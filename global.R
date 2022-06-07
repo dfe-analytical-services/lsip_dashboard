@@ -1,14 +1,12 @@
 # ---------------------------------------------------------
-# This is the global file.
-# Use it to store functions, library calls, source files etc.
-# Moving these out of the server file and into here improves performance
-# The global file is run only once when the app launches and stays consistent across users
-# whereas the server and UI files are constantly interacting and responsive to user input.
+# File name: server.R
+# Date created: 06/06/2022
 #
 # ---------------------------------------------------------
 
 
 # Library calls ---------------------------------------------------------------------------------
+
 
 library(shiny)
 library(shinyjs)
@@ -18,6 +16,10 @@ library(shinytest)
 library(shinydashboard)
 library(shinyWidgets)
 library(shinyGovstyle)
+
+#renv::snapshot()
+
+#source("R/Loading Core Indicators.R")
 
 # Functions ---------------------------------------------------------------------------------
 
@@ -71,3 +73,4 @@ appLoadingCSS <- "
 "
 
 source("R/support_links.R")
+source("R/accessibility.R")

@@ -1,23 +1,8 @@
 # ---------------------------------------------------------
-# This is the server file.
-# Use it to create interactive elements like tables, charts and text for your app.
-#
-# Anything you create in the server file won't appear in your app until you call it in the UI file.
-# This server script gives an example of a plot and value box that updates on slider input.
-# There are many other elements you can add in too, and you can play around with their reactivity.
-# The "outputs" section of the shiny cheatsheet has a few examples of render calls you can use:
-# https://shiny.rstudio.com/images/shiny-cheatsheet.pdf
-#
-#
-# This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
+# File name: server.R
+# Date created: 06/06/2022
 #
 # ---------------------------------------------------------
-
 
 server <- function(input, output, session) {
 
@@ -49,12 +34,38 @@ server <- function(input, output, session) {
     shinydashboard::valueBox(
       # take input number
       input$bins,
-      # add subtitle to explain what it's hsowing
+      # add subtitle to explain what it's showing
       paste0("Number that user has inputted"),
       color = "blue"
     )
   })
+  
+  ### page titles ------------------
+  output$page1title <- renderText({
+    page1title(input$LEP)
+  })
+#    style = "font-size: 24px;"
+ # })
+  
+  # KPIs
 
+  selection_kpis <- reactive ({
+    
+  })
+  output$emp_count <- renderUI({
+    emp_count2020 <- C_BRES1520 %>%
+      filter(Year == 2020,
+             Area == input$LEP
+      ) %>%
+      mutate(Total = sum(2:40))%>%
+      select(Total)
+  })
+  
+  output$kpi_emp_count <- renderUI({
+    
+  })
+  
+  
 
   # Stop app ---------------------------------------------------------------------------------
 
