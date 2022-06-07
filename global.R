@@ -16,7 +16,9 @@ library(shinytest)
 library(shinydashboard)
 library(shinyWidgets)
 library(shinyGovstyle)
-
+library(dplyr)
+library(data.table)
+library(tidyverse)
 #renv::snapshot()
 
 #source("R/Loading Core Indicators.R")
