@@ -34,7 +34,7 @@ fluidPage(
                            .navbar-nav {
                            float: none !important;
                            }
-                           .navbar-nav > li:nth-child(7) {
+                           .navbar-nav > li:nth-child(6) {
                            float: right;
                            }
                            ")))
@@ -127,21 +127,8 @@ fluidPage(
                          choices = C_LEP2020,
                          multiple = F
           ),
-        
-        ### Region button 
-        radioButtons("showMedian",
-                     selected = "England",
-                     label = div(
-                       style = "white-space: nowrap; ",
-                       "Choose a metric to show:"
-                     ),
-                     choices = c("England", "Region"),
-                     inline = F,
-                     width = "50%"
-        ),
-   #     uiOutput("SubjQualInputPanel"),
-        br(),
-        ### Rest button 
+
+        ### Reset button 
         actionButton("reset", "Reset",
                      style = "color: #0b0c0c;
                                              font-size: 12px;
@@ -200,24 +187,24 @@ fluidPage(
       #        uiOutput("median_in_sector"), # Make reactive to Primary LEP
       #        uiOutput("kpiEarn")
             ),
-            column(
-              id = "third",
-              width = 1
-            ),
-            column(
-              id = "second",
-              align = "left",
-              width = 3,
-              style = "height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-                div("15%", style = "font-size: 20px;"), # Make reactive to Primary LEP
-                div("self-employment rate in Primary LEP", style = "font-size: 12px;")
+     #       column(
+     #         id = "third",
+     #         width = 1
+      #      ),
+      #      column(
+      #        id = "second",
+      #        align = "left",
+      #        width = 3,
+      #        style = "height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
+      #          div("15%", style = "font-size: 20px;"), # Make reactive to Primary LEP
+      #          div("self-employment rate in Primary LEP", style = "font-size: 12px;")
       #        uiOutput("directionSector"), # Make reactive to Primary LEP
      #         uiOutput("kpiChange")
-            ),
-            column(
-              id = "third",
-              width = 1
-            )
+       #     ),
+      #      column(
+      #        id = "third",
+      #        width = 1
+     #       )
           ),
           box(
             title = NULL,
@@ -230,7 +217,12 @@ fluidPage(
             )
           ), # end of box
      ## Left panel ------------
-     
+     column(
+       width = 6,
+       plotlyOutput("empRate"),
+       br(),
+       valueBoxOutput("box_info", width = 6)
+     )
      ## Right panel -------------
           
      
@@ -265,18 +257,18 @@ fluidPage(
           ),
           
           ### Region button 
-          radioButtons("showMedian",
-                       selected = "England",
-                       label = div(
-                         style = "white-space: nowrap; ",
-                         "Choose a metric to show:"
-                       ),
-                       choices = c("England", "Region"),
-                       inline = F,
-                       width = "50%"
-          ),
+     #     radioButtons("showMedian",
+     #                  selected = "England",
+    #                   label = div(
+     #                    style = "white-space: nowrap; ",
+     #                    "Choose a metric to show:"
+      #                 ),
+     #                  choices = c("England", "Region"),
+     #                  inline = F,
+      #                 width = "50%"
+      #    ),
           #     uiOutput("SubjQualInputPanel"),
-          br(),
+      #    br(),
           ### Rest button 
           actionButton("reset", "Reset",
                        style = "color: #0b0c0c;
@@ -336,18 +328,18 @@ fluidPage(
           ),
           
           ### Region button 
-          radioButtons("showMedian",
-                       selected = "England",
-                       label = div(
-                         style = "white-space: nowrap; ",
-                         "Choose a metric to show:"
-                       ),
-                       choices = c("England", "Region"),
-                       inline = F,
-                       width = "50%"
-          ),
+      #    radioButtons("showMedian",
+      #                 selected = "England",
+      #                 label = div(
+      #                   style = "white-space: nowrap; ",
+      #                   "Choose a metric to show:"
+      #                 ),
+       #                choices = c("England", "Region"),
+       #                inline = F,
+       #                width = "50%"
+      #    ),
           #     uiOutput("SubjQualInputPanel"),
-          br(),
+      #    br(),
           ### Rest button 
           actionButton("reset", "Reset",
                        style = "color: #0b0c0c;
@@ -379,75 +371,75 @@ fluidPage(
       )
     ), #End of Skill demand tab
     # Mapping supply and demand tab -----------------
-    tabPanel(
-      "Mapping supply and demand",
+#    tabPanel(
+#      "Mapping supply and demand",
       
       # Sidebar =======
-      sidebarLayout(
-        sidebarPanel(
-          width = 2,
+  #    sidebarLayout(
+  #      sidebarPanel(
+  #        width = 2,
           ### Help text 
-          helpText("Choose a primary LEP area to view employment data."),
-          br(),
+   #       helpText("Choose a primary LEP area to view employment data."),
+    #      br(),
           ### Primary LEP input 
-          selectInput("LEP",
-                      #                        options = list(create=TRUE),
-                      label = "Choose a primary LEP:",
-                      choices = C_LEP2020,
-                      multiple = F
-          ),
+#          selectInput("LEP",
+ #                     #                        options = list(create=TRUE),
+  #                    label = "Choose a primary LEP:",
+   #                   choices = C_LEP2020,
+    #                  multiple = F
+     #     ),
           
           ### Comparison LEP input 
-          selectInput("LEP2",
+#          selectInput("LEP2",
                       #                       options = list(create=TRUE),
-                      label = "Choose a comparison LEP (optional):",
-                      choices = C_LEP2020,
-                      multiple = F
-          ),
+#                      label = "Choose a comparison LEP (optional):",
+#                      choices = C_LEP2020,
+#                      multiple = F
+#          ),
           
           ### Region button 
-          radioButtons("showMedian",
-                       selected = "England",
-                       label = div(
-                         style = "white-space: nowrap; ",
-                         "Choose a metric to show:"
-                       ),
-                       choices = c("England", "Region"),
-                       inline = F,
-                       width = "50%"
-          ),
+    #      radioButtons("showMedian",
+    #                   selected = "England",
+    #                   label = div(
+    #                     style = "white-space: nowrap; ",
+    #                     "Choose a metric to show:"
+    #                   ),
+   #                    choices = c("England", "Region"),
+   #                    inline = F,
+   #                    width = "50%"
+    #      ),
           #     uiOutput("SubjQualInputPanel"),
-          br(),
-          ### Rest button 
-          actionButton("reset", "Reset",
-                       style = "color: #0b0c0c;
-                                             font-size: 12px;
-                                             font-weight: bold;
-                                             background-color: #ffffff"
-          ),
-          br(),
-          br(),
+   #       br(),
+          ### Reset button 
+#          actionButton("reset", "Reset",
+#                       style = "color: #0b0c0c;
+#                                             font-size: 12px;
+#                                             font-weight: bold;
+#                                             background-color: #ffffff"
+#          ),
+#          br(),
+#          br(),
           ### Download button 
-          downloadButton(
-            outputId = "download_btn1",
-            label = "Download",
-            icon = shiny::icon("download")
-          ),
-          br(),
-          br()
-        ), # end of sidebar
+#          downloadButton(
+#            outputId = "download_btn1",
+#            label = "Download",
+#            icon = shiny::icon("download")
+#          ),
+#          br(),
+#          br()
+#        ), # end of sidebar
         
         # Main panel ======
-        mainPanel(
-          width = 10,
-          div("Overview of mapping supply and demand", style = "font-size: 24px; font-weight: bold;"), #Make dynamic with LEP title
-          br(),
-          div("XXX", style = "font-size: 16px; font-style: italic;"),
-          br(),
-          # add box to show user input
-        )
-      )
-    ), # End of Mapping supply and demand tab
+ #       mainPanel(
+#          width = 10,
+#          div("Overview of mapping supply and demand", style = "font-size: 24px; font-weight: bold;"), #Make dynamic with LEP title
+#          br(),
+#          div("XXX", style = "font-size: 16px; font-style: italic;"),
+#          br(),
+#          # add box to show user input
+ #       )
+#      )
+#    ), # End of Mapping supply and demand tab
     # Create the accessibility statement-----------------
     tabPanel(
       "Accessibility",

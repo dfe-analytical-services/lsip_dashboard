@@ -65,7 +65,15 @@ server <- function(input, output, session) {
     
   })
   
-  
+  # empRate -----------------
+  output$empRate <- renderPlotly ({
+    C_EmpRate_APS1721 %>%
+      select(year, area, empRate)%>%
+      filter(area %in% area_select)%>%
+    ggplotly(aes(x=year, y=empRate, group=area, color=area))+
+      geom_line()+
+      theme_minimal()
+  })
 
   # Stop app ---------------------------------------------------------------------------------
 

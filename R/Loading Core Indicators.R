@@ -38,14 +38,6 @@ I_EmpOcc_APS1721 <- read.xlsx(xlsxFile="./Data/nomis_2022_06_08_092847.xlsx", sh
 I_EmpRate_APS1721 <- read.xlsx(xlsxFile="./Data/nomis_2022_06_08_111841.xlsx", sheet=1, skipEmptyRows=T)
   
 
-# ESS
-I_ESS2019 <- fread('./Data/ESS_2019.csv')
-
-  # Save tabs as csv to import
-
-# KS4 Destinations
-I_KS4 <- fread('./Data/KS4 destinations - 201011 - 2021920 .csv')
-
 # Functions ----
 format.EmpOcc.APS <- function(x) { # need to clean up colnames
   x %>% mutate(year = ifelse(annual.population.survey == "date", X2, NA))%>% # tag time periods
@@ -56,7 +48,7 @@ format.EmpOcc.APS <- function(x) { # need to clean up colnames
     mutate(check = ifelse(grepl(":", area), 1, 0))%>% # remove anything but LEP and Country
     filter(check ==1)%>%
     filter(!grepl("nomisweb", area))%>%
-    select(area, year = jan_2017_dec_2017, everything(), - check) %>%# reorder and remove
+    select(year = jan_2017_dec_2017, area, everything(), - check) %>%# reorder and remove
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
     mutate_at(c(3:27),as.numeric) # Convert to numeric
 }
@@ -70,7 +62,7 @@ format.EmpRate.APS <- function(x) { # need to clean up colnames
     mutate(check = ifelse(grepl(":", area), 1, 0))%>% # remove anything but LEP and Country
     filter(check ==1)%>%
     filter(!grepl("nomisweb", area))%>%
-    select(area, year = jan_2017_dec_2017, everything(), - check)%>%# reorder and remove
+    select(year = jan_2017_dec_2017, area, everything(), - check)%>%# reorder and remove
     mutate(area = gsub(".*:", "", area))%>% # Tidy up Area names
     mutate_at(c(3:9),as.numeric) # Convert to numeric
 }
@@ -80,7 +72,9 @@ format.EmpRate.APS <- function(x) { # need to clean up colnames
 C_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
 
 ## Employment level and rate ----
-C_EmpRate_APS1721 <- format.EmpRate.APS(I_EmpRate_APS1721)
+C_EmpRate_APS1721 <- format.EmpRate.APS(I_EmpRate_APS1721)%>%
+  mutate(empRate = .[[5]]/.[[3]])
+
 
 # Save to SQL ----
 #con <- dbConnect(odbc(), Driver = "SQL Server Native Client 11.0", 

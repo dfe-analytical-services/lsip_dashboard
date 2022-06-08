@@ -19,10 +19,12 @@ library(shinyGovstyle)
 library(dplyr)
 library(data.table)
 library(tidyverse)
+library(plotly)
 #renv::snapshot()
 
 source("R/Loading Core Indicators.R")
 
+area_select <- c("Coast to Capital", "Greater Manchester", "England")
 # Functions ---------------------------------------------------------------------------------
 
 # Here's an example function for simplifying the code needed to commas separate numbers:
