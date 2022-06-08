@@ -13,6 +13,7 @@ library(stringr)
 library(eeptools)
 library(odbc)
 library(ggplot2)
+library(openxlsx)
 
 ## ---- Load data ----
 ### ---- LEP 2020
@@ -21,6 +22,10 @@ C_LEP2020 <- I_LEP2020 %>%
   select(ERNM)
 
 ### ---- APS
+I_APS1721 <- read.xlsx(xlsxFile="./Data/nomis_2022_06_08_092847.xlsx", sheet=1, skipEmptyRows=T)%>%
+  mutate(Year = if(date ))
+  discard(~all(is.na(.)))
+
 I_APS2021 <- fread('./Data/Employment by occupation - Dec 2021 - SOC2010 - APS.csv', data.table=FALSE) 
 I_APS2020 <- fread('./Data/Employment by occupation - Dec 2020 - SOC2010 - APS.csv', data.table=FALSE)
 I_APS2019 <- fread('./Data/Employment by occupation - Dec 2019 - SOC2010 - APS.csv', data.table=FALSE)

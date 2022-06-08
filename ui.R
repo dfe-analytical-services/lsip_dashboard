@@ -165,15 +165,15 @@ fluidPage(
           width = 10,
         
           ## Title -----------
-          textOutput("page1title"), #Make reactive title from primary LEP
+          h1("Primary LEP: Overview of Local Landscape", style = "font-size: 24px;"), #Make reactive title from primary LEP
           br(),
-          div("Data for working age population in 2021", style = "font-size: 16px; font-style: italic;"),
+          p("Data for working age population in 2021", style = "font-size: 16px; font-style: italic;"),
           br(),
           ## Sections ------------------------------------------------------------------------------
           
           #### KPIs ----------------------------------------------------------------------------
           
-          box(
+          box( # set colour of boxes
             title = NULL,
             width = 600,
             status = "primary",
@@ -183,7 +183,8 @@ fluidPage(
               align = "left",
               width = 3,
               style = "height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-                uiOutput("emp_count")
+                div("759,100", style = "font-size: 20px;"), # Make reactive to Primary LEP
+                div("in employment in Primary LEP", style = "font-size: 12px;")
             ),
             column(
               id = "third",
@@ -194,7 +195,9 @@ fluidPage(
               align = "left",
               width = 3,
               style = "height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-      #        uiOutput("median_in_sector"),
+                div("80%", style = "font-size: 20px;"), # Make reactive to Primary LEP
+                div("employment rate in Primary LEP", style = "font-size: 12px;")
+      #        uiOutput("median_in_sector"), # Make reactive to Primary LEP
       #        uiOutput("kpiEarn")
             ),
             column(
@@ -206,7 +209,9 @@ fluidPage(
               align = "left",
               width = 3,
               style = "height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-      #        uiOutput("directionSector"),
+                div("15%", style = "font-size: 20px;"), # Make reactive to Primary LEP
+                div("self-employment rate in Primary LEP", style = "font-size: 12px;")
+      #        uiOutput("directionSector"), # Make reactive to Primary LEP
      #         uiOutput("kpiChange")
             ),
             column(
@@ -223,7 +228,10 @@ fluidPage(
               id = "third", width = 12,
               style = "height:3vh; padding:0px;"
             )
-          ),
+          ), # end of box
+     ## Left panel ------------
+     
+     ## Right panel -------------
           
      
         ) # end of main panel
