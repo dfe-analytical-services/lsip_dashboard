@@ -1,11 +1,11 @@
+####
 # Title: LSIP dashboard - proof of concept
 # Author: Hannah Cox
 # Date: 18th May 2022
-# Last updated: 30th May 2022
+# Last updated: 8th June 2022
+###
 
-
-
-## ---- Load libraries ----
+# Load libraries ----
 library(dplyr)
 library(data.table)
 library(tidyverse)
@@ -14,35 +14,29 @@ library(eeptools)
 library(odbc)
 library(ggplot2)
 library(openxlsx)
+library(janitor)
 
-## ---- Load data ----
-### ---- LEP 2020
-I_LEP2020 <- fread('./Data/2020 LEP.csv')
+# Load data ----
+## LEP 2020 ----
+I_LEP2020 <- read.xlsx(xlsxFile="./Data/2020 LEP.xlsx", sheet=1, skipEmptyRows=T)
 C_LEP2020 <- I_LEP2020 %>%
   select(ERNM)
 
-### ---- APS
-I_APS1721 <- read.xlsx(xlsxFile="./Data/nomis_2022_06_08_092847.xlsx", sheet=1, skipEmptyRows=T)%>%
-  mutate(Year = if(date ))
-  discard(~all(is.na(.)))
+## APS ----
+### Employment by occupation ----
+# Download from https://www.nomisweb.co.uk/datasets/apsnew
+#Query data
+#Geography: England, LEPs (as of April 2021)
+#Date: 12 months to Dec 2017-2021
+#Cell: T09b Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people
 
-I_APS2021 <- fread('./Data/Employment by occupation - Dec 2021 - SOC2010 - APS.csv', data.table=FALSE) 
-I_APS2020 <- fread('./Data/Employment by occupation - Dec 2020 - SOC2010 - APS.csv', data.table=FALSE)
-I_APS2019 <- fread('./Data/Employment by occupation - Dec 2019 - SOC2010 - APS.csv', data.table=FALSE)
-I_APS2018 <- fread('./Data/Employment by occupation - Dec 2018 - SOC2010 - APS.csv', data.table=FALSE)
-I_APS2017 <- fread('./Data/Employment by occupation - Dec 2017 - SOC2010 - APS.csv', data.table=FALSE)
-I_APS2016 <- fread('./Data/Employment by occupation - Dec 2016 - SOC2010 - APS.csv', data.table=FALSE)
-I_APS2015 <- fread('./Data/Employment by occupation - Dec 2015 - SOC2010 - APS.csv', data.table=FALSE)
+I_EmpOcc_APS1721 <- read.xlsx(xlsxFile="./Data/nomis_2022_06_08_092847.xlsx", sheet=1, skipEmptyRows=T)
 
-# BRES - need to find out how to remove commas from numbers
-I_BRES2020 <- fread('./Data/Employment by sector - BRES 2020.csv') #, data.table=FALSE)
-I_BRES2019 <- fread('./Data/Employment by sector - BRES 2019.csv') #, data.table=FALSE)
-I_BRES2018 <- fread('./Data/Employment by sector - BRES 2018.csv') #, data.table=FALSE)
-I_BRES2017 <- fread('./Data/Employment by sector - BRES 2017.csv') #, data.table=FALSE)
-I_BRES2016 <- fread('./Data/Employment by sector - BRES 2016.csv') #, data.table=FALSE)
-I_BRES2015 <- fread('./Data/Employment by sector - BRES 2015.csv') #, data.table=FALSE)
+### Employment level and rate ------------
+#Cell: T01 Economic activity by age Aged 16-64/ All people
 
-  # Transpose 
+I_EmpRate_APS1721 <- read.xlsx(xlsxFile="./Data/nomis_2022_06_08_111841.xlsx", sheet=1, skipEmptyRows=T)
+  
 
 # ESS
 I_ESS2019 <- fread('./Data/ESS_2019.csv')
@@ -52,124 +46,60 @@ I_ESS2019 <- fread('./Data/ESS_2019.csv')
 # KS4 Destinations
 I_KS4 <- fread('./Data/KS4 destinations - 201011 - 2021920 .csv')
 
-## ---- Functions ----
-format.APS <- function(x) {
-  x %>% discard(~all(is.na(.)))%>%
-    mutate(Male = ifelse(grepl("Males", Cell), "Male", ""), # Tag for males
-           Female = ifelse(grepl("Females", Cell), "Female", ""), # Tag for females
-           Total = ifelse(Female == "" & Male == "", "Total", ""), #Tag for total
-           Gender = trimws(paste(Male, Female, Total)))%>% # Make new Gender column from Cell
-    select(-Male, -Female, -Total)%>%
-    mutate(FT = ifelse(grepl("Full-time", Cell), "Full-time",""), # Tag for FT
-           PT = ifelse(grepl("Part-time", Cell), "Part-time", ""), # Tag for PT
-           Total = ifelse(FT == "" & PT == "", "Total", ""), # Tag for total
-           WorkPattern = trimws(paste(FT, PT, Total)))%>% # Make new WorkPattern column from Cell
-    select(-FT, -PT, -Total)%>%
-    mutate(SOC2010title = gsub(".*- (.+) :.*", "\\1",Cell))%>% # Clean up and rename 
-    select(SOC2010title, Gender, WorkPattern, everything(), -Cell, -starts_with('Conf'))%>% # Remove conf
-    mutate_all(funs(replace(.,.=="!"|.=="~",NA)))%>% # Replace ! and ~ with NA
-    mutate_at(c(4:210),as.numeric)%>% # Convert to numeric
-    select(1:42) # remove nuts 3 for now
+# Functions ----
+format.EmpOcc.APS <- function(x) { # need to clean up colnames
+  x %>% mutate(year = ifelse(annual.population.survey == "date", X2, NA))%>% # tag time periods
+    fill(year)%>% # fill time periods for all rows
+    row_to_names(row_number=4) %>% # set col names
+    clean_names()%>%
+    select(-starts_with('na'))%>% # remove na columns (flags and confidence)
+    mutate(check = ifelse(grepl(":", area), 1, 0))%>% # remove anything but LEP and Country
+    filter(check ==1)%>%
+    filter(!grepl("nomisweb", area))%>%
+    select(area, year = jan_2017_dec_2017, everything(), - check) %>%# reorder and remove
+    mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
+    mutate_at(c(3:27),as.numeric) # Convert to numeric
 }
 
-format.BRES <- function(x) {
-  x %>%
-    discard(~all(is.na(.)))%>%
-    slice(-1)%>%
-    mutate_all(funs(replace(.,.=="" | .== "*",NA)))%>% # Replace "" and * with NA
-    discard(~all(is.na(.)))%>% # Remove empty columns
-    mutate_at(c(2:40),as.numeric)%>%
-    filter(!grepl("nuts", Area)) %>% # remove nuts 3 for now
-    mutate(Area = gsub(".*:", "", Area)) # Clean up LEP names
+format.EmpRate.APS <- function(x) { # need to clean up colnames
+  x %>% mutate(year = ifelse(annual.population.survey == "date", X2, NA))%>% # tag time periods
+    fill(year)%>% # fill time periods for all rows
+    row_to_names(row_number=4) %>% # set col names
+    clean_names()%>%
+    select(-starts_with('na'))%>% # remove na columns (flags and confidence)
+    mutate(check = ifelse(grepl(":", area), 1, 0))%>% # remove anything but LEP and Country
+    filter(check ==1)%>%
+    filter(!grepl("nomisweb", area))%>%
+    select(area, year = jan_2017_dec_2017, everything(), - check)%>%# reorder and remove
+    mutate(area = gsub(".*:", "", area))%>% # Tidy up Area names
+    mutate_at(c(3:9),as.numeric) # Convert to numeric
 }
 
-formant.ESS <- function(x) {
-  
-}
+# Indicators ----
+## Employment by occupation ----
+C_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
 
-## --- Employment by occupation ---
-C_APS2015 <- format.APS(I_APS2015)%>%
-  mutate(Year = 2015)
-C_APS2016 <- format.APS(I_APS2016)%>%
-  mutate(Year = 2016)
-C_APS2017 <- format.APS(I_APS2017)%>%
-  mutate(Year = 2017)
-C_APS2018 <- format.APS(I_APS2018)%>%
-  mutate(Year = 2018)
-C_APS2019 <- format.APS(I_APS2019)%>%
-  mutate(Year = 2019)
-C_APS2020 <- format.APS(I_APS2020)%>%
-  mutate(Year = 2020)
-C_APS2021 <- format.APS(I_APS2021)%>%
-  mutate(Year = 2021)
+## Employment level and rate ----
+C_EmpRate_APS1721 <- format.EmpRate.APS(I_EmpRate_APS1721)
 
-C_APS1521 <- rbind(C_APS2015, C_APS2016, C_APS2017, C_APS2018, C_APS2019, C_APS2020, C_APS2021)
-
-rm(C_APS2015,
-   C_APS2016,
-   C_APS2017,
-   C_APS2018,
-   C_APS2019,
-   C_APS2020,
-   C_APS2021,
-   I_APS2015,
-   I_APS2016,
-   I_APS2017,
-   I_APS2018,
-   I_APS2019,
-   I_APS2020,
-   I_APS2021)
-
-## ---- Employment by sector ----
-C_BRES2020 <- format.BRES(I_BRES2020)%>%
-  mutate(Year = 2020)
-C_BRES2019 <- format.BRES(I_BRES2019)%>%
-  mutate(Year = 2019)
-C_BRES2018 <- format.BRES(I_BRES2018)%>%
-  mutate(Year = 2018)
-C_BRES2017 <- format.BRES(I_BRES2017)%>%
-  mutate(Year = 2017)
-C_BRES2016 <- format.BRES(I_BRES2016)%>%
-  mutate(Year = 2016)
-C_BRES2015 <- format.BRES(I_BRES2015)%>%
-  mutate(Year = 2015)
-
-C_BRES1520 <- rbind(C_BRES2015, C_BRES2016, C_BRES2017, C_BRES2018, C_BRES2019, C_BRES2020)
-
-rm(C_BRES2015,
-   C_BRES2016,
-   C_BRES2017,
-   C_BRES2018,
-   C_BRES2019,
-   C_BRES2020,
-   I_BRES2015,
-   I_BRES2016,
-   I_BRES2017,
-   I_BRES2018,
-   I_BRES2019,
-   I_BRES2020)
-
-## ---- Employer reported skills that will need developing ----
-
-# ---- Proficiency of workforce ----
-
-# ---- Summary of vacancies (skills shortage and hard to fill) ----
-
-
-
-## ---- Save to SQL ----
+# Save to SQL ----
 #con <- dbConnect(odbc(), Driver = "SQL Server Native Client 11.0", 
-                 
+
 #                 Server = "T1PRANMSQL\SQLPROD,60125", 
-                 
- #                Database = "MA_UFS_S_DATA",
-                 
- #                Trusted_Connection = "yes")
+
+#                Database = "MA_UFS_S_DATA",
+
+#                Trusted_Connection = "yes")
 
 
 
 #and then I think you can use dbWriteTable to save the table 
 #(haven't used it before so you may need to tweak the code below). I'm calling X your R table.
-                                                             
-                                                             
+
+
 #con %>% dbWriteTable("MA_UFS_S_DATA.LSIP.dashboard_data", X)
+
+# Combine into single workbook ----
+
+
+
