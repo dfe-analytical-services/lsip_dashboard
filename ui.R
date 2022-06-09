@@ -30,7 +30,7 @@
 fluidPage(
   shinyjs::useShinyjs(),
   includeCSS("www/dfe_shiny_gov_style.css"),
-  title = "DfE Analytical Services R-Shiny Template",
+  title = "Local Skills Dashboard",
   # use_tota11y(), # accessibility layer for local testing
   
   # Set metadata for browser ==================================================
@@ -47,7 +47,7 @@ fluidPage(
   # ),
   
   # Set title for search engines
-  HTML("<title>DfE Analytical Services R-Shiny Template</title>"),
+  HTML("<title>Local Skills Dashboard</title>"),
   
   # Navbar ====================================================================
   
@@ -73,9 +73,9 @@ fluidPage(
                  fluidRow(
                    column(
                      12,
-                     h1("DfE Analytical Services R-Shiny data dashboard template"),
+                     h1("Local Skills Dashboard"),
 
-                     p("This app demonstrates the DfE Analytical Services R-Shiny data dashboard template."),
+                     p("This app XXX"),
                      br(),
                      br()
                    ),
@@ -134,12 +134,56 @@ fluidPage(
       sidebarLayout(
         sidebarPanel(
           width = 2,
+          div("Choose a LEP area to view employment information"),
           selectizeInput("lep1",
             "Choose a primary LEP:",
             choices=C_LEP2020,
             selected="England",
-          )
-        ),
+          ),
+          selectizeInput("lep2",
+                           "Choose a comparison LEP (optional)",
+                           choices=C_LEP2020,
+                           selected="England",
+          ),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+          br(),
+        # Reset button - not currently active
+          # actionButton("reset", "Reset",
+          #                style = "color: #0b0c0c;
+          #                                    font-size: 12px;
+          #                                    font-weight: bold;
+          #                                    background-color: #ffffff"
+          # ),
+          # br(),
+          # br(),
+        # Download button - not currently active
+          downloadButton(
+            outputId = "download_btn1",
+            label = "Download",
+            icon = shiny::icon("download")
+          ),
+          br(),
+          br()
+        ), # end of side panel
 
         # Show a plot of the generated distribution
         mainPanel(
@@ -151,14 +195,14 @@ fluidPage(
           ),
           box(width=12,
               column(width=6,
-                     p("Placeholder for the chart")),
+                     plotlyOutput("EmpRate_time")),
               column(width=6,
-                     p("Placeholder for the table"))
+                     tableOutput("EmpOcc"))
           )
           
-        )
-      )
-    ),
+        ) # end of main panel
+      ) # end of sidebar layout
+    ), # end of Local Landscape tab
 
     # Create the accessibility statement-----------------
     tabPanel(
