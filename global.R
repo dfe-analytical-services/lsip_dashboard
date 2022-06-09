@@ -20,6 +20,8 @@ library(dplyr)
 library(data.table)
 library(tidyverse)
 library(plotly)
+library(openxlsx)
+library(janitor)
 #renv::snapshot()
 
 source("R/Loading Core Indicators.R")
