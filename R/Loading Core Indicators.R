@@ -36,7 +36,8 @@ I_EmpOcc_APS1721 <- read.xlsx(xlsxFile="./Data/nomis_2022_06_08_092847.xlsx", sh
 #Cell: T01 Economic activity by age Aged 16-64/ All people
 
 I_EmpRate_APS1721 <- read.xlsx(xlsxFile="./Data/nomis_2022_06_08_111841.xlsx", sheet=1, skipEmptyRows=T)
-  
+
+?tableOutput
 
 # Functions ----
 format.EmpOcc.APS <- function(x) { # need to clean up colnames
