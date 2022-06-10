@@ -79,29 +79,37 @@ server <- function(input, output, session) {
   #   hist(x, breaks = bins, col = "darkgray", border = "white")
   # })
   
-  # Define page title
+# Define page titles ----
   
   output$page1title <- renderUI({
     paste0(input$lep1, ": Overview of Local Landscape")
   })
-  # Define server logic to create a box
   
+  output$page2title <- renderUI({
+    paste0(input$lep3, ": Overview of Skill Supply")
+  })
+
+# LOCAL LANDSCAPE ----
+  
+ ## KPIs ----
+  
+  ### Employment rate -----
   output$locland.emplrate <- renderValueBox({
     # Put value into box to plug into app
     valueBox(
       # take input number
       paste(
         format(100.*(C_EmpRate_APS1721 %>% 
-                       filter(area==input$lep1,year=="Jan 2021-Dec 2021")
+                       filter(area==input$lep1,year=="2021")
         )$empRate,digits=3),
         "%"),
       # add subtitle to explain what it's hsowing
-      paste("Employment rate in",input$lep1),
-      color = "blue"
+      paste("Employment rate in",input$lep1)
+      #style = "height:15vh; min-height:96px; padding:5px; word-wrap: break-word;"
     )
   })
   
-  
+  ### Employment count ----
   output$locland.emplcnt <- renderValueBox({
     # Put value into box to plug into app
     valueBox(
@@ -110,13 +118,12 @@ server <- function(input, output, session) {
                 filter(area==input$lep1,year=="Jan 2021-Dec 2021")
       )$t09a_1_all_people_corporate_managers_and_directors_soc2010_all_people,
       scientific=FALSE),
-      # add subtitle to explain what it's hsowing
-      paste("In employment in",input$lep1),
-      color = "blue"
+      # add subtitle to explain what it's showing
+      paste("In employment in",input$lep1)
     )
   })
   
-  # EmpRate time line graph
+  ## Employment rate over time line graph ----
   
   EmpRate_time <- reactive({
     C_EmpRate_APS1721 %>%
@@ -126,6 +133,7 @@ server <- function(input, output, session) {
                area == input$lep2) %>%
       ggplot(aes(x=year, y=empRate, group = area, colour = area))+
       geom_line()+
+      theme_minimal()+
       expand_limits(y = 0)+
       labs(colour = "Area")+
       # theme(legend.position="bottom")+
@@ -139,7 +147,7 @@ server <- function(input, output, session) {
     ggplotly(EmpRate_time())
   })
   
-  # EmpOcc table
+  ## Employment by occupation data table ----
   
   EmpOcc <- reactive({
     C_EmpOcc_APS1721 %>%
@@ -155,7 +163,47 @@ server <- function(input, output, session) {
   output$EmpOcc <- renderDataTable({
     EmpOcc()
     })
-  # Stop app ---------------------------------------------------------------------------------
+
+# SKILL SUPPLY ----
+  ## KPIs ----
+  ### FE achievements -----
+  output$skisup.FEach <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      format("XX,XXX", scientific=FALSE),
+      paste("FE Achievements in Primary LEP in Year")
+      # take input number
+      # format((C_EmpOcc_APS1721 %>% 
+      #           filter(area==input$lep1,year=="Jan 2021-Dec 2021")
+      # )$t09a_1_all_people_corporate_managers_and_directors_soc2010_all_people,
+      # scientific=FALSE),
+      # # add subtitle to explain what it's showing
+      # paste("In employment in",input$lep1),
+      # color = "blue"
+    )
+  })
+  
+  ### Apprentichesip achievements ----
+  output$skisup.APach <- renderValueBox({
+    # Put value into box to plug into app
+      valueBox(
+        format("XX,XXX", scientific=FALSE),
+        paste("Apprenticeship achievements in Primary LEP in Year")
+      # take input number
+      # format((C_EmpOcc_APS1721 %>% 
+      #           filter(area==input$lep1,year=="Jan 2021-Dec 2021")
+      # )$t09a_1_all_people_corporate_managers_and_directors_soc2010_all_people,
+      # scientific=FALSE),
+      # # add subtitle to explain what it's showing
+      # paste("In employment in",input$lep1),
+      # color = "blue"
+      )
+  })
+  
+  
+  
+  
+# Stop app ---------------------------------------------------------------------------------
   
   session$onSessionEnded(function() {
     stopApp()
