@@ -37,7 +37,7 @@ I_EmpOcc_APS1721 <- read.xlsx(xlsxFile="./Data/nomis_2022_06_08_092847.xlsx", sh
 
 I_EmpRate_APS1721 <- read.xlsx(xlsxFile="./Data/nomis_2022_06_08_111841.xlsx", sheet=1, skipEmptyRows=T)
 
-?tableOutput
+
 
 # Functions ----
 format.EmpOcc.APS <- function(x) { # need to clean up colnames
@@ -55,7 +55,7 @@ format.EmpOcc.APS <- function(x) { # need to clean up colnames
 }
 
 format.EmpRate.APS <- function(x) { # need to clean up colnames
-  x %>% mutate(year = ifelse(annual.population.survey == "date", X2, NA))%>% # tag time periods
+  x %>% mutate(year = ifelse(annual.population.survey == "date", substr(X2,nchar(X2)-4+1, nchar(X2)), NA))%>% # tag time periods
     fill(year)%>% # fill time periods for all rows
     row_to_names(row_number=4) %>% # set col names
     clean_names()%>%
@@ -63,9 +63,10 @@ format.EmpRate.APS <- function(x) { # need to clean up colnames
     mutate(check = ifelse(grepl(":", area), 1, 0))%>% # remove anything but LEP and Country
     filter(check ==1)%>%
     filter(!grepl("nomisweb", area))%>%
-    select(year = jan_2017_dec_2017, area, everything(), - check)%>%# reorder and remove
     mutate(area = gsub(".*:", "", area))%>% # Tidy up Area names
-    mutate_at(c(3:9),as.numeric) # Convert to numeric
+    mutate_at(c(2:9),as.numeric)%>% # Convert to numeric
+    select(year=x2017, area, everything(), - check)%>%# reorder and remove
+    mutate(empRate = .[[5]]/.[[3]])
 }
 
 # Indicators ----
@@ -73,8 +74,7 @@ format.EmpRate.APS <- function(x) { # need to clean up colnames
 C_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
 
 ## Employment level and rate ----
-C_EmpRate_APS1721 <- format.EmpRate.APS(I_EmpRate_APS1721)%>%
-  mutate(empRate = .[[5]]/.[[3]])
+C_EmpRate_APS1721 <- format.EmpRate.APS(I_EmpRate_APS1721)
 
 
 # Save to SQL ----
