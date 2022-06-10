@@ -33,7 +33,7 @@ fluidPage(
   title = "DfE Analytical Services R-Shiny Template",
   # use_tota11y(), # accessibility layer for local testing
   
-  # Set metadata for browser ==================================================
+# Set metadata for browser ==================================================
   
   tags$html(lang = "en"),
   # meta_general(
@@ -49,7 +49,7 @@ fluidPage(
   # Set title for search engines
   HTML("<title>Local Skils Dashboard</title>"),
   
-  # Navbar ====================================================================
+# Navbar ====================================================================
   
   # This CSS sets the 4th item on the navbar to the right
   tagList(
@@ -57,7 +57,7 @@ fluidPage(
                            .navbar-nav {
                            float: none !important;
                            }
-                           .navbar-nav > li:nth-child(4) {
+                           .navbar-nav > li:nth-child(5) {
                            float: right;
                            }
                            ")))
@@ -65,8 +65,8 @@ fluidPage(
   navbarPage("",
              id = "navbar",
              
-             # Homepage tab ============================================================
-             
+# Homepage tab ============================================================
+
              tabPanel(
                "Homepage",
                fluidPage(
@@ -74,14 +74,14 @@ fluidPage(
                    column(
                      12,
                      h1("Local Skills Dashboard"),
-                     
+
                      p("This app XXX"),
                      br(),
                      br()
                    ),
-                   
-                   ## Left panel -------------------------------------------------------
-                   
+
+ ## Left panel -------------------------------------------------------
+
                    column(
                      6,
                      div(
@@ -103,9 +103,9 @@ fluidPage(
                        )
                      ),
                    ),
-                   
-                   ## Right panel ------------------------------------------------------
-                   
+
+ ## Right panel ------------------------------------------------------
+
                    column(
                      6,
                      div(
@@ -125,6 +125,7 @@ fluidPage(
                  )
                )
              ),
+# Local Landscape tab ----
              tabPanel(
                "Local Landscape",
                
@@ -132,19 +133,21 @@ fluidPage(
                
                # Sidebar with a slider input for number of bins
                sidebarLayout(
+ ## Side panel ----
                  sidebarPanel(
                    width = 2,
-                   ## Help text --------------------
+  ### Help text --------------------
                    helpText("Choose a Local Area to view employment trends" 
-                            #,style = "font-style: italics;"
+                            ,style = "font-style: italic;"
                    ),
-                   ## LEP 1 input ---------------
+                   br(),
+  ### LEP 1 input ---------------
                    selectizeInput("lep1",
                                   "Choose a primary LEP:",
                                   choices=C_LEP2020,
                                   selected="England",
                    ),
-                   ## LEP 2 input ------------
+  ### LEP 2 input ------------
                    selectizeInput("lep2", # Make no selection an option
                                   "Choose a comparison LEP (optional):",
                                   choices=C_LEP2020,
@@ -170,7 +173,7 @@ fluidPage(
                    br(),
                    br(),
                    br(),
-                   ## Download button -------------
+  ### Download button -------------
                    downloadButton(
                      outputId = "download_btn1",
                      label = "Download",
@@ -178,32 +181,157 @@ fluidPage(
                    ),
                    
                  ), # end of side panel
-                 
+ ## Main panel ----
                  # Show a plot of the generated distribution
                  mainPanel(
                    width=10,
+  ### Title ----
                    uiOutput("page1title", style="font-size: 24px;"),
                    br(),
                    div("Data for employees aged 25-30 in sustained employment in the 2018-19 tax year", style = "font-size: 16px; font-style: italic;"),
                    br(),
-                   box(
-                     width=12, 
-                     #style = "height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-                     valueBoxOutput("locland.emplcnt",  width=6),
-                     valueBoxOutput("locland.emplrate", width=6)
-                   ),
+
+  ### KPI boxes ----
                    box(width=12,
+                           # title = NULL,
+                           # status = "primary",
+                           # solidheader=T,
+                           column(
+                             id="second",
+                             width=4,
+                             align="left",
+                             style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
+                             valueBoxOutput("locland.emplrate"), style="color:white"
+                           ),
+                           column(
+                             id="third",
+                             width=1
+                           ),
+                           column(width=4,
+                                  id="second",
+                                  align="left",
+                                  #style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
+                                  valueBoxOutput("locland.emplcnt"), style="color:white"
+                           )
+                       ), # end of box
+  ### Employment rate over time line chart ----
                        column(width=6,
                               plotlyOutput("EmpRate_time")),
+  ### Employment by occupation data table ----
                        column(width=6,
                               dataTableOutput("EmpOcc"))
-                   )
-                   
+
                  ) # end of main panel
-               )
-             ),
-             
-             # Create the accessibility statement-----------------
+               ) # end of side bar layout
+             ), # end of Local Landscape tab
+# Skill Supply tab ----
+tabPanel(
+  "Skill Supply",
+
+  # Define UI for application that draws a histogram
+
+  # Sidebar with a slider input for number of bins
+  sidebarLayout(
+ ## Side panel ----
+    sidebarPanel(
+      width = 2,
+  ### Help text --------------------
+      helpText("Choose a Local Area to view skill supply trends"
+               ,style = "font-style: italic;"
+      ),
+      br(),
+  ### LEP 1 input ---------------
+      selectizeInput("lep3",
+                     "Choose a primary LEP:",
+                     choices=C_LEP2020,
+                     selected="England",
+      ),
+  ### LEP 2 input ------------
+      selectizeInput("lep4", # Make no selection an option
+                     "Choose a comparison LEP (optional):",
+                     choices=C_LEP2020,
+                     selected="England",
+      ),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+  ### Download button -------------
+      downloadButton(
+        outputId = "download_btn2",
+        label = "Download",
+        icon = shiny::icon("download")
+      ),
+
+    ), # end of side panel
+ ## Main panel ----
+    # Show a plot of the generated distribution
+    mainPanel(
+      width=10,
+  ### Title ----
+      uiOutput("page2title", style="font-size: 24px;"),
+      br(),
+      div("XXX", style = "font-size: 16px; font-style: italic;"),
+      br(),
+  ### KPI boxes ----
+      box(width=12,
+        # title = NULL,
+        # status = "primary",
+        # solidheader=T,
+        column(
+          id="second",
+          width=4,
+          align="left",
+          style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
+          valueBoxOutput("skisup.FEach"), style="color:white"
+        ),
+        column(
+          id="third",
+          width=1
+        ),
+        column(width=4,
+          id="second",
+          align="left",
+          #style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
+          valueBoxOutput("skisup.APach"), style="color:white"
+        )
+    ), # end of box
+   
+      box(width=12,
+  ### Employment rate over time line chart ----
+  
+          column(width=6,
+                 p("Place holder for Achievement counts 2017-21")),
+                 #plotlyOutput("EmpRate_time")),
+  
+  ### Employment by occupation data table ----
+  
+          column(width=6,
+                 p("Place holder for Achievements by Sector Subject Area 2021"))
+                 #dataTableOutput("EmpOcc"))
+    ) # end of box
+
+    ) # end of main panel
+  ) # end of side bar layout
+), # end of Skills Supply tab
+
+# Create the accessibility statement-----------------
              tabPanel(
                "Accessibility",
                h2("Accessibility statement"),
