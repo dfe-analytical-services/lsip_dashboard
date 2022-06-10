@@ -104,8 +104,8 @@ server <- function(input, output, session) {
         )$empRate,digits=3),
         "%"),
       # add subtitle to explain what it's hsowing
-      paste("Employment rate in",input$lep1)
-      #style = "height:15vh; min-height:96px; padding:5px; word-wrap: break-word;"
+      paste("Employment rate in",input$lep1),
+      color='blue'
     )
   })
   
@@ -119,7 +119,8 @@ server <- function(input, output, session) {
       )$t09a_1_all_people_corporate_managers_and_directors_soc2010_all_people,
       scientific=FALSE),
       # add subtitle to explain what it's showing
-      paste("In employment in",input$lep1)
+      paste("In employment in",input$lep1),
+      color='blue'
     )
   })
   

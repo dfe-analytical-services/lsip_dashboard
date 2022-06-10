@@ -186,40 +186,26 @@ fluidPage(
                  mainPanel(
                    width=10,
   ### Title ----
-                   uiOutput("page1title", style="font-size: 24px;"),
+  box(width=12,
+      uiOutput("page1title", style="font-size: 24px;"),
                    br(),
                    div("Data for employees aged 25-30 in sustained employment in the 2018-19 tax year", style = "font-size: 16px; font-style: italic;"),
                    br(),
-
+),
   ### KPI boxes ----
                    box(width=12,
-                           # title = NULL,
-                           # status = "primary",
-                           # solidheader=T,
-                           column(
-                             id="second",
-                             width=4,
-                             align="left",
-                             style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-                             valueBoxOutput("locland.emplrate"), style="color:white"
-                           ),
-                           column(
-                             id="third",
-                             width=1
-                           ),
-                           column(width=4,
-                                  id="second",
-                                  align="left",
-                                  #style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-                                  valueBoxOutput("locland.emplcnt"), style="color:white"
-                           )
-                       ), # end of box
+                             valueBoxOutput("locland.emplrate"),
+                                  valueBoxOutput("locland.emplcnt"),
+                   ), # end of box
+                    box(
+                      width=12,
   ### Employment rate over time line chart ----
                        column(width=6,
                               plotlyOutput("EmpRate_time")),
   ### Employment by occupation data table ----
                        column(width=6,
                               dataTableOutput("EmpOcc"))
+                    )
 
                  ) # end of main panel
                ) # end of side bar layout
