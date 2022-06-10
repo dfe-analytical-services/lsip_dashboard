@@ -88,6 +88,10 @@ server <- function(input, output, session) {
   output$page2title <- renderUI({
     paste0(input$lep3, ": Overview of Skill Supply")
   })
+  
+  output$page3title <- renderUI({
+    paste0(input$lep5, ": Overview of Skill Demand")
+  })
 
 # LOCAL LANDSCAPE ----
   
@@ -171,7 +175,7 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       format("XX,XXX", scientific=FALSE),
-      paste("FE Achievements in Primary LEP in Year")
+      paste("FE Achievements in ","Primary LEP"," in 2021")
       # take input number
       # format((C_EmpOcc_APS1721 %>% 
       #           filter(area==input$lep1,year=="Jan 2021-Dec 2021")
@@ -188,7 +192,7 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
       valueBox(
         format("XX,XXX", scientific=FALSE),
-        paste("Apprenticeship achievements in Primary LEP in Year")
+        paste("Apprenticeship achievements in ","Primary LEP"," in 2021")
       # take input number
       # format((C_EmpOcc_APS1721 %>% 
       #           filter(area==input$lep1,year=="Jan 2021-Dec 2021")
@@ -200,7 +204,41 @@ server <- function(input, output, session) {
       )
   })
   
+# SKILL DEMAND ----
+ ## KPIs ----
+  ### FE achievements -----
+  output$jobad.cnt <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      format("XX,XXX", scientific=FALSE),
+      paste0("Online job advert units for","Primary LEP","in Jan 2022, compared to ","412 in Jan 2021")
+      # take input number
+      # format((C_EmpOcc_APS1721 %>% 
+      #           filter(area==input$lep1,year=="Jan 2021-Dec 2021")
+      # )$t09a_1_all_people_corporate_managers_and_directors_soc2010_all_people,
+      # scientific=FALSE),
+      # # add subtitle to explain what it's showing
+      # paste("In employment in",input$lep1),
+      # color = "blue"
+    )
+  })
   
+  ### Online job ad KPI 2 ----
+  output$jobad.oth <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      format("XX,XXX", scientific=FALSE),
+      paste("Something else here")
+      # take input number
+      # format((C_EmpOcc_APS1721 %>% 
+      #           filter(area==input$lep1,year=="Jan 2021-Dec 2021")
+      # )$t09a_1_all_people_corporate_managers_and_directors_soc2010_all_people,
+      # scientific=FALSE),
+      # # add subtitle to explain what it's showing
+      # paste("In employment in",input$lep1),
+      # color = "blue"
+    )
+  })
   
   
 # Stop app ---------------------------------------------------------------------------------
