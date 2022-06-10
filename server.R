@@ -20,130 +20,97 @@
 
 
 server <- function(input, output, session) {
-
+  
   # Loading screen ---------------------------------------------------------------------------
   # Call initial loading screen
-
+  
   hide(id = "loading-content", anim = TRUE, animType = "fade")
   show("app-content")
-
+  
   # Simple server stuff goes here ------------------------------------------------------------
-
-
+  # Download data -----------------------------------------------------------
+  
+  # to_download_pg1 <- reactiveValues(
+  #   subsectors_table = subsectors_table,
+  #   highest_qualification_table = highest_qualification_table,
+  #   qualifications_titles_table = qualifications_titles_table,
+  #   subjects_table = subjects_table,
+  #   income_proportions_table = income_proportions_table,
+  #   working_futures_table = working_futures_table
+  #   # qualifications_pathways_table = qualifications_pathways_table,
+  #   # progression_to_work_by_level_table = progression_to_work_by_level_table
+  # )
+  # 
+  # 
+  # output$download_btn1 <- downloadHandler(
+  #   filename = function() {
+  #     paste("data_", Sys.Date(), ".zip", sep = "")
+  #   },
+  #   content = function(file) {
+  #     temp_directory <- file.path(tempdir(), as.integer(Sys.time()))
+  #     dir.create(temp_directory)
+  #     
+  #     
+  #     reactiveValuesToList(to_download_pg1) %>%
+  #       imap(function(x, y) {
+  #         if (!is.null(x)) {
+  #           file_name <- glue("{y}_data.csv")
+  #           write.csv(x, file.path(temp_directory, file_name), row.names = F)
+  #         }
+  #       })
+  #     
+  #     zip::zip(
+  #       zipfile = file,
+  #       files = dir(temp_directory),
+  #       root = temp_directory
+  #     )
+  #   },
+  #   contentType = "application/zip"
+  # )
+  
   # Define server logic required to draw a histogram
   # output$distPlot <- renderPlot({
-  # 
+  #   
   #   # generate bins based on input$bins from ui.R
   #   x <- faithful[, 2]
   #   bins <- seq(min(x), max(x), length.out = input$bins + 1)
-  # 
+  #   
   #   # draw the histogram with the specified number of bins
   #   hist(x, breaks = bins, col = "darkgray", border = "white")
   # })
-
-  # Download data ----
   
-#   to_download_pg1 <- reactiveValues(
-#     subsectors_table = subsectors_table,
-#     highest_qualification_table = highest_qualification_table,
-#     qualifications_titles_table = qualifications_titles_table,
-#     subjects_table = subjects_table,
-#     income_proportions_table = income_proportions_table,
-#     working_futures_table = working_futures_table
-#     # qualifications_pathways_table = qualifications_pathways_table,
-#     # progression_to_work_by_level_table = progression_to_work_by_level_table
-#   )
-#   
-#   
-#   output$download_btn1 <- downloadHandler(
-#     filename = function() {
-#       paste("data_", Sys.Date(), ".zip", sep = "")
-#     },
-#     content = function(file) {
-#       temp_directory <- file.path(tempdir(), as.integer(Sys.time()))
-#       dir.create(temp_directory)
-#       
-#       
-#       reactiveValuesToList(to_download_pg1) %>%
-#         imap(function(x, y) {
-#           if (!is.null(x)) {
-#             file_name <- glue("{y}_data.csv")
-#             write.csv(x, file.path(temp_directory, file_name), row.names = F)
-#           }
-#         })
-#       
-#       zip::zip(
-#         zipfile = file,
-#         files = dir(temp_directory),
-#         root = temp_directory
-#       )
-#     },
-#     contentType = "application/zip"
-#   )
-#   
-#   
-#   to_download_pg2 <- reactiveValues(
-#     qualifications_pathways_table = qualifications_pathways_table,
-#     progression_to_work_by_level_table = progression_to_work_by_level_table
-#   )
-#   
-#   
-#   output$download_btn2 <- downloadHandler(
-#     filename = function() {
-#       paste("data_", Sys.Date(), ".zip", sep = "")
-#     },
-#     content = function(file) {
-#       temp_directory <- file.path(tempdir(), as.integer(Sys.time()))
-#       dir.create(temp_directory)
-#       
-#       
-#       reactiveValuesToList(to_download_pg2) %>%
-#         imap(function(x, y) {
-#           if (!is.null(x)) {
-#             file_name <- glue("{y}_data.csv")
-#             write.csv(x, file.path(temp_directory, file_name), row.names = F)
-#           }
-#         })
-#       
-#       zip::zip(
-#         zipfile = file,
-#         files = dir(temp_directory),
-#         root = temp_directory
-#       )
-#     },
-#     contentType = "application/zip"
-#   )
-# }
+  # Define page title
   
-  # Local landscape tab ----
-
+  output$page1title <- renderUI({
+    paste0(input$lep1, ": Overview of Local Landscape")
+  })
   # Define server logic to create a box
-
+  
   output$locland.emplrate <- renderValueBox({
     # Put value into box to plug into app
     valueBox(
       # take input number
       paste(
         format(100.*(C_EmpRate_APS1721 %>% 
-               filter(area==input$lep1,year=="Jan 2021-Dec 2021")
-             )$empRate,digits=3),
+                       filter(area==input$lep1,year=="Jan 2021-Dec 2021")
+        )$empRate,digits=3),
         "%"),
-      # add subtitle to explain what it's showing
+      # add subtitle to explain what it's hsowing
       paste("Employment rate in",input$lep1),
       color = "blue"
     )
   })
-
-
+  
+  
   output$locland.emplcnt <- renderValueBox({
     # Put value into box to plug into app
     valueBox(
       # take input number
-        format((C_EmpOcc_APS1721 %>% 
-                       filter(area==input$lep1,year=="Jan 2021-Dec 2021")
-        )$t09a_1_all_people_corporate_managers_and_directors_soc2010_all_people, # this should be total
-        scientific=FALSE),
-      # add subtitle to explain what it's showing
+      format((C_EmpOcc_APS1721 %>% 
+                filter(area==input$lep1,year=="Jan 2021-Dec 2021")
+      )$t09a_1_all_people_corporate_managers_and_directors_soc2010_all_people,
+      scientific=FALSE),
+      # add subtitle to explain what it's hsowing
       paste("In employment in",input$lep1),
       color = "blue"
     )
@@ -153,18 +120,18 @@ server <- function(input, output, session) {
   
   EmpRate_time <- reactive({
     C_EmpRate_APS1721 %>%
-    select(year, area, empRate)%>%
-    filter(area == "England" |
-             area == input$lep1 |
-             area == input$lep2) %>%
-    ggplot(aes(x=year, y=empRate, group = area, colour = area))+
-             geom_line()+
-             expand_limits(y = 0)+
-             guides(colour = guide_legend(title="Area"))+
+      select(year, area, empRate)%>%
+      filter(area == "England" |
+               area == input$lep1 |
+               area == input$lep2) %>%
+      ggplot(aes(x=year, y=empRate, group = area, colour = area))+
+      geom_line()+
+      expand_limits(y = 0)+
+      labs(colour = "Area")+
+      # theme(legend.position="bottom")+
       ggtitle("Employment Rate \n 2017-2021")+
       xlab("Year")+
       ylab("Employment Rate")+
-      theme_minimal()+
       scale_y_continuous(labels = scales::percent_format(accuracy=1))
   })
   
@@ -178,19 +145,18 @@ server <- function(input, output, session) {
     C_EmpOcc_APS1721 %>%
       filter(year == "Jan 2021-Dec 2021") %>%
       filter(area == "England" |
-             area == input$lep1 |
-             area == input$lep2)%>%
+               area == input$lep1 |
+               area == input$lep2)%>%
       select(-year)%>%
       t()%>%
       row_to_names(row_number=1)
   })
   
-  output$EmpOcc <- renderTable({
-    EmpOcc()},
-    rownames = TRUE
-    )
+  output$EmpOcc <- renderDataTable({
+    EmpOcc()
+    })
   # Stop app ---------------------------------------------------------------------------------
-
+  
   session$onSessionEnded(function() {
     stopApp()
   })

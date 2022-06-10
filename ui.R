@@ -30,7 +30,7 @@
 fluidPage(
   shinyjs::useShinyjs(),
   includeCSS("www/dfe_shiny_gov_style.css"),
-  title = "Local Skills Dashboard",
+  title = "DfE Analytical Services R-Shiny Template",
   # use_tota11y(), # accessibility layer for local testing
   
   # Set metadata for browser ==================================================
@@ -47,7 +47,7 @@ fluidPage(
   # ),
   
   # Set title for search engines
-  HTML("<title>Local Skills Dashboard</title>"),
+  HTML("<title>Local Skils Dashboard</title>"),
   
   # Navbar ====================================================================
   
@@ -74,7 +74,7 @@ fluidPage(
                    column(
                      12,
                      h1("Local Skills Dashboard"),
-
+                     
                      p("This app XXX"),
                      br(),
                      br()
@@ -125,125 +125,124 @@ fluidPage(
                  )
                )
              ),
-    tabPanel(
-      "Local Landscape",
-
-      # Define UI for application that draws a histogram
-
-      # Sidebar with a slider input for number of bins
-      sidebarLayout(
-        sidebarPanel(
-          width = 2,
-          div("Choose a LEP area to view employment information"),
-          selectizeInput("lep1",
-            "Choose a primary LEP:",
-            choices=C_LEP2020,
-            selected="England",
-          ),
-          selectizeInput("lep2",
-                           "Choose a comparison LEP (optional)",
-                           choices=C_LEP2020,
-                           selected="England",
-          ),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-          br(),
-        # Reset button - not currently active
-          # actionButton("reset", "Reset",
-          #                style = "color: #0b0c0c;
-          #                                    font-size: 12px;
-          #                                    font-weight: bold;
-          #                                    background-color: #ffffff"
-          # ),
-          # br(),
-          # br(),
-        # Download button - not currently active
-          downloadButton(
-            outputId = "download_btn1",
-            label = "Download",
-            icon = shiny::icon("download")
-          ),
-          br(),
-          br()
-        ), # end of side panel
-
-        # Show a plot of the generated distribution
-        mainPanel(
-          width = 10,
-          box(
-            width=12,
-          valueBoxOutput("locland.emplcnt", width = 6),
-          valueBoxOutput("locland.emplrate", width = 6)
-          ),
-          box(width=12,
-              column(width=6,
-                     plotlyOutput("EmpRate_time")),
-              column(width=6,
-                     tableOutput("EmpOcc"))
-          )
-          
-        ) # end of main panel
-      ) # end of sidebar layout
-    ), # end of Local Landscape tab
-
-    # Create the accessibility statement-----------------
-    tabPanel(
-      "Accessibility",
-      h2("Accessibility statement"),
-      br("This accessibility statement applies to the **application name**.
+             tabPanel(
+               "Local Landscape",
+               
+               # Define UI for application that draws a histogram
+               
+               # Sidebar with a slider input for number of bins
+               sidebarLayout(
+                 sidebarPanel(
+                   width = 2,
+                   ## Help text --------------------
+                   helpText("Choose a Local Area to view employment trends" 
+                            #,style = "font-style: italics;"
+                   ),
+                   ## LEP 1 input ---------------
+                   selectizeInput("lep1",
+                                  "Choose a primary LEP:",
+                                  choices=C_LEP2020,
+                                  selected="England",
+                   ),
+                   ## LEP 2 input ------------
+                   selectizeInput("lep2", # Make no selection an option
+                                  "Choose a comparison LEP (optional):",
+                                  choices=C_LEP2020,
+                                  selected="England",
+                   ),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   br(),
+                   ## Download button -------------
+                   downloadButton(
+                     outputId = "download_btn1",
+                     label = "Download",
+                     icon = shiny::icon("download")
+                   ),
+                   
+                 ), # end of side panel
+                 
+                 # Show a plot of the generated distribution
+                 mainPanel(
+                   width=10,
+                   uiOutput("page1title", style="font-size: 24px;"),
+                   br(),
+                   div("Data for employees aged 25-30 in sustained employment in the 2018-19 tax year", style = "font-size: 16px; font-style: italic;"),
+                   br(),
+                   box(
+                     width=12, 
+                     #style = "height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
+                     valueBoxOutput("locland.emplcnt",  width=6),
+                     valueBoxOutput("locland.emplrate", width=6)
+                   ),
+                   box(width=12,
+                       column(width=6,
+                              plotlyOutput("EmpRate_time")),
+                       column(width=6,
+                              dataTableOutput("EmpOcc"))
+                   )
+                   
+                 ) # end of main panel
+               )
+             ),
+             
+             # Create the accessibility statement-----------------
+             tabPanel(
+               "Accessibility",
+               h2("Accessibility statement"),
+               br("This accessibility statement applies to the **application name**.
             This application is run by the Department for Education. We want as many people as possible to be able to use this application,
             and have actively developed this application with accessibilty in mind."),
-      h3("WCAG 2.1 compliance"),
-      br("We follow the reccomendations of the ", a(href = "https://www.w3.org/TR/WCAG21/", "WCAG 2.1 requirements. "), "This application has been checked using the ", a(href = "https://github.com/ewenme/shinya11y", "Shinya11y tool "), ", which did not detect accessibility issues.
+               h3("WCAG 2.1 compliance"),
+               br("We follow the reccomendations of the ", a(href = "https://www.w3.org/TR/WCAG21/", "WCAG 2.1 requirements. "), "This application has been checked using the ", a(href = "https://github.com/ewenme/shinya11y", "Shinya11y tool "), ", which did not detect accessibility issues.
              This application also fully passes the accessibility audits checked by the ", a(href = "https://developers.google.com/web/tools/lighthouse", "Google Developer Lighthouse tool"), ". This means that this application:"),
-      tags$div(tags$ul(
-        tags$li("uses colours that have sufficient contrast"),
-        tags$li("allows you to zoom in up to 300% without the text spilling off the screen"),
-        tags$li("has its performance regularly monitored, with a team working on any feedback to improve accessibility for all users")
-      )),
-      h3("Limitations"),
-      br("We recognise that there are still potential issues with accessibility in this application, but we will continue
+               tags$div(tags$ul(
+                 tags$li("uses colours that have sufficient contrast"),
+                 tags$li("allows you to zoom in up to 300% without the text spilling off the screen"),
+                 tags$li("has its performance regularly monitored, with a team working on any feedback to improve accessibility for all users")
+               )),
+               h3("Limitations"),
+               br("We recognise that there are still potential issues with accessibility in this application, but we will continue
              to review updates to technology available to us to keep improving accessibility for all of our users. For example, these
             are known issues that we will continue to monitor and improve:"),
-      tags$div(tags$ul(
-        tags$li("List"),
-        tags$li("known"),
-        tags$li("limitations, e.g."),
-        tags$li("Alternative text in interactive charts is limited to titles and could be more descriptive (although this data is available in csv format)")
-      )),
-      h3("Feedback"),
-      br(
-        "If you have any feedback on how we could further improve the accessibility of this application, please contact us at",
-        a(href = "mailto:email@education.gov.uk", "email@education.gov.uk")
-      )
-    ), # End of accessibility tab
-    # Support links ===========================================================
-    
-    tabPanel(
-      "Support and feedback",
-      support_links() # defined in R/supporting_links.R
-    ),
-  # Footer ====================================================================
-    
-    shinyGovstyle::footer(TRUE)
-    
+               tags$div(tags$ul(
+                 tags$li("List"),
+                 tags$li("known"),
+                 tags$li("limitations, e.g."),
+                 tags$li("Alternative text in interactive charts is limited to titles and could be more descriptive (although this data is available in csv format)")
+               )),
+               h3("Feedback"),
+               br(
+                 "If you have any feedback on how we could further improve the accessibility of this application, please contact us at",
+                 a(href = "mailto:email@education.gov.uk", "email@education.gov.uk")
+               )
+             ), # End of accessibility tab
+             # Support links ===========================================================
+             
+             tabPanel(
+               "Support and feedback",
+               support_links() # defined in R/supporting_links.R
+             ),
+             # Footer ====================================================================
+             
+             shinyGovstyle::footer(TRUE)
+             
   ) # End of navBarPage
 )

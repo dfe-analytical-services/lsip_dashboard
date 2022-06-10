@@ -22,9 +22,10 @@ library(tidyverse)
 library(plotly)
 library(openxlsx)
 library(janitor)
+library(DT)
 #renv::snapshot()
 
-source("R/Loading Core Indicators.R")
+#source("R/Loading Core Indicators.R")
 
 area_select <- c("Coast to Capital", "Greater Manchester", "England")
 # Functions ---------------------------------------------------------------------------------
