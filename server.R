@@ -108,7 +108,8 @@ server <- function(input, output, session) {
         )$empRate,digits=3),
         "%"),
       # add subtitle to explain what it's hsowing
-      paste("Employment rate in",input$lep1)
+      paste("Employment rate in",input$lep1),
+      color='blue'
       #style = "height:15vh; min-height:96px; padding:5px; word-wrap: break-word;"
     )
   })
@@ -119,11 +120,12 @@ server <- function(input, output, session) {
     valueBox(
       # take input number
       format((C_EmpOcc_APS1721 %>% 
-                filter(area==input$lep1,year=="Jan 2021-Dec 2021")
+                filter(area==input$lep1,year=="2021")
       )$t09a_1_all_people_corporate_managers_and_directors_soc2010_all_people,
       scientific=FALSE),
       # add subtitle to explain what it's showing
-      paste("In employment in",input$lep1)
+      paste("In employment in",input$lep1),
+      color='blue'
     )
   })
   
@@ -155,7 +157,7 @@ server <- function(input, output, session) {
   
   EmpOcc <- reactive({
     C_EmpOcc_APS1721 %>%
-      filter(year == "Jan 2021-Dec 2021") %>%
+      filter(year == "2021") %>%
       filter(area == "England" |
                area == input$lep1 |
                area == input$lep2)%>%
@@ -175,7 +177,8 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       format("XX,XXX", scientific=FALSE),
-      paste("FE Achievements in ","Primary LEP"," in 2021")
+      paste("FE Achievements in ","Primary LEP"," in 2021"),
+      color='blue'
       # take input number
       # format((C_EmpOcc_APS1721 %>% 
       #           filter(area==input$lep1,year=="Jan 2021-Dec 2021")
@@ -187,12 +190,14 @@ server <- function(input, output, session) {
     )
   })
   
+  
   ### Apprentichesip achievements ----
   output$skisup.APach <- renderValueBox({
     # Put value into box to plug into app
       valueBox(
         format("XX,XXX", scientific=FALSE),
-        paste("Apprenticeship achievements in ","Primary LEP"," in 2021")
+        paste("Apprenticeship achievements in ","Primary LEP"," in 2021"),
+        color='blue'
       # take input number
       # format((C_EmpOcc_APS1721 %>% 
       #           filter(area==input$lep1,year=="Jan 2021-Dec 2021")
@@ -211,7 +216,8 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       format("XX,XXX", scientific=FALSE),
-      paste0("Online job advert units for","Primary LEP","in Jan 2022, compared to ","412 in Jan 2021")
+      paste0("Online job advert units for ","Primary LEP"," compared to ","412 in Jan 2021"),
+      color='blue'
       # take input number
       # format((C_EmpOcc_APS1721 %>% 
       #           filter(area==input$lep1,year=="Jan 2021-Dec 2021")
@@ -228,7 +234,8 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       format("XX,XXX", scientific=FALSE),
-      paste("Something else here")
+      paste("Something else here"),
+      color='blue'
       # take input number
       # format((C_EmpOcc_APS1721 %>% 
       #           filter(area==input$lep1,year=="Jan 2021-Dec 2021")

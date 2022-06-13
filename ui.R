@@ -73,8 +73,10 @@ fluidPage(
                  fluidRow(
                    column(
                      12,
+                     img(src='UFS logo.png', align="right"),
                      h1("Local Skills Dashboard"),
-
+                     h3("Welcome"),
+                     br(),
                      p("This app XXX"),
                      br(),
                      br()
@@ -94,10 +96,10 @@ fluidPage(
                          ),
                          div(
                            class = "panel-body",
-                           tags$div(
-                             title = "This section is useful if you want to understand how well different industries retain graduates.",
-                             h3(actionLink("link_to_industryFlow_tab", "App Content"))
-                           ),
+                         #  tags$div(
+                        #     title = "This section is useful if you want to understand how well different industries retain graduates.",
+                       #      h3(actionLink("link_to_industryFlow_tab", "App Content"))
+                       #    ),
                            br()
                          )
                        )
@@ -114,10 +116,19 @@ fluidPage(
                          div(
                            class = "panel-heading",
                            style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-                           h2("Background Info")
+                           h2("Data sources and background")
                          ),
                          div(
                            class = "panel-body",
+                           h2("ONS Annual Population Survey (APS)"),
+                           p("XXX"),
+                           br(),
+                           h2("DfE Individualised Learner Record (ILR)"),
+                           p("XXX"),
+                           br(),
+                           h2("ONS Online job adverts"),
+                           p("XXX"),
+                           br()
                          )
                        )
                      )
@@ -148,7 +159,7 @@ fluidPage(
                                   selected="England",
                    ),
   ### LEP 2 input ------------
-                   selectizeInput("lep2", # Make no selection an option
+                   selectizeInput("lep2", 
                                   "Choose a comparison LEP (optional):",
                                   choices=C_LEP2020,
                                   selected="England",
@@ -186,41 +197,47 @@ fluidPage(
                  mainPanel(
                    width=10,
   ### Title ----
-                   uiOutput("page1title", style="font-size: 24px;"),
+                   box(width=12,
+                       uiOutput("page1title", style="font-size: 24px;"),
                    br(),
                    div("Data for employees aged 25-30 in sustained employment in the 2018-19 tax year", style = "font-size: 16px; font-style: italic;"),
                    br(),
+                   ),
 
   ### KPI boxes ----
                    box(width=12,
                            # title = NULL,
                            # status = "primary",
                            # solidheader=T,
-                           column(
-                             id="second",
-                             width=4,
-                             align="left",
-                             style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-                             valueBoxOutput("locland.emplrate"), style="color:white"
-                           ),
-                           column(
-                             id="third",
-                             width=1
-                           ),
-                           column(width=4,
-                                  id="second",
-                                  align="left",
+                           # column(
+                           #   id="second",
+                           #   width=4,
+                           #   align="left",
+                           #   style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
+                             valueBoxOutput("locland.emplrate"),
+                       # style="color:white"
+                           # ),
+                           # column(
+                           #   id="third",
+                           #   width=1
+                           # ),
+                           # column(width=4,
+                           #        id="second",
+                           #        align="left",
                                   #style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-                                  valueBoxOutput("locland.emplcnt"), style="color:white"
-                           )
-                       ), # end of box
+                                  valueBoxOutput("locland.emplcnt"), 
+                       # style="color:white"
+                       #)
+                           ), # end of box
   ### Employment rate over time line chart ----
-                       column(width=6,
+  box(
+    width=12,
+  column(width=6,
                               plotlyOutput("EmpRate_time")),
   ### Employment by occupation data table ----
                        column(width=6,
                               dataTableOutput("EmpOcc"))
-
+  )
                  ) # end of main panel
                ) # end of side bar layout
              ), # end of Local Landscape tab
@@ -285,34 +302,39 @@ tabPanel(
     mainPanel(
       width=10,
   ### Title ----
-      uiOutput("page2title", style="font-size: 24px;"),
+      box(width=12,
+          uiOutput("page2title", style="font-size: 24px;"),
       br(),
       div("XXX", style = "font-size: 16px; font-style: italic;"),
       br(),
+      ), # end of box
   ### KPI boxes ----
       box(width=12,
         # title = NULL,
         # status = "primary",
         # solidheader=T,
-        column(
-          id="second",
-          width=4,
-          align="left",
-          style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-          valueBoxOutput("skisup.FEach"), style="color:white"
-        ),
-        column(
-          id="third",
-          width=1
-        ),
-        column(width=4,
-          id="second",
-          align="left",
-          style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-          valueBoxOutput("skisup.APach"), style="color:white"
-        )
+        # column(
+        #   id="second",
+        #   width=4,
+        #   align="left",
+        #   style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
+          valueBoxOutput("skisup.FEach"),
+        # style="color:white"
+        # ),
+        # column(
+        #   id="third",
+        #   width=1
+        # ),
+        # column(width=4,
+        #   id="second",
+        #   align="left",
+        #   style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
+          valueBoxOutput("skisup.APach"), 
+        # style="color:white"
+        #)
     ), # end of box
    
+ 
       box(width=12,
   ### Employment rate over time line chart ----
   
@@ -392,33 +414,38 @@ tabPanel(
     mainPanel(
       width=10,
   ### Title ----
-      uiOutput("page3title", style="font-size: 24px;"),
+      box(width=12,
+          uiOutput("page3title", style="font-size: 24px;"),
       br(),
       div("XXX", style = "font-size: 16px; font-style: italic;"),
       br(),
+      ), #end of box
   ### KPI boxes ----
       box(width=12,
           # title = NULL,
           # status = "primary",
           # solidheader=T,
-          column(
-            id="second",
-            width=4,
-            align="left",
-            style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-            valueBoxOutput("jobad.cnt"), style="color:white"
-          ),
-          column(
-            id="third",
-            width=1
-          ),
-          column(width=4,
-                 id="second",
-                 align="left",
-                 style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-                 valueBoxOutput("jobad.oth"), style="color:white"
-          )
+          # column(
+          #   id="second",
+          #   width=4,
+          #   align="left",
+          #   style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
+            valueBoxOutput("jobad.cnt"), 
+          # style="color:white"
+          # ),
+          # column(
+          #   id="third",
+          #   width=1
+          # ),
+          # column(width=4,
+          #        id="second",
+          #        align="left",
+          #        style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
+                 valueBoxOutput("jobad.oth"), 
+                 # style="color:white"
+          #)
       ), # end of box
+
 
       box(width=12,
           ### Online job advert information box ----
