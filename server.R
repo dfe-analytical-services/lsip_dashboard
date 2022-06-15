@@ -120,9 +120,9 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       # take input number
-      format((C_EmpOcc_APS1721 %>%
-                filter(area==input$lep1,year=="Jan 2021-Dec 2021")
-      )$t09a_1_all_people_corporate_managers_and_directors_soc2010_all_people,
+      format((C_EmpRate_APS1721 %>%
+                filter(area==input$lep1,year=="2021")
+      )$t01_28_aged_16_64_in_employment_all_people,
       scientific=FALSE),
       # add subtitle to explain what it's showing
       paste0("In employment in ",input$lep1),
@@ -141,7 +141,7 @@ server <- function(input, output, session) {
       ggplot(aes(x=year, y=empRate, group = area, colour = area))+
       geom_line()+
       theme_minimal()+
-      expand_limits(y = 0)+
+      #expand_limits(y = 0)+
       labs(colour = "Area")+
       # theme(legend.position="bottom")+
       ggtitle("Employment Rate \n 2017-2021")+
@@ -200,7 +200,7 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       format("XX,XXX", scientific=FALSE),
-      paste0("Online job advert units ", input$lep5),
+      paste0("Online job advert units in ", input$lep5),
       color="blue"
     )
   })
@@ -210,7 +210,7 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       format("XX,XXX", scientific=FALSE),
-      paste0("Something else here ", input$lep5),
+      paste0("Something else here in ", input$lep5),
       color="blue"
     )
   })

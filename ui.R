@@ -57,7 +57,7 @@ fluidPage(
                            .navbar-nav {
                            float: none !important;
                            }
-                           .navbar-nav > li:nth-child(5) {
+                           .navbar-nav > li:nth-child(6) {
                            float: right;
                            }
                            ")))
