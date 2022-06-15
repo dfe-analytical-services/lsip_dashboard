@@ -73,10 +73,8 @@ fluidPage(
                  fluidRow(
                    column(
                      12,
-                     img(src='UFS logo.png', align="right"),
                      h1("Local Skills Dashboard"),
-                     h3("Welcome"),
-                     br(),
+
                      p("This app XXX"),
                      br(),
                      br()
@@ -96,10 +94,10 @@ fluidPage(
                          ),
                          div(
                            class = "panel-body",
-                         #  tags$div(
-                        #     title = "This section is useful if you want to understand how well different industries retain graduates.",
-                       #      h3(actionLink("link_to_industryFlow_tab", "App Content"))
-                       #    ),
+                           tags$div(
+                             title = "This section is useful if you want to understand how well different industries retain graduates.",
+                             h3(actionLink("link_to_industryFlow_tab", "App Content"))
+                           ),
                            br()
                          )
                        )
@@ -116,19 +114,10 @@ fluidPage(
                          div(
                            class = "panel-heading",
                            style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-                           h2("Data sources and background")
+                           h2("Background Info")
                          ),
                          div(
                            class = "panel-body",
-                           h2("ONS Annual Population Survey (APS)"),
-                           p("XXX"),
-                           br(),
-                           h2("DfE Individualised Learner Record (ILR)"),
-                           p("XXX"),
-                           br(),
-                           h2("ONS Online job adverts"),
-                           p("XXX"),
-                           br()
                          )
                        )
                      )
@@ -159,7 +148,7 @@ fluidPage(
                                   selected="England",
                    ),
   ### LEP 2 input ------------
-                   selectizeInput("lep2", 
+                   selectizeInput("lep2", # Make no selection an option
                                   "Choose a comparison LEP (optional):",
                                   choices=C_LEP2020,
                                   selected="England",
@@ -197,27 +186,24 @@ fluidPage(
                  mainPanel(
                    width=10,
   ### Title ----
-                   box(width=12,
-                       uiOutput("page1title", style="font-size: 24px;"),
+                   uiOutput("page1title", style="font-size: 24px;"),
                    br(),
                    div("Data for employees aged 25-30 in sustained employment in the 2018-19 tax year", style = "font-size: 16px; font-style: italic;"),
                    br(),
-                   ),
 
   ### KPI boxes ----
                    box(width=12,
                        valueBoxOutput("locland.emplrate"),
                        valueBoxOutput("locland.emplcnt"), 
                            ), # end of box
+
   ### Employment rate over time line chart ----
-  box(
-    width=12,
-  column(width=6,
+                       column(width=6,
                               plotlyOutput("EmpRate_time")),
   ### Employment by occupation data table ----
                        column(width=6,
                               dataTableOutput("EmpOcc"))
-  )
+
                  ) # end of main panel
                ) # end of side bar layout
              ), # end of Local Landscape tab
@@ -282,19 +268,17 @@ tabPanel(
     mainPanel(
       width=10,
   ### Title ----
-      box(width=12,
-          uiOutput("page2title", style="font-size: 24px;"),
+      uiOutput("page2title", style="font-size: 24px;"),
       br(),
       div("XXX", style = "font-size: 16px; font-style: italic;"),
       br(),
-      ), # end of box
   ### KPI boxes ----
       box(width=12,
+
           valueBoxOutput("skisup.FEach"),
           valueBoxOutput("skisup.APach"), 
     ), # end of box
    
- 
       box(width=12,
   ### Employment rate over time line chart ----
   
@@ -312,122 +296,6 @@ tabPanel(
     ) # end of main panel
   ) # end of side bar layout
 ), # end of Skills Supply tab
-
-# SKILL DEMAND ----
-tabPanel(
-  "Skill Demand",
-  
-  # Define UI for application that draws a histogram
-  
-  # Sidebar with a slider input for number of bins
-  sidebarLayout(
- ## Side panel ----
-    sidebarPanel(
-      width = 2,
-  ### Help text --------------------
-      helpText("Choose a Local Area to view skill demand trends"
-               ,style = "font-style: italic;"
-      ),
-      br(),
-  ### LEP 5 input ---------------
-      selectizeInput("lep5",
-                     "Choose a primary LEP:",
-                     choices=C_LEP2020,
-                     selected="England",
-      ),
-  ### LEP 6 input ------------
-      selectizeInput("lep6", # Make no selection an option
-                     "Choose a comparison LEP (optional):",
-                     choices=C_LEP2020,
-                     selected="England",
-      ),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-  ### Download button -------------
-      downloadButton(
-        outputId = "download_btn3",
-        label = "Download",
-        icon = shiny::icon("download")
-      ),
-      
-    ), # end of side panel
- ## Main panel ----
-    # Show a plot of the generated distribution
-    mainPanel(
-      width=10,
-  ### Title ----
-      box(width=12,
-          uiOutput("page3title", style="font-size: 24px;"),
-      br(),
-      div("XXX", style = "font-size: 16px; font-style: italic;"),
-      br(),
-      ), #end of box
-  ### KPI boxes ----
-      box(width=12,
-          # title = NULL,
-          # status = "primary",
-          # solidheader=T,
-          # column(
-          #   id="second",
-          #   width=4,
-          #   align="left",
-          #   style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-            valueBoxOutput("jobad.cnt"), 
-          # style="color:white"
-          # ),
-          # column(
-          #   id="third",
-          #   width=1
-          # ),
-          # column(width=4,
-          #        id="second",
-          #        align="left",
-          #        style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-                 valueBoxOutput("jobad.oth"), 
-                 # style="color:white"
-          #)
-      ), # end of box
-
-
-      box(width=12,
-          ### Online job advert information box ----
-          
-          column(width=4,
-                 h3("Information"),
-                 br(),
-                 p("Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022."),
-                 br(),
-                 p("The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a unit measure. The unit measure is derived by dividing the monthly average count of job adverts by a set value.")),
-          #plotlyOutput("EmpRate_time")),
-          
-          ### Employment by occupation data table ----
-          
-          column(width=8,
-                 p("Place holder for Achievements by Sector Subject Area 2021"))
-          #dataTableOutput("EmpOcc"))
-      ) # end of box
-      
-    ) # end of main panel
-  ) # end of side bar layout
-), # end of Skill demand tab
 
 # Create the accessibility statement-----------------
              tabPanel(
