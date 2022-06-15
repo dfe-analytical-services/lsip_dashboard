@@ -6,15 +6,15 @@
 ###
 
 # Load libraries ----
-# library(dplyr)
-# library(data.table)
-# library(tidyverse)
-# library(stringr)
-# library(eeptools)
-# library(odbc)
-# library(ggplot2)
-# library(openxlsx)
-# library(janitor)
+library(dplyr)
+library(data.table)
+library(tidyverse)
+library(stringr)
+library(eeptools)
+library(odbc)
+library(ggplot2)
+library(openxlsx)
+library(janitor)
 
 # Load data ----
 ## LEP 2020 ----
@@ -41,7 +41,7 @@ I_EmpRate_APS1721 <- read.xlsx(xlsxFile="./Data/nomis_2022_06_08_111841.xlsx", s
 
 # Functions ----
 format.EmpOcc.APS <- function(x) { # need to clean up colnames
-  x %>% mutate(year = ifelse(annual.population.survey == "date", substr(X2,nchar(X2)-4+1, nchar(X2)), NA))%>% # tag time periods
+  x %>% mutate(year = ifelse(annual.population.survey == "date", X2, NA))%>% # tag time periods
     fill(year)%>% # fill time periods for all rows
     row_to_names(row_number=4) %>% # set col names
     clean_names()%>%
@@ -49,7 +49,7 @@ format.EmpOcc.APS <- function(x) { # need to clean up colnames
     mutate(check = ifelse(grepl(":", area), 1, 0))%>% # remove anything but LEP and Country
     filter(check ==1)%>%
     filter(!grepl("nomisweb", area))%>%
-    select(year = x2017, area, everything(), - check) %>%# reorder and remove
+    select(year = jan_2017_dec_2017, area, everything(), - check) %>%# reorder and remove
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
     mutate_at(c(3:27),as.numeric) # Convert to numeric
 }
