@@ -88,6 +88,7 @@ server <- function(input, output, session) {
   output$page2title <- renderUI({
     paste0(input$lep3, ": Overview of Skill Supply")
   })
+
   
   output$page3title <- renderUI({
     paste0(input$lep5, ": Overview of Skill Supply")
