@@ -102,8 +102,8 @@ fluidPage(
                          )
                        )
                      ),
-                   ),
-
+                   ), # end of left panel
+ 
  ## Right panel ------------------------------------------------------
 
                    column(
@@ -121,23 +121,23 @@ fluidPage(
                          )
                        )
                      )
-                   )
-                 )
-               )
-             ),
-# Local Landscape tab ----
+                   ), # end of right panel
+                  ) # end of FluidRow
+                ) # end of FluidPage
+              ), # end of Tab Panel
+# LOCAL LANDSCAPE ----
              tabPanel(
                "Local Landscape",
-               
+
                # Define UI for application that draws a histogram
-               
+
                # Sidebar with a slider input for number of bins
                sidebarLayout(
  ## Side panel ----
                  sidebarPanel(
                    width = 2,
   ### Help text --------------------
-                   helpText("Choose a Local Area to view employment trends" 
+                   helpText("Choose a Local Area to view employment trends"
                             ,style = "font-style: italic;"
                    ),
                    br(),
@@ -179,7 +179,7 @@ fluidPage(
                      label = "Download",
                      icon = shiny::icon("download")
                    ),
-                   
+
                  ), # end of side panel
  ## Main panel ----
                  # Show a plot of the generated distribution
@@ -193,38 +193,24 @@ fluidPage(
 
   ### KPI boxes ----
                    box(width=12,
-                           # title = NULL,
-                           # status = "primary",
-                           # solidheader=T,
-                           column(
-                             id="second",
-                             width=4,
-                             align="left",
-                             style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-                             valueBoxOutput("locland.emplrate"), style="color:white"
-                           ),
-                           column(
-                             id="third",
-                             width=1
-                           ),
-                           column(width=4,
-                                  id="second",
-                                  align="left",
-                                  #style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-                                  valueBoxOutput("locland.emplcnt"), style="color:white"
-                           )
-                       ), # end of box
+                       valueBoxOutput("locland.emplrate"),
+                       valueBoxOutput("locland.emplcnt"),
+                           ), # end of box
+
+
   ### Employment rate over time line chart ----
                        column(width=6,
-                              plotlyOutput("EmpRate_time")),
+                              plotlyOutput("EmpRate_time")
+                              ),
   ### Employment by occupation data table ----
                        column(width=6,
-                              dataTableOutput("EmpOcc"))
+                              dataTableOutput("EmpOcc")
+                              )
 
                  ) # end of main panel
                ) # end of side bar layout
              ), # end of Local Landscape tab
-# Skill Supply tab ----
+#SKILL SUPPLY ----
 tabPanel(
   "Skill Supply",
 
@@ -240,13 +226,13 @@ tabPanel(
                ,style = "font-style: italic;"
       ),
       br(),
-  ### LEP 1 input ---------------
+  ### LEP 3 input ---------------
       selectizeInput("lep3",
                      "Choose a primary LEP:",
                      choices=C_LEP2020,
                      selected="England",
       ),
-  ### LEP 2 input ------------
+  ### LEP 4 input ------------
       selectizeInput("lep4", # Make no selection an option
                      "Choose a comparison LEP (optional):",
                      choices=C_LEP2020,
@@ -291,39 +277,23 @@ tabPanel(
       br(),
   ### KPI boxes ----
       box(width=12,
-        # title = NULL,
-        # status = "primary",
-        # solidheader=T,
-        column(
-          id="second",
-          width=4,
-          align="left",
-          style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-          valueBoxOutput("skisup.FEach"), style="color:white"
-        ),
-        column(
-          id="third",
-          width=1
-        ),
-        column(width=4,
-          id="second",
-          align="left",
-          #style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-          valueBoxOutput("skisup.APach"), style="color:white"
-        )
+          valueBoxOutput("skisup.FEach"),
+          valueBoxOutput("skisup.APach"),
     ), # end of box
-   
+
       box(width=12,
   ### Employment rate over time line chart ----
-  
+
           column(width=6,
-                 p("Place holder for Achievement counts 2017-21")),
+                 p("Place holder for Achievement counts 2017-21")
+                 ),
                  #plotlyOutput("EmpRate_time")),
-  
+
   ### Employment by occupation data table ----
-  
+
           column(width=6,
-                 p("Place holder for Achievements by Sector Subject Area 2021"))
+                 p("Place holder for Achievements by Sector Subject Area 2021")
+                 )
                  #dataTableOutput("EmpOcc"))
     ) # end of box
 
@@ -331,6 +301,102 @@ tabPanel(
   ) # end of side bar layout
 ), # end of Skills Supply tab
 
+# SKILL DEMAND ---------------
+tabPanel(
+  "Skill Demand",
+  
+  # Define UI for application that draws a histogram
+  
+  # Sidebar with a slider input for number of bins
+  sidebarLayout(
+    ## Side panel ----
+    sidebarPanel(
+      width = 2,
+      ### Help text --------------------
+      helpText("Choose a Local Area to view skill demand trends"
+               ,style = "font-style: italic;"
+      ),
+      br(),
+      ### LEP 5 input ---------------
+      selectizeInput("lep5",
+                     "Choose a primary LEP:",
+                     choices=C_LEP2020,
+                     selected="England",
+      ),
+      ### LEP 6 input ------------
+      selectizeInput("lep6", # Make no selection an option
+                     "Choose a comparison LEP (optional):",
+                     choices=C_LEP2020,
+                     selected="England",
+      ),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      ### Download button -------------
+      downloadButton(
+        outputId = "download_btn3",
+        label = "Download",
+        icon = shiny::icon("download")
+      ),
+      
+    ), # end of side panel
+    ## Main panel ----
+    # Show a plot of the generated distribution
+    mainPanel(
+      width=10,
+      ### Title ----
+      uiOutput("page3title", style="font-size: 24px;"),
+      br(),
+      div("XXX", style = "font-size: 16px; font-style: italic;"),
+      br(),
+      ### KPI boxes ----
+      box(width=12,
+          valueBoxOutput("jobad.cnt"),
+          valueBoxOutput("jobad.kpi"),
+      ), # end of box
+      
+      box(width=12,
+          ### Employment rate over time line chart ----
+          
+          column(width=4,
+                 h2("Information"),
+                 br(),
+                 p("Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022. 
+"),
+                 br(),
+                 p("The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a unit measure. The unit measure is derived by dividing the monthly average count of job adverts by a set value.
+")
+          ),
+          #plotlyOutput("EmpRate_time")),
+          
+          ### Employment by occupation data table ----
+          
+          column(width=8,
+                 p("Place holder for Achievements by Sector Subject Area 2021")
+          )
+          #dataTableOutput("EmpOcc"))
+      ) # end of box
+      
+    ) # end of main panel
+  ) # end of side bar layout
+), # end of Skills Supply tab
 # Create the accessibility statement-----------------
              tabPanel(
                "Accessibility",

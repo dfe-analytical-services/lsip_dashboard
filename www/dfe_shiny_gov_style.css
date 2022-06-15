@@ -65,26 +65,31 @@ body {
 .small-box.bg-purple {
     background-color: 	#801650 !important;
     color: #ffffff;
+    padding: 2px 2px 4px 12px;
 }
 
 .small-box.bg-blue{
-     background-color: #12436D !important; 
-     color: #ffffff;
+    background-color: #1d70b8 !important; 
+    color: #ffffff;
+    padding: 2px 2px 4px 12px;
 }
 
 .small-box.bg-orange{
-     background-color: #F46A25 !important; 
-     color: #ffffff;
+    background-color: #F46A25 !important; 
+    color: #ffffff;
+    padding: 2px 2px 4px 12px;
 }
 
 .small-box.bg-red{
-     background-color: #f499be !important; 
-     color: #ffffff;
+    background-color: #f499be !important; 
+    color: #ffffff;
+    padding: 2px 2px 4px 12px;
 }
 
 .small-box.bg-green{
-     background-color: 	#00703c !important; 
-     color: #ffffff;
+    background-color: 	#00703c !important; 
+    color: #ffffff;
+    padding: 2px 2px 4px 12px;
 }
 
 .nav-tabs-custom>.nav-tabs>li.active {
@@ -109,27 +114,6 @@ a {
   font-size: 14px;
 }
 
-#first {
-border: 2px ;
-border-radius: 3px;
-border-style: groove;
-border-color: 	#1D70B8;
-background-color: #1D70B8;
-}
-
-#second {
-border: 2px ;
-border-radius: 3px;
-border-style: groove;
-border-color: #003078;
-background-color: #003078;
-}
-
-#third {
-border: 0px ;
-border-radius: 15px;
-padding:10px; 
-border-color: #ffffff;
-background-color: #ffffff;
-align: center;
+.box{
+    padding: 2px 2px 4px 12px;
 }
