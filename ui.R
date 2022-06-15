@@ -197,6 +197,7 @@ fluidPage(
                        valueBoxOutput("locland.emplcnt"),
                            ), # end of box
 
+
   ### Employment rate over time line chart ----
                        column(width=6,
                               plotlyOutput("EmpRate_time")
