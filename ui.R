@@ -193,27 +193,10 @@ fluidPage(
 
   ### KPI boxes ----
                    box(width=12,
-                           # title = NULL,
-                           # status = "primary",
-                           # solidheader=T,
-                           column(
-                             id="second",
-                             width=4,
-                             align="left",
-                             style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-                             valueBoxOutput("locland.emplrate"), style="color:white"
-                           ),
-                           column(
-                             id="third",
-                             width=1
-                           ),
-                           column(width=4,
-                                  id="second",
-                                  align="left",
-                                  #style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-                                  valueBoxOutput("locland.emplcnt"), style="color:white"
-                           )
-                       ), # end of box
+                       valueBoxOutput("locland.emplrate"),
+                       valueBoxOutput("locland.emplcnt"), 
+                           ), # end of box
+
   ### Employment rate over time line chart ----
                        column(width=6,
                               plotlyOutput("EmpRate_time")),
@@ -291,26 +274,9 @@ tabPanel(
       br(),
   ### KPI boxes ----
       box(width=12,
-        # title = NULL,
-        # status = "primary",
-        # solidheader=T,
-        column(
-          id="second",
-          width=4,
-          align="left",
-          style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-          valueBoxOutput("skisup.FEach"), style="color:white"
-        ),
-        column(
-          id="third",
-          width=1
-        ),
-        column(width=4,
-          id="second",
-          align="left",
-          #style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
-          valueBoxOutput("skisup.APach"), style="color:white"
-        )
+
+          valueBoxOutput("skisup.FEach"),
+          valueBoxOutput("skisup.APach"), 
     ), # end of box
    
       box(width=12,
