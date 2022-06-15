@@ -2,7 +2,7 @@
 # Title: LSIP dashboard - proof of concept
 # Author: Hannah Cox/Paul James
 # Date: 18th May 2022
-# Last updated: 14th June 2022
+# Last updated: 15th June 2022
 ###
 
 # Load libraries ----
@@ -51,7 +51,7 @@ I_Achieve_ILR1621 <- read.csv(file="./Data/permalink-3960ad0f-fd8a-49bb-91d7-f3c
 I_Vacancy_ONS1722 <- read.xlsx(xlsxFile="./Data/referencetablesupdated.xlsx", sheet="1", skipEmptyRows=T,startRow=4)
 
 # Data cleaning functions ----
-format.EmpOcc.APS <- function(x) { # need to clean up colnames
+format.EmpOcc.APS <- function(x) {
   x %>% mutate(year = ifelse(annual.population.survey == "date", X2, NA))%>% # tag time periods
     fill(year)%>% # fill time periods for all rows
     row_to_names(row_number=4) %>% # set col names
@@ -64,10 +64,13 @@ format.EmpOcc.APS <- function(x) { # need to clean up colnames
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
     mutate_at(c(3:27),as.numeric)%>% # Convert to numeric
-    relocate(geographic_level, .after = area)
+    relocate(geographic_level, .after = area)%>%
+    mutate(year=as.numeric(substr(year, 5, 8)))%>%
+    rename_with(.fn = ~ str_replace_all(.x, c("t09a_"="","all_people"="","soc2010"="","_"=" ")),
+                .cols = starts_with("t09a_")) 
 }
 
-format.EmpRate.APS <- function(x) { # need to clean up colnames
+format.EmpRate.APS <- function(x) { 
   x %>% mutate(year = ifelse(annual.population.survey == "date", substr(X2,nchar(X2)-4+1, nchar(X2)), NA))%>% # tag time periods
     fill(year)%>% # fill time periods for all rows
     row_to_names(row_number=4) %>% # set col names
@@ -81,7 +84,9 @@ format.EmpRate.APS <- function(x) { # need to clean up colnames
     mutate_at(c(2:9),as.numeric)%>% # Convert to numeric
     select(year=x2017, area, everything(), - check)%>%# reorder and remove
     mutate(empRate = .[[5]]/.[[3]])%>%
-    relocate(geographic_level, .after = area)
+    relocate(geographic_level, .after = area)%>%
+    rename_with(.fn = ~ str_replace_all(.x, c("t01_"="","all_people"="","aged_16_64"="","_"=" ")),
+                .cols = starts_with("t01")) 
 }
 
 #Clean ILR column names, reorder and reformat
