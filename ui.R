@@ -118,7 +118,18 @@ fluidPage(
                          ),
                          div(
                            class = "panel-body",
-                         )
+                           h2("Local Landscape"),
+                           h3("Annual Population Survey (APS)"),
+                           p("XXX"),
+                           br(),
+                           h2("Skill Supply"),
+                           h3("Individualised Learner Records (ILR)"),
+                           p("XXX"),
+                           br(),
+                           h2("Skill Demand"),
+                           h3("ONS Online Job Adverts"),
+                           p("XXX")
+                           )
                        )
                      )
                    ), # end of right panel
