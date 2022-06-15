@@ -177,7 +177,7 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       format("XX,XXX", scientific=FALSE),
-      paste0("FE Achievements in ", input$lep3, " in Year"),
+      paste0("FE Achievements in ", input$lep3),
       color="blue"
     )
   })
@@ -187,7 +187,7 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
       valueBox(
         format("XX,XXX", scientific=FALSE),
-        paste0("Apprenticeship achievements in ", input$lep3," in Year"),
+        paste0("Apprenticeship achievements in ", input$lep3),
         color="blue"
       )
   })
@@ -195,8 +195,24 @@ server <- function(input, output, session) {
 # SKILL DEMAND ----
   ## KPIs ----
    ### ONS job advert unit counts ----
+  output$jobad.cnt <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      format("XX,XXX", scientific=FALSE),
+      paste0("Online job advert units ", input$lep5),
+      color="blue"
+    )
+  })
 
-
+  ### Skill Demand KPI 2 ----
+  output$jobad.kpi <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      format("XX,XXX", scientific=FALSE),
+      paste0("Something else here ", input$lep5),
+      color="blue"
+    )
+  })
 
 # Stop app ---------------------------------------------------------------------------------
   
