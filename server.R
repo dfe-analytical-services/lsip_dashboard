@@ -88,10 +88,6 @@ server <- function(input, output, session) {
   output$page2title <- renderUI({
     paste0(input$lep3, ": Overview of Skill Supply")
   })
-  
-  output$page3title <- renderUI({
-    paste0(input$lep5, ": Overview of Skill Demand")
-  })
 
 # LOCAL LANDSCAPE ----
   
@@ -177,6 +173,7 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       format("XX,XXX", scientific=FALSE),
+
       paste("FE Achievements in ","Primary LEP"," in 2021"),
       color='blue'
       # take input number
@@ -209,6 +206,7 @@ server <- function(input, output, session) {
       )
   })
   
+
 # SKILL DEMAND ----
  ## KPIs ----
   ### FE achievements -----

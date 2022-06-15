@@ -57,7 +57,7 @@ fluidPage(
                            .navbar-nav {
                            float: none !important;
                            }
-                           .navbar-nav > li:nth-child(6) {
+                           .navbar-nav > li:nth-child(5) {
                            float: right;
                            }
                            ")))
@@ -65,7 +65,7 @@ fluidPage(
   navbarPage("",
              id = "navbar",
              
-# HOMEPAGE ============================================================
+# Homepage tab ============================================================
 
              tabPanel(
                "Homepage",
@@ -136,7 +136,7 @@ fluidPage(
                  )
                )
              ),
-# LOCAL LANDSCAPE ----
+# Local Landscape tab ----
              tabPanel(
                "Local Landscape",
                
@@ -241,7 +241,7 @@ fluidPage(
                  ) # end of main panel
                ) # end of side bar layout
              ), # end of Local Landscape tab
-# SKILL SUPPLY ----
+# Skill Supply tab ----
 tabPanel(
   "Skill Supply",
 
@@ -257,13 +257,13 @@ tabPanel(
                ,style = "font-style: italic;"
       ),
       br(),
-  ### LEP 3 input ---------------
+  ### LEP 1 input ---------------
       selectizeInput("lep3",
                      "Choose a primary LEP:",
                      choices=C_LEP2020,
                      selected="England",
       ),
-  ### LEP 4 input ------------
+  ### LEP 2 input ------------
       selectizeInput("lep4", # Make no selection an option
                      "Choose a comparison LEP (optional):",
                      choices=C_LEP2020,
@@ -332,6 +332,23 @@ tabPanel(
           valueBoxOutput("skisup.APach"), 
         # style="color:white"
         #)
+        column(
+          id="second",
+          width=4,
+          align="left",
+          style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
+          valueBoxOutput("skisup.FEach"), style="color:white"
+        ),
+        column(
+          id="third",
+          width=1
+        ),
+        column(width=4,
+          id="second",
+          align="left",
+          #style="height:15vh; min-height:96px; padding:5px; word-wrap: break-word;",
+          valueBoxOutput("skisup.APach"), style="color:white"
+        )
     ), # end of box
    
  
