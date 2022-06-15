@@ -89,47 +89,48 @@ server <- function(input, output, session) {
     paste0(input$lep3, ": Overview of Skill Supply")
   })
   
-  
   output$page3title <- renderUI({
-    paste0(input$lep5, ": Overview of Skill Demand")
+    paste0(input$lep5, ": Overview of Skill Supply")
   })
+  
 
 # LOCAL LANDSCAPE ----
-  
+
  ## KPIs ----
-  
+
   ### Employment rate -----
   output$locland.emplrate <- renderValueBox({
     # Put value into box to plug into app
     valueBox(
       # take input number
       paste(
-        format(100.*(C_EmpRate_APS1721 %>% 
+        format(100.*(C_EmpRate_APS1721 %>%
                        filter(area==input$lep1,year=="2021")
         )$empRate,digits=3),
         "%"),
-      # add subtitle to explain what it's hsowing
-      paste("Employment rate in",input$lep1)
-      #style = "height:15vh; min-height:96px; padding:5px; word-wrap: break-word;"
+      # add subtitle to explain what it's showing
+      paste0("Employment rate in ",input$lep1),
+      color="blue"
     )
   })
-  
+
   ### Employment count ----
   output$locland.emplcnt <- renderValueBox({
     # Put value into box to plug into app
     valueBox(
       # take input number
-      format((C_EmpOcc_APS1721 %>% 
+      format((C_EmpOcc_APS1721 %>%
                 filter(area==input$lep1,year=="Jan 2021-Dec 2021")
       )$t09a_1_all_people_corporate_managers_and_directors_soc2010_all_people,
       scientific=FALSE),
       # add subtitle to explain what it's showing
-      paste("In employment in",input$lep1)
+      paste0("In employment in ",input$lep1),
+      color="blue"
     )
   })
-  
+
   ## Employment rate over time line graph ----
-  
+
   EmpRate_time <- reactive({
     C_EmpRate_APS1721 %>%
       select(year, area, empRate)%>%
@@ -147,13 +148,13 @@ server <- function(input, output, session) {
       ylab("Employment Rate")+
       scale_y_continuous(labels = scales::percent_format(accuracy=1))
   })
-  
+
   output$EmpRate_time <- renderPlotly({
     ggplotly(EmpRate_time())
   })
-  
+
   ## Employment by occupation data table ----
-  
+
   EmpOcc <- reactive({
     C_EmpOcc_APS1721 %>%
       filter(year == "Jan 2021-Dec 2021") %>%
@@ -164,7 +165,7 @@ server <- function(input, output, session) {
       t()%>%
       row_to_names(row_number=1)
   })
-  
+
   output$EmpOcc <- renderDataTable({
     EmpOcc()
     })
@@ -176,38 +177,27 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       format("XX,XXX", scientific=FALSE),
-      paste("FE Achievements in Primary LEP in Year")
-      # take input number
-      # format((C_EmpOcc_APS1721 %>% 
-      #           filter(area==input$lep1,year=="Jan 2021-Dec 2021")
-      # )$t09a_1_all_people_corporate_managers_and_directors_soc2010_all_people,
-      # scientific=FALSE),
-      # # add subtitle to explain what it's showing
-      # paste("In employment in",input$lep1),
-      # color = "blue"
+      paste0("FE Achievements in ", input$lep3, " in Year"),
+      color="blue"
     )
   })
-  
+
   ### Apprentichesip achievements ----
   output$skisup.APach <- renderValueBox({
     # Put value into box to plug into app
       valueBox(
         format("XX,XXX", scientific=FALSE),
-        paste("Apprenticeship achievements in Primary LEP in Year")
-      # take input number
-      # format((C_EmpOcc_APS1721 %>% 
-      #           filter(area==input$lep1,year=="Jan 2021-Dec 2021")
-      # )$t09a_1_all_people_corporate_managers_and_directors_soc2010_all_people,
-      # scientific=FALSE),
-      # # add subtitle to explain what it's showing
-      # paste("In employment in",input$lep1),
-      # color = "blue"
+        paste0("Apprenticeship achievements in ", input$lep3," in Year"),
+        color="blue"
       )
   })
-  
-  
-  
-  
+
+# SKILL DEMAND ----
+  ## KPIs ----
+   ### ONS job advert unit counts ----
+
+
+
 # Stop app ---------------------------------------------------------------------------------
   
   session$onSessionEnded(function() {

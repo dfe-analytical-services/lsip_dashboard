@@ -102,8 +102,8 @@ fluidPage(
                          )
                        )
                      ),
-                   ),
-
+                   ), # end of left panel
+ 
  ## Right panel ------------------------------------------------------
 
                    column(
@@ -121,23 +121,23 @@ fluidPage(
                          )
                        )
                      )
-                   )
-                 )
-               )
-             ),
-# Local Landscape tab ----
+                   ), # end of right panel
+                  ) # end of FluidRow
+                ) # end of FluidPage
+              ), # end of Tab Panel
+# LOCAL LANDSCAPE ----
              tabPanel(
                "Local Landscape",
-               
+
                # Define UI for application that draws a histogram
-               
+
                # Sidebar with a slider input for number of bins
                sidebarLayout(
  ## Side panel ----
                  sidebarPanel(
                    width = 2,
   ### Help text --------------------
-                   helpText("Choose a Local Area to view employment trends" 
+                   helpText("Choose a Local Area to view employment trends"
                             ,style = "font-style: italic;"
                    ),
                    br(),
@@ -179,7 +179,7 @@ fluidPage(
                      label = "Download",
                      icon = shiny::icon("download")
                    ),
-                   
+
                  ), # end of side panel
  ## Main panel ----
                  # Show a plot of the generated distribution
@@ -194,20 +194,22 @@ fluidPage(
   ### KPI boxes ----
                    box(width=12,
                        valueBoxOutput("locland.emplrate"),
-                       valueBoxOutput("locland.emplcnt"), 
+                       valueBoxOutput("locland.emplcnt"),
                            ), # end of box
 
   ### Employment rate over time line chart ----
                        column(width=6,
-                              plotlyOutput("EmpRate_time")),
+                              plotlyOutput("EmpRate_time")
+                              ),
   ### Employment by occupation data table ----
                        column(width=6,
-                              dataTableOutput("EmpOcc"))
+                              dataTableOutput("EmpOcc")
+                              )
 
                  ) # end of main panel
                ) # end of side bar layout
              ), # end of Local Landscape tab
-# Skill Supply tab ----
+#SKILL SUPPLY ----
 tabPanel(
   "Skill Supply",
 
@@ -223,13 +225,13 @@ tabPanel(
                ,style = "font-style: italic;"
       ),
       br(),
-  ### LEP 1 input ---------------
+  ### LEP 3 input ---------------
       selectizeInput("lep3",
                      "Choose a primary LEP:",
                      choices=C_LEP2020,
                      selected="England",
       ),
-  ### LEP 2 input ------------
+  ### LEP 4 input ------------
       selectizeInput("lep4", # Make no selection an option
                      "Choose a comparison LEP (optional):",
                      choices=C_LEP2020,
@@ -274,28 +276,31 @@ tabPanel(
       br(),
   ### KPI boxes ----
       box(width=12,
-
           valueBoxOutput("skisup.FEach"),
-          valueBoxOutput("skisup.APach"), 
+          valueBoxOutput("skisup.APach"),
     ), # end of box
-   
+
       box(width=12,
   ### Employment rate over time line chart ----
-  
+
           column(width=6,
-                 p("Place holder for Achievement counts 2017-21")),
+                 p("Place holder for Achievement counts 2017-21")
+                 ),
                  #plotlyOutput("EmpRate_time")),
-  
+
   ### Employment by occupation data table ----
-  
+
           column(width=6,
-                 p("Place holder for Achievements by Sector Subject Area 2021"))
+                 p("Place holder for Achievements by Sector Subject Area 2021")
+                 )
                  #dataTableOutput("EmpOcc"))
     ) # end of box
 
     ) # end of main panel
   ) # end of side bar layout
 ), # end of Skills Supply tab
+
+# SKILL DEMAND ---------------
 
 # Create the accessibility statement-----------------
              tabPanel(
