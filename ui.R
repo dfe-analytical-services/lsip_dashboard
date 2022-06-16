@@ -57,7 +57,7 @@ fluidPage(
                            .navbar-nav {
                            float: none !important;
                            }
-                           .navbar-nav > li:nth-child(6) {
+                           .navbar-nav > li:nth-child(7) {
                            float: right;
                            }
                            ")))
@@ -293,18 +293,16 @@ tabPanel(
     ), # end of box
 
       box(width=12,
-  ### Employment rate over time line chart ----
+  ### Achievements over time line chart ----
 
           column(width=6,
-                 p("Place holder for Achievement counts 2017-21")
-                 ),
-                 #plotlyOutput("EmpRate_time")),
+                 plotlyOutput("Ach_time")),
 
   ### Employment by occupation data table ----
 
           column(width=6,
-                 p("Place holder for Achievements by Sector Subject Area 2021")
-                 )
+                 #p("Placeholder for Achievments by SSA bar chart"))
+                 plotlyOutput("Ach_SSA_pc"))
                  #dataTableOutput("EmpOcc"))
     ) # end of box
 
@@ -408,6 +406,68 @@ tabPanel(
     ) # end of main panel
   ) # end of side bar layout
 ), # end of Skills Supply tab
+
+# Methodology tab -----------------
+
+tabPanel(
+  "Methodology",
+  fluidPage(
+    fluidRow(
+      column(
+        12,
+        h1("Methodology"),
+        
+        p("This app XXX"),
+        br(),
+        br()
+      ),
+      
+      ## Left panel -------------------------------------------------------
+      
+      column(
+        6,
+        div(
+          div(
+            class = "panel panel-info",
+            div(
+              class = "panel-heading",
+              style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
+              h2("Contents")
+            ),
+            div(
+              class = "panel-body",
+              tags$div(
+                title = "This section is useful if you want to understand how well different industries retain graduates.",
+                h3(actionLink("link_to_industryFlow_tab", "App Content"))
+              ),
+              br()
+            )
+          )
+        ),
+      ), # end of left panel
+      
+      ## Right panel ------------------------------------------------------
+      
+      column(
+        6,
+        div(
+          div(
+            class = "panel panel-info",
+            div(
+              class = "panel-heading",
+              style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
+              h2("Links")
+            ),
+            div(
+              class = "panel-body",
+              p("XXX")
+            )
+          )
+        )
+      ), # end of right panel
+    ) # end of FluidRow
+  ) # end of FluidPage
+), # end of Methodology Panel
 # Create the accessibility statement-----------------
              tabPanel(
                "Accessibility",
