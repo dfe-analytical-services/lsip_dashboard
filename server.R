@@ -105,7 +105,7 @@ server <- function(input, output, session) {
     valueBox(
       # take input number
       paste(
-        format(100.*(C_EmpRate_APS1721_2 %>%
+        format(100.*(C_EmpRate_APS1721 %>%
                        filter(area==input$lep1,year=="2021")
         )$empRate,digits=3),
         "%"),
@@ -120,9 +120,9 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       # take input number
-      format((C_EmpRate_APS1721_2 %>%
+      format((C_EmpRate_APS1721 %>%
                 filter(area==input$lep1,year=="2021")
-      )$t01_28_aged_16_64_in_employment_all_people,
+      )$"28 in employment",
       scientific=FALSE),
       # add subtitle to explain what it's showing
       paste0("In employment in ",input$lep1),
@@ -133,7 +133,7 @@ server <- function(input, output, session) {
   ## Employment rate over time line graph ----
 
   EmpRate_time <- reactive({
-    C_EmpRate_APS1721_2 %>%
+    C_EmpRate_APS1721 %>%
       select(year, area, empRate)%>%
       filter(area == "England" |
                area == input$lep1 |
@@ -157,8 +157,8 @@ server <- function(input, output, session) {
   ## Employment by occupation data table ----
 
   EmpOcc <- reactive({
-    C_EmpOcc_APS1721_2 %>%
-      filter(year == "Jan 2021-Dec 2021") %>%
+    C_EmpOcc_APS1721 %>%
+      filter(year == "2021") %>%
       filter(area == "England" |
                area == input$lep1 |
                area == input$lep2)%>%
@@ -195,7 +195,7 @@ server <- function(input, output, session) {
   
   ## Achievements over time line chart ----
   Ach_time <- reactive({
-    C_FEAppAch_2 %>%
+    C_Achieve_ILR1621 %>%
     select(time_period, area, LEP, level_or_type, achievements)%>%
     filter(
       #area == "England" |
@@ -226,7 +226,7 @@ server <- function(input, output, session) {
   ## Achievements pc bar chart ----
   
   Ach_SSA_pc <- reactive ({
-    AchSSA_21 <- C_AchSSA_2 %>%
+    AchSSA_21 <- C_Achieve_ILR21 %>%
     filter(time_period== "202122" ,
            LEP == input$lep3 |
              LEP == input$lep4)%>%
