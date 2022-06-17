@@ -153,7 +153,11 @@ server <- function(input, output, session) {
   })
 
   output$EmpRate_time <- renderPlotly({
-    ggplotly(EmpRate_time())
+    ggplotly(EmpRate_time()) %>%
+      layout(legend=list(x=0.2,y=-0.3,
+                         xanchor='left',
+                                 yanchor='bottom',
+                                 orientation='h'))
   })
 
   ## Employment by occupation data table ----
