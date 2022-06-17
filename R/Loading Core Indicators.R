@@ -149,3 +149,6 @@ list_of_datasets <- list("2.Emp by occupation" = C_EmpOcc_APS1721,
                         "22.Vacancies"=C_Vacancy_ONS1722)
 write.xlsx(list_of_datasets, file = "202206CoreIndicators.xlsx")
 
+
+
+            
