@@ -91,7 +91,8 @@ format.EmpRate.APS <- function(x) {
 
 #Clean ILR column names, reorder and reformat
 format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
-  x %>% rename(area=ï..location)%>%
+  colnames(x)[1] <- "area"
+  x %>% 
     left_join(select(I_LEP2020,LACD,LEP=ERNM),by= c("location_code"="LACD"))%>%
     relocate(LEP, .after = geographic_level)%>%
     relocate(time_period, .before = area)%>%
