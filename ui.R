@@ -221,6 +221,8 @@ fluidPage(
                  ) # end of main panel
                ) # end of side bar layout
              ), # end of Local Landscape tab
+
+
 #SKILL SUPPLY ----
 tabPanel(
   "Skill Supply",
@@ -377,12 +379,12 @@ tabPanel(
       br(),
       ### KPI boxes ----
       box(width=12,
-          valueBoxOutput("jobad.cnt"),
-          valueBoxOutput("jobad.kpi"),
+          valueBoxOutput("jobad.pc"),
+          valueBoxOutput("jobad.ch"),
       ), # end of box
       
       box(width=12,
-          ### Employment rate over time line chart ----
+          ### ONS job advert information ----
           
           column(width=4,
                  h2("Information"),
@@ -390,17 +392,15 @@ tabPanel(
                  p("Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022. 
 "),
                  br(),
-                 p("The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a unit measure. The unit measure is derived by dividing the monthly average count of job adverts by a set value.
+                 p("The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a unit measure. The unit measure is derived by dividing the monthly average count of job adverts by a set value.
 ")
           ),
-          #plotlyOutput("EmpRate_time")),
+    
           
-          ### Employment by occupation data table ----
+          ### Online job vacancy units over time line chart ----
           
           column(width=8,
-                 p("Place holder for Achievements by Sector Subject Area 2021")
-          )
-          #dataTableOutput("EmpOcc"))
+                 plotlyOutput("jobad.time")),
       ) # end of box
       
     ) # end of main panel
