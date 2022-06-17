@@ -122,13 +122,15 @@ server <- function(input, output, session) {
       # take input number
       format((C_EmpRate_APS1721 %>%
                 filter(area==input$lep1,year=="2021")
-      )$"28 in employment",
+      )$"28  in employment ",
       scientific=FALSE),
       # add subtitle to explain what it's showing
       paste0("In employment in ",input$lep1),
       color="blue"
     )
   })
+  
+
 
   ## Employment rate over time line graph ----
 
@@ -143,7 +145,7 @@ server <- function(input, output, session) {
       theme_minimal()+
       #expand_limits(y = 0)+
       labs(colour = "Area")+
-      # theme(legend.position="bottom")+
+      theme(legend.position="bottom")+
       ggtitle("Employment Rate \n 2017-2021")+
       xlab("Year")+
       ylab("Employment Rate")+
@@ -177,21 +179,32 @@ server <- function(input, output, session) {
   output$skisup.FEach <- renderValueBox({
     # Put value into box to plug into app
     valueBox(
-      format("XX,XXX", scientific=FALSE),
+      format((C_Achieve_ILR1621 %>%
+                filter(time_period=="202122",
+                       LEP == input$lep3, 
+                       level_or_type == "Further education and skills: Total")%>%
+                summarise(App_ach=sum(achievements))), scientific=FALSE),
       paste0("FE Achievements in ", input$lep3),
       color="blue"
     )
   })
+  
+
 
   ### Apprentichesip achievements ----
   output$skisup.APach <- renderValueBox({
     # Put value into box to plug into app
       valueBox(
-        format("XX,XXX", scientific=FALSE),
+        format((C_Achieve_ILR1621 %>%
+                 filter(time_period=="202122",
+                        LEP == input$lep3, 
+                        level_or_type == "Apprenticeships: Total")%>%
+                 summarise(App_ach=sum(achievements))), scientific=FALSE),
         paste0("Apprenticeship achievements in ", input$lep3),
         color="blue"
       )
   })
+
   
   ## Achievements over time line chart ----
   Ach_time <- reactive({
