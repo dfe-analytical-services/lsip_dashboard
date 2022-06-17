@@ -91,7 +91,7 @@ server <- function(input, output, session) {
 
   
   output$page3title <- renderUI({
-    paste0(input$lep5, ": Overview of Skill Supply")
+    paste0(input$lep5, ": Overview of Skill Demand")
   })
   
 
@@ -238,7 +238,7 @@ server <- function(input, output, session) {
   
   output$Ach_time <- renderPlotly({
     ggplotly(Ach_time())%>%
-      layout(legend=list(x=0.2,y=-2.5,
+      layout(legend=list(x=0.2,y=-5,
                          xanchor='left',
                          yanchor='bottom',
                          orientation='h'))
@@ -272,13 +272,14 @@ server <- function(input, output, session) {
       theme_minimal()+
       theme(legend.position="bottom")+
       #scale_fill_brewer(palette="Set1")
-      scale_fill_manual(values=cbPalette)
+      scale_fill_manual(values=cbPalette)+
+      ggtitle("Achievements by Sector Subject Area (tier 1) \n Academic year 202021")
   })
 
 
   output$Ach_SSA_pc <- renderPlotly({
     ggplotly(Ach_SSA_pc())%>%
-      layout(legend=list(x=0.2,y=-2.5,
+      layout(legend=list(x=0.2,y=-5,
                          xanchor='left',
                          yanchor='bottom',
                          orientation='h'))
