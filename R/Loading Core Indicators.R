@@ -103,7 +103,7 @@ format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
 #Reshape vacancy data to long, rename and reorder and reformat some columns
 format.Vacancy.ONS <- function(x) { # need to clean up colnames
   x %>% gather(year, vacancy_unit, 3:8)%>%
-    rename(LA="Local.authority.[note.1]",region="Region.[note.2]")%>%
+    dplyr::rename(LA="Local.authority.[note.1]",region="Region.[note.2]")%>%
     left_join(select(I_LEP2020,LANM,LEP=ERNM),by= c("LA"="LANM"))%>%
     relocate(LEP, .after = region)%>%
     relocate(year,.before=LA)%>%
@@ -124,6 +124,34 @@ C_Achieve_ILR21 <- format.AchieveSSA.ILR(I_Achieve_ILR21)
 #vacancy
 C_Vacancy_ONS1722 <- format.Vacancy.ONS(I_Vacancy_ONS1722)
 
+C_Vacancy_England <- C_Vacancy_ONS1722 %>%
+  filter(region !="Wales"|
+           region != "Scotland"|
+           region != "Northern Ireland")%>%
+  group_by(year)%>%
+  dplyr::summarise(England = sum(vacancy_unit))%>%
+  right_join(C_Vacancy_ONS1722, by="year")%>%
+  mutate(pc_total = vacancy_unit/England)
+
+
+
+# EmpRate_time <- reactive({
+#   C_EmpRate_APS1721 %>%
+#     select(year, area, empRate)%>%
+#     filter(area == "England" |
+#              area == input$lep1 |
+#              area == input$lep2) %>%
+#     ggplot(aes(x=year, y=empRate, group = area, colour = area))+
+#     geom_line()+
+#     theme_minimal()+
+#     expand_limits(y = 0.6)+
+#     labs(colour = "Area")+
+#     theme(legend.position="bottom")+
+#     ggtitle("Employment Rate \n 2017-2021")+
+#     xlab("Year")+
+#     ylab("Employment Rate")+
+#     scale_y_continuous(labels = scales::percent_format(accuracy=1))
+# })
 # Save to SQL ----
 #con <- dbConnect(odbc(), Driver = "SQL Server Native Client 11.0", 
 
@@ -149,7 +177,5 @@ list_of_datasets <- list("2.Emp by occupation" = C_EmpOcc_APS1721,
                         "x.FE achievements"=C_Achieve_ILR1621,
                         "22.Vacancies"=C_Vacancy_ONS1722)
 write.xlsx(list_of_datasets, file = "202206CoreIndicators.xlsx")
-
-
 
             

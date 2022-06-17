@@ -25,9 +25,13 @@ library(janitor)
 library(DT)
 #renv::snapshot()
 
+
+
 #source("R/Loading Core Indicators.R")
 
-area_select <- c("Coast to Capital", "Greater Manchester", "England")
+#area_select <- c("Coast to Capital", "Greater Manchester", "England")
+
+cbPalette <- c("#801650","#1d70b8","#F46A25","#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7","#000000")
 # Functions ---------------------------------------------------------------------------------
 
 # Here's an example function for simplifying the code needed to commas separate numbers:

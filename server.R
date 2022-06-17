@@ -143,7 +143,7 @@ server <- function(input, output, session) {
       ggplot(aes(x=year, y=empRate, group = area, colour = area))+
       geom_line()+
       theme_minimal()+
-      #expand_limits(y = 0)+
+      expand_limits(y = 0.6)+
       labs(colour = "Area")+
       theme(legend.position="bottom")+
       ggtitle("Employment Rate \n 2017-2021")+
@@ -168,7 +168,7 @@ server <- function(input, output, session) {
       filter(area == "England" |
                area == input$lep1 |
                area == input$lep2)%>%
-      select(-year)%>%
+      select(-year, -geographic_level)%>%
       t()%>%
       row_to_names(row_number=1)
   })
@@ -187,7 +187,7 @@ server <- function(input, output, session) {
                 filter(time_period=="202122",
                        LEP == input$lep3, 
                        level_or_type == "Further education and skills: Total")%>%
-                summarise(App_ach=sum(achievements))), scientific=FALSE),
+                dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE),
       paste0("FE Achievements in ", input$lep3),
       color="blue"
     )
@@ -203,7 +203,7 @@ server <- function(input, output, session) {
                  filter(time_period=="202122",
                         LEP == input$lep3, 
                         level_or_type == "Apprenticeships: Total")%>%
-                 summarise(App_ach=sum(achievements))), scientific=FALSE),
+                 dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE),
         paste0("Apprenticeship achievements in ", input$lep3),
         color="blue"
       )
@@ -221,7 +221,7 @@ server <- function(input, output, session) {
       level_or_type == "Apprenticeships: Total"|
         level_or_type =="Further education and skills: Total") %>%
     group_by(time_period, LEP, level_or_type)%>%
-    summarise(Achievements=sum(achievements))%>%
+    dplyr::summarise(Achievements=sum(achievements))%>%
     ggplot(aes(x=time_period, y=Achievements, colour = LEP, shape = level_or_type,
                        group=interaction(level_or_type, LEP)))+
     geom_point() + 
@@ -237,7 +237,11 @@ server <- function(input, output, session) {
   
   
   output$Ach_time <- renderPlotly({
-    ggplotly(Ach_time())
+    ggplotly(Ach_time())%>%
+      layout(legend=list(x=0.2,y=-2.5,
+                         xanchor='left',
+                         yanchor='bottom',
+                         orientation='h'))
   })
   
   ## Achievements pc bar chart ----
@@ -250,7 +254,7 @@ server <- function(input, output, session) {
     #  area == "England")%>%
     select(LEP, SSA=ssa_t1_desc, Achievements = achievements)%>%
     group_by(LEP, SSA)%>%
-    summarise(Achievements=sum(Achievements))%>%
+    dplyr::summarise(Achievements=sum(Achievements))%>%
     ungroup()
 
     Ach_pc <- AchSSA_21 %>%
@@ -260,40 +264,135 @@ server <- function(input, output, session) {
     Ach_SSA_pc <- AchSSA_21 %>%
       left_join(Ach_pc, by = "LEP")%>%
       group_by(LEP)%>%
-      mutate(pc = Achievements/Total_ach)%>%
+      dplyr::mutate(pc = Achievements/Total_ach)%>%
       filter(SSA != "Total")%>%
       ggplot(aes(x=LEP, y=pc, fill=SSA))+
       geom_col()+
       coord_flip()+
       theme_minimal()+
-      theme(legend.position="bottom")
+      theme(legend.position="bottom")+
+      #scale_fill_brewer(palette="Set1")
+      scale_fill_manual(values=cbPalette)
   })
 
 
   output$Ach_SSA_pc <- renderPlotly({
-    ggplotly(Ach_SSA_pc())
+    ggplotly(Ach_SSA_pc())%>%
+      layout(legend=list(x=0.2,y=-2.5,
+                         xanchor='left',
+                         yanchor='bottom',
+                         orientation='h'))
   })
 # SKILL DEMAND ----
   ## KPIs ----
-   ### ONS job advert unit counts ----
-  output$jobad.cnt <- renderValueBox({
+   ### ONS job advert unit percent of total  ----
+  output$jobad.pc <- renderValueBox({
     # Put value into box to plug into app
     valueBox(
-      format("XX,XXX", scientific=FALSE),
-      paste0("Online job advert units in ", input$lep5),
+      paste0(
+        format(100.*(C_Vacancy_England %>%
+                filter(year == "2022",
+                       LEP == input$lep5)%>%
+                summarise(job.pc=sum(pc_total))), digits = 3),
+        "%"),
+      paste0("of total online total vacancies in England in January 2022 were in ", input$lep5),
       color="blue"
     )
   })
 
   ### Skill Demand KPI 2 ----
-  output$jobad.kpi <- renderValueBox({
+  output$jobad.ch <- renderValueBox({
     # Put value into box to plug into app
     valueBox(
-      format("XX,XXX", scientific=FALSE),
-      paste0("Something else here in ", input$lep5),
+      paste0(
+        format(100.*(C_Vacancy_England %>%
+                         filter(year == "2022"|
+                                  year == "2021",
+                                LEP == input$lep5)%>%
+                         group_by(year)%>%
+                         dplyr::summarise(job.cnt=sum(vacancy_unit))%>%
+                         dplyr::mutate(Row = 1:n()) %>%
+                         mutate(Percentage_Change = job.cnt/lag(job.cnt)) %>%
+                         ungroup%>%
+                         filter(year == "2022")%>%
+                         select(Percentage_Change)), digits = 3),
+        "%"),
+      paste0("change in online job vacancies in ", input$lep5, " January 2021 to January 2022"),
       color="blue"
     )
   })
+  
+  # jobad.ch <- C_Vacancy_England %>%
+  #   filter(year == "2022"|
+  #            year == "2021",
+  #          LEP == "Black Country")%>%
+  #   group_by(year)%>%
+  #   dplyr::summarise(job.cnt=sum(vacancy_unit))%>%
+  #   dplyr::mutate(Row = 1:n()) %>%
+  #   mutate(Percentage_Change = job.cnt/lag(job.cnt)) %>%
+  #   ungroup%>%
+  #   filter(year == "2022")%>%
+  #   select(Percentage_Change)
+
+  ## Online job vacancy units over time line chart ----
+
+  jobad.time <- reactive({
+    C_Vacancy_England %>%
+    filter(LEP == input$lep5|
+             LEP == input$lep6)%>%
+    select(-LA, -pc_total, -region, -England)%>%
+    group_by(year, LEP)%>%
+    dplyr::summarise(total = sum(vacancy_unit))%>%
+    ggplot(aes(x=year, y=total, colour=LEP))+
+    geom_line()+
+    theme_minimal()+
+    labs(colour = "LEP")+
+    theme(legend.position="bottom")+
+    ggtitle("Online job vacancy units over time \n January 2017- January 2022")+
+    xlab("Year")+
+    ylab("Job vacancy units")
+  })
+  
+  output$jobad.time <- renderPlotly({
+      ggplotly(jobad.time())%>%
+        layout(legend=list(x=0.2,y=-0.5,
+                           xanchor='left',
+                           yanchor='bottom',
+                           orientation='h'))
+    })
+
+  # Ach_time <- reactive({
+  #   C_Achieve_ILR1621 %>%
+  #     select(time_period, area, LEP, level_or_type, achievements)%>%
+  #     filter(
+  #       #area == "England" |
+  #       LEP == input$lep3 |
+  #         LEP == input$lep4,
+  #       level_or_type == "Apprenticeships: Total"|
+  #         level_or_type =="Further education and skills: Total") %>%
+  #     group_by(time_period, LEP, level_or_type)%>%
+  #     summarise(Achievements=sum(achievements))%>%
+  #     ggplot(aes(x=time_period, y=Achievements, colour = LEP, shape = level_or_type,
+  #                group=interaction(level_or_type, LEP)))+
+  #     geom_point() + 
+  #     geom_line()+
+  #     theme(legend.position = "bottom")+
+  #     theme_minimal()+
+  #     #expand_limits(y = 0)+
+  #     labs(shape = "Type", colour = "Area")+
+  #     # theme(legend.position="bottom")+
+  #     ggtitle("FE and Apprenticeship achievements \n 2017-2021")+
+  #     xlab("Year")
+  # })
+  # 
+  # 
+  # output$Ach_time <- renderPlotly({
+  #   ggplotly(Ach_time())%>%
+  #     layout(legend=list(x=0.2,y=-1.5,
+  #                        xanchor='left',
+  #                        yanchor='bottom',
+  #                        orientation='h'))
+  # })
 
 # Stop app ---------------------------------------------------------------------------------
   
