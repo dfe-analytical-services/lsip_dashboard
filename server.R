@@ -106,7 +106,9 @@ server <- function(input, output, session) {
       # take input number
       paste(
         format(100.*(C_EmpRate_APS1721 %>%
-                       filter(area==input$lep1,year=="2021")
+                       filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
+                              area==input$lep1,
+                              year=="2021")
         )$empRate,digits=3),
         "%"),
       # add subtitle to explain what it's showing
@@ -121,7 +123,9 @@ server <- function(input, output, session) {
     valueBox(
       # take input number
       format((C_EmpRate_APS1721 %>%
-                filter(area==input$lep1,year=="2021")
+                filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
+                       area==input$lep1,
+                       year=="2021")
       )$"28  in employment ",
       scientific=FALSE),
       # add subtitle to explain what it's showing
