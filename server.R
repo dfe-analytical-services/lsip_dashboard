@@ -117,6 +117,22 @@ server <- function(input, output, session) {
     )
   })
 
+  output$locland.emplrate.2 <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      # take input number
+      paste(
+        format(100.*(C_EmpRate_APS1721 %>%
+                       filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
+                              area==input$lep2,
+                              year=="2021")
+        )$empRate,digits=3),
+        "%"),
+      # add subtitle to explain what it's showing
+      paste0("Employment rate in ",input$lep2),
+      color="blue"
+    )
+  })
   ### Employment count ----
   output$locland.emplcnt <- renderValueBox({
     # Put value into box to plug into app
@@ -134,16 +150,32 @@ server <- function(input, output, session) {
     )
   })
   
-
+  output$locland.emplcnt.2 <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      # take input number
+      format((C_EmpRate_APS1721 %>%
+                filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
+                       area==input$lep2,
+                       year=="2021")
+      )$"28  in employment ",
+      scientific=FALSE),
+      # add subtitle to explain what it's showing
+      paste0("In employment in ",input$lep2),
+      color="blue"
+    )
+  })
 
   ## Employment rate over time line graph ----
 
   EmpRate_time <- reactive({
     C_EmpRate_APS1721 %>%
-      select(year, area, empRate)%>%
-      filter(area == "England" |
-               area == input$lep1 |
-               area == input$lep2) %>%
+      select(year, area, geographic_level, empRate)%>%
+      filter(geographic_level == "lep"|
+             geographic_level=="country",# cleans up for London and South East which is included as lep and gor
+             area == "England" |
+             area == input$lep1 |
+             area == input$lep2) %>%
       ggplot(aes(x=year, y=empRate, group = area, colour = area))+
       geom_line()+
       theme_minimal()+
@@ -169,9 +201,11 @@ server <- function(input, output, session) {
   EmpOcc <- reactive({
     C_EmpOcc_APS1721 %>%
       filter(year == "2021") %>%
-      filter(area == "England" |
-               area == input$lep1 |
-               area == input$lep2)%>%
+      filter(geographic_level == "lep"|
+             geographic_level=="country",# cleans up for London and South East which is included as lep and gor
+             area == "England" |
+             area == input$lep1 |
+             area == input$lep2)%>%
       select(-year, -geographic_level)%>%
       t()%>%
       row_to_names(row_number=1)
@@ -196,7 +230,19 @@ server <- function(input, output, session) {
       color="blue"
     )
   })
-  
+
+  output$skisup.FEach.2 <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      format((C_Achieve_ILR1621 %>%
+                filter(time_period=="202122",
+                       LEP == input$lep4, 
+                       level_or_type == "Further education and skills: Total")%>%
+                dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE),
+      paste0("FE Achievements in ", input$lep4),
+      color="blue"
+    )
+  }) 
 
 
   ### Apprentichesip achievements ----
@@ -211,6 +257,19 @@ server <- function(input, output, session) {
         paste0("Apprenticeship achievements in ", input$lep3),
         color="blue"
       )
+  })
+  
+  output$skisup.APach.2 <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      format((C_Achieve_ILR1621 %>%
+                filter(time_period=="202122",
+                       LEP == input$lep4, 
+                       level_or_type == "Apprenticeships: Total")%>%
+                dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE),
+      paste0("Apprenticeship achievements in ", input$lep4),
+      color="blue"
+    )
   })
 
   
@@ -304,6 +363,20 @@ server <- function(input, output, session) {
       color="blue"
     )
   })
+  
+  output$jobad.pc.2 <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      paste0(
+        format(100.*(C_Vacancy_England %>%
+                       filter(year == "2022",
+                              LEP == input$lep6)%>%
+                       summarise(job.pc=sum(pc_total))), digits = 3),
+        "%"),
+      paste0("of total online total vacancies in England in January 2022 were in ", input$lep6),
+      color="blue"
+    )
+  })
 
   ### Skill Demand KPI 2 ----
   output$jobad.ch <- renderValueBox({
@@ -327,6 +400,26 @@ server <- function(input, output, session) {
     )
   })
   
+  output$jobad.ch.2 <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      paste0(
+        format(100.*(C_Vacancy_England %>%
+                       filter(year == "2022"|
+                                year == "2021",
+                              LEP == input$lep6)%>%
+                       group_by(year)%>%
+                       dplyr::summarise(job.cnt=sum(vacancy_unit))%>%
+                       dplyr::mutate(Row = 1:n()) %>%
+                       mutate(Percentage_Change = job.cnt/lag(job.cnt)) %>%
+                       ungroup%>%
+                       filter(year == "2022")%>%
+                       select(Percentage_Change)), digits = 3),
+        "%"),
+      paste0("change in online job vacancies in ", input$lep6, " January 2021 to January 2022"),
+      color="blue"
+    )
+  })
   # jobad.ch <- C_Vacancy_England %>%
   #   filter(year == "2022"|
   #            year == "2021",

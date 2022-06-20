@@ -205,10 +205,13 @@ fluidPage(
   ### KPI boxes ----
                    box(width=12,
                        valueBoxOutput("locland.emplrate"),
-                       valueBoxOutput("locland.emplcnt"),
+                       valueBoxOutput("locland.emplcnt")
                            ), # end of box
 
-
+                    box(width=12,
+                        valueBoxOutput("locland.emplrate.2"),
+                        valueBoxOutput("locland.emplcnt.2")
+                    ),
   ### Employment rate over time line chart ----
                        column(width=6,
                               plotlyOutput("EmpRate_time")
@@ -292,8 +295,11 @@ tabPanel(
       box(width=12,
           valueBoxOutput("skisup.FEach"),
           valueBoxOutput("skisup.APach"),
-    ), # end of box
-
+      ), # end of box
+      box(width=12,
+          valueBoxOutput("skisup.FEach.2"),
+          valueBoxOutput("skisup.APach.2"),
+      ), # end of box
       box(width=12,
   ### Achievements over time line chart ----
 
@@ -382,7 +388,10 @@ tabPanel(
           valueBoxOutput("jobad.pc"),
           valueBoxOutput("jobad.ch"),
       ), # end of box
-      
+      box(width=12,
+          valueBoxOutput("jobad.pc.2"),
+          valueBoxOutput("jobad.ch.2"),
+      ), # end of box
       box(width=12,
           ### ONS job advert information ----
           
