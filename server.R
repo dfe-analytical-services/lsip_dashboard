@@ -199,7 +199,7 @@ server <- function(input, output, session) {
   ## Employment by occupation data table ----
 
   EmpOcc <- reactive({
-    C_EmpOcc_APS1721 %>%
+    EmpOcc <- C_EmpOcc_APS1721 %>%
       filter(year == "2021") %>%
       filter(geographic_level == "lep"|
              geographic_level=="country",# cleans up for London and South East which is included as lep and gor
@@ -207,8 +207,11 @@ server <- function(input, output, session) {
              area == input$lep1 |
              area == input$lep2)%>%
       select(-year, -geographic_level)%>%
+      as.data.frame()%>%
       t()%>%
       row_to_names(row_number=1)
+    #%>%
+      #mutate_if(is.character, as.numeric)
   })
 
   output$EmpOcc <- renderDataTable({
