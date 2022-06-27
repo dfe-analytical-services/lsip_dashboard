@@ -136,6 +136,81 @@ fluidPage(
                   ) # end of FluidRow
                 ) # end of FluidPage
               ), # end of Tab Panel
+
+# OVERVIEW ----
+tabPanel(
+  "Overview",
+  sidebarLayout(
+    ## Side panel ----
+    sidebarPanel(
+      width = 2,
+      br(),
+      ### LEP 1 input ---------------
+      selectizeInput("lep0a",
+                     "Choose the area(s) you want to look at",
+                     choices=C_LEP2020,
+                     selected="England",multiple=TRUE
+      ),
+      radioButtons("OccSect", 
+                         "Do you want to look at a particular sector or occupation group?", 
+                         choices = list("Occupation" = 1, 
+                                        "Sector" = 2),
+                         selected = 1),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      ### Download button -------------
+      downloadButton(
+        outputId = "download_btn0",
+        label = "Download",
+        icon = shiny::icon("download")
+      )
+    ), # end of side panel
+    ## Main panel ----
+    mainPanel(
+     # width=10,
+      ### Title ----
+      uiOutput("page0title", style="font-size: 24px;"),
+      br(),
+      div("Change measured since the same time year", style = "font-size: 16px; font-style: italic;"),
+      br(),
+      ### KPI boxes ----
+      fluidRow(
+        column(6,
+          box(title="Labour market",valueBoxOutput("locland.emplcnt0"))
+        ),
+          column(6,
+          box(valueBoxOutput("locland.emplrate0"))
+          )
+          ),
+        fluidRow(
+        column(6,
+          box(title="Skills landscape")),
+        column(6,
+          valueBox(10 * 2, "New Orders", icon = icon("credit-card")
+          ) 
+        )
+    )
+  ) # end of side bar layout
+), # end of Overview tab
+
 # LOCAL LANDSCAPE ----
              tabPanel(
                "Local Landscape",

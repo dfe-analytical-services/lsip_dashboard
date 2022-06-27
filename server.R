@@ -80,6 +80,9 @@ server <- function(input, output, session) {
   # })
   
 # Define page titles ----
+  output$page0title <- renderUI({
+    paste0(input$lep0a, ": Overview of Local Landscape")
+  })
   
   output$page1title <- renderUI({
     paste0(input$lep1, ": Overview of Local Landscape")
@@ -94,7 +97,45 @@ server <- function(input, output, session) {
     paste0(input$lep5, ": Overview of Skill Demand")
   })
   
-
+  # OVERVIEW ----
+  
+  ## KPIs ----
+  
+  ### Employment rate -----
+  output$locland.emplrate0 <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      # take input number
+      paste(
+        format(100.*(C_EmpRate_APS1721 %>%
+                       filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
+                              area==input$lep0a,
+                              year=="2021")
+        )$empRate,digits=3),
+        "%"),
+      # add subtitle to explain what it's showing
+      paste0("Employment rate in ",input$lep0a), 
+      icon = icon("circle-up", lib = "glyphicon"),color="purple"
+    )
+  })
+  
+  ### Employment count ----
+  output$locland.emplcnt0 <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      # take input number
+      format((C_EmpRate_APS1721 %>%
+                filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
+                       area==input$lep0a,
+                       year=="2021")
+      )$"28  in employment ",
+      scientific=FALSE,big.mark=","),
+      # add subtitle to explain what it's showing
+      paste0("In employment in ",input$lep0a), color="green"
+    )
+  })
+  
+  
 # LOCAL LANDSCAPE ----
 
  ## KPIs ----
