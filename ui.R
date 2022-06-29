@@ -150,7 +150,7 @@ tabPanel(
       selectizeInput("lep0a",
                      "Choose the area(s) you want to look at",
                      choices=C_LEP2020,
-                     selected="England",multiple=TRUE
+                     selected="England"#,multiple=TRUE
       ),
       radioButtons("OccSect", 
                          "Do you want to look at a particular sector or occupation group?", 
@@ -173,12 +173,16 @@ tabPanel(
          div("Change measured since the same time year", style = "font-size: 16px; font-style: italic;"),
          br(),
       fluidRow(
+        
+##Rich I want this column to take up half the mainPanel. It doesn't seem to take up half, more like a third.
         column(width = 6,
                box(
                  title = "Labour market", width = NULL,
                  #valueBoxOutput("locland.emplcnt0")
-                 "testing how thi silly thing works hsajhsakhdskdj;akdsa;lkdl;a"
+                 "testing how this silly thing works hsajh sakhds kdjjdslkjd salkjdsa ljdsklajdlkasj dladjlad jlsjdk lsdajdajdl"
                ,background="green"),
+##Rich Then i want a column of boxes, each also taking up the whole column (ie half the main panel), but seems about a third of the column.  I can show you a ppt template of what i want it to look like.
+    ##confusing if you shrink the screen so it is more like a mobile lay out, the box does fill up the column.           
                box(
                   width = NULL,
                  valueBoxOutput("locland.emplrate0")
