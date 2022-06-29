@@ -115,7 +115,7 @@ server <- function(input, output, session) {
         "%"),
       # add subtitle to explain what it's showing
       paste0("Employment rate in ",input$lep0a), 
-      icon = icon("circle-up", lib = "glyphicon"),color="purple"
+      icon = icon("circle-up", lib = "glyphicon"),color="purple", width=12
     )
   })
   
@@ -131,7 +131,7 @@ server <- function(input, output, session) {
       )$"28  in employment ",
       scientific=FALSE,big.mark=","),
       # add subtitle to explain what it's showing
-      paste0("In employment in ",input$lep0a), color="green"
+      paste0("In employment in ",input$lep0a), color="green", width=12
     )
   })
   

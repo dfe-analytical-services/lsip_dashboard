@@ -28,6 +28,7 @@
 # ---------------------------------------------------------
 
 fluidPage(
+  #useShinydashboard(),
   shinyjs::useShinyjs(),
   includeCSS("www/dfe_shiny_gov_style.css"),
   title = "DfE Analytical Services R-Shiny Template",
@@ -156,26 +157,7 @@ tabPanel(
                          choices = list("Occupation" = 1, 
                                         "Sector" = 2),
                          selected = 1),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
+
       ### Download button -------------
       downloadButton(
         outputId = "download_btn0",
@@ -185,29 +167,54 @@ tabPanel(
     ), # end of side panel
     ## Main panel ----
     mainPanel(
-     # width=10,
-      ### Title ----
-      uiOutput("page0title", style="font-size: 24px;"),
-      br(),
-      div("Change measured since the same time year", style = "font-size: 16px; font-style: italic;"),
-      br(),
-      ### KPI boxes ----
+         ### Title ----
+         uiOutput("page0title", style="font-size: 24px;"),
+         br(),
+         div("Change measured since the same time year", style = "font-size: 16px; font-style: italic;"),
+         br(),
       fluidRow(
-        column(6,
-          box(title="Labour market",valueBoxOutput("locland.emplcnt0"))
+        column(width = 6,
+               box(
+                 title = "Labour market", width = NULL,
+                 #valueBoxOutput("locland.emplcnt0")
+                 "testing how thi silly thing works hsajhsakhdskdj;akdsa;lkdl;a"
+               ,background="green"),
+               box(
+                  width = NULL,
+                 valueBoxOutput("locland.emplrate0")
+               ),
+               box(
+                 width = NULL, 
+                 "Vacancies"
+               ),
+               box(
+                 width = NULL, 
+                 "average salary"
+               )
         ),
-          column(6,
-          box(valueBoxOutput("locland.emplrate0"))
-          )
-          ),
-        fluidRow(
-        column(6,
-          box(title="Skills landscape")),
-        column(6,
-          valueBox(10 * 2, "New Orders", icon = icon("credit-card")
-          ) 
-        )
+        
+        column(width = 6,
+               box(
+                 title = "Skills landscape", width = NULL,
+                 "qualified at level 4"
+               ),
+               box(
+                 width = NULL,
+                 "adult education and skills"
+               ),
+               box(
+                 width = NULL,
+                 "app starts"
+               ),
+               box(
+                 width = NULL,
+                 "HE entrants"
+               ),
+        ),
+        
+      )
     )
+
   ) # end of side bar layout
 ), # end of Overview tab
 
