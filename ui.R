@@ -136,9 +136,9 @@ fluidPage(
                   ) # end of FluidRow
                 ) # end of FluidPage
               ), # end of Tab Panel
-# LOCAL LANDSCAPE ----
+# EMPLOYMENT ----
              tabPanel(
-               "Local Landscape",
+               "Employment",
 
                # Define UI for application that draws a histogram
 
@@ -184,12 +184,25 @@ fluidPage(
                    br(),
                    br(),
                    br(),
-  ### Download button -------------
+  helpText("Click to download all underlying data (.csv)"
+           ,style = "font-style: italic;"
+  ),
+  ### Download button for filtered data-------------
                    downloadButton(
                      outputId = "download_btn1",
                      label = "Download",
                      icon = shiny::icon("download")
                    ),
+ br(),
+ helpText("Click to download selected data (.csv)"
+           ,style = "font-style: italic;"
+  ),
+  ### Download button all data for all indicators ------------
+  downloadButton(
+    outputId = "download_btn2",
+    label = "Download",
+    icon = shiny::icon("download")
+  ),
 
                  ), # end of side panel
  ## Main panel ----
@@ -226,9 +239,9 @@ fluidPage(
              ), # end of Local Landscape tab
 
 
-#SKILL SUPPLY ----
+#ADULT FE AND APPRENTICESHIPS ----
 tabPanel(
-  "Skill Supply",
+  "Adult FE and Apprenticheships",
 
   # Define UI for application that draws a histogram
 
@@ -238,7 +251,7 @@ tabPanel(
     sidebarPanel(
       width = 2,
   ### Help text --------------------
-      helpText("Choose a Local Area to view skill supply trends"
+      helpText("Choose a Local Area to view adult FE and apprenticeship trends"
                ,style = "font-style: italic;"
       ),
       br(),
@@ -274,12 +287,25 @@ tabPanel(
       br(),
       br(),
       br(),
-  ### Download button -------------
-      downloadButton(
-        outputId = "download_btn2",
-        label = "Download",
-        icon = shiny::icon("download")
-      ),
+  helpText("Click to download all underlying data (.csv)"
+           ,style = "font-style: italic;"
+  ),
+  ### Download button for filtered data-------------
+  downloadButton(
+    outputId = "download_btn3",
+    label = "Download",
+    icon = shiny::icon("download")
+  ),
+  br(),
+  helpText("Click to download selected data (.csv)"
+           ,style = "font-style: italic;"
+  ),
+  ### Download button all data for all indicators ------------
+  downloadButton(
+    outputId = "download_btn4",
+    label = "Download",
+    icon = shiny::icon("download")
+  ),
 
     ), # end of side panel
  ## Main panel ----
@@ -318,9 +344,9 @@ tabPanel(
   ) # end of side bar layout
 ), # end of Skills Supply tab
 
-# SKILL DEMAND ---------------
+# VACANCIES ---------------
 tabPanel(
-  "Skill Demand",
+  "Vacancies",
   
   # Define UI for application that draws a histogram
   
@@ -330,7 +356,7 @@ tabPanel(
     sidebarPanel(
       width = 2,
       ### Help text --------------------
-      helpText("Choose a Local Area to view skill demand trends"
+      helpText("Choose a Local Area to view online vacancy trends"
                ,style = "font-style: italic;"
       ),
       br(),
@@ -366,9 +392,22 @@ tabPanel(
       br(),
       br(),
       br(),
-      ### Download button -------------
+      helpText("Click to download all underlying data (.csv)"
+               ,style = "font-style: italic;"
+      ),
+      ### Download button for filtered data-------------
       downloadButton(
-        outputId = "download_btn3",
+        outputId = "download_btn5",
+        label = "Download",
+        icon = shiny::icon("download")
+      ),
+      br(),
+      helpText("Click to download selected data (.csv)"
+               ,style = "font-style: italic;"
+      ),
+      ### Download button all data for all indicators ------------
+      downloadButton(
+        outputId = "download_btn6",
         label = "Download",
         icon = shiny::icon("download")
       ),
