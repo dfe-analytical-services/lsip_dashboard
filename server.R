@@ -82,20 +82,20 @@ server <- function(input, output, session) {
 # Define page titles ----
   
   output$page1title <- renderUI({
-    paste0(input$lep1, ": Overview of Local Landscape")
+    paste0(input$lep1, ": Overview of Employment")
   })
   
   output$page2title <- renderUI({
-    paste0(input$lep3, ": Overview of Skill Supply")
+    paste0(input$lep3, ": Overview of Adult FE and Apprenticheships")
   })
 
   
   output$page3title <- renderUI({
-    paste0(input$lep5, ": Overview of Skill Demand")
+    paste0(input$lep5, ": Overview of Vacancies")
   })
   
 
-# LOCAL LANDSCAPE ----
+# EMPLOYMENT ----
 
  ## KPIs ----
 
@@ -218,7 +218,7 @@ server <- function(input, output, session) {
     EmpOcc()
     })
 
-# SKILL SUPPLY ----
+# ADULT FE AND APPRENTICESHIPS ----
   ## KPIs ----
   ### FE achievements -----
   output$skisup.FEach <- renderValueBox({
@@ -350,7 +350,7 @@ server <- function(input, output, session) {
                          yanchor='bottom',
                          orientation='h'))
   })
-# SKILL DEMAND ----
+# VCANCIES ----
   ## KPIs ----
    ### ONS job advert unit percent of total  ----
   output$jobad.pc <- renderValueBox({
