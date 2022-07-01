@@ -12,7 +12,7 @@
 # Other elements like charts, navigation bars etc. are completely up to you to decide what goes in.
 # However, every element should meet accessibility requirements and user needs.
 #
-# This file uses a slider input, but other inputs are available like date selections, multiple choice dropdowns etc.
+# This fil e uses a slider input, but other inputs are available like date selections, multiple choice dropdowns etc.
 # Use the shiny cheatsheet to explore more options: https://shiny.rstudio.com/images/shiny-cheatsheet.pdf
 #
 # Likewise, this template uses the navbar layout.
@@ -106,6 +106,8 @@ fluidPage(
  
  ## Right panel ------------------------------------------------------
 
+ 
+ 
                    column(
                      6,
                      div(
