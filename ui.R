@@ -28,7 +28,6 @@
 # ---------------------------------------------------------
 
 fluidPage(
-  #useShinydashboard(),
   shinyjs::useShinyjs(),
   includeCSS("www/dfe_shiny_gov_style.css"),
   title = "DfE Analytical Services R-Shiny Template",
@@ -48,7 +47,7 @@ fluidPage(
   # ),
   
   # Set title for search engines
-  HTML("<title>Local Skils Dashboard</title>"),
+  HTML("<title>Local Skills Dashboard</title>"),
   
 # Navbar ====================================================================
   
@@ -58,7 +57,7 @@ fluidPage(
                            .navbar-nav {
                            float: none !important;
                            }
-                           .navbar-nav > li:nth-child(7) {
+                           .navbar-nav > li:nth-child(9) {
                            float: right;
                            }
                            ")))
@@ -167,52 +166,112 @@ tabPanel(
     ), # end of side panel
     ## Main panel ----
     mainPanel(
+      width=10,
          ### Title ----
          uiOutput("page0title", style="font-size: 24px;"),
-         br(),
          div("Change measured since the same time year", style = "font-size: 16px; font-style: italic;"),
          br(),
       fluidRow(
-        
-##Rich I want this column to take up half the mainPanel. It doesn't seem to take up half, more like a third.
+        #left column
         column(width = 6,
+               div(
+                 div(
+                   class = "panel panel-info",
+                   div(
+                     class = "panel-heading",
+                     style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;text-align:center",
+                     h2("Labour market")
+                   ),
+                   div(
+                     class = "panel-body",
+             #first row - emp vol
+               box(width = NULL,
+                 valueBoxOutput("locland.emplcnt0", width=8),
+                 valueBoxOutput("locland.emplcntchange0",width=4)),
+                 br(),
+             #second row - emp rate
+               box(width=NULL,
+                   valueBoxOutput("locland.emplrate0",width=8),
+                   valueBoxOutput("locland.emplchange0",width=4)),
+             #third row - link to emp tab
                box(
-                 title = "Labour market", width = NULL,
-                 #valueBoxOutput("locland.emplcnt0")
-                 "testing how this silly thing works hsajh sakhds kdjjdslkjd salkjdsa ljdsklajdlkasj dladjlad jlsjdk lsdajdajdl"
-               ,background="green"),
-##Rich Then i want a column of boxes, each also taking up the whole column (ie half the main panel), but seems about a third of the column.  I can show you a ppt template of what i want it to look like.
-    ##confusing if you shrink the screen so it is more like a mobile lay out, the box does fill up the column.           
+                 width = 12, 
+                 actionLink("link_to_tabpanel_employment", "Find out more about employment")
+                ),
+             #fourth row - vacancies
+               box(width = NULL, 
+                 valueBoxOutput("jobad.units", width=8),
+                 valueBoxOutput("jobad.change",width=4)),
+              #fifth row - link to vacancy data
                box(
-                  width = NULL,
-                 valueBoxOutput("locland.emplrate0")
+                 width = 12, 
+                 actionLink("link_to_tabpanel_skill_demand", "Find out more about vacancies")
                ),
+               box(width = NULL, 
+                   valueBoxOutput("earn.avg", width=8),
+                   valueBoxOutput("earn.change",width=4)),
                box(
-                 width = NULL, 
-                 "Vacancies"
-               ),
-               box(
-                 width = NULL, 
-                 "average salary"
+                 width = 12, 
+                 actionLink("link_to_tabpanel_earnings", "Find out more about earnings")
                )
+                   )
+                 )
+               ),
         ),
-        
+        #right column
         column(width = 6,
-               box(
-                 title = "Skills landscape", width = NULL,
-                 "qualified at level 4"
-               ),
-               box(
-                 width = NULL,
-                 "adult education and skills"
-               ),
-               box(
-                 width = NULL,
-                 "app starts"
-               ),
-               box(
-                 width = NULL,
-                 "HE entrants"
+               div(
+                 div(
+                   class = "panel panel-info",
+                   div(
+                     class = "panel-heading",
+                     style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;text-align:center",
+                     h2("Skills landscape")
+                   ),
+                   div(
+                     class = "panel-body",
+                     #first row - level 4 starts
+                     box(width = NULL, 
+                         valueBoxOutput("skills.l4", width=8),
+                         valueBoxOutput("skills.l4change",width=4)),
+                     #2nd row - link to skills population data
+                     box(
+                       width = 12, 
+                       actionLink("link_to_tabpanel_skills", "Find out more about skills")
+                     ),
+                     #3rd row - E&T 
+                     box(
+                       width = NULL,
+                       valueBoxOutput("skisup.ETach", width=8),
+                       valueBoxOutput("skisup.ETachChange", width=4)
+                     ),
+                     #4th row - link to E&T data
+                     box(
+                       width = 12, 
+                       actionLink("link_to_tabpanel_skills", "Find out more about skills")
+                     ),
+                     #5th row - apps
+                     box(
+                       width = NULL,
+                       valueBoxOutput("skisup.APPach", width=8),
+                       valueBoxOutput("skisup.APPachChange", width=4)
+                     ),
+                     #6th row - link to app data
+                     box(
+                       width = 12, 
+                       actionLink("link_to_tabpanel_skills", "Find out more about skills")
+                     ),
+                     #7th row - HE
+                     box(width = NULL, 
+                         valueBoxOutput("he.entrants", width=8),
+                         valueBoxOutput("he.entrantschange",width=4)),
+                     #8th row - link to HE data
+                     box(
+                       width = 12, 
+                       actionLink("link_to_tabpanel_HE", "Find out more about HE")
+                     ),
+                   )
+                 )
                ),
         ),
         
@@ -224,7 +283,7 @@ tabPanel(
 
 # LOCAL LANDSCAPE ----
              tabPanel(
-               "Local Landscape",
+               "Employment",
 
                # Define UI for application that draws a histogram
 
@@ -501,6 +560,154 @@ tabPanel(
     ) # end of main panel
   ) # end of side bar layout
 ), # end of Skills Supply tab
+
+# Earnings ---------------
+tabPanel(
+  "Earnings",
+  
+  # Define UI for application that draws a histogram
+  
+  # Sidebar with a slider input for number of bins
+  sidebarLayout(
+    ## Side panel ----
+    sidebarPanel(
+      width = 2,
+      ### Help text --------------------
+      helpText("Choose a Local Area to view skill demand trends"
+               ,style = "font-style: italic;"
+      ),
+      br(),
+      ### LEP 7 input ---------------
+      selectizeInput("lep7",
+                     "Choose a primary LEP:",
+                     choices=C_LEP2020,
+                     selected="England",
+      ),
+      ### LEP 8 input ------------
+      selectizeInput("lep8", # Make no selection an option
+                     "Choose a comparison LEP (optional):",
+                     choices=C_LEP2020,
+                     selected="England",
+      ),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      ### Download button -------------
+      downloadButton(
+        outputId = "download_btn4",
+        label = "Download",
+        icon = shiny::icon("download")
+      ),
+      
+    ), # end of side panel
+    ## Main panel ----
+    # Show a plot of the generated distribution
+    mainPanel(
+      width=10,
+      ### Title ----
+      uiOutput("page4title", style="font-size: 24px;"),
+      br(),
+      div("XXX", style = "font-size: 16px; font-style: italic;"),
+      br(),
+      ### KPI boxes ----
+      box(width=12,"blank"
+         # valueBoxOutput("jobad.pc"),
+         # valueBoxOutput("jobad.ch"),
+      ), # end of box
+    ) # end of main panel
+  ) # end of side bar layout
+), # end of earnings tab
+
+# HE ---------------
+tabPanel(
+  "HE",
+  
+  # Define UI for application that draws a histogram
+  
+  # Sidebar with a slider input for number of bins
+  sidebarLayout(
+    ## Side panel ----
+    sidebarPanel(
+      width = 2,
+      ### Help text --------------------
+      helpText("Choose a Local Area to view skill demand trends"
+               ,style = "font-style: italic;"
+      ),
+      br(),
+      ### LEP 9 input ---------------
+      selectizeInput("lep9",
+                     "Choose a primary LEP:",
+                     choices=C_LEP2020,
+                     selected="England",
+      ),
+      ### LEP 10 input ------------
+      selectizeInput("lep10", # Make no selection an option
+                     "Choose a comparison LEP (optional):",
+                     choices=C_LEP2020,
+                     selected="England",
+      ),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      br(),
+      ### Download button -------------
+      downloadButton(
+        outputId = "download_btn5",
+        label = "Download",
+        icon = shiny::icon("download")
+      ),
+      
+    ), # end of side panel
+    ## Main panel ----
+    # Show a plot of the generated distribution
+    mainPanel(
+      width=10,
+      ### Title ----
+      uiOutput("page5title", style="font-size: 24px;"),
+      br(),
+      div("XXX", style = "font-size: 16px; font-style: italic;"),
+      br(),
+      ### KPI boxes ----
+      box(width=12,"blank"
+          # valueBoxOutput("jobad.pc"),
+          # valueBoxOutput("jobad.ch"),
+      ), # end of box
+    ) # end of main panel
+  ) # end of side bar layout
+), # end of HE tab
 
 # Methodology tab -----------------
 
