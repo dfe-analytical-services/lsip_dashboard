@@ -81,7 +81,7 @@ server <- function(input, output, session) {
   
 # Define page titles ----
   output$page0title <- renderUI({
-    paste0(input$lep0a, ": overview of local landscape (AY20/21)")
+    paste0(input$lep0a, ": overview of local landscape")
   })
   
   output$page1title <- renderUI({
@@ -105,8 +105,29 @@ server <- function(input, output, session) {
   })
   
   # OVERVIEW ----
+  #download all core indicators
+  list_of_datasets <- list("2.Emp by occupation" = C_EmpOcc_APS1721,
+                           "5.Emp rate" = C_EmpRate_APS1721,
+                           "12.FE achievements SSA"=C_Achieve_ILR21,
+                           "x.FE achievements"=C_Achieve_ILR1621,
+                           "22.Vacancies"=C_Vacancy_ONS1722)
   
-  ## KPIs ----
+  output$download_btn0a <- downloadHandler(
+    filename = function() { "CoreIndicators.xlsx"},
+    content = function(file) {write_xlsx(list_of_datasets, path = file)}
+  )
+  #Download current indicators
+  
+  current_datasets<-C_EmpRate_APS1721 
+  # %>%
+  #   filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
+  #          area==input$lep0a,
+  #          year=="2021")
+  
+  output$download_btn0b <- downloadHandler(
+    filename = function() { "CurrentIndicators.xlsx"},
+    content = function(file) {write_xlsx(current_datasets, path = file)}
+  )
   
   # Conditional icon for widget.
   # Returns arrow-up icon on true (if true_direction is 'up')
@@ -127,6 +148,8 @@ server <- function(input, output, session) {
     colours <- c("green","red")
     return(ifelse(condition, true_color, colours[!colours == true_color]))
   }
+  
+  ## KPIs ----
   
   ### Employment count ----
   output$locland.emplcnt0 <- renderValueBox({
@@ -491,11 +514,8 @@ x<-(100.*((C_EmpRate_APS1721 %>%
       geom_line()+
       theme_minimal()+
       expand_limits(y = 0.6)+
-      labs(colour = "Area")+
-      theme(legend.position="bottom")+
-      ggtitle("Employment Rate \n 2017-2021")+
-      xlab("Year")+
-      ylab("Employment Rate")+
+      ggtitle("Employment Rate")+
+      theme(axis.title.x=element_blank(),axis.title.y=element_blank())+
       scale_y_continuous(labels = scales::percent_format(accuracy=1))
   })
 
