@@ -81,7 +81,7 @@ server <- function(input, output, session) {
   
 # Define page titles ----
   output$page0title <- renderUI({
-    paste0(input$lep0a, ": Overview of Local Landscape")
+    paste0(input$lep0a, ": overview of local landscape (AY20/21)")
   })
   
   output$page1title <- renderUI({
@@ -92,32 +92,41 @@ server <- function(input, output, session) {
     paste0(input$lep3, ": Overview of Skill Supply")
   })
 
-  
   output$page3title <- renderUI({
     paste0(input$lep5, ": Overview of Skill Demand")
+  })
+  
+  output$page4title <- renderUI({
+    paste0(input$lep7, ": Overview of earnings")
+  })
+  
+  output$page5title <- renderUI({
+    paste0(input$lep9, ": Overview of HE")
   })
   
   # OVERVIEW ----
   
   ## KPIs ----
   
-  ### Employment rate -----
-  output$locland.emplrate0 <- renderValueBox({
-    # Put value into box to plug into app
-    valueBox(
-      # take input number
-      paste(
-        format(100.*(C_EmpRate_APS1721 %>%
-                       filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
-                              area==input$lep0a,
-                              year=="2021")
-        )$empRate,digits=3),
-        "%"),
-      # add subtitle to explain what it's showing
-      paste0("Employment rate in ",input$lep0a), 
-      icon = icon("circle-up", lib = "glyphicon"),color="purple", width=12
-    )
-  })
+  # Conditional icon for widget.
+  # Returns arrow-up icon on true (if true_direction is 'up')
+  cond_icon <- function(condition, true_direction = "up") {
+    if (true_direction == "up") {
+      return(icon(ifelse(condition, "arrow-up", "arrow-down"), "fa-2x fa-beat"))
+    }
+    return(icon(ifelse(condition, "arrow-down", "arrow-up"), "fa-2x fa-beat"))
+  }
+  
+  # Conditional color for widget
+  # Returns 'green' on true, 'red' on false, e.g. api usage % change > 0
+  #                                               load time % change < 0
+  cond_color <- function(condition, true_color = "green") {
+    if(is.na(condition)){
+      return("black")
+    }
+    colours <- c("green","red")
+    return(ifelse(condition, true_color, colours[!colours == true_color]))
+  }
   
   ### Employment count ----
   output$locland.emplcnt0 <- renderValueBox({
@@ -130,11 +139,272 @@ server <- function(input, output, session) {
                        year=="2021")
       )$"28  in employment ",
       scientific=FALSE,big.mark=","),
-      # add subtitle to explain what it's showing
-      paste0("In employment in ",input$lep0a), color="green", width=12
+      "people employed"
+      ,width=12
+      ,color="blue"
     )
   })
   
+  ### Employment change ----
+  output$locland.emplcntchange0 <- renderValueBox({
+#get value
+    x<-((C_EmpRate_APS1721 %>%
+          filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
+                 area==input$lep0a,
+                 year=="2021")
+    )$"28  in employment "
+    -(C_EmpRate_APS1721 %>%
+        filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
+               area==input$lep0a,
+               year=="2020")
+    )$"28  in employment ")
+#build box   
+    valueBox(
+      sprintf("%+.0f",x),
+      subtitle = NULL
+      ,width=12
+      ,icon = cond_icon(x > 0)
+      ,color = cond_color(x > 0)
+    )
+  })
+    
+  ### Employment rate -----
+  output$locland.emplrate0 <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      # take input number
+      paste(
+        format(100.*(C_EmpRate_APS1721 %>%
+                       filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
+                              area==input$lep0a,
+                              year=="2021")
+        )$empRate,digits=2),
+        "%"),
+      paste("employment rate (compared with ",
+            
+              format(100.*(C_EmpRate_APS1721 %>%
+                             filter(geographic_level == "country", # cleans up for London which is included as lep and gor
+                                    year=="2021")
+              )$empRate,digits=2),
+              "% for England)")
+            , width=12
+      ,color="blue"
+    )
+  })
+  
+  ### Employment rate change -----
+  output$locland.emplchange0 <- renderValueBox({
+x<-(100.*((C_EmpRate_APS1721 %>%
+            filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
+                   area==input$lep0a,
+                   year=="2021"))$empRate-
+           (C_EmpRate_APS1721 %>%
+              filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
+                     area==input$lep0a,
+                     year=="2020"))$empRate))
+    valueBox(
+      # take input number
+      paste(
+        sprintf("%+.0f",x
+        ),
+        "ppts"),subtitle = NULL,
+      width=12
+      ,icon = cond_icon(x > 0)
+      ,color = cond_color(x > 0)
+    )
+  })
+ 
+  #Add button to link to employment data 
+  observeEvent(input$link_to_tabpanel_employment, {
+    updateTabsetPanel(session, "navbar", "Employment")
+  })
+  
+  ### ONS job advert units  ----
+  output$jobad.units <- renderValueBox({
+    valueBox(C_Vacancy_England %>%
+                       filter(year == "2022",
+                              LEP == input$lep0a)%>%
+                       summarise(job.unit=sum(vacancy_unit)),
+      "job vacancy units",
+      width=12
+      ,color="blue"
+    )
+  })
+  
+  ### ONS job advert units change  ----
+  output$jobad.change <- renderValueBox({
+    x<-((C_Vacancy_England %>%
+           filter(year == "2022",
+                  LEP == input$lep0a)%>%
+           summarise(job.unit=sum(vacancy_unit)))
+        -(C_Vacancy_England %>%
+            filter(year == "2021",
+                   LEP == input$lep0a)%>%
+            summarise(job.unit=sum(vacancy_unit))))
+    valueBox(
+      sprintf("%+.0f",x),
+      subtitle=NULL,
+      width=12
+      ,icon = cond_icon(x > 0)
+      ,color = cond_color(x > 0)     
+    )
+  })
+  
+  #Add button to link to vacancy data 
+  observeEvent(input$link_to_tabpanel_skill_demand, {
+    updateTabsetPanel(session, "navbar", "Skill Demand")
+  })
+  
+  ### Average salary  ----
+  output$earn.avg <- renderValueBox({
+    valueBox("£xxk",
+             "average salary",
+             width=12
+             ,color="blue"
+    )
+  })
+  
+  ### Average salary change  ----
+  output$earn.change <- renderValueBox({
+    x<-(1000)
+    valueBox(
+      sprintf("%+.0f",x),
+      subtitle=NULL,
+      width=12
+      ,icon = cond_icon(x > 0)
+      ,color = cond_color(x > 0)     
+    )
+  })
+  
+  #Add button to link to salary data 
+  observeEvent(input$link_to_tabpanel_earnings, {
+    updateTabsetPanel(session, "navbar", "Earnings")
+  })
+  
+  ### L4+  ----
+  output$skills.l4 <- renderValueBox({
+    valueBox("x,xxx",
+             "qualified at level 4+",
+             width=12
+             ,color="blue"
+    )
+  })
+  
+  ### L4+ change  ----
+  output$skills.l4change <- renderValueBox({
+    x<-(-1000)
+    valueBox(
+      sprintf("%+.0f",x),
+      subtitle=NULL,
+      width=12
+      ,icon = cond_icon(x > 0)
+      ,color = cond_color(x > 0)     
+    )
+  })
+ 
+  #Add button to link to skills data 
+  observeEvent(input$link_to_tabpanel_skills, {
+    updateTabsetPanel(session, "navbar", "Skill Supply")
+  }) 
+  
+  
+  ### E&T achievements -----
+  output$skisup.ETach <- renderValueBox({
+    valueBox(
+      format((C_Achieve_ILR1621 %>%
+                filter(time_period=="202021",
+                       LEP == input$lep0a, 
+                       level_or_type == "Education and training: Total")%>%
+                dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
+      "Education and training acheivements",
+      width=12
+      ,color="blue"
+    )
+  })
+  
+  ### E&T achievements change -----
+  output$skisup.ETachChange <- renderValueBox({
+    x<-((C_Achieve_ILR1621 %>%
+          filter(time_period=="202021",
+                 LEP == input$lep0a, 
+                 level_or_type == "Education and training: Total")%>%
+          summarise(App_ach=sum(achievements)))
+    -(C_Achieve_ILR1621 %>%
+        filter(time_period=="201920",
+               LEP == input$lep0a, 
+               level_or_type == "Education and training: Total")%>%
+        summarise(App_ach=sum(achievements))))
+    valueBox(
+      sprintf("%+.0f",x
+             ),
+      subtitle=NULL,
+      width=12
+      ,icon = cond_icon(x > 0)
+      ,color = cond_color(x > 0)    
+    )
+  })
+  
+  ### App achievements ----
+  output$skisup.APPach <- renderValueBox({
+    valueBox(
+      format((C_Achieve_ILR1621 %>%
+                filter(time_period=="202021",
+                       LEP == input$lep0a, 
+                       level_or_type == "Apprenticeships: Total")%>%
+                dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
+      "Apprenticeship achievements",
+      width=12
+      ,color="blue"
+    )
+  })
+  
+  ### App achievements change ----
+  output$skisup.APPachChange <- renderValueBox({
+    x<-((C_Achieve_ILR1621 %>%
+          filter(time_period=="202021",
+                 LEP == input$lep0a, 
+                 level_or_type == "Apprenticeships: Total")%>%
+          summarise(App_ach=sum(achievements)))
+    -(C_Achieve_ILR1621 %>%
+        filter(time_period=="201920",
+               LEP == input$lep0a, 
+               level_or_type == "Apprenticeships: Total")%>%
+        summarise(App_ach=sum(achievements))))
+    valueBox(
+      sprintf("%+.0f",x
+             ),
+      subtitle=NULL,
+      width=12
+      ,icon = cond_icon(x > 0)
+      ,color = cond_color(x > 0)  
+    )
+  }) 
+
+  ### HE entrants  ----
+  output$he.entrants <- renderValueBox({
+    valueBox("x,xxx",
+             "HE entrants",
+             width=12
+             ,color="blue"
+    )
+  })
+  
+  ### HE+ change  ----
+  output$he.entrantschange <- renderValueBox({
+    x<-(1000)
+    valueBox(
+      sprintf("%+.0f",x),
+      subtitle=NULL,
+      width=12
+      ,icon = cond_icon(x > 0)
+      ,color = cond_color(x > 0)     
+    )
+  })
+  
+  #Add button to link to skills data 
+  observeEvent(input$link_to_tabpanel_HE, {
+    updateTabsetPanel(session, "navbar", "HE")
+  }) 
   
 # LOCAL LANDSCAPE ----
 
