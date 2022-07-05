@@ -159,8 +159,14 @@ tabPanel(
 
       ### Download button -------------
       downloadButton(
-        outputId = "download_btn0",
-        label = "Download",
+        outputId = "download_btn0a",
+        label = "Download all data",
+        icon = shiny::icon("download")
+      ),
+      br(),
+      downloadButton(
+        outputId = "download_btn0b",
+        label = "Download current data",
         icon = shiny::icon("download")
       )
     ), # end of side panel
@@ -185,31 +191,36 @@ tabPanel(
                    div(
                      class = "panel-body",
              #first row - emp vol
-               box(width = NULL,
+               box(id="box_emplcnt",width = NULL,
                  valueBoxOutput("locland.emplcnt0", width=8),
                  valueBoxOutput("locland.emplcntchange0",width=4)),
+                bsTooltip("box_emplcnt", "Source:APS. 2021 (calendar)"),
                  br(),
              #second row - emp rate
-               box(width=NULL,
+               box(id="box_emplrate",width=NULL,
                    valueBoxOutput("locland.emplrate0",width=8),
                    valueBoxOutput("locland.emplchange0",width=4)),
+             bsTooltip("box_emplrate", "Source: APS. 2021 (calendar)"),
              #third row - link to emp tab
                box(
                  width = 12, 
                  actionLink("link_to_tabpanel_employment", "Find out more about employment")
                 ),
              #fourth row - vacancies
-               box(width = NULL, 
+               box(id="box_job",width = NULL, 
                  valueBoxOutput("jobad.units", width=8),
                  valueBoxOutput("jobad.change",width=4)),
+             bsTooltip("box_job", "Source: ONS (Adzuna). Jan 2022"),
               #fifth row - link to vacancy data
                box(
                  width = 12, 
                  actionLink("link_to_tabpanel_skill_demand", "Find out more about vacancies")
                ),
-               box(width = NULL, 
+               box(id="box_earn",width = NULL, 
                    valueBoxOutput("earn.avg", width=8),
-                   valueBoxOutput("earn.change",width=4)),
+                   valueBoxOutput("earn.change",width=4),
+                   bsTooltip("box_earn", "Source:?")),
+
                box(
                  width = 12, 
                  actionLink("link_to_tabpanel_earnings", "Find out more about earnings")
@@ -231,19 +242,20 @@ tabPanel(
                    div(
                      class = "panel-body",
                      #first row - level 4 starts
-                     box(width = NULL, 
+                     box(id="box_L4",width = NULL, 
                          valueBoxOutput("skills.l4", width=8),
                          valueBoxOutput("skills.l4change",width=4)),
+                     bsTooltip("box_l4", "Source:?"),
                      #2nd row - link to skills population data
                      box(
                        width = 12, 
                        actionLink("link_to_tabpanel_skills", "Find out more about skills")
                      ),
                      #3rd row - E&T 
-                     box(
-                       width = NULL,
+                     box(id="box_ET",width = NULL,
                        valueBoxOutput("skisup.ETach", width=8),
-                       valueBoxOutput("skisup.ETachChange", width=4)
+                       valueBoxOutput("skisup.ETachChange", width=4),
+                       bsTooltip("box_ET", "Source:ILR AY20/21"),
                      ),
                      #4th row - link to E&T data
                      box(
@@ -251,10 +263,10 @@ tabPanel(
                        actionLink("link_to_tabpanel_skills", "Find out more about skills")
                      ),
                      #5th row - apps
-                     box(
-                       width = NULL,
+                     box(id="box_app",width = NULL,
                        valueBoxOutput("skisup.APPach", width=8),
-                       valueBoxOutput("skisup.APPachChange", width=4)
+                       valueBoxOutput("skisup.APPachChange", width=4),
+                       bsTooltip("box_app", "Source:ILR AY20/21"),
                      ),
                      #6th row - link to app data
                      box(
@@ -262,9 +274,10 @@ tabPanel(
                        actionLink("link_to_tabpanel_skills", "Find out more about skills")
                      ),
                      #7th row - HE
-                     box(width = NULL, 
+                     box(id="box_he",width = NULL, 
                          valueBoxOutput("he.entrants", width=8),
                          valueBoxOutput("he.entrantschange",width=4)),
+                     bsTooltip("box_he", "Source:?"),
                      #8th row - link to HE data
                      box(
                        width = 12, 
