@@ -27,65 +27,13 @@ server <- function(input, output, session) {
   hide(id = "loading-content", anim = TRUE, animType = "fade")
   show("app-content")
   
-  # Simple server stuff goes here ------------------------------------------------------------
-  # Download data -----------------------------------------------------------
-  
-  # to_download_pg1 <- reactiveValues(
-  #   subsectors_table = subsectors_table,
-  #   highest_qualification_table = highest_qualification_table,
-  #   qualifications_titles_table = qualifications_titles_table,
-  #   subjects_table = subjects_table,
-  #   income_proportions_table = income_proportions_table,
-  #   working_futures_table = working_futures_table
-  #   # qualifications_pathways_table = qualifications_pathways_table,
-  #   # progression_to_work_by_level_table = progression_to_work_by_level_table
-  # )
-  # 
-  # 
-  # output$download_btn1 <- downloadHandler(
-  #   filename = function() {
-  #     paste("data_", Sys.Date(), ".zip", sep = "")
-  #   },
-  #   content = function(file) {
-  #     temp_directory <- file.path(tempdir(), as.integer(Sys.time()))
-  #     dir.create(temp_directory)
-  #     
-  #     
-  #     reactiveValuesToList(to_download_pg1) %>%
-  #       imap(function(x, y) {
-  #         if (!is.null(x)) {
-  #           file_name <- glue("{y}_data.csv")
-  #           write.csv(x, file.path(temp_directory, file_name), row.names = F)
-  #         }
-  #       })
-  #     
-  #     zip::zip(
-  #       zipfile = file,
-  #       files = dir(temp_directory),
-  #       root = temp_directory
-  #     )
-  #   },
-  #   contentType = "application/zip"
-  # )
-  
-  # Define server logic required to draw a histogram
-  # output$distPlot <- renderPlot({
-  #   
-  #   # generate bins based on input$bins from ui.R
-  #   x <- faithful[, 2]
-  #   bins <- seq(min(x), max(x), length.out = input$bins + 1)
-  #   
-  #   # draw the histogram with the specified number of bins
-  #   hist(x, breaks = bins, col = "darkgray", border = "white")
-  # })
-  
 # Define page titles ----
   output$page0title <- renderUI({
     paste0(input$lep0a, ": overview of local landscape")
   })
   
   output$page1title <- renderUI({
-    paste0(input$lep1, ": Overview of Local Landscape")
+    paste0(input$lep1, ": employment trends")
   })
   
   output$page2title <- renderUI({
@@ -105,6 +53,8 @@ server <- function(input, output, session) {
   })
   
   # OVERVIEW ----
+  
+###Downloads---- 
   #download all core indicators
   list_of_datasets <- list("2.Emp by occupation" = C_EmpOcc_APS1721,
                            "5.Emp rate" = C_EmpRate_APS1721,
@@ -116,20 +66,19 @@ server <- function(input, output, session) {
     filename = function() { "CoreIndicators.xlsx"},
     content = function(file) {write_xlsx(list_of_datasets, path = file)}
   )
-  #Download current indicators
   
-  current_datasets<-C_EmpRate_APS1721 
-  # %>%
-  #   filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
-  #          area==input$lep0a,
-  #          year=="2021")
+  #Download current indicators
+  filtered_data  <- reactive({
+    filter(C_EmpRate_APS1721, geographic_level == "lep", # cleans up for London which is included as lep and gor
+                    area==input$lep0a,
+                    year=="2021")})
   
   output$download_btn0b <- downloadHandler(
-    filename = function() { "CurrentIndicators.xlsx"},
-    content = function(file) {write_xlsx(current_datasets, path = file)}
+    filename = function() {"CurrentIndicators.csv"},
+    content = function(con) {write.csv(filtered_data(), con)}
   )
-  
-  # Conditional icon for widget.
+
+###Conditional functions---- 
   # Returns arrow-up icon on true (if true_direction is 'up')
   cond_icon <- function(condition, true_direction = "up") {
     if (true_direction == "up") {
@@ -429,40 +378,36 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     updateTabsetPanel(session, "navbar", "HE")
   }) 
   
-# LOCAL LANDSCAPE ----
+# EMPLOYMENT ----
 
  ## KPIs ----
 
   ### Employment rate -----
   output$locland.emplrate <- renderValueBox({
-    # Put value into box to plug into app
     valueBox(
-      # take input number
       paste(
         format(100.*(C_EmpRate_APS1721 %>%
                        filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
                               area==input$lep1,
                               year=="2021")
-        )$empRate,digits=3),
+        )$empRate,digits=2),
         "%"),
-      # add subtitle to explain what it's showing
       paste0("Employment rate in ",input$lep1),
       color="blue"
     )
   })
 
   output$locland.emplrate.2 <- renderValueBox({
-    # Put value into box to plug into app
+    if(input$lep2=="\nNone")
+      return(NULL)
     valueBox(
-      # take input number
       paste(
         format(100.*(C_EmpRate_APS1721 %>%
                        filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
                               area==input$lep2,
                               year=="2021")
-        )$empRate,digits=3),
+        )$empRate,digits=2),
         "%"),
-      # add subtitle to explain what it's showing
       paste0("Employment rate in ",input$lep2),
       color="blue"
     )
@@ -477,7 +422,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
                        area==input$lep1,
                        year=="2021")
       )$"28  in employment ",
-      scientific=FALSE),
+      scientific=FALSE,big.mark=","),
       # add subtitle to explain what it's showing
       paste0("In employment in ",input$lep1),
       color="blue"
@@ -485,16 +430,13 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   })
   
   output$locland.emplcnt.2 <- renderValueBox({
-    # Put value into box to plug into app
     valueBox(
-      # take input number
       format((C_EmpRate_APS1721 %>%
                 filter(geographic_level == "lep", # cleans up for London which is included as lep and gor
                        area==input$lep2,
                        year=="2021")
       )$"28  in employment ",
-      scientific=FALSE),
-      # add subtitle to explain what it's showing
+      scientific=FALSE,big.mark=","),
       paste0("In employment in ",input$lep2),
       color="blue"
     )
@@ -514,17 +456,15 @@ x<-(100.*((C_EmpRate_APS1721 %>%
       geom_line()+
       theme_minimal()+
       expand_limits(y = 0.6)+
-      ggtitle("Employment Rate")+
-      theme(axis.title.x=element_blank(),axis.title.y=element_blank())+
-      scale_y_continuous(labels = scales::percent_format(accuracy=1))
+      ggtitle("Employment rate")+
+      theme(axis.title.x=element_blank(),axis.title.y=element_blank(),legend.position = "bottom", legend.title = element_blank())+
+      scale_y_continuous(labels = scales::percent_format(accuracy=1))+
+      labs(colour = "")
   })
 
   output$EmpRate_time <- renderPlotly({
     ggplotly(EmpRate_time()) %>%
-      layout(legend=list(x=0.2,y=-0.3,
-                         xanchor='left',
-                                 yanchor='bottom',
-                                 orientation='h'))
+      layout(legend = list(orientation = "h", x = 0, y = -0.1))
   })
 
   ## Employment by occupation data table ----

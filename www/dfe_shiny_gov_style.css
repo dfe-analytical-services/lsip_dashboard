@@ -29,7 +29,7 @@
 }
 
 .well {
-    min-height: 90vh; 
+    /* min-height: 90vh; Got rid of this so sidebar shrinks in mobile view*/
     padding: 19px;
     margin-bottom: 20px;
     background-color: #1d70b8;
