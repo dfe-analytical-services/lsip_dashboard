@@ -50,18 +50,6 @@ fluidPage(
   HTML("<title>Local Skills Dashboard</title>"),
   
 # Navbar ====================================================================
-  
-  # This CSS sets the 4th item on the navbar to the right
-  tagList(
-    tags$head(tags$style(HTML("
-                           .navbar-nav {
-                           float: none !important;
-                           }
-                           .navbar-nav > li:nth-child(9) {
-                           float: right;
-                           }
-                           ")))
-  ),
   navbarPage("",
              id = "navbar",
              
@@ -245,7 +233,7 @@ tabPanel(
                      box(id="box_L4",width = NULL, 
                          valueBoxOutput("skills.l4", width=8),
                          valueBoxOutput("skills.l4change",width=4)),
-                     bsTooltip("box_l4", "Source:?"),
+                     bsTooltip("box_L4", "Source:?"),
                      #2nd row - link to skills population data
                      box(
                        width = 12, 
@@ -294,54 +282,30 @@ tabPanel(
   ) # end of side bar layout
 ), # end of Overview tab
 
-# LOCAL LANDSCAPE ----
+# EMPLOYMENT ----
              tabPanel(
                "Employment",
 
-               # Define UI for application that draws a histogram
-
-               # Sidebar with a slider input for number of bins
+               # Sidebar
                sidebarLayout(
  ## Side panel ----
                  sidebarPanel(
                    width = 2,
-  ### Help text --------------------
-                   helpText("Choose a Local Area to view employment trends"
-                            ,style = "font-style: italic;"
-                   ),
-                   br(),
+
   ### LEP 1 input ---------------
                    selectizeInput("lep1",
-                                  "Choose a primary LEP:",
+                                  "Choose a LEP:",
                                   choices=C_LEP2020,
                                   selected="England",
                    ),
   ### LEP 2 input ------------
-                   selectizeInput("lep2", # Make no selection an option
+                   selectizeInput("lep2",
                                   "Choose a comparison LEP (optional):",
-                                  choices=C_LEP2020,
-                                  selected="England",
+                                  choices=c("\nNone", unique(C_LEP2020)),
+                                  multiple = F,
+                                  selected="Black Country"
                    ),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
-                   br(),
+                   
   ### Download button -------------
                    downloadButton(
                      outputId = "download_btn1",
@@ -356,7 +320,6 @@ tabPanel(
                    width=10,
   ### Title ----
                    uiOutput("page1title", style="font-size: 24px;"),
-                   br(),
                    div("Data for employees aged 25-30 in sustained employment in the 2018-19 tax year", style = "font-size: 16px; font-style: italic;"),
                    br(),
 
@@ -364,12 +327,12 @@ tabPanel(
                    box(width=12,
                        valueBoxOutput("locland.emplrate"),
                        valueBoxOutput("locland.emplcnt")
-                           ), # end of box
-
+                      ),
                     box(width=12,
                         valueBoxOutput("locland.emplrate.2"),
                         valueBoxOutput("locland.emplcnt.2")
-                    ),
+                      ),
+  br(),
   ### Employment rate over time line chart ----
                        column(width=6,
                               plotlyOutput("EmpRate_time")
