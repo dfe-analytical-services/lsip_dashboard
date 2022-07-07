@@ -18,9 +18,9 @@ library(janitor)
 
 # Load data ----
 ## LEP 2020 ----
-I_LEP2020 <- read.xlsx(xlsxFile="./Data/2020 LEP.xlsx", sheet=1, skipEmptyRows=T)
+I_LEP2020 <- read.xlsx(xlsxFile="./Data/OA11_LAD21_LSOA11_MSOA11_LEP21_EN_v3.xlsx", sheet=1, skipEmptyRows=T)
 C_LEP2020 <- I_LEP2020 %>%
-  select(ERNM)
+  distinct(LEP=LEP21NM1)
 
 ## APS ----
 ### Core indicator 2: Employment by occupation ----
@@ -64,6 +64,7 @@ format.EmpOcc.APS <- function(x) {
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
     mutate_at(c(3:27),as.numeric)%>% # Convert to numeric
+    mutate(area=case_when(area=="Hull and East Riding" ~ "Hull and East Yorkshire",TRUE ~ area))%>%#Rename so matches official name
     relocate(geographic_level, .after = area)%>%
     mutate(year=as.numeric(substr(year, 5, 8)))%>%
     rename_with(.fn = ~ str_replace_all(.x, c("t09a_"="","all_people"="","soc2010"="","_"=" ")),
@@ -82,6 +83,7 @@ format.EmpRate.APS <- function(x) {
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area))%>% # Tidy up Area names
     mutate_at(c(2:9),as.numeric)%>% # Convert to numeric
+    mutate(area=case_when(area=="Hull and East Riding" ~ "Hull and East Yorkshire",TRUE ~ area))%>%#Rename so matches official name
     select(year=x2017, area, everything(), - check)%>%# reorder and remove
     mutate(empRate = .[[5]]/.[[3]])%>%
     relocate(geographic_level, .after = area)%>%
@@ -93,7 +95,7 @@ format.EmpRate.APS <- function(x) {
 format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
   colnames(x)[1] <- "area"
   x %>% 
-    left_join(select(I_LEP2020,LACD,LEP=ERNM),by= c("location_code"="LACD"))%>%
+    left_join(distinct(I_LEP2020,LAD21CD,LEP=LEP21NM1),by= c("location_code"="LAD21CD"))%>%
     relocate(LEP, .after = geographic_level)%>%
     relocate(time_period, .before = area)%>%
     rename_all(recode, e_and_t_aims_ach="achievements")%>%
@@ -103,8 +105,8 @@ format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
 #Reshape vacancy data to long, rename and reorder and reformat some columns
 format.Vacancy.ONS <- function(x) { # need to clean up colnames
   x %>% gather(year, vacancy_unit, 3:8)%>%
-    dplyr::rename(LA="Local.authority.[note.1]",region="Region.[note.2]")%>%
-    left_join(select(I_LEP2020,LANM,LEP=ERNM),by= c("LA"="LANM"))%>%
+    rename(LA="Local.authority.[note.1]",region="Region.[note.2]")%>%
+    left_join(distinct(I_LEP2020,LAD21NM,LEP=LEP21NM1),by= c("LA"="LAD21NM"))%>%
     relocate(LEP, .after = region)%>%
     relocate(year,.before=LA)%>%
     mutate(year=as.numeric(year))
@@ -129,7 +131,7 @@ C_Vacancy_England <- C_Vacancy_ONS1722 %>%
            region != "Scotland"|
            region != "Northern Ireland")%>%
   group_by(year)%>%
-  dplyr::summarise(England = sum(vacancy_unit))%>%
+  summarise(England = sum(vacancy_unit))%>%
   right_join(C_Vacancy_ONS1722, by="year")%>%
   mutate(pc_total = vacancy_unit/England)
 

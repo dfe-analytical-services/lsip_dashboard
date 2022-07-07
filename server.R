@@ -37,7 +37,7 @@ server <- function(input, output, session) {
   })
   
   output$page2title <- renderUI({
-    paste0(input$lep3, ": Overview of Skill Supply")
+    paste0(input$lep3, ": skill supply trends")
   })
 
   output$page3title <- renderUI({
@@ -52,33 +52,7 @@ server <- function(input, output, session) {
     paste0(input$lep9, ": Overview of HE")
   })
   
-  # OVERVIEW ----
-  
-###Downloads---- 
-  #download all core indicators
-  list_of_datasets <- list("2.Emp by occupation" = C_EmpOcc_APS1721,
-                           "5.Emp rate" = C_EmpRate_APS1721,
-                           "12.FE achievements SSA"=C_Achieve_ILR21,
-                           "x.FE achievements"=C_Achieve_ILR1621,
-                           "22.Vacancies"=C_Vacancy_ONS1722)
-  
-  output$download_btn0a <- downloadHandler(
-    filename = function() { "CoreIndicators.xlsx"},
-    content = function(file) {write_xlsx(list_of_datasets, path = file)}
-  )
-  
-  #Download current indicators
-  filtered_data  <- reactive({
-    filter(C_EmpRate_APS1721, geographic_level == "lep", # cleans up for London which is included as lep and gor
-                    area==input$lep0a,
-                    year=="2021")})
-  
-  output$download_btn0b <- downloadHandler(
-    filename = function() {"CurrentIndicators.csv"},
-    content = function(con) {write.csv(filtered_data(), con)}
-  )
-
-###Conditional functions---- 
+  ###Conditional functions---- 
   # Returns arrow-up icon on true (if true_direction is 'up')
   cond_icon <- function(condition, true_direction = "up") {
     if (true_direction == "up") {
@@ -98,8 +72,36 @@ server <- function(input, output, session) {
     return(ifelse(condition, true_color, colours[!colours == true_color]))
   }
   
-  ## KPIs ----
+  # OVERVIEW ----
   
+###Downloads---- 
+  #download all indicators
+  list_of_datasets0 <- list("2.Emp by occupation" = C_EmpOcc_APS1721,
+                           "5.Emp rate" = C_EmpRate_APS1721,
+                           "12a.FE achievements SSA"=C_Achieve_ILR21,
+                           "12b.FE achievements"=C_Achieve_ILR1621,
+                           "22.Vacancies"=C_Vacancy_ONS1722)
+  output$download_btn0a <- downloadHandler(
+    filename = function() { "CoreIndicators.xlsx"},
+    content = function(file) {write_xlsx(list_of_datasets0, path = file)}
+  )
+  
+  #Download current LEP indicators
+  filtered_data0  <- reactive({
+    list("2.Emp by occupation" = filter(C_EmpOcc_APS1721,geographic_level == "lep",area == input$lep0a),
+         "5.Emp rate" = filter(C_EmpRate_APS1721, geographic_level == "lep",area==input$lep0a),
+         "12a.FE achievements SSA"=filter(C_Achieve_ILR21,LEP == input$lep0a),
+         "12b.FE achievements"=filter(C_Achieve_ILR1621,LEP == input$lep0a),
+         "22.Vacancies"=filter(C_Vacancy_ONS1722,LEP == input$lep0a)
+    )
+    })
+  output$download_btn0b <- downloadHandler(
+    filename = function() {"CurrentIndicators.xlsx"},
+    content = function(file) {write_xlsx(filtered_data0(), path = file)}
+  )
+
+  ## KPIs ----
+
   ### Employment count ----
   output$locland.emplcnt0 <- renderValueBox({
     # Put value into box to plug into app
@@ -287,7 +289,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
                 filter(time_period=="202021",
                        LEP == input$lep0a, 
                        level_or_type == "Education and training: Total")%>%
-                dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
+                        summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
       "Education and training acheivements",
       width=12
       ,color="blue"
@@ -379,7 +381,26 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   }) 
   
 # EMPLOYMENT ----
-
+  ###Downloads---- 
+  #download employment indicators
+  list_of_datasets1 <- list("2.Emp by occupation" = C_EmpOcc_APS1721,
+                            "5.Emp rate" = C_EmpRate_APS1721)
+  output$download_btn1a <- downloadHandler(
+    filename = function() { "EmploymentIndicators.xlsx"},
+    content = function(file) {write_xlsx(list_of_datasets1, path = file)}
+  )
+  
+  #Download current LEP indicators
+  filtered_data1  <- reactive({
+    list("2.Emp by occupation" = filter(C_EmpOcc_APS1721,geographic_level == "lep",area == input$lep1),
+         "5.Emp rate" = filter(C_EmpRate_APS1721, geographic_level == "lep",area==input$lep1)
+    )
+  })
+  output$download_btn1b <- downloadHandler(
+    filename = function() {"CurrentEmploymentIndicators.xlsx"},
+    content = function(file) {write_xlsx(filtered_data1(), path = file)}
+  )
+  
  ## KPIs ----
 
   ### Employment rate -----
@@ -398,8 +419,8 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   })
 
   output$locland.emplrate.2 <- renderValueBox({
-    if(input$lep2=="\nNone")
-      return(NULL)
+   # if(input$lep2=="\nNone")
+   #   return(NULL)
     valueBox(
       paste(
         format(100.*(C_EmpRate_APS1721 %>%
@@ -468,7 +489,6 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   })
 
   ## Employment by occupation data table ----
-
   EmpOcc <- reactive({
     EmpOcc <- C_EmpOcc_APS1721 %>%
       filter(year == "2021") %>%
@@ -489,7 +509,27 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     EmpOcc()
     })
 
-# SKILL SUPPLY ----
+# SKILLS ----
+  ###Downloads---- 
+  #download skills indicators
+  list_of_datasets2 <- list("12a.FE achievements SSA"=C_Achieve_ILR21,
+                            "12b.FE achievements"=C_Achieve_ILR1621)
+  output$download_btn2a <- downloadHandler(
+    filename = function() { "SkillIndicators.xlsx"},
+    content = function(file) {write_xlsx(list_of_datasets2, path = file)}
+  )
+  
+  #Download current LEP indicators
+  filtered_data2  <- reactive({
+    list("12a.FE achievements SSA"=filter(C_Achieve_ILR21,LEP == input$lep3),
+         "12b.FE achievements"=filter(C_Achieve_ILR1621,LEP == input$lep3)
+    )
+  })
+  output$download_btn2b <- downloadHandler(
+    filename = function() {"CurrentSkillIndicators.xlsx"},
+    content = function(file) {write_xlsx(filtered_data2(), path = file)}
+  )
+  
   ## KPIs ----
   ### FE achievements -----
   output$skisup.FEach <- renderValueBox({
@@ -499,7 +539,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
                 filter(time_period=="202122",
                        LEP == input$lep3, 
                        level_or_type == "Further education and skills: Total")%>%
-                dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE),
+                summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
       paste0("FE Achievements in ", input$lep3),
       color="blue"
     )
@@ -512,12 +552,11 @@ x<-(100.*((C_EmpRate_APS1721 %>%
                 filter(time_period=="202122",
                        LEP == input$lep4, 
                        level_or_type == "Further education and skills: Total")%>%
-                dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE),
-      paste0("FE Achievements in ", input$lep4),
+                dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
+      paste0("FE achievements in ", input$lep4),
       color="blue"
     )
   }) 
-
 
   ### Apprentichesip achievements ----
   output$skisup.APach <- renderValueBox({
@@ -527,7 +566,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
                  filter(time_period=="202122",
                         LEP == input$lep3, 
                         level_or_type == "Apprenticeships: Total")%>%
-                 dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE),
+                        summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
         paste0("Apprenticeship achievements in ", input$lep3),
         color="blue"
       )
@@ -540,13 +579,12 @@ x<-(100.*((C_EmpRate_APS1721 %>%
                 filter(time_period=="202122",
                        LEP == input$lep4, 
                        level_or_type == "Apprenticeships: Total")%>%
-                dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE),
+                      summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
       paste0("Apprenticeship achievements in ", input$lep4),
       color="blue"
     )
   })
 
-  
   ## Achievements over time line chart ----
   Ach_time <- reactive({
     C_Achieve_ILR1621 %>%
@@ -558,31 +596,25 @@ x<-(100.*((C_EmpRate_APS1721 %>%
       level_or_type == "Apprenticeships: Total"|
         level_or_type =="Further education and skills: Total") %>%
     group_by(time_period, LEP, level_or_type)%>%
-    dplyr::summarise(Achievements=sum(achievements))%>%
+    summarise(Achievements=sum(achievements))%>%
     ggplot(aes(x=time_period, y=Achievements, colour = LEP, shape = level_or_type,
                        group=interaction(level_or_type, LEP)))+
     geom_point() + 
     geom_line()+
-    theme(legend.position = "bottom")+
     theme_minimal()+
+    theme(legend.position = "bottom",axis.title.x=element_blank(),axis.title.y=element_blank())+
     #expand_limits(y = 0)+
-    labs(shape = "Type", colour = "Area")+
-    # theme(legend.position="bottom")+
-    ggtitle("FE and Apprenticeship achievements \n 2017-2021")+
+    labs(shape = "", colour = "")+
+    ggtitle("FE and apprenticeship achievements")+
     xlab("Year")
   })
   
-  
   output$Ach_time <- renderPlotly({
     ggplotly(Ach_time())%>%
-      layout(legend=list(x=0.2,y=-5,
-                         xanchor='left',
-                         yanchor='bottom',
-                         orientation='h'))
+      layout(legend = list(orientation = "h", x = 0, y = -0.1))
   })
   
   ## Achievements pc bar chart ----
-  
   Ach_SSA_pc <- reactive ({
     AchSSA_21 <- C_Achieve_ILR21 %>%
     filter(time_period== "202122" ,
@@ -591,28 +623,27 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     #  area == "England")%>%
     select(LEP, SSA=ssa_t1_desc, Achievements = achievements)%>%
     group_by(LEP, SSA)%>%
-    dplyr::summarise(Achievements=sum(Achievements))%>%
+    summarise(Achievements=sum(Achievements))%>%
     ungroup()
 
     Ach_pc <- AchSSA_21 %>%
       filter(SSA == "Total")%>%
       select(LEP, Total=SSA, Total_ach=Achievements)
-
+  
     Ach_SSA_pc <- AchSSA_21 %>%
       left_join(Ach_pc, by = "LEP")%>%
       group_by(LEP)%>%
-      dplyr::mutate(pc = Achievements/Total_ach)%>%
+      mutate(pc = Achievements/Total_ach)%>%
       filter(SSA != "Total")%>%
       ggplot(aes(x=LEP, y=pc, fill=SSA))+
       geom_col()+
       coord_flip()+
       theme_minimal()+
       theme(legend.position="bottom")+
-      #scale_fill_brewer(palette="Set1")
-      scale_fill_manual(values=cbPalette)+
+      scale_fill_brewer(palette="Set1")+
+      #scale_fill_manual(values=cbPalette)+
       ggtitle("Achievements by Sector Subject Area (tier 1) \n Academic year 202021")
   })
-
 
   output$Ach_SSA_pc <- renderPlotly({
     ggplotly(Ach_SSA_pc())%>%
@@ -621,7 +652,24 @@ x<-(100.*((C_EmpRate_APS1721 %>%
                          yanchor='bottom',
                          orientation='h'))
   })
-# SKILL DEMAND ----
+# VACANCIES ----
+  
+  ###Downloads---- 
+  #download skills indicators
+  list_of_datasets3 <- list("22.Vacancies"=C_Vacancy_ONS1722)
+  output$download_btn3a <- downloadHandler(
+    filename = function() { "VacancyIndicators.xlsx"},
+    content = function(file) {write_xlsx(list_of_datasets3, path = file)}
+  )
+  
+  #Download current LEP indicators
+  filtered_data3  <- reactive({
+    list("22.Vacancies"=filter(C_Vacancy_ONS1722,LEP == input$lep5))
+  })
+  output$download_btn3b <- downloadHandler(
+    filename = function() {"CurrentVacancyIndicators.xlsx"},
+    content = function(file) {write_xlsx(filtered_data3(), path = file)}
+  )
   ## KPIs ----
    ### ONS job advert unit percent of total  ----
   output$jobad.pc <- renderValueBox({
@@ -719,18 +767,14 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     geom_line()+
     theme_minimal()+
     labs(colour = "LEP")+
-    theme(legend.position="bottom")+
-    ggtitle("Online job vacancy units over time \n January 2017- January 2022")+
-    xlab("Year")+
-    ylab("Job vacancy units")
+    theme(legend.position = "bottom",axis.title.x=element_blank(),axis.title.y=element_blank())+
+    ggtitle("Online job vacancy units")+
+      labs(shape = "", colour = "")
   })
   
   output$jobad.time <- renderPlotly({
       ggplotly(jobad.time())%>%
-        layout(legend=list(x=0.2,y=-0.5,
-                           xanchor='left',
-                           yanchor='bottom',
-                           orientation='h'))
+        layout(legend=list(orientation = "h", x = 0, y = -0.1))
     })
 
   # Ach_time <- reactive({

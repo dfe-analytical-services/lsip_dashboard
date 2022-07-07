@@ -144,17 +144,19 @@ tabPanel(
                          choices = list("Occupation" = 1, 
                                         "Sector" = 2),
                          selected = 1),
-
+      ### Help text --------------------
+      helpText("Download all available indicators for:"
+               ,style = "font-style: italic;"
+      ),
       ### Download button -------------
       downloadButton(
         outputId = "download_btn0a",
-        label = "Download all data",
+        label = "All LEPs",
         icon = shiny::icon("download")
       ),
-      br(),
       downloadButton(
         outputId = "download_btn0b",
-        label = "Download current data",
+        label = "Current LEP",
         icon = shiny::icon("download")
       )
     ), # end of side panel
@@ -302,16 +304,23 @@ tabPanel(
                    selectizeInput("lep2",
                                   "Choose a comparison LEP (optional):",
                                   choices=c("\nNone", unique(C_LEP2020)),
-                                  multiple = F,
-                                  selected="Black Country"
+                                  multiple = F
                    ),
-                   
-  ### Download button -------------
+  ### Help text --------------------
+  helpText("Download employment indicators for:"
+           ,style = "font-style: italic;"
+  ),                   
+  ### Download buttons -------------
                    downloadButton(
-                     outputId = "download_btn1",
-                     label = "Download",
+                     outputId = "download_btn1a",
+                     label = "All LEPs",
                      icon = shiny::icon("download")
                    ),
+  downloadButton(
+    outputId = "download_btn1b",
+    label = "Current LEP",
+    icon = shiny::icon("download")
+  ),
 
                  ), # end of side panel
  ## Main panel ----
@@ -347,9 +356,9 @@ tabPanel(
              ), # end of Local Landscape tab
 
 
-#SKILL SUPPLY ----
+#SKILLS ----
 tabPanel(
-  "Skill Supply",
+  "Skills",
 
   # Define UI for application that draws a histogram
 
@@ -358,11 +367,6 @@ tabPanel(
  ## Side panel ----
     sidebarPanel(
       width = 2,
-  ### Help text --------------------
-      helpText("Choose a Local Area to view skill supply trends"
-               ,style = "font-style: italic;"
-      ),
-      br(),
   ### LEP 3 input ---------------
       selectizeInput("lep3",
                      "Choose a primary LEP:",
@@ -372,58 +376,44 @@ tabPanel(
   ### LEP 4 input ------------
       selectizeInput("lep4", # Make no selection an option
                      "Choose a comparison LEP (optional):",
-                     choices=C_LEP2020,
-                     selected="England",
+                     choices=c("\nNone", unique(C_LEP2020))
       ),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-  ### Download button -------------
-      downloadButton(
-        outputId = "download_btn2",
-        label = "Download",
-        icon = shiny::icon("download")
-      ),
+  ### Help text --------------------
+  helpText("Download skills indicators for:"
+           ,style = "font-style: italic;"
+  ),                   
+  ### Download buttons -------------
+  downloadButton(
+    outputId = "download_btn2a",
+    label = "All LEPs",
+    icon = icon("download")
+  ),
+  downloadButton(
+    outputId = "download_btn2b",
+    label = "Current LEP",
+    icon = icon("download")
+  ),
 
     ), # end of side panel
  ## Main panel ----
-    # Show a plot of the generated distribution
     mainPanel(
       width=10,
   ### Title ----
       uiOutput("page2title", style="font-size: 24px;"),
-      br(),
-      div("XXX", style = "font-size: 16px; font-style: italic;"),
+      div("xxx", style = "font-size: 16px; font-style: italic;"),
       br(),
   ### KPI boxes ----
       box(width=12,
           valueBoxOutput("skisup.FEach"),
           valueBoxOutput("skisup.APach"),
-      ), # end of box
+      ), 
       box(width=12,
           valueBoxOutput("skisup.FEach.2"),
           valueBoxOutput("skisup.APach.2"),
-      ), # end of box
+      ), 
       box(width=12,
+          
   ### Achievements over time line chart ----
-
           column(width=6,
                  plotlyOutput("Ach_time")),
 
@@ -439,12 +429,9 @@ tabPanel(
   ) # end of side bar layout
 ), # end of Skills Supply tab
 
-# SKILL DEMAND ---------------
+# VACANCIES ---------------
 tabPanel(
-  "Skill Demand",
-  
-  # Define UI for application that draws a histogram
-  
+  "Vacancies",
   # Sidebar with a slider input for number of bins
   sidebarLayout(
     ## Side panel ----
@@ -464,34 +451,22 @@ tabPanel(
       ### LEP 6 input ------------
       selectizeInput("lep6", # Make no selection an option
                      "Choose a comparison LEP (optional):",
-                     choices=C_LEP2020,
-                     selected="England",
+                     choices=c("\nNone", unique(C_LEP2020))
       ),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      ### Download button -------------
+      ### Help text --------------------
+      helpText("Download vacancy indicators for:"
+               ,style = "font-style: italic;"
+      ),                   
+      ### Download buttons -------------
       downloadButton(
-        outputId = "download_btn3",
-        label = "Download",
-        icon = shiny::icon("download")
+        outputId = "download_btn3a",
+        label = "All LEPs",
+        icon = icon("download")
+      ),
+      downloadButton(
+        outputId = "download_btn3b",
+        label = "Current LEP",
+        icon = icon("download")
       ),
       
     ), # end of side panel
@@ -501,7 +476,6 @@ tabPanel(
       width=10,
       ### Title ----
       uiOutput("page3title", style="font-size: 24px;"),
-      br(),
       div("XXX", style = "font-size: 16px; font-style: italic;"),
       br(),
       ### KPI boxes ----
@@ -537,7 +511,7 @@ tabPanel(
   ) # end of side bar layout
 ), # end of Skills Supply tab
 
-# Earnings ---------------
+# EARNINGS ---------------
 tabPanel(
   "Earnings",
   
@@ -562,34 +536,22 @@ tabPanel(
       ### LEP 8 input ------------
       selectizeInput("lep8", # Make no selection an option
                      "Choose a comparison LEP (optional):",
-                     choices=C_LEP2020,
-                     selected="England",
+                     choices=c("\nNone", unique(C_LEP2020))
       ),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      ### Download button -------------
+      ### Help text --------------------
+      helpText("Download earnings indicators for:"
+               ,style = "font-style: italic;"
+      ),                   
+      ### Download buttons -------------
       downloadButton(
-        outputId = "download_btn4",
-        label = "Download",
-        icon = shiny::icon("download")
+        outputId = "download_btn4a",
+        label = "All LEPs",
+        icon = icon("download")
+      ),
+      downloadButton(
+        outputId = "download_btn4b",
+        label = "Current LEP",
+        icon = icon("download")
       ),
       
     ), # end of side panel
@@ -599,7 +561,6 @@ tabPanel(
       width=10,
       ### Title ----
       uiOutput("page4title", style="font-size: 24px;"),
-      br(),
       div("XXX", style = "font-size: 16px; font-style: italic;"),
       br(),
       ### KPI boxes ----
@@ -636,34 +597,22 @@ tabPanel(
       ### LEP 10 input ------------
       selectizeInput("lep10", # Make no selection an option
                      "Choose a comparison LEP (optional):",
-                     choices=C_LEP2020,
-                     selected="England",
+                     choices=c("\nNone", unique(C_LEP2020))
       ),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      br(),
-      ### Download button -------------
+      ### Help text --------------------
+      helpText("Download HE indicators for:"
+               ,style = "font-style: italic;"
+      ),                   
+      ### Download buttons -------------
       downloadButton(
-        outputId = "download_btn5",
-        label = "Download",
-        icon = shiny::icon("download")
+        outputId = "download_btn5a",
+        label = "All LEPs",
+        icon = icon("download")
+      ),
+      downloadButton(
+        outputId = "download_btn5b",
+        label = "Current LEP",
+        icon = icon("download")
       ),
       
     ), # end of side panel
@@ -673,7 +622,6 @@ tabPanel(
       width=10,
       ### Title ----
       uiOutput("page5title", style="font-size: 24px;"),
-      br(),
       div("XXX", style = "font-size: 16px; font-style: italic;"),
       br(),
       ### KPI boxes ----
