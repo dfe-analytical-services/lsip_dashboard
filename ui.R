@@ -181,40 +181,45 @@ tabPanel(
                    div(
                      class = "panel-body",
              #first row - emp vol
-               box(id="box_emplcnt",width = NULL,
-                 valueBoxOutput("locland.emplcnt0", width=8),
-                 valueBoxOutput("locland.emplcntchange0",width=4)),
-                bsTooltip("box_emplcnt", "Source:APS. 2021 (calendar)"),
-                 br(),
+             tags$div(
+               title="Source: APS. 2021 (calendar)",
+               valueBoxOutput("locland.emplcnt0", width=8),
+               valueBoxOutput("locland.emplcntchange0",width=4)
+             ),
+             box(
+               width=12,
+               p(" ")
+             ),
              #second row - emp rate
-               box(id="box_emplrate",width=NULL,
-                   valueBoxOutput("locland.emplrate0",width=8),
-                   valueBoxOutput("locland.emplchange0",width=4)),
-             bsTooltip("box_emplrate", "Source: APS. 2021 (calendar)"),
+             tags$div(
+               title="Source: APS. 2021 (calendar)",
+               valueBoxOutput("locland.emplrate0",width=8),
+               valueBoxOutput("locland.emplchange0",width=4)
+             ),
+             box(
+               width=12,
+               actionLink("link_to_tabpanel_employment", "Find out more about employment")
+             ),
              #third row - link to emp tab
-               box(
-                 width = 12, 
-                 actionLink("link_to_tabpanel_employment", "Find out more about employment")
-                ),
              #fourth row - vacancies
-               box(id="box_job",width = NULL, 
-                 valueBoxOutput("jobad.units", width=8),
-                 valueBoxOutput("jobad.change",width=4)),
-             bsTooltip("box_job", "Source: ONS (Adzuna). Jan 2022"),
-              #fifth row - link to vacancy data
-               box(
-                 width = 12, 
-                 actionLink("link_to_tabpanel_skill_demand", "Find out more about vacancies")
-               ),
-               box(id="box_earn",width = NULL, 
-                   valueBoxOutput("earn.avg", width=8),
-                   valueBoxOutput("earn.change",width=4),
-                   bsTooltip("box_earn", "Source:?")),
-
-               box(
-                 width = 12, 
-                 actionLink("link_to_tabpanel_earnings", "Find out more about earnings")
-               )
+             tags$div(
+               title="Source: ONS (Adzuna). Jan 2022",
+               valueBoxOutput("jobad.units", width=8),
+               valueBoxOutput("jobad.change",width=4)
+             ),
+             #fifth row - link to vacancy data
+             box(
+               width=12,
+               actionLink("link_to_tabpanel_skill_demand", "Find out more about vacancies")
+             ),
+             tags$div(
+               title="Source: ?????",
+               valueBoxOutput("earn.avg", width=8),
+               valueBoxOutput("earn.change",width=4)
+             ),
+             box(
+             actionLink("link_to_tabpanel_earnings", "Find out more about earnings")
+             )
                    )
                  )
                ),
