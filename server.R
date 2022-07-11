@@ -686,6 +686,22 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     )
   })
   
+  output$vac_comp <- renderUI({
+    print(input$lep6)
+    if(input$lep6=='\nNone'){
+      tagList(
+        br(),
+        p("Select a comparison LEP to see the comparison data."),
+        br()
+      )
+    } else {
+      tagList(
+        valueBoxOutput("jobad.pc.2"),
+        valueBoxOutput("jobad.ch.2")
+      )
+    }
+  })
+  
   output$jobad.pc.2 <- renderValueBox({
     # Put value into box to plug into app
     valueBox(
