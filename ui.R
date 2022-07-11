@@ -483,10 +483,10 @@ tabPanel(
           valueBoxOutput("jobad.pc"),
           valueBoxOutput("jobad.ch"),
       ), # end of box
-      box(width=12,
-          valueBoxOutput("jobad.pc.2"),
-          valueBoxOutput("jobad.ch.2"),
-      ), # end of box
+      box(
+        width=12,
+        uiOutput("vac_comp")
+      ),
       box(width=12,
           ### ONS job advert information ----
           
