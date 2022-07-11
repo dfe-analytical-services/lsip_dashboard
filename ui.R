@@ -348,6 +348,7 @@ tabPanel(
                               ),
   ### Employment by occupation data table ----
                        column(width=6,
+                              p("In employment in each occupation",style = "font-size:20px;"),
                               dataTableOutput("EmpOcc")
                               )
 
@@ -359,10 +360,6 @@ tabPanel(
 #SKILLS ----
 tabPanel(
   "Skills",
-
-  # Define UI for application that draws a histogram
-
-  # Sidebar with a slider input for number of bins
   sidebarLayout(
  ## Side panel ----
     sidebarPanel(
@@ -415,12 +412,15 @@ tabPanel(
           
   ### Achievements over time line chart ----
           column(width=6,
+                 ### LEP 4 input ------------
+                 selectizeInput("skill_line", # Make no selection an option
+                                "Choose a learner group",
+                                choices=c("Apprenticeships: Total", "Education and training: Total","Community learning: Total","Further education and skills: Total")),
                  plotlyOutput("Ach_time")),
 
   ### Employment by occupation data table ----
 
           column(width=6,
-                 #p("Placeholder for Achievments by SSA bar chart"))
                  plotlyOutput("Ach_SSA_pc"))
                  #dataTableOutput("EmpOcc"))
     ) # end of box

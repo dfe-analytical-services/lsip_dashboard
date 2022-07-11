@@ -231,8 +231,8 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   
   ### Average salary  ----
   output$earn.avg <- renderValueBox({
-    valueBox("£xxk",
-             "average salary",
+    valueBox("In V2",
+             "average salary (compared with x% for England)",
              width=12
              ,color="blue"
     )
@@ -240,7 +240,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   
   ### Average salary change  ----
   output$earn.change <- renderValueBox({
-    x<-(1000)
+    x<-(0)
     valueBox(
       sprintf("%+.0f",x),
       subtitle=NULL,
@@ -257,7 +257,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   
   ### L4+  ----
   output$skills.l4 <- renderValueBox({
-    valueBox("x,xxx",
+    valueBox("In V2",
              "qualified at level 4+",
              width=12
              ,color="blue"
@@ -266,7 +266,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   
   ### L4+ change  ----
   output$skills.l4change <- renderValueBox({
-    x<-(-1000)
+    x<-(0)
     valueBox(
       sprintf("%+.0f",x),
       subtitle=NULL,
@@ -356,7 +356,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
 
   ### HE entrants  ----
   output$he.entrants <- renderValueBox({
-    valueBox("x,xxx",
+    valueBox("In V2",
              "HE entrants",
              width=12
              ,color="blue"
@@ -365,7 +365,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   
   ### HE+ change  ----
   output$he.entrantschange <- renderValueBox({
-    x<-(1000)
+    x<-(0)
     valueBox(
       sprintf("%+.0f",x),
       subtitle=NULL,
@@ -464,7 +464,6 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   })
 
   ## Employment rate over time line graph ----
-
   EmpRate_time <- reactive({
     C_EmpRate_APS1721 %>%
       select(year, area, geographic_level, empRate)%>%
@@ -498,6 +497,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
              area == input$lep1 |
              area == input$lep2)%>%
       select(-year, -geographic_level)%>%
+      mutate(across(where(is.numeric), format, big.mark=","))%>% 
       as.data.frame()%>%
       t()%>%
       row_to_names(row_number=1)
@@ -506,7 +506,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   })
 
   output$EmpOcc <- renderDataTable({
-    EmpOcc()
+    datatable(EmpOcc()) 
     })
 
 # SKILLS ----
@@ -552,7 +552,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
                 filter(time_period=="202122",
                        LEP == input$lep4, 
                        level_or_type == "Further education and skills: Total")%>%
-                dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
+                      summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
       paste0("FE achievements in ", input$lep4),
       color="blue"
     )
@@ -593,18 +593,18 @@ x<-(100.*((C_EmpRate_APS1721 %>%
       #area == "England" |
       LEP == input$lep3 |
         LEP == input$lep4,
-      level_or_type == "Apprenticeships: Total"|
-        level_or_type =="Further education and skills: Total") %>%
+      level_or_type == input$skill_line)%>% # |
+      mutate(time_period=paste(substr(time_period,3,4),"/",substr(time_period,5,6),sep = ""))%>%
     group_by(time_period, LEP, level_or_type)%>%
     summarise(Achievements=sum(achievements))%>%
-    ggplot(aes(x=time_period, y=Achievements, colour = LEP, shape = level_or_type,
+    ggplot(aes(x=time_period, y=Achievements, colour = LEP, #shape = level_or_type,
                        group=interaction(level_or_type, LEP)))+
-    geom_point() + 
+   # geom_point() + 
     geom_line()+
     theme_minimal()+
     theme(legend.position = "bottom",axis.title.x=element_blank(),axis.title.y=element_blank())+
-    #expand_limits(y = 0)+
     labs(shape = "", colour = "")+
+    scale_y_continuous(label=comma)+
     ggtitle("FE and apprenticeship achievements")+
     xlab("Year")
   })
@@ -635,22 +635,21 @@ x<-(100.*((C_EmpRate_APS1721 %>%
       group_by(LEP)%>%
       mutate(pc = Achievements/Total_ach)%>%
       filter(SSA != "Total")%>%
-      ggplot(aes(x=LEP, y=pc, fill=SSA))+
-      geom_col()+
+      ggplot(aes(x=SSA, y=pc, fill=LEP))+
+      geom_bar(stat="identity",position = "dodge")+
+      scale_y_continuous(labels = scales::percent)+
+      scale_x_discrete(label = function(SSA) stringr::str_trunc(SSA, 12)) +#truncate labels becaus ethey can be very long
       coord_flip()+
       theme_minimal()+
-      theme(legend.position="bottom")+
-      scale_fill_brewer(palette="Set1")+
-      #scale_fill_manual(values=cbPalette)+
-      ggtitle("Achievements by Sector Subject Area (tier 1) \n Academic year 202021")
+      labs(fill = "",
+           title ="All achievements by SSA tier 1. AY20/21")+
+      theme(legend.position = "bottom",
+            axis.title.x=element_blank(),axis.title.y=element_blank())
   })
 
   output$Ach_SSA_pc <- renderPlotly({
     ggplotly(Ach_SSA_pc())%>%
-      layout(legend=list(x=0.2,y=-5,
-                         xanchor='left',
-                         yanchor='bottom',
-                         orientation='h'))
+      layout(legend=list(orientation = "h", x = 0, y = -0.1))
   })
 # VACANCIES ----
   
