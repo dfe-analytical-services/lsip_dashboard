@@ -344,6 +344,7 @@ tabPanel(
   br(),
   ### Employment rate over time line chart ----
                        column(width=6,
+                              p("Employment rate",style = "font-size:20px;"),
                               plotlyOutput("EmpRate_time")
                               ),
   ### Employment by occupation data table ----
@@ -413,16 +414,16 @@ tabPanel(
   ### Achievements over time line chart ----
           column(width=6,
                  ### LEP 4 input ------------
+                 p("FE and apprenticeship achievements",style = "font-size:20px;"),
                  selectizeInput("skill_line", # Make no selection an option
                                 "Choose a learner group",
                                 choices=c("Apprenticeships: Total", "Education and training: Total","Community learning: Total","Further education and skills: Total")),
                  plotlyOutput("Ach_time")),
 
   ### Employment by occupation data table ----
-
           column(width=6,
+                 p("All achievements by SSA tier 1 (AY20/21)",style = "font-size:20px;"),
                  plotlyOutput("Ach_SSA_pc"))
-                 #dataTableOutput("EmpOcc"))
     ) # end of box
 
     ) # end of main panel
@@ -491,7 +492,7 @@ tabPanel(
           ### ONS job advert information ----
           
           column(width=4,
-                 h2("Information"),
+                 p("Information",style = "font-size:20px;"),
                  br(),
                  p("Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022. 
 "),
@@ -502,8 +503,8 @@ tabPanel(
     
           
           ### Online job vacancy units over time line chart ----
-          
           column(width=8,
+                 p("Online job vacancy units",style = "font-size:20px;"),
                  plotlyOutput("jobad.time")),
       ) # end of box
       
