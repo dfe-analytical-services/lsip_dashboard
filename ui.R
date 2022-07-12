@@ -182,7 +182,7 @@ tabPanel(
                      class = "panel-body",
              #first row - emp vol
              tags$div(
-               title="Source: APS. 2021 (calendar)",
+               title="Source: APS. 2021 calendar year",
                valueBoxOutput("locland.emplcnt0", width=8),
                valueBoxOutput("locland.emplcntchange0",width=4)
              ),
@@ -192,7 +192,7 @@ tabPanel(
              ),
              #second row - emp rate
              tags$div(
-               title="Source: APS. 2021 (calendar)",
+               title="Source: APS. 2021 calendar year",
                valueBoxOutput("locland.emplrate0",width=8),
                valueBoxOutput("locland.emplchange0",width=4)
              ),
@@ -237,20 +237,21 @@ tabPanel(
                    div(
                      class = "panel-body",
                      #first row - level 4 starts
-                     box(id="box_L4",width = NULL, 
-                         valueBoxOutput("skills.l4", width=8),
-                         valueBoxOutput("skills.l4change",width=4)),
-                     bsTooltip("box_L4", "Source:?"),
+                     tags$div(
+                       title="Source:?",
+                       valueBoxOutput("skills.l4", width=8),
+                       valueBoxOutput("skills.l4change",width=4)
+                     ),
                      #2nd row - link to skills population data
                      box(
                        width = 12, 
                        actionLink("link_to_tabpanel_skills", "Find out more about skills")
                      ),
                      #3rd row - E&T 
-                     box(id="box_ET",width = NULL,
+                     tags$div(
+                       title="Source:ILR AY20/21",
                        valueBoxOutput("skisup.ETach", width=8),
-                       valueBoxOutput("skisup.ETachChange", width=4),
-                       bsTooltip("box_ET", "Source:ILR AY20/21"),
+                       valueBoxOutput("skisup.ETachChange", width=4)
                      ),
                      #4th row - link to E&T data
                      box(
@@ -258,10 +259,10 @@ tabPanel(
                        actionLink("link_to_tabpanel_skills", "Find out more about skills")
                      ),
                      #5th row - apps
-                     box(id="box_app",width = NULL,
+                     tags$div(
+                       title="Source:ILR AY20/21",
                        valueBoxOutput("skisup.APPach", width=8),
-                       valueBoxOutput("skisup.APPachChange", width=4),
-                       bsTooltip("box_app", "Source:ILR AY20/21"),
+                       valueBoxOutput("skisup.APPachChange", width=4)
                      ),
                      #6th row - link to app data
                      box(
@@ -269,10 +270,11 @@ tabPanel(
                        actionLink("link_to_tabpanel_skills", "Find out more about skills")
                      ),
                      #7th row - HE
-                     box(id="box_he",width = NULL, 
-                         valueBoxOutput("he.entrants", width=8),
-                         valueBoxOutput("he.entrantschange",width=4)),
-                     bsTooltip("box_he", "Source:?"),
+                     tags$div(
+                       title="Source:?",
+                       valueBoxOutput("he.entrants", width=8),
+                       valueBoxOutput("he.entrantschange",width=4)
+                     ),
                      #8th row - link to HE data
                      box(
                        width = 12, 
@@ -342,10 +344,10 @@ tabPanel(
                        valueBoxOutput("locland.emplrate"),
                        valueBoxOutput("locland.emplcnt")
                       ),
-                    box(width=12,
-                        valueBoxOutput("locland.emplrate.2"),
-                        valueBoxOutput("locland.emplcnt.2")
-                      ),
+  box(
+    width=12,
+    uiOutput("emp_comp")
+  ),
   br(),
   ### Employment rate over time line chart ----
                        column(width=6,
@@ -410,10 +412,10 @@ tabPanel(
           valueBoxOutput("skisup.FEach"),
           valueBoxOutput("skisup.APach"),
       ), 
-      box(width=12,
-          valueBoxOutput("skisup.FEach.2"),
-          valueBoxOutput("skisup.APach.2"),
-      ), 
+    box(
+    width=12,
+    uiOutput("skill_comp")
+    ),
       box(width=12,
           
   ### Achievements over time line chart ----
@@ -639,67 +641,6 @@ tabPanel(
   ) # end of side bar layout
 ), # end of HE tab
 
-# Methodology tab -----------------
-
-tabPanel(
-  "Methodology",
-  fluidPage(
-    fluidRow(
-      column(
-        12,
-        h1("Methodology"),
-        
-        p("This app XXX"),
-        br(),
-        br()
-      ),
-      
-      ## Left panel -------------------------------------------------------
-      
-      column(
-        6,
-        div(
-          div(
-            class = "panel panel-info",
-            div(
-              class = "panel-heading",
-              style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-              h2("Contents")
-            ),
-            div(
-              class = "panel-body",
-              tags$div(
-                title = "This section is useful if you want to understand how well different industries retain graduates.",
-                h3(actionLink("link_to_industryFlow_tab", "App Content"))
-              ),
-              br()
-            )
-          )
-        ),
-      ), # end of left panel
-      
-      ## Right panel ------------------------------------------------------
-      
-      column(
-        6,
-        div(
-          div(
-            class = "panel panel-info",
-            div(
-              class = "panel-heading",
-              style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-              h2("Links")
-            ),
-            div(
-              class = "panel-body",
-              p("XXX")
-            )
-          )
-        )
-      ), # end of right panel
-    ) # end of FluidRow
-  ) # end of FluidPage
-), # end of Methodology Panel
 # Create the accessibility statement-----------------
              tabPanel(
                "Accessibility",

@@ -462,6 +462,21 @@ x<-(100.*((C_EmpRate_APS1721 %>%
       color="blue"
     )
   })
+  #turn off comparison boxes if none is selected 
+  output$emp_comp <- renderUI({
+    print(input$lep2)
+    if(input$lep2=='\nNone'){
+      tagList(
+        br(),
+        p("")
+      )
+    } else {
+      tagList(
+        valueBoxOutput("locland.emplrate.2"),
+        valueBoxOutput("locland.emplcnt.2")
+      )
+    }
+  })
 
   ## Employment rate over time line graph ----
   EmpRate_time <- reactive({
@@ -584,6 +599,22 @@ x<-(100.*((C_EmpRate_APS1721 %>%
       color="blue"
     )
   })
+  
+  #turn off comparison boxes if none is selected 
+  output$skill_comp <- renderUI({
+    print(input$lep4)
+    if(input$lep4=='\nNone'){
+      tagList(
+        br(),
+        p("")
+      )
+    } else {
+      tagList(
+        valueBoxOutput("skisup.FEach.2"),
+        valueBoxOutput("skisup.APach.2")
+      )
+    }
+  })
 
   ## Achievements over time line chart ----
   Ach_time <- reactive({
@@ -684,22 +715,6 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     )
   })
   
-  output$vac_comp <- renderUI({
-    print(input$lep6)
-    if(input$lep6=='\nNone'){
-      tagList(
-        br(),
-        p("Select a comparison LEP to see the comparison data."),
-        br()
-      )
-    } else {
-      tagList(
-        valueBoxOutput("jobad.pc.2"),
-        valueBoxOutput("jobad.ch.2")
-      )
-    }
-  })
-  
   output$jobad.pc.2 <- renderValueBox({
     # Put value into box to plug into app
     valueBox(
@@ -756,20 +771,24 @@ x<-(100.*((C_EmpRate_APS1721 %>%
       color="blue"
     )
   })
-  # jobad.ch <- C_Vacancy_England %>%
-  #   filter(year == "2022"|
-  #            year == "2021",
-  #          LEP == "Black Country")%>%
-  #   group_by(year)%>%
-  #   dplyr::summarise(job.cnt=sum(vacancy_unit))%>%
-  #   dplyr::mutate(Row = 1:n()) %>%
-  #   mutate(Percentage_Change = job.cnt/lag(job.cnt)) %>%
-  #   ungroup%>%
-  #   filter(year == "2022")%>%
-  #   select(Percentage_Change)
+
+  #turn off comparison boxes if none is selected 
+  output$vac_comp <- renderUI({
+    print(input$lep6)
+    if(input$lep6=='\nNone'){
+      tagList(
+        br(),
+        p("")
+      )
+    } else {
+      tagList(
+        valueBoxOutput("jobad.pc.2"),
+        valueBoxOutput("jobad.ch.2")
+      )
+    }
+  })
 
   ## Online job vacancy units over time line chart ----
-
   jobad.time <- reactive({
     C_Vacancy_England %>%
     filter(LEP == input$lep5|

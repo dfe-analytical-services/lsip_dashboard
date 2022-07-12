@@ -24,7 +24,6 @@ library(openxlsx)
 library(janitor)
 library(DT)
 library(writexl)
-library(shinyBS)#for tooltips
 library(scales)#for comma 1,000s
 
 #renv::snapshot()
