@@ -16,6 +16,13 @@
       "Repository": "CRAN",
       "Hash": "dcd1743af4336156873e3ce3c950b8b9"
     },
+    "DT": {
+      "Package": "DT",
+      "Version": "0.23",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "d8f1498dc47763ce4647c8d03214d30b"
+    },
     "MASS": {
       "Package": "MASS",
       "Version": "7.3-55",
@@ -877,6 +884,13 @@
       "Repository": "CRAN",
       "Hash": "00344c227c7bd0ab5d78052c5d736c44"
     },
+    "shinyBS": {
+      "Package": "shinyBS",
+      "Version": "0.61.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "e44255f073ecdc26ba6bc2ce3fcf174d"
+    },
     "shinyGovstyle": {
       "Package": "shinyGovstyle",
       "Version": "0.0.8",
@@ -1079,6 +1093,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "c0e49a9760983e81e55cdd9be92e7182"
+    },
+    "writexl": {
+      "Package": "writexl",
+      "Version": "1.4.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "edd181b6e10c87497db16d1f8c0d4ed5"
     },
     "xfun": {
       "Package": "xfun",
