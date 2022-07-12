@@ -476,7 +476,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
       geom_line()+
       theme_minimal()+
       expand_limits(y = 0.6)+
-      ggtitle("Employment rate")+
+     # ggtitle("Employment rate")+
       theme(axis.title.x=element_blank(),axis.title.y=element_blank(),legend.position = "bottom", legend.title = element_blank())+
       scale_y_continuous(labels = scales::percent_format(accuracy=1))+
       labs(colour = "")
@@ -593,19 +593,18 @@ x<-(100.*((C_EmpRate_APS1721 %>%
       #area == "England" |
       LEP == input$lep3 |
         LEP == input$lep4,
-      level_or_type == input$skill_line)%>% # |
+      level_or_type == input$skill_line)%>% 
       mutate(time_period=paste(substr(time_period,3,4),"/",substr(time_period,5,6),sep = ""))%>%
     group_by(time_period, LEP, level_or_type)%>%
     summarise(Achievements=sum(achievements))%>%
-    ggplot(aes(x=time_period, y=Achievements, colour = LEP, #shape = level_or_type,
+    ggplot(aes(x=time_period, y=Achievements, colour = LEP, 
                        group=interaction(level_or_type, LEP)))+
-   # geom_point() + 
     geom_line()+
     theme_minimal()+
     theme(legend.position = "bottom",axis.title.x=element_blank(),axis.title.y=element_blank())+
     labs(shape = "", colour = "")+
     scale_y_continuous(label=comma)+
-    ggtitle("FE and apprenticeship achievements")+
+    #ggtitle("FE and apprenticeship achievements")+
     xlab("Year")
   })
   
@@ -641,8 +640,8 @@ x<-(100.*((C_EmpRate_APS1721 %>%
       scale_x_discrete(label = function(SSA) stringr::str_trunc(SSA, 12)) +#truncate labels becaus ethey can be very long
       coord_flip()+
       theme_minimal()+
-      labs(fill = "",
-           title ="All achievements by SSA tier 1. AY20/21")+
+      labs(fill = "")+
+      #     title ="All achievements by SSA tier 1. AY20/21")+
       theme(legend.position = "bottom",
             axis.title.x=element_blank(),axis.title.y=element_blank())
   })
@@ -767,7 +766,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     theme_minimal()+
     labs(colour = "LEP")+
     theme(legend.position = "bottom",axis.title.x=element_blank(),axis.title.y=element_blank())+
-    ggtitle("Online job vacancy units")+
+    #ggtitle("Online job vacancy units")+
       labs(shape = "", colour = "")
   })
   
