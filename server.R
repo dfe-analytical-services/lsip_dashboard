@@ -10,7 +10,7 @@
 #
 #
 # This is the server logic of a Shiny web application. You can run the
-# application by clicking 'Run App' above.
+# application  by clicking 'Run App' above.
 #
 # Find out more about building applications with Shiny here:
 #
@@ -41,7 +41,7 @@ server <- function(input, output, session) {
   })
 
   output$page3title <- renderUI({
-    paste0(input$lep5, ": Overview of Skill Demand")
+    paste0(input$lep5, ": Overview of Vacancies")
   })
   
   output$page4title <- renderUI({
@@ -544,7 +544,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     filename = function() {"CurrentSkillIndicators.xlsx"},
     content = function(file) {write_xlsx(filtered_data2(), path = file)}
   )
-  
+
   ## KPIs ----
   ### FE achievements -----
   output$skisup.FEach <- renderValueBox({
@@ -681,6 +681,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     ggplotly(Ach_SSA_pc())%>%
       layout(legend=list(orientation = "h", x = 0, y = -0.1))
   })
+  
 # VACANCIES ----
   
   ###Downloads---- 
@@ -699,6 +700,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     filename = function() {"CurrentVacancyIndicators.xlsx"},
     content = function(file) {write_xlsx(filtered_data3(), path = file)}
   )
+
   ## KPIs ----
    ### ONS job advert unit percent of total  ----
   output$jobad.pc <- renderValueBox({
