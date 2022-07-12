@@ -12,7 +12,7 @@
 # Other elements like charts, navigation bars etc. are completely up to you to decide what goes in.
 # However, every element should meet accessibility requirements and user needs.
 #
-# This file uses a slider input, but other inputs are available like date selections, multiple choice dropdowns etc.
+# This fil e uses a slider input, but other inputs are available like date selections, multiple choice dropdowns etc.
 # Use the shiny cheatsheet to explore more options: https://shiny.rstudio.com/images/shiny-cheatsheet.pdf
 #
 # Likewise, this template uses the navbar layout.
@@ -94,6 +94,8 @@ fluidPage(
  
  ## Right panel ------------------------------------------------------
 
+ 
+ 
                    column(
                      6,
                      div(
@@ -313,6 +315,7 @@ tabPanel(
                                   choices=c("\nNone", unique(C_LEP2020)),
                                   multiple = F
                    ),
+
   ### Help text --------------------
   helpText("Download employment indicators for:"
            ,style = "font-style: italic;"
@@ -321,12 +324,13 @@ tabPanel(
                    downloadButton(
                      outputId = "download_btn1a",
                      label = "All LEPs",
-                     icon = shiny::icon("download")
+                     icon = icon("download")
                    ),
+
   downloadButton(
     outputId = "download_btn1b",
     label = "Current LEP",
-    icon = shiny::icon("download")
+    icon = icon("download")
   ),
 
                  ), # end of side panel
@@ -363,7 +367,6 @@ tabPanel(
                  ) # end of main panel
                ) # end of side bar layout
              ), # end of Local Landscape tab
-
 
 #SKILLS ----
 tabPanel(
@@ -446,7 +449,7 @@ tabPanel(
     sidebarPanel(
       width = 2,
       ### Help text --------------------
-      helpText("Choose a Local Area to view skill demand trends"
+      helpText("Choose a Local Area to view online vacancy trends"
                ,style = "font-style: italic;"
       ),
       br(),
