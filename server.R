@@ -71,7 +71,34 @@ server <- function(input, output, session) {
     colours <- c("green","red")
     return(ifelse(condition, true_color, colours[!colours == true_color]))
   }
+
+  # HOMEPAGE ---- 
   
+  #Add link to overview 
+  observeEvent(input$link_to_tabpanel_overview, {
+    updateTabsetPanel(session, "navbar", "Overview")
+  }) 
+  #Add link to employment data 
+  observeEvent(input$link_to_tabpanel_employment, {
+    updateTabsetPanel(session, "navbar", "Employment")
+  })
+  #Add link to vacancy data 
+  observeEvent(input$link_to_tabpanel_vacancies, {
+    updateTabsetPanel(session, "navbar", "Vacancies")
+  })
+  #Add link to salary data 
+  observeEvent(input$link_to_tabpanel_earnings, {
+    updateTabsetPanel(session, "navbar", "Earnings")
+  })
+  #Add link to skills data 
+  observeEvent(input$link_to_tabpanel_FE, {
+    updateTabsetPanel(session, "navbar", "FE")
+  }) 
+  #Add link to HE data 
+  observeEvent(input$link_to_tabpanel_HE, {
+    updateTabsetPanel(session, "navbar", "HE")
+  }) 
+    
   # OVERVIEW ----
   
 ###Downloads---- 
@@ -189,7 +216,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   })
  
   #Add button to link to employment data 
-  observeEvent(input$link_to_tabpanel_employment, {
+  observeEvent(input$link_to_tabpanel_employment2, {
     updateTabsetPanel(session, "navbar", "Employment")
   })
   
@@ -225,8 +252,8 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   })
   
   #Add button to link to vacancy data 
-  observeEvent(input$link_to_tabpanel_skill_demand, {
-    updateTabsetPanel(session, "navbar", "Skill Demand")
+  observeEvent(input$link_to_tabpanel_vacancies2, {
+    updateTabsetPanel(session, "navbar", "Vacancies")
   })
   
   ### Average salary  ----
@@ -251,7 +278,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   })
   
   #Add button to link to salary data 
-  observeEvent(input$link_to_tabpanel_earnings, {
+  observeEvent(input$link_to_tabpanel_earnings2, {
     updateTabsetPanel(session, "navbar", "Earnings")
   })
   
@@ -277,8 +304,8 @@ x<-(100.*((C_EmpRate_APS1721 %>%
   })
  
   #Add button to link to skills data 
-  observeEvent(input$link_to_tabpanel_skills, {
-    updateTabsetPanel(session, "navbar", "Skill Supply")
+  observeEvent(input$link_to_tabpanel_FE2, {
+    updateTabsetPanel(session, "navbar", "FE")
   }) 
   
   
@@ -375,8 +402,8 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     )
   })
   
-  #Add button to link to skills data 
-  observeEvent(input$link_to_tabpanel_HE, {
+  #Add button to link to HE data 
+  observeEvent(input$link_to_tabpanel_HE2, {
     updateTabsetPanel(session, "navbar", "HE")
   }) 
   
@@ -524,7 +551,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     datatable(EmpOcc()) 
     })
 
-# SKILLS ----
+# FE ----
   ###Downloads---- 
   #download skills indicators
   list_of_datasets2 <- list("12a.FE achievements SSA"=C_Achieve_ILR21,
