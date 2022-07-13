@@ -75,7 +75,10 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               .noWS = c("after")
             ),
             ".",
-            br()
+            box(
+              width = 12,
+              p(" ")
+            )
           ),
 
           ## Left panel -------------------------------------------------------
@@ -103,7 +106,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                     p("To be completed in V2."),
                     h2("Skills landscape"),
                     h3(actionLink("link_to_tabpanel_FE", "FE")),
-                    p("FE acheivements over time and by SSA."),
+                    p("FE achievements over time and by SSA."),
                     h3(actionLink("link_to_tabpanel_HE", "HE")),
                     p("To be completed in V2."),
                   ),
@@ -380,7 +383,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             width = 10,
             ### Title ----
             uiOutput("page1title", style = "font-size: 24px;"),
-            div("Data for employees aged 25-30 in sustained employment in the 2018-19 tax year", style = "font-size: 16px; font-style: italic;"),
+            div("Data from the Annual Population Survey. Years represent calendar years.", style = "font-size: 16px; font-style: italic;"),
             br(),
 
             ### KPI boxes ----
@@ -393,7 +396,10 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               width = 12,
               uiOutput("emp_comp")
             ),
-            br(),
+            box(
+              width = 12,
+              p(" ")
+            ),
             ### Employment rate over time line chart ----
             column(
               width = 6,
@@ -456,7 +462,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             width = 10,
             ### Title ----
             uiOutput("page3title", style = "font-size: 24px;"),
-            div("XXX", style = "font-size: 16px; font-style: italic;"),
+            div("Data from ONS using Adzuna online job adverts. Data for each year is the monthly average of vacancies across January of each year.", style = "font-size: 16px; font-style: italic;"),
             br(),
             ### KPI boxes ----
             box(
@@ -467,6 +473,10 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             box(
               width = 12,
               uiOutput("vac_comp")
+            ),
+            box(
+              width = 12,
+              p(" ")
             ),
             box(
               width = 12,
@@ -598,7 +608,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             width = 10,
             ### Title ----
             uiOutput("page2title", style = "font-size: 24px;"),
-            div("xxx", style = "font-size: 16px; font-style: italic;"),
+            div("Data from Individualised Learner Records for adult FE learners. Years shown are academic years.", style = "font-size: 16px; font-style: italic;"),
             br(),
             ### KPI boxes ----
             box(
@@ -609,6 +619,10 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             box(
               width = 12,
               uiOutput("skill_comp")
+            ),
+            box(
+              width = 12,
+              p(" ")
             ),
             box(
               width = 12,

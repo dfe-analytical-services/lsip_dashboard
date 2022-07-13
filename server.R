@@ -519,7 +519,7 @@ server <- function(input, output, session) {
         "%"
       ),
       paste0("Employment rate in ", input$lep2),
-      color = "blue"
+      color = "orange"
     )
   })
   ### Employment count ----
@@ -554,7 +554,7 @@ server <- function(input, output, session) {
       scientific = FALSE, big.mark = ","
       ),
       paste0("In employment in ", input$lep2),
-      color = "blue"
+      color = "orange"
     )
   })
   # turn off comparison boxes if none is selected
@@ -588,15 +588,16 @@ server <- function(input, output, session) {
       geom_line() +
       theme_minimal() +
       expand_limits(y = 0.6) +
-      # ggtitle("Employment rate")+
       theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
       scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
-      labs(colour = "")
+      labs(colour = "") +
+      scale_color_manual(values=c("#1d70b8", "#F46A25", "#28a197"))
   })
 
   output$EmpRate_time <- renderPlotly({
     ggplotly(EmpRate_time()) %>%
-      layout(legend = list(orientation = "h", x = 0, y = -0.1))
+      layout(legend = list(orientation = "h", x = 0, y = -0.1))%>%
+      config(displayModeBar = FALSE)
   })
 
   ## Employment by occupation data table ----
@@ -611,7 +612,7 @@ server <- function(input, output, session) {
           area == input$lep2
       ) %>%
       select(-year, -geographic_level) %>%
-      rename_with(str_to_title) %>% # capitalise column titles
+      rename_with(str_to_sentence) %>% # capitalise column titles
       mutate(across(where(is.numeric), format, big.mark = ",")) %>%
       as.data.frame() %>%
       t() %>%
@@ -621,188 +622,6 @@ server <- function(input, output, session) {
 
   output$EmpOcc <- renderDataTable({
     datatable(EmpOcc())
-  })
-
-  # FE ----
-  ### Downloads----
-  # download skills indicators
-  list_of_datasets2 <- list(
-    "12a.FE achievements SSA" = C_Achieve_ILR21,
-    "12b.FE achievements" = C_Achieve_ILR1621
-  )
-  output$download_btn2a <- downloadHandler(
-    filename = function() {
-      "SkillIndicators.xlsx"
-    },
-    content = function(file) {
-      write_xlsx(list_of_datasets2, path = file)
-    }
-  )
-
-  # Download current LEP indicators
-  filtered_data2 <- reactive({
-    list(
-      "12a.FE achievements SSA" = filter(C_Achieve_ILR21, LEP == input$lep3),
-      "12b.FE achievements" = filter(C_Achieve_ILR1621, LEP == input$lep3)
-    )
-  })
-  output$download_btn2b <- downloadHandler(
-    filename = function() {
-      "CurrentSkillIndicators.xlsx"
-    },
-    content = function(file) {
-      write_xlsx(filtered_data2(), path = file)
-    }
-  )
-
-  ## KPIs ----
-  ### FE achievements -----
-  output$skisup.FEach <- renderValueBox({
-    # Put value into box to plug into app
-    valueBox(
-      format((C_Achieve_ILR1621 %>%
-        filter(
-          time_period == "202021",
-          LEP == input$lep3,
-          level_or_type == "Further education and skills: Total"
-        ) %>%
-        summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 FE achievements in ", input$lep3),
-      color = "blue"
-    )
-  })
-
-  output$skisup.FEach.2 <- renderValueBox({
-    # Put value into box to plug into app
-    valueBox(
-      format((C_Achieve_ILR1621 %>%
-        filter(
-          time_period == "202021",
-          LEP == input$lep4,
-          level_or_type == "Further education and skills: Total"
-        ) %>%
-        summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("FE 20/21 achievements in ", input$lep4),
-      color = "blue"
-    )
-  })
-
-  ### Apprentichesip achievements ----
-  output$skisup.APach <- renderValueBox({
-    # Put value into box to plug into app
-    valueBox(
-      format((C_Achieve_ILR1621 %>%
-        filter(
-          time_period == "202021",
-          LEP == input$lep3,
-          level_or_type == "Apprenticeships: Total"
-        ) %>%
-        summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 apprenticeship achievements in ", input$lep3),
-      color = "blue"
-    )
-  })
-
-  output$skisup.APach.2 <- renderValueBox({
-    # Put value into box to plug into app
-    valueBox(
-      format((C_Achieve_ILR1621 %>%
-        filter(
-          time_period == "202021",
-          LEP == input$lep4,
-          level_or_type == "Apprenticeships: Total"
-        ) %>%
-        summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 apprenticeship achievements in ", input$lep4),
-      color = "blue"
-    )
-  })
-
-  # turn off comparison boxes if none is selected
-  output$skill_comp <- renderUI({
-    print(input$lep4)
-    if (input$lep4 == "\nNone") {
-      tagList(
-        br(),
-        p("")
-      )
-    } else {
-      tagList(
-        valueBoxOutput("skisup.FEach.2"),
-        valueBoxOutput("skisup.APach.2")
-      )
-    }
-  })
-
-  ## Achievements over time line chart ----
-  Ach_time <- reactive({
-    C_Achieve_ILR1621 %>%
-      select(time_period, area, LEP, level_or_type, achievements) %>%
-      filter(
-        # area == "England" |
-        LEP == input$lep3 |
-          LEP == input$lep4,
-        level_or_type == input$skill_line
-      ) %>%
-      mutate(time_period = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
-      group_by(time_period, LEP, level_or_type) %>%
-      summarise(Achievements = sum(achievements)) %>%
-      ggplot(aes(
-        x = time_period, y = Achievements, colour = LEP,
-        group = interaction(level_or_type, LEP)
-      )) +
-      geom_line() +
-      theme_minimal() +
-      theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
-      labs(shape = "", colour = "") +
-      scale_y_continuous(label = comma) +
-      xlab("Year")
-  })
-
-  output$Ach_time <- renderPlotly({
-    ggplotly(Ach_time()) %>%
-      layout(legend = list(orientation = "h", x = 0, y = -0.1))
-  })
-
-  ## Achievements pc bar chart ----
-  Ach_SSA_pc <- reactive({
-    AchSSA_21 <- C_Achieve_ILR21 %>%
-      filter(
-        time_period == "202122",
-        LEP == input$lep3 |
-          LEP == input$lep4
-      ) %>%
-      #  area == "England")%>%
-      select(LEP, SSA = ssa_t1_desc, Achievements = achievements) %>%
-      group_by(LEP, SSA) %>%
-      summarise(Achievements = sum(Achievements)) %>%
-      ungroup()
-
-    Ach_pc <- AchSSA_21 %>%
-      filter(SSA == "Total") %>%
-      select(LEP, Total = SSA, Total_ach = Achievements)
-
-    Ach_SSA_pc <- AchSSA_21 %>%
-      left_join(Ach_pc, by = "LEP") %>%
-      group_by(LEP) %>%
-      mutate(pc = Achievements / Total_ach) %>%
-      filter(SSA != "Total") %>%
-      ggplot(aes(x = SSA, y = pc, fill = LEP)) +
-      geom_bar(stat = "identity", position = "dodge") +
-      scale_y_continuous(labels = scales::percent) +
-      scale_x_discrete(label = function(SSA) stringr::str_trunc(SSA, 12)) + # truncate labels becaus ethey can be very long
-      coord_flip() +
-      theme_minimal() +
-      labs(fill = "") +
-      theme(
-        legend.position = "bottom",
-        axis.title.x = element_blank(), axis.title.y = element_blank()
-      )
-  })
-
-  output$Ach_SSA_pc <- renderPlotly({
-    ggplotly(Ach_SSA_pc()) %>%
-      layout(legend = list(orientation = "h", x = 0, y = -0.1))
   })
 
   # VACANCIES ----
@@ -864,7 +683,7 @@ server <- function(input, output, session) {
         "%"
       ),
       paste0("of total online total vacancies in England in January 2022 were in ", input$lep6),
-      color = "blue"
+      color = "orange"
     )
   })
 
@@ -913,7 +732,7 @@ server <- function(input, output, session) {
         "%"
       ),
       paste0("change in online job vacancies in ", input$lep6, " January 2021 to January 2022"),
-      color = "blue"
+      color = "orange"
     )
   })
 
@@ -947,47 +766,203 @@ server <- function(input, output, session) {
       labs(colour = "LEP") +
       theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
       # ggtitle("Online job vacancy units")+
-      labs(shape = "", colour = "")
+      labs(shape = "", colour = "")+
+      scale_color_manual(values=c("#1d70b8", "#F46A25", "#28a197"))
   })
 
   output$jobad.time <- renderPlotly({
     ggplotly(jobad.time()) %>%
-      layout(legend = list(orientation = "h", x = 0, y = -0.1))
+      layout(legend = list(orientation = "h", x = 0, y = -0.1))%>%
+      config(displayModeBar = FALSE)
   })
 
-  # Ach_time <- reactive({
-  #   C_Achieve_ILR1621 %>%
-  #     select(time_period, area, LEP, level_or_type, achievements)%>%
-  #     filter(
-  #       #area == "England" |
-  #       LEP == input$lep3 |
-  #         LEP == input$lep4,
-  #       level_or_type == "Apprenticeships: Total"|
-  #         level_or_type =="Further education and skills: Total") %>%
-  #     group_by(time_period, LEP, level_or_type)%>%
-  #     summarise(Achievements=sum(achievements))%>%
-  #     ggplot(aes(x=time_period, y=Achievements, colour = LEP, shape = level_or_type,
-  #                group=interaction(level_or_type, LEP)))+
-  #     geom_point() +
-  #     geom_line()+
-  #     theme(legend.position = "bottom")+
-  #     theme_minimal()+
-  #     #expand_limits(y = 0)+
-  #     labs(shape = "Type", colour = "Area")+
-  #     # theme(legend.position="bottom")+
-  #     ggtitle("FE and Apprenticeship achievements \n 2017-2021")+
-  #     xlab("Year")
-  # })
-  #
-  #
-  # output$Ach_time <- renderPlotly({
-  #   ggplotly(Ach_time())%>%
-  #     layout(legend=list(x=0.2,y=-1.5,
-  #                        xanchor='left',
-  #                        yanchor='bottom',
-  #                        orientation='h'))
-  # })
-
+  
+  # FE ----
+  ### Downloads----
+  # download skills indicators
+  list_of_datasets2 <- list(
+    "12a.FE achievements SSA" = C_Achieve_ILR21,
+    "12b.FE achievements" = C_Achieve_ILR1621
+  )
+  output$download_btn2a <- downloadHandler(
+    filename = function() {
+      "SkillIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list_of_datasets2, path = file)
+    }
+  )
+  
+  # Download current LEP indicators
+  filtered_data2 <- reactive({
+    list(
+      "12a.FE achievements SSA" = filter(C_Achieve_ILR21, LEP == input$lep3),
+      "12b.FE achievements" = filter(C_Achieve_ILR1621, LEP == input$lep3)
+    )
+  })
+  output$download_btn2b <- downloadHandler(
+    filename = function() {
+      "CurrentSkillIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(filtered_data2(), path = file)
+    }
+  )
+  
+  ## KPIs ----
+  ### FE achievements -----
+  output$skisup.FEach <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      format((C_Achieve_ILR1621 %>%
+                filter(
+                  time_period == "202021",
+                  LEP == input$lep3,
+                  level_or_type == "Further education and skills: Total"
+                ) %>%
+                summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
+      paste0("20/21 FE achievements in ", input$lep3),
+      color = "blue"
+    )
+  })
+  
+  output$skisup.FEach.2 <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      format((C_Achieve_ILR1621 %>%
+                filter(
+                  time_period == "202021",
+                  LEP == input$lep4,
+                  level_or_type == "Further education and skills: Total"
+                ) %>%
+                summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
+      paste0("FE 20/21 achievements in ", input$lep4),
+      color = "orange"
+    )
+  })
+  
+  ### Apprentichesip achievements ----
+  output$skisup.APach <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      format((C_Achieve_ILR1621 %>%
+                filter(
+                  time_period == "202021",
+                  LEP == input$lep3,
+                  level_or_type == "Apprenticeships: Total"
+                ) %>%
+                summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
+      paste0("20/21 apprenticeship achievements in ", input$lep3),
+      color = "blue"
+    )
+  })
+  
+  output$skisup.APach.2 <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      format((C_Achieve_ILR1621 %>%
+                filter(
+                  time_period == "202021",
+                  LEP == input$lep4,
+                  level_or_type == "Apprenticeships: Total"
+                ) %>%
+                summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
+      paste0("20/21 apprenticeship achievements in ", input$lep4),
+      color = "orange"
+    )
+  })
+  
+  # turn off comparison boxes if none is selected
+  output$skill_comp <- renderUI({
+    print(input$lep4)
+    if (input$lep4 == "\nNone") {
+      tagList(
+        br(),
+        p("")
+      )
+    } else {
+      tagList(
+        valueBoxOutput("skisup.FEach.2"),
+        valueBoxOutput("skisup.APach.2")
+      )
+    }
+  })
+  
+  ## Achievements over time line chart ----
+  Ach_time <- reactive({
+    C_Achieve_ILR1621 %>%
+      select(time_period, area, LEP, level_or_type, achievements) %>%
+      filter(
+        # area == "England" |
+        LEP == input$lep3 |
+          LEP == input$lep4,
+        level_or_type == input$skill_line
+      ) %>%
+      mutate(time_period = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
+      group_by(time_period, LEP, level_or_type) %>%
+      summarise(Achievements = sum(achievements)) %>%
+      ggplot(aes(
+        x = time_period, y = Achievements, colour = LEP,
+        group = interaction(level_or_type, LEP)
+      )) +
+      geom_line() +
+      theme_minimal() +
+      theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
+      labs(shape = "", colour = "") +
+      scale_y_continuous(label = comma) +
+      xlab("Year")+
+      scale_color_manual(values=c("#1d70b8", "#F46A25", "#28a197"))
+  })
+  
+  output$Ach_time <- renderPlotly({
+    ggplotly(Ach_time()) %>%
+      layout(legend = list(orientation = "h", x = 0, y = -0.1))%>%
+      config(displayModeBar = FALSE)
+  })
+  
+  ## Achievements pc bar chart ----
+  Ach_SSA_pc <- reactive({
+    AchSSA_21 <- C_Achieve_ILR21 %>%
+      filter(
+        time_period == "202122",
+        LEP == input$lep3 |
+          LEP == input$lep4
+      ) %>%
+      #  area == "England")%>%
+      select(LEP, SSA = ssa_t1_desc, Achievements = achievements) %>%
+      group_by(LEP, SSA) %>%
+      summarise(Achievements = sum(Achievements)) %>%
+      ungroup()
+    
+    Ach_pc <- AchSSA_21 %>%
+      filter(SSA == "Total") %>%
+      select(LEP, Total = SSA, Total_ach = Achievements)
+    
+    Ach_SSA_pc <- AchSSA_21 %>%
+      left_join(Ach_pc, by = "LEP") %>%
+      group_by(LEP) %>%
+      mutate(pc = Achievements / Total_ach) %>%
+      filter(SSA != "Total") %>%
+      ggplot(aes(x = SSA, y = pc, fill = LEP)) +
+      geom_bar(stat = "identity", position = "dodge") +
+      scale_y_continuous(labels = scales::percent) +
+      scale_x_discrete(label = function(SSA) stringr::str_trunc(SSA, 12)) + # truncate labels becaus ethey can be very long
+      coord_flip() +
+      theme_minimal() +
+      labs(fill = "") +
+      theme(
+        legend.position = "bottom",
+        axis.title.x = element_blank(), axis.title.y = element_blank()
+      )+
+      scale_color_manual("legend",values=c("#1d70b8", "#F46A25", "#28a197"))
+  })
+  
+  output$Ach_SSA_pc <- renderPlotly({
+    ggplotly(Ach_SSA_pc()) %>%
+      layout(legend = list(orientation = "h", x = 0, y = -0.1))%>%
+      config(displayModeBar = FALSE)
+  })
+  
   # Stop app ---------------------------------------------------------------------------------
 
   session$onSessionEnded(function() {
