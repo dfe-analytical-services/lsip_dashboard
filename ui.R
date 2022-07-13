@@ -53,7 +53,7 @@ fluidPage(
   navbarPage("",
              id = "navbar",
              
-# Homepage tab ============================================================
+# HOMEPAGE ============================================================
 
              tabPanel(
                "Homepage",
@@ -63,13 +63,15 @@ fluidPage(
                      12,
                      h1("Local Skills Dashboard"),
 
-                     p("This app XXX"),
-                     br(),
+                     p("The aim of this app is to provide local data to local actors in an accessible format. The app will 
+                     support the implementation of LSIPs, 
+provide a baseline of local skills data which ERBs can build on with qualitative employer information, and
+benefit secondary local actors (including Ofsted) who already use these local indicators to inform their work. 
+The app displays published data from a variety of sources (APS, ILR and ONS online job vacancies) to compare between different LEPS and over time for some indicators. "),
                      br()
                    ),
 
  ## Left panel -------------------------------------------------------
-
                    column(
                      6,
                      div(
@@ -83,8 +85,20 @@ fluidPage(
                          div(
                            class = "panel-body",
                            tags$div(
-                             title = "This section is useful if you want to understand how well different industries retain graduates.",
-                             h3(actionLink("link_to_industryFlow_tab", "App Content"))
+                             h3(actionLink("link_to_tabpanel_overview", "Overview")),
+                             p("Key labour and skills metrics for each LEP."),
+                             h2("Labour market"),
+                             h3(actionLink("link_to_tabpanel_employment", "Employment")),
+                             p("Employment volumes and rates over time and by occupation."),
+                             h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
+                             p("Online job vacancies over time."),
+                             h3(actionLink("link_to_tabpanel_earnings", "Earnings")),
+                             p("To be completed in V2."),
+                             h2("Skills landscape"),
+                             h3(actionLink("link_to_tabpanel_FE", "FE")),
+                             p("FE acheivements over time and by SSA."),
+                             h3(actionLink("link_to_tabpanel_HE", "HE")),
+                             p("To be completed in V2."),
                            ),
                            br()
                          )
@@ -93,9 +107,6 @@ fluidPage(
                    ), # end of left panel
  
  ## Right panel ------------------------------------------------------
-
- 
- 
                    column(
                      6,
                      div(
@@ -104,7 +115,7 @@ fluidPage(
                          div(
                            class = "panel-heading",
                            style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-                           h2("Background Info")
+                           h2("Data sources")
                          ),
                          div(
                            class = "panel-body",
@@ -200,7 +211,7 @@ tabPanel(
              ),
              box(
                width=12,
-               actionLink("link_to_tabpanel_employment", "Find out more about employment")
+               actionLink("link_to_tabpanel_employment2", "Find out more about employment")
              ),
              #third row - link to emp tab
              #fourth row - vacancies
@@ -212,7 +223,7 @@ tabPanel(
              #fifth row - link to vacancy data
              box(
                width=12,
-               actionLink("link_to_tabpanel_skill_demand", "Find out more about vacancies")
+               actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies")
              ),
              tags$div(
                title="Source: ?????",
@@ -220,7 +231,7 @@ tabPanel(
                valueBoxOutput("earn.change",width=4)
              ),
              box(
-             actionLink("link_to_tabpanel_earnings", "Find out more about earnings")
+             actionLink("link_to_tabpanel_earnings2", "Find out more about earnings")
              )
                    )
                  )
@@ -244,10 +255,9 @@ tabPanel(
                        valueBoxOutput("skills.l4", width=8),
                        valueBoxOutput("skills.l4change",width=4)
                      ),
-                     #2nd row - link to skills population data
                      box(
-                       width = 12, 
-                       actionLink("link_to_tabpanel_skills", "Find out more about skills")
+                       width=12,
+                       p(" ")
                      ),
                      #3rd row - E&T 
                      tags$div(
@@ -255,12 +265,11 @@ tabPanel(
                        valueBoxOutput("skisup.ETach", width=8),
                        valueBoxOutput("skisup.ETachChange", width=4)
                      ),
-                     #4th row - link to E&T data
                      box(
-                       width = 12, 
-                       actionLink("link_to_tabpanel_skills", "Find out more about skills")
+                       width=12,
+                       p(" ")
                      ),
-                     #5th row - apps
+                      #5th row - apps
                      tags$div(
                        title="Source:ILR AY20/21",
                        valueBoxOutput("skisup.APPach", width=8),
@@ -269,7 +278,7 @@ tabPanel(
                      #6th row - link to app data
                      box(
                        width = 12, 
-                       actionLink("link_to_tabpanel_skills", "Find out more about skills")
+                       actionLink("link_to_tabpanel_FE2", "Find out more about skills")
                      ),
                      #7th row - HE
                      tags$div(
@@ -280,7 +289,7 @@ tabPanel(
                      #8th row - link to HE data
                      box(
                        width = 12, 
-                       actionLink("link_to_tabpanel_HE", "Find out more about HE")
+                       actionLink("link_to_tabpanel_HE2", "Find out more about HE")
                      ),
                    )
                  )
@@ -293,6 +302,7 @@ tabPanel(
   ) # end of side bar layout
 ), # end of Overview tab
 
+navbarMenu("Labour market", 
 # EMPLOYMENT ----
              tabPanel(
                "Employment",
@@ -368,78 +378,6 @@ tabPanel(
                ) # end of side bar layout
              ), # end of Local Landscape tab
 
-#SKILLS ----
-tabPanel(
-  "Skills",
-  sidebarLayout(
- ## Side panel ----
-    sidebarPanel(
-      width = 2,
-  ### LEP 3 input ---------------
-      selectizeInput("lep3",
-                     "Choose a primary LEP:",
-                     choices=C_LEP2020,
-                     selected="England",
-      ),
-  ### LEP 4 input ------------
-      selectizeInput("lep4", # Make no selection an option
-                     "Choose a comparison LEP (optional):",
-                     choices=c("\nNone", unique(C_LEP2020))
-      ),
-  ### Help text --------------------
-  helpText("Download skills indicators for:"
-           ,style = "font-style: italic;"
-  ),                   
-  ### Download buttons -------------
-  downloadButton(
-    outputId = "download_btn2a",
-    label = "All LEPs",
-    icon = icon("download")
-  ),
-  downloadButton(
-    outputId = "download_btn2b",
-    label = "Current LEP",
-    icon = icon("download")
-  ),
-
-    ), # end of side panel
- ## Main panel ----
-    mainPanel(
-      width=10,
-  ### Title ----
-      uiOutput("page2title", style="font-size: 24px;"),
-      div("xxx", style = "font-size: 16px; font-style: italic;"),
-      br(),
-  ### KPI boxes ----
-      box(width=12,
-          valueBoxOutput("skisup.FEach"),
-          valueBoxOutput("skisup.APach"),
-      ), 
-    box(
-    width=12,
-    uiOutput("skill_comp")
-    ),
-      box(width=12,
-          
-  ### Achievements over time line chart ----
-          column(width=6,
-                 ### LEP 4 input ------------
-                 p("FE and apprenticeship achievements",style = "font-size:20px;"),
-                 selectizeInput("skill_line", # Make no selection an option
-                                "Choose a learner group",
-                                choices=c("Apprenticeships: Total", "Education and training: Total","Community learning: Total","Further education and skills: Total")),
-                 plotlyOutput("Ach_time")),
-
-  ### Employment by occupation data table ----
-          column(width=6,
-                 p("All achievements by SSA tier 1 (AY20/21)",style = "font-size:20px;"),
-                 plotlyOutput("Ach_SSA_pc"))
-    ) # end of box
-
-    ) # end of main panel
-  ) # end of side bar layout
-), # end of Skills Supply tab
-
 # VACANCIES ---------------
 tabPanel(
   "Vacancies",
@@ -510,7 +448,7 @@ tabPanel(
                  p("The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a unit measure. The unit measure is derived by dividing the monthly average count of job adverts by a set value.
 ")
           ),
-    
+          
           
           ### Online job vacancy units over time line chart ----
           column(width=8,
@@ -576,12 +514,87 @@ tabPanel(
       br(),
       ### KPI boxes ----
       box(width=12,"blank"
-         # valueBoxOutput("jobad.pc"),
-         # valueBoxOutput("jobad.ch"),
+          # valueBoxOutput("jobad.pc"),
+          # valueBoxOutput("jobad.ch"),
       ), # end of box
     ) # end of main panel
   ) # end of side bar layout
 ), # end of earnings tab
+), #end of labour navbar
+
+navbarMenu("Skills landscape", 
+#FE ----
+tabPanel(
+  "FE",
+  sidebarLayout(
+ ## Side panel ----
+    sidebarPanel(
+      width = 2,
+  ### LEP 3 input ---------------
+      selectizeInput("lep3",
+                     "Choose a primary LEP:",
+                     choices=C_LEP2020,
+                     selected="England",
+      ),
+  ### LEP 4 input ------------
+      selectizeInput("lep4", # Make no selection an option
+                     "Choose a comparison LEP (optional):",
+                     choices=c("\nNone", unique(C_LEP2020))
+      ),
+  ### Help text --------------------
+  helpText("Download skills indicators for:"
+           ,style = "font-style: italic;"
+  ),                   
+  ### Download buttons -------------
+  downloadButton(
+    outputId = "download_btn2a",
+    label = "All LEPs",
+    icon = icon("download")
+  ),
+  downloadButton(
+    outputId = "download_btn2b",
+    label = "Current LEP",
+    icon = icon("download")
+  ),
+
+    ), # end of side panel
+ ## Main panel ----
+    mainPanel(
+      width=10,
+  ### Title ----
+      uiOutput("page2title", style="font-size: 24px;"),
+      div("xxx", style = "font-size: 16px; font-style: italic;"),
+      br(),
+  ### KPI boxes ----
+      box(width=12,
+          valueBoxOutput("skisup.FEach"),
+          valueBoxOutput("skisup.APach"),
+      ), 
+    box(
+    width=12,
+    uiOutput("skill_comp")
+    ),
+      box(width=12,
+          
+  ### Achievements over time line chart ----
+          column(width=6,
+                 ### LEP 4 input ------------
+                 p("FE achievements",style = "font-size:20px;"),
+                 selectizeInput("skill_line", # Make no selection an option
+                                "Choose a learner group",
+                                choices=c("Apprenticeships: Total", "Education and training: Total","Community learning: Total","Further education and skills: Total")),
+                 plotlyOutput("Ach_time")),
+
+  ### Employment by occupation data table ----
+          column(width=6,
+                 p("All achievements by SSA tier 1 (AY20/21)",style = "font-size:20px;"),
+                 plotlyOutput("Ach_SSA_pc"))
+    ) # end of box
+
+    ) # end of main panel
+  ) # end of side bar layout
+), # end of Skills Supply tab
+
 
 # HE ---------------
 tabPanel(
@@ -643,7 +656,7 @@ tabPanel(
     ) # end of main panel
   ) # end of side bar layout
 ), # end of HE tab
-
+),#end of skills navbar
 # Create the accessibility statement-----------------
              tabPanel(
                "Accessibility",
