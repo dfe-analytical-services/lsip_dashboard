@@ -6,25 +6,25 @@
 
 
 # Library calls ---------------------------------------------------------------------------------
+shhh <- suppressPackageStartupMessages # It's a library, so shhh!
 
-
-library(shiny)
-library(shinyjs)
-library(tools)
-library(testthat)
-library(shinytest)
-library(shinydashboard)
-library(shinyWidgets)
-library(shinyGovstyle)
-library(dplyr)
-library(data.table)
-library(tidyverse)
-library(plotly)
-library(openxlsx)
-library(janitor)
-library(DT)
-library(writexl)
-library(scales) # for comma 1,000s
+shhh(library(shiny))
+shhh(library(shinyjs))
+shhh(library(tools))
+shhh(library(testthat))
+shhh(library(shinytest))
+shhh(library(shinydashboard))
+shhh(library(shinyWidgets))
+shhh(library(shinyGovstyle))
+shhh(library(dplyr))
+shhh(library(data.table))
+shhh(library(tidyverse))
+shhh(library(plotly))
+shhh(library(openxlsx))
+shhh(library(janitor))
+shhh(library(DT))
+shhh(library(writexl))
+shhh(library(scales)) # for comma 1,000s
 
 # renv::snapshot()
 
