@@ -24,9 +24,9 @@ library(openxlsx)
 library(janitor)
 library(DT)
 library(writexl)
-library(scales)#for comma 1,000s
+library(scales) # for comma 1,000s
 
-#renv::snapshot()
+# renv::snapshot()
 
 source("R/Loading Core Indicators.R")
 
