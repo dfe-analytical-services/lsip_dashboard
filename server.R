@@ -140,7 +140,7 @@ server <- function(input, output, session) {
                        year=="2021")
       )$"28  in employment ",
       scientific=FALSE,big.mark=","),
-      "people employed"
+      "people employed in 2021"
       ,width=12
       ,color="blue"
     )
@@ -181,7 +181,7 @@ server <- function(input, output, session) {
                               year=="2021")
         )$empRate,digits=2),
         "%"),
-      paste("employment rate (compared with ",
+      paste("employment rate in 2021 (compared with ",
             
               format(100.*(C_EmpRate_APS1721 %>%
                              filter(geographic_level == "country", # cleans up for London which is included as lep and gor
@@ -226,7 +226,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
                        filter(year == "2022",
                               LEP == input$lep0a)%>%
                        summarise(job.unit=sum(vacancy_unit)),
-      "job vacancy units",
+      "job vacancy units (Jan 22)",
       width=12
       ,color="blue"
     )
@@ -317,7 +317,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
                        LEP == input$lep0a, 
                        level_or_type == "Education and training: Total")%>%
                         summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
-      "Education and training acheivements",
+      "Education and training acheivements (AY20/21)",
       width=12
       ,color="blue"
     )
@@ -353,7 +353,7 @@ x<-(100.*((C_EmpRate_APS1721 %>%
                        LEP == input$lep0a, 
                        level_or_type == "Apprenticeships: Total")%>%
                 dplyr::summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
-      "Apprenticeship achievements",
+      "Apprenticeship achievements (AY20/21)",
       width=12
       ,color="blue"
     )
@@ -539,12 +539,12 @@ x<-(100.*((C_EmpRate_APS1721 %>%
              area == input$lep1 |
              area == input$lep2)%>%
       select(-year, -geographic_level)%>%
+      rename_with(str_to_title)%>%#capitalise column titles
       mutate(across(where(is.numeric), format, big.mark=","))%>% 
       as.data.frame()%>%
       t()%>%
-      row_to_names(row_number=1)
-    #%>%
-      #mutate_if(is.character, as.numeric)
+      row_to_names(row_number=1)#%>%
+   # arrange(desc(input$lep1))
   })
 
   output$EmpOcc <- renderDataTable({
@@ -578,11 +578,11 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     # Put value into box to plug into app
     valueBox(
       format((C_Achieve_ILR1621 %>%
-                filter(time_period=="202122",
+                filter(time_period=="202021",
                        LEP == input$lep3, 
                        level_or_type == "Further education and skills: Total")%>%
                 summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
-      paste0("FE Achievements in ", input$lep3),
+      paste0("20/21 FE achievements in ", input$lep3),
       color="blue"
     )
   })
@@ -591,11 +591,11 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     # Put value into box to plug into app
     valueBox(
       format((C_Achieve_ILR1621 %>%
-                filter(time_period=="202122",
+                filter(time_period=="202021",
                        LEP == input$lep4, 
                        level_or_type == "Further education and skills: Total")%>%
                       summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
-      paste0("FE achievements in ", input$lep4),
+      paste0("FE 20/21 achievements in ", input$lep4),
       color="blue"
     )
   }) 
@@ -605,11 +605,11 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     # Put value into box to plug into app
       valueBox(
         format((C_Achieve_ILR1621 %>%
-                 filter(time_period=="202122",
+                 filter(time_period=="202021",
                         LEP == input$lep3, 
                         level_or_type == "Apprenticeships: Total")%>%
                         summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
-        paste0("Apprenticeship achievements in ", input$lep3),
+        paste0("20/21 apprenticeship achievements in ", input$lep3),
         color="blue"
       )
   })
@@ -618,11 +618,11 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     # Put value into box to plug into app
     valueBox(
       format((C_Achieve_ILR1621 %>%
-                filter(time_period=="202122",
+                filter(time_period=="202021",
                        LEP == input$lep4, 
                        level_or_type == "Apprenticeships: Total")%>%
                       summarise(App_ach=sum(achievements))), scientific=FALSE,big.mark=","),
-      paste0("Apprenticeship achievements in ", input$lep4),
+      paste0("20/21 apprenticeship achievements in ", input$lep4),
       color="blue"
     )
   })
@@ -662,7 +662,6 @@ x<-(100.*((C_EmpRate_APS1721 %>%
     theme(legend.position = "bottom",axis.title.x=element_blank(),axis.title.y=element_blank())+
     labs(shape = "", colour = "")+
     scale_y_continuous(label=comma)+
-    #ggtitle("FE and apprenticeship achievements")+
     xlab("Year")
   })
   
@@ -699,7 +698,6 @@ x<-(100.*((C_EmpRate_APS1721 %>%
       coord_flip()+
       theme_minimal()+
       labs(fill = "")+
-      #     title ="All achievements by SSA tier 1. AY20/21")+
       theme(legend.position = "bottom",
             axis.title.x=element_blank(),axis.title.y=element_blank())
   })

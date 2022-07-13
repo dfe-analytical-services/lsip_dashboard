@@ -37,7 +37,7 @@ I_EmpOcc_APS1721 <- read.xlsx(xlsxFile="./Data/nomis_2022_06_14_092401.xlsx",ski
 I_EmpRate_APS1721 <- read.xlsx(xlsxFile="./Data/nomis_2022_06_14_095314.xlsx", sheet=1, skipEmptyRows=T)
 
 ##ILR
-### Core indicator 12: AY20/21 achievements by SSAt1 and LAD ------------
+### Core indicator 12: AY21/22 achievements by SSAt1 and LAD ------------
 ## Permalink: https://explore-education-statistics.service.gov.uk/data-tables/permalink/c390bb3f-8577-40f1-869c-fc8a8195516e
 I_Achieve_ILR21 <- read.csv(file="./Data/permalink-c390bb3f-8577-40f1-869c-fc8a8195516e.csv")
 
@@ -51,6 +51,7 @@ I_Achieve_ILR1621 <- read.csv(file="./Data/permalink-3960ad0f-fd8a-49bb-91d7-f3c
 I_Vacancy_ONS1722 <- read.xlsx(xlsxFile="./Data/referencetablesupdated.xlsx", sheet="1", skipEmptyRows=T,startRow=4)
 
 # Data cleaning functions ----
+## Employment by occupation ----
 format.EmpOcc.APS <- function(x) {
   x %>% mutate(year = ifelse(annual.population.survey == "date", X2, NA))%>% # tag time periods
     fill(year)%>% # fill time periods for all rows
@@ -68,9 +69,13 @@ format.EmpOcc.APS <- function(x) {
     relocate(geographic_level, .after = area)%>%
     mutate(year=as.numeric(substr(year, 5, 8)))%>%
     rename_with(.fn = ~ str_replace_all(.x, c("t09a_"="","all_people"="","soc2010"="","_"=" ")),
-                .cols = starts_with("t09a_")) 
+                .cols = starts_with("t09a_"))%>%
+    rename_with(~gsub('[[:digit:]]+', "", .))#remove numbers from occupations since they don't match the ONS ones
 }
 
+C_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
+
+## Employment level and rate ----
 format.EmpRate.APS <- function(x) { 
   x %>% mutate(year = ifelse(annual.population.survey == "date", substr(X2,nchar(X2)-4+1, nchar(X2)), NA))%>% # tag time periods
     fill(year)%>% # fill time periods for all rows
@@ -91,6 +96,8 @@ format.EmpRate.APS <- function(x) {
                 .cols = starts_with("t01")) 
 }
 
+C_EmpRate_APS1721 <- format.EmpRate.APS(I_EmpRate_APS1721)
+
 #Clean ILR column names, reorder and reformat
 format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
   colnames(x)[1] <- "area"
@@ -101,6 +108,10 @@ format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
     rename_all(recode, e_and_t_aims_ach="achievements")%>%
     mutate(achievements=as.numeric(achievements))
 }
+
+##Achievements
+C_Achieve_ILR1621 <- format.AchieveSSA.ILR(I_Achieve_ILR1621)
+C_Achieve_ILR21 <- format.AchieveSSA.ILR(I_Achieve_ILR21)
 
 #Reshape vacancy data to long, rename and reorder and reformat some columns
 format.Vacancy.ONS <- function(x) { # need to clean up colnames
@@ -113,15 +124,11 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
 }
 
 # Clean indicators datasets----
-## Employment by occupation ----
-C_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
 
-## Employment level and rate ----
-C_EmpRate_APS1721 <- format.EmpRate.APS(I_EmpRate_APS1721)
 
-##Achievements
-C_Achieve_ILR1621 <- format.AchieveSSA.ILR(I_Achieve_ILR1621)
-C_Achieve_ILR21 <- format.AchieveSSA.ILR(I_Achieve_ILR21)
+
+
+
 
 #vacancy
 C_Vacancy_ONS1722 <- format.Vacancy.ONS(I_Vacancy_ONS1722)

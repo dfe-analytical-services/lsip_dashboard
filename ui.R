@@ -68,6 +68,14 @@ fluidPage(
 provide a baseline of local skills data which ERBs can build on with qualitative employer information, and
 benefit secondary local actors (including Ofsted) who already use these local indicators to inform their work. 
 The app displays published data from a variety of sources (APS, ILR and ONS online job vacancies) to compare between different LEPS and over time for some indicators. "),
+                     br(),
+                     "This dashboard has been produced to support the aims of the ",
+                     a(
+                       href = "https://www.gov.uk/government/groups/unit-for-future-skills",
+                       "Unit for Future Skills",
+                       .noWS = c("after")
+                     ),
+                     ".",
                      br()
                    ),
 
@@ -119,18 +127,40 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                          ),
                          div(
                            class = "panel-body",
-                           h2("Local Landscape"),
+                           h2("Labour market"),
                            h3("Annual Population Survey (APS)"),
-                           p("XXX"),
+                           p("A continuous household survey covering the UK. 
+                             The app uses employment volumes and rates for each LEP and split by sub-major SOC 2020 grouping.
+                             The data are for interviews conducted over the calendar year (2017-2021 are shown). 
+                             "),
+                           a(
+                             href = "https://www.nomisweb.co.uk/datasets/apsnew",
+                             "APS data on Nomis",
+                             .noWS = c("after")
+                           ),
                            br(),
-                           h2("Skill Supply"),
+                           h2("Skills landscape"),
                            h3("Individualised Learner Records (ILR)"),
-                           p("XXX"),
-                           br(),
-                           h2("Skill Demand"),
+                           p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England. 
+                             The app uses adult FE acheivements over time (AY1617-21/22 (temporary data to October for 21/22)) split by apprenticeships, community learning, education and training. 
+                             The app also shows adult FE acheivements split by sector subject area (tier 1) for the latest AY21/22 reported to January."),
+                             a(
+                               href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills",
+                               "ILR data on EES",
+                               .noWS = c("after")
+                             ),
+                             br(),
                            h3("ONS Online Job Adverts"),
-                           p("XXX")
+                           p("These data tables are created based upon online job adverts data provided by Adzuna. 
+                             Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022. The monthly average is derived from weekly snapshots in January. 
+                             The app shows job 'units' which is the number of job adverts divided a set value for all regions. It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across regions or to follow trends over time."),
+                           a(
+                             href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/onlinejobadvertsbyitl1regionandlocalauthority",
+                             "Job adverts data on ONS",
+                             .noWS = c("after")
                            )
+                           )
+                         
                        )
                      )
                    ), # end of right panel
@@ -226,7 +256,7 @@ tabPanel(
                actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies")
              ),
              tags$div(
-               title="Source: ?????",
+               #title="Source: ?????",
                valueBoxOutput("earn.avg", width=8),
                valueBoxOutput("earn.change",width=4)
              ),
@@ -251,7 +281,7 @@ tabPanel(
                      class = "panel-body",
                      #first row - level 4 starts
                      tags$div(
-                       title="Source:?",
+                       #title="Source:?",
                        valueBoxOutput("skills.l4", width=8),
                        valueBoxOutput("skills.l4change",width=4)
                      ),
@@ -282,7 +312,7 @@ tabPanel(
                      ),
                      #7th row - HE
                      tags$div(
-                       title="Source:?",
+                       #title="Source:?",
                        valueBoxOutput("he.entrants", width=8),
                        valueBoxOutput("he.entrantschange",width=4)
                      ),
@@ -580,6 +610,7 @@ tabPanel(
           column(width=6,
                  ### LEP 4 input ------------
                  p("FE achievements",style = "font-size:20px;"),
+                 "NB 21/22 data is temporary to Oct.",
                  selectizeInput("skill_line", # Make no selection an option
                                 "Choose a learner group",
                                 choices=c("Apprenticeships: Total", "Education and training: Total","Community learning: Total","Further education and skills: Total")),
@@ -587,7 +618,7 @@ tabPanel(
 
   ### Employment by occupation data table ----
           column(width=6,
-                 p("All achievements by SSA tier 1 (AY20/21)",style = "font-size:20px;"),
+                 p("All achievements by SSA tier 1 (AY21/22 Aug to Jan)",style = "font-size:20px;"),
                  plotlyOutput("Ach_SSA_pc"))
     ) # end of box
 
