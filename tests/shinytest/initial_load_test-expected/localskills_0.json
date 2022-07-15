@@ -28,7 +28,7 @@
   },
   "output": {
     "earn.avg": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>average salary (compared with x% for England)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>average salary (compared with x% for England)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -55,7 +55,7 @@
       ]
     },
     "he.entrants": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>HE entrants<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>HE entrants<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -103,7 +103,7 @@
       ]
     },
     "jobad.units": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>94.3<\/h3>\n    <p>job vacancy units (Jan 22)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>94.3<\/h3>\n    <p>job vacancy units (Jan 22)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -130,7 +130,7 @@
       ]
     },
     "locland.emplcnt0": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>536,700<\/h3>\n    <p>people employed in 2021<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>536,700<\/h3>\n    <p>people employed in 2021<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -157,7 +157,7 @@
       ]
     },
     "locland.emplrate0": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>73 %<\/h3>\n    <p>employment rate in 2021 (compared with  75 % for England)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>73 %<\/h3>\n    <p>employment rate in 2021 (compared with  75 % for England)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -169,7 +169,7 @@
       ]
     },
     "skills.l4": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>qualified at level 4+<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>qualified at level 4+<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -196,7 +196,7 @@
       ]
     },
     "skisup.APPach": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>3,970<\/h3>\n    <p>Apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>3,970<\/h3>\n    <p>Apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -223,7 +223,7 @@
       ]
     },
     "skisup.ETach": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>17,680<\/h3>\n    <p>Education and training acheivements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>17,680<\/h3>\n    <p>Education and training acheivements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
