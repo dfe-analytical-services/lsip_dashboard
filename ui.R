@@ -194,7 +194,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             icon = shiny::icon("download")
           ),
           helpText("Or just for the currently chosen LEP:",
-                   style = "font-style: italic;"
+            style = "font-style: italic;"
           ),
           downloadButton(
             outputId = "download_btn0b",
@@ -241,8 +241,8 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                     ),
                     box(
                       width = 12,
-                      actionLink("link_to_tabpanel_employment2", "Find out more about employment")
-                      ,align = "right"
+                      actionLink("link_to_tabpanel_employment2", "Find out more about employment"),
+                      align = "right"
                     ),
                     # third row - link to emp tab
                     # fourth row - vacancies
@@ -254,10 +254,10 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                     # fifth row - link to vacancy data
                     box(
                       width = 12,
-                      actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies")
-                      ,align = "right"
+                      actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies"),
+                      align = "right"
                     ),
-                    )
+                  )
                 )
               ),
             ),
@@ -293,8 +293,8 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                     # 6th row - link to app data
                     box(
                       width = 12,
-                      actionLink("link_to_tabpanel_FE2", "Find out more about skills")
-                      ,align = "right"
+                      actionLink("link_to_tabpanel_FE2", "Find out more about skills"),
+                      align = "right"
                     ),
                   )
                 )
@@ -342,7 +342,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               icon = icon("download")
             ),
             helpText("Or just for the currently chosen LEP:",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             downloadButton(
               outputId = "download_btn1b",
@@ -423,7 +423,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               icon = icon("download")
             ),
             helpText("Or just for the currently chosen LEP:",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             downloadButton(
               outputId = "download_btn3b",
@@ -479,7 +479,6 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
           ) # end of main panel
         ) # end of side bar layout
       ), # end of Skills Supply tab
-
     ), # end of labour navbar
 
     navbarMenu(
@@ -513,7 +512,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               icon = icon("download")
             ),
             helpText("Or just for the currently chosen LEP:",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             downloadButton(
               outputId = "download_btn2b",
@@ -567,15 +566,12 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
           ) # end of main panel
         ) # end of side bar layout
       ), # end of Skills Supply tab
-
-
- 
     ), # end of skills navbar
 
-    # FUTURE DEVELOPMENT ---------------        
+    # FUTURE DEVELOPMENT ---------------
     navbarMenu(
       "Future development",
-      # Overview --------------- 
+      # Overview ---------------
       tabPanel(
         "Overview v2",
         sidebarLayout(
@@ -585,25 +581,25 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             br(),
             ### LEP 1 input ---------------
             selectizeInput("lepOver2",
-                           "Choose the area(s) you want to look at",
-                           choices = C_LEP2020,
-                           selected = "England" # ,multiple=TRUE
+              "Choose the area(s) you want to look at",
+              choices = C_LEP2020,
+              selected = "England" # ,multiple=TRUE
             ),
             radioButtons("OccSect",
-                         "Do you want to look at a particular sector or occupation group?",
-                         choices = list(
-                           "Occupation" = 1,
-                           "Sector" = 2
-                         ),
-                         selected = 1
+              "Do you want to look at a particular sector or occupation group?",
+              choices = list(
+                "Occupation" = 1,
+                "Sector" = 2
+              ),
+              selected = 1
             ),
             selectizeInput("Occ-Sector",
-                           "Choose sector/occupation",
-                           choices = c("Sector 1","Sector 2","...")
+              "Choose sector/occupation",
+              choices = c("Sector 1", "Sector 2", "...")
             ),
             ### Help text --------------------
             helpText("Download all available indicators for all geographies (LEPs, LAs, Regions and England):",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             ### Download button -------------
             downloadButton(
@@ -612,7 +608,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               icon = icon("download")
             ),
             helpText("Or just for the currently chosen LEP:",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             downloadButton(
               outputId = "download_btnOver2b",
@@ -659,8 +655,9 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                       ),
                       box(
                         width = 12,
-                        actionLink("link_to_tabpanel_employment3", "Find out more about employment")
-                        ,align = "right"),
+                        actionLink("link_to_tabpanel_employment3", "Find out more about employment"),
+                        align = "right"
+                      ),
                       # third row - link to emp tab
                       # fourth row - vacancies
                       tags$div(
@@ -671,17 +668,18 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                       # fifth row - link to vacancy data
                       box(
                         width = 12,
-                        actionLink("link_to_tabpanel_vacancies3", "Find out more about vacancies")
-                        ,align = "right"
+                        actionLink("link_to_tabpanel_vacancies3", "Find out more about vacancies"),
+                        align = "right"
                       ),
                       tags$div(
                         # title="Source: ?????",
                         valueBoxOutput("earn.avgOver2", width = 8),
                         valueBoxOutput("earn.changeOver2", width = 4)
                       ),
-                      box(width=12,
-                        actionLink("link_to_tabpanel_earnings3", "Find out more about earnings")
-                        ,align = "right"
+                      box(
+                        width = 12,
+                        actionLink("link_to_tabpanel_earnings3", "Find out more about earnings"),
+                        align = "right"
                       )
                     )
                   )
@@ -729,8 +727,8 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                       # 6th row - link to app data
                       box(
                         width = 12,
-                        actionLink("link_to_tabpanel_FE3", "Find out more about skills")
-                        ,align = "right"
+                        actionLink("link_to_tabpanel_FE3", "Find out more about skills"),
+                        align = "right"
                       ),
                       # 7th row - HE
                       tags$div(
@@ -741,8 +739,8 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                       # 8th row - link to HE data
                       box(
                         width = 12,
-                        actionLink("link_to_tabpanel_HE3", "Find out more about HE")
-                        ,align = "right"
+                        actionLink("link_to_tabpanel_HE3", "Find out more about HE"),
+                        align = "right"
                       ),
                     )
                   )
@@ -752,7 +750,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
           )
         ) # end of side bar layout
       ), # end of Overview tab
-      
+
       # APPS ---------------
       tabPanel(
         "Apprenticeships",
@@ -762,23 +760,23 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             width = 2,
             ### Help text --------------------
             helpText("Choose a Local Area to view outcome trends",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             br(),
             ### LEP 7 input ---------------
             selectizeInput("lepAppa",
-                           "Choose a primary LEP:",
-                           choices = C_LEP2020,
-                           selected = "England",
+              "Choose a primary LEP:",
+              choices = C_LEP2020,
+              selected = "England",
             ),
             ### LEP 8 input ------------
             selectizeInput("lepAppb", # Make no selection an option
-                           "Choose a comparison LEP (optional):",
-                           choices = c("\nNone", unique(C_LEP2020))
+              "Choose a comparison LEP (optional):",
+              choices = c("\nNone", unique(C_LEP2020))
             ),
             ### Help text --------------------
             helpText("Download apprenticeship indicators for all geographies (LEPs, LAs, Regions and England):",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             ### Download buttons -------------
             downloadButton(
@@ -787,7 +785,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               icon = icon("download")
             ),
             helpText("Or just for the currently chosen LEP:",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             downloadButton(
               outputId = "download_btnAppb",
@@ -801,16 +799,15 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             ### Title ----
             uiOutput("page7title", style = "font-size: 24px;"),
             br(),
-            p("We will show:"),br(),
-            p("Starts and achievements timeseries."),br(), 
-            p("Distribution by level, SSA, enterprise size, and enterprise sector."),br(),
-            p("Most common apprenticeships within selected provision, level, SSA, sector."),br(),
+            p("We will show:"), br(),
+            p("Starts and achievements timeseries."), br(),
+            p("Distribution by level, SSA, enterprise size, and enterprise sector."), br(),
+            p("Most common apprenticeships within selected provision, level, SSA, sector."), br(),
             p("Information about which providers/employers deliver these apprenticeships."),
-
           ) # end of main panel
         ) # end of side bar layout
       ), # end of earnings tab
-      
+
       # HE ---------------
       tabPanel(
         "HE",
@@ -820,23 +817,23 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             width = 2,
             ### Help text --------------------
             helpText("Choose a Local Area to view skill demand trends",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             br(),
             ### LEP 9 input ---------------
             selectizeInput("lep9",
-                           "Choose a primary LEP:",
-                           choices = C_LEP2020,
-                           selected = "England",
+              "Choose a primary LEP:",
+              choices = C_LEP2020,
+              selected = "England",
             ),
             ### LEP 10 input ------------
             selectizeInput("lep10", # Make no selection an option
-                           "Choose a comparison LEP (optional):",
-                           choices = c("\nNone", unique(C_LEP2020))
+              "Choose a comparison LEP (optional):",
+              choices = c("\nNone", unique(C_LEP2020))
             ),
             ### Help text --------------------
             helpText("Download HE indicators for all geographies (LEPs, LAs, Regions and England):",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             ### Download buttons -------------
             downloadButton(
@@ -845,7 +842,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               icon = icon("download")
             ),
             helpText("Or just for the currently chosen LEP:",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             downloadButton(
               outputId = "download_btn5b",
@@ -873,23 +870,23 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             width = 2,
             ### Help text --------------------
             helpText("Choose a Local Area to view outcome trends",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             br(),
             ### LEP 7 input ---------------
             selectizeInput("lep7",
-                           "Choose a primary LEP:",
-                           choices = C_LEP2020,
-                           selected = "England",
+              "Choose a primary LEP:",
+              choices = C_LEP2020,
+              selected = "England",
             ),
             ### LEP 8 input ------------
             selectizeInput("lep8", # Make no selection an option
-                           "Choose a comparison LEP (optional):",
-                           choices = c("\nNone", unique(C_LEP2020))
+              "Choose a comparison LEP (optional):",
+              choices = c("\nNone", unique(C_LEP2020))
             ),
             ### Help text --------------------
             helpText("Download outcome indicators for all geographies (LEPs, LAs, Regions and England):",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             ### Download buttons -------------
             downloadButton(
@@ -898,7 +895,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               icon = icon("download")
             ),
             helpText("Or just for the currently chosen LEP:",
-                     style = "font-style: italic;"
+              style = "font-style: italic;"
             ),
             downloadButton(
               outputId = "download_btn4b",
@@ -910,15 +907,14 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
           mainPanel(
             width = 10,
             ### Title ----
-            uiOutput("page4title", style = "font-size: 24px;"),
-            div("Page will show learner outcomes by type of provision", style = "font-size: 16px; font-style: italic;"),
+            uiOutput("page4title", style = "font-size: 24px;"), br(),
+            p("Page will show learner outcomes by type of provision"),
           ) # end of main panel
         ) # end of side bar layout
       ), # end of earnings tab
-      
-    ),#end of future development nav bar      
-    
-    
+    ), # end of future development nav bar
+
+
     # Create the accessibility statement-----------------
     tabPanel(
       "Accessibility",
@@ -956,7 +952,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
       "Support and feedback",
       support_links() # defined in R/supporting_links.R
     ),
-    
+
     # Footer ====================================================================
 
     shinyGovstyle::footer(TRUE)
