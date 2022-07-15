@@ -1,0 +1,256 @@
+{
+  "input": {
+    "lep0a": "Cheshire and Warrington",
+    "lep1": "Black Country",
+    "lep10": "\nNone",
+    "lep2": "\nNone",
+    "lep3": "Black Country",
+    "lep4": "\nNone",
+    "lep5": "Black Country",
+    "lep6": "\nNone",
+    "lep7": "Black Country",
+    "lep8": "\nNone",
+    "lep9": "Black Country",
+    "link_to_tabpanel_earnings": 0,
+    "link_to_tabpanel_earnings2": 0,
+    "link_to_tabpanel_employment": 0,
+    "link_to_tabpanel_employment2": 0,
+    "link_to_tabpanel_FE": 0,
+    "link_to_tabpanel_FE2": 0,
+    "link_to_tabpanel_HE": 0,
+    "link_to_tabpanel_HE2": 0,
+    "link_to_tabpanel_overview": 0,
+    "link_to_tabpanel_vacancies": 0,
+    "link_to_tabpanel_vacancies2": 0,
+    "navbar": "Overview",
+    "OccSect": "1",
+    "skill_line": "Apprenticeships: Total"
+  },
+  "output": {
+    "earn.avg": {
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>average salary (compared with x% for England)<\/p>\n  <\/div>\n<\/div>",
+      "deps": [
+
+      ]
+    },
+    "earn.change": {
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>+0<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+      "deps": [
+        {
+          "name": "font-awesome",
+          "version": "5.15.3",
+          "src": {
+            "href": "font-awesome-5.15.3"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": [
+            "css/all.min.css",
+            "css/v4-shims.min.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    },
+    "he.entrants": {
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>HE entrants<\/p>\n  <\/div>\n<\/div>",
+      "deps": [
+
+      ]
+    },
+    "he.entrantschange": {
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>+0<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+      "deps": [
+        {
+          "name": "font-awesome",
+          "version": "5.15.3",
+          "src": {
+            "href": "font-awesome-5.15.3"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": [
+            "css/all.min.css",
+            "css/v4-shims.min.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    },
+    "jobad.change": {
+      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+77<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
+      "deps": [
+        {
+          "name": "font-awesome",
+          "version": "5.15.3",
+          "src": {
+            "href": "font-awesome-5.15.3"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": [
+            "css/all.min.css",
+            "css/v4-shims.min.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    },
+    "jobad.units": {
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>168.7<\/h3>\n    <p>job vacancy units (Jan 22)<\/p>\n  <\/div>\n<\/div>",
+      "deps": [
+
+      ]
+    },
+    "locland.emplchange0": {
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-4 ppts<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+      "deps": [
+        {
+          "name": "font-awesome",
+          "version": "5.15.3",
+          "src": {
+            "href": "font-awesome-5.15.3"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": [
+            "css/all.min.css",
+            "css/v4-shims.min.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    },
+    "locland.emplcnt0": {
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>418,000<\/h3>\n    <p>people employed in 2021<\/p>\n  <\/div>\n<\/div>",
+      "deps": [
+
+      ]
+    },
+    "locland.emplcntchange0": {
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-22700<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+      "deps": [
+        {
+          "name": "font-awesome",
+          "version": "5.15.3",
+          "src": {
+            "href": "font-awesome-5.15.3"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": [
+            "css/all.min.css",
+            "css/v4-shims.min.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    },
+    "locland.emplrate0": {
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>75 %<\/h3>\n    <p>employment rate in 2021 (compared with  75 % for England)<\/p>\n  <\/div>\n<\/div>",
+      "deps": [
+
+      ]
+    },
+    "page0title": {
+      "html": "Cheshire and Warrington: overview of local landscape",
+      "deps": [
+
+      ]
+    },
+    "skills.l4": {
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>qualified at level 4+<\/p>\n  <\/div>\n<\/div>",
+      "deps": [
+
+      ]
+    },
+    "skills.l4change": {
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>+0<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+      "deps": [
+        {
+          "name": "font-awesome",
+          "version": "5.15.3",
+          "src": {
+            "href": "font-awesome-5.15.3"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": [
+            "css/all.min.css",
+            "css/v4-shims.min.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    },
+    "skisup.APPach": {
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>Apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "deps": [
+
+      ]
+    },
+    "skisup.APPachChange": {
+      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+110<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
+      "deps": [
+        {
+          "name": "font-awesome",
+          "version": "5.15.3",
+          "src": {
+            "href": "font-awesome-5.15.3"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": [
+            "css/all.min.css",
+            "css/v4-shims.min.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    },
+    "skisup.ETach": {
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>Education and training acheivements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "deps": [
+
+      ]
+    },
+    "skisup.ETachChange": {
+      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+180<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
+      "deps": [
+        {
+          "name": "font-awesome",
+          "version": "5.15.3",
+          "src": {
+            "href": "font-awesome-5.15.3"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": [
+            "css/all.min.css",
+            "css/v4-shims.min.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    }
+  },
+  "export": {
+
+  }
+}
