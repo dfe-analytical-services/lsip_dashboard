@@ -335,6 +335,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
 
     navbarMenu(
       "Labour market",
+
       # EMPLOYMENT ----
       tabPanel(
         "Employment",
