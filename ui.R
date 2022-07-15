@@ -192,14 +192,17 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             selected = 1
           ),
           ### Help text --------------------
-          helpText("Download all available indicators for:",
+          helpText("Download all available indicators for all geographies (LEPs, LAs, Regions and England):",
             style = "font-style: italic;"
           ),
           ### Download button -------------
           downloadButton(
             outputId = "download_btn0a",
-            label = "All LEPs",
+            label = "All data",
             icon = shiny::icon("download")
+          ),
+          helpText("Or just for the currently chosen LEP:",
+                   style = "font-style: italic;"
           ),
           downloadButton(
             outputId = "download_btn0b",
@@ -362,14 +365,17 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             ),
 
             ### Help text --------------------
-            helpText("Download employment indicators for:",
+            helpText("Download employment indicators for all geographies (LEPs, LAs, Regions and England):",
               style = "font-style: italic;"
             ),
             ### Download buttons -------------
             downloadButton(
               outputId = "download_btn1a",
-              label = "All LEPs",
+              label = "All data",
               icon = icon("download")
+            ),
+            helpText("Or just for the currently chosen LEP:",
+                     style = "font-style: italic;"
             ),
             downloadButton(
               outputId = "download_btn1b",
@@ -383,7 +389,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             width = 10,
             ### Title ----
             uiOutput("page1title", style = "font-size: 24px;"),
-            div("Data from the Annual Population Survey. Years represent calendar years.", style = "font-size: 16px; font-style: italic;"),
+            p("Data from the Annual Population Survey. Years represent calendar years."),
             br(),
 
             ### KPI boxes ----
@@ -409,7 +415,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             ### Employment by occupation data table ----
             column(
               width = 6,
-              p("In employment in each occupation", style = "font-size:20px;"),
+              p("In employment in each occupation (sub-major SOC group)", style = "font-size:20px;"),
               dataTableOutput("EmpOcc")
             )
           ) # end of main panel
@@ -419,7 +425,6 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
       # VACANCIES ---------------
       tabPanel(
         "Vacancies",
-        # Sidebar with a slider input for number of bins
         sidebarLayout(
           ## Side panel ----
           sidebarPanel(
@@ -441,14 +446,17 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               choices = c("\nNone", unique(C_LEP2020))
             ),
             ### Help text --------------------
-            helpText("Download vacancy indicators for:",
+            helpText("Download vacancy indicators for all geographies (LEPs, LAs, Regions and England):",
               style = "font-style: italic;"
             ),
             ### Download buttons -------------
             downloadButton(
               outputId = "download_btn3a",
-              label = "All LEPs",
+              label = "All data",
               icon = icon("download")
+            ),
+            helpText("Or just for the currently chosen LEP:",
+                     style = "font-style: italic;"
             ),
             downloadButton(
               outputId = "download_btn3b",
@@ -533,14 +541,17 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               choices = c("\nNone", unique(C_LEP2020))
             ),
             ### Help text --------------------
-            helpText("Download earnings indicators for:",
+            helpText("Download earnings indicators for all geographies (LEPs, LAs, Regions and England):",
               style = "font-style: italic;"
             ),
             ### Download buttons -------------
             downloadButton(
               outputId = "download_btn4a",
-              label = "All LEPs",
+              label = "All data",
               icon = icon("download")
+            ),
+            helpText("Or just for the currently chosen LEP:",
+                     style = "font-style: italic;"
             ),
             downloadButton(
               outputId = "download_btn4b",
@@ -588,14 +599,17 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               choices = c("\nNone", unique(C_LEP2020))
             ),
             ### Help text --------------------
-            helpText("Download skills indicators for:",
+            helpText("Download skills indicators for all geographies (LEPs, LAs, Regions and England):",
               style = "font-style: italic;"
             ),
             ### Download buttons -------------
             downloadButton(
               outputId = "download_btn2a",
-              label = "All LEPs",
+              label = "All data",
               icon = icon("download")
+            ),
+            helpText("Or just for the currently chosen LEP:",
+                     style = "font-style: italic;"
             ),
             downloadButton(
               outputId = "download_btn2b",
@@ -680,14 +694,17 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               choices = c("\nNone", unique(C_LEP2020))
             ),
             ### Help text --------------------
-            helpText("Download HE indicators for:",
+            helpText("Download HE indicators for all geographies (LEPs, LAs, Regions and England):",
               style = "font-style: italic;"
             ),
             ### Download buttons -------------
             downloadButton(
               outputId = "download_btn5a",
-              label = "All LEPs",
+              label = "All data",
               icon = icon("download")
+            ),
+            helpText("Or just for the currently chosen LEP:",
+                     style = "font-style: italic;"
             ),
             downloadButton(
               outputId = "download_btn5b",
