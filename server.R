@@ -155,8 +155,7 @@ server <- function(input, output, session) {
       scientific = FALSE, big.mark = ","
       ),
       "people employed in 2021",
-      width = 12,
-      color = "blue"
+      width = 12
     )
   })
 
@@ -212,8 +211,7 @@ server <- function(input, output, session) {
         )$empRate, digits = 2),
         "% for England)"
       ),
-      width = 12,
-      color = "blue"
+      width = 12
     )
   })
 
@@ -258,8 +256,7 @@ server <- function(input, output, session) {
       ) %>%
       summarise(job.unit = sum(vacancy_unit)),
     "job vacancy units (Jan 22)",
-    width = 12,
-    color = "blue"
+    width = 12
     )
   })
 
@@ -295,8 +292,7 @@ server <- function(input, output, session) {
   output$earn.avg <- renderValueBox({
     valueBox("In V2",
       "average salary (compared with x% for England)",
-      width = 12,
-      color = "blue"
+      width = 12
     )
   })
 
@@ -321,8 +317,7 @@ server <- function(input, output, session) {
   output$skills.l4 <- renderValueBox({
     valueBox("In V2",
       "qualified at level 4+",
-      width = 12,
-      color = "blue"
+      width = 12
     )
   })
 
@@ -355,8 +350,7 @@ server <- function(input, output, session) {
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
       "Education and training acheivements (AY20/21)",
-      width = 12,
-      color = "blue"
+      width = 12
     )
   })
 
@@ -396,8 +390,7 @@ server <- function(input, output, session) {
         ) %>%
         dplyr::summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
       "Apprenticeship achievements (AY20/21)",
-      width = 12,
-      color = "blue"
+      width = 12
     )
   })
 
@@ -430,8 +423,7 @@ server <- function(input, output, session) {
   output$he.entrants <- renderValueBox({
     valueBox("In V2",
       "HE entrants",
-      width = 12,
-      color = "blue"
+      width = 12
     )
   })
 
@@ -575,7 +567,7 @@ server <- function(input, output, session) {
 
   ## Employment rate over time line graph ----
   EmpRate_time <- reactive({
-    C_EmpRate_APS1721 %>%
+    EmpRateTime<-C_EmpRate_APS1721 %>%
       select(year, area, geographic_level, empRate) %>%
       filter(
         geographic_level == "lep" |
@@ -583,15 +575,19 @@ server <- function(input, output, session) {
         area == "England" |
           area == input$lep1 |
           area == input$lep2
-      ) %>%
-      ggplot(aes(x = year, y = empRate, group = area, colour = area)) +
+      ) 
+ #add an extra column so the colours work in ggplot when sorting alphabetically
+    EmpRateTime$Areas <- factor(EmpRateTime$area,
+                         levels=c("England",input$lep1,input$lep2)
+      )
+      ggplot(EmpRateTime,aes(x = year, y = empRate,color=Areas)) +
       geom_line() +
       theme_minimal() +
       expand_limits(y = 0.6) +
       theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
       scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
       labs(colour = "") +
-      scale_color_manual(values=c("#1d70b8", "#F46A25", "#28a197"))
+      scale_color_manual(values=c("#28a197","#1d70b8", "#F46A25"))
   })
 
   output$EmpRate_time <- renderPlotly({
@@ -614,14 +610,14 @@ server <- function(input, output, session) {
       select(-year, -geographic_level) %>%
       rename_with(str_to_sentence) %>% # capitalise column titles
       mutate(across(where(is.numeric), format, big.mark = ",")) %>%
-      as.data.frame() %>%
+     # as.data.frame() %>%
       t() %>%
-      row_to_names(row_number = 1) # %>%
-    # arrange(desc(input$lep1))
+      row_to_names(row_number = 1) 
   })
 
   output$EmpOcc <- renderDataTable({
-    datatable(EmpOcc())
+    datatable(EmpOcc(),options = list(order=list(2,'desc'))
+              )
   })
 
   # VACANCIES ----
@@ -754,20 +750,23 @@ server <- function(input, output, session) {
 
   ## Online job vacancy units over time line chart ----
   jobad.time <- reactive({
-    C_Vacancy_England %>%
+    JobTime<- C_Vacancy_England %>%
       filter(LEP == input$lep5 |
         LEP == input$lep6) %>%
       select(-LA, -pc_total, -region, -England) %>%
       group_by(year, LEP) %>%
-      dplyr::summarise(total = sum(vacancy_unit)) %>%
-      ggplot(aes(x = year, y = total, colour = LEP)) +
+      summarise(total = sum(vacancy_unit)) 
+    #add an extra column so the colours work in ggplot when sorting alphabetically
+    JobTime$Areas <- factor(JobTime$LEP,
+                                levels=c(input$lep5,input$lep6)
+    )
+      ggplot(JobTime,aes(x = year, y = total, colour = Areas)) +
       geom_line() +
       theme_minimal() +
       labs(colour = "LEP") +
       theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
-      # ggtitle("Online job vacancy units")+
       labs(shape = "", colour = "")+
-      scale_color_manual(values=c("#1d70b8", "#F46A25", "#28a197"))
+      scale_color_manual(values=c("#1d70b8", "#F46A25"))
   })
 
   output$jobad.time <- renderPlotly({
@@ -890,7 +889,7 @@ server <- function(input, output, session) {
   
   ## Achievements over time line chart ----
   Ach_time <- reactive({
-    C_Achieve_ILR1621 %>%
+    FETime<-C_Achieve_ILR1621 %>%
       select(time_period, area, LEP, level_or_type, achievements) %>%
       filter(
         # area == "England" |
@@ -900,9 +899,13 @@ server <- function(input, output, session) {
       ) %>%
       mutate(time_period = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
       group_by(time_period, LEP, level_or_type) %>%
-      summarise(Achievements = sum(achievements)) %>%
-      ggplot(aes(
-        x = time_period, y = Achievements, colour = LEP,
+      summarise(Achievements = sum(achievements))
+    #add an extra column so the colours work in ggplot when sorting alphabetically
+    FETime$Areas <- factor(FETime$LEP,
+                            levels=c(input$lep3,input$lep4)
+    )
+      ggplot(FETime,aes(
+        x = time_period, y = Achievements, colour = Areas,
         group = interaction(level_or_type, LEP)
       )) +
       geom_line() +
@@ -911,7 +914,7 @@ server <- function(input, output, session) {
       labs(shape = "", colour = "") +
       scale_y_continuous(label = comma) +
       xlab("Year")+
-      scale_color_manual(values=c("#1d70b8", "#F46A25", "#28a197"))
+      scale_color_manual(values=c("#1d70b8", "#F46A25"))
   })
   
   output$Ach_time <- renderPlotly({
