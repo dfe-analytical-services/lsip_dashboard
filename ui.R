@@ -242,6 +242,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                     box(
                       width = 12,
                       actionLink("link_to_tabpanel_employment2", "Find out more about employment")
+                      ,align = "right"
                     ),
                     # third row - link to emp tab
                     # fourth row - vacancies
@@ -253,8 +254,8 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                     # fifth row - link to vacancy data
                     box(
                       width = 12,
-                      actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies"),
-                      class = 'rightAlign'
+                      actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies")
+                      ,align = "right"
                     ),
                     )
                 )
@@ -293,6 +294,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                     box(
                       width = 12,
                       actionLink("link_to_tabpanel_FE2", "Find out more about skills")
+                      ,align = "right"
                     ),
                   )
                 )
@@ -595,6 +597,10 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                          ),
                          selected = 1
             ),
+            selectizeInput("Occ-Sector",
+                           "Choose sector/occupation",
+                           choices = c("Sector 1","Sector 2","...")
+            ),
             ### Help text --------------------
             helpText("Download all available indicators for all geographies (LEPs, LAs, Regions and England):",
                      style = "font-style: italic;"
@@ -666,14 +672,16 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                       box(
                         width = 12,
                         actionLink("link_to_tabpanel_vacancies3", "Find out more about vacancies")
+                        ,align = "right"
                       ),
                       tags$div(
                         # title="Source: ?????",
                         valueBoxOutput("earn.avgOver2", width = 8),
                         valueBoxOutput("earn.changeOver2", width = 4)
                       ),
-                      box(
+                      box(width=12,
                         actionLink("link_to_tabpanel_earnings3", "Find out more about earnings")
+                        ,align = "right"
                       )
                     )
                   )
@@ -722,6 +730,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                       box(
                         width = 12,
                         actionLink("link_to_tabpanel_FE3", "Find out more about skills")
+                        ,align = "right"
                       ),
                       # 7th row - HE
                       tags$div(
@@ -733,6 +742,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                       box(
                         width = 12,
                         actionLink("link_to_tabpanel_HE3", "Find out more about HE")
+                        ,align = "right"
                       ),
                     )
                   )
@@ -791,10 +801,11 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             ### Title ----
             uiOutput("page7title", style = "font-size: 24px;"),
             br(),
-            p("Starts and achievements timeseries. \n
-Distribution by level, SSA, enterprise size, and enterprise sector.\n
-most common apprenticeships within selected provision, level, SSA, sector.\n
-Information about which providers/employers deliver these apprenticeships."),
+            p("We will show:"),br(),
+            p("Starts and achievements timeseries."),br(), 
+            p("Distribution by level, SSA, enterprise size, and enterprise sector."),br(),
+            p("Most common apprenticeships within selected provision, level, SSA, sector."),br(),
+            p("Information about which providers/employers deliver these apprenticeships."),
 
           ) # end of main panel
         ) # end of side bar layout
