@@ -1,0 +1,42 @@
+{
+  "input": {
+    "lep0a": "Black Country",
+    "lep1": "Black Country",
+    "lep10": "\nNone",
+    "lep2": "\nNone",
+    "lep3": "Black Country",
+    "lep4": "\nNone",
+    "lep5": "Black Country",
+    "lep6": "\nNone",
+    "lep7": "Black Country",
+    "lep8": "\nNone",
+    "lep9": "Black Country",
+    "lepAppa": "Black Country",
+    "lepAppb": "\nNone",
+    "lepOver2": "Black Country",
+    "link_to_tabpanel_earnings": 0,
+    "link_to_tabpanel_earnings3": 0,
+    "link_to_tabpanel_employment": 0,
+    "link_to_tabpanel_employment2": 0,
+    "link_to_tabpanel_employment3": 0,
+    "link_to_tabpanel_FE": 0,
+    "link_to_tabpanel_FE2": 0,
+    "link_to_tabpanel_FE3": 0,
+    "link_to_tabpanel_HE": 0,
+    "link_to_tabpanel_HE3": 0,
+    "link_to_tabpanel_overview": 0,
+    "link_to_tabpanel_vacancies": 0,
+    "link_to_tabpanel_vacancies2": 0,
+    "link_to_tabpanel_vacancies3": 0,
+    "navbar": "Homepage",
+    "Occ-Sector": "Sector 1",
+    "OccSect": "1",
+    "skill_line": "Apprenticeships"
+  },
+  "output": {
+
+  },
+  "export": {
+
+  }
+}

@@ -118,28 +118,35 @@
     "lep1": "London",
     "lep10": "\nNone",
     "lep2": "Greater Manchester",
-    "lep3": "Black Country",
-    "lep4": "\nNone",
+    "lep3": "London",
+    "lep4": "Greater Manchester",
     "lep5": "London",
     "lep6": "Greater Manchester",
     "lep7": "London",
     "lep8": "Greater Manchester",
-    "lep9": "Black Country",
+    "lep9": "London",
+    "lepAppa": "Black Country",
+    "lepAppb": "\nNone",
+    "lepOver2": "Black Country",
     "link_to_tabpanel_earnings": 0,
-    "link_to_tabpanel_earnings2": 0,
+    "link_to_tabpanel_earnings3": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
+    "link_to_tabpanel_employment3": 0,
     "link_to_tabpanel_FE": 0,
     "link_to_tabpanel_FE2": 0,
+    "link_to_tabpanel_FE3": 0,
     "link_to_tabpanel_HE": 0,
-    "link_to_tabpanel_HE2": 0,
+    "link_to_tabpanel_HE3": 0,
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
-    "navbar": "FE",
+    "link_to_tabpanel_vacancies3": 0,
+    "navbar": "HE",
+    "Occ-Sector": "Sector 1",
     "OccSect": "1",
-    "plotly_afterplot-A": "\"Ach_SSA_pc\"",
-    "skill_line": "Apprenticeships: Total"
+    "plotly_afterplot-A": "\"Ach_time\"",
+    "skill_line": "Apprenticeships"
   },
   "output": {
     "Ach_SSA_pc": {
@@ -148,94 +155,94 @@
           {
             "orientation": "h",
             "width": [
-              0.9,
-              0.9,
-              0.9,
-              0.9,
-              0.9,
-              0.9,
-              0.9,
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999
+              0.450000000000003,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.45,
+              0.45,
+              0.45,
+              0.45
             ],
             "base": [
               null,
               0,
-              0,
-              0,
-              0,
-              0,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
               0,
               null,
               0,
-              0,
-              0,
               null,
-              0,
-              0,
               null,
               null
             ],
             "x": [
               null,
-              0.00580720092915215,
-              0.127758420441347,
-              0.0871080139372822,
-              0.00580720092915215,
-              0.0557491289198606,
-              0.140534262485482,
+              0.0598654708520179,
               null,
-              0.121951219512195,
-              0.00696864111498258,
-              0.00580720092915215,
               null,
-              0.356562137049942,
-              0.0801393728222996,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              0.0239910313901345,
+              null,
+              0.564798206278027,
+              null,
               null,
               null
             ],
             "y": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9,
-              10,
-              11,
-              12,
-              13,
-              14,
-              15,
-              16
+              16.225,
+              15.225,
+              14.225,
+              13.225,
+              12.225,
+              11.225,
+              10.225,
+              9.225,
+              8.225,
+              7.225,
+              6.225,
+              5.225,
+              4.225,
+              3.225,
+              2.225,
+              1.225
             ],
             "text": [
-              "SSA: Agriculture, Horticulture and Animal Care<br>Area: Black Country<br>Percentage of achievements: NA<br>",
-              "SSA: Arts, Media and Publishing<br>Area: Black Country<br>Percentage of achievements: 1%<br>",
-              "SSA: Business, Administration and Law<br>Area: Black Country<br>Percentage of achievements: 13%<br>",
-              "SSA: Construction, Planning and the Built Environment<br>Area: Black Country<br>Percentage of achievements: 9%<br>",
-              "SSA: Education and Training<br>Area: Black Country<br>Percentage of achievements: 1%<br>",
-              "SSA: Engineering and Manufacturing Technologies<br>Area: Black Country<br>Percentage of achievements: 6%<br>",
-              "SSA: Health, Public Services and Care<br>Area: Black Country<br>Percentage of achievements: 14%<br>",
-              "SSA: History, Philosophy and Theology<br>Area: Black Country<br>Percentage of achievements: NA<br>",
-              "SSA: Information and Communication Technology<br>Area: Black Country<br>Percentage of achievements: 12%<br>",
-              "SSA: Languages, Literature and Culture<br>Area: Black Country<br>Percentage of achievements: 1%<br>",
-              "SSA: Leisure, Travel and Tourism<br>Area: Black Country<br>Percentage of achievements: 1%<br>",
-              "SSA: Not Applicable/ Not Known<br>Area: Black Country<br>Percentage of achievements: NA<br>",
-              "SSA: Preparation for Life and Work<br>Area: Black Country<br>Percentage of achievements: 36%<br>",
-              "SSA: Retail and Commercial Enterprise<br>Area: Black Country<br>Percentage of achievements: 8%<br>",
-              "SSA: Science and Mathematics<br>Area: Black Country<br>Percentage of achievements: NA<br>",
-              "SSA: Social Sciences<br>Area: Black Country<br>Percentage of achievements: NA<br>"
+              "SSA: Agriculture, Horticulture and Animal Care<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Arts, Media and Publishing<br>Area: London<br>Percentage of achievements: 6%<br>Achievements: 2670<br>",
+              "SSA: Business, Administration and Law<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Construction, Planning and the Built Environment<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Education and Training<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Engineering and Manufacturing Technologies<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Health, Public Services and Care<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: History, Philosophy and Theology<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Information and Communication Technology<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Languages, Literature and Culture<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Leisure, Travel and Tourism<br>Area: London<br>Percentage of achievements: 2%<br>Achievements: 1070<br>",
+              "SSA: Not Applicable/ Not Known<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Preparation for Life and Work<br>Area: London<br>Percentage of achievements: 56%<br>Achievements: 25190<br>",
+              "SSA: Retail and Commercial Enterprise<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Science and Mathematics<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Social Sciences<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>"
             ],
             "type": "bar",
             "textposition": "none",
@@ -247,8 +254,118 @@
                 "color": "transparent"
               }
             },
-            "name": "Black Country",
-            "legendgroup": "Black Country",
+            "name": "London",
+            "legendgroup": "London",
+            "showlegend": true,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "orientation": "h",
+            "width": [
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.449999999999999,
+              0.45,
+              0.45,
+              0.45,
+              0.45
+            ],
+            "base": [
+              null,
+              null,
+              0,
+              0,
+              0,
+              0,
+              0,
+              null,
+              0,
+              null,
+              null,
+              0,
+              0,
+              0,
+              null,
+              null
+            ],
+            "x": [
+              null,
+              null,
+              0.0808,
+              0.0456,
+              0.032,
+              0.0256,
+              0.1568,
+              null,
+              0.0768,
+              null,
+              null,
+              0.0112,
+              0.4528,
+              0.0936,
+              null,
+              null
+            ],
+            "y": [
+              15.775,
+              14.775,
+              13.775,
+              12.775,
+              11.775,
+              10.775,
+              9.775,
+              8.775,
+              7.775,
+              6.775,
+              5.775,
+              4.775,
+              3.775,
+              2.775,
+              1.775,
+              0.775
+            ],
+            "text": [
+              "SSA: Agriculture, Horticulture and Animal Care<br>Area: Greater Manchester<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Arts, Media and Publishing<br>Area: Greater Manchester<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Business, Administration and Law<br>Area: Greater Manchester<br>Percentage of achievements: 8%<br>Achievements: 1010<br>",
+              "SSA: Construction, Planning and the Built Environment<br>Area: Greater Manchester<br>Percentage of achievements: 5%<br>Achievements: 570<br>",
+              "SSA: Education and Training<br>Area: Greater Manchester<br>Percentage of achievements: 3%<br>Achievements: 400<br>",
+              "SSA: Engineering and Manufacturing Technologies<br>Area: Greater Manchester<br>Percentage of achievements: 3%<br>Achievements: 320<br>",
+              "SSA: Health, Public Services and Care<br>Area: Greater Manchester<br>Percentage of achievements: 16%<br>Achievements: 1960<br>",
+              "SSA: History, Philosophy and Theology<br>Area: Greater Manchester<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Information and Communication Technology<br>Area: Greater Manchester<br>Percentage of achievements: 8%<br>Achievements: 960<br>",
+              "SSA: Languages, Literature and Culture<br>Area: Greater Manchester<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Leisure, Travel and Tourism<br>Area: Greater Manchester<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Not Applicable/ Not Known<br>Area: Greater Manchester<br>Percentage of achievements: 1%<br>Achievements: 140<br>",
+              "SSA: Preparation for Life and Work<br>Area: Greater Manchester<br>Percentage of achievements: 45%<br>Achievements: 5660<br>",
+              "SSA: Retail and Commercial Enterprise<br>Area: Greater Manchester<br>Percentage of achievements: 9%<br>Achievements: 1170<br>",
+              "SSA: Science and Mathematics<br>Area: Greater Manchester<br>Percentage of achievements: NA<br>Achievements: NA<br>",
+              "SSA: Social Sciences<br>Area: Greater Manchester<br>Percentage of achievements: NA<br>Achievements: NA<br>"
+            ],
+            "type": "bar",
+            "textposition": "none",
+            "marker": {
+              "autocolorscale": false,
+              "color": "rgba(244,106,37,1)",
+              "line": {
+                "width": 1.88976377952756,
+                "color": "transparent"
+              }
+            },
+            "name": "Greater Manchester",
+            "legendgroup": "Greater Manchester",
             "showlegend": true,
             "xaxis": "x",
             "yaxis": "y",
@@ -277,28 +394,25 @@
             "type": "linear",
             "autorange": false,
             "range": [
-              -0.0178281068524971,
-              0.374390243902439
+              -0.0282399103139013,
+              0.593038116591928
             ],
             "tickmode": "array",
             "ticktext": [
               "0%",
-              "10%",
               "20%",
-              "30%"
+              "40%"
             ],
             "tickvals": [
               0,
-              0.1,
               0.2,
-              0.3
+              0.4
             ],
             "categoryorder": "array",
             "categoryarray": [
               "0%",
-              "10%",
               "20%",
-              "30%"
+              "40%"
             ],
             "nticks": null,
             "ticks": "",
@@ -344,22 +458,22 @@
             ],
             "tickmode": "array",
             "ticktext": [
-              "Agricultu...",
-              "Arts, Med...",
-              "Business,...",
-              "Construct...",
-              "Education...",
-              "Engineeri...",
-              "Health, P...",
-              "History, ...",
-              "Informati...",
-              "Languages...",
-              "Leisure, ...",
-              "Not Appli...",
-              "Preparati...",
-              "Retail an...",
+              "Social Sc...",
               "Science a...",
-              "Social Sc..."
+              "Retail an...",
+              "Preparati...",
+              "Not Appli...",
+              "Leisure, ...",
+              "Languages...",
+              "Informati...",
+              "History, ...",
+              "Health, P...",
+              "Engineeri...",
+              "Education...",
+              "Construct...",
+              "Business,...",
+              "Arts, Med...",
+              "Agricultu..."
             ],
             "tickvals": [
               1,
@@ -381,22 +495,22 @@
             ],
             "categoryorder": "array",
             "categoryarray": [
-              "Agricultu...",
-              "Arts, Med...",
-              "Business,...",
-              "Construct...",
-              "Education...",
-              "Engineeri...",
-              "Health, P...",
-              "History, ...",
-              "Informati...",
-              "Languages...",
-              "Leisure, ...",
-              "Not Appli...",
-              "Preparati...",
-              "Retail an...",
+              "Social Sc...",
               "Science a...",
-              "Social Sc..."
+              "Retail an...",
+              "Preparati...",
+              "Not Appli...",
+              "Leisure, ...",
+              "Languages...",
+              "Informati...",
+              "History, ...",
+              "Health, P...",
+              "Engineeri...",
+              "Education...",
+              "Construct...",
+              "Business,...",
+              "Arts, Med...",
+              "Agricultu..."
             ],
             "nticks": null,
             "ticks": "",
@@ -604,24 +718,21 @@
               2,
               3,
               4,
-              5,
-              6
+              5
             ],
             "y": [
-              7500,
-              7810,
-              4790,
-              3820,
-              3970,
-              1190
+              23830,
+              23980,
+              null,
+              12850,
+              15280
             ],
             "text": [
-              "AY: 16/17<br>Area: Black Country<br>Achievements: 7,500<br>",
-              "AY: 17/18<br>Area: Black Country<br>Achievements: 7,810<br>",
-              "AY: 18/19<br>Area: Black Country<br>Achievements: 4,790<br>",
-              "AY: 19/20<br>Area: Black Country<br>Achievements: 3,820<br>",
-              "AY: 20/21<br>Area: Black Country<br>Achievements: 3,970<br>",
-              "AY: 21/22<br>Area: Black Country<br>Achievements: 1,190<br>"
+              "AY: 16/17<br>Area: London<br>Achievements: 23,830<br>Provision: Apprenticeships<br>",
+              "AY: 17/18<br>Area: London<br>Achievements: 23,980<br>Provision: Apprenticeships<br>",
+              "AY: 18/19<br>Area: London<br>Achievements:     NA<br>Provision: Apprenticeships<br>",
+              "AY: 19/20<br>Area: London<br>Achievements: 12,850<br>Provision: Apprenticeships<br>",
+              "AY: 20/21<br>Area: London<br>Achievements: 15,280<br>Provision: Apprenticeships<br>"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -631,8 +742,46 @@
               "dash": "solid"
             },
             "hoveron": "points",
-            "name": "Black Country",
-            "legendgroup": "Black Country",
+            "name": "London",
+            "legendgroup": "London",
+            "showlegend": true,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              1,
+              2,
+              3,
+              4,
+              5
+            ],
+            "y": [
+              16280,
+              15630,
+              10350,
+              8170,
+              8710
+            ],
+            "text": [
+              "AY: 16/17<br>Area: Greater Manchester<br>Achievements: 16,280<br>Provision: Apprenticeships<br>",
+              "AY: 17/18<br>Area: Greater Manchester<br>Achievements: 15,630<br>Provision: Apprenticeships<br>",
+              "AY: 18/19<br>Area: Greater Manchester<br>Achievements: 10,350<br>Provision: Apprenticeships<br>",
+              "AY: 19/20<br>Area: Greater Manchester<br>Achievements:  8,170<br>Provision: Apprenticeships<br>",
+              "AY: 20/21<br>Area: Greater Manchester<br>Achievements:  8,710<br>Provision: Apprenticeships<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.88976377952756,
+              "color": "rgba(244,106,37,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "name": "Greater Manchester",
+            "legendgroup": "Greater Manchester",
             "showlegend": true,
             "xaxis": "x",
             "yaxis": "y",
@@ -645,7 +794,7 @@
             "t": 25.7412480974125,
             "r": 7.30593607305936,
             "b": 25.0837138508371,
-            "l": 40.1826484018265
+            "l": 46.027397260274
           },
           "font": {
             "color": "rgba(0,0,0,1)",
@@ -662,7 +811,7 @@
             "autorange": false,
             "range": [
               0.4,
-              6.6
+              5.6
             ],
             "tickmode": "array",
             "ticktext": [
@@ -670,16 +819,14 @@
               "17/18",
               "18/19",
               "19/20",
-              "20/21",
-              "21/22"
+              "20/21"
             ],
             "tickvals": [
               1,
               2,
               3,
               4,
-              5,
-              6
+              5
             ],
             "categoryorder": "array",
             "categoryarray": [
@@ -687,8 +834,7 @@
               "17/18",
               "18/19",
               "19/20",
-              "20/21",
-              "21/22"
+              "20/21"
             ],
             "nticks": null,
             "ticks": "",
@@ -729,28 +875,25 @@
             "type": "linear",
             "autorange": false,
             "range": [
-              859,
-              8141
+              7379.5,
+              24770.5
             ],
             "tickmode": "array",
             "ticktext": [
-              "2,000",
-              "4,000",
-              "6,000",
-              "8,000"
+              "10,000",
+              "15,000",
+              "20,000"
             ],
             "tickvals": [
-              2000,
-              4000,
-              6000,
-              8000
+              10000,
+              15000,
+              20000
             ],
             "categoryorder": "array",
             "categoryarray": [
-              "2,000",
-              "4,000",
-              "6,000",
-              "8,000"
+              "10,000",
+              "15,000",
+              "20,000"
             ],
             "nticks": null,
             "ticks": "",
@@ -949,33 +1092,6 @@
         }
       ]
     },
-    "earn.avg": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>average salary (compared with x% for England)<\/p>\n  <\/div>\n<\/div>",
-      "deps": [
-
-      ]
-    },
-    "earn.change": {
-      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>+0<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
-      ]
-    },
     "emp_comp": {
       "html": "<div class=\"shiny-html-output col-sm-4\" id=\"locland.emplrate.2\"><\/div>\n<div class=\"shiny-html-output col-sm-4\" id=\"locland.emplcnt.2\"><\/div>",
       "deps": [
@@ -1085,11 +1201,11 @@
               0.7510359969423
             ],
             "text": [
-              "year: 2017<br />empRate: 0.7508329<br />Areas: England",
-              "year: 2018<br />empRate: 0.7535346<br />Areas: England",
-              "year: 2019<br />empRate: 0.7599508<br />Areas: England",
-              "year: 2020<br />empRate: 0.7555651<br />Areas: England",
-              "year: 2021<br />empRate: 0.7510360<br />Areas: England"
+              "AY: 2017<br>Area: England<br>Employment rate: 75%<br>",
+              "AY: 2018<br>Area: England<br>Employment rate: 75%<br>",
+              "AY: 2019<br>Area: England<br>Employment rate: 76%<br>",
+              "AY: 2020<br>Area: England<br>Employment rate: 76%<br>",
+              "AY: 2021<br>Area: England<br>Employment rate: 75%<br>"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -1123,11 +1239,11 @@
               0.747928142929532
             ],
             "text": [
-              "year: 2017<br />empRate: 0.7390858<br />Areas: London",
-              "year: 2018<br />empRate: 0.7428496<br />Areas: London",
-              "year: 2019<br />empRate: 0.7449746<br />Areas: London",
-              "year: 2020<br />empRate: 0.7504709<br />Areas: London",
-              "year: 2021<br />empRate: 0.7479281<br />Areas: London"
+              "AY: 2017<br>Area: London<br>Employment rate: 74%<br>",
+              "AY: 2018<br>Area: London<br>Employment rate: 74%<br>",
+              "AY: 2019<br>Area: London<br>Employment rate: 74%<br>",
+              "AY: 2020<br>Area: London<br>Employment rate: 75%<br>",
+              "AY: 2021<br>Area: London<br>Employment rate: 75%<br>"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -1161,11 +1277,11 @@
               0.715982297910481
             ],
             "text": [
-              "year: 2017<br />empRate: 0.7200225<br />Areas: Greater Manchester",
-              "year: 2018<br />empRate: 0.7282731<br />Areas: Greater Manchester",
-              "year: 2019<br />empRate: 0.7269468<br />Areas: Greater Manchester",
-              "year: 2020<br />empRate: 0.7219766<br />Areas: Greater Manchester",
-              "year: 2021<br />empRate: 0.7159823<br />Areas: Greater Manchester"
+              "AY: 2017<br>Area: Greater Manchester<br>Employment rate: 72%<br>",
+              "AY: 2018<br>Area: Greater Manchester<br>Employment rate: 73%<br>",
+              "AY: 2019<br>Area: Greater Manchester<br>Employment rate: 73%<br>",
+              "AY: 2020<br>Area: Greater Manchester<br>Employment rate: 72%<br>",
+              "AY: 2021<br>Area: Greater Manchester<br>Employment rate: 72%<br>"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -1498,33 +1614,6 @@
         }
       ]
     },
-    "he.entrants": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>HE entrants<\/p>\n  <\/div>\n<\/div>",
-      "deps": [
-
-      ]
-    },
-    "he.entrantschange": {
-      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>+0<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
-      ]
-    },
     "jobad.ch": {
       "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>294%<\/h3>\n    <p>change in online job vacancies in London January 2021 to January 2022<\/p>\n  <\/div>\n<\/div>",
       "deps": [
@@ -1591,12 +1680,12 @@
               999.8
             ],
             "text": [
-              "year: 2017<br />total: 524.9<br />Areas: London",
-              "year: 2018<br />total: 835.4<br />Areas: London",
-              "year: 2019<br />total: 669.8<br />Areas: London",
-              "year: 2020<br />total: 526.9<br />Areas: London",
-              "year: 2021<br />total: 339.6<br />Areas: London",
-              "year: 2022<br />total: 999.8<br />Areas: London"
+              "Year: 2017<br>Area: London<br>Job vacancy units: 525<br>",
+              "Year: 2018<br>Area: London<br>Job vacancy units: 835<br>",
+              "Year: 2019<br>Area: London<br>Job vacancy units: 670<br>",
+              "Year: 2020<br>Area: London<br>Job vacancy units: 527<br>",
+              "Year: 2021<br>Area: London<br>Job vacancy units: 340<br>",
+              "Year: 2022<br>Area: London<br>Job vacancy units: 1000<br>"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -1632,12 +1721,12 @@
               491
             ],
             "text": [
-              "year: 2017<br />total: 376.9<br />Areas: Greater Manchester",
-              "year: 2018<br />total: 438.4<br />Areas: Greater Manchester",
-              "year: 2019<br />total: 405.5<br />Areas: Greater Manchester",
-              "year: 2020<br />total: 347.3<br />Areas: Greater Manchester",
-              "year: 2021<br />total: 283.8<br />Areas: Greater Manchester",
-              "year: 2022<br />total: 491.0<br />Areas: Greater Manchester"
+              "Year: 2017<br>Area: Greater Manchester<br>Job vacancy units: 377<br>",
+              "Year: 2018<br>Area: Greater Manchester<br>Job vacancy units: 438<br>",
+              "Year: 2019<br>Area: Greater Manchester<br>Job vacancy units: 406<br>",
+              "Year: 2020<br>Area: Greater Manchester<br>Job vacancy units: 347<br>",
+              "Year: 2021<br>Area: Greater Manchester<br>Job vacancy units: 284<br>",
+              "Year: 2022<br>Area: Greater Manchester<br>Job vacancy units: 491<br>"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -2062,7 +2151,7 @@
       ]
     },
     "page2title": {
-      "html": "Black Country: skill supply trends",
+      "html": "London: skill supply trends",
       "deps": [
 
       ]
@@ -2073,47 +2162,26 @@
 
       ]
     },
-    "page4title": {
-      "html": "London: Overview of earnings",
+    "page5title": {
+      "html": "London: Overview of HE",
       "deps": [
 
       ]
     },
     "skill_comp": {
-      "html": "<br/>\n<p><\/p>",
+      "html": "<div class=\"shiny-html-output col-sm-4\" id=\"skisup.FEach.2\"><\/div>\n<div class=\"shiny-html-output col-sm-4\" id=\"skisup.APach.2\"><\/div>",
       "deps": [
 
-      ]
-    },
-    "skills.l4": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>qualified at level 4+<\/p>\n  <\/div>\n<\/div>",
-      "deps": [
-
-      ]
-    },
-    "skills.l4change": {
-      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>+0<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
       ]
     },
     "skisup.APach": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>3,970<\/h3>\n    <p>20/21 apprenticeship achievements in Black Country<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>15,280<\/h3>\n    <p>20/21 adult apprenticeship achievements in London<\/p>\n  <\/div>\n<\/div>",
+      "deps": [
+
+      ]
+    },
+    "skisup.APach.2": {
+      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>8,710<\/h3>\n    <p>20/21 adult apprenticeship achievements in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -2146,7 +2214,7 @@
       ]
     },
     "skisup.ETach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>Education and training acheivements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>Education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -2173,7 +2241,13 @@
       ]
     },
     "skisup.FEach": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>24,810<\/h3>\n    <p>20/21 FE achievements in Black Country<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>140,370<\/h3>\n    <p>20/21 adult education and training achievements in London<\/p>\n  <\/div>\n<\/div>",
+      "deps": [
+
+      ]
+    },
+    "skisup.FEach.2": {
+      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>38,290<\/h3>\n    <p>20/21 adult education and training achievements in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
