@@ -22,43 +22,43 @@
     ],
     "EmpOcc_columns_selected": null,
     "EmpOcc_rows_all": [
-      1,
+      23,
       2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13,
-      14,
       15,
       16,
-      17,
-      18,
-      19,
-      20,
-      21,
       22,
-      23,
+      10,
+      8,
+      7,
+      19,
+      13,
       24,
-      25
+      21,
+      17,
+      9,
+      14,
+      12,
+      25,
+      11,
+      3,
+      18,
+      1,
+      6,
+      20,
+      5,
+      4
     ],
     "EmpOcc_rows_current": [
-      1,
+      23,
       2,
-      3,
-      4,
-      5,
-      6,
-      7,
+      15,
+      16,
+      22,
+      10,
       8,
-      9,
-      10
+      7,
+      19,
+      13
     ],
     "EmpOcc_rows_selected": null,
     "EmpOcc_search": "",
@@ -66,7 +66,8 @@
       "start": 0,
       "length": 10,
       "order": [
-
+        2,
+        "desc"
       ],
       "search": {
         "search": "",
@@ -142,7 +143,7 @@
   },
   "output": {
     "earn.avg": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>average salary (compared with x% for England)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>average salary (compared with x% for England)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -180,14 +181,15 @@
         "vertical": false,
         "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>England<\/th>\n      <th>Greater Manchester<\/th>\n      <th>London<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>",
         "options": {
+          "order": [
+            2,
+            "desc"
+          ],
           "columnDefs": [
             {
               "orderable": false,
               "targets": 0
             }
-          ],
-          "order": [
-
           ],
           "autoWidth": false,
           "orderClasses": false,
@@ -276,60 +278,22 @@
               0.7510359969423
             ],
             "text": [
-              "year: 2017<br />empRate: 0.7508329<br />area: England<br />area: England",
-              "year: 2018<br />empRate: 0.7535346<br />area: England<br />area: England",
-              "year: 2019<br />empRate: 0.7599508<br />area: England<br />area: England",
-              "year: 2020<br />empRate: 0.7555651<br />area: England<br />area: England",
-              "year: 2021<br />empRate: 0.7510360<br />area: England<br />area: England"
+              "year: 2017<br />empRate: 0.7508329<br />Areas: England",
+              "year: 2018<br />empRate: 0.7535346<br />Areas: England",
+              "year: 2019<br />empRate: 0.7599508<br />Areas: England",
+              "year: 2020<br />empRate: 0.7555651<br />Areas: England",
+              "year: 2021<br />empRate: 0.7510360<br />Areas: England"
             ],
             "type": "scatter",
             "mode": "lines",
             "line": {
               "width": 1.88976377952756,
-              "color": "rgba(248,118,109,1)",
+              "color": "rgba(40,161,151,1)",
               "dash": "solid"
             },
             "hoveron": "points",
             "name": "England",
             "legendgroup": "England",
-            "showlegend": true,
-            "xaxis": "x",
-            "yaxis": "y",
-            "hoverinfo": "text",
-            "frame": null
-          },
-          {
-            "x": [
-              2017,
-              2018,
-              2019,
-              2020,
-              2021
-            ],
-            "y": [
-              0.720022497187851,
-              0.728273074331911,
-              0.726946778711485,
-              0.721976607532598,
-              0.715982297910481
-            ],
-            "text": [
-              "year: 2017<br />empRate: 0.7200225<br />area: Greater Manchester<br />area: Greater Manchester",
-              "year: 2018<br />empRate: 0.7282731<br />area: Greater Manchester<br />area: Greater Manchester",
-              "year: 2019<br />empRate: 0.7269468<br />area: Greater Manchester<br />area: Greater Manchester",
-              "year: 2020<br />empRate: 0.7219766<br />area: Greater Manchester<br />area: Greater Manchester",
-              "year: 2021<br />empRate: 0.7159823<br />area: Greater Manchester<br />area: Greater Manchester"
-            ],
-            "type": "scatter",
-            "mode": "lines",
-            "line": {
-              "width": 1.88976377952756,
-              "color": "rgba(0,186,56,1)",
-              "dash": "solid"
-            },
-            "hoveron": "points",
-            "name": "Greater Manchester",
-            "legendgroup": "Greater Manchester",
             "showlegend": true,
             "xaxis": "x",
             "yaxis": "y",
@@ -352,22 +316,60 @@
               0.747928142929532
             ],
             "text": [
-              "year: 2017<br />empRate: 0.7390858<br />area: London<br />area: London",
-              "year: 2018<br />empRate: 0.7428496<br />area: London<br />area: London",
-              "year: 2019<br />empRate: 0.7449746<br />area: London<br />area: London",
-              "year: 2020<br />empRate: 0.7504709<br />area: London<br />area: London",
-              "year: 2021<br />empRate: 0.7479281<br />area: London<br />area: London"
+              "year: 2017<br />empRate: 0.7390858<br />Areas: London",
+              "year: 2018<br />empRate: 0.7428496<br />Areas: London",
+              "year: 2019<br />empRate: 0.7449746<br />Areas: London",
+              "year: 2020<br />empRate: 0.7504709<br />Areas: London",
+              "year: 2021<br />empRate: 0.7479281<br />Areas: London"
             ],
             "type": "scatter",
             "mode": "lines",
             "line": {
               "width": 1.88976377952756,
-              "color": "rgba(97,156,255,1)",
+              "color": "rgba(29,112,184,1)",
               "dash": "solid"
             },
             "hoveron": "points",
             "name": "London",
             "legendgroup": "London",
+            "showlegend": true,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              2017,
+              2018,
+              2019,
+              2020,
+              2021
+            ],
+            "y": [
+              0.720022497187851,
+              0.728273074331911,
+              0.726946778711485,
+              0.721976607532598,
+              0.715982297910481
+            ],
+            "text": [
+              "year: 2017<br />empRate: 0.7200225<br />Areas: Greater Manchester",
+              "year: 2018<br />empRate: 0.7282731<br />Areas: Greater Manchester",
+              "year: 2019<br />empRate: 0.7269468<br />Areas: Greater Manchester",
+              "year: 2020<br />empRate: 0.7219766<br />Areas: Greater Manchester",
+              "year: 2021<br />empRate: 0.7159823<br />Areas: Greater Manchester"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.88976377952756,
+              "color": "rgba(244,106,37,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "name": "Greater Manchester",
+            "legendgroup": "Greater Manchester",
             "showlegend": true,
             "xaxis": "x",
             "yaxis": "y",
@@ -572,7 +574,8 @@
             "hoverclosest",
             "hovercompare"
           ],
-          "showSendToCloud": false
+          "showSendToCloud": false,
+          "displayModeBar": false
         },
         "source": "A",
         "highlight": {
@@ -689,7 +692,7 @@
       ]
     },
     "he.entrants": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>HE entrants<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>HE entrants<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -769,18 +772,18 @@
               94.3
             ],
             "text": [
-              "year: 2017<br />total: 83.7<br />LEP: Black Country",
-              "year: 2018<br />total: 83.1<br />LEP: Black Country",
-              "year: 2019<br />total: 64.1<br />LEP: Black Country",
-              "year: 2020<br />total: 52.9<br />LEP: Black Country",
-              "year: 2021<br />total: 48.8<br />LEP: Black Country",
-              "year: 2022<br />total: 94.3<br />LEP: Black Country"
+              "year: 2017<br />total: 83.7<br />Areas: Black Country",
+              "year: 2018<br />total: 83.1<br />Areas: Black Country",
+              "year: 2019<br />total: 64.1<br />Areas: Black Country",
+              "year: 2020<br />total: 52.9<br />Areas: Black Country",
+              "year: 2021<br />total: 48.8<br />Areas: Black Country",
+              "year: 2022<br />total: 94.3<br />Areas: Black Country"
             ],
             "type": "scatter",
             "mode": "lines",
             "line": {
               "width": 1.88976377952756,
-              "color": "rgba(248,118,109,1)",
+              "color": "rgba(29,112,184,1)",
               "dash": "solid"
             },
             "hoveron": "points",
@@ -988,7 +991,8 @@
             "hoverclosest",
             "hovercompare"
           ],
-          "showSendToCloud": false
+          "showSendToCloud": false,
+          "displayModeBar": false
         },
         "source": "A",
         "highlight": {
@@ -1105,7 +1109,7 @@
       ]
     },
     "jobad.units": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>168.7<\/h3>\n    <p>job vacancy units (Jan 22)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>168.7<\/h3>\n    <p>job vacancy units (Jan 22)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -1138,13 +1142,13 @@
       ]
     },
     "locland.emplcnt.2": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>1,278,100<\/h3>\n    <p>In employment in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>1,278,100<\/h3>\n    <p>In employment in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
     },
     "locland.emplcnt0": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>418,000<\/h3>\n    <p>people employed in 2021<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>418,000<\/h3>\n    <p>people employed in 2021<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -1177,13 +1181,13 @@
       ]
     },
     "locland.emplrate.2": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>72 %<\/h3>\n    <p>Employment rate in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>72 %<\/h3>\n    <p>Employment rate in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
     },
     "locland.emplrate0": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>75 %<\/h3>\n    <p>employment rate in 2021 (compared with  75 % for England)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>75 %<\/h3>\n    <p>employment rate in 2021 (compared with  75 % for England)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -1207,7 +1211,7 @@
       ]
     },
     "skills.l4": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>qualified at level 4+<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>qualified at level 4+<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -1234,7 +1238,7 @@
       ]
     },
     "skisup.APPach": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>Apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>Apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -1261,7 +1265,7 @@
       ]
     },
     "skisup.ETach": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>Education and training acheivements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>Education and training acheivements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]

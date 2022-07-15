@@ -51,6 +51,14 @@ server <- function(input, output, session) {
   output$page5title <- renderUI({
     paste0(input$lep9, ": Overview of HE")
   })
+  
+  output$page6title <- renderUI({
+    paste0(input$lepOver2, ": overview of local landscape")
+  })
+  
+  output$page7title <- renderUI({
+    paste0(input$lepAppa, ": overview of apprenticeships")
+  })
 
   ### Conditional functions----
   # Returns arrow-up icon on true (if true_direction is 'up')
@@ -288,51 +296,6 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbar", "Vacancies")
   })
 
-  ### Average salary  ----
-  output$earn.avg <- renderValueBox({
-    valueBox("In V2",
-      "average salary (compared with x% for England)",
-      width = 12
-    )
-  })
-
-  ### Average salary change  ----
-  output$earn.change <- renderValueBox({
-    x <- (0)
-    valueBox(
-      sprintf("%+.0f", x),
-      subtitle = NULL,
-      width = 12,
-      icon = cond_icon(x > 0),
-      color = cond_color(x > 0)
-    )
-  })
-
-  # Add button to link to salary data
-  observeEvent(input$link_to_tabpanel_earnings2, {
-    updateTabsetPanel(session, "navbar", "Earnings")
-  })
-
-  ### L4+  ----
-  output$skills.l4 <- renderValueBox({
-    valueBox("In V2",
-      "qualified at level 4+",
-      width = 12
-    )
-  })
-
-  ### L4+ change  ----
-  output$skills.l4change <- renderValueBox({
-    x <- (0)
-    valueBox(
-      sprintf("%+.0f", x),
-      subtitle = NULL,
-      width = 12,
-      icon = cond_icon(x > 0),
-      color = cond_color(x > 0)
-    )
-  })
-
   # Add button to link to skills data
   observeEvent(input$link_to_tabpanel_FE2, {
     updateTabsetPanel(session, "navbar", "FE")
@@ -349,7 +312,7 @@ server <- function(input, output, session) {
           level_or_type == "Education and training: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      "Education and training acheivements (AY20/21)",
+      "Education and training achievements (AY20/21)",
       width = 12
     )
   })
@@ -417,31 +380,6 @@ server <- function(input, output, session) {
       icon = cond_icon(x > 0),
       color = cond_color(x > 0)
     )
-  })
-
-  ### HE entrants  ----
-  output$he.entrants <- renderValueBox({
-    valueBox("In V2",
-      "HE entrants",
-      width = 12
-    )
-  })
-
-  ### HE+ change  ----
-  output$he.entrantschange <- renderValueBox({
-    x <- (0)
-    valueBox(
-      sprintf("%+.0f", x),
-      subtitle = NULL,
-      width = 12,
-      icon = cond_icon(x > 0),
-      color = cond_color(x > 0)
-    )
-  })
-
-  # Add button to link to HE data
-  observeEvent(input$link_to_tabpanel_HE2, {
-    updateTabsetPanel(session, "navbar", "HE")
   })
 
   # EMPLOYMENT ----
@@ -580,8 +518,12 @@ server <- function(input, output, session) {
     EmpRateTime$Areas <- factor(EmpRateTime$area,
                          levels=c("England",input$lep1,input$lep2)
       )
-      ggplot(EmpRateTime,aes(x = year, y = empRate,color=Areas)) +
-      geom_line() +
+      ggplot(EmpRateTime,aes(x = year, y = empRate,color=Areas, group =Areas)) +
+      geom_line(aes(text=paste0(
+        "AY: ", year, "<br>",
+        "Area: ", Areas, "<br>",
+        "Employment rate: ", scales::percent(round(empRate,2)), "<br>"
+      ))) +
       theme_minimal() +
       expand_limits(y = 0.6) +
       theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
@@ -591,7 +533,7 @@ server <- function(input, output, session) {
   })
 
   output$EmpRate_time <- renderPlotly({
-    ggplotly(EmpRate_time()) %>%
+    ggplotly(EmpRate_time(),tooltip="text") %>%
       layout(legend = list(orientation = "h", x = 0, y = -0.1))%>%
       config(displayModeBar = FALSE)
   })
@@ -760,8 +702,12 @@ server <- function(input, output, session) {
     JobTime$Areas <- factor(JobTime$LEP,
                                 levels=c(input$lep5,input$lep6)
     )
-      ggplot(JobTime,aes(x = year, y = total, colour = Areas)) +
-      geom_line() +
+      ggplot(JobTime,aes(x = year, y = total, colour = Areas,group=Areas)) +
+      geom_line(aes(text=paste0(
+        "Year: ", year, "<br>",
+        "Area: ", Areas, "<br>",
+        "Job vacancy units: ", round(total,0), "<br>"
+      ))) +
       theme_minimal() +
       labs(colour = "LEP") +
       theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
@@ -770,7 +716,7 @@ server <- function(input, output, session) {
   })
 
   output$jobad.time <- renderPlotly({
-    ggplotly(jobad.time()) %>%
+    ggplotly(jobad.time(),tooltip = c("text")) %>%
       layout(legend = list(orientation = "h", x = 0, y = -0.1))%>%
       config(displayModeBar = FALSE)
   })
@@ -817,10 +763,10 @@ server <- function(input, output, session) {
                 filter(
                   time_period == "202021",
                   LEP == input$lep3,
-                  level_or_type == "Further education and skills: Total"
+                  level_or_type == "Education and training: Total"
                 ) %>%
                 summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 FE achievements in ", input$lep3),
+      paste0("20/21 adult education and training achievements in ", input$lep3),
       color = "blue"
     )
   })
@@ -832,10 +778,10 @@ server <- function(input, output, session) {
                 filter(
                   time_period == "202021",
                   LEP == input$lep4,
-                  level_or_type == "Further education and skills: Total"
+                  level_or_type == "Education and training: Total"
                 ) %>%
                 summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("FE 20/21 achievements in ", input$lep4),
+      paste0("20/21 adult education and training achievements in ", input$lep4),
       color = "orange"
     )
   })
@@ -851,7 +797,7 @@ server <- function(input, output, session) {
                   level_or_type == "Apprenticeships: Total"
                 ) %>%
                 summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 apprenticeship achievements in ", input$lep3),
+      paste0("20/21 adult apprenticeship achievements in ", input$lep3),
       color = "blue"
     )
   })
@@ -866,7 +812,7 @@ server <- function(input, output, session) {
                   level_or_type == "Apprenticeships: Total"
                 ) %>%
                 summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 apprenticeship achievements in ", input$lep4),
+      paste0("20/21 adult apprenticeship achievements in ", input$lep4),
       color = "orange"
     )
   })
@@ -891,24 +837,36 @@ server <- function(input, output, session) {
   Ach_time <- reactive({
     FETime<-C_Achieve_ILR1621 %>%
       select(time_period, area, LEP, level_or_type, achievements) %>%
+      mutate(level_or_type=case_when(level_or_type=="Further education and skills: Total" ~ "Total FE and Apps provision",
+                                     level_or_type=="Education and training: Total" ~"Education and training",
+                                     level_or_type=="Community learning: Total" ~"Community learning",
+                                     level_or_type=="Apprenticeships: Total" ~"Apprenticeships",
+                                     TRUE ~level_or_type)
+      )%>%
       filter(
         # area == "England" |
         LEP == input$lep3 |
           LEP == input$lep4,
-        level_or_type == input$skill_line
+        level_or_type == input$skill_line,
+        time_period!=202122
       ) %>%
-      mutate(time_period = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
-      group_by(time_period, LEP, level_or_type) %>%
+      mutate(AY = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
+      group_by(AY, LEP, level_or_type) %>%
       summarise(Achievements = sum(achievements))
     #add an extra column so the colours work in ggplot when sorting alphabetically
-    FETime$Areas <- factor(FETime$LEP,
+    FETime$Area <- factor(FETime$LEP,
                             levels=c(input$lep3,input$lep4)
     )
       ggplot(FETime,aes(
-        x = time_period, y = Achievements, colour = Areas,
+        x = AY, y = Achievements, colour = Area,
         group = interaction(level_or_type, LEP)
       )) +
-      geom_line() +
+      geom_line(aes(text=paste0(
+        "AY: ", AY, "<br>",
+        "Area: ", Area, "<br>",
+        "Achievements: ", format(Achievements,big.mark = ","), "<br>",
+        "Provision: ",level_or_type,"<br>"
+      ))) +
       theme_minimal() +
       theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
       labs(shape = "", colour = "") +
@@ -918,7 +876,7 @@ server <- function(input, output, session) {
   })
   
   output$Ach_time <- renderPlotly({
-    ggplotly(Ach_time()) %>%
+    ggplotly(Ach_time(),tooltip = c("text")) %>%
       layout(legend = list(orientation = "h", x = 0, y = -0.1))%>%
       config(displayModeBar = FALSE)
   })
@@ -931,7 +889,6 @@ server <- function(input, output, session) {
         LEP == input$lep3 |
           LEP == input$lep4
       ) %>%
-      #  area == "England")%>%
       select(LEP, SSA = ssa_t1_desc, Achievements = achievements) %>%
       group_by(LEP, SSA) %>%
       summarise(Achievements = sum(Achievements)) %>%
@@ -941,29 +898,344 @@ server <- function(input, output, session) {
       filter(SSA == "Total") %>%
       select(LEP, Total = SSA, Total_ach = Achievements)
     
-    Ach_SSA_pc <- AchSSA_21 %>%
+    FEBar<-AchSSA_21 %>%
       left_join(Ach_pc, by = "LEP") %>%
       group_by(LEP) %>%
       mutate(pc = Achievements / Total_ach) %>%
-      filter(SSA != "Total") %>%
-      ggplot(aes(x = SSA, y = pc, fill = LEP)) +
-      geom_bar(stat = "identity", position = "dodge") +
+      filter(SSA != "Total") 
+      #add an extra column so the colours work in ggplot when sorting alphabetically
+      FEBar$Area <- factor(FEBar$LEP,
+                             levels=c(input$lep3,input$lep4)
+      )
+    Ach_SSA_pc <- ggplot(FEBar,aes(x = reorder(SSA,desc(SSA)), y = pc, fill = Area)) +
+      geom_col(position = "dodge"
+               ,aes(text=paste0(
+                 "SSA: ", SSA, "<br>",
+                 "Area: ", Area, "<br>",
+                 "Percentage of achievements: ", scales::percent(round(pc,2)), "<br>",
+                 "Achievements: ",Achievements,"<br>"
+               ))) +
       scale_y_continuous(labels = scales::percent) +
-      scale_x_discrete(label = function(SSA) stringr::str_trunc(SSA, 12)) + # truncate labels becaus ethey can be very long
+      scale_x_discrete(label = function(SSA) stringr::str_trunc(SSA, 12)) + # truncate labels because they can be very long
       coord_flip() +
       theme_minimal() +
       labs(fill = "") +
-      theme(
-        legend.position = "bottom",
-        axis.title.x = element_blank(), axis.title.y = element_blank()
-      )+
-      scale_color_manual("legend",values=c("#1d70b8", "#F46A25", "#28a197"))
+      theme(legend.position = "bottom",axis.title.x = element_blank(), axis.title.y = element_blank()) +
+      scale_fill_manual (values=c("#1d70b8", "#F46A25"))
   })
   
   output$Ach_SSA_pc <- renderPlotly({
-    ggplotly(Ach_SSA_pc()) %>%
+    ggplotly(Ach_SSA_pc(),tooltip = c("text")) %>%
       layout(legend = list(orientation = "h", x = 0, y = -0.1))%>%
       config(displayModeBar = FALSE)
+  })
+  
+  # OVERVIEW V2 ----
+  
+  ## KPIs ----
+  
+  ### Employment count ----
+  output$locland.emplcntOver2 <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      # take input number
+      format((C_EmpRate_APS1721 %>%
+                filter(
+                  geographic_level == "lep", # cleans up for London which is included as lep and gor
+                  area == input$lepOver2,
+                  year == "2021"
+                )
+      )$"28  in employment ",
+      scientific = FALSE, big.mark = ","
+      ),
+      "people employed in 2021",
+      width = 12
+    )
+  })
+  
+  ### Employment change ----
+  output$locland.emplcntchangeOver2 <- renderValueBox({
+    # get value
+    x <- ((C_EmpRate_APS1721 %>%
+             filter(
+               geographic_level == "lep", # cleans up for London which is included as lep and gor
+               area == input$lepOver2,
+               year == "2021"
+             )
+    )$"28  in employment "
+    - (C_EmpRate_APS1721 %>%
+         filter(
+           geographic_level == "lep", # cleans up for London which is included as lep and gor
+           area == input$lepOver2,
+           year == "2020"
+         )
+    )$"28  in employment ")
+    # build box
+    valueBox(
+      sprintf("%+.0f", x),
+      subtitle = NULL,
+      width = 12,
+      icon = cond_icon(x > 0),
+      color = cond_color(x > 0)
+    )
+  })
+  
+  ### Employment rate -----
+  output$locland.emplrateOver2 <- renderValueBox({
+    # Put value into box to plug into app
+    valueBox(
+      # take input number
+      paste(
+        format(100. * (C_EmpRate_APS1721 %>%
+                         filter(
+                           geographic_level == "lep", # cleans up for London which is included as lep and gor
+                           area == input$lepOver2,
+                           year == "2021"
+                         )
+        )$empRate, digits = 2),
+        "%"
+      ),
+      paste(
+        "employment rate in 2021 (compared with ",
+        format(100. * (C_EmpRate_APS1721 %>%
+                         filter(
+                           geographic_level == "country", # cleans up for London which is included as lep and gor
+                           year == "2021"
+                         )
+        )$empRate, digits = 2),
+        "% for England)"
+      ),
+      width = 12
+    )
+  })
+  
+  ### Employment rate change -----
+  output$locland.emplchangeOver2 <- renderValueBox({
+    x <- (100. * ((C_EmpRate_APS1721 %>%
+                     filter(
+                       geographic_level == "lep", # cleans up for London which is included as lep and gor
+                       area == input$lepOver2,
+                       year == "2021"
+                     ))$empRate -
+                    (C_EmpRate_APS1721 %>%
+                       filter(
+                         geographic_level == "lep", # cleans up for London which is included as lep and gor
+                         area == input$lepOver2,
+                         year == "2020"
+                       ))$empRate))
+    valueBox(
+      # take input number
+      paste(
+        sprintf("%+.0f", x),
+        "ppts"
+      ),
+      subtitle = NULL,
+      width = 12,
+      icon = cond_icon(x > 0),
+      color = cond_color(x > 0)
+    )
+  })
+  
+  # Add button to link to employment data
+  observeEvent(input$link_to_tabpanel_employment3, {
+    updateTabsetPanel(session, "navbar", "Employment")
+  })
+  
+  ### ONS job advert units  ----
+  output$jobad.unitsOver2 <- renderValueBox({
+    valueBox(C_Vacancy_England %>%
+               filter(
+                 year == "2022",
+                 LEP == input$lepOver2
+               ) %>%
+               summarise(job.unit = sum(vacancy_unit)),
+             "job vacancy units (Jan 22)",
+             width = 12
+    )
+  })
+  
+  ### ONS job advert units change  ----
+  output$jobad.changeOver2 <- renderValueBox({
+    x <- ((C_Vacancy_England %>%
+             filter(
+               year == "2022",
+               LEP == input$lepOver2
+             ) %>%
+             summarise(job.unit = sum(vacancy_unit)))
+          - (C_Vacancy_England %>%
+               filter(
+                 year == "2021",
+                 LEP == input$lepOver2
+               ) %>%
+               summarise(job.unit = sum(vacancy_unit))))
+    valueBox(
+      sprintf("%+.0f", x),
+      subtitle = NULL,
+      width = 12,
+      icon = cond_icon(x > 0),
+      color = cond_color(x > 0)
+    )
+  })
+  
+  # Add button to link to vacancy data
+  observeEvent(input$link_to_tabpanel_vacancies3, {
+    updateTabsetPanel(session, "navbar", "Vacancies")
+  })
+  
+  ### Average salary  ----
+  output$earn.avgOver2 <- renderValueBox({
+    valueBox("In V2",
+             "average salary (compared with £x for England)",
+             width = 12
+    )
+  })
+  
+  ### Average salary change  ----
+  output$earn.changeOver2 <- renderValueBox({
+    x <- (0)
+    valueBox(
+      sprintf("%+.0f", x),
+      subtitle = NULL,
+      width = 12,
+      icon = cond_icon(x > 0),
+      color = cond_color(x > 0)
+    )
+  })
+  
+  # Add button to link to salary data
+  observeEvent(input$link_to_tabpanel_earnings3, {
+    updateTabsetPanel(session, "navbar", "Earnings")
+  })
+  
+  ### L4+  ----
+  output$skills.l4Over2 <- renderValueBox({
+    valueBox("In V2",
+             "qualified at level 4+ (compared with x% for England)",
+             width = 12
+    )
+  })
+  
+  ### L4+ change  ----
+  output$skills.l4changeOver2 <- renderValueBox({
+    x <- (0)
+    valueBox(
+      sprintf("%+.0f", x),
+      subtitle = NULL,
+      width = 12,
+      icon = cond_icon(x > 0),
+      color = cond_color(x > 0)
+    )
+  })
+  
+  # Add button to link to skills data
+  observeEvent(input$link_to_tabpanel_FE3, {
+    updateTabsetPanel(session, "navbar", "FE")
+  })
+  
+  
+  ### E&T achievements -----
+  output$skisup.ETachOver2 <- renderValueBox({
+    valueBox(
+      format((C_Achieve_ILR1621 %>%
+                filter(
+                  time_period == "202021",
+                  LEP == input$lepOver2,
+                  level_or_type == "Education and training: Total"
+                ) %>%
+                summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
+      "Education and training achievements (AY20/21)",
+      width = 12
+    )
+  })
+  
+  ### E&T achievements change -----
+  output$skisup.ETachChangeOver2 <- renderValueBox({
+    x <- ((C_Achieve_ILR1621 %>%
+             filter(
+               time_period == "202021",
+               LEP == input$lepOver2,
+               level_or_type == "Education and training: Total"
+             ) %>%
+             summarise(App_ach = sum(achievements)))
+          - (C_Achieve_ILR1621 %>%
+               filter(
+                 time_period == "201920",
+                 LEP == input$lepOver2,
+                 level_or_type == "Education and training: Total"
+               ) %>%
+               summarise(App_ach = sum(achievements))))
+    valueBox(
+      sprintf("%+.0f", x),
+      subtitle = NULL,
+      width = 12,
+      icon = cond_icon(x > 0),
+      color = cond_color(x > 0)
+    )
+  })
+  
+  ### App achievements ----
+  output$skisup.APPachOver2 <- renderValueBox({
+    valueBox(
+      format((C_Achieve_ILR1621 %>%
+                filter(
+                  time_period == "202021",
+                  LEP == input$lepOver2,
+                  level_or_type == "Apprenticeships: Total"
+                ) %>%
+                summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
+      "Apprenticeship achievements (AY20/21)",
+      width = 12
+    )
+  })
+  
+  ### App achievements change ----
+  output$skisup.APPachChangeOver2 <- renderValueBox({
+    x <- ((C_Achieve_ILR1621 %>%
+             filter(
+               time_period == "202021",
+               LEP == input$lepOver2,
+               level_or_type == "Apprenticeships: Total"
+             ) %>%
+             summarise(App_ach = sum(achievements)))
+          - (C_Achieve_ILR1621 %>%
+               filter(
+                 time_period == "201920",
+                 LEP == input$lepOver2,
+                 level_or_type == "Apprenticeships: Total"
+               ) %>%
+               summarise(App_ach = sum(achievements))))
+    valueBox(
+      sprintf("%+.0f", x),
+      subtitle = NULL,
+      width = 12,
+      icon = cond_icon(x > 0),
+      color = cond_color(x > 0)
+    )
+  })
+  
+  ### HE entrants  ----
+  output$he.entrantsOver2 <- renderValueBox({
+    valueBox("In V2",
+             "HE entrants",
+             width = 12
+    )
+  })
+  
+  ### HE+ change  ----
+  output$he.entrantschangeOver2 <- renderValueBox({
+    x <- (0)
+    valueBox(
+      sprintf("%+.0f", x),
+      subtitle = NULL,
+      width = 12,
+      icon = cond_icon(x > 0),
+      color = cond_color(x > 0)
+    )
+  })
+  
+  # Add button to link to HE data
+  observeEvent(input$link_to_tabpanel_HE3, {
+    updateTabsetPanel(session, "navbar", "HE")
   })
   
   # Stop app ---------------------------------------------------------------------------------
