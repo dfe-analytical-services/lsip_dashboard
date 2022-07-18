@@ -33,15 +33,15 @@ server <- function(input, output, session) {
   })
 
   output$page1title <- renderUI({
-    paste0(input$lep1, ": employment trends")
+    paste0(input$lep1, " employment trends")
   })
 
   output$page2title <- renderUI({
-    paste0(input$lep3, ": skill supply trends")
+    paste0(input$lep3, " FE skill supply trends")
   })
 
   output$page3title <- renderUI({
-    paste0(input$lep5, ": Overview of Vacancies")
+    paste0(input$lep5, " vacancy trends")
   })
 
   output$page4title <- renderUI({
@@ -238,7 +238,6 @@ server <- function(input, output, session) {
           year == "2020"
         ))$empRate))
     valueBox(
-      # take input number
       paste(
         sprintf("%+.0f", x),
         "ppts"
@@ -257,33 +256,49 @@ server <- function(input, output, session) {
 
   ### ONS job advert units  ----
   output$jobad.units <- renderValueBox({
-    valueBox(C_Vacancy_England %>%
-      filter(
-        year == "2022",
-        LEP == input$lep0a
-      ) %>%
-      summarise(job.unit = sum(vacancy_unit)),
-    "job vacancy units (Jan 22)",
-    width = 12
+    # valueBox(C_Vacancy_England %>%
+    #   filter(
+    #     year == "2022",
+    #     LEP == input$lep0a
+    #   ) %>%
+    #   summarise(job.unit = sum(vacancy_unit)),
+    # "job vacancy units (Jan 22)",
+    # width = 12
+    # )
+    valueBox(
+      paste0(
+        format(100. * (C_Vacancy_England %>%
+          filter(
+            year == "2022",
+            LEP == input$lep0a
+          ) %>%
+          summarise(job.pc = sum(pc_total))), digits = 2),
+        "%"
+      ),
+      paste0("of English online vacancies (Jan '22)"),
+      width = 12
     )
   })
 
   ### ONS job advert units change  ----
   output$jobad.change <- renderValueBox({
-    x <- ((C_Vacancy_England %>%
+    x <- (C_Vacancy_England %>%
       filter(
         year == "2022",
         LEP == input$lep0a
       ) %>%
-      summarise(job.unit = sum(vacancy_unit)))
-    - (C_Vacancy_England %>%
+      summarise(job.pc = sum(pc_total))
+      - (C_Vacancy_England %>%
         filter(
           year == "2021",
           LEP == input$lep0a
         ) %>%
-        summarise(job.unit = sum(vacancy_unit))))
+        summarise(job.pc = sum(pc_total))))
     valueBox(
-      sprintf("%+.0f", x),
+      paste(
+        sprintf("%+.2f", x),
+        "ppts"
+      ),
       subtitle = NULL,
       width = 12,
       icon = cond_icon(x > 0),
@@ -312,7 +327,7 @@ server <- function(input, output, session) {
           level_or_type == "Education and training: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      "Education and training achievements (AY20/21)",
+      "education and training achievements (AY20/21)",
       width = 12
     )
   })
@@ -352,7 +367,7 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         dplyr::summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      "Apprenticeship achievements (AY20/21)",
+      "apprenticeship achievements (AY20/21)",
       width = 12
     )
   })
@@ -429,14 +444,12 @@ server <- function(input, output, session) {
         )$empRate, digits = 2),
         "%"
       ),
-      paste0("Employment rate in ", input$lep1),
+      paste0("employment rate in ", input$lep1),
       color = "blue"
     )
   })
 
   output$locland.emplrate.2 <- renderValueBox({
-    # if(input$lep2=="\nNone")
-    #   return(NULL)
     valueBox(
       paste(
         format(100. * (C_EmpRate_APS1721 %>%
@@ -448,7 +461,7 @@ server <- function(input, output, session) {
         )$empRate, digits = 2),
         "%"
       ),
-      paste0("Employment rate in ", input$lep2),
+      paste0("employment rate in ", input$lep2),
       color = "orange"
     )
   })
@@ -467,7 +480,7 @@ server <- function(input, output, session) {
       scientific = FALSE, big.mark = ","
       ),
       # add subtitle to explain what it's showing
-      paste0("In employment in ", input$lep1),
+      paste0("in employment in ", input$lep1),
       color = "blue"
     )
   })
@@ -483,7 +496,7 @@ server <- function(input, output, session) {
       )$"28  in employment ",
       scientific = FALSE, big.mark = ","
       ),
-      paste0("In employment in ", input$lep2),
+      paste0("in employment in ", input$lep2),
       color = "orange"
     )
   })
@@ -497,8 +510,8 @@ server <- function(input, output, session) {
       )
     } else {
       tagList(
-        valueBoxOutput("locland.emplrate.2"),
-        valueBoxOutput("locland.emplcnt.2")
+        valueBoxOutput("locland.emplcnt.2"),
+        valueBoxOutput("locland.emplrate.2")
       )
     }
   })
@@ -546,15 +559,17 @@ server <- function(input, output, session) {
         geographic_level == "lep" |
           geographic_level == "country", # cleans up for London and South East which is included as lep and gor
         area == "England" |
-          area == input$lep1 |
-          area == input$lep2
+          area == input$lep1 | # "South East"|
+          area == input$lep2 # "London"
       ) %>%
       select(-year, -geographic_level) %>%
       rename_with(str_to_sentence) %>% # capitalise column titles
-      mutate(across(where(is.numeric), format, big.mark = ",")) %>%
-      # as.data.frame() %>%
       t() %>%
-      row_to_names(row_number = 1)
+      row_to_names(row_number = 1) %>%
+      as.data.frame() %>%
+      mutate_if(is.character, as.numeric) %>%
+      mutate(across(where(is.numeric), ~ round(prop.table(.) * 100, 1)))
+    # mutate(across(where(is.numeric), format, big.mark = ",")) %>%
   })
 
   output$EmpOcc <- renderDataTable({
@@ -591,7 +606,6 @@ server <- function(input, output, session) {
   ## KPIs ----
   ### ONS job advert unit percent of total  ----
   output$jobad.pc <- renderValueBox({
-    # Put value into box to plug into app
     valueBox(
       paste0(
         format(100. * (C_Vacancy_England %>%
@@ -602,7 +616,7 @@ server <- function(input, output, session) {
           summarise(job.pc = sum(pc_total))), digits = 3),
         "%"
       ),
-      paste0("of total online total vacancies in England in January 2022 were in ", input$lep5),
+      paste0("of online vacancies in England (Jan '22) were in ", input$lep5),
       color = "blue"
     )
   })
@@ -619,14 +633,13 @@ server <- function(input, output, session) {
           summarise(job.pc = sum(pc_total))), digits = 3),
         "%"
       ),
-      paste0("of total online total vacancies in England in January 2022 were in ", input$lep6),
+      paste0("of online vacancies in England (Jan '22) were in ", input$lep6),
       color = "orange"
     )
   })
 
   ### Skill Demand KPI 2 ----
   output$jobad.ch <- renderValueBox({
-    # Put value into box to plug into app
     valueBox(
       paste0(
         format(100. * (C_Vacancy_England %>%
@@ -644,7 +657,7 @@ server <- function(input, output, session) {
           select(Percentage_Change)), digits = 3),
         "%"
       ),
-      paste0("change in online job vacancies in ", input$lep5, " January 2021 to January 2022"),
+      paste0("change in online job vacancies in ", input$lep5, " from Jan '21 to Jan '22"),
       color = "blue"
     )
   })
@@ -668,7 +681,7 @@ server <- function(input, output, session) {
           select(Percentage_Change)), digits = 3),
         "%"
       ),
-      paste0("change in online job vacancies in ", input$lep6, " January 2021 to January 2022"),
+      paste0("change in online job vacancies in ", input$lep6, " from Jan '21 to Jan '22"),
       color = "orange"
     )
   })
@@ -918,16 +931,17 @@ server <- function(input, output, session) {
         ))
       ) +
       scale_y_continuous(labels = scales::percent) +
-      scale_x_discrete(label = function(SSA) stringr::str_trunc(SSA, 12)) + # truncate labels because they can be very long
+      # scale_x_discrete(label = function(SSA) stringr::str_trunc(SSA, 12)) + # truncate labels because they can be very long
+      scale_x_discrete(labels = function(SSA) str_wrap(SSA, width = 26)) +
       coord_flip() +
       theme_minimal() +
       labs(fill = "") +
-      theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
+      theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7)) +
       scale_fill_manual(values = c("#1d70b8", "#F46A25"))
   })
 
   output$Ach_SSA_pc <- renderPlotly({
-    ggplotly(Ach_SSA_pc(), tooltip = c("text")) %>%
+    ggplotly(Ach_SSA_pc(), tooltip = c("text"), height = 474) %>%
       layout(legend = list(orientation = "h", x = 0, y = -0.1)) %>%
       config(displayModeBar = FALSE)
   })
@@ -950,7 +964,7 @@ server <- function(input, output, session) {
       )$"28  in employment ",
       scientific = FALSE, big.mark = ","
       ),
-      "people employed in 2021",
+      "people were employed in 2021",
       width = 12
     )
   })

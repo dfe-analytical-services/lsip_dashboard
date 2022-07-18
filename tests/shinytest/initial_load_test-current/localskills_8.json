@@ -22,24 +22,36 @@
     ],
     "EmpOcc_columns_selected": null,
     "EmpOcc_rows_all": [
+      12,
+      11,
+      25,
+      3,
+      18,
+      1,
+      6,
+      20,
+      5,
+      4,
       23,
       2,
       15,
       16,
       22,
-      10,
-      8,
       7,
+      8,
+      10,
       19,
       13,
       24,
       21,
       17,
       9,
-      14,
+      14
+    ],
+    "EmpOcc_rows_current": [
       12,
-      25,
       11,
+      25,
       3,
       18,
       1,
@@ -47,18 +59,6 @@
       20,
       5,
       4
-    ],
-    "EmpOcc_rows_current": [
-      23,
-      2,
-      15,
-      16,
-      22,
-      10,
-      8,
-      7,
-      19,
-      13
     ],
     "EmpOcc_rows_selected": null,
     "EmpOcc_search": "",
@@ -116,41 +116,27 @@
     },
     "lep0a": "Cheshire and Warrington",
     "lep1": "London",
-    "lep10": "\nNone",
     "lep2": "Greater Manchester",
     "lep3": "Black Country",
     "lep4": "\nNone",
     "lep5": "London",
     "lep6": "Greater Manchester",
-    "lep7": "Black Country",
-    "lep8": "\nNone",
-    "lep9": "Black Country",
-    "lepAppa": "Black Country",
-    "lepAppb": "\nNone",
-    "lepOver2": "Black Country",
     "link_to_tabpanel_earnings": 0,
-    "link_to_tabpanel_earnings3": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
-    "link_to_tabpanel_employment3": 0,
     "link_to_tabpanel_FE": 0,
     "link_to_tabpanel_FE2": 0,
-    "link_to_tabpanel_FE3": 0,
     "link_to_tabpanel_HE": 0,
-    "link_to_tabpanel_HE3": 0,
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
-    "link_to_tabpanel_vacancies3": 0,
     "navbar": "Vacancies",
-    "Occ-Sector": "Sector 1",
-    "OccSect": "1",
     "plotly_afterplot-A": "\"jobad.time\"",
     "skill_line": "Apprenticeships"
   },
   "output": {
     "emp_comp": {
-      "html": "<div class=\"shiny-html-output col-sm-4\" id=\"locland.emplrate.2\"><\/div>\n<div class=\"shiny-html-output col-sm-4\" id=\"locland.emplcnt.2\"><\/div>",
+      "html": "<div class=\"shiny-html-output col-sm-4\" id=\"locland.emplcnt.2\"><\/div>\n<div class=\"shiny-html-output col-sm-4\" id=\"locland.emplrate.2\"><\/div>",
       "deps": [
 
       ]
@@ -166,6 +152,14 @@
             "desc"
           ],
           "columnDefs": [
+            {
+              "className": "dt-right",
+              "targets": [
+                1,
+                2,
+                3
+              ]
+            },
             {
               "orderable": false,
               "targets": 0
@@ -672,19 +666,19 @@
       ]
     },
     "jobad.ch": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>294%<\/h3>\n    <p>change in online job vacancies in London January 2021 to January 2022<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>294%<\/h3>\n    <p>change in online job vacancies in London from Jan '21 to Jan '22<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
     },
     "jobad.ch.2": {
-      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>173%<\/h3>\n    <p>change in online job vacancies in Greater Manchester January 2021 to January 2022<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>173%<\/h3>\n    <p>change in online job vacancies in Greater Manchester from Jan '21 to Jan '22<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
     },
     "jobad.change": {
-      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+77<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-0.00 ppts<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
       "deps": [
         {
           "name": "font-awesome",
@@ -705,13 +699,13 @@
       ]
     },
     "jobad.pc": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>12.3%<\/h3>\n    <p>of total online total vacancies in England in January 2022 were in London<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>12.3%<\/h3>\n    <p>of online vacancies in England (Jan '22) were in London<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
     },
     "jobad.pc.2": {
-      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>6.03%<\/h3>\n    <p>of total online total vacancies in England in January 2022 were in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>6.03%<\/h3>\n    <p>of online vacancies in England (Jan '22) were in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -1112,7 +1106,7 @@
       ]
     },
     "jobad.units": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>168.7<\/h3>\n    <p>job vacancy units (Jan 22)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2.1%<\/h3>\n    <p>of English online vacancies (Jan '22)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -1139,13 +1133,13 @@
       ]
     },
     "locland.emplcnt": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>4,575,600<\/h3>\n    <p>In employment in London<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>4,575,600<\/h3>\n    <p>in employment in London<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
     },
     "locland.emplcnt.2": {
-      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>1,278,100<\/h3>\n    <p>In employment in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>1,278,100<\/h3>\n    <p>in employment in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -1178,13 +1172,13 @@
       ]
     },
     "locland.emplrate": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>75 %<\/h3>\n    <p>Employment rate in London<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>75 %<\/h3>\n    <p>employment rate in London<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
     },
     "locland.emplrate.2": {
-      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>72 %<\/h3>\n    <p>Employment rate in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>72 %<\/h3>\n    <p>employment rate in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -1202,19 +1196,19 @@
       ]
     },
     "page1title": {
-      "html": "London: employment trends",
+      "html": "London employment trends",
       "deps": [
 
       ]
     },
     "page3title": {
-      "html": "London: Overview of Vacancies",
+      "html": "London vacancy trends",
       "deps": [
 
       ]
     },
     "skisup.APPach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>Apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -1241,7 +1235,7 @@
       ]
     },
     "skisup.ETach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>Education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
