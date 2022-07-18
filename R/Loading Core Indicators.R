@@ -20,7 +20,8 @@ library(janitor)
 ## LEP 2020 ----
 I_LEP2020 <- read.xlsx(xlsxFile = "./Data/OA11_LAD21_LSOA11_MSOA11_LEP21_EN_v3.xlsx", sheet = 1, skipEmptyRows = T)
 C_LEP2020 <- I_LEP2020 %>%
-  distinct(LEP = LEP21NM1)
+  distinct(LEP = LEP21NM1) %>%
+  arrange(LEP)
 
 ## APS ----
 ### Core indicator 2: Employment by occupation ----
