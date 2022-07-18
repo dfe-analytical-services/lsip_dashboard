@@ -36,6 +36,13 @@ I_EmpOcc_APS1721 <- read.xlsx(xlsxFile = "./Data/nomis_2022_06_14_092401.xlsx", 
 # Cell: T01 Economic activity by age Aged 16-64/ All people
 I_EmpRate_APS1721 <- read.xlsx(xlsxFile = "./Data/nomis_2022_06_14_095314.xlsx", sheet = 1, skipEmptyRows = T)
 
+### Core indicator NEW: 4 digit soc ------------
+# Download from https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/adhocs/14855employmentbyoccupationandlocalauthoritylocalenterprisepartnership2021
+# Geography: LEP (LAD also available)
+# SOC 2010 (because of a SOC 2020 error)
+I_EmpSOC_APS21 <- read.xlsx(xlsxFile = "./Data/3digitoccupationbylaualepand4digitbylepjd21.xlsx", sheet = 3, skipEmptyRows = T)
+
+
 ## ILR
 ### Core indicator 12: AY21/22 achievements by SSAt1 and LAD ------------
 ## Permalink: https://explore-education-statistics.service.gov.uk/data-tables/permalink/c390bb3f-8577-40f1-869c-fc8a8195516e
