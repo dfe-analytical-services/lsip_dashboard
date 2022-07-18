@@ -540,10 +540,10 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               column(
                 width = 6,
                 ### LEP 4 input ------------
-                p("FE adult achievement trend", style = "font-size:20px;"),
+                p("FE and apps achievement trend", style = "font-size:20px;"),
                 p("Choose provision group"),
                 selectizeInput("skill_line", "",
-                  choices = c("Apprenticeships", "Education and training", "Community learning", "Total FE and Apps provision")
+                  choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and Apps provision")
                 ),
                 plotlyOutput("Ach_time")
               ),
@@ -551,7 +551,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               ### FE acheivements ----
               column(
                 width = 6,
-                p("All adult FE achievements by SSA tier 1 (AY21/22 Aug to Jan)", style = "font-size:20px;"),
+                p("All FE and apps achievements by SSA tier 1 (AY21/22 Aug to Jan)", style = "font-size:20px;"),
                 plotlyOutput("Ach_SSA_pc")
               )
             ) # end of box

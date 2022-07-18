@@ -851,9 +851,9 @@ server <- function(input, output, session) {
       select(time_period, area, LEP, level_or_type, achievements) %>%
       mutate(level_or_type = case_when(
         level_or_type == "Further education and skills: Total" ~ "Total FE and Apps provision",
-        level_or_type == "Education and training: Total" ~ "Education and training",
-        level_or_type == "Community learning: Total" ~ "Community learning",
-        level_or_type == "Apprenticeships: Total" ~ "Apprenticeships",
+        level_or_type == "Education and training: Total" ~ "Education and training (adults only)",
+        level_or_type == "Community learning: Total" ~ "Community learning (adults only)",
+        level_or_type == "Apprenticeships: Total" ~ "Apprenticeships (all ages)",
         TRUE ~ level_or_type
       )) %>%
       filter(
