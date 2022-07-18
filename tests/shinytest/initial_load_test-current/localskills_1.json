@@ -2,40 +2,26 @@
   "input": {
     "lep0a": "Cheshire and Warrington",
     "lep1": "Black Country",
-    "lep10": "\nNone",
     "lep2": "\nNone",
     "lep3": "Black Country",
     "lep4": "\nNone",
     "lep5": "Black Country",
     "lep6": "\nNone",
-    "lep7": "Black Country",
-    "lep8": "\nNone",
-    "lep9": "Black Country",
-    "lepAppa": "Black Country",
-    "lepAppb": "\nNone",
-    "lepOver2": "Black Country",
     "link_to_tabpanel_earnings": 0,
-    "link_to_tabpanel_earnings3": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
-    "link_to_tabpanel_employment3": 0,
     "link_to_tabpanel_FE": 0,
     "link_to_tabpanel_FE2": 0,
-    "link_to_tabpanel_FE3": 0,
     "link_to_tabpanel_HE": 0,
-    "link_to_tabpanel_HE3": 0,
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
-    "link_to_tabpanel_vacancies3": 0,
     "navbar": "Overview",
-    "Occ-Sector": "Sector 1",
-    "OccSect": "1",
     "skill_line": "Apprenticeships"
   },
   "output": {
     "jobad.change": {
-      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+77<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-0.00 ppts<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
       "deps": [
         {
           "name": "font-awesome",
@@ -56,7 +42,7 @@
       ]
     },
     "jobad.units": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>168.7<\/h3>\n    <p>job vacancy units (Jan 22)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2.1%<\/h3>\n    <p>of English online vacancies (Jan '22)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -122,7 +108,7 @@
       ]
     },
     "skisup.APPach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>Apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -149,7 +135,7 @@
       ]
     },
     "skisup.ETach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>Education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
