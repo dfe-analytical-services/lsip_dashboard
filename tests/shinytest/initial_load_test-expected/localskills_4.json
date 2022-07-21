@@ -21,11 +21,99 @@
 
     ],
     "EmpOcc_columns_selected": null,
-    "EmpOcc_rows_all": null,
-    "EmpOcc_rows_current": null,
+    "EmpOcc_rows_all": [
+      12,
+      25,
+      11,
+      3,
+      18,
+      1,
+      6,
+      20,
+      5,
+      4,
+      23,
+      2,
+      15,
+      16,
+      22,
+      10,
+      8,
+      7,
+      19,
+      13,
+      24,
+      21,
+      17,
+      9,
+      14
+    ],
+    "EmpOcc_rows_current": [
+      12,
+      25,
+      11,
+      3,
+      18,
+      1,
+      6,
+      20,
+      5,
+      4
+    ],
     "EmpOcc_rows_selected": null,
     "EmpOcc_search": "",
-    "EmpOcc_state": null,
+    "EmpOcc_state": {
+      "start": 0,
+      "length": 10,
+      "order": [
+        2,
+        "desc"
+      ],
+      "search": {
+        "search": "",
+        "smart": true,
+        "regex": false,
+        "caseInsensitive": true
+      },
+      "columns": [
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        },
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        },
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        },
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        }
+      ]
+    },
     "lep0a": "Cheshire and Warrington",
     "lep1": "London",
     "lep2": "Greater Manchester",
