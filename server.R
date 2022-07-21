@@ -568,12 +568,14 @@ server <- function(input, output, session) {
       row_to_names(row_number = 1) %>%
       as.data.frame() %>%
       mutate_if(is.character, as.numeric) %>%
-      mutate(across(where(is.numeric), ~ round(prop.table(.) * 100, 1)))
+      mutate(across(where(is.numeric), ~ round(prop.table(.), 4)))
     # mutate(across(where(is.numeric), format, big.mark = ",")) %>%
   })
 
   output$EmpOcc <- renderDataTable({
-    datatable(EmpOcc(), options = list(order = list(2, "desc")))
+    df <- EmpOcc()
+    datatable(df, options = list(order = list(2, "desc"))) %>% 
+      formatPercentage(1:ncol(df),1)
   })
 
   # VACANCIES ----
