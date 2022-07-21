@@ -2,29 +2,22 @@
   "input": {
     "lep0a": "Black Country",
     "lep1": "Black Country",
-    "lep10": "\nNone",
     "lep2": "\nNone",
     "lep3": "Black Country",
     "lep4": "\nNone",
     "lep5": "Black Country",
     "lep6": "\nNone",
-    "lep7": "Black Country",
-    "lep8": "\nNone",
-    "lep9": "Black Country",
     "link_to_tabpanel_earnings": 0,
-    "link_to_tabpanel_earnings2": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
     "link_to_tabpanel_FE": 0,
     "link_to_tabpanel_FE2": 0,
     "link_to_tabpanel_HE": 0,
-    "link_to_tabpanel_HE2": 0,
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
     "navbar": "Homepage",
-    "OccSect": "1",
-    "skill_line": "Apprenticeships: Total"
+    "skill_line": "Apprenticeships"
   },
   "output": {
 

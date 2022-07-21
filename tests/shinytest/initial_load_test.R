@@ -27,7 +27,7 @@ dfTestInputs <- data.frame(
     "navbar", "lep1", "lep2",
     "navbar", "lep5", "lep6",
     # "navbar", "lep7", "lep8",
-    "navbar", "lep3", "lep4",
+    "navbar", "lep3", "lep4"
     #  "navbar", "lep9", "lep10"
   ),
   value = c(
@@ -35,7 +35,7 @@ dfTestInputs <- data.frame(
     "Employment", "London", "Greater Manchester",
     "Vacancies", "London", "Greater Manchester",
     # "Earnings", "London", "Greater Manchester",
-    "FE", "London", "Greater Manchester",
+    "FE", "London", "Greater Manchester"
     # "HE", "London", "Greater Manchester"
   )
 )
