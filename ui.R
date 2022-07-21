@@ -170,330 +170,332 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
     ), # end of Tab Panel
 
     # OVERVIEW ----
-    tabPanel("App",
-             #choice row
-             fluidRow(
-               column(4,
-                      p("Choose primary LEP"),
-                      selectInput("lep1", NULL,
-                                  choices = C_LEP2020)
-               ),
-               column(4,
-                      p("Choose comparison LEP"),
-                      selectInput("lep2",NULL ,
-                                  choices = c("\nNone", unique(C_LEP2020))
-                                 )
-               )
-             ),
-             
-             #next row is the data tabs
-             fluidRow(
-               bsCollapse(id = "collapseExample",multiple=TRUE,
-                                 bsCollapsePanel(
-               
-      "Overview",
-        ## Main panel ----
-        mainPanel(
-          width = 12,
-          ### Title ----
-          uiOutput("page0title", style = "font-size: 24px;"),
-          div("Change metrics are measured since the same period the year before.", style = "font-size: 16px; font-style: italic;"),
-          br(),
-          fluidRow(
-            # left column
-            column(
-              width = 5,
-              style = "background-color:#f3f2f1;",
-              h2("Labour market"),
-              div(
-                title = "Source: APS. 2021 calendar year",
-                valueBoxOutput("locland.emplcnt0", width = 8),
-                valueBoxOutput("locland.emplcntchange0", width = 4)
-              ),
-            box(
-                      width = 12,
-                      p(" ")
-                    ),
-                    # second row - emp rate
-                    tags$div(
-                      title = "Source: APS. 2021 calendar year",
-                      valueBoxOutput("locland.emplrate0", width = 8),
-                      valueBoxOutput("locland.emplchange0", width = 4)
-                    ),
-                    # third row - link to emp tab
-                    box(
-                      width = 12,
-                      actionLink("link_to_tabpanel_employment2", "Find out more about employment"),
-                      align = "right"
-                    ),
-                    box(
-                      width = 12,
-                      p(" ")
-                    ),
-                    # fourth row - vacancies
-                    tags$div(
-                      title = "Source: ONS (Adzuna). Jan 2022",
-                      valueBoxOutput("jobad.units", width = 8),
-                      valueBoxOutput("jobad.change", width = 4)
-                    ),
-                    # fifth row - link to vacancy data
-                    box(
-                      width = 12,
-                      actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies"),
-                      align = "right"
+    tabPanel(
+      "App",
+      # choice row
+      fluidRow(
+        column(
+          4,
+          p("Choose primary LEP"),
+          selectInput("lep1", NULL,
+            choices = C_LEP2020
+          )
+        ),
+        column(
+          4,
+          p("Choose comparison LEP"),
+          selectInput("lep2", NULL,
+            choices = c("\nNone", unique(C_LEP2020))
+          )
+        )
+      ),
+
+      # next row is the data tabs
+      fluidRow(
+        bsCollapse(
+          id = "collapseExample", multiple = TRUE,
+          bsCollapsePanel(
+            "Overview",
+            ## Main panel ----
+            mainPanel(
+              width = 12,
+              ### Title ----
+              uiOutput("page0title", style = "font-size: 24px;"),
+              div("Change metrics are measured since the same period the year before.", style = "font-size: 16px; font-style: italic;"),
+              br(),
+              fluidRow(
+                # left column
+                column(
+                  width = 5,
+                  style = "background-color:#f3f2f1;",
+                  h2("Labour market"),
+                  div(
+                    title = "Source: APS. 2021 calendar year",
+                    valueBoxOutput("locland.emplcnt0", width = 8),
+                    valueBoxOutput("locland.emplcntchange0", width = 4)
+                  ),
+                  box(
+                    width = 12,
+                    p(" ")
+                  ),
+                  # second row - emp rate
+                  tags$div(
+                    title = "Source: APS. 2021 calendar year",
+                    valueBoxOutput("locland.emplrate0", width = 8),
+                    valueBoxOutput("locland.emplchange0", width = 4)
+                  ),
+                  # third row - link to emp tab
+                  box(
+                    width = 12,
+                    actionLink("link_to_tabpanel_employment2", "Find out more about employment"),
+                    align = "right"
+                  ),
+                  box(
+                    width = 12,
+                    p(" ")
+                  ),
+                  # fourth row - vacancies
+                  tags$div(
+                    title = "Source: ONS (Adzuna). Jan 2022",
+                    valueBoxOutput("jobad.units", width = 8),
+                    valueBoxOutput("jobad.change", width = 4)
+                  ),
+                  # fifth row - link to vacancy data
+                  box(
+                    width = 12,
+                    actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies"),
+                    align = "right"
+                  )
+                ),
+                column(width = 1), # column split
+                # right column
+                column(
+                  width = 5,
+                  style = "background-color:#f3f2f1;",
+                  h2("Skills landscape"),
+                  div(
+                    title = "Source:ILR AY20/21", # tooltip
+                    fluidRow(
+                      column(
+                        width = 8,
+                        h2(uiOutput("skisup.ETach")),
+                        p("education and training achievements (AY20/21)")
+                      ),
+                      # valueBoxOutput("skisup.ETach", width = 8),
+                      column(uiOutput("skisup.ETachChange"), width = 4)
                     )
                   ),
-            column(width=1),#column split
-            # right column
-            column(
-              width = 5,
-              style = "background-color:#f3f2f1;",
-              h2("Skills landscape"),
-              div(
-                title = "Source:ILR AY20/21",#tooltip
-                fluidRow(
-                    column(width=8,
-                  h2(uiOutput("skisup.ETach")),
-                  p("education and training achievements (AY20/21)")),
-                  #valueBoxOutput("skisup.ETach", width = 8),
-                  column(uiOutput("skisup.ETachChange"),width=4)
+                  box(
+                    width = 12,
+                    p(" ")
+                  ),
+                  # 5th row - apps
+                  div(
+                    title = "Source:ILR AY20/21",
+                    uiOutput("skisup.APPach"),
+                    p("apprenticeship achievements (AY20/21)")
+                    # valueBoxOutput("skisup.APPach", width = 8),
+                    # valueBoxOutput("skisup.APPachChange", width = 4)
+                  ),
+                  # 6th row - link to app data
+                  box(
+                    width = 12,
+                    actionLink("link_to_tabpanel_FE2", "Find out more about skills"),
+                    align = "right"
+                  ),
+                ) # end of right column
+              ), # end of data row
+
+              fluidRow( ### Help text --------------------
+                helpText("Download all available indicators for all geographies (LEPs, LAs, Regions and England):",
+                  style = "font-style: italic;"
+                ),
+                ### Download button -------------
+                downloadButton(
+                  outputId = "download_btn0a",
+                  label = "All data",
+                  icon = shiny::icon("download")
+                ),
+                helpText("Or just for the currently chosen LEP:",
+                  style = "font-style: italic;"
+                ),
+                downloadButton(
+                  outputId = "download_btn0b",
+                  label = "Current LEP",
+                  icon = shiny::icon("download")
                 )
+              )
+            )
+          ), # end of Overview tab
+
+          bsCollapsePanel(
+            "Employment",
+            ## Main panel ----
+            mainPanel(
+              width = 12,
+              ### Title ----
+              uiOutput("page1title", style = "font-size: 24px;"),
+              div("Data is from the Annual Population Survey. Years represent calendar years.", style = "font-size: 16px; font-style: italic;"),
+              # br(),
+
+              ### KPI boxes ----
+              box(
+                width = 12,
+                valueBoxOutput("locland.emplcnt"),
+                valueBoxOutput("locland.emplrate")
+              ),
+              box(
+                width = 12,
+                uiOutput("emp_comp")
               ),
               box(
                 width = 12,
                 p(" ")
               ),
-                    # 5th row - apps
-                    div(
-                      title = "Source:ILR AY20/21",
-                      uiOutput("skisup.APPach"),
-                      p("apprenticeship achievements (AY20/21)")
-                      #valueBoxOutput("skisup.APPach", width = 8),
-                      #valueBoxOutput("skisup.APPachChange", width = 4)
-                    ),
-                    # 6th row - link to app data
-                    box(
-                      width = 12,
-                      actionLink("link_to_tabpanel_FE2", "Find out more about skills"),
-                      align = "right"
-                    ),
-                  )#end of right column
-                
-              ),#end of data row
-
-          fluidRow( ### Help text --------------------
-                    helpText("Download all available indicators for all geographies (LEPs, LAs, Regions and England):",
-                             style = "font-style: italic;"
-                    ),
-                    ### Download button -------------
-                    downloadButton(
-                      outputId = "download_btn0a",
-                      label = "All data",
-                      icon = shiny::icon("download")
-                    ),
-                    helpText("Or just for the currently chosen LEP:",
-                             style = "font-style: italic;"
-                    ),
-                    downloadButton(
-                      outputId = "download_btn0b",
-                      label = "Current LEP",
-                      icon = shiny::icon("download")
-                    )
-                    )
-        )
-
-    ), # end of Overview tab
-
-    bsCollapsePanel(
-        "Employment",
-          ## Main panel ----
-          mainPanel(
-            width = 12,
-            ### Title ----
-            uiOutput("page1title", style = "font-size: 24px;"),
-            div("Data is from the Annual Population Survey. Years represent calendar years.", style = "font-size: 16px; font-style: italic;"),
-            # br(),
-
-            ### KPI boxes ----
-            box(
-              width = 12,
-              valueBoxOutput("locland.emplcnt"),
-              valueBoxOutput("locland.emplrate")
-            ),
-            box(
-              width = 12,
-              uiOutput("emp_comp")
-            ),
-            box(
-              width = 12,
-              p(" ")
-            ),
-            ### Employment rate over time line chart ----
-            column(
-              width = 6,
-              p("Employment rate trend", style = "font-size:20px;"),
-              plotlyOutput("EmpRate_time")
-            ),
-            ### Employment percentage by occupation data table ----
-            column(
-              width = 6,
-              p("Employment percentage by occupation (sub-major SOC group)", style = "font-size:20px;"),
-              dataTableOutput("EmpOcc")
-            ),
-            ### Help text --------------------
-            helpText("Download employment indicators for all geographies (LEPs, LAs, Regions and England):",
-                     style = "font-style: italic;"
-            ),
-            ### Download buttons -------------
-            downloadButton(
-              outputId = "download_btn1a",
-              label = "All data",
-              icon = icon("download")
-            ),
-            helpText("Or just for the currently chosen LEP:",
-                     style = "font-style: italic;"
-            ),
-            downloadButton(
-              outputId = "download_btn1b",
-              label = "Current LEP",
-              icon = icon("download")
-            )
-          ) # end of main panel
-      ), # end of Local Landscape tab
-
-      # VACANCIES ---------------
-    bsCollapsePanel(
-        "Vacancies",
-           
-          ## Main panel ----
-          mainPanel(
-            width = 12,
-            ### Title ----
-            uiOutput("page3title", style = "font-size: 24px;"),
-            div("Data is from ONS using Adzuna online job adverts. Data for each year is the average of vacancies across January of that year.", style = "font-size: 16px; font-style: italic;"),
-            br(),
-            ### KPI boxes ----
-            box(
-              width = 12,
-              valueBoxOutput("jobad.pc"),
-              valueBoxOutput("jobad.ch"),
-            ), # end of box
-            box(
-              width = 12,
-              uiOutput("vac_comp")
-            ),
-            box(
-              width = 12,
-              p(" ")
-            ),
-            box(
-              width = 12,
-              ### ONS job advert information ----
-              ### Online job vacancy units over time line chart ----
-              column(
-                width = 12,
-                p("Online job vacancy unit trend", style = "font-size:20px;"),
-                plotlyOutput("jobad.time")
-              ),
-            ), # end of box
-            details(
-              inputId = "SubsLev",
-              label = "Chart information",
-              help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
-              The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a unit measure. The unit measure is derived by dividing the monthly average count of job adverts by a set value."
-            ),
-            ### Help text --------------------
-            helpText("Download vacancy indicators for all geographies (LEPs, LAs, Regions and England):",
-                     style = "font-style: italic;"
-            ),
-            ### Download buttons -------------
-            downloadButton(
-              outputId = "download_btn3a",
-              label = "All data",
-              icon = icon("download")
-            ),
-            helpText("Or just for the currently chosen LEP:",
-                     style = "font-style: italic;"
-            ),
-            downloadButton(
-              outputId = "download_btn3b",
-              label = "Current LEP",
-              icon = icon("download")
-            ),
-          ) # end of main panel
-      ), # end of Skills Supply tab
-  #  ), # end of labour navbar
-
-    bsCollapsePanel(
-        "FE",
-          ## Main panel ----
-          mainPanel(
-            width = 10,
-            ### Title ----
-            uiOutput("page2title", style = "font-size: 24px;"),
-            div("Data from Individualised Learner Records for adult FE learners. Years shown are academic years.", style = "font-size: 16px; font-style: italic;"),
-            br(),
-            ### KPI boxes ----
-            box(
-              width = 12,
-              valueBoxOutput("skisup.FEach"),
-              valueBoxOutput("skisup.APach"),
-            ),
-            box(
-              width = 12,
-              uiOutput("skill_comp")
-            ),
-            box(
-              width = 12,
-              p(" ")
-            ),
-            box(
-              width = 12,
-              # height=500,
-              ### Achievements over time line chart ----
+              ### Employment rate over time line chart ----
               column(
                 width = 6,
-                ### LEP 4 input ------------
-                p("FE adult achievement trend", style = "font-size:20px;"),
-                p("Choose provision group"),
-                selectizeInput("skill_line", "",
-                  choices = c("Apprenticeships", "Education and training", "Community learning", "Total FE and Apps provision")
-                ),
-                plotlyOutput("Ach_time")
+                p("Employment rate trend", style = "font-size:20px;"),
+                plotlyOutput("EmpRate_time")
               ),
-
-              ### FE acheivements ----
+              ### Employment percentage by occupation data table ----
               column(
                 width = 6,
-                p("All adult FE achievements by SSA tier 1 (AY21/22 Aug to Jan)", style = "font-size:20px;"),
-                plotlyOutput("Ach_SSA_pc")
+                p("Employment percentage by occupation (sub-major SOC group)", style = "font-size:20px;"),
+                dataTableOutput("EmpOcc")
+              ),
+              ### Help text --------------------
+              helpText("Download employment indicators for all geographies (LEPs, LAs, Regions and England):",
+                style = "font-style: italic;"
+              ),
+              ### Download buttons -------------
+              downloadButton(
+                outputId = "download_btn1a",
+                label = "All data",
+                icon = icon("download")
+              ),
+              helpText("Or just for the currently chosen LEP:",
+                style = "font-style: italic;"
+              ),
+              downloadButton(
+                outputId = "download_btn1b",
+                label = "Current LEP",
+                icon = icon("download")
               )
-            ), # end of box
-            ### Help text --------------------
-            helpText("Download FE indicators for all geographies (LEPs, LAs, Regions and England):",
-                     style = "font-style: italic;"
-            ),
-            ### Download buttons -------------
-            downloadButton(
-              outputId = "download_btn2a",
-              label = "All data",
-              icon = icon("download")
-            ),
-            helpText("Or just for the currently chosen LEP:",
-                     style = "font-style: italic;"
-            ),
-            downloadButton(
-              outputId = "download_btn2b",
-              label = "Current LEP",
-              icon = icon("download")
-            )
-          ) # end of main panel
-      ) # end of Skills Supply tab
-    ) # end of skills navbar
-               
-)#end of app data row
+            ) # end of main panel
+          ), # end of Local Landscape tab
 
-),#end of app tab panel
+          # VACANCIES ---------------
+          bsCollapsePanel(
+            "Vacancies",
+
+            ## Main panel ----
+            mainPanel(
+              width = 12,
+              ### Title ----
+              uiOutput("page3title", style = "font-size: 24px;"),
+              div("Data is from ONS using Adzuna online job adverts. Data for each year is the average of vacancies across January of that year.", style = "font-size: 16px; font-style: italic;"),
+              br(),
+              ### KPI boxes ----
+              box(
+                width = 12,
+                valueBoxOutput("jobad.pc"),
+                valueBoxOutput("jobad.ch"),
+              ), # end of box
+              box(
+                width = 12,
+                uiOutput("vac_comp")
+              ),
+              box(
+                width = 12,
+                p(" ")
+              ),
+              box(
+                width = 12,
+                ### ONS job advert information ----
+                ### Online job vacancy units over time line chart ----
+                column(
+                  width = 12,
+                  p("Online job vacancy unit trend", style = "font-size:20px;"),
+                  plotlyOutput("jobad.time")
+                ),
+              ), # end of box
+              details(
+                inputId = "SubsLev",
+                label = "Chart information",
+                help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
+              The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a unit measure. The unit measure is derived by dividing the monthly average count of job adverts by a set value."
+              ),
+              ### Help text --------------------
+              helpText("Download vacancy indicators for all geographies (LEPs, LAs, Regions and England):",
+                style = "font-style: italic;"
+              ),
+              ### Download buttons -------------
+              downloadButton(
+                outputId = "download_btn3a",
+                label = "All data",
+                icon = icon("download")
+              ),
+              helpText("Or just for the currently chosen LEP:",
+                style = "font-style: italic;"
+              ),
+              downloadButton(
+                outputId = "download_btn3b",
+                label = "Current LEP",
+                icon = icon("download")
+              ),
+            ) # end of main panel
+          ), # end of Skills Supply tab
+          #  ), # end of labour navbar
+
+          bsCollapsePanel(
+            "FE",
+            ## Main panel ----
+            mainPanel(
+              width = 10,
+              ### Title ----
+              uiOutput("page2title", style = "font-size: 24px;"),
+              div("Data from Individualised Learner Records for adult FE learners. Years shown are academic years.", style = "font-size: 16px; font-style: italic;"),
+              br(),
+              ### KPI boxes ----
+              box(
+                width = 12,
+                valueBoxOutput("skisup.FEach"),
+                valueBoxOutput("skisup.APach"),
+              ),
+              box(
+                width = 12,
+                uiOutput("skill_comp")
+              ),
+              box(
+                width = 12,
+                p(" ")
+              ),
+              box(
+                width = 12,
+                # height=500,
+                ### Achievements over time line chart ----
+                column(
+                  width = 6,
+                  ### LEP 4 input ------------
+                  p("FE adult achievement trend", style = "font-size:20px;"),
+                  p("Choose provision group"),
+                  selectizeInput("skill_line", "",
+                    choices = c("Apprenticeships", "Education and training", "Community learning", "Total FE and Apps provision")
+                  ),
+                  plotlyOutput("Ach_time")
+                ),
+
+                ### FE acheivements ----
+                column(
+                  width = 6,
+                  p("All adult FE achievements by SSA tier 1 (AY21/22 Aug to Jan)", style = "font-size:20px;"),
+                  plotlyOutput("Ach_SSA_pc")
+                )
+              ), # end of box
+              ### Help text --------------------
+              helpText("Download FE indicators for all geographies (LEPs, LAs, Regions and England):",
+                style = "font-style: italic;"
+              ),
+              ### Download buttons -------------
+              downloadButton(
+                outputId = "download_btn2a",
+                label = "All data",
+                icon = icon("download")
+              ),
+              helpText("Or just for the currently chosen LEP:",
+                style = "font-style: italic;"
+              ),
+              downloadButton(
+                outputId = "download_btn2b",
+                label = "Current LEP",
+                icon = icon("download")
+              )
+            ) # end of main panel
+          ) # end of Skills Supply tab
+        ) # end of skills navbar
+      ) # end of app data row
+    ), # end of app tab panel
     # FUTURE DEVELOPMENT ---------------
     #   navbarMenu(
     #    "Future development",

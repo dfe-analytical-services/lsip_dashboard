@@ -318,18 +318,18 @@ server <- function(input, output, session) {
 
 
   ### E&T achievements -----
-  #text approach
+  # text approach
   output$skisup.ETach <- renderUI({
-     ETach<-C_Achieve_ILR1621 %>%
-        filter(
-          time_period == "202021",
-          LEP == input$lep1,
-          level_or_type == "Education and training: Total"
-        ) %>%
-        summarise(App_ach = sum(achievements))
-     format(ETach,big.mark = ",")
+    ETach <- C_Achieve_ILR1621 %>%
+      filter(
+        time_period == "202021",
+        LEP == input$lep1,
+        level_or_type == "Education and training: Total"
+      ) %>%
+      summarise(App_ach = sum(achievements))
+    format(ETach, big.mark = ",")
   })
- #valuebox approach 
+  # valuebox approach
   # output$skisup.ETach <- renderValueBox({
   #   valueBox(
   #     format((C_Achieve_ILR1621 %>%
@@ -345,26 +345,25 @@ server <- function(input, output, session) {
   # })
 
   ### E&T achievements change -----
-  #text appraoch
+  # text appraoch
   output$skisup.ETachChange <- renderUI({
     x <- ((C_Achieve_ILR1621 %>%
-             filter(
-               time_period == "202021",
-               LEP == input$lep1,
-               level_or_type == "Education and training: Total"
-             ) %>%
-             summarise(App_ach = sum(achievements)))
-          - (C_Achieve_ILR1621 %>%
-               filter(
-                 time_period == "201920",
-                 LEP == input$lep1,
-                 level_or_type == "Education and training: Total"
-               ) %>%
-               summarise(App_ach = sum(achievements))))
-    h2(sprintf("%+.0f", x),style=paste0("color:",cond_color(x > 0)))
-
+      filter(
+        time_period == "202021",
+        LEP == input$lep1,
+        level_or_type == "Education and training: Total"
+      ) %>%
+      summarise(App_ach = sum(achievements)))
+    - (C_Achieve_ILR1621 %>%
+        filter(
+          time_period == "201920",
+          LEP == input$lep1,
+          level_or_type == "Education and training: Total"
+        ) %>%
+        summarise(App_ach = sum(achievements))))
+    h2(sprintf("%+.0f", x), style = paste0("color:", cond_color(x > 0)))
   })
-  #valuebox approach
+  # valuebox approach
   # output$skisup.ETachChange <- renderValueBox({
   #   x <- ((C_Achieve_ILR1621 %>%
   #     filter(
@@ -380,7 +379,7 @@ server <- function(input, output, session) {
   #         level_or_type == "Education and training: Total"
   #       ) %>%
   #       summarise(App_ach = sum(achievements))))
-#   valueBox(
+  #   valueBox(
   #     sprintf("%+.0f", x),
   #     subtitle = NULL,
   #     width = 12,
@@ -391,17 +390,18 @@ server <- function(input, output, session) {
   ### App achievements ----#
   ### App achievements ----
   output$skisup.APPach <- renderUI({
-      AppAch<-format((C_Achieve_ILR1621 %>%
-        filter(
-          time_period == "202021",
-          LEP == input$lep1,
-          level_or_type == "Apprenticeships: Total"
-        ) %>%
-        summarise(App_ach = sum(achievements))), 
-        big.mark = ",")
+    AppAch <- format((C_Achieve_ILR1621 %>%
+      filter(
+        time_period == "202021",
+        LEP == input$lep1,
+        level_or_type == "Apprenticeships: Total"
+      ) %>%
+      summarise(App_ach = sum(achievements))),
+    big.mark = ","
+    )
 
-  ### App achievements change ----
-  APPachChange <- ((C_Achieve_ILR1621 %>%
+    ### App achievements change ----
+    APPachChange <- ((C_Achieve_ILR1621 %>%
       filter(
         time_period == "202021",
         LEP == input$lep1,
@@ -415,11 +415,10 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))))
-  
-  h2(AppAch," (",sprintf("%+.0f", APPachChange),")")
-     #,style=paste0("color:",cond_color(x > 0)))
-  
-})
+
+    h2(AppAch, " (", sprintf("%+.0f", APPachChange), ")")
+    # ,style=paste0("color:",cond_color(x > 0)))
+  })
   # ### App achievements ----
   # output$skisup.APPach <- renderValueBox({
   #   valueBox(
