@@ -173,28 +173,41 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
     tabPanel(
       "App",
       # choice row
-      fluidRow(
-        column(
-          4,
-          p("Choose primary LEP"),
-          selectInput("lep1", NULL,
+      sidebarLayout(
+        sidebarPanel(
+          width=2,
+          selectInput("lep1", "Choose primary LEP",
             choices = C_LEP2020
-          )
-        ),
-        column(
-          4,
-          p("Choose comparison LEP"),
-          selectInput("lep2", NULL,
+          ),
+          selectInput("lep2", "Choose comparison LEP",
             choices = c("\nNone", unique(C_LEP2020))
-          )
-        )
+          ),
+                    helpText("Download all available indicators for all geographies (LEPs, LAs, Regions and England):",
+                             style = "font-style: italic;"
+                    ),
+                    ### Download button -------------
+                    downloadButton(
+                      outputId = "download_btn0a",
+                      label = "All data",
+                      icon = shiny::icon("download")
+                    ),
+                    helpText("Or just for the currently chosen LEP:",
+                             style = "font-style: italic;"
+                    ),
+                    downloadButton(
+                      outputId = "download_btn0b",
+                      label = "Current LEP",
+                      icon = shiny::icon("download")
+                    )
+
       ),
 
       # next row is the data tabs
-      fluidRow(
-        bsCollapse(
-          id = "collapseExample", multiple = TRUE,
-          bsCollapsePanel(
+      mainPanel(
+        width=10,
+        tabsetPanel(
+          id = "collapseExample",
+          tabPanel(
             "Overview",
             ## Main panel ----
             mainPanel(
@@ -286,29 +299,10 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                 ) # end of right column
               ), # end of data row
 
-              fluidRow( ### Help text --------------------
-                helpText("Download all available indicators for all geographies (LEPs, LAs, Regions and England):",
-                  style = "font-style: italic;"
-                ),
-                ### Download button -------------
-                downloadButton(
-                  outputId = "download_btn0a",
-                  label = "All data",
-                  icon = shiny::icon("download")
-                ),
-                helpText("Or just for the currently chosen LEP:",
-                  style = "font-style: italic;"
-                ),
-                downloadButton(
-                  outputId = "download_btn0b",
-                  label = "Current LEP",
-                  icon = shiny::icon("download")
-                )
-              )
             )
           ), # end of Overview tab
 
-          bsCollapsePanel(
+          tabPanel(
             "Employment",
             ## Main panel ----
             mainPanel(
@@ -366,7 +360,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
           ), # end of Local Landscape tab
 
           # VACANCIES ---------------
-          bsCollapsePanel(
+          tabPanel(
             "Vacancies",
 
             ## Main panel ----
@@ -428,7 +422,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
           ), # end of Skills Supply tab
           #  ), # end of labour navbar
 
-          bsCollapsePanel(
+          tabPanel(
             "FE",
             ## Main panel ----
             mainPanel(
@@ -491,6 +485,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                 label = "Current LEP",
                 icon = icon("download")
               )
+            )
             ) # end of main panel
           ) # end of Skills Supply tab
         ) # end of skills navbar
