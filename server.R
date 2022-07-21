@@ -574,8 +574,8 @@ server <- function(input, output, session) {
 
   output$EmpOcc <- renderDataTable({
     df <- EmpOcc()
-    datatable(df, options = list(order = list(2, "desc"))) %>% 
-      formatPercentage(1:ncol(df),1)
+    datatable(df, options = list(order = list(2, "desc"))) %>%
+      formatPercentage(1:ncol(df), 1)
   })
 
   # VACANCIES ----
