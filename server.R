@@ -29,7 +29,7 @@ server <- function(input, output, session) {
 
   # Define page titles ----
   output$page0title <- renderUI({
-    paste0(input$lep0a, ": overview of local landscape")
+    paste0(input$lep1, ": overview of local landscape")
   })
 
   output$page1title <- renderUI({
@@ -37,27 +37,27 @@ server <- function(input, output, session) {
   })
 
   output$page2title <- renderUI({
-    paste0(input$lep3, " FE skill supply trends")
+    paste0(input$lep1, " FE skill supply trends")
   })
 
   output$page3title <- renderUI({
-    paste0(input$lep5, " vacancy trends")
+    paste0(input$lep1, " vacancy trends")
   })
 
   output$page4title <- renderUI({
-    paste0(input$lep7, ": Overview of earnings")
+    paste0(input$lep1, ": Overview of earnings")
   })
 
   output$page5title <- renderUI({
-    paste0(input$lep9, ": Overview of HE")
+    paste0(input$lep1, ": Overview of HE")
   })
 
   output$page6title <- renderUI({
-    paste0(input$lepOver2, ": overview of local landscape")
+    paste0(input$lep1, ": overview of local landscape")
   })
 
   output$page7title <- renderUI({
-    paste0(input$lepAppa, ": overview of apprenticeships")
+    paste0(input$lep1, ": overview of apprenticeships")
   })
 
   ### Conditional functions----
@@ -130,11 +130,11 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data0 <- reactive({
     list(
-      "2.Emp by occupation" = filter(C_EmpOcc_APS1721, geographic_level == "lep", area == input$lep0a),
-      "5.Emp rate" = filter(C_EmpRate_APS1721, geographic_level == "lep", area == input$lep0a),
-      "12a.FE achievements SSA" = filter(C_Achieve_ILR21, LEP == input$lep0a),
-      "12b.FE achievements" = filter(C_Achieve_ILR1621, LEP == input$lep0a),
-      "22.Vacancies" = filter(C_Vacancy_ONS1722, LEP == input$lep0a)
+      "2.Emp by occupation" = filter(C_EmpOcc_APS1721, geographic_level == "lep", area == input$lep1),
+      "5.Emp rate" = filter(C_EmpRate_APS1721, geographic_level == "lep", area == input$lep1),
+      "12a.FE achievements SSA" = filter(C_Achieve_ILR21, LEP == input$lep1),
+      "12b.FE achievements" = filter(C_Achieve_ILR1621, LEP == input$lep1),
+      "22.Vacancies" = filter(C_Vacancy_ONS1722, LEP == input$lep1)
     )
   })
   output$download_btn0b <- downloadHandler(
@@ -156,7 +156,7 @@ server <- function(input, output, session) {
       format((C_EmpRate_APS1721 %>%
         filter(
           geographic_level == "lep", # cleans up for London which is included as lep and gor
-          area == input$lep0a,
+          area == input$lep1,
           year == "2021"
         )
       )$"28  in employment ",
@@ -173,14 +173,14 @@ server <- function(input, output, session) {
     x <- ((C_EmpRate_APS1721 %>%
       filter(
         geographic_level == "lep", # cleans up for London which is included as lep and gor
-        area == input$lep0a,
+        area == input$lep1,
         year == "2021"
       )
     )$"28  in employment "
       - (C_EmpRate_APS1721 %>%
         filter(
           geographic_level == "lep", # cleans up for London which is included as lep and gor
-          area == input$lep0a,
+          area == input$lep1,
           year == "2020"
         )
       )$"28  in employment ")
@@ -203,7 +203,7 @@ server <- function(input, output, session) {
         format(100. * (C_EmpRate_APS1721 %>%
           filter(
             geographic_level == "lep", # cleans up for London which is included as lep and gor
-            area == input$lep0a,
+            area == input$lep1,
             year == "2021"
           )
         )$empRate, digits = 2),
@@ -228,13 +228,13 @@ server <- function(input, output, session) {
     x <- (100. * ((C_EmpRate_APS1721 %>%
       filter(
         geographic_level == "lep", # cleans up for London which is included as lep and gor
-        area == input$lep0a,
+        area == input$lep1,
         year == "2021"
       ))$empRate -
       (C_EmpRate_APS1721 %>%
         filter(
           geographic_level == "lep", # cleans up for London which is included as lep and gor
-          area == input$lep0a,
+          area == input$lep1,
           year == "2020"
         ))$empRate))
     valueBox(
@@ -259,7 +259,7 @@ server <- function(input, output, session) {
     # valueBox(C_Vacancy_England %>%
     #   filter(
     #     year == "2022",
-    #     LEP == input$lep0a
+    #     LEP == input$lep1
     #   ) %>%
     #   summarise(job.unit = sum(vacancy_unit)),
     # "job vacancy units (Jan 22)",
@@ -270,7 +270,7 @@ server <- function(input, output, session) {
         format(100. * (C_Vacancy_England %>%
           filter(
             year == "2022",
-            LEP == input$lep0a
+            LEP == input$lep1
           ) %>%
           summarise(job.pc = sum(pc_total))), digits = 2),
         "%"
@@ -285,13 +285,13 @@ server <- function(input, output, session) {
     x <- (C_Vacancy_England %>%
       filter(
         year == "2022",
-        LEP == input$lep0a
+        LEP == input$lep1
       ) %>%
       summarise(job.pc = sum(pc_total))
       - (C_Vacancy_England %>%
         filter(
           year == "2021",
-          LEP == input$lep0a
+          LEP == input$lep1
         ) %>%
         summarise(job.pc = sum(pc_total))))
     valueBox(
@@ -318,92 +318,147 @@ server <- function(input, output, session) {
 
 
   ### E&T achievements -----
-  output$skisup.ETach <- renderValueBox({
-    valueBox(
-      format((C_Achieve_ILR1621 %>%
+  #text approach
+  output$skisup.ETach <- renderUI({
+     ETach<-C_Achieve_ILR1621 %>%
         filter(
           time_period == "202021",
-          LEP == input$lep0a,
+          LEP == input$lep1,
           level_or_type == "Education and training: Total"
         ) %>%
-        summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      "education and training achievements (AY20/21)",
-      width = 12
-    )
+        summarise(App_ach = sum(achievements))
+     format(ETach,big.mark = ",")
   })
+ #valuebox approach 
+  # output$skisup.ETach <- renderValueBox({
+  #   valueBox(
+  #     format((C_Achieve_ILR1621 %>%
+  #               filter(
+  #                 time_period == "202021",
+  #                 LEP == input$lep1,
+  #                 level_or_type == "Education and training: Total"
+  #               ) %>%
+  #               summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
+  #     "education and training achievements (AY20/21)",
+  #     width = 12
+  #   )
+  # })
 
   ### E&T achievements change -----
-  output$skisup.ETachChange <- renderValueBox({
+  #text appraoch
+  output$skisup.ETachChange <- renderUI({
     x <- ((C_Achieve_ILR1621 %>%
-      filter(
-        time_period == "202021",
-        LEP == input$lep0a,
-        level_or_type == "Education and training: Total"
-      ) %>%
-      summarise(App_ach = sum(achievements)))
-    - (C_Achieve_ILR1621 %>%
-        filter(
-          time_period == "201920",
-          LEP == input$lep0a,
-          level_or_type == "Education and training: Total"
-        ) %>%
-        summarise(App_ach = sum(achievements))))
-    valueBox(
-      sprintf("%+.0f", x),
-      subtitle = NULL,
-      width = 12,
-      icon = cond_icon(x > 0),
-      color = cond_color(x > 0)
-    )
-  })
+             filter(
+               time_period == "202021",
+               LEP == input$lep1,
+               level_or_type == "Education and training: Total"
+             ) %>%
+             summarise(App_ach = sum(achievements)))
+          - (C_Achieve_ILR1621 %>%
+               filter(
+                 time_period == "201920",
+                 LEP == input$lep1,
+                 level_or_type == "Education and training: Total"
+               ) %>%
+               summarise(App_ach = sum(achievements))))
+    h2(sprintf("%+.0f", x),style=paste0("color:",cond_color(x > 0)))
 
+  })
+  #valuebox approach
+  # output$skisup.ETachChange <- renderValueBox({
+  #   x <- ((C_Achieve_ILR1621 %>%
+  #     filter(
+  #       time_period == "202021",
+  #       LEP == input$lep1,
+  #       level_or_type == "Education and training: Total"
+  #     ) %>%
+  #     summarise(App_ach = sum(achievements)))
+  #   - (C_Achieve_ILR1621 %>%
+  #       filter(
+  #         time_period == "201920",
+  #         LEP == input$lep1,
+  #         level_or_type == "Education and training: Total"
+  #       ) %>%
+  #       summarise(App_ach = sum(achievements))))
+#   valueBox(
+  #     sprintf("%+.0f", x),
+  #     subtitle = NULL,
+  #     width = 12,
+  #     icon = cond_icon(x > 0),
+  #     color = cond_color(x > 0)
+  #   )
+  # })
+  ### App achievements ----#
   ### App achievements ----
-  output$skisup.APPach <- renderValueBox({
-    valueBox(
-      format((C_Achieve_ILR1621 %>%
+  output$skisup.APPach <- renderUI({
+      AppAch<-format((C_Achieve_ILR1621 %>%
         filter(
           time_period == "202021",
-          LEP == input$lep0a,
+          LEP == input$lep1,
           level_or_type == "Apprenticeships: Total"
         ) %>%
-        dplyr::summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      "apprenticeship achievements (AY20/21)",
-      width = 12
-    )
-  })
+        summarise(App_ach = sum(achievements))), 
+        big.mark = ",")
 
   ### App achievements change ----
-  output$skisup.APPachChange <- renderValueBox({
-    x <- ((C_Achieve_ILR1621 %>%
+  APPachChange <- ((C_Achieve_ILR1621 %>%
       filter(
         time_period == "202021",
-        LEP == input$lep0a,
+        LEP == input$lep1,
         level_or_type == "Apprenticeships: Total"
       ) %>%
       summarise(App_ach = sum(achievements)))
     - (C_Achieve_ILR1621 %>%
         filter(
           time_period == "201920",
-          LEP == input$lep0a,
+          LEP == input$lep1,
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))))
-    valueBox(
-      sprintf("%+.0f", x),
-      subtitle = NULL,
-      width = 12,
-      icon = cond_icon(x > 0),
-      color = cond_color(x > 0)
-    )
-  })
+  
+  h2(AppAch," (",sprintf("%+.0f", APPachChange),")")
+     #,style=paste0("color:",cond_color(x > 0)))
+  
+})
+  # ### App achievements ----
+  # output$skisup.APPach <- renderValueBox({
+  #   valueBox(
+  #     format((C_Achieve_ILR1621 %>%
+  #       filter(
+  #         time_period == "202021",
+  #         LEP == input$lep1,
+  #         level_or_type == "Apprenticeships: Total"
+  #       ) %>%
+  #       dplyr::summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
+  #     "apprenticeship achievements (AY20/21)",
+  #     width = 12
+  #   )
+  # })
+  #
+  # ### App achievements change ----
+  # output$skisup.APPachChange <- renderValueBox({
+  #   x <- ((C_Achieve_ILR1621 %>%
+  #     filter(
+  #       time_period == "202021",
+  #       LEP == input$lep1,
+  #       level_or_type == "Apprenticeships: Total"
+  #     ) %>%
+  #     summarise(App_ach = sum(achievements)))
+  #   - (C_Achieve_ILR1621 %>%
+  #       filter(
+  #         time_period == "201920",
+  #         LEP == input$lep1,
+  #         level_or_type == "Apprenticeships: Total"
+  #       ) %>%
+  #       summarise(App_ach = sum(achievements))))
+  #   valueBox(
+  #     sprintf("%+.0f", x),
+  #     subtitle = NULL,
+  #     width = 12,
+  #     icon = cond_icon(x > 0),
+  #     color = cond_color(x > 0)
+  #   )
 
-  # EMPLOYMENT ----
-  ### Downloads----
-  # download employment indicators
-  list_of_datasets1 <- list(
-    "2.Emp by occupation" = C_EmpOcc_APS1721,
-    "5.Emp rate" = C_EmpRate_APS1721
-  )
   output$download_btn1a <- downloadHandler(
     filename = function() {
       "EmploymentIndicators.xlsx"
@@ -592,7 +647,7 @@ server <- function(input, output, session) {
 
   # Download current LEP indicators
   filtered_data3 <- reactive({
-    list("22.Vacancies" = filter(C_Vacancy_ONS1722, LEP == input$lep5))
+    list("22.Vacancies" = filter(C_Vacancy_ONS1722, LEP == input$lep1))
   })
   output$download_btn3b <- downloadHandler(
     filename = function() {
@@ -611,12 +666,12 @@ server <- function(input, output, session) {
         format(100. * (C_Vacancy_England %>%
           filter(
             year == "2022",
-            LEP == input$lep5
+            LEP == input$lep1
           ) %>%
           summarise(job.pc = sum(pc_total))), digits = 3),
         "%"
       ),
-      paste0("of online vacancies in England (Jan '22) were in ", input$lep5),
+      paste0("of online vacancies in England (Jan '22) were in ", input$lep1),
       color = "blue"
     )
   })
@@ -628,12 +683,12 @@ server <- function(input, output, session) {
         format(100. * (C_Vacancy_England %>%
           filter(
             year == "2022",
-            LEP == input$lep6
+            LEP == input$lep2
           ) %>%
           summarise(job.pc = sum(pc_total))), digits = 3),
         "%"
       ),
-      paste0("of online vacancies in England (Jan '22) were in ", input$lep6),
+      paste0("of online vacancies in England (Jan '22) were in ", input$lep2),
       color = "orange"
     )
   })
@@ -646,7 +701,7 @@ server <- function(input, output, session) {
           filter(
             year == "2022" |
               year == "2021",
-            LEP == input$lep5
+            LEP == input$lep1
           ) %>%
           group_by(year) %>%
           dplyr::summarise(job.cnt = sum(vacancy_unit)) %>%
@@ -657,7 +712,7 @@ server <- function(input, output, session) {
           select(Percentage_Change)), digits = 3),
         "%"
       ),
-      paste0("change in online job vacancies in ", input$lep5, " from Jan '21 to Jan '22"),
+      paste0("change in online job vacancies in ", input$lep1, " from Jan '21 to Jan '22"),
       color = "blue"
     )
   })
@@ -670,7 +725,7 @@ server <- function(input, output, session) {
           filter(
             year == "2022" |
               year == "2021",
-            LEP == input$lep6
+            LEP == input$lep2
           ) %>%
           group_by(year) %>%
           dplyr::summarise(job.cnt = sum(vacancy_unit)) %>%
@@ -681,15 +736,15 @@ server <- function(input, output, session) {
           select(Percentage_Change)), digits = 3),
         "%"
       ),
-      paste0("change in online job vacancies in ", input$lep6, " from Jan '21 to Jan '22"),
+      paste0("change in online job vacancies in ", input$lep2, " from Jan '21 to Jan '22"),
       color = "orange"
     )
   })
 
   # turn off comparison boxes if none is selected
   output$vac_comp <- renderUI({
-    print(input$lep6)
-    if (input$lep6 == "\nNone") {
+    print(input$lep2)
+    if (input$lep2 == "\nNone") {
       tagList(
         br(),
         p("")
@@ -705,14 +760,14 @@ server <- function(input, output, session) {
   ## Online job vacancy units over time line chart ----
   jobad.time <- reactive({
     JobTime <- C_Vacancy_England %>%
-      filter(LEP == input$lep5 |
-        LEP == input$lep6) %>%
+      filter(LEP == input$lep1 |
+        LEP == input$lep2) %>%
       select(-LA, -pc_total, -region, -England) %>%
       group_by(year, LEP) %>%
       summarise(total = sum(vacancy_unit))
     # add an extra column so the colours work in ggplot when sorting alphabetically
     JobTime$Areas <- factor(JobTime$LEP,
-      levels = c(input$lep5, input$lep6)
+      levels = c(input$lep1, input$lep2)
     )
     ggplot(JobTime, aes(x = year, y = total, colour = Areas, group = Areas)) +
       geom_line(aes(text = paste0(
@@ -753,8 +808,8 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data2 <- reactive({
     list(
-      "12a.FE achievements SSA" = filter(C_Achieve_ILR21, LEP == input$lep3),
-      "12b.FE achievements" = filter(C_Achieve_ILR1621, LEP == input$lep3)
+      "12a.FE achievements SSA" = filter(C_Achieve_ILR21, LEP == input$lep1),
+      "12b.FE achievements" = filter(C_Achieve_ILR1621, LEP == input$lep1)
     )
   })
   output$download_btn2b <- downloadHandler(
@@ -774,11 +829,11 @@ server <- function(input, output, session) {
       format((C_Achieve_ILR1621 %>%
         filter(
           time_period == "202021",
-          LEP == input$lep3,
+          LEP == input$lep1,
           level_or_type == "Education and training: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 adult education and training achievements in ", input$lep3),
+      paste0("20/21 adult education and training achievements in ", input$lep1),
       color = "blue"
     )
   })
@@ -789,11 +844,11 @@ server <- function(input, output, session) {
       format((C_Achieve_ILR1621 %>%
         filter(
           time_period == "202021",
-          LEP == input$lep4,
+          LEP == input$lep2,
           level_or_type == "Education and training: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 adult education and training achievements in ", input$lep4),
+      paste0("20/21 adult education and training achievements in ", input$lep2),
       color = "orange"
     )
   })
@@ -805,11 +860,11 @@ server <- function(input, output, session) {
       format((C_Achieve_ILR1621 %>%
         filter(
           time_period == "202021",
-          LEP == input$lep3,
+          LEP == input$lep1,
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 adult apprenticeship achievements in ", input$lep3),
+      paste0("20/21 adult apprenticeship achievements in ", input$lep1),
       color = "blue"
     )
   })
@@ -820,19 +875,19 @@ server <- function(input, output, session) {
       format((C_Achieve_ILR1621 %>%
         filter(
           time_period == "202021",
-          LEP == input$lep4,
+          LEP == input$lep2,
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 adult apprenticeship achievements in ", input$lep4),
+      paste0("20/21 adult apprenticeship achievements in ", input$lep2),
       color = "orange"
     )
   })
 
   # turn off comparison boxes if none is selected
   output$skill_comp <- renderUI({
-    print(input$lep4)
-    if (input$lep4 == "\nNone") {
+    print(input$lep2)
+    if (input$lep2 == "\nNone") {
       tagList(
         br(),
         p("")
@@ -858,8 +913,8 @@ server <- function(input, output, session) {
       )) %>%
       filter(
         # area == "England" |
-        LEP == input$lep3 |
-          LEP == input$lep4,
+        LEP == input$lep1 |
+          LEP == input$lep2,
         level_or_type == input$skill_line,
         time_period != 202122
       ) %>%
@@ -868,7 +923,7 @@ server <- function(input, output, session) {
       summarise(Achievements = sum(achievements))
     # add an extra column so the colours work in ggplot when sorting alphabetically
     FETime$Area <- factor(FETime$LEP,
-      levels = c(input$lep3, input$lep4)
+      levels = c(input$lep1, input$lep2)
     )
     ggplot(FETime, aes(
       x = AY, y = Achievements, colour = Area,
@@ -899,8 +954,8 @@ server <- function(input, output, session) {
     AchSSA_21 <- C_Achieve_ILR21 %>%
       filter(
         time_period == "202122",
-        LEP == input$lep3 |
-          LEP == input$lep4
+        LEP == input$lep1 |
+          LEP == input$lep2
       ) %>%
       select(LEP, SSA = ssa_t1_desc, Achievements = achievements) %>%
       group_by(LEP, SSA) %>%
@@ -918,7 +973,7 @@ server <- function(input, output, session) {
       filter(SSA != "Total")
     # add an extra column so the colours work in ggplot when sorting alphabetically
     FEBar$Area <- factor(FEBar$LEP,
-      levels = c(input$lep3, input$lep4)
+      levels = c(input$lep1, input$lep2)
     )
     Ach_SSA_pc <- ggplot(FEBar, aes(x = reorder(SSA, desc(SSA)), y = pc, fill = Area)) +
       geom_col(
@@ -958,7 +1013,7 @@ server <- function(input, output, session) {
       format((C_EmpRate_APS1721 %>%
         filter(
           geographic_level == "lep", # cleans up for London which is included as lep and gor
-          area == input$lepOver2,
+          area == input$lep1,
           year == "2021"
         )
       )$"28  in employment ",
@@ -975,14 +1030,14 @@ server <- function(input, output, session) {
     x <- ((C_EmpRate_APS1721 %>%
       filter(
         geographic_level == "lep", # cleans up for London which is included as lep and gor
-        area == input$lepOver2,
+        area == input$lep1,
         year == "2021"
       )
     )$"28  in employment "
       - (C_EmpRate_APS1721 %>%
         filter(
           geographic_level == "lep", # cleans up for London which is included as lep and gor
-          area == input$lepOver2,
+          area == input$lep1,
           year == "2020"
         )
       )$"28  in employment ")
@@ -1005,7 +1060,7 @@ server <- function(input, output, session) {
         format(100. * (C_EmpRate_APS1721 %>%
           filter(
             geographic_level == "lep", # cleans up for London which is included as lep and gor
-            area == input$lepOver2,
+            area == input$lep1,
             year == "2021"
           )
         )$empRate, digits = 2),
@@ -1030,13 +1085,13 @@ server <- function(input, output, session) {
     x <- (100. * ((C_EmpRate_APS1721 %>%
       filter(
         geographic_level == "lep", # cleans up for London which is included as lep and gor
-        area == input$lepOver2,
+        area == input$lep1,
         year == "2021"
       ))$empRate -
       (C_EmpRate_APS1721 %>%
         filter(
           geographic_level == "lep", # cleans up for London which is included as lep and gor
-          area == input$lepOver2,
+          area == input$lep1,
           year == "2020"
         ))$empRate))
     valueBox(
@@ -1062,7 +1117,7 @@ server <- function(input, output, session) {
     valueBox(C_Vacancy_England %>%
       filter(
         year == "2022",
-        LEP == input$lepOver2
+        LEP == input$lep1
       ) %>%
       summarise(job.unit = sum(vacancy_unit)),
     "job vacancy units (Jan 22)",
@@ -1075,13 +1130,13 @@ server <- function(input, output, session) {
     x <- ((C_Vacancy_England %>%
       filter(
         year == "2022",
-        LEP == input$lepOver2
+        LEP == input$lep1
       ) %>%
       summarise(job.unit = sum(vacancy_unit)))
     - (C_Vacancy_England %>%
         filter(
           year == "2021",
-          LEP == input$lepOver2
+          LEP == input$lep1
         ) %>%
         summarise(job.unit = sum(vacancy_unit))))
     valueBox(
@@ -1155,7 +1210,7 @@ server <- function(input, output, session) {
       format((C_Achieve_ILR1621 %>%
         filter(
           time_period == "202021",
-          LEP == input$lepOver2,
+          LEP == input$lep1,
           level_or_type == "Education and training: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
@@ -1169,14 +1224,14 @@ server <- function(input, output, session) {
     x <- ((C_Achieve_ILR1621 %>%
       filter(
         time_period == "202021",
-        LEP == input$lepOver2,
+        LEP == input$lep1,
         level_or_type == "Education and training: Total"
       ) %>%
       summarise(App_ach = sum(achievements)))
     - (C_Achieve_ILR1621 %>%
         filter(
           time_period == "201920",
-          LEP == input$lepOver2,
+          LEP == input$lep1,
           level_or_type == "Education and training: Total"
         ) %>%
         summarise(App_ach = sum(achievements))))
@@ -1195,7 +1250,7 @@ server <- function(input, output, session) {
       format((C_Achieve_ILR1621 %>%
         filter(
           time_period == "202021",
-          LEP == input$lepOver2,
+          LEP == input$lep1,
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
@@ -1209,14 +1264,14 @@ server <- function(input, output, session) {
     x <- ((C_Achieve_ILR1621 %>%
       filter(
         time_period == "202021",
-        LEP == input$lepOver2,
+        LEP == input$lep1,
         level_or_type == "Apprenticeships: Total"
       ) %>%
       summarise(App_ach = sum(achievements)))
     - (C_Achieve_ILR1621 %>%
         filter(
           time_period == "201920",
-          LEP == input$lepOver2,
+          LEP == input$lep1,
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))))
