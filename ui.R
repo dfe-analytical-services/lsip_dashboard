@@ -210,8 +210,8 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
           tabPanel(
             "Overview",
             ## Main panel ----
-            mainPanel(
-              width = 12,
+            box(
+              width=12,
               ### Title ----
               uiOutput("page0title", style = "font-size: 24px;"),
               div("Change metrics are measured since the same period the year before.", style = "font-size: 16px; font-style: italic;"),
@@ -298,14 +298,15 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                   ),
                 ) # end of right column
               ), # end of data row
-
-            )
+              p(" ")
+              
+            ),
           ), # end of Overview tab
 
           tabPanel(
             "Employment",
             ## Main panel ----
-            mainPanel(
+            box(
               width = 12,
               ### Title ----
               uiOutput("page1title", style = "font-size: 24px;"),
@@ -364,7 +365,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
             "Vacancies",
 
             ## Main panel ----
-            mainPanel(
+            box(
               width = 12,
               ### Title ----
               uiOutput("page3title", style = "font-size: 24px;"),
@@ -425,8 +426,8 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
           tabPanel(
             "FE",
             ## Main panel ----
-            mainPanel(
-              width = 10,
+            box(
+              width = 12,
               ### Title ----
               uiOutput("page2title", style = "font-size: 24px;"),
               div("Data from Individualised Learner Records for adult FE learners. Years shown are academic years.", style = "font-size: 16px; font-style: italic;"),
