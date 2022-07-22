@@ -30,7 +30,7 @@
 fluidPage(
   shinyjs::useShinyjs(),
   includeCSS("www/dfe_shiny_gov_style.css"),
-  title = "DfE Analytical Services R-Shiny Template",
+  title = "DfE Local Skills Dashboard",
   # use_tota11y(), # accessibility layer for local testing
 
   # Set metadata for browser ==================================================
