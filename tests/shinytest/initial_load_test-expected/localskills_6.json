@@ -23,6 +23,7 @@
     ],
     "EmpOcc_columns_selected": null,
     "EmpOcc_rows_all": [
+<<<<<<< HEAD
       12,
       11,
       25,
@@ -51,6 +52,11 @@
     ],
     "EmpOcc_rows_current": [
       12,
+=======
+      12,
+
+      25,
+>>>>>>> main
       11,
       25,
       3,
@@ -59,6 +65,36 @@
       6,
       20,
       5,
+<<<<<<< HEAD
+=======
+      4,
+      23,
+      2,
+      15,
+      16,
+      22,
+      7,
+      8,
+      10,
+      19,
+      13,
+      24,
+      21,
+      17,
+      9,
+      14
+    ],
+    "EmpOcc_rows_current": [
+      12,
+      11,
+      25,
+      3,
+      18,
+      1,
+      6,
+      20,
+      5,
+>>>>>>> main
       4
     ],
     "EmpOcc_rows_selected": null,
@@ -117,6 +153,13 @@
     },
     "lep1": "London",
     "lep2": "Greater Manchester",
+<<<<<<< HEAD
+=======
+    "lep3": "Black Country",
+    "lep4": "\nNone",
+    "lep5": "London",
+    "lep6": "\nNone",
+>>>>>>> main
     "link_to_tabpanel_earnings": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
@@ -126,7 +169,11 @@
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
+<<<<<<< HEAD
     "navbar": "App",
+=======
+    "navbar": "Vacancies",
+>>>>>>> main
     "plotly_afterplot-A": "\"jobad.time\"",
     "skill_line": "Apprenticeships"
   },
@@ -149,6 +196,23 @@
           ],
           "columnDefs": [
             {
+<<<<<<< HEAD
+=======
+
+              "targets": 1,
+              "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
+            },
+            {
+              "targets": 2,
+              "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
+            },
+            {
+              "targets": 3,
+              "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
+            },
+            {
+
+>>>>>>> main
               "className": "dt-right",
               "targets": [
                 1,
@@ -178,6 +242,9 @@
         }
       },
       "evals": [
+        "options.columnDefs.0.render",
+        "options.columnDefs.1.render",
+        "options.columnDefs.2.render",
         "options.ajax.data"
       ],
       "jsHooks": [
@@ -663,12 +730,15 @@
     },
     "jobad.ch": {
       "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>294%<\/h3>\n    <p>change in online job vacancies in London from Jan '21 to Jan '22<\/p>\n  <\/div>\n<\/div>",
+<<<<<<< HEAD
       "deps": [
 
       ]
     },
     "jobad.ch.2": {
       "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>173%<\/h3>\n    <p>change in online job vacancies in Greater Manchester from Jan '21 to Jan '22<\/p>\n  <\/div>\n<\/div>",
+=======
+>>>>>>> main
       "deps": [
 
       ]
@@ -696,12 +766,15 @@
     },
     "jobad.pc": {
       "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>12.3%<\/h3>\n    <p>of online vacancies in England (Jan '22) were in London<\/p>\n  <\/div>\n<\/div>",
+<<<<<<< HEAD
       "deps": [
 
       ]
     },
     "jobad.pc.2": {
       "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>6.03%<\/h3>\n    <p>of online vacancies in England (Jan '22) were in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
+=======
+>>>>>>> main
       "deps": [
 
       ]
@@ -1147,7 +1220,7 @@
       ]
     },
     "locland.emplcntchange0": {
-      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-22700<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-22,700<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
       "deps": [
         {
           "name": "font-awesome",
@@ -1204,13 +1277,21 @@
       ]
     },
     "skisup.APPach": {
+<<<<<<< HEAD
       "html": "<h2>\n  2,600\n   (\n  +110\n  )\n<\/h2>",
+=======
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
 
       ]
     },
     "skisup.ETach": {
+<<<<<<< HEAD
       "html": "8,210",
+=======
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
 
       ]

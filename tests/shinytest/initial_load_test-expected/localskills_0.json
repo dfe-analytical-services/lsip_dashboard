@@ -3,6 +3,13 @@
     "datatabset": "Overview",
     "lep1": "Black Country",
     "lep2": "\nNone",
+<<<<<<< HEAD
+=======
+    "lep3": "Black Country",
+    "lep4": "\nNone",
+    "lep5": "Black Country",
+    "lep6": "\nNone",
+>>>>>>> main
     "link_to_tabpanel_earnings": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
@@ -12,7 +19,11 @@
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
+<<<<<<< HEAD
     "navbar": "App",
+=======
+    "navbar": "Overview",
+>>>>>>> main
     "skill_line": "Apprenticeships"
   },
   "output": {
@@ -71,7 +82,7 @@
       ]
     },
     "locland.emplcntchange0": {
-      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+9600<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+9,600<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
       "deps": [
         {
           "name": "font-awesome",
@@ -104,13 +115,21 @@
       ]
     },
     "skisup.APPach": {
+<<<<<<< HEAD
       "html": "<h2>\n  3,970\n   (\n  +150\n  )\n<\/h2>",
+=======
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>3,970<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
 
       ]
     },
     "skisup.ETach": {
+<<<<<<< HEAD
       "html": "17,680",
+=======
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>17,680<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
 
       ]
