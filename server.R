@@ -186,7 +186,7 @@ server <- function(input, output, session) {
       )$"28  in employment ")
     # build box
     valueBox(
-      sprintf("%+.0f", x),
+      format_pm(x),
       subtitle = NULL,
       width = 12,
       icon = cond_icon(x > 0),
