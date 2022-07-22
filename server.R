@@ -318,7 +318,6 @@ server <- function(input, output, session) {
 
 
   ### E&T achievements -----
-<<<<<<< HEAD
   # text approach
   output$skisup.ETach <- renderUI({
     ETach <- C_Achieve_ILR1621 %>%
@@ -329,20 +328,6 @@ server <- function(input, output, session) {
       ) %>%
       summarise(App_ach = sum(achievements))
     format(ETach, big.mark = ",")
-=======
-  output$skisup.ETach <- renderValueBox({
-    valueBox(
-      format((C_Achieve_ILR1621 %>%
-        filter(
-          time_period == "202021",
-          LEP == input$lep0a,
-          level_or_type == "Education and training: Total"
-        ) %>%
-        summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      "adult education and training achievements (AY20/21)",
-      width = 12
-    )
->>>>>>> main
   })
   # valuebox approach
   # output$skisup.ETach <- renderValueBox({
@@ -376,17 +361,7 @@ server <- function(input, output, session) {
           level_or_type == "Education and training: Total"
         ) %>%
         summarise(App_ach = sum(achievements))))
-<<<<<<< HEAD
-    h2(sprintf("%+.0f", x), style = paste0("color:", cond_color(x > 0)))
-=======
-    valueBox(
-      format_pm(x),
-      subtitle = NULL,
-      width = 12,
-      icon = cond_icon(x > 0),
-      color = cond_color(x > 0)
-    )
->>>>>>> main
+    h2(format_pm(x), style = paste0("color:", cond_color(x > 0)))
   })
   # valuebox approach
   # output$skisup.ETachChange <- renderValueBox({
@@ -440,19 +415,8 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))))
-<<<<<<< HEAD
-=======
-    valueBox(
-      format_pm(x),
-      subtitle = NULL,
-      width = 12,
-      icon = cond_icon(x > 0),
-      color = cond_color(x > 0)
-    )
-  })
->>>>>>> main
 
-    h2(AppAch, " (", sprintf("%+.0f", APPachChange), ")")
+    h2(AppAch, " (", format_pm(APPachChange), ")")
     # ,style=paste0("color:",cond_color(x > 0)))
   })
   # ### App achievements ----
@@ -901,11 +865,7 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-<<<<<<< HEAD
       paste0("20/21 adult apprenticeship achievements in ", input$lep1),
-=======
-      paste0("20/21 apprenticeship achievements in ", input$lep3),
->>>>>>> main
       color = "blue"
     )
   })
@@ -920,11 +880,7 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-<<<<<<< HEAD
       paste0("20/21 adult apprenticeship achievements in ", input$lep2),
-=======
-      paste0("20/21 apprenticeship achievements in ", input$lep4),
->>>>>>> main
       color = "orange"
     )
   })
@@ -960,7 +916,7 @@ server <- function(input, output, session) {
         # area == "England" |
         LEP == input$lep1 |
           LEP == input$lep2,
-        level_or_type == input$skill_line,
+        grepl(input$skill_line,level_or_type),
         time_period != 202122
       ) %>%
       mutate(AY = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
