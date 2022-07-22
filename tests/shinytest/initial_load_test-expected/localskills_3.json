@@ -14,6 +14,7 @@
 
       ]
     },
+    "datatabset": "Employment",
     "EmpOcc_cell_clicked": {
 
     },
@@ -22,43 +23,43 @@
     ],
     "EmpOcc_columns_selected": null,
     "EmpOcc_rows_all": [
+      1,
+      3,
+      18,
+      12,
       6,
       11,
-      3,
-      1,
-      12,
-      25,
-      18,
       5,
+      25,
       4,
-      10,
       20,
       2,
-      23,
-      21,
-      13,
-      16,
-      8,
-      17,
-      19,
       15,
+      21,
+      16,
       7,
       24,
       22,
+      19,
+      13,
+      10,
+      23,
+      17,
+      8,
       9,
       14
     ],
     "EmpOcc_rows_current": [
+      1,
+      3,
+      18,
+      12,
       6,
       11,
-      3,
-      1,
-      12,
-      25,
-      18,
       5,
+      25,
       4,
-      10
+      20
     ],
     "EmpOcc_rows_selected": null,
     "EmpOcc_search": "",
@@ -105,13 +106,8 @@
         }
       ]
     },
-    "lep0a": "Cheshire and Warrington",
-    "lep1": "London",
+    "lep1": "Cheshire and Warrington",
     "lep2": "\nNone",
-    "lep3": "Black Country",
-    "lep4": "\nNone",
-    "lep5": "Black Country",
-    "lep6": "\nNone",
     "link_to_tabpanel_earnings": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
@@ -121,7 +117,7 @@
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
-    "navbar": "Employment",
+    "navbar": "App",
     "plotly_afterplot-A": "\"EmpRate_time\"",
     "skill_line": "Apprenticeships"
   },
@@ -136,7 +132,7 @@
       "x": {
         "filter": "none",
         "vertical": false,
-        "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>England<\/th>\n      <th>London<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>",
+        "container": "<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>England<\/th>\n      <th>Cheshire and Warrington<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>",
         "options": {
           "order": [
             2,
@@ -144,7 +140,6 @@
           ],
           "columnDefs": [
             {
-
               "targets": 1,
               "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
             },
@@ -153,7 +148,6 @@
               "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
             },
             {
-
               "className": "dt-right",
               "targets": [
                 1,
@@ -285,18 +279,18 @@
               2021
             ],
             "y": [
-              0.739085764333356,
-              0.742849554290267,
-              0.74497462598036,
-              0.750470856057256,
-              0.747928142929532
+              0.75441727645904,
+              0.767703862660944,
+              0.793159025787966,
+              0.79106085083468,
+              0.754648853583679
             ],
             "text": [
-              "AY: 2017<br>Area: London<br>Employment rate: 74%<br>",
-              "AY: 2018<br>Area: London<br>Employment rate: 74%<br>",
-              "AY: 2019<br>Area: London<br>Employment rate: 74%<br>",
-              "AY: 2020<br>Area: London<br>Employment rate: 75%<br>",
-              "AY: 2021<br>Area: London<br>Employment rate: 75%<br>"
+              "AY: 2017<br>Area: Cheshire and Warrington<br>Employment rate: 75%<br>",
+              "AY: 2018<br>Area: Cheshire and Warrington<br>Employment rate: 77%<br>",
+              "AY: 2019<br>Area: Cheshire and Warrington<br>Employment rate: 79%<br>",
+              "AY: 2020<br>Area: Cheshire and Warrington<br>Employment rate: 79%<br>",
+              "AY: 2021<br>Area: Cheshire and Warrington<br>Employment rate: 75%<br>"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -306,8 +300,8 @@
               "dash": "solid"
             },
             "hoveron": "points",
-            "name": "London",
-            "legendgroup": "London",
+            "name": "Cheshire and Warrington",
+            "legendgroup": "Cheshire and Warrington",
             "showlegend": true,
             "xaxis": "x",
             "yaxis": "y",
@@ -409,28 +403,31 @@
             "type": "linear",
             "autorange": false,
             "range": [
-              0.59200245897872,
-              0.767948361446891
+              0.590342048710602,
+              0.802816977077364
             ],
             "tickmode": "array",
             "ticktext": [
               "60%",
               "65%",
               "70%",
-              "75%"
+              "75%",
+              "80%"
             ],
             "tickvals": [
               0.6,
               0.65,
               0.7,
-              0.75
+              0.75,
+              0.8
             ],
             "categoryorder": "array",
             "categoryarray": [
               "60%",
               "65%",
               "70%",
-              "75%"
+              "75%",
+              "80%"
             ],
             "nticks": null,
             "ticks": "",
@@ -678,7 +675,7 @@
       ]
     },
     "locland.emplcnt": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>4,575,600<\/h3>\n    <p>in employment in London<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>418,000<\/h3>\n    <p>in employment in Cheshire and Warrington<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -711,7 +708,7 @@
       ]
     },
     "locland.emplrate": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>75 %<\/h3>\n    <p>employment rate in London<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>75 %<\/h3>\n    <p>employment rate in Cheshire and Warrington<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -729,63 +726,27 @@
       ]
     },
     "page1title": {
-      "html": "London employment trends",
+      "html": "Cheshire and Warrington employment trends",
       "deps": [
 
       ]
     },
     "skisup.APPach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<h2>\n  2,600\n   (\n  +110\n  )\n<\/h2>",
       "deps": [
 
       ]
     },
-    "skisup.APPachChange": {
-      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+110<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
-      ]
-    },
     "skisup.ETach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "8,210",
       "deps": [
 
       ]
     },
     "skisup.ETachChange": {
-      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+180<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
+      "html": "<h2 style=\"color:green\">+180<\/h2>",
       "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
+
       ]
     }
   },
