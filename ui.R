@@ -62,11 +62,11 @@ fluidPage(
           column(
             12,
             h1("Local Skills Dashboard"),
-            p("The aim of this app is to provide local data to local actors in an accessible format. The app will
+            p("The aim of this dashboard is to provide local data to local actors in an accessible format. The dashboard will
                      support the implementation of LSIPs,
 provide a baseline of local skills data which ERBs can build on with qualitative employer information, and
 benefit secondary local actors (including Ofsted) who already use these local indicators to inform their work.
-The app displays published data from a variety of sources (APS, ILR and ONS online job vacancies) to compare between different LEPS and over time for some indicators. "),
+The dashboard displays published data from a variety of sources (APS, ILR and ONS online job vacancies) to compare between different LEPS and over time for some indicators. "),
             br(),
             "This dashboard has been produced to support the aims of the ",
             a(
@@ -132,7 +132,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                   h2("Labour market"),
                   h3("Annual Population Survey (APS)"),
                   p("A continuous household survey covering the UK.
-                             The app uses employment volumes and rates for each LEP and split by sub-major SOC 2020 grouping.
+                             The dashboard uses employment volumes and rates for each LEP and split by sub-major SOC 2020 grouping.
                              The data are for interviews conducted over the calendar year (2017-2021 are shown).
                              "),
                   a(
@@ -144,8 +144,8 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                   h2("Skills landscape"),
                   h3("Individualised Learner Records (ILR)"),
                   p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England.
-                             The app uses adult FE achievements over time (AY1617-21/22 (temporary data to October for 21/22)) split by apprenticeships, community learning, education and training.
-                             The app also shows adult FE achievements split by sector subject area (tier 1) for the latest AY21/22 reported to January."),
+                             The dashboard uses adult FE achievements over time (AY1617-21/22 (temporary data to October for 21/22)) split by apprenticeships, community learning, education and training.
+                             The dashboard also shows adult FE achievements split by sector subject area (tier 1) for the latest AY21/22 reported to January."),
                   a(
                     href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills",
                     "ILR data on EES",
@@ -155,7 +155,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
                   h3("ONS Online Job Adverts"),
                   p("These data tables are created based upon online job adverts data provided by Adzuna.
                              Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022. The monthly average is derived from weekly snapshots in January.
-                             The app shows job 'units' which is the number of job adverts divided a set value for all regions. It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across regions or to follow trends over time."),
+                             The dashboard shows job 'units' which is the number of job adverts divided a set value for all regions. It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across regions or to follow trends over time."),
                   a(
                     href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/onlinejobadvertsbyitl1regionandlocalauthority",
                     "Job adverts data on ONS",
@@ -540,7 +540,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
               column(
                 width = 6,
                 ### LEP 4 input ------------
-                p("FE and apps achievement trend", style = "font-size:20px;"),
+                p("FE and apprenticehips achievement trend", style = "font-size:20px;"),
                 p("Choose provision group"),
                 selectizeInput("skill_line", "",
                   choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and Apps provision")
@@ -938,19 +938,19 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
     tabPanel(
       "Accessibility",
       h2("Accessibility statement"),
-      br("This accessibility statement applies to the **application name**.
-            This application is run by the Department for Education. We want as many people as possible to be able to use this application,
-            and have actively developed this application with accessibilty in mind."),
+      br("This accessibility statement applies to the Local Skills dashboard.
+            This dashboard is run by the Department for Education. We want as many people as possible to be able to use this application,
+            and have actively developed this dashboard with accessibilty in mind."),
       h3("WCAG 2.1 compliance"),
       br("We follow the reccomendations of the ", a(href = "https://www.w3.org/TR/WCAG21/", "WCAG 2.1 requirements. "), "This application has been checked using the ", a(href = "https://github.com/ewenme/shinya11y", "Shinya11y tool "), ", which did not detect accessibility issues.
-             This application also fully passes the accessibility audits checked by the ", a(href = "https://developers.google.com/web/tools/lighthouse", "Google Developer Lighthouse tool"), ". This means that this application:"),
+             This dashboard also fully passes the accessibility audits checked by the ", a(href = "https://developers.google.com/web/tools/lighthouse", "Google Developer Lighthouse tool"), ". This means that this dashboard:"),
       tags$div(tags$ul(
         tags$li("uses colours that have sufficient contrast"),
         tags$li("allows you to zoom in up to 300% without the text spilling off the screen"),
         tags$li("has its performance regularly monitored, with a team working on any feedback to improve accessibility for all users")
       )),
       h3("Limitations"),
-      br("We recognise that there are still potential issues with accessibility in this application, but we will continue
+      br("We recognise that there are still potential issues with accessibility in this dashboard, but we will continue
              to review updates to technology available to us to keep improving accessibility for all of our users. For example, these
             are known issues that we will continue to monitor and improve:"),
       tags$div(tags$ul(
@@ -961,7 +961,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
       )),
       h3("Feedback"),
       br(
-        "If you have any feedback on how we could further improve the accessibility of this application, please contact us at",
+        "If you have any feedback on how we could further improve the accessibility of this dashboard, please contact us at",
         a(href = "mailto:email@education.gov.uk", "email@education.gov.uk")
       )
     ), # End of accessibility tab
