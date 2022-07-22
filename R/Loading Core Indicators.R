@@ -67,7 +67,9 @@ format.EmpOcc.APS <- function(x) {
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
     mutate_at(c(3:27), as.numeric) %>% # Convert to numeric
-    mutate(area = case_when(area == "Hull and East Riding" ~ "Hull and East Yorkshire", TRUE ~ area)) %>% # Rename so matches official name
+    mutate(area = case_when(area == "Hull and East Riding" ~ "Hull and East Yorkshire", 
+                            area=="Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+                            TRUE ~ area)) %>% # Rename so matches official name
     relocate(geographic_level, .after = area) %>%
     mutate(year = as.numeric(substr(year, 5, 8))) %>%
     rename_with(
@@ -93,7 +95,9 @@ format.EmpRate.APS <- function(x) {
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
     mutate_at(c(2:9), as.numeric) %>% # Convert to numeric
-    mutate(area = case_when(area == "Hull and East Riding" ~ "Hull and East Yorkshire", TRUE ~ area)) %>% # Rename so matches official name
+    mutate(area = case_when(area == "Hull and East Riding" ~ "Hull and East Yorkshire",
+                            area=="Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+                            TRUE ~ area)) %>% # Rename so matches official name
     select(year = x2017, area, everything(), -check) %>% # reorder and remove
     mutate(empRate = .[[5]] / .[[3]]) %>%
     relocate(geographic_level, .after = area) %>%
