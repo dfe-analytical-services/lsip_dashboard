@@ -23,20 +23,18 @@ app$snapshot(
 
 dfTestInputs <- data.frame(
   field = c(
-    "navbar", "lep0a",
-    "navbar", "lep1", "lep2",
-    "navbar", "lep5", "lep6",
-    # "navbar", "lep7", "lep8",
-    "navbar", "lep3", "lep4",
-    #  "navbar", "lep9", "lep10"
+    "navbar",
+    "datatabset", "lep1",
+    "datatabset", "lep1", "lep2",
+    "datatabset", "lep1", "lep2",
+    "datatabset", "lep1", "lep2"
   ),
   value = c(
+    "App",
     "Overview", "Cheshire and Warrington",
     "Employment", "London", "Greater Manchester",
     "Vacancies", "London", "Greater Manchester",
-    # "Earnings", "London", "Greater Manchester",
-    "FE", "London", "Greater Manchester",
-    # "HE", "London", "Greater Manchester"
+    "FE", "London", "Greater Manchester"
   )
 )
 run_set_shinytests(dfTestInputs, "localskills", "")
