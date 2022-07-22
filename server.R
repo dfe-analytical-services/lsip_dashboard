@@ -916,7 +916,7 @@ server <- function(input, output, session) {
         # area == "England" |
         LEP == input$lep1 |
           LEP == input$lep2,
-        grepl(input$skill_line,level_or_type),
+        grepl(input$skill_line, level_or_type),
         time_period != 202122
       ) %>%
       mutate(AY = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
