@@ -23,51 +23,46 @@
     ],
     "EmpOcc_columns_selected": null,
     "EmpOcc_rows_all": [
+      1,
+      3,
+      18,
+      12,
       6,
       11,
-      3,
-      1,
-      12,
-      25,
-      18,
       5,
+      25,
       4,
-      10,
       20,
       2,
-      23,
-      21,
-      13,
-      16,
-      8,
-      17,
-      19,
       15,
+      21,
+      16,
       7,
       24,
       22,
+      19,
+      13,
+      10,
+      23,
+      17,
+      8,
       9,
       14
     ],
     "EmpOcc_rows_current": [
+      1,
+      3,
+      18,
+      12,
       6,
       11,
-      3,
-      1,
-      12,
-      25,
-      18,
       5,
+      25,
       4,
-      10
+      20
     ],
     "EmpOcc_rows_selected": null,
     "EmpOcc_search": "",
-<<<<<<< HEAD
-    "EmpOcc_state": null,
-    "lep1": "Cheshire and Warrington",
-    "lep2": "\nNone",
-=======
     "EmpOcc_state": {
       "start": 0,
       "length": 10,
@@ -111,14 +106,8 @@
         }
       ]
     },
-    "lep0a": "Cheshire and Warrington",
-    "lep1": "London",
+    "lep1": "Cheshire and Warrington",
     "lep2": "\nNone",
-    "lep3": "Black Country",
-    "lep4": "\nNone",
-    "lep5": "Black Country",
-    "lep6": "\nNone",
->>>>>>> main
     "link_to_tabpanel_earnings": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
@@ -128,11 +117,7 @@
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
-<<<<<<< HEAD
     "navbar": "App",
-=======
-    "navbar": "Employment",
->>>>>>> main
     "plotly_afterplot-A": "\"EmpRate_time\"",
     "skill_line": "Apprenticeships"
   },
@@ -155,9 +140,6 @@
           ],
           "columnDefs": [
             {
-<<<<<<< HEAD
-=======
-
               "targets": 1,
               "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
             },
@@ -166,8 +148,6 @@
               "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
             },
             {
-
->>>>>>> main
               "className": "dt-right",
               "targets": [
                 1,
@@ -306,19 +286,11 @@
               0.754648853583679
             ],
             "text": [
-<<<<<<< HEAD
               "AY: 2017<br>Area: Cheshire and Warrington<br>Employment rate: 75%<br>",
               "AY: 2018<br>Area: Cheshire and Warrington<br>Employment rate: 77%<br>",
               "AY: 2019<br>Area: Cheshire and Warrington<br>Employment rate: 79%<br>",
               "AY: 2020<br>Area: Cheshire and Warrington<br>Employment rate: 79%<br>",
               "AY: 2021<br>Area: Cheshire and Warrington<br>Employment rate: 75%<br>"
-=======
-              "AY: 2017<br>Area: London<br>Employment rate: 74%<br>",
-              "AY: 2018<br>Area: London<br>Employment rate: 74%<br>",
-              "AY: 2019<br>Area: London<br>Employment rate: 74%<br>",
-              "AY: 2020<br>Area: London<br>Employment rate: 75%<br>",
-              "AY: 2021<br>Area: London<br>Employment rate: 75%<br>"
->>>>>>> main
             ],
             "type": "scatter",
             "mode": "lines",
@@ -703,11 +675,7 @@
       ]
     },
     "locland.emplcnt": {
-<<<<<<< HEAD
       "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>418,000<\/h3>\n    <p>in employment in Cheshire and Warrington<\/p>\n  <\/div>\n<\/div>",
-=======
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>4,575,600<\/h3>\n    <p>in employment in London<\/p>\n  <\/div>\n<\/div>",
->>>>>>> main
       "deps": [
 
       ]
@@ -740,11 +708,7 @@
       ]
     },
     "locland.emplrate": {
-<<<<<<< HEAD
       "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>75 %<\/h3>\n    <p>employment rate in Cheshire and Warrington<\/p>\n  <\/div>\n<\/div>",
-=======
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>75 %<\/h3>\n    <p>employment rate in London<\/p>\n  <\/div>\n<\/div>",
->>>>>>> main
       "deps": [
 
       ]
@@ -762,31 +726,19 @@
       ]
     },
     "page1title": {
-<<<<<<< HEAD
       "html": "Cheshire and Warrington employment trends",
-=======
-      "html": "London employment trends",
->>>>>>> main
       "deps": [
 
       ]
     },
     "skisup.APPach": {
-<<<<<<< HEAD
       "html": "<h2>\n  2,600\n   (\n  +110\n  )\n<\/h2>",
-=======
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
->>>>>>> main
       "deps": [
 
       ]
     },
     "skisup.ETach": {
-<<<<<<< HEAD
       "html": "8,210",
-=======
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
->>>>>>> main
       "deps": [
 
       ]

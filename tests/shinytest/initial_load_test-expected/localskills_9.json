@@ -24,15 +24,8 @@
     "EmpOcc_columns_selected": null,
     "EmpOcc_rows_all": [
       12,
-<<<<<<< HEAD
-      11,
-      25,
-=======
-
       25,
       11,
-
->>>>>>> main
       3,
       18,
       1,
@@ -45,9 +38,9 @@
       15,
       16,
       22,
-      7,
-      8,
       10,
+      8,
+      7,
       19,
       13,
       24,
@@ -58,8 +51,8 @@
     ],
     "EmpOcc_rows_current": [
       12,
-      11,
       25,
+      11,
       3,
       18,
       1,
@@ -124,13 +117,6 @@
     },
     "lep1": "London",
     "lep2": "Greater Manchester",
-<<<<<<< HEAD
-=======
-    "lep3": "London",
-    "lep4": "\nNone",
-    "lep5": "London",
-    "lep6": "Greater Manchester",
->>>>>>> main
     "link_to_tabpanel_earnings": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
@@ -140,11 +126,7 @@
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
-<<<<<<< HEAD
     "navbar": "App",
-=======
-    "navbar": "FE",
->>>>>>> main
     "plotly_afterplot-A": "\"Ach_SSA_pc\"",
     "skill_line": "Apprenticeships"
   },
@@ -155,7 +137,6 @@
           {
             "orientation": "h",
             "width": [
-<<<<<<< HEAD
               0.450000000000003,
               0.449999999999999,
               0.449999999999999,
@@ -172,24 +153,6 @@
               0.45,
               0.45,
               0.45
-=======
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999,
-              0.899999999999999,
-              0.9,
-              0.9,
-              0.9,
-              0.9,
-              0.9,
-              0.9,
-              0.9
->>>>>>> main
             ],
             "base": [
               null,
@@ -228,7 +191,6 @@
               null
             ],
             "y": [
-<<<<<<< HEAD
               16.225,
               15.225,
               14.225,
@@ -245,24 +207,6 @@
               3.225,
               2.225,
               1.225
-=======
-              16,
-              15,
-              14,
-              13,
-              12,
-              11,
-              10,
-              9,
-              8,
-              7,
-              6,
-              5,
-              4,
-              3,
-              2,
-              1
->>>>>>> main
             ],
             "text": [
               "SSA: Agriculture, Horticulture and Animal Care<br>Area: London<br>Percentage of achievements: NA<br>Achievements: NA<br>",
@@ -299,7 +243,6 @@
             "yaxis": "y",
             "hoverinfo": "text",
             "frame": null
-<<<<<<< HEAD
           },
           {
             "orientation": "h",
@@ -410,8 +353,6 @@
             "yaxis": "y",
             "hoverinfo": "text",
             "frame": null
-=======
->>>>>>> main
           }
         ],
         "layout": {
@@ -770,11 +711,11 @@
               15280
             ],
             "text": [
-              "AY: 16/17<br>Area: London<br>Achievements: 23,830<br>Provision: Apprenticeships<br>",
-              "AY: 17/18<br>Area: London<br>Achievements: 23,980<br>Provision: Apprenticeships<br>",
-              "AY: 18/19<br>Area: London<br>Achievements:     NA<br>Provision: Apprenticeships<br>",
-              "AY: 19/20<br>Area: London<br>Achievements: 12,850<br>Provision: Apprenticeships<br>",
-              "AY: 20/21<br>Area: London<br>Achievements: 15,280<br>Provision: Apprenticeships<br>"
+              "AY: 16/17<br>Area: London<br>Achievements: 23,830<br>Provision: Apprenticeships (all ages)<br>",
+              "AY: 17/18<br>Area: London<br>Achievements: 23,980<br>Provision: Apprenticeships (all ages)<br>",
+              "AY: 18/19<br>Area: London<br>Achievements:     NA<br>Provision: Apprenticeships (all ages)<br>",
+              "AY: 19/20<br>Area: London<br>Achievements: 12,850<br>Provision: Apprenticeships (all ages)<br>",
+              "AY: 20/21<br>Area: London<br>Achievements: 15,280<br>Provision: Apprenticeships (all ages)<br>"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -791,7 +732,6 @@
             "yaxis": "y",
             "hoverinfo": "text",
             "frame": null
-<<<<<<< HEAD
           },
           {
             "x": [
@@ -809,11 +749,11 @@
               8710
             ],
             "text": [
-              "AY: 16/17<br>Area: Greater Manchester<br>Achievements: 16,280<br>Provision: Apprenticeships<br>",
-              "AY: 17/18<br>Area: Greater Manchester<br>Achievements: 15,630<br>Provision: Apprenticeships<br>",
-              "AY: 18/19<br>Area: Greater Manchester<br>Achievements: 10,350<br>Provision: Apprenticeships<br>",
-              "AY: 19/20<br>Area: Greater Manchester<br>Achievements:  8,170<br>Provision: Apprenticeships<br>",
-              "AY: 20/21<br>Area: Greater Manchester<br>Achievements:  8,710<br>Provision: Apprenticeships<br>"
+              "AY: 16/17<br>Area: Greater Manchester<br>Achievements: 16,280<br>Provision: Apprenticeships (all ages)<br>",
+              "AY: 17/18<br>Area: Greater Manchester<br>Achievements: 15,630<br>Provision: Apprenticeships (all ages)<br>",
+              "AY: 18/19<br>Area: Greater Manchester<br>Achievements: 10,350<br>Provision: Apprenticeships (all ages)<br>",
+              "AY: 19/20<br>Area: Greater Manchester<br>Achievements:  8,170<br>Provision: Apprenticeships (all ages)<br>",
+              "AY: 20/21<br>Area: Greater Manchester<br>Achievements:  8,710<br>Provision: Apprenticeships (all ages)<br>"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -830,8 +770,6 @@
             "yaxis": "y",
             "hoverinfo": "text",
             "frame": null
-=======
->>>>>>> main
           }
         ],
         "layout": {
@@ -920,7 +858,6 @@
             "type": "linear",
             "autorange": false,
             "range": [
-<<<<<<< HEAD
               7379.5,
               24770.5
             ],
@@ -940,30 +877,6 @@
               "10,000",
               "15,000",
               "20,000"
-=======
-              12293.5,
-              24536.5
-            ],
-            "tickmode": "array",
-            "ticktext": [
-              "15,000",
-              "18,000",
-              "21,000",
-              "24,000"
-            ],
-            "tickvals": [
-              15000,
-              18000,
-              21000,
-              24000
-            ],
-            "categoryorder": "array",
-            "categoryarray": [
-              "15,000",
-              "18,000",
-              "21,000",
-              "24,000"
->>>>>>> main
             ],
             "nticks": null,
             "ticks": "",
@@ -1180,9 +1093,6 @@
           ],
           "columnDefs": [
             {
-<<<<<<< HEAD
-=======
-
               "targets": 1,
               "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
             },
@@ -1195,8 +1105,6 @@
               "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
             },
             {
-
->>>>>>> main
               "className": "dt-right",
               "targets": [
                 1,
@@ -2261,11 +2169,7 @@
       ]
     },
     "skill_comp": {
-<<<<<<< HEAD
       "html": "<div class=\"shiny-html-output col-sm-4\" id=\"skisup.FEach.2\"><\/div>\n<div class=\"shiny-html-output col-sm-4\" id=\"skisup.APach.2\"><\/div>",
-=======
-      "html": "<br/>\n<p><\/p>",
->>>>>>> main
       "deps": [
 
       ]
@@ -2276,7 +2180,6 @@
 
       ]
     },
-<<<<<<< HEAD
     "skisup.APach.2": {
       "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>8,710<\/h3>\n    <p>20/21 adult apprenticeship achievements in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
       "deps": [
@@ -2285,20 +2188,12 @@
     },
     "skisup.APPach": {
       "html": "<h2>\n  2,600\n   (\n  +110\n  )\n<\/h2>",
-=======
-    "skisup.APPach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
->>>>>>> main
       "deps": [
 
       ]
     },
     "skisup.ETach": {
-<<<<<<< HEAD
       "html": "8,210",
-=======
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
->>>>>>> main
       "deps": [
 
       ]
@@ -2317,12 +2212,6 @@
     },
     "skisup.FEach.2": {
       "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>38,290<\/h3>\n    <p>20/21 adult education and training achievements in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
-      "deps": [
-
-      ]
-    },
-    "skisup.FEach": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>140,370<\/h3>\n    <p>20/21 adult education and training achievements in London<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]

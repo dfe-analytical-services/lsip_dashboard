@@ -24,15 +24,8 @@
     "EmpOcc_columns_selected": null,
     "EmpOcc_rows_all": [
       12,
-<<<<<<< HEAD
-      11,
-      25,
-=======
-
       25,
       11,
-
->>>>>>> main
       3,
       18,
       1,
@@ -45,9 +38,9 @@
       15,
       16,
       22,
-      7,
-      8,
       10,
+      8,
+      7,
       19,
       13,
       24,
@@ -58,8 +51,8 @@
     ],
     "EmpOcc_rows_current": [
       12,
-      11,
       25,
+      11,
       3,
       18,
       1,
@@ -124,13 +117,6 @@
     },
     "lep1": "London",
     "lep2": "Greater Manchester",
-<<<<<<< HEAD
-=======
-    "lep3": "Black Country",
-    "lep4": "\nNone",
-    "lep5": "London",
-    "lep6": "Greater Manchester",
->>>>>>> main
     "link_to_tabpanel_earnings": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
@@ -140,11 +126,7 @@
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
-<<<<<<< HEAD
     "navbar": "App",
-=======
-    "navbar": "Vacancies",
->>>>>>> main
     "plotly_afterplot-A": "\"jobad.time\"",
     "skill_line": "Apprenticeships"
   },
@@ -167,9 +149,6 @@
           ],
           "columnDefs": [
             {
-<<<<<<< HEAD
-=======
-
               "targets": 1,
               "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
             },
@@ -182,8 +161,6 @@
               "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
             },
             {
-
->>>>>>> main
               "className": "dt-right",
               "targets": [
                 1,
@@ -1242,21 +1219,13 @@
       ]
     },
     "skisup.APPach": {
-<<<<<<< HEAD
       "html": "<h2>\n  2,600\n   (\n  +110\n  )\n<\/h2>",
-=======
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
->>>>>>> main
       "deps": [
 
       ]
     },
     "skisup.ETach": {
-<<<<<<< HEAD
       "html": "8,210",
-=======
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
->>>>>>> main
       "deps": [
 
       ]
