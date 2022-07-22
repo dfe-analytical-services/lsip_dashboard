@@ -1,12 +1,8 @@
 {
   "input": {
-    "lep0a": "Cheshire and Warrington",
+    "datatabset": "Overview",
     "lep1": "Black Country",
     "lep2": "\nNone",
-    "lep3": "Black Country",
-    "lep4": "\nNone",
-    "lep5": "Black Country",
-    "lep6": "\nNone",
     "link_to_tabpanel_earnings": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
@@ -16,12 +12,12 @@
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
-    "navbar": "Overview",
+    "navbar": "App",
     "skill_line": "Apprenticeships"
   },
   "output": {
     "jobad.change": {
-      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-0.00 ppts<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+0.00 ppts<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
       "deps": [
         {
           "name": "font-awesome",
@@ -42,13 +38,13 @@
       ]
     },
     "jobad.units": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2.1%<\/h3>\n    <p>of English online vacancies (Jan '22)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>1.2%<\/h3>\n    <p>of English online vacancies (Jan '22)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
     },
     "locland.emplchange0": {
-      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-4 ppts<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+1 ppts<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
       "deps": [
         {
           "name": "font-awesome",
@@ -69,13 +65,13 @@
       ]
     },
     "locland.emplcnt0": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>418,000<\/h3>\n    <p>people employed in 2021<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>536,700<\/h3>\n    <p>people employed in 2021<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
     },
     "locland.emplcntchange0": {
-      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-22,700<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+9,600<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
       "deps": [
         {
           "name": "font-awesome",
@@ -96,69 +92,33 @@
       ]
     },
     "locland.emplrate0": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>75 %<\/h3>\n    <p>employment rate in 2021 (compared with  75 % for England)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>73 %<\/h3>\n    <p>employment rate in 2021 (compared with  75 % for England)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
     },
     "page0title": {
-      "html": "Cheshire and Warrington: overview of local landscape",
+      "html": "Black Country: overview of local landscape",
       "deps": [
 
       ]
     },
     "skisup.APPach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<h2>\n  3,970\n   (\n  +150\n  )\n<\/h2>",
       "deps": [
 
       ]
     },
-    "skisup.APPachChange": {
-      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+110<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
-      ]
-    },
     "skisup.ETach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "17,680",
       "deps": [
 
       ]
     },
     "skisup.ETachChange": {
-      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+180<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
+      "html": "<h2 style=\"color:red\">-810<\/h2>",
       "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
+
       ]
     }
   },

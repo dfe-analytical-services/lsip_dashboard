@@ -14,6 +14,7 @@
 
       ]
     },
+    "datatabset": "Employment",
     "EmpOcc_cell_clicked": {
 
     },
@@ -37,9 +38,9 @@
       15,
       16,
       22,
-      7,
-      8,
       10,
+      8,
+      7,
       19,
       13,
       24,
@@ -50,8 +51,8 @@
     ],
     "EmpOcc_rows_current": [
       12,
-      11,
       25,
+      11,
       3,
       18,
       1,
@@ -114,13 +115,8 @@
         }
       ]
     },
-    "lep0a": "Cheshire and Warrington",
     "lep1": "London",
     "lep2": "Greater Manchester",
-    "lep3": "Black Country",
-    "lep4": "\nNone",
-    "lep5": "Black Country",
-    "lep6": "\nNone",
     "link_to_tabpanel_earnings": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
@@ -130,8 +126,8 @@
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
-    "navbar": "Vacancies",
-    "plotly_afterplot-A": "\"jobad.time\"",
+    "navbar": "App",
+    "plotly_afterplot-A": "\"EmpRate_time\"",
     "skill_line": "Apprenticeships"
   },
   "output": {
@@ -680,12 +676,6 @@
         }
       ]
     },
-    "jobad.ch": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>193%<\/h3>\n    <p>change in online job vacancies in Black Country from Jan '21 to Jan '22<\/p>\n  <\/div>\n<\/div>",
-      "deps": [
-
-      ]
-    },
     "jobad.change": {
       "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-0.00 ppts<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
       "deps": [
@@ -704,369 +694,6 @@
           "head": null,
           "attachment": null,
           "all_files": true
-        }
-      ]
-    },
-    "jobad.pc": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>1.16%<\/h3>\n    <p>of online vacancies in England (Jan '22) were in Black Country<\/p>\n  <\/div>\n<\/div>",
-      "deps": [
-
-      ]
-    },
-    "jobad.time": {
-      "x": {
-        "data": [
-          {
-            "x": [
-              2017,
-              2018,
-              2019,
-              2020,
-              2021,
-              2022
-            ],
-            "y": [
-              83.7,
-              83.1,
-              64.1,
-              52.9,
-              48.8,
-              94.3
-            ],
-            "text": [
-              "Year: 2017<br>Area: Black Country<br>Job vacancy units: 84<br>",
-              "Year: 2018<br>Area: Black Country<br>Job vacancy units: 83<br>",
-              "Year: 2019<br>Area: Black Country<br>Job vacancy units: 64<br>",
-              "Year: 2020<br>Area: Black Country<br>Job vacancy units: 53<br>",
-              "Year: 2021<br>Area: Black Country<br>Job vacancy units: 49<br>",
-              "Year: 2022<br>Area: Black Country<br>Job vacancy units: 94<br>"
-            ],
-            "type": "scatter",
-            "mode": "lines",
-            "line": {
-              "width": 1.88976377952756,
-              "color": "rgba(29,112,184,1)",
-              "dash": "solid"
-            },
-            "hoveron": "points",
-            "name": "Black Country",
-            "legendgroup": "Black Country",
-            "showlegend": true,
-            "xaxis": "x",
-            "yaxis": "y",
-            "hoverinfo": "text",
-            "frame": null
-          }
-        ],
-        "layout": {
-          "margin": {
-            "t": 25.7412480974125,
-            "r": 7.30593607305936,
-            "b": 25.0837138508371,
-            "l": 22.648401826484
-          },
-          "font": {
-            "color": "rgba(0,0,0,1)",
-            "family": "",
-            "size": 14.6118721461187
-          },
-          "xaxis": {
-            "domain": [
-              0,
-              1
-            ],
-            "automargin": true,
-            "type": "linear",
-            "autorange": false,
-            "range": [
-              2016.75,
-              2022.25
-            ],
-            "tickmode": "array",
-            "ticktext": [
-              "2017",
-              "2018",
-              "2019",
-              "2020",
-              "2021",
-              "2022"
-            ],
-            "tickvals": [
-              2017,
-              2018,
-              2019,
-              2020,
-              2021,
-              2022
-            ],
-            "categoryorder": "array",
-            "categoryarray": [
-              "2017",
-              "2018",
-              "2019",
-              "2020",
-              "2021",
-              "2022"
-            ],
-            "nticks": null,
-            "ticks": "",
-            "tickcolor": null,
-            "ticklen": 3.65296803652968,
-            "tickwidth": 0,
-            "showticklabels": true,
-            "tickfont": {
-              "color": "rgba(77,77,77,1)",
-              "family": "",
-              "size": 11.689497716895
-            },
-            "tickangle": 0,
-            "showline": false,
-            "linecolor": null,
-            "linewidth": 0,
-            "showgrid": true,
-            "gridcolor": "rgba(235,235,235,1)",
-            "gridwidth": 0.66417600664176,
-            "zeroline": false,
-            "anchor": "y",
-            "title": {
-              "text": "",
-              "font": {
-                "color": null,
-                "family": null,
-                "size": 0
-              }
-            },
-            "hoverformat": ".2f"
-          },
-          "yaxis": {
-            "domain": [
-              0,
-              1
-            ],
-            "automargin": true,
-            "type": "linear",
-            "autorange": false,
-            "range": [
-              46.525,
-              96.575
-            ],
-            "tickmode": "array",
-            "ticktext": [
-              "50",
-              "60",
-              "70",
-              "80",
-              "90"
-            ],
-            "tickvals": [
-              50,
-              60,
-              70,
-              80,
-              90
-            ],
-            "categoryorder": "array",
-            "categoryarray": [
-              "50",
-              "60",
-              "70",
-              "80",
-              "90"
-            ],
-            "nticks": null,
-            "ticks": "",
-            "tickcolor": null,
-            "ticklen": 3.65296803652968,
-            "tickwidth": 0,
-            "showticklabels": true,
-            "tickfont": {
-              "color": "rgba(77,77,77,1)",
-              "family": "",
-              "size": 11.689497716895
-            },
-            "tickangle": 0,
-            "showline": false,
-            "linecolor": null,
-            "linewidth": 0,
-            "showgrid": true,
-            "gridcolor": "rgba(235,235,235,1)",
-            "gridwidth": 0.66417600664176,
-            "zeroline": false,
-            "anchor": "x",
-            "title": {
-              "text": "",
-              "font": {
-                "color": null,
-                "family": null,
-                "size": 0
-              }
-            },
-            "hoverformat": ".2f"
-          },
-          "shapes": [
-            {
-              "type": "rect",
-              "fillcolor": null,
-              "line": {
-                "color": null,
-                "width": 0,
-                "linetype": [
-
-                ]
-              },
-              "yref": "paper",
-              "xref": "paper",
-              "x0": 0,
-              "x1": 1,
-              "y0": 0,
-              "y1": 1
-            }
-          ],
-          "showlegend": true,
-          "legend": {
-            "bgcolor": null,
-            "bordercolor": null,
-            "borderwidth": 0,
-            "font": {
-              "color": "rgba(0,0,0,1)",
-              "family": "",
-              "size": 11.689497716895
-            },
-            "title": {
-              "text": "",
-              "font": {
-                "color": "rgba(0,0,0,1)",
-                "family": "",
-                "size": 14.6118721461187
-              }
-            },
-            "orientation": "h",
-            "x": 0,
-            "y": -0.1
-          },
-          "hovermode": "closest",
-          "barmode": "relative"
-        },
-        "config": {
-          "doubleClick": "reset",
-          "modeBarButtonsToAdd": [
-            "hoverclosest",
-            "hovercompare"
-          ],
-          "showSendToCloud": false,
-          "displayModeBar": false
-        },
-        "source": "A",
-        "highlight": {
-          "on": "plotly_click",
-          "persistent": false,
-          "dynamic": false,
-          "selectize": false,
-          "opacityDim": 0.2,
-          "selected": {
-            "opacity": 1
-          },
-          "debounce": 0
-        },
-        "shinyEvents": [
-          "plotly_hover",
-          "plotly_click",
-          "plotly_selected",
-          "plotly_relayout",
-          "plotly_brushed",
-          "plotly_brushing",
-          "plotly_clickannotation",
-          "plotly_doubleclick",
-          "plotly_deselect",
-          "plotly_afterplot",
-          "plotly_sunburstclick"
-        ],
-        "base_url": "https://plot.ly"
-      },
-      "evals": [
-
-      ],
-      "jsHooks": [
-
-      ],
-      "deps": [
-        {
-          "name": "setprototypeof",
-          "version": "0.1",
-          "src": {
-            "href": "setprototypeof-0.1"
-          },
-          "meta": null,
-          "script": "setprototypeof.js",
-          "stylesheet": null,
-          "head": null,
-          "attachment": null,
-          "all_files": false
-        },
-        {
-          "name": "typedarray",
-          "version": "0.1",
-          "src": {
-            "href": "typedarray-0.1"
-          },
-          "meta": null,
-          "script": "typedarray.min.js",
-          "stylesheet": null,
-          "head": null,
-          "attachment": null,
-          "all_files": false
-        },
-        {
-          "name": "jquery",
-          "version": "3.5.1",
-          "src": {
-            "href": "jquery-3.5.1"
-          },
-          "meta": null,
-          "script": "jquery.min.js",
-          "stylesheet": null,
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        },
-        {
-          "name": "crosstalk",
-          "version": "1.2.0",
-          "src": {
-            "href": "crosstalk-1.2.0"
-          },
-          "meta": null,
-          "script": "js/crosstalk.min.js",
-          "stylesheet": "css/crosstalk.min.css",
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        },
-        {
-          "name": "plotly-htmlwidgets-css",
-          "version": "2.5.1",
-          "src": {
-            "href": "plotly-htmlwidgets-css-2.5.1"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": "plotly-htmlwidgets.css",
-          "head": null,
-          "attachment": null,
-          "all_files": false
-        },
-        {
-          "name": "plotly-main",
-          "version": "2.5.1",
-          "src": {
-            "href": "plotly-main-2.5.1"
-          },
-          "meta": null,
-          "script": "plotly-latest.min.js",
-          "stylesheet": null,
-          "head": null,
-          "attachment": null,
-          "all_files": false
         }
       ]
     },
@@ -1166,68 +793,20 @@
 
       ]
     },
-    "page3title": {
-      "html": "Black Country vacancy trends",
-      "deps": [
-
-      ]
-    },
     "skisup.APPach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<h2>\n  2,600\n   (\n  +110\n  )\n<\/h2>",
       "deps": [
 
-      ]
-    },
-    "skisup.APPachChange": {
-      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+110<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
       ]
     },
     "skisup.ETach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "8,210",
       "deps": [
 
       ]
     },
     "skisup.ETachChange": {
-      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+180<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
-      ]
-    },
-    "vac_comp": {
-      "html": "<br/>\n<p><\/p>",
+      "html": "<h2 style=\"color:green\">+180<\/h2>",
       "deps": [
 
       ]
