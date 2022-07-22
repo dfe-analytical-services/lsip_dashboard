@@ -3,6 +3,13 @@
     "datatabset": "Overview",
     "lep1": "Black Country",
     "lep2": "\nNone",
+<<<<<<< HEAD
+=======
+    "lep3": "Black Country",
+    "lep4": "\nNone",
+    "lep5": "Black Country",
+    "lep6": "\nNone",
+>>>>>>> main
     "link_to_tabpanel_earnings": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
@@ -12,12 +19,20 @@
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
+<<<<<<< HEAD
     "navbar": "App",
+=======
+    "navbar": "Overview",
+>>>>>>> main
     "skill_line": "Apprenticeships"
   },
   "output": {
     "jobad.change": {
+<<<<<<< HEAD
       "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+0.00 ppts<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
+=======
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-0.00 ppts<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
         {
           "name": "font-awesome",
@@ -38,7 +53,11 @@
       ]
     },
     "jobad.units": {
+<<<<<<< HEAD
       "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>1.2%<\/h3>\n    <p>of English online vacancies (Jan '22)<\/p>\n  <\/div>\n<\/div>",
+=======
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2.1%<\/h3>\n    <p>of English online vacancies (Jan '22)<\/p>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
 
       ]
@@ -71,7 +90,11 @@
       ]
     },
     "locland.emplcntchange0": {
+<<<<<<< HEAD
       "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+9600<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
+=======
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-22,700<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
         {
           "name": "font-awesome",
@@ -104,13 +127,21 @@
       ]
     },
     "skisup.APPach": {
+<<<<<<< HEAD
       "html": "<h2>\n  3,970\n   (\n  +150\n  )\n<\/h2>",
+=======
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
 
       ]
     },
     "skisup.ETach": {
+<<<<<<< HEAD
       "html": "17,680",
+=======
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
 
       ]

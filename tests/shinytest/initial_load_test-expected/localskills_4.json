@@ -23,6 +23,7 @@
     ],
     "EmpOcc_columns_selected": null,
     "EmpOcc_rows_all": [
+<<<<<<< HEAD
       6,
       11,
       3,
@@ -60,6 +61,45 @@
       5,
       4,
       10
+=======
+      12,
+      25,
+      11,
+      3,
+      18,
+      1,
+      6,
+      20,
+      5,
+      4,
+      23,
+      2,
+      15,
+      16,
+      22,
+      10,
+      8,
+      7,
+      19,
+      13,
+      24,
+      21,
+      17,
+      9,
+      14
+    ],
+    "EmpOcc_rows_current": [
+      12,
+      25,
+      11,
+      3,
+      18,
+      1,
+      6,
+      20,
+      5,
+      4
+>>>>>>> main
     ],
     "EmpOcc_rows_selected": null,
     "EmpOcc_search": "",
@@ -103,11 +143,33 @@
             "regex": false,
             "caseInsensitive": true
           }
+<<<<<<< HEAD
         }
       ]
     },
     "lep1": "London",
     "lep2": "\nNone",
+=======
+        },
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        }
+      ]
+    },
+    "lep0a": "Cheshire and Warrington",
+    "lep1": "London",
+    "lep2": "Greater Manchester",
+    "lep3": "Black Country",
+    "lep4": "\nNone",
+    "lep5": "Black Country",
+    "lep6": "\nNone",
+>>>>>>> main
     "link_to_tabpanel_earnings": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
@@ -117,13 +179,21 @@
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
+<<<<<<< HEAD
     "navbar": "App",
+=======
+    "navbar": "Employment",
+>>>>>>> main
     "plotly_afterplot-A": "\"EmpRate_time\"",
     "skill_line": "Apprenticeships"
   },
   "output": {
     "emp_comp": {
+<<<<<<< HEAD
       "html": "<br/>\n<p><\/p>",
+=======
+      "html": "<div class=\"shiny-html-output col-sm-4\" id=\"locland.emplcnt.2\"><\/div>\n<div class=\"shiny-html-output col-sm-4\" id=\"locland.emplrate.2\"><\/div>",
+>>>>>>> main
       "deps": [
 
       ]
@@ -140,10 +210,31 @@
           ],
           "columnDefs": [
             {
+<<<<<<< HEAD
               "className": "dt-right",
               "targets": [
                 1,
                 2
+=======
+              "targets": 1,
+              "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
+            },
+            {
+              "targets": 2,
+              "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
+            },
+            {
+              "targets": 3,
+              "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
+            },
+            {
+
+              "className": "dt-right",
+              "targets": [
+                1,
+                2,
+                3
+>>>>>>> main
               ]
             },
             {
@@ -168,6 +259,9 @@
         }
       },
       "evals": [
+        "options.columnDefs.0.render",
+        "options.columnDefs.1.render",
+        "options.columnDefs.2.render",
         "options.ajax.data"
       ],
       "jsHooks": [
@@ -299,6 +393,47 @@
             "frame": null
           },
           {
+<<<<<<< HEAD
+=======
+            "x": [
+              2017,
+              2018,
+              2019,
+              2020,
+              2021
+            ],
+            "y": [
+              0.720022497187851,
+              0.728273074331911,
+              0.726946778711485,
+              0.721976607532598,
+              0.715982297910481
+            ],
+            "text": [
+              "AY: 2017<br>Area: Greater Manchester<br>Employment rate: 72%<br>",
+              "AY: 2018<br>Area: Greater Manchester<br>Employment rate: 73%<br>",
+              "AY: 2019<br>Area: Greater Manchester<br>Employment rate: 73%<br>",
+              "AY: 2020<br>Area: Greater Manchester<br>Employment rate: 72%<br>",
+              "AY: 2021<br>Area: Greater Manchester<br>Employment rate: 72%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.88976377952756,
+              "color": "rgba(244,106,37,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "name": "Greater Manchester",
+            "legendgroup": "Greater Manchester",
+            "showlegend": true,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+>>>>>>> main
             "visible": false,
             "showlegend": false,
             "xaxis": "x",
@@ -663,6 +798,15 @@
     },
     "locland.emplcnt": {
       "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>4,575,600<\/h3>\n    <p>in employment in London<\/p>\n  <\/div>\n<\/div>",
+<<<<<<< HEAD
+=======
+      "deps": [
+
+      ]
+    },
+    "locland.emplcnt.2": {
+      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>1,278,100<\/h3>\n    <p>in employment in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
 
       ]
@@ -674,7 +818,7 @@
       ]
     },
     "locland.emplcntchange0": {
-      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-22700<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-22,700<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
       "deps": [
         {
           "name": "font-awesome",
@@ -696,6 +840,15 @@
     },
     "locland.emplrate": {
       "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>75 %<\/h3>\n    <p>employment rate in London<\/p>\n  <\/div>\n<\/div>",
+<<<<<<< HEAD
+=======
+      "deps": [
+
+      ]
+    },
+    "locland.emplrate.2": {
+      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>72 %<\/h3>\n    <p>employment rate in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
 
       ]
@@ -719,13 +872,21 @@
       ]
     },
     "skisup.APPach": {
+<<<<<<< HEAD
       "html": "<h2>\n  2,600\n   (\n  +110\n  )\n<\/h2>",
+=======
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
 
       ]
     },
     "skisup.ETach": {
+<<<<<<< HEAD
       "html": "8,210",
+=======
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
 
       ]

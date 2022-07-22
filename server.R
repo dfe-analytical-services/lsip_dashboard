@@ -186,7 +186,7 @@ server <- function(input, output, session) {
       )$"28  in employment ")
     # build box
     valueBox(
-      sprintf("%+.0f", x),
+      format_pm(x),
       subtitle = NULL,
       width = 12,
       icon = cond_icon(x > 0),
@@ -318,6 +318,7 @@ server <- function(input, output, session) {
 
 
   ### E&T achievements -----
+<<<<<<< HEAD
   # text approach
   output$skisup.ETach <- renderUI({
     ETach <- C_Achieve_ILR1621 %>%
@@ -328,6 +329,20 @@ server <- function(input, output, session) {
       ) %>%
       summarise(App_ach = sum(achievements))
     format(ETach, big.mark = ",")
+=======
+  output$skisup.ETach <- renderValueBox({
+    valueBox(
+      format((C_Achieve_ILR1621 %>%
+        filter(
+          time_period == "202021",
+          LEP == input$lep0a,
+          level_or_type == "Education and training: Total"
+        ) %>%
+        summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
+      "adult education and training achievements (AY20/21)",
+      width = 12
+    )
+>>>>>>> main
   })
   # valuebox approach
   # output$skisup.ETach <- renderValueBox({
@@ -361,7 +376,17 @@ server <- function(input, output, session) {
           level_or_type == "Education and training: Total"
         ) %>%
         summarise(App_ach = sum(achievements))))
+<<<<<<< HEAD
     h2(sprintf("%+.0f", x), style = paste0("color:", cond_color(x > 0)))
+=======
+    valueBox(
+      format_pm(x),
+      subtitle = NULL,
+      width = 12,
+      icon = cond_icon(x > 0),
+      color = cond_color(x > 0)
+    )
+>>>>>>> main
   })
   # valuebox approach
   # output$skisup.ETachChange <- renderValueBox({
@@ -415,6 +440,17 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))))
+<<<<<<< HEAD
+=======
+    valueBox(
+      format_pm(x),
+      subtitle = NULL,
+      width = 12,
+      icon = cond_icon(x > 0),
+      color = cond_color(x > 0)
+    )
+  })
+>>>>>>> main
 
     h2(AppAch, " (", sprintf("%+.0f", APPachChange), ")")
     # ,style=paste0("color:",cond_color(x > 0)))
@@ -622,12 +658,14 @@ server <- function(input, output, session) {
       row_to_names(row_number = 1) %>%
       as.data.frame() %>%
       mutate_if(is.character, as.numeric) %>%
-      mutate(across(where(is.numeric), ~ round(prop.table(.) * 100, 1)))
+      mutate(across(where(is.numeric), ~ round(prop.table(.), 4)))
     # mutate(across(where(is.numeric), format, big.mark = ",")) %>%
   })
 
   output$EmpOcc <- renderDataTable({
-    datatable(EmpOcc(), options = list(order = list(2, "desc")))
+    df <- EmpOcc()
+    datatable(df, options = list(order = list(2, "desc"))) %>%
+      formatPercentage(1:ncol(df), 1)
   })
 
   # VACANCIES ----
@@ -863,7 +901,11 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
+<<<<<<< HEAD
       paste0("20/21 adult apprenticeship achievements in ", input$lep1),
+=======
+      paste0("20/21 apprenticeship achievements in ", input$lep3),
+>>>>>>> main
       color = "blue"
     )
   })
@@ -878,7 +920,11 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
+<<<<<<< HEAD
       paste0("20/21 adult apprenticeship achievements in ", input$lep2),
+=======
+      paste0("20/21 apprenticeship achievements in ", input$lep4),
+>>>>>>> main
       color = "orange"
     )
   })
@@ -905,9 +951,9 @@ server <- function(input, output, session) {
       select(time_period, area, LEP, level_or_type, achievements) %>%
       mutate(level_or_type = case_when(
         level_or_type == "Further education and skills: Total" ~ "Total FE and Apps provision",
-        level_or_type == "Education and training: Total" ~ "Education and training",
-        level_or_type == "Community learning: Total" ~ "Community learning",
-        level_or_type == "Apprenticeships: Total" ~ "Apprenticeships",
+        level_or_type == "Education and training: Total" ~ "Education and training (adults only)",
+        level_or_type == "Community learning: Total" ~ "Community learning (adults only)",
+        level_or_type == "Apprenticeships: Total" ~ "Apprenticeships (all ages)",
         TRUE ~ level_or_type
       )) %>%
       filter(

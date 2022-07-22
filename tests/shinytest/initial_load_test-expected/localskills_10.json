@@ -23,6 +23,7 @@
     ],
     "EmpOcc_columns_selected": null,
     "EmpOcc_rows_all": [
+<<<<<<< HEAD
       12,
       11,
       25,
@@ -50,6 +51,8 @@
       14
     ],
     "EmpOcc_rows_current": [
+=======
+>>>>>>> main
       12,
       11,
       25,
@@ -59,6 +62,36 @@
       6,
       20,
       5,
+<<<<<<< HEAD
+=======
+      4,
+      23,
+      2,
+      15,
+      16,
+      22,
+      7,
+      8,
+      10,
+      19,
+      13,
+      24,
+      21,
+      17,
+      9,
+      14
+    ],
+    "EmpOcc_rows_current": [
+      12,
+      11,
+      25,
+      3,
+      18,
+      1,
+      6,
+      20,
+      5,
+>>>>>>> main
       4
     ],
     "EmpOcc_rows_selected": null,
@@ -117,6 +150,13 @@
     },
     "lep1": "London",
     "lep2": "Greater Manchester",
+<<<<<<< HEAD
+=======
+    "lep3": "London",
+    "lep4": "Greater Manchester",
+    "lep5": "London",
+    "lep6": "Greater Manchester",
+>>>>>>> main
     "link_to_tabpanel_earnings": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
@@ -126,8 +166,13 @@
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
+<<<<<<< HEAD
     "navbar": "App",
     "plotly_afterplot-A": "\"Ach_SSA_pc\"",
+=======
+    "navbar": "FE",
+    "plotly_afterplot-A": "\"Ach_time\"",
+>>>>>>> main
     "skill_line": "Apprenticeships"
   },
   "output": {
@@ -1093,6 +1138,23 @@
           ],
           "columnDefs": [
             {
+<<<<<<< HEAD
+=======
+
+              "targets": 1,
+              "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
+            },
+            {
+              "targets": 2,
+              "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
+            },
+            {
+              "targets": 3,
+              "render": "function(data, type, row, meta) {\n    return type !== 'display' ? data : DTWidget.formatPercentage(data, 1, 3, \",\", \".\", null);\n  }"
+            },
+            {
+
+>>>>>>> main
               "className": "dt-right",
               "targets": [
                 1,
@@ -1122,6 +1184,9 @@
         }
       },
       "evals": [
+        "options.columnDefs.0.render",
+        "options.columnDefs.1.render",
+        "options.columnDefs.2.render",
         "options.ajax.data"
       ],
       "jsHooks": [
@@ -2091,7 +2156,7 @@
       ]
     },
     "locland.emplcntchange0": {
-      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-22700<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-22,700<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
       "deps": [
         {
           "name": "font-awesome",
@@ -2172,19 +2237,39 @@
       ]
     },
     "skisup.APPach": {
+<<<<<<< HEAD
       "html": "<h2>\n  2,600\n   (\n  +110\n  )\n<\/h2>",
+=======
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
 
       ]
     },
     "skisup.ETach": {
+<<<<<<< HEAD
       "html": "8,210",
+=======
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+>>>>>>> main
       "deps": [
 
       ]
     },
     "skisup.ETachChange": {
       "html": "<h2 style=\"color:green\">+180<\/h2>",
+      "deps": [
+
+      ]
+    },
+    "skisup.FEach": {
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>140,370<\/h3>\n    <p>20/21 adult education and training achievements in London<\/p>\n  <\/div>\n<\/div>",
+      "deps": [
+
+      ]
+    },
+    "skisup.FEach.2": {
+      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>38,290<\/h3>\n    <p>20/21 adult education and training achievements in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
