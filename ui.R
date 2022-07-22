@@ -205,7 +205,7 @@ The app displays published data from a variety of sources (APS, ILR and ONS onli
         mainPanel(
           width = 10,
           tabsetPanel(
-            id = "collapseExample",
+            id = "datatabset",
             tabPanel(
               "Overview",
               ## Main panel ----
