@@ -327,7 +327,7 @@ server <- function(input, output, session) {
           level_or_type == "Education and training: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      "education and training achievements (AY20/21)",
+      "adult education and training achievements (AY20/21)",
       width = 12
     )
   })
@@ -811,7 +811,7 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 adult apprenticeship achievements in ", input$lep3),
+      paste0("20/21 apprenticeship achievements in ", input$lep3),
       color = "blue"
     )
   })
@@ -826,7 +826,7 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 adult apprenticeship achievements in ", input$lep4),
+      paste0("20/21 apprenticeship achievements in ", input$lep4),
       color = "orange"
     )
   })
@@ -853,9 +853,9 @@ server <- function(input, output, session) {
       select(time_period, area, LEP, level_or_type, achievements) %>%
       mutate(level_or_type = case_when(
         level_or_type == "Further education and skills: Total" ~ "Total FE and Apps provision",
-        level_or_type == "Education and training: Total" ~ "Education and training",
-        level_or_type == "Community learning: Total" ~ "Community learning",
-        level_or_type == "Apprenticeships: Total" ~ "Apprenticeships",
+        level_or_type == "Education and training: Total" ~ "Education and training (adults only)",
+        level_or_type == "Community learning: Total" ~ "Community learning (adults only)",
+        level_or_type == "Apprenticeships: Total" ~ "Apprenticeships (all ages)",
         TRUE ~ level_or_type
       )) %>%
       filter(
