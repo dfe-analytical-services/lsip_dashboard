@@ -150,9 +150,7 @@ server <- function(input, output, session) {
 
   ### Employment count ----
   output$locland.emplcnt0 <- renderValueBox({
-    # Put value into box to plug into app
     valueBox(
-      # take input number
       format((C_EmpRate_APS1721 %>%
         filter(
           geographic_level == "lep", # cleans up for London which is included as lep and gor
@@ -196,10 +194,8 @@ server <- function(input, output, session) {
 
   ### Employment rate -----
   output$locland.emplrate0 <- renderValueBox({
-    # Put value into box to plug into app
     valueBox(
-      # take input number
-      paste(
+      paste0(
         format(100. * (C_EmpRate_APS1721 %>%
           filter(
             geographic_level == "lep", # cleans up for London which is included as lep and gor
@@ -209,7 +205,7 @@ server <- function(input, output, session) {
         )$empRate, digits = 2),
         "%"
       ),
-      paste(
+      paste0(
         "employment rate in 2021 (compared with ",
         format(100. * (C_EmpRate_APS1721 %>%
           filter(
@@ -275,7 +271,7 @@ server <- function(input, output, session) {
           summarise(job.pc = sum(pc_total))), digits = 2),
         "%"
       ),
-      paste0("of English online vacancies (Jan '22)"),
+      paste0("of online vacancies in England (Jan '22)"),
       width = 12
     )
   })
@@ -434,7 +430,7 @@ server <- function(input, output, session) {
   ### Employment rate -----
   output$locland.emplrate <- renderValueBox({
     valueBox(
-      paste(
+      paste0(
         format(100. * (C_EmpRate_APS1721 %>%
           filter(
             geographic_level == "lep", # cleans up for London which is included as lep and gor
@@ -444,14 +440,14 @@ server <- function(input, output, session) {
         )$empRate, digits = 2),
         "%"
       ),
-      paste0("employment rate in ", input$lep1),
+      paste0("employment rate in 2021 in ", input$lep1),
       color = "blue"
     )
   })
 
   output$locland.emplrate.2 <- renderValueBox({
     valueBox(
-      paste(
+      paste0(
         format(100. * (C_EmpRate_APS1721 %>%
           filter(
             geographic_level == "lep", # cleans up for London which is included as lep and gor
@@ -461,7 +457,7 @@ server <- function(input, output, session) {
         )$empRate, digits = 2),
         "%"
       ),
-      paste0("employment rate in ", input$lep2),
+      paste0("employment rate in 2021 in ", input$lep2),
       color = "orange"
     )
   })
@@ -480,7 +476,7 @@ server <- function(input, output, session) {
       scientific = FALSE, big.mark = ","
       ),
       # add subtitle to explain what it's showing
-      paste0("in employment in ", input$lep1),
+      paste0("in employment in 2021 in ", input$lep1),
       color = "blue"
     )
   })
@@ -496,7 +492,7 @@ server <- function(input, output, session) {
       )$"28  in employment ",
       scientific = FALSE, big.mark = ","
       ),
-      paste0("in employment in ", input$lep2),
+      paste0("in employment in 2021 in ", input$lep2),
       color = "orange"
     )
   })
@@ -938,7 +934,8 @@ server <- function(input, output, session) {
       coord_flip() +
       theme_minimal() +
       labs(fill = "") +
-      theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7)) +
+      theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
+            panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
       scale_fill_manual(values = c("#1d70b8", "#F46A25"))
   })
 
@@ -954,9 +951,7 @@ server <- function(input, output, session) {
 
   ### Employment count ----
   output$locland.emplcntOver2 <- renderValueBox({
-    # Put value into box to plug into app
     valueBox(
-      # take input number
       format((C_EmpRate_APS1721 %>%
         filter(
           geographic_level == "lep", # cleans up for London which is included as lep and gor
@@ -1000,7 +995,6 @@ server <- function(input, output, session) {
 
   ### Employment rate -----
   output$locland.emplrateOver2 <- renderValueBox({
-    # Put value into box to plug into app
     valueBox(
       # take input number
       paste(
