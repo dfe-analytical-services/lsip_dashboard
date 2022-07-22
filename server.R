@@ -349,7 +349,7 @@ server <- function(input, output, session) {
         ) %>%
         summarise(App_ach = sum(achievements))))
     valueBox(
-      sprintf("%+.0f", x),
+      format_pm(x),
       subtitle = NULL,
       width = 12,
       icon = cond_icon(x > 0),
@@ -389,7 +389,7 @@ server <- function(input, output, session) {
         ) %>%
         summarise(App_ach = sum(achievements))))
     valueBox(
-      sprintf("%+.0f", x),
+      format_pm(x),
       subtitle = NULL,
       width = 12,
       icon = cond_icon(x > 0),
