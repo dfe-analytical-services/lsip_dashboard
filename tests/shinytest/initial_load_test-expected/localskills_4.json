@@ -28,61 +28,27 @@
     "EmpOcc_state": null,
     "lep0a": "Cheshire and Warrington",
     "lep1": "London",
-    "lep10": "\nNone",
     "lep2": "Greater Manchester",
     "lep3": "Black Country",
     "lep4": "\nNone",
     "lep5": "Black Country",
     "lep6": "\nNone",
-    "lep7": "Black Country",
-    "lep8": "\nNone",
-    "lep9": "Black Country",
     "link_to_tabpanel_earnings": 0,
-    "link_to_tabpanel_earnings2": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
     "link_to_tabpanel_FE": 0,
     "link_to_tabpanel_FE2": 0,
     "link_to_tabpanel_HE": 0,
-    "link_to_tabpanel_HE2": 0,
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
     "navbar": "Employment",
-    "OccSect": "1",
     "plotly_afterplot-A": "\"EmpRate_time\"",
-    "skill_line": "Apprenticeships: Total"
+    "skill_line": "Apprenticeships"
   },
   "output": {
-    "earn.avg": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>average salary (compared with x% for England)<\/p>\n  <\/div>\n<\/div>",
-      "deps": [
-
-      ]
-    },
-    "earn.change": {
-      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>+0<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
-      ]
-    },
     "emp_comp": {
-      "html": "<div class=\"shiny-html-output col-sm-4\" id=\"locland.emplrate.2\"><\/div>\n<div class=\"shiny-html-output col-sm-4\" id=\"locland.emplcnt.2\"><\/div>",
+      "html": "<div class=\"shiny-html-output col-sm-4\" id=\"locland.emplcnt.2\"><\/div>\n<div class=\"shiny-html-output col-sm-4\" id=\"locland.emplrate.2\"><\/div>",
       "deps": [
 
       ]
@@ -98,6 +64,14 @@
             "desc"
           ],
           "columnDefs": [
+            {
+              "className": "dt-right",
+              "targets": [
+                1,
+                2,
+                3
+              ]
+            },
             {
               "orderable": false,
               "targets": 0
@@ -190,11 +164,11 @@
               0.7510359969423
             ],
             "text": [
-              "year: 2017<br />empRate: 0.7508329<br />Areas: England",
-              "year: 2018<br />empRate: 0.7535346<br />Areas: England",
-              "year: 2019<br />empRate: 0.7599508<br />Areas: England",
-              "year: 2020<br />empRate: 0.7555651<br />Areas: England",
-              "year: 2021<br />empRate: 0.7510360<br />Areas: England"
+              "AY: 2017<br>Area: England<br>Employment rate: 75%<br>",
+              "AY: 2018<br>Area: England<br>Employment rate: 75%<br>",
+              "AY: 2019<br>Area: England<br>Employment rate: 76%<br>",
+              "AY: 2020<br>Area: England<br>Employment rate: 76%<br>",
+              "AY: 2021<br>Area: England<br>Employment rate: 75%<br>"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -228,11 +202,11 @@
               0.747928142929532
             ],
             "text": [
-              "year: 2017<br />empRate: 0.7390858<br />Areas: London",
-              "year: 2018<br />empRate: 0.7428496<br />Areas: London",
-              "year: 2019<br />empRate: 0.7449746<br />Areas: London",
-              "year: 2020<br />empRate: 0.7504709<br />Areas: London",
-              "year: 2021<br />empRate: 0.7479281<br />Areas: London"
+              "AY: 2017<br>Area: London<br>Employment rate: 74%<br>",
+              "AY: 2018<br>Area: London<br>Employment rate: 74%<br>",
+              "AY: 2019<br>Area: London<br>Employment rate: 74%<br>",
+              "AY: 2020<br>Area: London<br>Employment rate: 75%<br>",
+              "AY: 2021<br>Area: London<br>Employment rate: 75%<br>"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -266,11 +240,11 @@
               0.715982297910481
             ],
             "text": [
-              "year: 2017<br />empRate: 0.7200225<br />Areas: Greater Manchester",
-              "year: 2018<br />empRate: 0.7282731<br />Areas: Greater Manchester",
-              "year: 2019<br />empRate: 0.7269468<br />Areas: Greater Manchester",
-              "year: 2020<br />empRate: 0.7219766<br />Areas: Greater Manchester",
-              "year: 2021<br />empRate: 0.7159823<br />Areas: Greater Manchester"
+              "AY: 2017<br>Area: Greater Manchester<br>Employment rate: 72%<br>",
+              "AY: 2018<br>Area: Greater Manchester<br>Employment rate: 73%<br>",
+              "AY: 2019<br>Area: Greater Manchester<br>Employment rate: 73%<br>",
+              "AY: 2020<br>Area: Greater Manchester<br>Employment rate: 72%<br>",
+              "AY: 2021<br>Area: Greater Manchester<br>Employment rate: 72%<br>"
             ],
             "type": "scatter",
             "mode": "lines",
@@ -603,35 +577,8 @@
         }
       ]
     },
-    "he.entrants": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>HE entrants<\/p>\n  <\/div>\n<\/div>",
-      "deps": [
-
-      ]
-    },
-    "he.entrantschange": {
-      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>+0<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
-      ]
-    },
     "jobad.change": {
-      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+77<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-0.00 ppts<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
       "deps": [
         {
           "name": "font-awesome",
@@ -652,7 +599,7 @@
       ]
     },
     "jobad.units": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>168.7<\/h3>\n    <p>job vacancy units (Jan 22)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2.1%<\/h3>\n    <p>of English online vacancies (Jan '22)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -679,13 +626,13 @@
       ]
     },
     "locland.emplcnt": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>4,575,600<\/h3>\n    <p>In employment in London<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>4,575,600<\/h3>\n    <p>in employment in London<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
     },
     "locland.emplcnt.2": {
-      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>1,278,100<\/h3>\n    <p>In employment in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>1,278,100<\/h3>\n    <p>in employment in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -697,7 +644,7 @@
       ]
     },
     "locland.emplcntchange0": {
-      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-22700<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>-22,700<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
       "deps": [
         {
           "name": "font-awesome",
@@ -718,13 +665,13 @@
       ]
     },
     "locland.emplrate": {
-      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>75 %<\/h3>\n    <p>Employment rate in London<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-blue\">\n  <div class=\"inner\">\n    <h3>75 %<\/h3>\n    <p>employment rate in London<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
     },
     "locland.emplrate.2": {
-      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>72 %<\/h3>\n    <p>Employment rate in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-orange\">\n  <div class=\"inner\">\n    <h3>72 %<\/h3>\n    <p>employment rate in Greater Manchester<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -742,40 +689,13 @@
       ]
     },
     "page1title": {
-      "html": "London: employment trends",
+      "html": "London employment trends",
       "deps": [
 
-      ]
-    },
-    "skills.l4": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>In V2<\/h3>\n    <p>qualified at level 4+<\/p>\n  <\/div>\n<\/div>",
-      "deps": [
-
-      ]
-    },
-    "skills.l4change": {
-      "html": "<div class=\"small-box bg-red\">\n  <div class=\"inner\">\n    <h3>+0<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-down fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-down icon\"><\/i>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
       ]
     },
     "skisup.APPach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>Apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>2,600<\/h3>\n    <p>apprenticeship achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
@@ -802,7 +722,7 @@
       ]
     },
     "skisup.ETach": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>Education and training acheivements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
+      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>8,210<\/h3>\n    <p>education and training achievements (AY20/21)<\/p>\n  <\/div>\n<\/div>",
       "deps": [
 
       ]
