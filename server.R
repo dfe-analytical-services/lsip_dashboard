@@ -920,7 +920,7 @@ server <- function(input, output, session) {
         # area == "England" |
         LEP == input$lep1 |
           LEP == input$lep2,
-        grepl(input$skill_line, level_or_type),
+        level_or_type == input$skill_line,
         time_period != 202122
       ) %>%
       mutate(AY = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
@@ -928,7 +928,7 @@ server <- function(input, output, session) {
       summarise(Achievements = sum(achievements))
     # add an extra column so the colours work in ggplot when sorting alphabetically
     FETime$Area <- factor(FETime$LEP,
-      levels = c(input$lep1, input$lep2)
+                          levels = c(input$lep1, input$lep2)
     )
     ggplot(FETime, aes(
       x = AY, y = Achievements, colour = Area,
@@ -947,13 +947,13 @@ server <- function(input, output, session) {
       xlab("Year") +
       scale_color_manual(values = c("#1d70b8", "#F46A25"))
   })
-
+  
   output$Ach_time <- renderPlotly({
     ggplotly(Ach_time(), tooltip = c("text")) %>%
       layout(legend = list(orientation = "h", x = 0, y = -0.1)) %>%
       config(displayModeBar = FALSE)
   })
-
+  
   ## Achievements pc bar chart ----
   Ach_SSA_pc <- reactive({
     AchSSA_21 <- C_Achieve_ILR21 %>%
@@ -1219,7 +1219,7 @@ server <- function(input, output, session) {
           level_or_type == "Education and training: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      "Education and training achievements (AY20/21)",
+      "adult education and training achievements (AY20/21)",
       width = 12
     )
   })

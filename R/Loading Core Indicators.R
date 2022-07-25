@@ -139,13 +139,6 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
     mutate(year = as.numeric(year))
 }
 
-# Clean indicators datasets----
-
-
-
-
-
-
 # vacancy
 C_Vacancy_ONS1722 <- format.Vacancy.ONS(I_Vacancy_ONS1722)
 
