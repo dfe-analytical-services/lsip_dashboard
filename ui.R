@@ -95,20 +95,25 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                 div(
                   class = "panel-body",
                   tags$div(
+                    h2("Dashboard"),
+                    p("This page contains the different dashboard tabs."),
                     h3(actionLink("link_to_tabpanel_overview", "Overview")),
-                    p("Key labour and skills metrics for each LEP."),
-                    h2("Labour market"),
+                    p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, adult FE and apprenticeship achievement volumes. It shows year-on-year change for each indicator."),
+                    p("The download buttons download all indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
+                    #h2("Labour market"),
                     h3(actionLink("link_to_tabpanel_employment", "Employment")),
-                    p("Employment volumes and rates over time and by occupation."),
+                    p("This tab contains employment indicators at LEP level. These can be compared to England and a comparator LEP."),
+                    p("The chart shows employment rate over time for the chosen LEP. The table displays employment distribution by occupation (sub-major SOC group)."),
+                    p("The download buttons download employment indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
                     h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
-                    p("Online job vacancies over time."),
-                    h3(actionLink("link_to_tabpanel_earnings", "Earnings")),
-                    p("To be completed in V2."),
-                    h2("Skills landscape"),
+                    p("This tab contains online job vacancies indicators at LEP level. These can be compared to England and a comparator LEP."),
+                    p("The chart shows change in online job vacancy units over time. Units are not an indication of real volume, but each unit represents a fixed number of job adverts to enable comparisons over time and between areas."),
+                    #h2("Skills landscape"),
                     h3(actionLink("link_to_tabpanel_FE", "FE")),
                     p("FE achievements over time and by SSA."),
-                    h3(actionLink("link_to_tabpanel_HE", "HE")),
-                    p("To be completed in V2."),
+                    h2("Dashboard information"),
+                    h3(actionLink("link_to_tabpanel_future", "Future development")),
+                    p("Proposed additional functionality in the next version of the dashboard."),
                   ),
                   br()
                 )
@@ -169,9 +174,9 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
       ) # end of FluidPage
     ), # end of Tab Panel
 
-    # OVERVIEW ----
+    # APP ----
     tabPanel(
-      "App",
+      "Dashboard",
       # choice row
       sidebarLayout(
         sidebarPanel(
@@ -179,9 +184,11 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
           selectInput("lep1", "Choose primary LEP",
             choices = C_LEP2020
           ),
+          #lep 2 is reactve to lep 1 so is populated in the server
           selectInput("lep2", "Choose comparison LEP",
-            choices = c("\nNone", unique(C_LEP2020))
+            choices = NULL
           ),
+    
           helpText("Download all available indicators for all geographies (LEPs, LAs, Regions and England):",
             style = "font-style: italic;"
           ),
@@ -206,6 +213,8 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
           width = 10,
           tabsetPanel(
             id = "datatabset",
+            
+            # OVERVIEW ----
             tabPanel(
               "Overview",
               ## Main panel ----
@@ -301,6 +310,7 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
               ),
             ), # end of Overview tab
 
+            # EMPLOYMENT  ----
             tabPanel(
               "Employment",
               ## Main panel ----
@@ -309,7 +319,7 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                 ### Title ----
                 uiOutput("page1title", style = "font-size: 24px;"),
                 div("Data is from the Annual Population Survey. Years represent calendar years.", style = "font-size: 16px; font-style: italic;"),
-                # br(),
+                 br(),
 
                 ### KPI boxes ----
                 box(
@@ -516,7 +526,7 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
         p("HE page", style = "font-size:20px;"),
         p("V2 will show HE participants and qualifiers by subject."),
         br(),
-        p("Overview page", style = "font-size:20px;"),
+        p("FE page", style = "font-size:20px;"),
         p("V2 will show learner outcomes by type of provision."),
       )
     ), # enedx of future development
