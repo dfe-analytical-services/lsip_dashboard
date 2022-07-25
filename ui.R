@@ -98,7 +98,7 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                     h2("Dashboard"),
                     p("This page contains the different dashboard tabs."),
                     h3(actionLink("link_to_tabpanel_overview", "Overview")),
-                    p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, adult FE and apprenticeship achievement volumes. It shows year-on-year change for each indicator."),
+                    p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, FE and apprenticeship achievement volumes. It shows year-on-year change for each indicator."),
                     p("The download buttons download all indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
                     # h2("Labour market"),
                     h3(actionLink("link_to_tabpanel_employment", "Employment")),
@@ -149,8 +149,8 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                   h2("Skills landscape"),
                   h3("Individualised Learner Records (ILR)"),
                   p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England.
-                             The dashboard uses adult FE achievements over time (AY1617-21/22 (temporary data to October for 21/22)) split by apprenticeships, community learning, education and training.
-                             The dashboard also shows adult FE achievements split by sector subject area (tier 1) for the latest AY21/22 reported to January."),
+                             The dashboard uses FE learner achievements over time (AY1617-21/22 (temporary data to October for 21/22)) split by apprenticeships, community learning, education and training.
+                             The dashboard also shows FE learner achievements split by sector subject area (tier 1) for the latest AY21/22 reported to January."),
                   a(
                     href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills",
                     "ILR data on EES",
@@ -429,7 +429,7 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
               ) # end of main panel
             ), # end of Skills Supply tab
             #  ), # end of labour navbar
-
+            # FE ----
             tabPanel(
               "FE",
               ## Main panel ----
@@ -437,7 +437,7 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                 width = 12,
                 ### Title ----
                 uiOutput("page2title", style = "font-size: 24px;"),
-                div("Data from Individualised Learner Records for adult FE learners. Years shown are academic years.", style = "font-size: 16px; font-style: italic;"),
+                div("Data from Individualised Learner Records for FE learners. Years shown are academic years.", style = "font-size: 16px; font-style: italic;"),
                 br(),
                 ### KPI boxes ----
                 box(
@@ -460,18 +460,19 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                   column(
                     width = 6,
                     ### LEP 4 input ------------
-                    p("FE adult achievement trend", style = "font-size:20px;"),
-                    p("Choose provision group"),
-                    selectizeInput("skill_line", "",
-                      choices = c("Apprenticeships", "Education and training", "Community learning", "Total FE and Apps provision")
+                    p("FE and apprenticehips learner achievement trend", style = "font-size:20px;"),
+                    p("Choose provision group:"),
+                    selectizeInput("skill_line", NULL,
+                      choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and Apps provision")
                     ),
-                    plotlyOutput("Ach_time")
+                    plotlyOutput("Ach_time"),
+                    p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total.", style = "font-style: italic;")
                   ),
 
-                  ### FE acheivements ----
+                  ### FE achievements ----
                   column(
                     width = 6,
-                    p("All adult FE achievements by SSA tier 1 (AY21/22 Aug to Jan)", style = "font-size:20px;"),
+                    p("All FE learner achievements by SSA tier 1 (AY21/22 Aug to Jan)", style = "font-size:20px;"),
                     plotlyOutput("Ach_SSA_pc")
                   )
                 ), # end of box
