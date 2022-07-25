@@ -100,7 +100,7 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                     h3(actionLink("link_to_tabpanel_overview", "Overview")),
                     p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, adult FE and apprenticeship achievement volumes. It shows year-on-year change for each indicator."),
                     p("The download buttons download all indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
-                    #h2("Labour market"),
+                    # h2("Labour market"),
                     h3(actionLink("link_to_tabpanel_employment", "Employment")),
                     p("This tab contains employment indicators at LEP level. These can be compared to England and a comparator LEP."),
                     p("The chart shows employment rate over time for the chosen LEP. The table displays employment distribution by occupation (sub-major SOC group)."),
@@ -108,7 +108,7 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                     h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
                     p("This tab contains online job vacancies indicators at LEP level. These can be compared to England and a comparator LEP."),
                     p("The chart shows change in online job vacancy units over time. Units are not an indication of real volume, but each unit represents a fixed number of job adverts to enable comparisons over time and between areas."),
-                    #h2("Skills landscape"),
+                    # h2("Skills landscape"),
                     h3(actionLink("link_to_tabpanel_FE", "FE")),
                     p("FE achievements over time and by SSA."),
                     h2("Dashboard information"),
@@ -184,11 +184,10 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
           selectInput("lep1", "Choose primary LEP",
             choices = C_LEP2020
           ),
-          #lep 2 is reactve to lep 1 so is populated in the server
+          # lep 2 is reactve to lep 1 so is populated in the server
           selectInput("lep2", "Choose comparison LEP",
             choices = NULL
           ),
-    
           helpText("Download all available indicators for all geographies (LEPs, LAs, Regions and England):",
             style = "font-style: italic;"
           ),
@@ -213,7 +212,7 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
           width = 10,
           tabsetPanel(
             id = "datatabset",
-            
+
             # OVERVIEW ----
             tabPanel(
               "Overview",
@@ -319,7 +318,7 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                 ### Title ----
                 uiOutput("page1title", style = "font-size: 24px;"),
                 div("Data is from the Annual Population Survey. Years represent calendar years.", style = "font-size: 16px; font-style: italic;"),
-                 br(),
+                br(),
 
                 ### KPI boxes ----
                 box(

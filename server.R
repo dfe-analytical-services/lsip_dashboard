@@ -84,8 +84,8 @@ server <- function(input, output, session) {
 
   # Add link to overview
   observeEvent(input$link_to_tabpanel_overview, {
-    updateTabsetPanel(session, "navbar", "Dashboard")#Get into app
-    updateTabsetPanel(session, "datatabset", "Overview")#then pick tab
+    updateTabsetPanel(session, "navbar", "Dashboard") # Get into app
+    updateTabsetPanel(session, "datatabset", "Overview") # then pick tab
   })
   # Add link to employment data
   observeEvent(input$link_to_tabpanel_employment, {
@@ -106,13 +106,13 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_future, {
     updateTabsetPanel(session, "navbar", "Future development")
   })
- 
-  #Make sure second LEP filter doesn't include what has been chosen in lep1 filter
+
+  # Make sure second LEP filter doesn't include what has been chosen in lep1 filter
   observe({
-   x<- unique(C_LEP2020)%>%filter(LEP!=input$lep1)
-   updateSelectInput(session,"lep2", "Choose comparison LEP",choices=c("\nNone",x))#Add in a none so nothing is selected for 2nd LEP to start with
+    x <- unique(C_LEP2020) %>% filter(LEP != input$lep1)
+    updateSelectInput(session, "lep2", "Choose comparison LEP", choices = c("\nNone", x)) # Add in a none so nothing is selected for 2nd LEP to start with
   })
-  
+
   # OVERVIEW ----
 
   ### Downloads----
@@ -313,7 +313,7 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbar", "Dashboard")
     updateTabsetPanel(session, "datatabset", "Vacancies")
   })
-  
+
   # Add link to skills data
   observeEvent(input$link_to_tabpanel_FE2, {
     updateTabsetPanel(session, "navbar", "Dashboard")
@@ -996,8 +996,10 @@ server <- function(input, output, session) {
       coord_flip() +
       theme_minimal() +
       labs(fill = "") +
-      theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
-            panel.grid.major = element_blank(), panel.grid.minor = element_blank()) +
+      theme(
+        legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank()
+      ) +
       scale_fill_manual(values = c("#1d70b8", "#F46A25"))
   })
 
@@ -1155,57 +1157,57 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_vacancies3, {
     updateTabsetPanel(session, "navbar", "Vacancies")
   })
-# 
-#   ### Average salary  ----
-#   output$earn.avgOver2 <- renderValueBox({
-#     valueBox("In V2",
-#       "average salary (compared with £x for England)",
-#       width = 12
-#     )
-#   })
-# 
-#   ### Average salary change  ----
-#   output$earn.changeOver2 <- renderValueBox({
-#     x <- (0)
-#     valueBox(
-#       sprintf("%+.0f", x),
-#       subtitle = NULL,
-#       width = 12,
-#       icon = cond_icon(x > 0),
-#       color = cond_color(x > 0)
-#     )
-#   })
-# 
-#   # Add button to link to salary data
-#   observeEvent(input$link_to_tabpanel_earnings3, {
-#     updateTabsetPanel(session, "navbar", "Earnings")
-#   })
-# 
-#   ### L4+  ----
-#   output$skills.l4Over2 <- renderValueBox({
-#     valueBox("In V2",
-#       "qualified at level 4+ (compared with x% for England)",
-#       width = 12
-#     )
-#   })
-# 
-#   ### L4+ change  ----
-#   output$skills.l4changeOver2 <- renderValueBox({
-#     x <- (0)
-#     valueBox(
-#       sprintf("%+.0f", x),
-#       subtitle = NULL,
-#       width = 12,
-#       icon = cond_icon(x > 0),
-#       color = cond_color(x > 0)
-#     )
-#   })
-# 
-#   # Add button to link to skills data
-#   observeEvent(input$link_to_tabpanel_FE3, {
-#     updateTabsetPanel(session, "navbar", "FE")
-#   })
-# 
+  #
+  #   ### Average salary  ----
+  #   output$earn.avgOver2 <- renderValueBox({
+  #     valueBox("In V2",
+  #       "average salary (compared with £x for England)",
+  #       width = 12
+  #     )
+  #   })
+  #
+  #   ### Average salary change  ----
+  #   output$earn.changeOver2 <- renderValueBox({
+  #     x <- (0)
+  #     valueBox(
+  #       sprintf("%+.0f", x),
+  #       subtitle = NULL,
+  #       width = 12,
+  #       icon = cond_icon(x > 0),
+  #       color = cond_color(x > 0)
+  #     )
+  #   })
+  #
+  #   # Add button to link to salary data
+  #   observeEvent(input$link_to_tabpanel_earnings3, {
+  #     updateTabsetPanel(session, "navbar", "Earnings")
+  #   })
+  #
+  #   ### L4+  ----
+  #   output$skills.l4Over2 <- renderValueBox({
+  #     valueBox("In V2",
+  #       "qualified at level 4+ (compared with x% for England)",
+  #       width = 12
+  #     )
+  #   })
+  #
+  #   ### L4+ change  ----
+  #   output$skills.l4changeOver2 <- renderValueBox({
+  #     x <- (0)
+  #     valueBox(
+  #       sprintf("%+.0f", x),
+  #       subtitle = NULL,
+  #       width = 12,
+  #       icon = cond_icon(x > 0),
+  #       color = cond_color(x > 0)
+  #     )
+  #   })
+  #
+  #   # Add button to link to skills data
+  #   observeEvent(input$link_to_tabpanel_FE3, {
+  #     updateTabsetPanel(session, "navbar", "FE")
+  #   })
+  #
 
   ### E&T achievements -----
   output$skisup.ETachOver2 <- renderValueBox({
@@ -1286,31 +1288,31 @@ server <- function(input, output, session) {
       color = cond_color(x > 0)
     )
   })
-# 
-#   ### HE entrants  ----
-#   output$he.entrantsOver2 <- renderValueBox({
-#     valueBox("In V2",
-#       "HE entrants",
-#       width = 12
-#     )
-#   })
-# 
-#   ### HE+ change  ----
-#   output$he.entrantschangeOver2 <- renderValueBox({
-#     x <- (0)
-#     valueBox(
-#       sprintf("%+.0f", x),
-#       subtitle = NULL,
-#       width = 12,
-#       icon = cond_icon(x > 0),
-#       color = cond_color(x > 0)
-#     )
-#   })
-# 
-#   # Add button to link to HE data
-#   observeEvent(input$link_to_tabpanel_HE3, {
-#     updateTabsetPanel(session, "navbar", "HE")
-#   })
+  #
+  #   ### HE entrants  ----
+  #   output$he.entrantsOver2 <- renderValueBox({
+  #     valueBox("In V2",
+  #       "HE entrants",
+  #       width = 12
+  #     )
+  #   })
+  #
+  #   ### HE+ change  ----
+  #   output$he.entrantschangeOver2 <- renderValueBox({
+  #     x <- (0)
+  #     valueBox(
+  #       sprintf("%+.0f", x),
+  #       subtitle = NULL,
+  #       width = 12,
+  #       icon = cond_icon(x > 0),
+  #       color = cond_color(x > 0)
+  #     )
+  #   })
+  #
+  #   # Add button to link to HE data
+  #   observeEvent(input$link_to_tabpanel_HE3, {
+  #     updateTabsetPanel(session, "navbar", "HE")
+  #   })
 
   # Stop app ---------------------------------------------------------------------------------
 
