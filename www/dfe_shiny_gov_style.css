@@ -117,3 +117,13 @@ a {
 .box{
     padding: 2px 2px 4px 12px;
 }
+
+/*make buttons stretch to width of column so they align*/
+.downloadButton{
+    width:100%;
+}
+
+/*use ,id="monospaced-title" in any text format to apply this*/
+#monospaced-title {
+        font-family: monospace;
+      }
