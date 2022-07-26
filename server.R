@@ -709,8 +709,8 @@ server <- function(input, output, session) {
             LEP == input$lep1
           ) %>%
           group_by(year) %>%
-          dplyr::summarise(job.cnt = sum(vacancy_unit)) %>%
-          dplyr::mutate(Row = 1:n()) %>%
+          summarise(job.cnt = sum(vacancy_unit)) %>%
+          mutate(Row = 1:n()) %>%
           mutate(Percentage_Change = job.cnt / lag(job.cnt)) %>%
           ungroup() %>%
           filter(year == "2022") %>%
@@ -733,8 +733,8 @@ server <- function(input, output, session) {
             LEP == input$lep2
           ) %>%
           group_by(year) %>%
-          dplyr::summarise(job.cnt = sum(vacancy_unit)) %>%
-          dplyr::mutate(Row = 1:n()) %>%
+          summarise(job.cnt = sum(vacancy_unit)) %>%
+          mutate(Row = 1:n()) %>%
           mutate(Percentage_Change = job.cnt / lag(job.cnt)) %>%
           ungroup() %>%
           filter(year == "2022") %>%
@@ -928,7 +928,7 @@ server <- function(input, output, session) {
       summarise(Achievements = sum(achievements))
     # add an extra column so the colours work in ggplot when sorting alphabetically
     FETime$Area <- factor(FETime$LEP,
-                          levels = c(input$lep1, input$lep2)
+      levels = c(input$lep1, input$lep2)
     )
     ggplot(FETime, aes(
       x = AY, y = Achievements, colour = Area,
@@ -947,13 +947,13 @@ server <- function(input, output, session) {
       xlab("Year") +
       scale_color_manual(values = c("#1d70b8", "#F46A25"))
   })
-  
+
   output$Ach_time <- renderPlotly({
     ggplotly(Ach_time(), tooltip = c("text")) %>%
       layout(legend = list(orientation = "h", x = 0, y = -0.1)) %>%
       config(displayModeBar = FALSE)
   })
-  
+
   ## Achievements pc bar chart ----
   Ach_SSA_pc <- reactive({
     AchSSA_21 <- C_Achieve_ILR21 %>%
