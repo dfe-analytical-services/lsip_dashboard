@@ -202,23 +202,6 @@ fluidPage(
           # lep 2 is reactve to lep 1 so is populated in the server
           selectInput("lep2", "Choose comparison LEP",
             choices = NULL
-          ),
-          helpText("Download all available indicators for all geographies (LEPs, LAs, Regions and England):",
-            style = "font-style: italic;"
-          ),
-          ### Download button -------------
-          downloadButton(
-            outputId = "download_btn0a",
-            label = "All data",
-            icon = shiny::icon("download")
-          ),
-          helpText("Or just for the currently chosen LEP:",
-            style = "font-style: italic;"
-          ),
-          downloadButton(
-            outputId = "download_btn0b",
-            label = "Current LEP",
-            icon = shiny::icon("download")
           )
         ),
 
@@ -320,8 +303,36 @@ fluidPage(
                     ),
                   ) # end of right column
                 ), # end of data row
-                p(" ")
-              ),
+                ### Downloads-------------
+                br(),
+                fluidRow(
+                  column(
+                    width = 3,
+                    downloadButton(
+                      outputId = "download_btn0a",
+                      label = "All data   ",
+                      icon = shiny::icon("download"),
+                      class = "downloadButton"
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    "Download all available indicators for all geographies (LEPs, LAs, Regions and England)",
+                  )
+                ),
+                fluidRow(
+                  column(
+                    width = 3,
+                    downloadButton(
+                      outputId = "download_btn0b",
+                      label = "Current LEP",
+                      icon = shiny::icon("download"),
+                      class = "downloadButton"
+                    )
+                  ),
+                  column(width = 9, "Or just for the currently chosen LEP")
+                )
+              ) # end of main pane box
             ), # end of Overview tab
 
             # EMPLOYMENT  ----
@@ -361,24 +372,38 @@ fluidPage(
                   p("Employment percentage by occupation (sub-major SOC group)", style = "font-size:20px;"),
                   dataTableOutput("EmpOcc")
                 ),
-                ### Help text --------------------
-                helpText("Download employment indicators for all geographies (LEPs, LAs, Regions and England):",
-                  style = "font-style: italic;"
+                ### Downloads-------------
+                box(
+                  width = 12,
+                  p(" ")
                 ),
-                ### Download buttons -------------
-                downloadButton(
-                  outputId = "download_btn1a",
-                  label = "All data",
-                  icon = icon("download")
-                ),
-                helpText("Or just for the currently chosen LEP:",
-                  style = "font-style: italic;"
-                ),
-                downloadButton(
-                  outputId = "download_btn1b",
-                  label = "Current LEP",
-                  icon = icon("download")
-                )
+                fluidRow(
+                  column(
+                    width = 3,
+                    downloadButton(
+                      outputId = "download_btn1a",
+                      label = "All data   ",
+                      icon = shiny::icon("download"),
+                      class = "downloadButton"
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    "Download employment indicators for all geographies (LEPs, LAs, Regions and England)",
+                  )
+                ), # end of row
+                fluidRow(
+                  column(
+                    width = 3,
+                    downloadButton(
+                      outputId = "download_btn1b",
+                      label = "Current LEP",
+                      icon = shiny::icon("download"),
+                      class = "downloadButton"
+                    )
+                  ),
+                  column(width = 9, p("Or just for the currently chosen LEP"))
+                ) # end of row
               ) # end of main panel
             ), # end of Local Landscape tab
 
@@ -423,27 +448,37 @@ fluidPage(
                   help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
               The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between LEPS and over time, but do not represent true job vacancy volumes."
                 ),
-                ### Help text --------------------
-                helpText("Download vacancy indicators for all geographies (LEPs, LAs, Regions and England):",
-                  style = "font-style: italic;"
-                ),
-                ### Download buttons -------------
-                downloadButton(
-                  outputId = "download_btn3a",
-                  label = "All data",
-                  icon = icon("download")
-                ),
-                helpText("Or just for the currently chosen LEP:",
-                  style = "font-style: italic;"
-                ),
-                downloadButton(
-                  outputId = "download_btn3b",
-                  label = "Current LEP",
-                  icon = icon("download")
-                ),
+                ### Downloads-------------
+                br(),
+                fluidRow(
+                  column(
+                    width = 3,
+                    downloadButton(
+                      outputId = "download_btn3a",
+                      label = "All data   ",
+                      icon = shiny::icon("download"),
+                      class = "downloadButton"
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    "Download vacancy indicators for all geographies (LEPs, LAs, Regions and England)",
+                  )
+                ), # end of row
+                fluidRow(
+                  column(
+                    width = 3,
+                    downloadButton(
+                      outputId = "download_btn3b",
+                      label = "Current LEP",
+                      icon = shiny::icon("download"),
+                      class = "downloadButton"
+                    )
+                  ),
+                  column(width = 9, p("Or just for the currently chosen LEP"))
+                ) # end of row
               ) # end of main panel
             ), # end of Skills Supply tab
-            #  ), # end of labour navbar
             # FE ----
             tabPanel(
               "FE",
@@ -491,28 +526,42 @@ fluidPage(
                     plotlyOutput("Ach_SSA_pc")
                   )
                 ), # end of box
-                ### Help text --------------------
-                helpText("Download FE indicators for all geographies (LEPs, LAs, Regions and England):",
-                  style = "font-style: italic;"
+                ### Downloads-------------
+                box(
+                  width = 12,
+                  p(" ")
                 ),
-                ### Download buttons -------------
-                downloadButton(
-                  outputId = "download_btn2a",
-                  label = "All data",
-                  icon = icon("download")
-                ),
-                helpText("Or just for the currently chosen LEP:",
-                  style = "font-style: italic;"
-                ),
-                downloadButton(
-                  outputId = "download_btn2b",
-                  label = "Current LEP",
-                  icon = icon("download")
-                )
-              )
-            ) # end of main panel
-          ) # end of Skills Supply tab
-        ) # end of skills navbar
+                fluidRow(
+                  column(
+                    width = 3,
+                    downloadButton(
+                      outputId = "download_btn2a",
+                      label = "All data   ",
+                      icon = shiny::icon("download"),
+                      class = "downloadButton"
+                    )
+                  ),
+                  column(
+                    width = 9,
+                    "Download FE indicators for all geographies (LEPs, LAs, Regions and England)",
+                  )
+                ), # end of row
+                fluidRow(
+                  column(
+                    width = 3,
+                    downloadButton(
+                      outputId = "download_btn2b",
+                      label = "Current LEP",
+                      icon = shiny::icon("download"),
+                      class = "downloadButton"
+                    )
+                  ),
+                  column(width = 9, p("Or just for the currently chosen LEP"))
+                ) # end of row
+              ) # end of main panel
+            ) # FE panel
+          ) # end of dashboard tabset panel
+        ) # end of dashboard navbar
       ) # end of app data row
     ), # end of app tab panel
     # FUTURE DEVELOPMENT ---------------
