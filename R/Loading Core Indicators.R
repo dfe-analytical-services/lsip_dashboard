@@ -67,9 +67,11 @@ format.EmpOcc.APS <- function(x) {
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
     mutate_at(c(3:27), as.numeric) %>% # Convert to numeric
-    mutate(area = case_when(area == "Hull and East Riding" ~ "Hull and East Yorkshire", 
-                            area=="Buckinghamshire Thames Valley" ~ "Buckinghamshire",
-                            TRUE ~ area)) %>% # Rename so matches official name
+    mutate(area = case_when(
+      area == "Hull and East Riding" ~ "Hull and East Yorkshire",
+      area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+      TRUE ~ area
+    )) %>% # Rename so matches official name
     relocate(geographic_level, .after = area) %>%
     mutate(year = as.numeric(substr(year, 5, 8))) %>%
     rename_with(
@@ -95,9 +97,11 @@ format.EmpRate.APS <- function(x) {
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
     mutate_at(c(2:9), as.numeric) %>% # Convert to numeric
-    mutate(area = case_when(area == "Hull and East Riding" ~ "Hull and East Yorkshire",
-                            area=="Buckinghamshire Thames Valley" ~ "Buckinghamshire",
-                            TRUE ~ area)) %>% # Rename so matches official name
+    mutate(area = case_when(
+      area == "Hull and East Riding" ~ "Hull and East Yorkshire",
+      area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+      TRUE ~ area
+    )) %>% # Rename so matches official name
     select(year = x2017, area, everything(), -check) %>% # reorder and remove
     mutate(empRate = .[[5]] / .[[3]]) %>%
     relocate(geographic_level, .after = area) %>%
@@ -135,60 +139,15 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
     mutate(year = as.numeric(year))
 }
 
-# Clean indicators datasets----
-
-
-
-
-
-
 # vacancy
 C_Vacancy_ONS1722 <- format.Vacancy.ONS(I_Vacancy_ONS1722)
 
 C_Vacancy_England <- C_Vacancy_ONS1722 %>%
-  filter(region != "Wales" |
-    region != "Scotland" |
-    region != "Northern Ireland") %>%
+  filter(!region %in% c("Wales", "Scotland", "Northern Ireland")) %>%
   group_by(year) %>%
   summarise(England = sum(vacancy_unit)) %>%
   right_join(C_Vacancy_ONS1722, by = "year") %>%
   mutate(pc_total = vacancy_unit / England)
-
-
-
-# EmpRate_time <- reactive({
-#   C_EmpRate_APS1721 %>%
-#     select(year, area, empRate)%>%
-#     filter(area == "England" |
-#              area == input$lep1 |
-#              area == input$lep2) %>%
-#     ggplot(aes(x=year, y=empRate, group = area, colour = area))+
-#     geom_line()+
-#     theme_minimal()+
-#     expand_limits(y = 0.6)+
-#     labs(colour = "Area")+
-#     theme(legend.position="bottom")+
-#     ggtitle("Employment Rate \n 2017-2021")+
-#     xlab("Year")+
-#     ylab("Employment Rate")+
-#     scale_y_continuous(labels = scales::percent_format(accuracy=1))
-# })
-# Save to SQL ----
-# con <- dbConnect(odbc(), Driver = "SQL Server Native Client 11.0",
-
-#                 Server = "T1PRANMSQL\SQLPROD,60125",
-
-#                Database = "MA_UFS_S_DATA",
-
-#                Trusted_Connection = "yes")
-
-
-
-# and then I think you can use dbWriteTable to save the table
-# (haven't used it before so you may need to tweak the code below). I'm calling X your R table.
-
-
-# con %>% dbWriteTable("MA_UFS_S_DATA.LSIP.dashboard_data", X)
 
 # Combine into single workbook ----
 
