@@ -62,11 +62,9 @@ fluidPage(
           column(
             12,
             h1("Local Skills Dashboard"),
-            p("The aim of this dashboard is to provide local data to local actors in an accessible format. The dashboard will
-                     support the implementation of LSIPs,
-provide a baseline of local skills data which ERBs can build on with qualitative employer information, and
-benefit secondary local actors (including Ofsted) who already use these local indicators to inform their work.
-The dashboard displays published data from a variety of sources (APS, ILR and ONS online job vacancies) to compare between different LEPS and over time for some indicators. "),
+            p("This dashboard brings together published data on local employment and skills. It provides a consistent baseline assessment of local skills landscapes for use by local actors."),
+            p("It aims to support employer bodies in developing Local Skills Improvement Plans."),
+            p("The dashboard displays published data from a variety of sources (APS, ILR and ONS online job vacancies) at Local Enterprise Partnership (LEP) geography. Trends can be compared between different LEPs and over time for some indicators. The underlying data contains national, regional, LEP and LA data and can be downloaded directly from the dashboard."),
             br(),
             "This dashboard has been produced to support the aims of the ",
             a(
@@ -98,22 +96,39 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                     h2("Dashboard"),
                     p("This page contains the different dashboard tabs."),
                     h3(actionLink("link_to_tabpanel_overview", "Overview")),
-                    p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, FE and apprenticeship achievement volumes. It shows year-on-year change for each indicator."),
+                    p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, adult FE and apprenticeship achievement volumes. It shows year-on-year change for each indicator."),
                     p("The download buttons download all indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
                     # h2("Labour market"),
                     h3(actionLink("link_to_tabpanel_employment", "Employment")),
                     p("This tab contains employment indicators at LEP level. These can be compared to England and a comparator LEP."),
-                    p("The chart shows employment rate over time for the chosen LEP. The table displays employment distribution by occupation (sub-major SOC group)."),
+                    p("The line chart shows employment rate over time for the chosen LEP. The table displays employment distribution by occupation (sub-major SOC group)."),
                     p("The download buttons download employment indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
                     h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
                     p("This tab contains online job vacancies indicators at LEP level. These can be compared to England and a comparator LEP."),
-                    p("The chart shows change in online job vacancy units over time. Units are not an indication of real volume, but each unit represents a fixed number of job adverts to enable comparisons over time and between areas."),
+                    p("The line chart shows change in online job vacancy units over time. Units are not real volumes but represent a fixed number of job adverts to be used for comparisons over time and between areas."),
+                    p("The download buttons download vacancy indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
                     # h2("Skills landscape"),
                     h3(actionLink("link_to_tabpanel_FE", "FE")),
-                    p("FE achievements over time and by SSA."),
-                    h2("Dashboard information"),
+                    p("This tab provides a summary of further education (FE) and skills statistics at LEP level. These can be compared to another LEP."),
+                    p("The line chart shows achievement volumes over time for apprenticeships, education & training and community learning."),
+                    p("The bar chart displays distribution of FE and apprenticeships achievements by SSA for the latest available period."),
+                    p("The download buttons download FE and skills indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
+                    p("Definitions", style = "font-style: bold"),
+                    tags$li("FE and skills include all age apprenticeships and wider adult (19+) FE learning, such as community learning and education and training."),
+                    tags$li("Further Education covers publicly-funded learning delivered by an FE institution, a training provider or within a local community. It also includes apprenticeships delivered in the workplace. It does not include higher education, unless delivered as part of an apprenticeship programme."),
+                    tags$li("Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications."),
+                    tags$li("Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups."),
+                    tags$li("Education and training   is mainly classroom-based adult FE that is not an apprenticeship or community learning."),
+                    tags$li("Achievements are the number of learners who successfully complete an individual aim in an academic year. "),
+                    # h2("Dashboard information"),
                     h3(actionLink("link_to_tabpanel_future", "Future development")),
-                    p("Proposed additional functionality in the next version of the dashboard."),
+                    p("This page summarises the improvements we plan to make for the next release (October 2022). These include:"),
+                    tags$li("Integrating more data sources (e.g. ASHE earnings data, BRES enterprise data, HE learner data, OBSM learner outcomes);"),
+                    tags$li("Providing more data breakdowns (e.g. employment by 4-digit SOC, qualification by subject and level, apprenticeships by enterprise size and sector);"),
+                    tags$li("Adding new features, like the ability to choose the geography (LA, LEP, Region) and view data for one or multiple areas, combined or side-by-side."),
+                    br(),
+                    "If you have any feedback or suggestions for improvement, please contact us at ",
+                    a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk"), "."
                   ),
                   br()
                 )
@@ -137,23 +152,12 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                   h2("Labour market"),
                   h3("Annual Population Survey (APS)"),
                   p("A continuous household survey covering the UK.
-                             The dashboard uses employment volumes and rates for each LEP and split by sub-major SOC 2020 grouping.
+                             The dashboard uses employment volumes and rates for each LEP and split by sub-major SOC 2010 grouping.
                              The data are for interviews conducted over the calendar year (2017-2021 are shown).
                              "),
                   a(
                     href = "https://www.nomisweb.co.uk/datasets/apsnew",
                     "APS data on Nomis",
-                    .noWS = c("after")
-                  ),
-                  br(),
-                  h2("Skills landscape"),
-                  h3("Individualised Learner Records (ILR)"),
-                  p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England.
-                             The dashboard uses FE learner achievements over time (AY1617-21/22 (temporary data to October for 21/22)) split by apprenticeships, community learning, education and training.
-                             The dashboard also shows FE learner achievements split by sector subject area (tier 1) for the latest AY21/22 reported to January."),
-                  a(
-                    href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills",
-                    "ILR data on EES",
                     .noWS = c("after")
                   ),
                   br(),
@@ -164,6 +168,17 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                   a(
                     href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/onlinejobadvertsbyitl1regionandlocalauthority",
                     "Job adverts data on ONS",
+                    .noWS = c("after")
+                  ),
+                  br(),
+                  h2("Skills landscape"),
+                  h3("Individualised Learner Records (ILR)"),
+                  p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England.
+                             The dashboard uses FE learner achievements over time (AY1617-21/22 (temporary data to October for 21/22)) split by apprenticeships, community learning, education and training.
+                             The data is taken from the FE and Skills official statistics."),
+                  a(
+                    href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills",
+                    "ILR data on EES",
                     .noWS = c("after")
                   )
                 )
@@ -406,7 +421,7 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                   inputId = "SubsLev",
                   label = "Chart information",
                   help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
-              The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a unit measure. The unit measure is derived by dividing the monthly average count of job adverts by a set value."
+              The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between LEPS and over time, but do not represent true job vacancy volumes."
                 ),
                 ### Help text --------------------
                 helpText("Download vacancy indicators for all geographies (LEPs, LAs, Regions and England):",
@@ -437,7 +452,7 @@ The dashboard displays published data from a variety of sources (APS, ILR and ON
                 width = 12,
                 ### Title ----
                 uiOutput("page2title", style = "font-size: 24px;"),
-                div("Data from Individualised Learner Records for FE learners. Years shown are academic years.", style = "font-size: 16px; font-style: italic;"),
+                div("Data from Individualised Learner Records for FE learners. Years shown are academic years. All figures are for 16-64 except the occupation split bar chart which is all ages.", style = "font-size: 16px; font-style: italic;"),
                 br(),
                 ### KPI boxes ----
                 box(
