@@ -229,18 +229,18 @@ fluidPage(
                     h2("Labour market"),
                     div(
                       title = "Source: APS. 2021 calendar year",
-                      valueBoxOutput("locland.emplcnt0", width = 8),
-                      valueBoxOutput("locland.emplcntchange0", width = 4)
+                      uiOutput("locland.emplcnt0"),
+                      p("people employed in 2021")
                     ),
                     box(
                       width = 12,
                       p(" ")
                     ),
                     # second row - emp rate
-                    tags$div(
+                    div(
                       title = "Source: APS. 2021 calendar year",
-                      valueBoxOutput("locland.emplrate0", width = 8),
-                      valueBoxOutput("locland.emplchange0", width = 4)
+                      uiOutput("locland.emplrate0"),
+                      uiOutput("locland.emplRateSub") # subtitle compared to England
                     ),
                     # third row - link to emp tab
                     box(
@@ -253,10 +253,10 @@ fluidPage(
                       p(" ")
                     ),
                     # fourth row - vacancies
-                    tags$div(
+                    div(
                       title = "Source: ONS (Adzuna). Jan 2022",
-                      valueBoxOutput("jobad.units", width = 8),
-                      valueBoxOutput("jobad.change", width = 4)
+                      uiOutput("jobad.units"),
+                      p("of online vacancies in England (Jan 2022)")
                     ),
                     # fifth row - link to vacancy data
                     box(
@@ -272,16 +272,9 @@ fluidPage(
                     style = "background-color:#f3f2f1;",
                     h2("Skills landscape"),
                     div(
-                      title = "Source:ILR AY20/21", # tooltip
-                      fluidRow(
-                        column(
-                          width = 8,
-                          h2(uiOutput("skisup.ETach")),
-                          p("education and training achievements (AY20/21)")
-                        ),
-                        # valueBoxOutput("skisup.ETach", width = 8),
-                        column(uiOutput("skisup.ETachChange"), width = 4)
-                      )
+                      title = "Source: ILR AY20/21", # tooltip
+                      uiOutput("skisup.ETach"),
+                      p("education and training achievements (AY20/21)")
                     ),
                     box(
                       width = 12,
@@ -289,11 +282,9 @@ fluidPage(
                     ),
                     # 5th row - apps
                     div(
-                      title = "Source:ILR AY20/21",
+                      title = "Source: ILR AY20/21",
                       uiOutput("skisup.APPach"),
                       p("apprenticeship achievements (AY20/21)")
-                      # valueBoxOutput("skisup.APPach", width = 8),
-                      # valueBoxOutput("skisup.APPachChange", width = 4)
                     ),
                     # 6th row - link to app data
                     box(
@@ -331,6 +322,10 @@ fluidPage(
                     )
                   ),
                   column(width = 9, "Or just for the currently chosen LEP")
+                ),
+                box(
+                  width = 12,
+                  p(" ")
                 )
               ) # end of main pane box
             ), # end of Overview tab
