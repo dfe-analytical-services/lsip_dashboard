@@ -155,26 +155,17 @@ server <- function(input, output, session) {
   ## KPIs ----
 
   ### Employment count ----
-  output$locland.emplcnt0 <- renderValueBox({
-    valueBox(
-      format((C_EmpRate_APS1721 %>%
-        filter(
-          geographic_level == "lep", # cleans up for London which is included as lep and gor
-          area == input$lep1,
-          year == "2021"
-        )
-      )$"28  in employment ",
-      scientific = FALSE, big.mark = ","
-      ),
-      "people employed in 2021",
-      width = 12
-    )
-  })
+  output$locland.emplcnt0 <- renderUI({
+    empCnt <- (C_EmpRate_APS1721 %>%
+      filter(
+        geographic_level == "lep", # cleans up for London which is included as lep and gor
+        area == input$lep1,
+        year == "2021"
+      )
+    )$"28  in employment "
 
-  ### Employment change ----
-  output$locland.emplcntchange0 <- renderValueBox({
-    # get value
-    x <- ((C_EmpRate_APS1721 %>%
+    # Employment change
+    empCntChange <- ((C_EmpRate_APS1721 %>%
       filter(
         geographic_level == "lep", # cleans up for London which is included as lep and gor
         area == input$lep1,
@@ -188,46 +179,29 @@ server <- function(input, output, session) {
           year == "2020"
         )
       )$"28  in employment ")
-    # build box
-    valueBox(
-      format_pm(x),
-      subtitle = NULL,
-      width = 12,
-      icon = cond_icon(x > 0),
-      color = cond_color(x > 0)
+
+    # print with formatting
+    h2(
+      format(empCnt, big.mark = ","), " (",
+      span(
+        format_pm(empCntChange) # plus-minus and comma sep formatting
+        ,
+        style = paste0("color:", cond_color(empCntChange > 0)) # colour formating
+        , .noWS = c("before", "after") # remove whitespace
+      ),
+      ")"
     )
   })
 
   ### Employment rate -----
-  output$locland.emplrate0 <- renderValueBox({
-    valueBox(
-      paste0(
-        format(100. * (C_EmpRate_APS1721 %>%
-          filter(
-            geographic_level == "lep", # cleans up for London which is included as lep and gor
-            area == input$lep1,
-            year == "2021"
-          )
-        )$empRate, digits = 2),
-        "%"
-      ),
-      paste0(
-        "employment rate in 2021 (compared with ",
-        format(100. * (C_EmpRate_APS1721 %>%
-          filter(
-            geographic_level == "country", # cleans up for London which is included as lep and gor
-            year == "2021"
-          )
-        )$empRate, digits = 2),
-        "% for England)"
-      ),
-      width = 12
-    )
-  })
-
-  ### Employment rate change -----
-  output$locland.emplchange0 <- renderValueBox({
-    x <- (100. * ((C_EmpRate_APS1721 %>%
+  output$locland.emplrate0 <- renderUI({
+    empRate <- (C_EmpRate_APS1721 %>%
+      filter(
+        geographic_level == "lep", # cleans up for London which is included as lep and gor
+        area == input$lep1,
+        year == "2021"
+      ))$empRate
+    empRateChange <- (C_EmpRate_APS1721 %>%
       filter(
         geographic_level == "lep", # cleans up for London which is included as lep and gor
         area == input$lep1,
@@ -238,18 +212,30 @@ server <- function(input, output, session) {
           geographic_level == "lep", # cleans up for London which is included as lep and gor
           area == input$lep1,
           year == "2020"
-        ))$empRate))
-    valueBox(
-      paste(
-        sprintf("%+.0f", x),
-        "ppts"
-      ),
-      subtitle = NULL,
-      width = 12,
-      icon = cond_icon(x > 0),
-      color = cond_color(x > 0)
+        ))$empRate
+
+    # print with formatting
+    h2(
+      paste0(format(100 * empRate, digit = 2), "% ("),
+      span(
+        paste0(sprintf("%+.0f", 100 * empRateChange), "ppts"),
+        style = paste0("color:", cond_color(empRateChange > 0)) # colour formating
+        , .noWS = c("before", "after")
+      ), ")"
     )
   })
+
+  ### Employment rate sub -----
+  output$locland.emplRateSub <- renderUI({
+    empRateEng <- (C_EmpRate_APS1721 %>%
+      filter(
+        geographic_level == "country", # cleans up for London which is included as lep and gor
+        year == "2021"
+      )
+    )$empRate
+    p(paste0("employment rate in 2021 (compared with ", format(100. * empRateEng, digits = 2), "% for England)"))
+  })
+
   # Add link to employment data
   observeEvent(input$link_to_tabpanel_employment2, {
     updateTabsetPanel(session, "navbar", "Dashboard")
@@ -257,34 +243,16 @@ server <- function(input, output, session) {
   })
 
   ### ONS job advert units  ----
-  output$jobad.units <- renderValueBox({
-    # valueBox(C_Vacancy_England %>%
-    #   filter(
-    #     year == "2022",
-    #     LEP == input$lep1
-    #   ) %>%
-    #   summarise(job.unit = sum(vacancy_unit)),
-    # "job vacancy units (Jan 22)",
-    # width = 12
-    # )
-    valueBox(
-      paste0(
-        format(100. * (C_Vacancy_England %>%
-          filter(
-            year == "2022",
-            LEP == input$lep1
-          ) %>%
-          summarise(job.pc = sum(pc_total))), digits = 2),
-        "%"
-      ),
-      paste0("of online vacancies in England (Jan 2022)"),
-      width = 12
-    )
-  })
+  output$jobad.units <- renderUI({
+    VacPc <- C_Vacancy_England %>%
+      filter(
+        year == "2022",
+        LEP == input$lep1
+      ) %>%
+      summarise(job.pc = sum(pc_total))
 
-  ### ONS job advert units change  ----
-  output$jobad.change <- renderValueBox({
-    x <- (C_Vacancy_England %>%
+    ### ONS job advert units change  ----
+    VacPcChange <- (C_Vacancy_England %>%
       filter(
         year == "2022",
         LEP == input$lep1
@@ -296,15 +264,15 @@ server <- function(input, output, session) {
           LEP == input$lep1
         ) %>%
         summarise(job.pc = sum(pc_total))))
-    valueBox(
-      paste(
-        sprintf("%+.2f", x),
-        "ppts"
-      ),
-      subtitle = NULL,
-      width = 12,
-      icon = cond_icon(x > 0),
-      color = cond_color(x > 0)
+
+    # print with formatting
+    h2(
+      paste0(format(100 * VacPc, digit = 2), "% ("),
+      span(
+        paste0(sprintf("%+.1f", 100 * VacPcChange), "ppts"),
+        style = paste0("color:", cond_color(VacPcChange > 0)) # colour formating
+        , .noWS = c("before", "after")
+      ), ")", # remove whitespace
     )
   })
 
@@ -322,7 +290,6 @@ server <- function(input, output, session) {
 
 
   ### E&T achievements -----
-  # text approach
   output$skisup.ETach <- renderUI({
     ETach <- C_Achieve_ILR1621 %>%
       filter(
@@ -331,27 +298,9 @@ server <- function(input, output, session) {
         level_or_type == "Education and training: Total"
       ) %>%
       summarise(App_ach = sum(achievements))
-    format(ETach, big.mark = ",")
-  })
-  # valuebox approach
-  # output$skisup.ETach <- renderValueBox({
-  #   valueBox(
-  #     format((C_Achieve_ILR1621 %>%
-  #               filter(
-  #                 time_period == "202021",
-  #                 LEP == input$lep1,
-  #                 level_or_type == "Education and training: Total"
-  #               ) %>%
-  #               summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-  #     "education and training achievements (AY20/21)",
-  #     width = 12
-  #   )
-  # })
 
-  ### E&T achievements change -----
-  # text appraoch
-  output$skisup.ETachChange <- renderUI({
-    x <- ((C_Achieve_ILR1621 %>%
+    # E&T achievements change -----
+    ETachChange <- ((C_Achieve_ILR1621 %>%
       filter(
         time_period == "202021",
         LEP == input$lep1,
@@ -365,33 +314,20 @@ server <- function(input, output, session) {
           level_or_type == "Education and training: Total"
         ) %>%
         summarise(App_ach = sum(achievements))))
-    h2(format_pm(x), style = paste0("color:", cond_color(x > 0)))
+
+    # print with formatting
+    h2(
+      format(ETach, big.mark = ","), " (",
+      span(
+        format_pm(ETachChange) # plus-minus and comma sep formatting
+        ,
+        style = paste0("color:", cond_color(ETachChange > 0)) # colour formating
+        , .noWS = c("before", "after") # remove whitespace
+      ),
+      ")"
+    )
   })
-  # valuebox approach
-  # output$skisup.ETachChange <- renderValueBox({
-  #   x <- ((C_Achieve_ILR1621 %>%
-  #     filter(
-  #       time_period == "202021",
-  #       LEP == input$lep1,
-  #       level_or_type == "Education and training: Total"
-  #     ) %>%
-  #     summarise(App_ach = sum(achievements)))
-  #   - (C_Achieve_ILR1621 %>%
-  #       filter(
-  #         time_period == "201920",
-  #         LEP == input$lep1,
-  #         level_or_type == "Education and training: Total"
-  #       ) %>%
-  #       summarise(App_ach = sum(achievements))))
-  #   valueBox(
-  #     sprintf("%+.0f", x),
-  #     subtitle = NULL,
-  #     width = 12,
-  #     icon = cond_icon(x > 0),
-  #     color = cond_color(x > 0)
-  #   )
-  # })
-  ### App achievements ----#
+
   ### App achievements ----
   output$skisup.APPach <- renderUI({
     AppAch <- format((C_Achieve_ILR1621 %>%
@@ -404,7 +340,7 @@ server <- function(input, output, session) {
     big.mark = ","
     )
 
-    ### App achievements change ----
+    # App achievements change ----
     APPachChange <- ((C_Achieve_ILR1621 %>%
       filter(
         time_period == "202021",
@@ -419,49 +355,18 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))))
-
-    h2(AppAch, " (", format_pm(APPachChange), ")")
-    # ,style=paste0("color:",cond_color(x > 0)))
+    # print with formatting
+    h2(
+      AppAch, " (",
+      span(
+        format_pm(APPachChange) # plus-minus and comma sep formatting
+        ,
+        style = paste0("color:", cond_color(APPachChange > 0)) # colour formating
+        , .noWS = c("before", "after") # remove whitespace
+      ),
+      ")"
+    )
   })
-  # ### App achievements ----
-  # output$skisup.APPach <- renderValueBox({
-  #   valueBox(
-  #     format((C_Achieve_ILR1621 %>%
-  #       filter(
-  #         time_period == "202021",
-  #         LEP == input$lep1,
-  #         level_or_type == "Apprenticeships: Total"
-  #       ) %>%
-  #       dplyr::summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-  #     "apprenticeship achievements (AY20/21)",
-  #     width = 12
-  #   )
-  # })
-  #
-  # ### App achievements change ----
-  # output$skisup.APPachChange <- renderValueBox({
-  #   x <- ((C_Achieve_ILR1621 %>%
-  #     filter(
-  #       time_period == "202021",
-  #       LEP == input$lep1,
-  #       level_or_type == "Apprenticeships: Total"
-  #     ) %>%
-  #     summarise(App_ach = sum(achievements)))
-  #   - (C_Achieve_ILR1621 %>%
-  #       filter(
-  #         time_period == "201920",
-  #         LEP == input$lep1,
-  #         level_or_type == "Apprenticeships: Total"
-  #       ) %>%
-  #       summarise(App_ach = sum(achievements))))
-  #   valueBox(
-  #     sprintf("%+.0f", x),
-  #     subtitle = NULL,
-  #     width = 12,
-  #     icon = cond_icon(x > 0),
-  #     color = cond_color(x > 0)
-  #   )
-
 
   # EMPLOYMENT ----
   ### Downloads----
@@ -624,8 +529,8 @@ server <- function(input, output, session) {
         geographic_level == "lep" |
           geographic_level == "country", # cleans up for London and South East which is included as lep and gor
         area == "England" |
-          area == input$lep1 | # "South East"|
-          area == input$lep2 # "London"
+          area == input$lep1 |
+          area == input$lep2
       ) %>%
       select(-year, -geographic_level) %>%
       rename_with(str_to_sentence) %>% # capitalise column titles
