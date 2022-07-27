@@ -194,21 +194,44 @@ server <- function(input, output, session) {
   })
   
   #Emp chart
-  output$locland.emplcnt0 <- renderUI({
+  empLineChart <- reactive({
     empLine <- C_EmpRate_APS1721 %>%
                  filter(
                    geographic_level == "lep", # cleans up for London which is included as lep and gor
-                   area == "South East"#input$lep1
-                 )%>%
-      mutate(LatestYr=case_when(year==2021 ~"Y",TRUE~"N"))
-    ggplot(empLine,aes(x = year, y = `28  in employment `,color=LatestYr))+
-    geom_line()+
+                   area == input$lep1
+                 )
+    empCntChange <- ((C_EmpRate_APS1721 %>%
+                        filter(
+                          geographic_level == "lep", # cleans up for London which is included as lep and gor
+                          area == input$lep1,
+                          year == "2021"
+                        )
+    )$"28  in employment "
+    - (C_EmpRate_APS1721 %>%
+         filter(
+           geographic_level == "lep", # cleans up for London which is included as lep and gor
+           area == input$lep1,
+           year == "2020"
+         )
+    )$"28  in employment ")
+    ggplot(empLine,aes(x = year,))+
+    geom_line(aes(y = `28  in employment `),data=empLine[1:5,],color = "black")+
+      geom_ribbon(aes(ymin = min(`28  in employment `),ymax=`28  in employment `),data=empLine[4:6,],fill=ifelse(empCntChange > 0, "#00703c", "#d4351c"),color=ifelse(empCntChange > 0, "#00703c", "#d4351c"))+
+                    #)+ 
     theme_classic()+
       theme(axis.line=element_blank(),
             axis.text.y=element_blank(),
             axis.ticks=element_blank(),
             axis.title.x=element_blank(),
-            axis.title.y=element_blank())
+            axis.title.y=element_blank(),
+            panel.background = element_rect(fill = "#f3f2f1"),
+            plot.background = element_rect(fill = "#f3f2f1"))
+  })
+  
+  output$empLineChart <- renderPlotly({
+    ggplotly(empLineChart(),height=150) %>%
+      layout(legend = list(orientation = "h", x = 0, y = -0.1)) %>%
+      config(displayModeBar = FALSE)
   })
 
   ### Employment rate -----
