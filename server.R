@@ -181,15 +181,15 @@ server <- function(input, output, session) {
       )$"28  in employment ")
 
     # print with formatting
-    h2(
-      format(empCnt, big.mark = ","), " (",
+    
+    h3(span("2021",style = "font-size: 16px;font-weight:normal"),
+      format(empCnt, big.mark = ","), " ",
       span(
         format_pm(empCntChange) # plus-minus and comma sep formatting
         ,
-        style = paste0("color:", cond_color(empCntChange > 0)) # colour formating
+        style = paste0("font-size: 16px;color:", cond_color(empCntChange > 0)) # colour formating
         , .noWS = c("before", "after") # remove whitespace
-      ),
-      ")"
+      )
     )
   })
   
@@ -214,23 +214,30 @@ server <- function(input, output, session) {
            year == "2020"
          )
     )$"28  in employment ")
-    ggplot(empLine,aes(x = year,))+
-    geom_line(aes(y = `28  in employment `),data=empLine[1:5,],color = "black")+
-      geom_ribbon(aes(ymin = min(`28  in employment `),ymax=`28  in employment `),data=empLine[4:6,],fill=ifelse(empCntChange > 0, "#00703c", "#d4351c"),color=ifelse(empCntChange > 0, "#00703c", "#d4351c"))+
-                    #)+ 
-    theme_classic()+
-      theme(axis.line=element_blank(),
-            axis.text.y=element_blank(),
-            axis.ticks=element_blank(),
-            axis.title.x=element_blank(),
-            axis.title.y=element_blank(),
-            panel.background = element_rect(fill = "#f3f2f1"),
-            plot.background = element_rect(fill = "#f3f2f1"))
+    ggplot(empLine,aes(x = year))+
+    geom_line(data=empLine[1:4,],aes(y = `28  in employment `),color = "black")+
+      geom_line(data=empLine[4:5,],aes(y = `28  in employment `),color = ifelse(empCntChange > 0, "#00703c", "#d4351c"))+
+      geom_ribbon(data=empLine[4:5,],aes(ymin = min(`28  in employment `),ymax=`28  in employment `)
+                  ,fill=ifelse(empCntChange > 0, "#00703c", "#d4351c"),alpha=0.3)+
+                #  ,color=ifelse(empCntChange > 0, "#00703c", "#d4351c"))+
+      theme_classic()+
+        theme(axis.line=element_blank(),
+              axis.text.y=element_blank(),
+              axis.ticks=element_blank(),
+              axis.title=element_blank(),
+              panel.background = element_rect(fill = "#f3f2f1"),
+              plot.background = element_rect(fill = "#f3f2f1") )
   })
-  
+  m <- list(
+    l = 0,
+    #r = 1,
+    b = 0,
+    t = 0,
+    pad = 0
+  )
   output$empLineChart <- renderPlotly({
-    ggplotly(empLineChart(),height=150) %>%
-      layout(legend = list(orientation = "h", x = 0, y = -0.1)) %>%
+    ggplotly(empLineChart(),height=80) %>%
+      layout(margin = m) %>%
       config(displayModeBar = FALSE)
   })
 

@@ -227,10 +227,10 @@ fluidPage(
                     width = 5,
                     style = "background-color:#f3f2f1;",
                     h2("Labour market"),
-                    h3("Employment volumes"),
+                    h3("People employed"),
                     fluidRow(
                       column(width=4,
-                      div(p("2021"),
+                      div(style = "margin-top:-2em",
                       title = "Source: APS. 2021 calendar year",
                       uiOutput("locland.emplcnt0"),
                       )
