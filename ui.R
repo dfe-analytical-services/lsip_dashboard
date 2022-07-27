@@ -227,14 +227,17 @@ fluidPage(
                     width = 5,
                     style = "background-color:#f3f2f1;",
                     h2("Labour market"),
-                    div(
+                    h3("Employment volumes"),
+                    fluidRow(
+                      column(width=4,
+                      div(p("2021"),
                       title = "Source: APS. 2021 calendar year",
                       uiOutput("locland.emplcnt0"),
-                      p("people employed in 2021")
-                    ),
-                    box(
-                      width = 12,
-                      p(" ")
+                      )
+                      ),
+                      column(width=7,
+                             plotlyOutput("empLineChart")
+                    )
                     ),
                     # second row - emp rate
                     div(
