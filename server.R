@@ -192,6 +192,24 @@ server <- function(input, output, session) {
       ")"
     )
   })
+  
+  #Emp chart
+  output$locland.emplcnt0 <- renderUI({
+    empLine <- C_EmpRate_APS1721 %>%
+                 filter(
+                   geographic_level == "lep", # cleans up for London which is included as lep and gor
+                   area == "South East"#input$lep1
+                 )%>%
+      mutate(LatestYr=case_when(year==2021 ~"Y",TRUE~"N"))
+    ggplot(empLine,aes(x = year, y = `28  in employment `,color=LatestYr))+
+    geom_line()+
+    theme_classic()+
+      theme(axis.line=element_blank(),
+            axis.text.y=element_blank(),
+            axis.ticks=element_blank(),
+            axis.title.x=element_blank(),
+            axis.title.y=element_blank())
+  })
 
   ### Employment rate -----
   output$locland.emplrate0 <- renderUI({
