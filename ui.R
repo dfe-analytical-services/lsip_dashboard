@@ -1,32 +1,3 @@
-# ---------------------------------------------------------
-# This is the ui file.
-# Use it to call elements created in your server file into the app, and define where they are placed.
-# Also use this file to define inputs.
-#
-# Every UI file should contain:
-# - A title for the app
-# - A call to a CSS file to define the styling
-# - An accessibility statement
-# - Contact information
-#
-# Other elements like charts, navigation bars etc. are completely up to you to decide what goes in.
-# However, every element should meet accessibility requirements and user needs.
-#
-# This fil e uses a slider input, but other inputs are available like date selections, multiple choice dropdowns etc.
-# Use the shiny cheatsheet to explore more options: https://shiny.rstudio.com/images/shiny-cheatsheet.pdf
-#
-# Likewise, this template uses the navbar layout.
-# We have used this as it meets accessibility requirements, but you are free to use another layout if it does too.
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-# ---------------------------------------------------------
-
 fluidPage(
   shinyjs::useShinyjs(),
   includeCSS("www/dfe_shiny_gov_style.css"),
@@ -113,22 +84,14 @@ fluidPage(
                     p("The line chart shows achievement volumes over time for apprenticeships, education & training and community learning."),
                     p("The bar chart displays distribution of FE and apprenticeships achievements by SSA for the latest available period."),
                     p("The download buttons download FE and skills indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
-                    p("Definitions", style = "font-style: bold"),
-                    tags$li("FE and skills include all age apprenticeships and wider adult (19+) FE learning, such as community learning and education and training."),
-                    tags$li("Further Education covers publicly-funded learning delivered by an FE institution, a training provider or within a local community. It also includes apprenticeships delivered in the workplace. It does not include higher education, unless delivered as part of an apprenticeship programme."),
-                    tags$li("Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications."),
-                    tags$li("Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups."),
-                    tags$li("Education and training   is mainly classroom-based adult FE that is not an apprenticeship or community learning."),
-                    tags$li("Achievements are the number of learners who successfully complete an individual aim in an academic year. "),
-                    # h2("Dashboard information"),
-                    h3(actionLink("link_to_tabpanel_future", "Future development")),
+                    h3("Future development"),
                     p("This page summarises the improvements we plan to make for the next release (October 2022). These include:"),
                     tags$li("Integrating more data sources (e.g. ASHE earnings data, BRES enterprise data, HE learner data, OBSM learner outcomes);"),
                     tags$li("Providing more data breakdowns (e.g. employment by 4-digit SOC, qualification by subject and level, apprenticeships by enterprise size and sector);"),
                     tags$li("Adding new features, like the ability to choose the geography (LA, LEP, Region) and view data for one or multiple areas, combined or side-by-side."),
                     br(),
                     "If you have any feedback or suggestions for improvement, please contact us at ",
-                    a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk"), "."
+                    a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk",.noWS = c("after")), "."
                   ),
                   br()
                 )
@@ -179,7 +142,7 @@ fluidPage(
                   a(
                     href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills",
                     "ILR data on EES",
-                    .noWS = c("after")
+                    .noWS = c("after","before")
                   )
                 )
               )
@@ -196,11 +159,11 @@ fluidPage(
       sidebarLayout(
         sidebarPanel(
           width = 2,
-          selectInput("lep1", "Choose primary LEP",
+          selectInput("lep1", "Choose primary LEP area",
             choices = C_LEP2020
           ),
           # lep 2 is reactve to lep 1 so is populated in the server
-          selectInput("lep2", "Choose comparison LEP",
+          selectInput("lep2", "Choose comparison LEP area",
             choices = NULL
           )
         ),
@@ -217,7 +180,6 @@ fluidPage(
               ## Main panel ----
               box(
                 width = 12,
-                ### Title ----
                 uiOutput("page0title", style = "font-size: 24px;"),
                 div("Change metrics are measured since the same period the year before.", style = "font-size: 16px; font-style: italic;"),
                 br(),
@@ -336,7 +298,6 @@ fluidPage(
               ## Main panel ----
               box(
                 width = 12,
-                ### Title ----
                 uiOutput("page1title", style = "font-size: 24px;"),
                 div("Data is from the Annual Population Survey. Years represent calendar years.", style = "font-size: 16px; font-style: italic;"),
                 br(),
@@ -397,7 +358,11 @@ fluidPage(
                       class = "downloadButton"
                     )
                   ),
-                  column(width = 9, p("Or just for the currently chosen LEP"))
+                  column(width = 9, p("Or just for the currently chosen LEP")),
+                  box(
+                    width = 12,
+                    p(" ")
+                  )
                 ) # end of row
               ) # end of main panel
             ), # end of Local Landscape tab
@@ -405,11 +370,9 @@ fluidPage(
             # VACANCIES ---------------
             tabPanel(
               "Vacancies",
-
               ## Main panel ----
               box(
                 width = 12,
-                ### Title ----
                 uiOutput("page3title", style = "font-size: 24px;"),
                 div("Data is from ONS using Adzuna online job adverts. Data for each year is the average of vacancies across January of that year.", style = "font-size: 16px; font-style: italic;"),
                 br(),
@@ -429,7 +392,6 @@ fluidPage(
                 ),
                 box(
                   width = 12,
-                  ### ONS job advert information ----
                   ### Online job vacancy units over time line chart ----
                   column(
                     width = 12,
@@ -470,17 +432,20 @@ fluidPage(
                       class = "downloadButton"
                     )
                   ),
-                  column(width = 9, p("Or just for the currently chosen LEP"))
+                  column(width = 9, p("Or just for the currently chosen LEP")),
+                  box(
+                    width = 12,
+                    p(" ")
+                  )
                 ) # end of row
               ) # end of main panel
             ), # end of Skills Supply tab
             # FE ----
             tabPanel(
               "FE",
-              ## Main panel ----
+              # Main panel
               box(
                 width = 12,
-                ### Title ----
                 uiOutput("page2title", style = "font-size: 24px;"),
                 div("Data from Individualised Learner Records for FE learners. Years shown are academic years. All figures are for 16-64 except the occupation split bar chart which is all ages.", style = "font-size: 16px; font-style: italic;"),
                 br(),
@@ -500,11 +465,9 @@ fluidPage(
                 ),
                 box(
                   width = 12,
-                  # height=500,
                   ### Achievements over time line chart ----
                   column(
                     width = 6,
-                    ### LEP 4 input ------------
                     p("FE and apprenticehips learner achievement trend", style = "font-size:20px;"),
                     p("Choose provision group:"),
                     selectizeInput("skill_line", NULL,
@@ -513,14 +476,26 @@ fluidPage(
                     plotlyOutput("Ach_time"),
                     p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total.", style = "font-style: italic;")
                   ),
-
-                  ### FE achievements ----
+                  ### FE achievements by SSA----
                   column(
                     width = 6,
                     p("All FE learner achievements by SSA tier 1 (AY21/22 Aug to Jan)", style = "font-size:20px;"),
                     plotlyOutput("Ach_SSA_pc")
                   )
-                ), # end of box
+                ), # end of charts box
+                ### FE definitions----
+                details(
+                      inputId = "FEdefs",
+                      label = "FE definitions",
+                    p(
+                      tags$li("FE and skills include all age apprenticeships and wider adult (19+) FE learning, such as community learning and education and training."),
+                    tags$li("Further Education covers publicly-funded learning delivered by an FE institution, a training provider or within a local community. It also includes apprenticeships delivered in the workplace. It does not include higher education, unless delivered as part of an apprenticeship programme."),
+                    tags$li("Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications."),
+                    tags$li("Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups."),
+                    tags$li("Education and training   is mainly classroom-based adult FE that is not an apprenticeship or community learning."),
+                    tags$li("Achievements are the number of learners who successfully complete an individual aim in an academic year. "),
+                    )
+                ),
                 ### Downloads-------------
                 box(
                   width = 12,
@@ -551,7 +526,11 @@ fluidPage(
                       class = "downloadButton"
                     )
                   ),
-                  column(width = 9, p("Or just for the currently chosen LEP"))
+                  column(width = 9, p("Or just for the currently chosen LEP")),
+                  box(
+                    width = 12,
+                    p(" ")
+                  )
                 ) # end of row
               ) # end of main panel
             ) # FE panel
@@ -559,36 +538,82 @@ fluidPage(
         ) # end of dashboard navbar
       ) # end of app data row
     ), # end of app tab panel
+    
+    # Create the accessibility statement-----------------
+    tabPanel(
+      "Accessibility",
+      h2("Accessibility statement"),
+      br("This accessibility statement applies to the Local Skills dashboard.
+            This dashboard is run by the Department for Education. We want as many people as possible to be able to use this application,
+            and have actively developed this dashboard with accessibilty in mind."),
+      h3("WCAG 2.1 compliance"),
+      br("We follow the reccomendations of the ", a(href = "https://www.w3.org/TR/WCAG21/", "WCAG 2.1 requirements. "), "This application has been checked using the ", a(href = "https://github.com/ewenme/shinya11y", "Shinya11y tool "), ", which did not detect accessibility issues.
+             This dashboard also fully passes the accessibility audits checked by the ", a(href = "https://developers.google.com/web/tools/lighthouse", "Google Developer Lighthouse tool"), ". This means that this dashboard:"),
+      tags$div(tags$ul(
+        tags$li("uses colours that have sufficient contrast"),
+        tags$li("allows you to zoom in up to 300% without the text spilling off the screen"),
+        tags$li("has its performance regularly monitored, with a team working on any feedback to improve accessibility for all users")
+      )),
+      h3("Limitations"),
+      br("We recognise that there are still potential issues with accessibility in this dashboard, but we will continue
+             to review updates to technology available to us to keep improving accessibility for all of our users. For example, these
+            are known issues that we will continue to monitor and improve:"),
+      tags$div(tags$ul(
+        tags$li("List"),
+        tags$li("known"),
+        tags$li("limitations, e.g."),
+        tags$li("Alternative text in interactive charts is limited to titles and could be more descriptive (although this data is available in csv format)")
+      )),
+      h3("Feedback"),
+      br(
+        "If you have any feedback on how we could further improve the accessibility of this dashboard, please contact us at",
+        a(href = "mailto:statistics.development@education.gov.uk", "statistics.development@education.gov.uk")
+      ),
+      br()
+    ), # End of accessibility tab
+    # Support links ===========================================================
+    
+    tabPanel(
+      "Support and feedback",
+      support_links() # defined in R/supporting_links.R
+    ),
+    
+    # Footer ====================================================================
+    
+    shinyGovstyle::footer(TRUE)
+  ) # End of navBarPage
+)
+    
     # FUTURE DEVELOPMENT ---------------
     #   navbarMenu(
     #    "Future development",
-    tabPanel(
-      "Future development",
-      mainPanel(
-        width = 12,
-        p("We will be seeking feedback on this version 1 of the local skills dashboard to inform our version 2.
-            We do have a number of improvements we will implement in version 2:  "),
-        br(),
-        p("Overview page", style = "font-size:20px;"),
-        p("V2 will include a number of key indicators to this page including: average salary, FE skill level, and HE data. "),
-        p("V2 will also include the functionality to filter the indicators by sector or occupation. "),
-        p("V2 overview page mockup:", style = "font-style: italic"),
-        img(src = "OverviewV2.png"),
-        br(),
-        p("Apprenticeships page", style = "font-size:20px;"),
-        p("V2 will show:"),
-        p("Starts and achievements timeseries."),
-        p("Distribution by level, SSA, enterprise size, and enterprise sector."),
-        p("Most common apprenticeships within selected provision, level, SSA, sector."),
-        p("Information about which providers/employers deliver these apprenticeships."),
-        br(),
-        p("HE page", style = "font-size:20px;"),
-        p("V2 will show HE participants and qualifiers by subject."),
-        br(),
-        p("FE page", style = "font-size:20px;"),
-        p("V2 will show learner outcomes by type of provision."),
-      )
-    ), # enedx of future development
+    # tabPanel(
+    #   "Future development",
+    #   mainPanel(
+    #     width = 12,
+    #     p("We will be seeking feedback on this version 1 of the local skills dashboard to inform our version 2.
+    #         We do have a number of improvements we will implement in version 2:  "),
+    #     br(),
+    #     p("Overview page", style = "font-size:20px;"),
+    #     p("V2 will include a number of key indicators to this page including: average salary, FE skill level, and HE data. "),
+    #     p("V2 will also include the functionality to filter the indicators by sector or occupation. "),
+    #     p("V2 overview page mockup:", style = "font-style: italic"),
+    #     img(src = "OverviewV2.png"),
+    #     br(),
+    #     p("Apprenticeships page", style = "font-size:20px;"),
+    #     p("V2 will show:"),
+    #     p("Starts and achievements timeseries."),
+    #     p("Distribution by level, SSA, enterprise size, and enterprise sector."),
+    #     p("Most common apprenticeships within selected provision, level, SSA, sector."),
+    #     p("Information about which providers/employers deliver these apprenticeships."),
+    #     br(),
+    #     p("HE page", style = "font-size:20px;"),
+    #     p("V2 will show HE participants and qualifiers by subject."),
+    #     br(),
+    #     p("FE page", style = "font-size:20px;"),
+    #     p("V2 will show learner outcomes by type of provision."),
+    #   )
+    # ), # enedx of future development
     #   # Overview ---------------
     #   tabPanel(
     #     "Overview v2",
@@ -933,46 +958,4 @@ fluidPage(
     # ), # end of future development nav bar
 
 
-    # Create the accessibility statement-----------------
-    tabPanel(
-      "Accessibility",
-      h2("Accessibility statement"),
-      br("This accessibility statement applies to the Local Skills dashboard.
-            This dashboard is run by the Department for Education. We want as many people as possible to be able to use this application,
-            and have actively developed this dashboard with accessibilty in mind."),
-      h3("WCAG 2.1 compliance"),
-      br("We follow the reccomendations of the ", a(href = "https://www.w3.org/TR/WCAG21/", "WCAG 2.1 requirements. "), "This application has been checked using the ", a(href = "https://github.com/ewenme/shinya11y", "Shinya11y tool "), ", which did not detect accessibility issues.
-             This dashboard also fully passes the accessibility audits checked by the ", a(href = "https://developers.google.com/web/tools/lighthouse", "Google Developer Lighthouse tool"), ". This means that this dashboard:"),
-      tags$div(tags$ul(
-        tags$li("uses colours that have sufficient contrast"),
-        tags$li("allows you to zoom in up to 300% without the text spilling off the screen"),
-        tags$li("has its performance regularly monitored, with a team working on any feedback to improve accessibility for all users")
-      )),
-      h3("Limitations"),
-      br("We recognise that there are still potential issues with accessibility in this dashboard, but we will continue
-             to review updates to technology available to us to keep improving accessibility for all of our users. For example, these
-            are known issues that we will continue to monitor and improve:"),
-      tags$div(tags$ul(
-        tags$li("List"),
-        tags$li("known"),
-        tags$li("limitations, e.g."),
-        tags$li("Alternative text in interactive charts is limited to titles and could be more descriptive (although this data is available in csv format)")
-      )),
-      h3("Feedback"),
-      br(
-        "If you have any feedback on how we could further improve the accessibility of this dashboard, please contact us at",
-        a(href = "mailto:email@education.gov.uk", "email@education.gov.uk")
-      )
-    ), # End of accessibility tab
-    # Support links ===========================================================
-
-    tabPanel(
-      "Support and feedback",
-      support_links() # defined in R/supporting_links.R
-    ),
-
-    # Footer ====================================================================
-
-    shinyGovstyle::footer(TRUE)
-  ) # End of navBarPage
-)
+  

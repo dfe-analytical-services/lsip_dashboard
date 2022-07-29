@@ -1,24 +1,3 @@
-# ---------------------------------------------------------
-# This is the server file.
-# Use it to create interactive elements like tables, charts and text for your app.
-#
-# Anything you create in the server file won't appear in your app until you call it in the UI file.
-# This server script gives an example of a plot and value box that updates on slider input.
-# There are many other elements you can add in too, and you can play around with their reactivity.
-# The "outputs" section of the shiny cheatsheet has a few examples of render calls you can use:
-# https://shiny.rstudio.com/images/shiny-cheatsheet.pdf
-#
-#
-# This is the server logic of a Shiny web application. You can run the
-# application  by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
-# ---------------------------------------------------------
-
-
 server <- function(input, output, session) {
 
   # Loading screen ---------------------------------------------------------------------------
@@ -44,42 +23,6 @@ server <- function(input, output, session) {
     paste0(input$lep1, " vacancy trends")
   })
 
-  output$page4title <- renderUI({
-    paste0(input$lep1, ": Overview of earnings")
-  })
-
-  output$page5title <- renderUI({
-    paste0(input$lep1, ": Overview of HE")
-  })
-
-  output$page6title <- renderUI({
-    paste0(input$lep1, ": overview of local landscape")
-  })
-
-  output$page7title <- renderUI({
-    paste0(input$lep1, ": overview of apprenticeships")
-  })
-
-  ### Conditional functions----
-  # Returns arrow-up icon on true (if true_direction is 'up')
-  cond_icon <- function(condition, true_direction = "up") {
-    if (true_direction == "up") {
-      return(icon(ifelse(condition, "arrow-up", "arrow-down"), "fa-2x fa-beat"))
-    }
-    return(icon(ifelse(condition, "arrow-down", "arrow-up"), "fa-2x fa-beat"))
-  }
-
-  # Conditional color for widget
-  # Returns 'green' on true, 'red' on false, e.g. api usage % change > 0
-  #                                               load time % change < 0
-  cond_color <- function(condition, true_color = "green") {
-    if (is.na(condition)) {
-      return("black")
-    }
-    colours <- c("green", "red")
-    return(ifelse(condition, true_color, colours[!colours == true_color]))
-  }
-
   # HOMEPAGE ----
 
   # Add link to overview
@@ -102,15 +45,11 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbar", "Dashboard")
     updateTabsetPanel(session, "datatabset", "FE")
   })
-  # Add link to future development
-  observeEvent(input$link_to_tabpanel_future, {
-    updateTabsetPanel(session, "navbar", "Future development")
-  })
 
   # Make sure second LEP filter doesn't include what has been chosen in lep1 filter
   observe({
     x <- unique(C_LEP2020) %>% filter(LEP != input$lep1)
-    updateSelectInput(session, "lep2", "Choose comparison LEP", choices = c("\nNone", x)) # Add in a none so nothing is selected for 2nd LEP to start with
+    updateSelectInput(session, "lep2", "Choose comparison LEP area", choices = c("\nNone", x)) # Add in a none so nothing is selected for 2nd LEP to start with
   })
 
   # OVERVIEW ----
@@ -184,8 +123,7 @@ server <- function(input, output, session) {
     h2(
       format(empCnt, big.mark = ","), " (",
       span(
-        format_pm(empCntChange) # plus-minus and comma sep formatting
-        ,
+        format_pm(empCntChange), # plus-minus and comma sep formatting
         style = paste0("color:", cond_color(empCntChange > 0)) # colour formating
         , .noWS = c("before", "after") # remove whitespace
       ),
