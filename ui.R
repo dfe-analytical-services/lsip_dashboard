@@ -236,7 +236,7 @@ fluidPage(
                       )
                       ),
                       column(width=7,
-                             plotlyOutput("empLineChart")
+                             plotlyOutput("empLineChart", height = 80)
                     )
                     ),
                     h3("Employment rate"),
@@ -247,15 +247,9 @@ fluidPage(
                              )
                       ),
                       column(width=7,
-                             plotlyOutput("empRateLineChart")
+                             plotlyOutput("empRateLineChart", height = 80)
                       )
                     ),
-                    # # second row - emp rate
-                    # div(
-                    #   title = "Source: APS. 2021 calendar year",
-                    #   uiOutput("locland.emplrate0"),
-                    #   uiOutput("locland.emplRateSub") # subtitle compared to England
-                    # ),
                     # third row - link to emp tab
                     box(
                       width = 12,
@@ -267,12 +261,17 @@ fluidPage(
                       p(" ")
                     ),
                     # fourth row - vacancies
-                    div(
-                      title = "Source: ONS (Adzuna). Jan 2022",
-                      uiOutput("jobad.units"),
-                      p("of online vacancies in England (Jan 2022)")
+                    h3("England vacancy share"),
+                    fluidRow(
+                      column(width=4,
+                             div(title = "Source: ONS (Adzuna). Jan 2022",
+                                 uiOutput("jobad.units"),
+                             )
+                      ),
+                      column(width=7,
+                             plotlyOutput("VacLineChart", height = 80)
+                      )
                     ),
-                    # fifth row - link to vacancy data
                     box(
                       width = 12,
                       actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies"),
@@ -293,7 +292,7 @@ fluidPage(
                              )
                       ),
                       column(width=7,
-                             plotlyOutput("etLineChart")
+                             plotlyOutput("etLineChart", height = 80)
                       )
                     ),
                     h3("App achievements"),
@@ -304,7 +303,7 @@ fluidPage(
                              )
                       ),
                       column(width=7,
-                             plotlyOutput("AppLineChart")
+                             plotlyOutput("AppLineChart", height = 80)
                       )
                     ),
                     # 6th row - link to app data
@@ -388,6 +387,13 @@ fluidPage(
                   p("Employment percentage by occupation (sub-major SOC group)", style = "font-size:20px;"),
                   dataTableOutput("EmpOcc")
                 ),
+                # br(),
+                # column(
+                #   width = 12,
+                #   p("Employment rates", style = "font-size:20px;"),
+                #   plotlyOutput("EmpRate_dot")
+                # ),
+                
                 ### Downloads-------------
                 box(
                   width = 12,
