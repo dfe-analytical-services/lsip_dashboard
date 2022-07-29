@@ -230,7 +230,7 @@ fluidPage(
                     h3("People employed"),
                     fluidRow(
                       column(width=4,
-                      div(style = "margin-top:-2em",
+                      div(
                       title = "Source: APS. 2021 calendar year",
                       uiOutput("locland.emplcnt0"),
                       )
@@ -274,20 +274,27 @@ fluidPage(
                     width = 5,
                     style = "background-color:#f3f2f1;",
                     h2("Skills landscape"),
-                    div(
-                      title = "Source: ILR AY20/21", # tooltip
-                      uiOutput("skisup.ETach"),
-                      p("education and training achievements (AY20/21)")
+                    h3("E&T achievements"),
+                    fluidRow(
+                      column(width=4,
+                             div(title = "Source: ILR AY20/21",
+                               uiOutput("skisup.ETach"),
+                             )
+                      ),
+                      column(width=7,
+                             plotlyOutput("etLineChart")
+                      )
                     ),
-                    box(
-                      width = 12,
-                      p(" ")
-                    ),
-                    # 5th row - apps
-                    div(
-                      title = "Source: ILR AY20/21",
-                      uiOutput("skisup.APPach"),
-                      p("apprenticeship achievements (AY20/21)")
+                    h3("App achievements"),
+                    fluidRow(
+                      column(width=4,
+                             div(title = "Source: ILR AY20/21",
+                               uiOutput("skisup.APPach"),
+                             )
+                      ),
+                      column(width=7,
+                             plotlyOutput("AppLineChart")
+                      )
                     ),
                     # 6th row - link to app data
                     box(
