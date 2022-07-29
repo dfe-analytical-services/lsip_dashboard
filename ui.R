@@ -229,25 +229,30 @@ fluidPage(
                     h2("Labour market"),
                     h3("People employed"),
                     fluidRow(
-                      column(width=4,
-                      div(
-                      title = "Source: APS. 2021 calendar year",
-                      uiOutput("locland.emplcnt0"),
-                      )
+                      column(
+                        width = 4,
+                        div(
+                          title = "Source: APS. 2021 calendar year",
+                          uiOutput("locland.emplcnt0"),
+                        )
                       ),
-                      column(width=7,
-                             plotlyOutput("empLineChart", height = 80)
-                    )
+                      column(
+                        width = 7,
+                        plotlyOutput("empLineChart", height = 80)
+                      )
                     ),
                     h3("Employment rate"),
                     fluidRow(
-                      column(width=4,
-                             div(title = "Source: APS. 2021 calendar year",
-                                 uiOutput("locland.emplrate0"),
-                             )
+                      column(
+                        width = 4,
+                        div(
+                          title = "Source: APS. 2021 calendar year",
+                          uiOutput("locland.emplrate0"),
+                        )
                       ),
-                      column(width=7,
-                             plotlyOutput("empRateLineChart", height = 80)
+                      column(
+                        width = 7,
+                        plotlyOutput("empRateLineChart", height = 80)
                       )
                     ),
                     # third row - link to emp tab
@@ -263,13 +268,16 @@ fluidPage(
                     # fourth row - vacancies
                     h3("England vacancy share"),
                     fluidRow(
-                      column(width=4,
-                             div(title = "Source: ONS (Adzuna). Jan 2022",
-                                 uiOutput("jobad.units"),
-                             )
+                      column(
+                        width = 4,
+                        div(
+                          title = "Source: ONS (Adzuna). Jan 2022",
+                          uiOutput("jobad.units"),
+                        )
                       ),
-                      column(width=7,
-                             plotlyOutput("VacLineChart", height = 80)
+                      column(
+                        width = 7,
+                        plotlyOutput("VacLineChart", height = 80)
                       )
                     ),
                     box(
@@ -286,24 +294,30 @@ fluidPage(
                     h2("Skills landscape"),
                     h3("E&T achievements"),
                     fluidRow(
-                      column(width=4,
-                             div(title = "Source: ILR AY20/21",
-                               uiOutput("skisup.ETach"),
-                             )
+                      column(
+                        width = 4,
+                        div(
+                          title = "Source: ILR AY20/21",
+                          uiOutput("skisup.ETach"),
+                        )
                       ),
-                      column(width=7,
-                             plotlyOutput("etLineChart", height = 80)
+                      column(
+                        width = 7,
+                        plotlyOutput("etLineChart", height = 80)
                       )
                     ),
                     h3("App achievements"),
                     fluidRow(
-                      column(width=4,
-                             div(title = "Source: ILR AY20/21",
-                               uiOutput("skisup.APPach"),
-                             )
+                      column(
+                        width = 4,
+                        div(
+                          title = "Source: ILR AY20/21",
+                          uiOutput("skisup.APPach"),
+                        )
                       ),
-                      column(width=7,
-                             plotlyOutput("AppLineChart", height = 80)
+                      column(
+                        width = 7,
+                        plotlyOutput("AppLineChart", height = 80)
                       )
                     ),
                     # 6th row - link to app data
@@ -393,7 +407,7 @@ fluidPage(
                 #   p("Employment rates", style = "font-size:20px;"),
                 #   plotlyOutput("EmpRate_dot")
                 # ),
-                
+
                 ### Downloads-------------
                 box(
                   width = 12,
