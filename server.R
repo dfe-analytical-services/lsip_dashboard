@@ -182,14 +182,14 @@ server <- function(input, output, session) {
 
     # print with formatting
     
-    h3(span("2021",style = "font-size: 16px;font-weight:normal"),
-      format(empCnt, big.mark = ","), " ",
+    h4(span("2021",style = "font-size: 16px;font-weight:normal;"),br(),
+      format(empCnt, big.mark = ","),br(),
       span(
         format_pm(empCntChange) # plus-minus and comma sep formatting
         ,
         style = paste0("font-size: 16px;color:", cond_color(empCntChange > 0)) # colour formating
         , .noWS = c("before", "after") # remove whitespace
-      )
+      ),br(),style = "font-size: 21px"
     )
   })
   
@@ -199,27 +199,25 @@ server <- function(input, output, session) {
                  filter(
                    geographic_level == "lep", # cleans up for London which is included as lep and gor
                    area == input$lep1
-                 )
-    empCntChange <- ((C_EmpRate_APS1721 %>%
-                        filter(
-                          geographic_level == "lep", # cleans up for London which is included as lep and gor
-                          area == input$lep1,
-                          year == "2021"
-                        )
-    )$"28  in employment "
-    - (C_EmpRate_APS1721 %>%
-         filter(
-           geographic_level == "lep", # cleans up for London which is included as lep and gor
-           area == input$lep1,
-           year == "2020"
-         )
-    )$"28  in employment ")
-    ggplot(empLine,aes(x = year))+
-    geom_line(data=empLine[1:4,],aes(y = `28  in employment `),color = "black")+
-      geom_line(data=empLine[4:5,],aes(y = `28  in employment `),color = ifelse(empCntChange > 0, "#00703c", "#d4351c"))+
-      geom_ribbon(data=empLine[4:5,],aes(ymin = min(`28  in employment `),ymax=`28  in employment `)
-                  ,fill=ifelse(empCntChange > 0, "#00703c", "#d4351c"),alpha=0.3)+
-                #  ,color=ifelse(empCntChange > 0, "#00703c", "#d4351c"))+
+                 )%>%
+      mutate(Year=as.numeric(substr(year,3,4)))%>%
+      rename(Employment=`28  in employment `)
+    
+    empCntChange <- (empLine%>%filter(Year==21))$Employment-
+                    (empLine%>%filter(Year==20))$Employment
+
+    ggplot(empLine,aes(x = Year,y=Employment))+
+      geom_line(data=empLine%>%filter(Year<=20))+
+      geom_ribbon(data=empLine%>%filter(Year>=20)
+                  ,aes(ymin = min(Employment),ymax=Employment)
+                  ,fill=ifelse(empCntChange > 0, "#00703c", "#d4351c")
+                  ,alpha=0.3)+
+      geom_line(data=empLine%>%filter(Year>=20)
+                ,color = ifelse(empCntChange > 0, "#00703c", "#d4351c"))+
+      #add a blank line for the formatted tooltip
+      geom_line(aes(text = paste0("Year: ", year, "<br>",
+                                  "Employment: ", format(Employment, big.mark = ","), "<br>"))
+              ,alpha=0)+
       theme_classic()+
         theme(axis.line=element_blank(),
               axis.text.y=element_blank(),
@@ -228,15 +226,19 @@ server <- function(input, output, session) {
               panel.background = element_rect(fill = "#f3f2f1"),
               plot.background = element_rect(fill = "#f3f2f1") )
   })
+  #set margins
   m <- list(
     l = 0,
-    #r = 1,
+    r = 4,#increase this margin a bit to prevent the last lable dissapearing
     b = 0,
     t = 0,
     pad = 0
   )
+
   output$empLineChart <- renderPlotly({
-    ggplotly(empLineChart(),height=80) %>%
+    ggplotly(empLineChart()
+             ,tooltip = "text"
+             ,height=80) %>%
       layout(margin = m) %>%
       config(displayModeBar = FALSE)
   })
@@ -336,8 +338,7 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "datatabset", "FE")
   })
 
-
-  ### E&T achievements -----
+  ### E&T achievements ----
   output$skisup.ETach <- renderUI({
     ETach <- C_Achieve_ILR1621 %>%
       filter(
@@ -345,76 +346,220 @@ server <- function(input, output, session) {
         LEP == input$lep1,
         level_or_type == "Education and training: Total"
       ) %>%
-      summarise(App_ach = sum(achievements))
-
-    # E&T achievements change -----
+      summarise(ET_ach = sum(achievements))
+    
+    # E&T achievements change
     ETachChange <- ((C_Achieve_ILR1621 %>%
-      filter(
-        time_period == "202021",
-        LEP == input$lep1,
-        level_or_type == "Education and training: Total"
-      ) %>%
-      summarise(App_ach = sum(achievements)))
+                      filter(
+                        time_period == "202021",
+                        LEP == input$lep1,
+                        level_or_type == "Education and training: Total"
+                      ) %>%
+                      summarise(ET_ach = sum(achievements)))
     - (C_Achieve_ILR1621 %>%
-        filter(
-          time_period == "201920",
-          LEP == input$lep1,
-          level_or_type == "Education and training: Total"
-        ) %>%
-        summarise(App_ach = sum(achievements))))
-
+         filter(
+           time_period == "201920",
+           LEP == input$lep1,
+           level_or_type == "Education and training: Total"
+         ) %>%
+         summarise(ET_ach = sum(achievements))))
+    
     # print with formatting
-    h2(
-      format(ETach, big.mark = ","), " (",
-      span(
-        format_pm(ETachChange) # plus-minus and comma sep formatting
-        ,
-        style = paste0("color:", cond_color(ETachChange > 0)) # colour formating
-        , .noWS = c("before", "after") # remove whitespace
-      ),
-      ")"
+    h4(span("20/21",style = "font-size: 16px;font-weight:normal;"),br(),
+       format(ETach, big.mark = ","),br(),
+       span(
+         format_pm(ETachChange) # plus-minus and comma sep formatting
+         ,
+         style = paste0("font-size: 16px;color:", cond_color(ETachChange > 0)) # colour formating
+         , .noWS = c("before", "after") # remove whitespace
+       ),br(),style = "font-size: 21px"
     )
   })
-
+  
+  #e and t chart
+  etLineChart <- reactive({
+    etLine <- C_Achieve_ILR1621 %>%
+      filter(LEP == input$lep1,
+        level_or_type == "Education and training: Total",
+        time_period!="202122"
+      ) %>%
+      group_by(time_period)%>%
+      summarise(achievements = sum(achievements))%>%
+      mutate(Year=as.numeric(substr(time_period,3,4)))
+    
+    etCntChange <- (etLine%>%filter(Year==20))$achievements-
+      (etLine%>%filter(Year==19))$achievements
+    
+    ggplot(etLine,aes(x = Year,y=achievements))+
+      geom_line(data=etLine%>%filter(Year<=19))+
+      geom_ribbon(data=etLine%>%filter(Year>=19)
+                  ,aes(ymin = min(achievements),ymax=achievements)
+                  ,fill=ifelse(etCntChange > 0, "#00703c", "#d4351c")
+                  ,alpha=0.3)+
+      geom_line(data=etLine%>%filter(Year>=19)
+                ,color = ifelse(etCntChange > 0, "#00703c", "#d4351c"))+
+      #add a blank line for the formatted tooltip
+      geom_line(aes(text = paste0("AY: ", time_period, "<br>",
+                                  "Achievements: ", format(achievements, big.mark = ","), "<br>"))
+                ,alpha=0)+
+      theme_classic()+
+      theme(axis.line=element_blank(),
+            axis.text.y=element_blank(),
+            axis.ticks=element_blank(),
+            axis.title=element_blank(),
+            panel.background = element_rect(fill = "#f3f2f1"),
+            plot.background = element_rect(fill = "#f3f2f1") )
+  })
+  #set margins
+  m <- list(
+    l = 0,
+    r = 4,#increase this margin a bit to prevent the last lable dissapearing
+    b = 0,
+    t = 0,
+    pad = 0
+  )
+  
+  output$etLineChart <- renderPlotly({
+    ggplotly(etLineChart()
+             ,tooltip = "text"
+             ,height=80) %>%
+      layout(margin = m) %>%
+      config(displayModeBar = FALSE)
+  })
+ 
   ### App achievements ----
   output$skisup.APPach <- renderUI({
-    AppAch <- format((C_Achieve_ILR1621 %>%
+    Appach <- C_Achieve_ILR1621 %>%
       filter(
         time_period == "202021",
         LEP == input$lep1,
         level_or_type == "Apprenticeships: Total"
       ) %>%
-      summarise(App_ach = sum(achievements))),
-    big.mark = ","
-    )
-
-    # App achievements change ----
-    APPachChange <- ((C_Achieve_ILR1621 %>%
-      filter(
-        time_period == "202021",
-        LEP == input$lep1,
-        level_or_type == "Apprenticeships: Total"
-      ) %>%
-      summarise(App_ach = sum(achievements)))
-    - (C_Achieve_ILR1621 %>%
-        filter(
-          time_period == "201920",
-          LEP == input$lep1,
-          level_or_type == "Apprenticeships: Total"
-        ) %>%
-        summarise(App_ach = sum(achievements))))
+      summarise(App_ach = sum(achievements))
+    
+    # App achievements change
+    AppachChange <- ((C_Achieve_ILR1621 %>%
+                       filter(
+                         time_period == "202021",
+                         LEP == input$lep1,
+                         level_or_type == "Apprenticeships: Total"
+                       ) %>%
+                       summarise(App_ach = sum(achievements)))
+                    - (C_Achieve_ILR1621 %>%
+                         filter(
+                           time_period == "201920",
+                           LEP == input$lep1,
+                           level_or_type == "Apprenticeships: Total"
+                         ) %>%
+                         summarise(App_ach = sum(achievements))))
+    
     # print with formatting
-    h2(
-      AppAch, " (",
-      span(
-        format_pm(APPachChange) # plus-minus and comma sep formatting
-        ,
-        style = paste0("color:", cond_color(APPachChange > 0)) # colour formating
-        , .noWS = c("before", "after") # remove whitespace
-      ),
-      ")"
+    h4(span("20/21",style = "font-size: 16px;font-weight:normal;"),br(),
+       format(Appach, big.mark = ","),br(),
+       span(
+         format_pm(AppachChange) # plus-minus and comma sep formatting
+         ,
+         style = paste0("font-size: 16px;color:", cond_color(AppachChange > 0)) # colour formating
+         , .noWS = c("before", "after") # remove whitespace
+       ),br(),style = "font-size: 21px"
     )
   })
+  
+  #app chart
+  AppLineChart <- reactive({
+    AppLine <- C_Achieve_ILR1621 %>%
+      filter(LEP == input$lep1,
+             level_or_type == "Apprenticeships: Total",
+             time_period!="202122"
+      ) %>%
+      group_by(time_period)%>%
+      summarise(achievements = sum(achievements))%>%
+      mutate(Year=as.numeric(substr(time_period,3,4)))
+    
+    AppCntChange <- (AppLine%>%filter(Year==20))$achievements-
+      (AppLine%>%filter(Year==19))$achievements
+    
+    ggplot(AppLine,aes(x = Year,y=achievements))+
+      geom_line(data=AppLine%>%filter(Year<=19))+
+      geom_ribbon(data=AppLine%>%filter(Year>=19)
+                  ,aes(ymin = min(achievements),ymax=achievements)
+                  ,fill=ifelse(AppCntChange > 0, "#00703c", "#d4351c")
+                  ,alpha=0.3)+
+      geom_line(data=AppLine%>%filter(Year>=19)
+                ,color = ifelse(AppCntChange > 0, "#00703c", "#d4351c"))+
+      #add a blank line for the formatted tooltip
+      geom_line(aes(text = paste0("AY: ", time_period, "<br>",
+                                  "Achievements: ", format(achievements, big.mark = ","), "<br>"))
+                ,alpha=0)+
+      theme_classic()+
+      theme(axis.line=element_blank(),
+            axis.text.y=element_blank(),
+            axis.ticks=element_blank(),
+            axis.title=element_blank(),
+            panel.background = element_rect(fill = "#f3f2f1"),
+            plot.background = element_rect(fill = "#f3f2f1") )
+  })
+  #set margins
+  m <- list(
+    l = 0,
+    r = 4,#increase this margin a bit to prevent the last lable dissapearing
+    b = 0,
+    t = 0,
+    pad = 0
+  )
+  
+  output$AppLineChart <- renderPlotly({
+    ggplotly(AppLineChart()
+             ,tooltip = "text"
+             ,height=80) %>%
+      layout(margin = m) %>%
+      config(displayModeBar = FALSE)
+  })
+  
+
+  
+  
+  # 
+  # 
+  # ### App achievements ----
+  # output$skisup.APPach <- renderUI({
+  #   AppAch <- format((C_Achieve_ILR1621 %>%
+  #     filter(
+  #       time_period == "202021",
+  #       LEP == input$lep1,
+  #       level_or_type == "Apprenticeships: Total"
+  #     ) %>%
+  #     summarise(App_ach = sum(achievements))),
+  #   big.mark = ","
+  #   )
+  # 
+  #   # App achievements change ----
+  #   APPachChange <- ((C_Achieve_ILR1621 %>%
+  #     filter(
+  #       time_period == "202021",
+  #       LEP == input$lep1,
+  #       level_or_type == "Apprenticeships: Total"
+  #     ) %>%
+  #     summarise(App_ach = sum(achievements)))
+  #   - (C_Achieve_ILR1621 %>%
+  #       filter(
+  #         time_period == "201920",
+  #         LEP == input$lep1,
+  #         level_or_type == "Apprenticeships: Total"
+  #       ) %>%
+  #       summarise(App_ach = sum(achievements))))
+  #   # print with formatting
+  #   h2(
+  #     AppAch, " (",
+  #     span(
+  #       format_pm(APPachChange) # plus-minus and comma sep formatting
+  #       ,
+  #       style = paste0("color:", cond_color(APPachChange > 0)) # colour formating
+  #       , .noWS = c("before", "after") # remove whitespace
+  #     ),
+  #     ")"
+  #   )
+  # })
 
   # EMPLOYMENT ----
   ### Downloads----
