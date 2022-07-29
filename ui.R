@@ -239,12 +239,23 @@ fluidPage(
                              plotlyOutput("empLineChart")
                     )
                     ),
-                    # second row - emp rate
-                    div(
-                      title = "Source: APS. 2021 calendar year",
-                      uiOutput("locland.emplrate0"),
-                      uiOutput("locland.emplRateSub") # subtitle compared to England
+                    h3("Employment rate"),
+                    fluidRow(
+                      column(width=4,
+                             div(title = "Source: APS. 2021 calendar year",
+                                 uiOutput("locland.emplrate0"),
+                             )
+                      ),
+                      column(width=7,
+                             plotlyOutput("empRateLineChart")
+                      )
                     ),
+                    # # second row - emp rate
+                    # div(
+                    #   title = "Source: APS. 2021 calendar year",
+                    #   uiOutput("locland.emplrate0"),
+                    #   uiOutput("locland.emplRateSub") # subtitle compared to England
+                    # ),
                     # third row - link to emp tab
                     box(
                       width = 12,

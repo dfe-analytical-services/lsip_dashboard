@@ -244,36 +244,123 @@ server <- function(input, output, session) {
   })
 
   ### Employment rate -----
+  
   output$locland.emplrate0 <- renderUI({
     empRate <- (C_EmpRate_APS1721 %>%
-      filter(
-        geographic_level == "lep", # cleans up for London which is included as lep and gor
-        area == input$lep1,
-        year == "2021"
-      ))$empRate
+                  filter(
+                    geographic_level == "lep", # cleans up for London which is included as lep and gor
+                    area == input$lep1,
+                    year == "2021"
+                  ))$empRate
     empRateChange <- (C_EmpRate_APS1721 %>%
-      filter(
-        geographic_level == "lep", # cleans up for London which is included as lep and gor
-        area == input$lep1,
-        year == "2021"
-      ))$empRate -
+                        filter(
+                          geographic_level == "lep", # cleans up for London which is included as lep and gor
+                          area == input$lep1,
+                          year == "2021"
+                        ))$empRate -
       (C_EmpRate_APS1721 %>%
-        filter(
-          geographic_level == "lep", # cleans up for London which is included as lep and gor
-          area == input$lep1,
-          year == "2020"
-        ))$empRate
-
+         filter(
+           geographic_level == "lep", # cleans up for London which is included as lep and gor
+           area == input$lep1,
+           year == "2020"
+         ))$empRate
+    
     # print with formatting
-    h2(
-      paste0(format(100 * empRate, digit = 2), "% ("),
-      span(
-        paste0(sprintf("%+.0f", 100 * empRateChange), "ppts"),
-        style = paste0("color:", cond_color(empRateChange > 0)) # colour formating
-        , .noWS = c("before", "after")
-      ), ")"
+    
+    h4(span("2021",style = "font-size: 16px;font-weight:normal;"),br(),
+       paste0(format(100*empRate, digit=2),"%"),br(),
+       span(
+         paste0(sprintf("%+.0f", 100 * empRateChange),"ppts"), 
+         style = paste0("font-size: 16px;color:", cond_color(empRateChange > 0)) # colour formating
+         , .noWS = c("before", "after") # remove whitespace
+       ),br(),style = "font-size: 21px"
     )
   })
+  
+  #Emp chart
+  empRateLineChart <- reactive({
+    empRateLine <- C_EmpRate_APS1721 %>%
+      filter(
+        geographic_level == "lep", # cleans up for London which is included as lep and gor
+        area == input$lep1
+      )%>%
+      mutate(Year=as.numeric(substr(year,3,4)))
+    
+    empRateCntChange <- (empRateLine%>%filter(Year==21))$empRate-
+      (empRateLine%>%filter(Year==20))$empRate
+    
+    ggplot(empRateLine,aes(x = Year,y=empRate))+
+      geom_line(data=empRateLine%>%filter(Year<=20))+
+      geom_ribbon(data=empRateLine%>%filter(Year>=20)
+                  ,aes(ymin = min(empRate),ymax=empRate)
+                  ,fill=ifelse(empRateCntChange > 0, "#00703c", "#d4351c")
+                  ,alpha=0.3)+
+      geom_line(data=empRateLine%>%filter(Year>=20)
+                ,color = ifelse(empRateCntChange > 0, "#00703c", "#d4351c"))+
+      #add a blank line for the formatted tooltip
+      geom_line(aes(text = paste0("Year: ", year, "<br>",
+                                  "Employment rate: ", format(100*empRate, digit=2), "%<br>"))
+                ,alpha=0)+
+      theme_classic()+
+      theme(axis.line=element_blank(),
+            axis.text.y=element_blank(),
+            axis.ticks=element_blank(),
+            axis.title=element_blank(),
+            panel.background = element_rect(fill = "#f3f2f1"),
+            plot.background = element_rect(fill = "#f3f2f1") )
+  })
+  #set margins
+  m <- list(
+    l = 0,
+    r = 4,#increase this margin a bit to prevent the last lable dissapearing
+    b = 0,
+    t = 0,
+    pad = 0
+  )
+  
+  output$empRateLineChart <- renderPlotly({
+    ggplotly(empRateLineChart()
+             ,tooltip = "text"
+             ,height=80) %>%
+      layout(margin = m) %>%
+      config(displayModeBar = FALSE)
+  })
+  
+  
+  
+  
+  
+  
+  # output$locland.emplrate0 <- renderUI({
+  #   empRate <- (C_EmpRate_APS1721 %>%
+  #     filter(
+  #       geographic_level == "lep", # cleans up for London which is included as lep and gor
+  #       area == input$lep1,
+  #       year == "2021"
+  #     ))$empRate
+  #   empRateChange <- (C_EmpRate_APS1721 %>%
+  #     filter(
+  #       geographic_level == "lep", # cleans up for London which is included as lep and gor
+  #       area == input$lep1,
+  #       year == "2021"
+  #     ))$empRate -
+  #     (C_EmpRate_APS1721 %>%
+  #       filter(
+  #         geographic_level == "lep", # cleans up for London which is included as lep and gor
+  #         area == input$lep1,
+  #         year == "2020"
+  #       ))$empRate
+  # 
+  #   # print with formatting
+  #   h2(
+  #     paste0(format(100 * empRate, digit = 2), "% ("),
+  #     span(
+  #       paste0(sprintf("%+.0f", 100 * empRateChange), "ppts"),
+  #       style = paste0("color:", cond_color(empRateChange > 0)) # colour formating
+  #       , .noWS = c("before", "after")
+  #     ), ")"
+  #   )
+  # })
 
   ### Employment rate sub -----
   output$locland.emplRateSub <- renderUI({
@@ -515,51 +602,6 @@ server <- function(input, output, session) {
       layout(margin = m) %>%
       config(displayModeBar = FALSE)
   })
-  
-
-  
-  
-  # 
-  # 
-  # ### App achievements ----
-  # output$skisup.APPach <- renderUI({
-  #   AppAch <- format((C_Achieve_ILR1621 %>%
-  #     filter(
-  #       time_period == "202021",
-  #       LEP == input$lep1,
-  #       level_or_type == "Apprenticeships: Total"
-  #     ) %>%
-  #     summarise(App_ach = sum(achievements))),
-  #   big.mark = ","
-  #   )
-  # 
-  #   # App achievements change ----
-  #   APPachChange <- ((C_Achieve_ILR1621 %>%
-  #     filter(
-  #       time_period == "202021",
-  #       LEP == input$lep1,
-  #       level_or_type == "Apprenticeships: Total"
-  #     ) %>%
-  #     summarise(App_ach = sum(achievements)))
-  #   - (C_Achieve_ILR1621 %>%
-  #       filter(
-  #         time_period == "201920",
-  #         LEP == input$lep1,
-  #         level_or_type == "Apprenticeships: Total"
-  #       ) %>%
-  #       summarise(App_ach = sum(achievements))))
-  #   # print with formatting
-  #   h2(
-  #     AppAch, " (",
-  #     span(
-  #       format_pm(APPachChange) # plus-minus and comma sep formatting
-  #       ,
-  #       style = paste0("color:", cond_color(APPachChange > 0)) # colour formating
-  #       , .noWS = c("before", "after") # remove whitespace
-  #     ),
-  #     ")"
-  #   )
-  # })
 
   # EMPLOYMENT ----
   ### Downloads----
