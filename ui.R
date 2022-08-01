@@ -29,6 +29,7 @@ fluidPage(
     tabPanel(
       "Homepage",
       fluidPage(
+        "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
         fluidRow(
           column(
             12,
@@ -67,7 +68,7 @@ fluidPage(
                     h2("Dashboard"),
                     p("This page contains the different dashboard tabs."),
                     h3(actionLink("link_to_tabpanel_overview", "Overview")),
-                    p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, adult FE and apprenticeship achievement volumes. It shows year-on-year change for each indicator."),
+                    p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, FE and skills achievement volumes. It shows year-on-year change for each indicator."),
                     p("The download buttons download all indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
                     # h2("Labour market"),
                     h3(actionLink("link_to_tabpanel_employment", "Employment")),
@@ -82,12 +83,12 @@ fluidPage(
                     h3(actionLink("link_to_tabpanel_FE", "FE")),
                     p("This tab provides a summary of further education (FE) and skills statistics at LEP level. These can be compared to another LEP."),
                     p("The line chart shows achievement volumes over time for apprenticeships, education & training and community learning."),
-                    p("The bar chart displays distribution of FE and apprenticeships achievements by SSA for the latest available period."),
+                    p("The bar chart displays distribution of FE and skills achievements by SSA for the latest available period."),
                     p("The download buttons download FE and skills indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
                     h3("Future development"),
-                    p("This page summarises the improvements we plan to make for the next release (October 2022). These include:"),
+                    p("We plan to make the following improvements for the next release (October 2022):"),
                     tags$li("Integrating more data sources (e.g. ASHE earnings data, BRES enterprise data, HE learner data, OBSM learner outcomes);"),
-                    tags$li("Providing more data breakdowns (e.g. employment by 4-digit SOC, qualification by subject and level, apprenticeships by enterprise size and sector);"),
+                    tags$li("Providing more data breakdowns (e.g. employment by 3-digit SOC, qualification by subject and level, apprenticeships by enterprise size and sector);"),
                     tags$li("Adding new features, like the ability to choose the geography (LA, LEP, Region) and view data for one or multiple areas, combined or side-by-side."),
                     br(),
                     "If you have any feedback or suggestions for improvement, please contact us at ",
@@ -137,7 +138,7 @@ fluidPage(
                   h2("Skills landscape"),
                   h3("Individualised Learner Records (ILR)"),
                   p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England.
-                             The dashboard uses FE learner achievements over time (AY1617-21/22 (temporary data to October for 21/22)) split by apprenticeships, community learning, education and training.
+                             The dashboard uses FE and skills learner achievements over time (AY1617-21/22 (provisional data to January for 21/22)) split by apprenticeships, community learning, education and training.
                              The data is taken from the FE and Skills official statistics."),
                   a(
                     href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills",
@@ -153,8 +154,14 @@ fluidPage(
     ), # end of Tab Panel
 
     # APP ----
+
     tabPanel(
       "Dashboard",
+      "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      box(
+        width = 12,
+        p(" ")
+      ),
       # choice row
       sidebarLayout(
         sidebarPanel(
@@ -447,7 +454,7 @@ fluidPage(
               box(
                 width = 12,
                 uiOutput("page2title", style = "font-size: 24px;"),
-                div("Data from Individualised Learner Records for FE learners. Years shown are academic years. All figures are for 16-64 except the occupation split bar chart which is all ages.", style = "font-size: 16px; font-style: italic;"),
+                div("Data from Individualised Learner Records for FE and skills learners. Years shown are academic years. All figures are for 16-64 except the occupation split bar chart which is all ages.", style = "font-size: 16px; font-style: italic;"),
                 br(),
                 ### KPI boxes ----
                 box(
@@ -468,10 +475,10 @@ fluidPage(
                   ### Achievements over time line chart ----
                   column(
                     width = 6,
-                    p("FE and apprenticehips learner achievement trend", style = "font-size:20px;"),
+                    p("FE and skills learner achievement trend", style = "font-size:20px;"),
                     p("Choose provision group:"),
                     selectizeInput("skill_line", NULL,
-                      choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and Apps provision")
+                      choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and skills provision")
                     ),
                     plotlyOutput("Ach_time"),
                     p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total.", style = "font-style: italic;")
@@ -479,7 +486,7 @@ fluidPage(
                   ### FE achievements by SSA----
                   column(
                     width = 6,
-                    p("All FE learner achievements by SSA tier 1 (AY21/22 Aug to Jan)", style = "font-size:20px;"),
+                    p("All FE and skills learner achievements by SSA tier 1 (AY21/22 Aug to Jan provisional data)", style = "font-size:20px;"),
                     plotlyOutput("Ach_SSA_pc")
                   )
                 ), # end of charts box
@@ -492,7 +499,7 @@ fluidPage(
                     tags$li("Further Education covers publicly-funded learning delivered by an FE institution, a training provider or within a local community. It also includes apprenticeships delivered in the workplace. It does not include higher education, unless delivered as part of an apprenticeship programme."),
                     tags$li("Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications."),
                     tags$li("Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups."),
-                    tags$li("Education and training   is mainly classroom-based adult FE that is not an apprenticeship or community learning."),
+                    tags$li("Education and training is mainly classroom-based adult FE that is not an apprenticeship or community learning."),
                     tags$li("Achievements are the number of learners who successfully complete an individual aim in an academic year. "),
                   )
                 ),
@@ -513,7 +520,7 @@ fluidPage(
                   ),
                   column(
                     width = 9,
-                    "Download FE indicators for all geographies (LEPs, LAs, Regions and England)",
+                    "Download FE and skills indicators for all geographies (LEPs, LAs, Regions and England)",
                   )
                 ), # end of row
                 fluidRow(
@@ -542,6 +549,11 @@ fluidPage(
     # Create the accessibility statement-----------------
     tabPanel(
       "Accessibility",
+      "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      box(
+        width = 12,
+        p(" ")
+      ),
       h2("Accessibility statement"),
       br("This accessibility statement applies to the Local Skills dashboard.
             This dashboard is run by the Department for Education. We want as many people as possible to be able to use this application,
@@ -575,6 +587,11 @@ fluidPage(
 
     tabPanel(
       "Support and feedback",
+      "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      box(
+        width = 12,
+        p(" ")
+      ),
       support_links() # defined in R/supporting_links.R
     ),
 
