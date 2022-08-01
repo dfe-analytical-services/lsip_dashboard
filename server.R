@@ -291,17 +291,6 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
 
-  # ### Employment rate sub -----
-  # output$locland.emplRateSub <- renderUI({
-  #   empRateEng <- (C_EmpRate_APS1721 %>%
-  #     filter(
-  #       geographic_level == "country", # cleans up for London which is included as lep and gor
-  #       year == "2021"
-  #     )
-  #   )$empRate
-  #   p(paste0("employment rate in 2021 (compared with ", format(100. * empRateEng, digits = 2), "% for England)"))
-  # })
-
   # Add link to employment data
   observeEvent(input$link_to_tabpanel_employment2, {
     updateTabsetPanel(session, "navbar", "Dashboard")
@@ -317,7 +306,7 @@ server <- function(input, output, session) {
       ) %>%
       summarise(job.pc = sum(pc_total))
 
-    ### ONS job advert units change  ----
+    ### ONS job advert units change 
     VacPcChange <- (C_Vacancy_England %>%
       filter(
         year == "2022",
@@ -336,7 +325,7 @@ server <- function(input, output, session) {
     h4(span("2022", style = "font-size: 16px;font-weight:normal;"), br(),
       paste0(format(100 * VacPc, digit = 2), "%"), br(),
       span(
-        paste0(sprintf("%+.0f", 100 * VacPcChange), "ppts"),
+        paste0(sprintf("%+.1f", 100 * VacPcChange), "ppts"),
         style = paste0("font-size: 16px;color:", cond_color(VacPcChange > 0)) # colour formating
         , .noWS = c("before", "after") # remove whitespace
       ), br(),
@@ -354,19 +343,19 @@ server <- function(input, output, session) {
       summarise(job.pc = sum(pc_total)) %>%
       mutate(Year = as.numeric(substr(year, 3, 4)))
 
-    VacChange <- (VacLine %>% filter(Year == 21))$job.pc -
-      (VacLine %>% filter(Year == 20))$job.pc
+    VacChange <- (VacLine %>% filter(Year == 22))$job.pc -
+      (VacLine %>% filter(Year == 21))$job.pc
 
     ggplot(VacLine, aes(x = Year, y = job.pc)) +
-      geom_line(data = VacLine %>% filter(Year <= 20)) +
+      geom_line(data = VacLine %>% filter(Year <= 21)) +
       geom_ribbon(
-        data = VacLine %>% filter(Year >= 20),
+        data = VacLine %>% filter(Year >= 21),
         aes(ymin = min(job.pc), ymax = job.pc),
         fill = ifelse(VacChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = VacLine %>% filter(Year >= 20),
+        data = VacLine %>% filter(Year >= 21),
         color = ifelse(VacChange > 0, "#00703c", "#d4351c")
       ) +
       # add a blank line for the formatted tooltip
