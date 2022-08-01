@@ -120,18 +120,82 @@ server <- function(input, output, session) {
       )$"28  in employment ")
 
     # print with formatting
-    h2(
-      format(empCnt, big.mark = ","), " (",
+
+    h4(span("2021", style = "font-size: 16px;font-weight:normal;"), br(),
+      format(empCnt, big.mark = ","), br(),
       span(
-        format_pm(empCntChange), # plus-minus and comma sep formatting
-        style = paste0("color:", cond_color(empCntChange > 0)) # colour formating
+        format_pm(empCntChange) # plus-minus and comma sep formatting
+        ,
+        style = paste0("font-size: 16px;color:", cond_color(empCntChange > 0)) # colour formating
+
         , .noWS = c("before", "after") # remove whitespace
-      ),
-      ")"
+      ), br(),
+      style = "font-size: 21px"
     )
   })
 
+  # Emp chart
+  empLineChart <- reactive({
+    empLine <- C_EmpRate_APS1721 %>%
+      filter(
+        geographic_level == "lep", # cleans up for London which is included as lep and gor
+        area == input$lep1
+      ) %>%
+      mutate(Year = as.numeric(substr(year, 3, 4))) %>%
+      rename(Employment = `28  in employment `)
+
+    empCntChange <- (empLine %>% filter(Year == 21))$Employment -
+      (empLine %>% filter(Year == 20))$Employment
+
+    ggplot(empLine, aes(x = Year, y = Employment)) +
+      geom_line(data = empLine %>% filter(Year <= 20)) +
+      geom_ribbon(
+        data = empLine %>% filter(Year >= 20),
+        aes(ymin = min(Employment), ymax = Employment),
+        fill = ifelse(empCntChange > 0, "#00703c", "#d4351c"),
+        alpha = 0.3
+      ) +
+      geom_line(
+        data = empLine %>% filter(Year >= 20),
+        color = ifelse(empCntChange > 0, "#00703c", "#d4351c")
+      ) +
+      # add a blank line for the formatted tooltip
+      geom_line(aes(text = paste0(
+        "Year: ", year, "<br>",
+        "Employment: ", format(Employment, big.mark = ","), "<br>"
+      )),
+      alpha = 0
+      ) +
+      theme_classic() +
+      theme(
+        axis.line = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        panel.background = element_rect(fill = "#f3f2f1"),
+        plot.background = element_rect(fill = "#f3f2f1")
+      )
+  })
+  # set margins
+  m <- list(
+    l = 0,
+    r = 4, # increase this margin a bit to prevent the last lable dissapearing
+    b = 0,
+    t = 0,
+    pad = 0
+  )
+
+  output$empLineChart <- renderPlotly({
+    ggplotly(empLineChart(),
+      tooltip = "text",
+      height = 80
+    ) %>%
+      layout(margin = m) %>%
+      config(displayModeBar = FALSE)
+  })
+
   ### Employment rate -----
+
   output$locland.emplrate0 <- renderUI({
     empRate <- (C_EmpRate_APS1721 %>%
       filter(
@@ -153,26 +217,90 @@ server <- function(input, output, session) {
         ))$empRate
 
     # print with formatting
-    h2(
-      paste0(format(100 * empRate, digit = 2), "% ("),
+
+    h4(span("2021", style = "font-size: 16px;font-weight:normal;"), br(),
+      paste0(format(100 * empRate, digit = 2), "%"), br(),
       span(
         paste0(sprintf("%+.0f", 100 * empRateChange), "ppts"),
-        style = paste0("color:", cond_color(empRateChange > 0)) # colour formating
-        , .noWS = c("before", "after")
-      ), ")"
+        style = paste0("font-size: 16px;color:", cond_color(empRateChange > 0)) # colour formating
+        , .noWS = c("before", "after") # remove whitespace
+      ), br(),
+      style = "font-size: 21px"
     )
   })
 
-  ### Employment rate sub -----
-  output$locland.emplRateSub <- renderUI({
-    empRateEng <- (C_EmpRate_APS1721 %>%
+  # Emp chart
+  empRateLineChart <- reactive({
+    empRateLine <- C_EmpRate_APS1721 %>%
       filter(
-        geographic_level == "country", # cleans up for London which is included as lep and gor
-        year == "2021"
+        (geographic_level == "lep" & # cleans up for London which is included as lep and gor
+          area == input$lep1) | area == "England"
+      ) %>%
+      mutate(Year = as.numeric(substr(year, 3, 4)))
+
+    empRateCntChange <- (empRateLine %>% filter(Year == 21, geographic_level == "lep"))$empRate -
+      (empRateLine %>% filter(Year == 20, geographic_level == "lep"))$empRate
+
+    ggplot(empRateLine, aes(x = Year, y = empRate)) +
+      geom_line(data = empRateLine %>% filter(Year <= 20, geographic_level == "lep")) +
+      geom_line(data = empRateLine %>% filter(geographic_level == "country"), alpha = 0.5) +
+      geom_ribbon(
+        data = empRateLine %>% filter(Year >= 20, geographic_level == "lep"),
+        aes(ymin = min(empRate), ymax = empRate),
+        fill = ifelse(empRateCntChange > 0, "#00703c", "#d4351c"),
+        alpha = 0.3
+      ) +
+      geom_line(
+        data = empRateLine %>% filter(Year >= 20, geographic_level == "lep"),
+        color = ifelse(empRateCntChange > 0, "#00703c", "#d4351c")
+      ) +
+
+      # add a blank line for the formatted tooltip
+      geom_line(aes(group = area, text = paste0(
+        "Year: ", year, "<br>",
+        "Area: ", area, "<br>",
+        "Employment rate: ", format(100 * empRate, digit = 2), "%<br>"
+      )),
+      alpha = 0
+      ) +
+      theme_classic() +
+      theme(
+        axis.line = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        panel.background = element_rect(fill = "#f3f2f1"),
+        plot.background = element_rect(fill = "#f3f2f1")
       )
-    )$empRate
-    p(paste0("employment rate in 2021 (compared with ", format(100. * empRateEng, digits = 2), "% for England)"))
   })
+  # set margins
+  m <- list(
+    l = 0,
+    r = 4, # increase this margin a bit to prevent the last lable dissapearing
+    b = 0,
+    t = 0,
+    pad = 0
+  )
+
+  output$empRateLineChart <- renderPlotly({
+    ggplotly(empRateLineChart(),
+      tooltip = "text",
+      height = 80
+    ) %>%
+      layout(margin = m) %>%
+      config(displayModeBar = FALSE)
+  })
+
+  # ### Employment rate sub -----
+  # output$locland.emplRateSub <- renderUI({
+  #   empRateEng <- (C_EmpRate_APS1721 %>%
+  #     filter(
+  #       geographic_level == "country", # cleans up for London which is included as lep and gor
+  #       year == "2021"
+  #     )
+  #   )$empRate
+  #   p(paste0("employment rate in 2021 (compared with ", format(100. * empRateEng, digits = 2), "% for England)"))
+  # })
 
   # Add link to employment data
   observeEvent(input$link_to_tabpanel_employment2, {
@@ -204,15 +332,114 @@ server <- function(input, output, session) {
         summarise(job.pc = sum(pc_total))))
 
     # print with formatting
-    h2(
-      paste0(format(100 * VacPc, digit = 2), "% ("),
+
+    h4(span("2022", style = "font-size: 16px;font-weight:normal;"), br(),
+      paste0(format(100 * VacPc, digit = 2), "%"), br(),
       span(
-        paste0(sprintf("%+.1f", 100 * VacPcChange), "ppts"),
-        style = paste0("color:", cond_color(VacPcChange > 0)) # colour formating
-        , .noWS = c("before", "after")
-      ), ")", # remove whitespace
+        paste0(sprintf("%+.0f", 100 * VacPcChange), "ppts"),
+        style = paste0("font-size: 16px;color:", cond_color(VacPcChange > 0)) # colour formating
+        , .noWS = c("before", "after") # remove whitespace
+      ), br(),
+      style = "font-size: 21px"
     )
   })
+
+  # Vacancy chart
+  VacLineChart <- reactive({
+    VacLine <- C_Vacancy_England %>%
+      filter(
+        LEP == input$lep1
+      ) %>%
+      group_by(year) %>%
+      summarise(job.pc = sum(pc_total)) %>%
+      mutate(Year = as.numeric(substr(year, 3, 4)))
+
+    VacChange <- (VacLine %>% filter(Year == 21))$job.pc -
+      (VacLine %>% filter(Year == 20))$job.pc
+
+    ggplot(VacLine, aes(x = Year, y = job.pc)) +
+      geom_line(data = VacLine %>% filter(Year <= 20)) +
+      geom_ribbon(
+        data = VacLine %>% filter(Year >= 20),
+        aes(ymin = min(job.pc), ymax = job.pc),
+        fill = ifelse(VacChange > 0, "#00703c", "#d4351c"),
+        alpha = 0.3
+      ) +
+      geom_line(
+        data = VacLine %>% filter(Year >= 20),
+        color = ifelse(VacChange > 0, "#00703c", "#d4351c")
+      ) +
+      # add a blank line for the formatted tooltip
+      geom_line(aes(text = paste0(
+        "Year: ", year, "<br>",
+        "England vacancy share: ", format(100 * job.pc, digit = 2), "%<br>"
+      )),
+      alpha = 0
+      ) +
+      theme_classic() +
+      theme(
+        axis.line = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        panel.background = element_rect(fill = "#f3f2f1"),
+        plot.background = element_rect(fill = "#f3f2f1")
+      )
+  })
+  # set margins
+  m <- list(
+    l = 0,
+    r = 4, # increase this margin a bit to prevent the last lable dissapearing
+    b = 0,
+    t = 0,
+    pad = 0
+  )
+
+  output$VacLineChart <- renderPlotly({
+    ggplotly(VacLineChart(),
+      tooltip = "text",
+      height = 80
+    ) %>%
+      layout(margin = m) %>%
+      config(displayModeBar = FALSE)
+  })
+
+
+  #
+
+
+  # output$jobad.units <- renderUI({
+  #   VacPc <- C_Vacancy_England %>%
+  #     filter(
+  #       year == "2022",
+  #       LEP == input$lep1
+  #     ) %>%
+  #     summarise(job.pc = sum(pc_total))
+  #
+  #   ### ONS job advert units change  ----
+  #   VacPcChange <- (C_Vacancy_England %>%
+  #     filter(
+  #       year == "2022",
+  #       LEP == input$lep1
+  #     ) %>%
+  #     summarise(job.pc = sum(pc_total))
+  #     - (C_Vacancy_England %>%
+  #       filter(
+  #         year == "2021",
+  #         LEP == input$lep1
+  #       ) %>%
+  #       summarise(job.pc = sum(pc_total))))
+  #
+  #   # print with formatting
+  #   h2(
+  #     paste0(format(100 * VacPc, digit = 2), "% ("),
+  #     span(
+  #       paste0(sprintf("%+.1f", 100 * VacPcChange), "ppts"),
+  #       style = paste0("color:", cond_color(VacPcChange > 0)) # colour formating
+  #       , .noWS = c("before", "after")
+  #     ), ")", # remove whitespace
+  #   )
+  # })
 
   # Add link to vacancy data
   observeEvent(input$link_to_tabpanel_vacancies2, {
@@ -226,8 +453,7 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "datatabset", "FE")
   })
 
-
-  ### E&T achievements -----
+  ### E&T achievements ----
   output$skisup.ETach <- renderUI({
     ETach <- C_Achieve_ILR1621 %>%
       filter(
@@ -235,51 +461,111 @@ server <- function(input, output, session) {
         LEP == input$lep1,
         level_or_type == "Education and training: Total"
       ) %>%
-      summarise(App_ach = sum(achievements))
+      summarise(ET_ach = sum(achievements))
 
-    # E&T achievements change -----
+    # E&T achievements change
     ETachChange <- ((C_Achieve_ILR1621 %>%
       filter(
         time_period == "202021",
         LEP == input$lep1,
         level_or_type == "Education and training: Total"
       ) %>%
-      summarise(App_ach = sum(achievements)))
+      summarise(ET_ach = sum(achievements)))
     - (C_Achieve_ILR1621 %>%
         filter(
           time_period == "201920",
           LEP == input$lep1,
           level_or_type == "Education and training: Total"
         ) %>%
-        summarise(App_ach = sum(achievements))))
+        summarise(ET_ach = sum(achievements))))
 
     # print with formatting
-    h2(
-      format(ETach, big.mark = ","), " (",
+    h4(span("20/21", style = "font-size: 16px;font-weight:normal;"), br(),
+      format(ETach, big.mark = ","), br(),
       span(
         format_pm(ETachChange) # plus-minus and comma sep formatting
         ,
-        style = paste0("color:", cond_color(ETachChange > 0)) # colour formating
+        style = paste0("font-size: 16px;color:", cond_color(ETachChange > 0)) # colour formating
         , .noWS = c("before", "after") # remove whitespace
-      ),
-      ")"
+      ), br(),
+      style = "font-size: 21px"
     )
+  })
+
+  # e and t chart
+  etLineChart <- reactive({
+    etLine <- C_Achieve_ILR1621 %>%
+      filter(
+        LEP == input$lep1,
+        level_or_type == "Education and training: Total",
+        time_period != "202122"
+      ) %>%
+      group_by(time_period) %>%
+      summarise(achievements = sum(achievements)) %>%
+      mutate(Year = as.numeric(substr(time_period, 3, 4)))
+
+    etCntChange <- (etLine %>% filter(Year == 20))$achievements -
+      (etLine %>% filter(Year == 19))$achievements
+
+    ggplot(etLine, aes(x = Year, y = achievements)) +
+      geom_line(data = etLine %>% filter(Year <= 19)) +
+      geom_ribbon(
+        data = etLine %>% filter(Year >= 19),
+        aes(ymin = min(achievements), ymax = achievements),
+        fill = ifelse(etCntChange > 0, "#00703c", "#d4351c"),
+        alpha = 0.3
+      ) +
+      geom_line(
+        data = etLine %>% filter(Year >= 19),
+        color = ifelse(etCntChange > 0, "#00703c", "#d4351c")
+      ) +
+      # add a blank line for the formatted tooltip
+      geom_line(aes(text = paste0(
+        "AY: ", time_period, "<br>",
+        "Achievements: ", format(achievements, big.mark = ","), "<br>"
+      )),
+      alpha = 0
+      ) +
+      theme_classic() +
+      theme(
+        axis.line = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        panel.background = element_rect(fill = "#f3f2f1"),
+        plot.background = element_rect(fill = "#f3f2f1")
+      )
+  })
+  # set margins
+  m <- list(
+    l = 0,
+    r = 4, # increase this margin a bit to prevent the last lable dissapearing
+    b = 0,
+    t = 0,
+    pad = 0
+  )
+
+  output$etLineChart <- renderPlotly({
+    ggplotly(etLineChart(),
+      tooltip = "text",
+      height = 80
+    ) %>%
+      layout(margin = m) %>%
+      config(displayModeBar = FALSE)
   })
 
   ### App achievements ----
   output$skisup.APPach <- renderUI({
-    AppAch <- format((C_Achieve_ILR1621 %>%
+    Appach <- C_Achieve_ILR1621 %>%
       filter(
         time_period == "202021",
         LEP == input$lep1,
         level_or_type == "Apprenticeships: Total"
       ) %>%
-      summarise(App_ach = sum(achievements))),
-    big.mark = ","
-    )
+      summarise(App_ach = sum(achievements))
 
-    # App achievements change ----
-    APPachChange <- ((C_Achieve_ILR1621 %>%
+    # App achievements change
+    AppachChange <- ((C_Achieve_ILR1621 %>%
       filter(
         time_period == "202021",
         LEP == input$lep1,
@@ -293,17 +579,80 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))))
+
     # print with formatting
-    h2(
-      AppAch, " (",
+    h4(span("20/21", style = "font-size: 16px;font-weight:normal;"), br(),
+      format(Appach, big.mark = ","), br(),
       span(
-        format_pm(APPachChange) # plus-minus and comma sep formatting
+        format_pm(AppachChange) # plus-minus and comma sep formatting
         ,
-        style = paste0("color:", cond_color(APPachChange > 0)) # colour formating
+        style = paste0("font-size: 16px;color:", cond_color(AppachChange > 0)) # colour formating
         , .noWS = c("before", "after") # remove whitespace
-      ),
-      ")"
+      ), br(),
+      style = "font-size: 21px"
     )
+  })
+
+  # app chart
+  AppLineChart <- reactive({
+    AppLine <- C_Achieve_ILR1621 %>%
+      filter(
+        LEP == input$lep1,
+        level_or_type == "Apprenticeships: Total",
+        time_period != "202122"
+      ) %>%
+      group_by(time_period) %>%
+      summarise(achievements = sum(achievements)) %>%
+      mutate(Year = as.numeric(substr(time_period, 3, 4)))
+
+    AppCntChange <- (AppLine %>% filter(Year == 20))$achievements -
+      (AppLine %>% filter(Year == 19))$achievements
+
+    ggplot(AppLine, aes(x = Year, y = achievements)) +
+      geom_line(data = AppLine %>% filter(Year <= 19)) +
+      geom_ribbon(
+        data = AppLine %>% filter(Year >= 19),
+        aes(ymin = min(achievements), ymax = achievements),
+        fill = ifelse(AppCntChange > 0, "#00703c", "#d4351c"),
+        alpha = 0.3
+      ) +
+      geom_line(
+        data = AppLine %>% filter(Year >= 19),
+        color = ifelse(AppCntChange > 0, "#00703c", "#d4351c")
+      ) +
+      # add a blank line for the formatted tooltip
+      geom_line(aes(text = paste0(
+        "AY: ", time_period, "<br>",
+        "Achievements: ", format(achievements, big.mark = ","), "<br>"
+      )),
+      alpha = 0
+      ) +
+      theme_classic() +
+      theme(
+        axis.line = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        panel.background = element_rect(fill = "#f3f2f1"),
+        plot.background = element_rect(fill = "#f3f2f1")
+      )
+  })
+  # set margins
+  m <- list(
+    l = 0,
+    r = 4, # increase this margin a bit to prevent the last lable dissapearing
+    b = 0,
+    t = 0,
+    pad = 0
+  )
+
+  output$AppLineChart <- renderPlotly({
+    ggplotly(AppLineChart(),
+      tooltip = "text",
+      height = 80
+    ) %>%
+      layout(margin = m) %>%
+      config(displayModeBar = FALSE)
   })
 
   # EMPLOYMENT ----
@@ -485,6 +834,33 @@ server <- function(input, output, session) {
     datatable(df, options = list(order = list(2, "desc"))) %>%
       formatPercentage(1:ncol(df), 1)
   })
+
+  # ## Employment rate dot plot ----
+  # EmpRate_dot <- reactive({
+  #   EmpRateDot <- C_EmpRate_APS1721 %>%
+  #     filter(year=="2021",geographic_level=="lep"|geographic_level == "country")%>%
+  #     select(area, geographic_level, empRate)%>%
+  #     mutate(chosen=case_when(geographic_level == "country"~"a",
+  #                             area=="South East" ~ "b",#input$lep1 ~input$lep1,
+  #                             area=="London" ~ "c",#input$lep2 ~input$lep2,
+  #                             TRUE~"d"))
+  #
+  #   ggplot(EmpRateDot, aes(x = empRate)) +
+  #     geom_dotplot(aes(fill = chosen,color=chosen,text = paste0(
+  #       "Area: ", area, "<br>",
+  #       "Employment rate: ", scales::percent(round(empRate, 2)), "<br>"
+  #     )),binaxis='x', method = "histodot",stackdir='center', dotsize=1,stackgroups = TRUE)+
+  #     theme_minimal() +
+  #     scale_fill_manual(values = c("#28a197", "#1d70b8", "#F46A25","grey"))+
+  #     scale_color_manual(values = c("#28a197", "#1d70b8", "#F46A25","grey"))+
+  #     theme( axis.title.y = element_blank(), legend.position="none")
+  # })
+  #
+  # output$EmpRate_dot <- renderPlotly({
+  #   ggplotly(EmpRate_dot(), tooltip = "text") %>%
+  #    # layout(legend = list(orientation = "h", x = 0, y = -0.1)) %>%
+  #     config(displayModeBar = FALSE)
+  # })
 
   # VACANCIES ----
 
