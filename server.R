@@ -16,7 +16,7 @@ server <- function(input, output, session) {
   })
 
   output$page2title <- renderUI({
-    paste0(input$lep1, " FE skill supply trends")
+    paste0(input$lep1, " FE and skills supply trends")
   })
 
   output$page3title <- renderUI({
@@ -719,7 +719,7 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 adult apprenticeship achievements in ", input$lep1),
+      paste0("20/21 apprenticeship achievements in ", input$lep1),
       color = "blue"
     )
   })
@@ -734,7 +734,7 @@ server <- function(input, output, session) {
           level_or_type == "Apprenticeships: Total"
         ) %>%
         summarise(App_ach = sum(achievements))), scientific = FALSE, big.mark = ","),
-      paste0("20/21 adult apprenticeship achievements in ", input$lep2),
+      paste0("20/21 apprenticeship achievements in ", input$lep2),
       color = "orange"
     )
   })
@@ -760,7 +760,7 @@ server <- function(input, output, session) {
     FETime <- C_Achieve_ILR1621 %>%
       select(time_period, area, LEP, level_or_type, achievements) %>%
       mutate(level_or_type = case_when(
-        level_or_type == "Further education and skills: Total" ~ "Total FE and Apps provision",
+        level_or_type == "Further education and skills: Total" ~ "Total FE and skills provision",
         level_or_type == "Education and training: Total" ~ "Education and training (adults only)",
         level_or_type == "Community learning: Total" ~ "Community learning (adults only)",
         level_or_type == "Apprenticeships: Total" ~ "Apprenticeships (all ages)",
