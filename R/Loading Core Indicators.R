@@ -66,7 +66,6 @@ format.EmpOcc.APS <- function(x) {
     select(year = jan_2017_dec_2017, area, everything(), -check) %>% # reorder and remove
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
-    mutate_at(c(3:27), as.numeric) %>% # Convert to numeric
     mutate(area = case_when(
       area == "Hull and East Riding" ~ "Hull and East Yorkshire",
       area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
@@ -80,8 +79,15 @@ format.EmpOcc.APS <- function(x) {
     ) %>%
     rename_with(~ gsub("[[:digit:]]+", "", .)) # remove numbers from occupations since they don't match the ONS ones
 }
-
-C_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
+#format data
+F_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
+#create downloadable version with new suppression rules
+D_EmpOcc_APS1721 <- F_EmpOcc_APS1721%>%
+  mutate_at(vars(-year, -area,-geographic_level),function(x) str_replace_all(x, c("!"="c","\\*"="u","~"="low","-"="x")))
+#create version to use in dashboard
+C_EmpOcc_APS1721 <- F_EmpOcc_APS1721%>%
+mutate_at(vars(-year, -area,-geographic_level),function(x) str_replace_all(x, c("!"="","\\*"="","~"="","-"="")))%>% #convert to blank to avoid error msg
+mutate_at(c(4:28), as.numeric) # Convert to numeric
 
 ## Employment level and rate ----
 format.EmpRate.APS <- function(x) {
@@ -96,14 +102,12 @@ format.EmpRate.APS <- function(x) {
     filter(!grepl("nomisweb", area)) %>%
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
-    mutate_at(c(2:9), as.numeric) %>% # Convert to numeric
     mutate(area = case_when(
       area == "Hull and East Riding" ~ "Hull and East Yorkshire",
       area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
       TRUE ~ area
     )) %>% # Rename so matches official name
     select(year = x2017, area, everything(), -check) %>% # reorder and remove
-    mutate(empRate = .[[5]] / .[[3]]) %>%
     relocate(geographic_level, .after = area) %>%
     rename_with(
       .fn = ~ str_replace_all(.x, c("t01_" = "", "all_people" = "", "aged_16_64" = "", "_" = " ")),
@@ -111,7 +115,16 @@ format.EmpRate.APS <- function(x) {
     )
 }
 
-C_EmpRate_APS1721 <- format.EmpRate.APS(I_EmpRate_APS1721)
+#format data
+F_EmpRate_APS1721 <- format.EmpRate.APS(I_EmpRate_APS1721)
+#create downloadable version with new suppression rules
+D_EmpRate_APS1721 <- F_EmpRate_APS1721%>%
+  mutate_at(vars(-year, -area,-geographic_level),function(x) str_replace_all(x, c("!"="c","\\*"="u","~"="low","-"="x")))
+#create version to use in dashboard
+C_EmpRate_APS1721 <- F_EmpRate_APS1721%>%
+  mutate_at(vars(-year, -area,-geographic_level),function(x) str_replace_all(x, c("!"="","\\*"="","~"="","-"="")))%>% #convert to blank to avoid error msg
+  mutate_at(c(4:10), as.numeric) %>% # Convert to numeric 
+  mutate(empRate = .[[6]] / .[[4]])
 
 # Clean ILR column names, reorder and reformat
 format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
@@ -120,13 +133,28 @@ format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
     left_join(distinct(I_LEP2020, LAD21CD, LEP = LEP21NM1), by = c("location_code" = "LAD21CD")) %>%
     relocate(LEP, .after = geographic_level) %>%
     relocate(time_period, .before = area) %>%
-    rename_all(recode, e_and_t_aims_ach = "achievements") %>%
-    mutate(achievements = as.numeric(achievements))
+    rename_all(recode, e_and_t_aims_ach = "achievements") 
 }
 
-## Achievements
-C_Achieve_ILR1621 <- format.AchieveSSA.ILR(I_Achieve_ILR1621)
-C_Achieve_ILR21 <- format.AchieveSSA.ILR(I_Achieve_ILR21)
+## format achievements
+F_Achieve_ILR1621 <- format.AchieveSSA.ILR(I_Achieve_ILR1621)
+#create downloadable version with new suppression rules
+D_Achieve_ILR1621 <- F_Achieve_ILR1621%>%
+  mutate_at(vars(achievements),function(x) str_replace_all(x, c("!"="c","\\*"="u","~"="low","-"="x")))
+#create version to use in dashboard
+C_Achieve_ILR1621 <- F_Achieve_ILR1621%>%
+  mutate_at(vars(achievements),function(x) str_replace_all(x, c("!"="","\\*"="","~"="","-"="")))%>% #convert to blank to avoid error msg
+mutate(achievements = as.numeric(achievements))
+
+## format achievements by SSA
+F_Achieve_ILR21 <- format.AchieveSSA.ILR(I_Achieve_ILR21)
+#create downloadable version with new suppression rules
+D_Achieve_ILR21 <- F_Achieve_ILR21%>%
+  mutate_at(vars(achievements),function(x) str_replace_all(x, c("!"="c","\\*"="u","~"="low","-"="x")))
+#create version to use in dashboard
+C_Achieve_ILR21 <- F_Achieve_ILR21%>%
+  mutate_at(vars(achievements),function(x) str_replace_all(x, c("!"="","\\*"="","~"="","-"="")))%>% #convert to blank to avoid error msg
+  mutate(achievements = as.numeric(achievements))
 
 # Reshape vacancy data to long, rename and reorder and reformat some columns
 format.Vacancy.ONS <- function(x) { # need to clean up colnames
