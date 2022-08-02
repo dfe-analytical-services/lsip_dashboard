@@ -57,11 +57,11 @@ server <- function(input, output, session) {
   ### Downloads----
   # download all indicators
   list_of_datasets0 <- list(
-    "1a.Emp by occupation" = C_EmpOcc_APS1721,
-    "1b.Emp rate" = C_EmpRate_APS1721,
+    "1a.Emp by occupation" = D_EmpOcc_APS1721,
+    "1b.Emp rate" = D_EmpRate_APS1721,
     "2.Vacancies" = C_Vacancy_ONS1722,
-    "3a.FE achievements SSA" = C_Achieve_ILR21,
-    "3b.FE achievements" = C_Achieve_ILR1621
+    "3a.FE achievements SSA" = D_Achieve_ILR21,
+    "3b.FE achievements" = D_Achieve_ILR1621
   )
   output$download_btn0a <- downloadHandler(
     filename = function() {
@@ -75,11 +75,11 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data0 <- reactive({
     list(
-      "1a.Emp by occupation" = filter(C_EmpOcc_APS1721, geographic_level == "lep", area == input$lep1),
-      "1b.Emp rate" = filter(C_EmpRate_APS1721, geographic_level == "lep", area == input$lep1),
+      "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == "lep", area == input$lep1),
+      "1b.Emp rate" = filter(D_EmpRate_APS1721, geographic_level == "lep", area == input$lep1),
       "2.Vacancies" = filter(C_Vacancy_ONS1722, LEP == input$lep1),
-      "3a.FE achievements SSA" = filter(C_Achieve_ILR21, LEP == input$lep1),
-      "3b.FE achievements" = filter(C_Achieve_ILR1621, LEP == input$lep1)
+      "3a.FE achievements SSA" = filter(D_Achieve_ILR21, LEP == input$lep1),
+      "3b.FE achievements" = filter(D_Achieve_ILR1621, LEP == input$lep1)
     )
   })
   output$download_btn0b <- downloadHandler(
@@ -306,7 +306,7 @@ server <- function(input, output, session) {
       ) %>%
       summarise(job.pc = sum(pc_total))
 
-    ### ONS job advert units change 
+    ### ONS job advert units change
     VacPcChange <- (C_Vacancy_England %>%
       filter(
         year == "2022",
@@ -647,8 +647,8 @@ server <- function(input, output, session) {
   # EMPLOYMENT ----
   ### Downloads----
   list_of_datasets1 <- list(
-    "1a.Emp by occupation" = C_EmpOcc_APS1721,
-    "1b.Emp rate" = C_EmpRate_APS1721
+    "1a.Emp by occupation" = D_EmpOcc_APS1721,
+    "1b.Emp rate" = D_EmpRate_APS1721
   )
   output$download_btn1a <- downloadHandler(
     filename = function() {
@@ -662,8 +662,8 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data1 <- reactive({
     list(
-      "1a.Emp by occupation" = filter(C_EmpOcc_APS1721, geographic_level == "lep", area == input$lep1),
-      "1b.Emp rate" = filter(C_EmpRate_APS1721, geographic_level == "lep", area == input$lep1)
+      "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == "lep", area == input$lep1),
+      "1b.Emp rate" = filter(D_EmpRate_APS1721, geographic_level == "lep", area == input$lep1)
     )
   })
   output$download_btn1b <- downloadHandler(
@@ -1013,8 +1013,8 @@ server <- function(input, output, session) {
   ### Downloads----
   # download skills indicators
   list_of_datasets2 <- list(
-    "3a.FE achievements SSA" = C_Achieve_ILR21,
-    "3b.FE achievements" = C_Achieve_ILR1621
+    "3a.FE achievements SSA" = D_Achieve_ILR21,
+    "3b.FE achievements" = D_Achieve_ILR1621
   )
   output$download_btn2a <- downloadHandler(
     filename = function() {
@@ -1028,8 +1028,8 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data2 <- reactive({
     list(
-      "3a.FE achievements SSA" = filter(C_Achieve_ILR21, LEP == input$lep1),
-      "3b.FE achievements" = filter(C_Achieve_ILR1621, LEP == input$lep1)
+      "3a.FE achievements SSA" = filter(D_Achieve_ILR21, LEP == input$lep1),
+      "3b.FE achievements" = filter(D_Achieve_ILR1621, LEP == input$lep1)
     )
   })
   output$download_btn2b <- downloadHandler(
