@@ -79,15 +79,15 @@ format.EmpOcc.APS <- function(x) {
     ) %>%
     rename_with(~ gsub("[[:digit:]]+", "", .)) # remove numbers from occupations since they don't match the ONS ones
 }
-#format data
+# format data
 F_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
-#create downloadable version with new suppression rules
-D_EmpOcc_APS1721 <- F_EmpOcc_APS1721%>%
-  mutate_at(vars(-year, -area,-geographic_level),function(x) str_replace_all(x, c("!"="c","\\*"="u","~"="low","-"="x")))
-#create version to use in dashboard
-C_EmpOcc_APS1721 <- F_EmpOcc_APS1721%>%
-mutate_at(vars(-year, -area,-geographic_level),function(x) str_replace_all(x, c("!"="","\\*"="","~"="","-"="")))%>% #convert to blank to avoid error msg
-mutate_at(c(4:28), as.numeric) # Convert to numeric
+# create downloadable version with new suppression rules
+D_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
+  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+# create version to use in dashboard
+C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
+  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+  mutate_at(c(4:28), as.numeric) # Convert to numeric
 
 ## Employment level and rate ----
 format.EmpRate.APS <- function(x) {
@@ -115,15 +115,15 @@ format.EmpRate.APS <- function(x) {
     )
 }
 
-#format data
+# format data
 F_EmpRate_APS1721 <- format.EmpRate.APS(I_EmpRate_APS1721)
-#create downloadable version with new suppression rules
-D_EmpRate_APS1721 <- F_EmpRate_APS1721%>%
-  mutate_at(vars(-year, -area,-geographic_level),function(x) str_replace_all(x, c("!"="c","\\*"="u","~"="low","-"="x")))
-#create version to use in dashboard
-C_EmpRate_APS1721 <- F_EmpRate_APS1721%>%
-  mutate_at(vars(-year, -area,-geographic_level),function(x) str_replace_all(x, c("!"="","\\*"="","~"="","-"="")))%>% #convert to blank to avoid error msg
-  mutate_at(c(4:10), as.numeric) %>% # Convert to numeric 
+# create downloadable version with new suppression rules
+D_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
+  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+# create version to use in dashboard
+C_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
+  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+  mutate_at(c(4:10), as.numeric) %>% # Convert to numeric
   mutate(empRate = .[[6]] / .[[4]])
 
 # Clean ILR column names, reorder and reformat
@@ -133,27 +133,27 @@ format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
     left_join(distinct(I_LEP2020, LAD21CD, LEP = LEP21NM1), by = c("location_code" = "LAD21CD")) %>%
     relocate(LEP, .after = geographic_level) %>%
     relocate(time_period, .before = area) %>%
-    rename_all(recode, e_and_t_aims_ach = "achievements") 
+    rename_all(recode, e_and_t_aims_ach = "achievements")
 }
 
 ## format achievements
 F_Achieve_ILR1621 <- format.AchieveSSA.ILR(I_Achieve_ILR1621)
-#create downloadable version with new suppression rules
-D_Achieve_ILR1621 <- F_Achieve_ILR1621%>%
-  mutate_at(vars(achievements),function(x) str_replace_all(x, c("!"="c","\\*"="u","~"="low","-"="x")))
-#create version to use in dashboard
-C_Achieve_ILR1621 <- F_Achieve_ILR1621%>%
-  mutate_at(vars(achievements),function(x) str_replace_all(x, c("!"="","\\*"="","~"="","-"="")))%>% #convert to blank to avoid error msg
-mutate(achievements = as.numeric(achievements))
+# create downloadable version with new suppression rules
+D_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
+  mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+# create version to use in dashboard
+C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
+  mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+  mutate(achievements = as.numeric(achievements))
 
 ## format achievements by SSA
 F_Achieve_ILR21 <- format.AchieveSSA.ILR(I_Achieve_ILR21)
-#create downloadable version with new suppression rules
-D_Achieve_ILR21 <- F_Achieve_ILR21%>%
-  mutate_at(vars(achievements),function(x) str_replace_all(x, c("!"="c","\\*"="u","~"="low","-"="x")))
-#create version to use in dashboard
-C_Achieve_ILR21 <- F_Achieve_ILR21%>%
-  mutate_at(vars(achievements),function(x) str_replace_all(x, c("!"="","\\*"="","~"="","-"="")))%>% #convert to blank to avoid error msg
+# create downloadable version with new suppression rules
+D_Achieve_ILR21 <- F_Achieve_ILR21 %>%
+  mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+# create version to use in dashboard
+C_Achieve_ILR21 <- F_Achieve_ILR21 %>%
+  mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
   mutate(achievements = as.numeric(achievements))
 
 # Reshape vacancy data to long, rename and reorder and reformat some columns

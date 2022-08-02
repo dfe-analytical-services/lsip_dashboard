@@ -306,7 +306,7 @@ server <- function(input, output, session) {
       ) %>%
       summarise(job.pc = sum(pc_total))
 
-    ### ONS job advert units change 
+    ### ONS job advert units change
     VacPcChange <- (C_Vacancy_England %>%
       filter(
         year == "2022",
