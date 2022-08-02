@@ -306,7 +306,7 @@ server <- function(input, output, session) {
       ) %>%
       summarise(job.pc = sum(pc_total))
 
-    ### ONS job advert units change
+    ### ONS job advert units change 
     VacPcChange <- (C_Vacancy_England %>%
       filter(
         year == "2022",
@@ -551,7 +551,7 @@ server <- function(input, output, session) {
         LEP == input$lep1,
         level_or_type == "Apprenticeships: Total"
       ) %>%
-      summarise(App_ach = sum(achievements))
+      summarise(App_ach = sum(achievements,na.rm=TRUE))
 
     # App achievements change
     AppachChange <- ((C_Achieve_ILR1621 %>%
@@ -560,14 +560,14 @@ server <- function(input, output, session) {
         LEP == input$lep1,
         level_or_type == "Apprenticeships: Total"
       ) %>%
-      summarise(App_ach = sum(achievements)))
+      summarise(App_ach = sum(achievements,na.rm=TRUE)))
     - (C_Achieve_ILR1621 %>%
         filter(
           time_period == "201920",
           LEP == input$lep1,
           level_or_type == "Apprenticeships: Total"
         ) %>%
-        summarise(App_ach = sum(achievements))))
+        summarise(App_ach = sum(achievements,na.rm=TRUE))))
 
     # print with formatting
     h4(span("20/21", style = "font-size: 16px;font-weight:normal;"), br(),
@@ -591,7 +591,7 @@ server <- function(input, output, session) {
         time_period != "202122"
       ) %>%
       group_by(time_period) %>%
-      summarise(achievements = sum(achievements)) %>%
+      summarise(achievements = sum(achievements,na.rm=TRUE)) %>%
       mutate(Year = as.numeric(substr(time_period, 3, 4)))
 
     AppCntChange <- (AppLine %>% filter(Year == 20))$achievements -
