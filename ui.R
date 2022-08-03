@@ -170,7 +170,11 @@ fluidPage(
 
     tabPanel(
       "Dashboard",
-      "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      fluidRow(column(
+        width = 12,
+        style = "background-color:#eb5c5d;color: #000000;",
+        "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      )),
       box(
         width = 12,
         p(" ")
@@ -603,7 +607,11 @@ fluidPage(
     # Create the accessibility statement-----------------
     tabPanel(
       "Accessibility",
-      "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      fluidRow(column(
+        width = 12,
+        style = "background-color:#eb5c5d;color: #000000;",
+        "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      )),
       box(
         width = 12,
         p(" ")
@@ -641,7 +649,11 @@ fluidPage(
 
     tabPanel(
       "Support and feedback",
-      "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      fluidRow(column(
+        width = 12,
+        style = "background-color:#eb5c5d;color: #000000;",
+        "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      )),
       box(
         width = 12,
         p(" ")
