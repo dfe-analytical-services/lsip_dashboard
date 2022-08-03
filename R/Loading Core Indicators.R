@@ -19,9 +19,15 @@ library(janitor)
 # Load data ----
 ## LEP 2020 ----
 I_LEP2020 <- read.xlsx(xlsxFile = "./Data/OA11_LAD21_LSOA11_MSOA11_LEP21_EN_v3.xlsx", sheet = 1, skipEmptyRows = T)
+# list leps for dropdowns
 C_LEP2020 <- I_LEP2020 %>%
   distinct(LEP = LEP21NM1) %>%
   arrange(LEP)
+# Load missing LAD-LEP lookup. This happens because we have some old LADs in the ILR data that have since been made inactive. These do not feature in the most recent LAD-LEP matching. We have manually mapped these LADs to the latest LEPS (2021)
+I_missingLAD <- read.xlsx(xlsxFile = "./Data/missing_leps.xlsx", sheet = 2, skipEmptyRows = T)
+# Create LAD-LEP lookup table
+C_LADLEP2020 <- distinct(I_LEP2020, LAD21CD, LEP = LEP21NM1) %>%
+  bind_rows(I_missingLAD %>% filter(LAD21CD != "z") %>% select(LAD21CD, LEP = `LEP21.(manually.mapped)`))
 
 ## APS ----
 ### Core indicator 2: Employment by occupation ----
@@ -130,11 +136,12 @@ C_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
 format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
   colnames(x)[1] <- "area"
   x %>%
-    left_join(distinct(I_LEP2020, LAD21CD, LEP = LEP21NM1), by = c("location_code" = "LAD21CD")) %>%
+    left_join(C_LADLEP2020, by = c("location_code" = "LAD21CD")) %>%
     relocate(LEP, .after = geographic_level) %>%
     relocate(time_period, .before = area) %>%
     rename_all(recode, e_and_t_aims_ach = "achievements")
 }
+
 
 ## format achievements
 F_Achieve_ILR1621 <- format.AchieveSSA.ILR(I_Achieve_ILR1621)
