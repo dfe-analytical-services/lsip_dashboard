@@ -1,5 +1,6 @@
 fluidPage(
   shinyjs::useShinyjs(),
+  tags$head(includeHTML(("google-analytics.html"))),
   includeCSS("www/dfe_shiny_gov_style.css"),
   title = "Unit for Future Skills - Local Skills Dashboard",
   # use_tota11y(), # accessibility layer for local testing
