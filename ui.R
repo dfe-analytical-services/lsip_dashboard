@@ -24,13 +24,18 @@ fluidPage(
   # Navbar ====================================================================
   navbarPage("",
     id = "navbar",
+    collapsible = TRUE,
 
     # HOMEPAGE ============================================================
 
     tabPanel(
       "Homepage",
       fluidPage(
-        "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+        fluidRow(column(
+          width = 12,
+          style = "background-color:#eb5c5d;color: #000000;",
+          "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+        )),
         fluidRow(
           column(
             12,
@@ -55,50 +60,38 @@ fluidPage(
           ## Left panel -------------------------------------------------------
           column(
             6,
+            # div(
             div(
+              class = "panel panel-info",
               div(
-                class = "panel panel-info",
-                div(
-                  class = "panel-heading",
-                  style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-                  h2("Contents")
-                ),
-                div(
-                  class = "panel-body",
-                  tags$div(
-                    h2("Dashboard"),
-                    p("This page contains the different dashboard tabs."),
-                    h3(actionLink("link_to_tabpanel_overview", "Overview")),
-                    p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, FE and skills achievement volumes. It shows year-on-year change for each indicator."),
-                    p("The download buttons download all indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
-                    # h2("Labour market"),
-                    h3(actionLink("link_to_tabpanel_employment", "Employment")),
-                    p("This tab contains employment indicators at LEP level. These can be compared to England and a comparator LEP."),
-                    p("The line chart shows employment rate over time for the chosen LEP. The table displays employment distribution by occupation (sub-major SOC group)."),
-                    p("The download buttons download employment indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
-                    h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
-                    p("This tab contains online job vacancies indicators at LEP level. These can be compared to England and a comparator LEP."),
-                    p("The line chart shows change in online job vacancy units over time. Units are not real volumes but represent a fixed number of job adverts to be used for comparisons over time and between areas."),
-                    p("The download buttons download vacancy indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
-                    # h2("Skills landscape"),
-                    h3(actionLink("link_to_tabpanel_FE", "FE")),
-                    p("This tab provides a summary of further education (FE) and skills statistics at LEP level. These can be compared to another LEP."),
-                    p("The line chart shows achievement volumes over time for apprenticeships, education & training and community learning."),
-                    p("The bar chart displays distribution of FE and skills achievements by SSA for the latest available period."),
-                    p("The download buttons download FE and skills indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
-                    h3("Future development"),
-                    p("We plan to make the following improvements for the next release (October 2022):"),
-                    tags$li("Integrating more data sources (e.g. ASHE earnings data, BRES enterprise data, HE learner data, OBSM learner outcomes);"),
-                    tags$li("Providing more data breakdowns (e.g. employment by 3-digit SOC, qualification by subject and level, apprenticeships by enterprise size and sector);"),
-                    tags$li("Adding new features, like the ability to choose the geography (LA, LEP, Region) and view data for one or multiple areas, combined or side-by-side."),
-                    br(),
-                    "If you have any feedback or suggestions for improvement, please contact us at ",
-                    a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk", .noWS = c("after")), "."
-                  ),
-                  br()
-                )
+                class = "panel-heading",
+                style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
+                h2("Contents")
+              ),
+              div(
+                class = "panel-body",
+                h2("Dashboard"),
+                p("This page contains the different dashboard tabs."),
+                h3(actionLink("link_to_tabpanel_overview", "Overview")),
+                p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, FE and skills achievement volumes. It shows year-on-year change for each indicator."),
+                p("The download buttons download all indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
+                # h2("Labour market"),
+                h3(actionLink("link_to_tabpanel_employment", "Employment")),
+                p("This tab contains employment indicators at LEP level. These can be compared to England and a comparator LEP."),
+                p("The line chart shows employment rate over time for the chosen LEP. The table displays employment distribution by occupation (sub-major SOC group)."),
+                p("The download buttons download employment indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
+                h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
+                p("This tab contains online job vacancies indicators at LEP level. These can be compared to England and a comparator LEP."),
+                p("The line chart shows change in online job vacancy units over time. Units are not real volumes but represent a fixed number of job adverts to be used for comparisons over time and between areas."),
+                p("The download buttons download vacancy indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
+                # h2("Skills landscape"),
+                h3(actionLink("link_to_tabpanel_FE", "Skills")),
+                p("This tab provides a summary of further education (FE) and skills statistics at LEP level. These can be compared to another LEP."),
+                p("The line chart shows achievement volumes over time for apprenticeships, education & training and community learning."),
+                p("The bar chart displays distribution of FE and skills achievements by SSA for the latest available period."),
+                p("The download buttons download FE and skills indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
               )
-            ),
+            )
           ), # end of left panel
 
           ## Right panel ------------------------------------------------------
@@ -148,6 +141,26 @@ fluidPage(
                   )
                 )
               )
+            ),
+            div(
+              class = "panel panel-info",
+              div(
+                class = "panel-heading",
+                style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
+                h2("Version control")
+              ),
+              div(
+                class = "panel-body",
+                p("Version 0.1. August 2022."),
+                h3("Future development"),
+                p("We plan to make the following improvements for the next release (October 2022):"),
+                tags$li("Integrating more data sources (e.g. ASHE earnings data, BRES enterprise data, HE learner data, OBSM learner outcomes);"),
+                tags$li("Providing more data breakdowns (e.g. employment by 3-digit SOC, qualification by subject and level, apprenticeships by enterprise size and sector);"),
+                tags$li("Adding new features, like the ability to choose the geography (LA, LEP, Region) and view data for one or multiple areas, combined or side-by-side."),
+                br(),
+                "If you have any feedback or suggestions for improvement, please contact us at ",
+                a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk", .noWS = c("after")), "."
+              )
             )
           ), # end of right panel
         ) # end of FluidRow
@@ -158,7 +171,11 @@ fluidPage(
 
     tabPanel(
       "Dashboard",
-      "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      fluidRow(column(
+        width = 12,
+        style = "background-color:#eb5c5d;color: #000000;",
+        "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      )),
       box(
         width = 12,
         p(" ")
@@ -236,12 +253,12 @@ fluidPage(
                       p(" ")
                     ),
                     # fourth row - vacancies
-                    h3("England vacancy share"),
+                    h3("Job vacancy share"),
                     fluidRow(
                       column(
                         width = 4,
                         div(
-                          title = "Source: ONS (Adzuna). Jan 2022",
+                          title = "Source: ONS (Adzuna). Jan 2022. Share of job vacancies in England.",
                           uiOutput("jobad.units"),
                         )
                       ),
@@ -262,7 +279,7 @@ fluidPage(
                     width = 5,
                     style = "background-color:#f3f2f1;",
                     h2("Skills landscape"),
-                    h3("E&T achievements"),
+                    h3("Education and training achievements"),
                     fluidRow(
                       column(
                         width = 4,
@@ -276,7 +293,7 @@ fluidPage(
                         plotlyOutput("etLineChart", height = 80)
                       )
                     ),
-                    h3("App achievements"),
+                    h3("Apprenticeship achievements"),
                     fluidRow(
                       column(
                         width = 4,
@@ -341,7 +358,7 @@ fluidPage(
               box(
                 width = 12,
                 uiOutput("page1title", style = "font-size: 24px;"),
-                div("Data is from the Annual Population Survey. Years represent calendar years.", style = "font-size: 16px; font-style: italic;"),
+                div("Data is from the Annual Population Survey. Years represent calendar years. All figures are for 16-64 except the occupation split table which is all ages.", style = "font-size: 16px; font-style: italic;"),
                 br(),
 
                 ### KPI boxes ----
@@ -491,12 +508,12 @@ fluidPage(
             ), # end of Skills Supply tab
             # FE ----
             tabPanel(
-              "FE",
+              "Skills",
               # Main panel
               box(
                 width = 12,
                 uiOutput("page2title", style = "font-size: 24px;"),
-                div("Data from Individualised Learner Records for FE and skills learners. Years shown are academic years. All figures are for 16-64 except the occupation split bar chart which is all ages.", style = "font-size: 16px; font-style: italic;"),
+                div("Data from Individualised Learner Records for FE and skills learners. Years shown are academic years.", style = "font-size: 16px; font-style: italic;"),
                 br(),
                 ### KPI boxes ----
                 box(
@@ -582,7 +599,7 @@ fluidPage(
                   )
                 ) # end of row
               ) # end of main panel
-            ) # FE panel
+            ) # sills panel
           ) # end of dashboard tabset panel
         ) # end of dashboard navbar
       ) # end of app data row
@@ -591,7 +608,11 @@ fluidPage(
     # Create the accessibility statement-----------------
     tabPanel(
       "Accessibility",
-      "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      fluidRow(column(
+        width = 12,
+        style = "background-color:#eb5c5d;color: #000000;",
+        "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      )),
       box(
         width = 12,
         p(" ")
@@ -629,18 +650,21 @@ fluidPage(
 
     tabPanel(
       "Support and feedback",
-      "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      fluidRow(column(
+        width = 12,
+        style = "background-color:#eb5c5d;color: #000000;",
+        "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
+      )),
       box(
         width = 12,
         p(" ")
       ),
       support_links() # defined in R/supporting_links.R
-    ),
+    )
+  ), # End of navBarPage
+  # Footer ====================================================================
 
-    # Footer ====================================================================
-
-    shinyGovstyle::footer(TRUE)
-  ) # End of navBarPage
+  shinyGovstyle::footer(TRUE)
 )
 
 # FUTURE DEVELOPMENT ---------------
