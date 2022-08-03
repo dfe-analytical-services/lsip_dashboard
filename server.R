@@ -51,6 +51,12 @@ server <- function(input, output, session) {
     x <- unique(C_LEP2020) %>% filter(LEP != input$lep1)
     updateSelectInput(session, "lep2", "Choose comparison LEP area", choices = c("\nNone", x)) # Add in a none so nothing is selected for 2nd LEP to start with
   })
+  
+  #find chart y axis min and max
+  EmpRateMin<-C_EmpRate_APS1721%>%filter(geographic_level=="lep")%>%
+    summarise(min(empRate,na.rm = T))
+  EmpRateMax<-C_EmpRate_APS1721%>%filter(geographic_level=="lep")%>%
+    summarise(max(empRate,na.rm = T))
 
   # OVERVIEW ----
 
@@ -254,7 +260,6 @@ server <- function(input, output, session) {
         data = empRateLine %>% filter(Year >= 20, geographic_level == "lep"),
         color = ifelse(empRateCntChange > 0, "#00703c", "#d4351c")
       ) +
-
       # add a blank line for the formatted tooltip
       geom_line(aes(group = area, text = paste0(
         "Year: ", year, "<br>",
@@ -271,7 +276,8 @@ server <- function(input, output, session) {
         axis.title = element_blank(),
         panel.background = element_rect(fill = "#f3f2f1"),
         plot.background = element_rect(fill = "#f3f2f1")
-      )
+      )+
+      ylim(c(EmpRateMin[1,1],EmpRateMax[1,1]))
   })
   # set margins
   m <- list(
@@ -777,6 +783,7 @@ server <- function(input, output, session) {
     EmpRateTime$Areas <- factor(EmpRateTime$area,
       levels = c("England", input$lep1, input$lep2)
     )
+    
     ggplot(EmpRateTime, aes(x = year, y = empRate, color = Areas, group = Areas)) +
       geom_line(aes(text = paste0(
         "AY: ", year, "<br>",
@@ -784,9 +791,8 @@ server <- function(input, output, session) {
         "Employment rate: ", scales::percent(round(empRate, 2)), "<br>"
       ))) +
       theme_minimal() +
-      expand_limits(y = 0.6) +
       theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
-      scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+      scale_y_continuous(labels = scales::percent_format(accuracy = 1),limits=c(EmpRateMin[1,1],EmpRateMax[1,1])) +
       labs(colour = "") +
       scale_color_manual(values = c("#28a197", "#1d70b8", "#F46A25"))
   })
