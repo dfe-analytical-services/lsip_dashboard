@@ -145,14 +145,16 @@ server <- function(input, output, session) {
     empLine <- C_EmpRate_APS1721 %>%
       filter(
         geographic_level == "lep", # cleans up for London which is included as lep and gor
-        area == input$lep1
+        area == input$lep1#"London"#
       ) %>%
       mutate(Year = as.numeric(substr(year, 3, 4))) %>%
       rename(Employment = `28  in employment `)
 
     empCntChange <- (empLine %>% filter(Year == 21))$Employment -
       (empLine %>% filter(Year == 20))$Employment
-
+    empCntMin <- empLine %>% summarise(min=min(Employment))
+    empCntMax <- empLine %>% summarise(max=max(Employment))
+    
     ggplot(empLine, aes(x = Year, y = Employment)) +
       geom_line(data = empLine %>% filter(Year <= 20)) +
       geom_ribbon(
@@ -175,12 +177,22 @@ server <- function(input, output, session) {
       theme_classic() +
       theme(
         axis.line = element_blank(),
-        axis.text.y = element_blank(),
+        #axis.text.y = element_blank(),
         axis.ticks = element_blank(),
         axis.title = element_blank(),
         panel.background = element_rect(fill = "#f3f2f1"),
         plot.background = element_rect(fill = "#f3f2f1")
-      )
+       )+
+      scale_y_continuous(labels =label_number_si(accuracy=1)
+                         ,breaks=c(empCntMin[1,1],empCntMax[1,1]))
+      # geom_text(data = empLine %>% filter(Year == 17)
+      #           ,aes(label = label_number_si(accuracy=1)(Employment))
+      #           ,size = 3
+      #           ,nudge_x = -0.5)+
+      # geom_text(data = empLine %>% filter(Year==21)#Year == 17|
+      #           ,aes(label = label_number_si(accuracy=1)(Employment))
+      #           ,size = 3
+                # ,nudge_x = 0.5)
   })
   # set margins
   m <- list(
@@ -271,13 +283,15 @@ server <- function(input, output, session) {
       theme_classic() +
       theme(
         axis.line = element_blank(),
-        axis.text.y = element_blank(),
+       # axis.text.y = element_blank(),
         axis.ticks = element_blank(),
         axis.title = element_blank(),
         panel.background = element_rect(fill = "#f3f2f1"),
         plot.background = element_rect(fill = "#f3f2f1")
       )+
-      ylim(c(EmpRateMin[1,1],EmpRateMax[1,1]))
+      scale_y_continuous(labels =scales::percent_format(accuracy = 1)
+                         ,breaks=c(EmpRateMin[1,1],EmpRateMax[1,1])
+                         ,limits=c(EmpRateMin[1,1],EmpRateMax[1,1]))
   })
   # set margins
   m <- list(
@@ -351,6 +365,8 @@ server <- function(input, output, session) {
 
     VacChange <- (VacLine %>% filter(Year == 22))$job.pc -
       (VacLine %>% filter(Year == 21))$job.pc
+    VacMin <- VacLine %>% summarise(min=min(job.pc))
+    VacMax <- VacLine %>% summarise(max=max(job.pc))
 
     ggplot(VacLine, aes(x = Year, y = job.pc)) +
       geom_line(data = VacLine %>% filter(Year <= 21)) +
@@ -374,12 +390,14 @@ server <- function(input, output, session) {
       theme_classic() +
       theme(
         axis.line = element_blank(),
-        axis.text.y = element_blank(),
+       # axis.text.y = element_blank(),
         axis.ticks = element_blank(),
         axis.title = element_blank(),
         panel.background = element_rect(fill = "#f3f2f1"),
         plot.background = element_rect(fill = "#f3f2f1")
-      )
+      )+
+      scale_y_continuous(labels = scales::percent_format(accuracy = 0.1)
+                         ,breaks=c(VacMin$min,VacMax$max))
   })
   # set margins
   m <- list(
@@ -398,43 +416,6 @@ server <- function(input, output, session) {
       layout(margin = m) %>%
       config(displayModeBar = FALSE)
   })
-
-
-  #
-
-
-  # output$jobad.units <- renderUI({
-  #   VacPc <- C_Vacancy_England %>%
-  #     filter(
-  #       year == "2022",
-  #       LEP == input$lep1
-  #     ) %>%
-  #     summarise(job.pc = sum(pc_total))
-  #
-  #   ### ONS job advert units change  ----
-  #   VacPcChange <- (C_Vacancy_England %>%
-  #     filter(
-  #       year == "2022",
-  #       LEP == input$lep1
-  #     ) %>%
-  #     summarise(job.pc = sum(pc_total))
-  #     - (C_Vacancy_England %>%
-  #       filter(
-  #         year == "2021",
-  #         LEP == input$lep1
-  #       ) %>%
-  #       summarise(job.pc = sum(pc_total))))
-  #
-  #   # print with formatting
-  #   h2(
-  #     paste0(format(100 * VacPc, digit = 2), "% ("),
-  #     span(
-  #       paste0(sprintf("%+.1f", 100 * VacPcChange), "ppts"),
-  #       style = paste0("color:", cond_color(VacPcChange > 0)) # colour formating
-  #       , .noWS = c("before", "after")
-  #     ), ")", # remove whitespace
-  #   )
-  # })
 
   # Add link to vacancy data
   observeEvent(input$link_to_tabpanel_vacancies2, {
@@ -501,6 +482,8 @@ server <- function(input, output, session) {
 
     etCntChange <- (etLine %>% filter(Year == 20))$achievements -
       (etLine %>% filter(Year == 19))$achievements
+    etMin <- etLine %>% summarise(min=min(achievements))
+    etMax <- etLine %>% summarise(max=max(achievements))
 
     ggplot(etLine, aes(x = Year, y = achievements)) +
       geom_line(data = etLine %>% filter(Year <= 19)) +
@@ -524,12 +507,14 @@ server <- function(input, output, session) {
       theme_classic() +
       theme(
         axis.line = element_blank(),
-        axis.text.y = element_blank(),
+       # axis.text.y = element_blank(),
         axis.ticks = element_blank(),
         axis.title = element_blank(),
         panel.background = element_rect(fill = "#f3f2f1"),
         plot.background = element_rect(fill = "#f3f2f1")
-      )
+      )+
+      scale_y_continuous(labels =label_number_si(accuracy=1)
+                         ,breaks=c(etMin$min,etMax$max))
   })
   # set margins
   m <- list(
@@ -602,6 +587,8 @@ server <- function(input, output, session) {
 
     AppCntChange <- (AppLine %>% filter(Year == 20))$achievements -
       (AppLine %>% filter(Year == 19))$achievements
+    AppMin <- AppLine %>% summarise(min=min(achievements))
+    AppMax <- AppLine %>% summarise(max=max(achievements))
 
     ggplot(AppLine, aes(x = Year, y = achievements)) +
       geom_line(data = AppLine %>% filter(Year <= 19)) +
@@ -625,12 +612,14 @@ server <- function(input, output, session) {
       theme_classic() +
       theme(
         axis.line = element_blank(),
-        axis.text.y = element_blank(),
+        #axis.text.y = element_blank(),
         axis.ticks = element_blank(),
         axis.title = element_blank(),
         panel.background = element_rect(fill = "#f3f2f1"),
         plot.background = element_rect(fill = "#f3f2f1")
-      )
+      )+
+      scale_y_continuous(labels =label_number_si(accuracy=1)
+                         ,breaks=c(AppMin$min,AppMax$max))
   })
   # set margins
   m <- list(
