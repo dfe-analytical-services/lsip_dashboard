@@ -43,7 +43,7 @@ server <- function(input, output, session) {
   # Add link to skills data
   observeEvent(input$link_to_tabpanel_FE, {
     updateTabsetPanel(session, "navbar", "Dashboard")
-    updateTabsetPanel(session, "datatabset", "FE")
+    updateTabsetPanel(session, "datatabset", "Skills")
   })
 
   # Make sure second LEP filter doesn't include what has been chosen in lep1 filter
@@ -434,7 +434,7 @@ server <- function(input, output, session) {
   # Add link to skills data
   observeEvent(input$link_to_tabpanel_FE2, {
     updateTabsetPanel(session, "navbar", "Dashboard")
-    updateTabsetPanel(session, "datatabset", "FE")
+    updateTabsetPanel(session, "datatabset", "Skills")
   })
 
   ### E&T achievements ----
@@ -464,7 +464,7 @@ server <- function(input, output, session) {
         summarise(ET_ach = sum(achievements))))
 
     # print with formatting
-    h4(span("20/21", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
       format(ETach, big.mark = ","), br(),
       span(
         format_pm(ETachChange) # plus-minus and comma sep formatting
@@ -507,7 +507,7 @@ server <- function(input, output, session) {
       ) +
       # add a blank line for the formatted tooltip
       geom_line(aes(text = paste0(
-        "AY: ", time_period, "<br>",
+        "Academic year: ", time_period, "<br>",
         "Achievements: ", format(achievements, big.mark = ","), "<br>"
       )),
       alpha = 0
@@ -571,7 +571,7 @@ server <- function(input, output, session) {
         summarise(App_ach = sum(achievements, na.rm = TRUE))))
 
     # print with formatting
-    h4(span("20/21", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
       format(Appach, big.mark = ","), br(),
       span(
         format_pm(AppachChange) # plus-minus and comma sep formatting
@@ -614,7 +614,7 @@ server <- function(input, output, session) {
       ) +
       # add a blank line for the formatted tooltip
       geom_line(aes(text = paste0(
-        "AY: ", time_period, "<br>",
+        "Academic year: ", time_period, "<br>",
         "Achievements: ", format(achievements, big.mark = ","), "<br>"
       )),
       alpha = 0
