@@ -3,124 +3,18 @@
     "datatabset": "Overview",
     "lep1": "Black Country",
     "lep2": "\nNone",
-    "link_to_tabpanel_earnings": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
     "link_to_tabpanel_FE": 0,
     "link_to_tabpanel_FE2": 0,
-    "link_to_tabpanel_HE": 0,
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
-    "navbar": "App",
-    "skill_line": "Apprenticeships"
+    "navbar": "Homepage",
+    "skill_line": "Apprenticeships (all ages)"
   },
   "output": {
-    "jobad.change": {
-      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+0.00 ppts<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
-      ]
-    },
-    "jobad.units": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>1.2%<\/h3>\n    <p>of English online vacancies (Jan '22)<\/p>\n  <\/div>\n<\/div>",
-      "deps": [
 
-      ]
-    },
-    "locland.emplchange0": {
-      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+1 ppts<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
-      ]
-    },
-    "locland.emplcnt0": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>536,700<\/h3>\n    <p>people employed in 2021<\/p>\n  <\/div>\n<\/div>",
-      "deps": [
-
-      ]
-    },
-    "locland.emplcntchange0": {
-      "html": "<div class=\"small-box bg-green\">\n  <div class=\"inner\">\n    <h3>+9,600<\/h3>\n    <p><\/p>\n  <\/div>\n  <div class=\"icon-large\">\n    <i class=\"fa fa-arrow-up fa-2x fa-beat\" role=\"presentation\" aria-label=\"arrow-up icon\"><\/i>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "5.15.3",
-          "src": {
-            "href": "font-awesome-5.15.3"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
-      ]
-    },
-    "locland.emplrate0": {
-      "html": "<div class=\"small-box bg-aqua\">\n  <div class=\"inner\">\n    <h3>73 %<\/h3>\n    <p>employment rate in 2021 (compared with  75 % for England)<\/p>\n  <\/div>\n<\/div>",
-      "deps": [
-
-      ]
-    },
-    "page0title": {
-      "html": "Black Country: overview of local landscape",
-      "deps": [
-
-      ]
-    },
-    "skisup.APPach": {
-      "html": "<h2>\n  3,970\n   (\n  +150\n  )\n<\/h2>",
-      "deps": [
-
-      ]
-    },
-    "skisup.ETach": {
-      "html": "17,680",
-      "deps": [
-
-      ]
-    },
-    "skisup.ETachChange": {
-      "html": "<h2 style=\"color:red\">-810<\/h2>",
-      "deps": [
-
-      ]
-    }
   },
   "export": {
 
