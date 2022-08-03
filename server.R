@@ -51,12 +51,14 @@ server <- function(input, output, session) {
     x <- unique(C_LEP2020) %>% filter(LEP != input$lep1)
     updateSelectInput(session, "lep2", "Choose comparison LEP area", choices = c("\nNone", x)) # Add in a none so nothing is selected for 2nd LEP to start with
   })
-  
-  #find chart y axis min and max
-  EmpRateMin<-C_EmpRate_APS1721%>%filter(geographic_level=="lep")%>%
-    summarise(min(empRate,na.rm = T))
-  EmpRateMax<-C_EmpRate_APS1721%>%filter(geographic_level=="lep")%>%
-    summarise(max(empRate,na.rm = T))
+
+  # find chart y axis min and max
+  EmpRateMin <- C_EmpRate_APS1721 %>%
+    filter(geographic_level == "lep") %>%
+    summarise(min(empRate, na.rm = T))
+  EmpRateMax <- C_EmpRate_APS1721 %>%
+    filter(geographic_level == "lep") %>%
+    summarise(max(empRate, na.rm = T))
 
   # OVERVIEW ----
 
@@ -145,16 +147,16 @@ server <- function(input, output, session) {
     empLine <- C_EmpRate_APS1721 %>%
       filter(
         geographic_level == "lep", # cleans up for London which is included as lep and gor
-        area == input$lep1#"London"#
+        area == input$lep1 # "London"#
       ) %>%
       mutate(Year = as.numeric(substr(year, 3, 4))) %>%
       rename(Employment = `28  in employment `)
 
     empCntChange <- (empLine %>% filter(Year == 21))$Employment -
       (empLine %>% filter(Year == 20))$Employment
-    empCntMin <- empLine %>% summarise(min=min(Employment))
-    empCntMax <- empLine %>% summarise(max=max(Employment))
-    
+    empCntMin <- empLine %>% summarise(min = min(Employment))
+    empCntMax <- empLine %>% summarise(max = max(Employment))
+
     ggplot(empLine, aes(x = Year, y = Employment)) +
       geom_line(data = empLine %>% filter(Year <= 20)) +
       geom_ribbon(
@@ -177,22 +179,24 @@ server <- function(input, output, session) {
       theme_classic() +
       theme(
         axis.line = element_blank(),
-        #axis.text.y = element_blank(),
+        # axis.text.y = element_blank(),
         axis.ticks = element_blank(),
         axis.title = element_blank(),
         panel.background = element_rect(fill = "#f3f2f1"),
         plot.background = element_rect(fill = "#f3f2f1")
-       )+
-      scale_y_continuous(labels =label_number_si(accuracy=1)
-                         ,breaks=c(empCntMin[1,1],empCntMax[1,1]))
-      # geom_text(data = empLine %>% filter(Year == 17)
-      #           ,aes(label = label_number_si(accuracy=1)(Employment))
-      #           ,size = 3
-      #           ,nudge_x = -0.5)+
-      # geom_text(data = empLine %>% filter(Year==21)#Year == 17|
-      #           ,aes(label = label_number_si(accuracy=1)(Employment))
-      #           ,size = 3
-                # ,nudge_x = 0.5)
+      ) +
+      scale_y_continuous(
+        labels = label_number_si(accuracy = 1),
+        breaks = c(empCntMin[1, 1], empCntMax[1, 1])
+      )
+    # geom_text(data = empLine %>% filter(Year == 17)
+    #           ,aes(label = label_number_si(accuracy=1)(Employment))
+    #           ,size = 3
+    #           ,nudge_x = -0.5)+
+    # geom_text(data = empLine %>% filter(Year==21)#Year == 17|
+    #           ,aes(label = label_number_si(accuracy=1)(Employment))
+    #           ,size = 3
+    # ,nudge_x = 0.5)
   })
   # set margins
   m <- list(
@@ -283,15 +287,17 @@ server <- function(input, output, session) {
       theme_classic() +
       theme(
         axis.line = element_blank(),
-       # axis.text.y = element_blank(),
+        # axis.text.y = element_blank(),
         axis.ticks = element_blank(),
         axis.title = element_blank(),
         panel.background = element_rect(fill = "#f3f2f1"),
         plot.background = element_rect(fill = "#f3f2f1")
-      )+
-      scale_y_continuous(labels =scales::percent_format(accuracy = 1)
-                         ,breaks=c(EmpRateMin[1,1],EmpRateMax[1,1])
-                         ,limits=c(EmpRateMin[1,1],EmpRateMax[1,1]))
+      ) +
+      scale_y_continuous(
+        labels = scales::percent_format(accuracy = 1),
+        breaks = c(EmpRateMin[1, 1], EmpRateMax[1, 1]),
+        limits = c(EmpRateMin[1, 1], EmpRateMax[1, 1])
+      )
   })
   # set margins
   m <- list(
@@ -365,8 +371,8 @@ server <- function(input, output, session) {
 
     VacChange <- (VacLine %>% filter(Year == 22))$job.pc -
       (VacLine %>% filter(Year == 21))$job.pc
-    VacMin <- VacLine %>% summarise(min=min(job.pc))
-    VacMax <- VacLine %>% summarise(max=max(job.pc))
+    VacMin <- VacLine %>% summarise(min = min(job.pc))
+    VacMax <- VacLine %>% summarise(max = max(job.pc))
 
     ggplot(VacLine, aes(x = Year, y = job.pc)) +
       geom_line(data = VacLine %>% filter(Year <= 21)) +
@@ -390,14 +396,16 @@ server <- function(input, output, session) {
       theme_classic() +
       theme(
         axis.line = element_blank(),
-       # axis.text.y = element_blank(),
+        # axis.text.y = element_blank(),
         axis.ticks = element_blank(),
         axis.title = element_blank(),
         panel.background = element_rect(fill = "#f3f2f1"),
         plot.background = element_rect(fill = "#f3f2f1")
-      )+
-      scale_y_continuous(labels = scales::percent_format(accuracy = 0.1)
-                         ,breaks=c(VacMin$min,VacMax$max))
+      ) +
+      scale_y_continuous(
+        labels = scales::percent_format(accuracy = 0.1),
+        breaks = c(VacMin$min, VacMax$max)
+      )
   })
   # set margins
   m <- list(
@@ -482,8 +490,8 @@ server <- function(input, output, session) {
 
     etCntChange <- (etLine %>% filter(Year == 20))$achievements -
       (etLine %>% filter(Year == 19))$achievements
-    etMin <- etLine %>% summarise(min=min(achievements))
-    etMax <- etLine %>% summarise(max=max(achievements))
+    etMin <- etLine %>% summarise(min = min(achievements))
+    etMax <- etLine %>% summarise(max = max(achievements))
 
     ggplot(etLine, aes(x = Year, y = achievements)) +
       geom_line(data = etLine %>% filter(Year <= 19)) +
@@ -507,14 +515,16 @@ server <- function(input, output, session) {
       theme_classic() +
       theme(
         axis.line = element_blank(),
-       # axis.text.y = element_blank(),
+        # axis.text.y = element_blank(),
         axis.ticks = element_blank(),
         axis.title = element_blank(),
         panel.background = element_rect(fill = "#f3f2f1"),
         plot.background = element_rect(fill = "#f3f2f1")
-      )+
-      scale_y_continuous(labels =label_number_si(accuracy=1)
-                         ,breaks=c(etMin$min,etMax$max))
+      ) +
+      scale_y_continuous(
+        labels = label_number_si(accuracy = 1),
+        breaks = c(etMin$min, etMax$max)
+      )
   })
   # set margins
   m <- list(
@@ -587,8 +597,8 @@ server <- function(input, output, session) {
 
     AppCntChange <- (AppLine %>% filter(Year == 20))$achievements -
       (AppLine %>% filter(Year == 19))$achievements
-    AppMin <- AppLine %>% summarise(min=min(achievements))
-    AppMax <- AppLine %>% summarise(max=max(achievements))
+    AppMin <- AppLine %>% summarise(min = min(achievements))
+    AppMax <- AppLine %>% summarise(max = max(achievements))
 
     ggplot(AppLine, aes(x = Year, y = achievements)) +
       geom_line(data = AppLine %>% filter(Year <= 19)) +
@@ -612,14 +622,16 @@ server <- function(input, output, session) {
       theme_classic() +
       theme(
         axis.line = element_blank(),
-        #axis.text.y = element_blank(),
+        # axis.text.y = element_blank(),
         axis.ticks = element_blank(),
         axis.title = element_blank(),
         panel.background = element_rect(fill = "#f3f2f1"),
         plot.background = element_rect(fill = "#f3f2f1")
-      )+
-      scale_y_continuous(labels =label_number_si(accuracy=1)
-                         ,breaks=c(AppMin$min,AppMax$max))
+      ) +
+      scale_y_continuous(
+        labels = label_number_si(accuracy = 1),
+        breaks = c(AppMin$min, AppMax$max)
+      )
   })
   # set margins
   m <- list(
@@ -772,7 +784,7 @@ server <- function(input, output, session) {
     EmpRateTime$Areas <- factor(EmpRateTime$area,
       levels = c("England", input$lep1, input$lep2)
     )
-    
+
     ggplot(EmpRateTime, aes(x = year, y = empRate, color = Areas, group = Areas)) +
       geom_line(aes(text = paste0(
         "AY: ", year, "<br>",
@@ -781,7 +793,7 @@ server <- function(input, output, session) {
       ))) +
       theme_minimal() +
       theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
-      scale_y_continuous(labels = scales::percent_format(accuracy = 1),limits=c(EmpRateMin[1,1],EmpRateMax[1,1])) +
+      scale_y_continuous(labels = scales::percent_format(accuracy = 1), limits = c(EmpRateMin[1, 1], EmpRateMax[1, 1])) +
       labs(colour = "") +
       scale_color_manual(values = c("#28a197", "#1d70b8", "#F46A25"))
   })
