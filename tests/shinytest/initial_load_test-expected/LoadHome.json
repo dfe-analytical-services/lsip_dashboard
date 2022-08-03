@@ -3,17 +3,15 @@
     "datatabset": "Overview",
     "lep1": "Black Country",
     "lep2": "\nNone",
-    "link_to_tabpanel_earnings": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
     "link_to_tabpanel_FE": 0,
     "link_to_tabpanel_FE2": 0,
-    "link_to_tabpanel_HE": 0,
     "link_to_tabpanel_overview": 0,
     "link_to_tabpanel_vacancies": 0,
     "link_to_tabpanel_vacancies2": 0,
     "navbar": "Homepage",
-    "skill_line": "Apprenticeships"
+    "skill_line": "Apprenticeships (all ages)"
   },
   "output": {
 
