@@ -73,7 +73,7 @@ fluidPage(
                 h2("Dashboard"),
                 p("This page contains the different dashboard tabs."),
                 h3(actionLink("link_to_tabpanel_overview", "Overview")),
-                p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, FE and skills achievement volumes. It shows year-on-year change for each indicator."),
+                p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, Further Education (FE) and skills achievement volumes. It shows year-on-year change for each indicator."),
                 p("The download buttons download all indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
                 # h2("Labour market"),
                 h3(actionLink("link_to_tabpanel_employment", "Employment")),
@@ -226,7 +226,7 @@ fluidPage(
                       ),
                       column(
                         width = 7,
-                        plotlyOutput("empLineChart", height = 80)
+                        plotlyOutput("empLineChart", height = 81)
                       )
                     ),
                     h3("Employment rate"),
@@ -240,7 +240,7 @@ fluidPage(
                       ),
                       column(
                         width = 7,
-                        plotlyOutput("empRateLineChart", height = 80)
+                        plotlyOutput("empRateLineChart", height = 81)
                       )
                     ),
                     # third row - link to emp tab
@@ -265,7 +265,7 @@ fluidPage(
                       ),
                       column(
                         width = 7,
-                        plotlyOutput("VacLineChart", height = 80)
+                        plotlyOutput("VacLineChart", height = 81)
                       )
                     ),
                     box(
@@ -291,7 +291,7 @@ fluidPage(
                       ),
                       column(
                         width = 7,
-                        plotlyOutput("etLineChart", height = 80)
+                        plotlyOutput("etLineChart", height = 81)
                       )
                     ),
                     h3("Apprenticeship achievements"),
@@ -305,7 +305,7 @@ fluidPage(
                       ),
                       column(
                         width = 7,
-                        plotlyOutput("AppLineChart", height = 80)
+                        plotlyOutput("AppLineChart", height = 81)
                       )
                     ),
                     # 6th row - link to app data
