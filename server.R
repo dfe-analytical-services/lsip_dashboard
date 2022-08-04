@@ -215,7 +215,9 @@ server <- function(input, output, session) {
       tooltip = "text",
       height = 81
     ) %>%
-      layout(margin = m) %>%
+      layout(margin = m,
+             xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
 
@@ -317,7 +319,9 @@ server <- function(input, output, session) {
       tooltip = "text",
       height = 81
     ) %>%
-      layout(margin = m) %>%
+      layout(margin = m,
+             xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
 
@@ -422,7 +426,9 @@ server <- function(input, output, session) {
       tooltip = "text",
       height = 81
     ) %>%
-      layout(margin = m) %>%
+      layout(margin = m,
+             xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
 
@@ -538,7 +544,9 @@ server <- function(input, output, session) {
       tooltip = "text",
       height = 81
     ) %>%
-      layout(margin = m) %>%
+      layout(margin = m,
+             xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
 
@@ -645,7 +653,9 @@ server <- function(input, output, session) {
       tooltip = "text",
       height = 81
     ) %>%
-      layout(margin = m) %>%
+      layout(margin = m,
+             xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
 
