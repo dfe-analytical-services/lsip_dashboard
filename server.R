@@ -802,7 +802,7 @@ server <- function(input, output, session) {
 
     ggplot(EmpRateTime, aes(x = year, y = empRate, color = Areas, group = Areas)) +
       geom_line(aes(text = paste0(
-        "AY: ", year, "<br>",
+        "Year: ", year, "<br>",
         "Area: ", Areas, "<br>",
         "Employment rate: ", scales::percent(round(empRate, 2)), "<br>"
       ))) +
@@ -1190,7 +1190,7 @@ server <- function(input, output, session) {
       group = interaction(level_or_type, LEP)
     )) +
       geom_line(aes(text = paste0(
-        "AY: ", AY, "<br>",
+        "Academic year: ", AY, "<br>",
         "Area: ", Area, "<br>",
         "Achievements: ", format(Achievements, big.mark = ","), "<br>",
         "Provision: ", level_or_type, "<br>"
