@@ -44,7 +44,7 @@ fluidPage(
       fluidPage(
         fluidRow(column(
           width = 12,
-          style = "background-color:#eb5c5d;color: #000000;",
+          style = "background-color:#6a282a;color: #FFFFFF;font-size: 16px",
           "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
         )),
         fluidRow(
@@ -184,7 +184,7 @@ fluidPage(
       "Dashboard",
       fluidRow(column(
         width = 12,
-        style = "background-color:#eb5c5d;color: #000000;",
+        style = "background-color:#6a282a;color: #FFFFFF;font-size: 16px",
         "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
       )),
       box(
@@ -622,7 +622,7 @@ fluidPage(
       "Accessibility",
       fluidRow(column(
         width = 12,
-        style = "background-color:#eb5c5d;color: #000000;",
+        style = "background-color:#6a282a;color: #FFFFFF;font-size: 16px",
         "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
       )),
       box(
@@ -664,7 +664,7 @@ fluidPage(
       "Support and feedback",
       fluidRow(column(
         width = 12,
-        style = "background-color:#eb5c5d;color: #000000;",
+        style = "background-color:#6a282a;color: #FFFFFF;font-size: 16px",
         "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
       )),
       box(

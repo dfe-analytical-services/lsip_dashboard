@@ -791,6 +791,7 @@ server <- function(input, output, session) {
       levels = c("England", input$lep1, input$lep2)
     )
 
+
     ggplot(
       EmpRateTime,
       aes(
@@ -804,6 +805,7 @@ server <- function(input, output, session) {
       )
     ) +
       geom_line() +
+
       theme_minimal() +
       theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
       scale_y_continuous(labels = scales::percent_format(accuracy = 1), limits = c(.65, .85)) +
