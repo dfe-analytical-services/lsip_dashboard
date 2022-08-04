@@ -16,7 +16,7 @@ server <- function(input, output, session) {
   })
 
   output$page2title <- renderUI({
-    paste0(input$lep1, " FE and skills supply trends")
+    paste0(input$lep1, " Further Education (FE) and skills supply trends")
   })
 
   output$page3title <- renderUI({
@@ -217,7 +217,7 @@ server <- function(input, output, session) {
   output$empLineChart <- renderPlotly({
     ggplotly(empLineChart(),
       tooltip = "text",
-      height = 80
+      height = 81
     ) %>%
       layout(margin = m) %>%
       config(displayModeBar = FALSE)
@@ -318,7 +318,7 @@ server <- function(input, output, session) {
   output$empRateLineChart <- renderPlotly({
     ggplotly(empRateLineChart(),
       tooltip = "text",
-      height = 80
+      height = 81
     ) %>%
       layout(margin = m) %>%
       config(displayModeBar = FALSE)
@@ -426,7 +426,7 @@ server <- function(input, output, session) {
   output$VacLineChart <- renderPlotly({
     ggplotly(VacLineChart(),
       tooltip = "text",
-      height = 80
+      height = 81
     ) %>%
       layout(margin = m) %>%
       config(displayModeBar = FALSE)
@@ -545,7 +545,7 @@ server <- function(input, output, session) {
   output$etLineChart <- renderPlotly({
     ggplotly(etLineChart(),
       tooltip = "text",
-      height = 80
+      height = 81
     ) %>%
       layout(margin = m) %>%
       config(displayModeBar = FALSE)
@@ -652,7 +652,7 @@ server <- function(input, output, session) {
   output$AppLineChart <- renderPlotly({
     ggplotly(AppLineChart(),
       tooltip = "text",
-      height = 80
+      height = 81
     ) %>%
       layout(margin = m) %>%
       config(displayModeBar = FALSE)
@@ -808,7 +808,7 @@ server <- function(input, output, session) {
       ))) +
       theme_minimal() +
       theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
-      scale_y_continuous(labels = scales::percent_format(accuracy = 1), limits = c(EmpRateMin[1, 1], EmpRateMax[1, 1])) +
+      scale_y_continuous(labels = scales::percent_format(accuracy = 1), limits = c(.65, .85)) +
       labs(colour = "") +
       scale_color_manual(values = c("#28a197", "#1d70b8", "#F46A25"))
   })
