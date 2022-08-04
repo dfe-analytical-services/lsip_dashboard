@@ -19,7 +19,6 @@ fluidPage(
 
   # Set title for search engines
   HTML("<title>Local Skills Dashboard</title>"),
-
   tagList(
     tags$head(tags$style(HTML("
                            .navbar-nav {
@@ -31,11 +30,11 @@ fluidPage(
                            ")))
   ),
   tags$head(includeHTML(("google-analytics.html"))),
-  
+
   # Navbar ====================================================================
   navbarPage(
     id = "navbar",
-    title="",
+    title = "",
     collapsible = TRUE,
 
     # HOMEPAGE ============================================================
