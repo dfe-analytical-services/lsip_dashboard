@@ -49,10 +49,10 @@ server <- function(input, output, session) {
   # find emp chart y axis min and max
   EmpRateMin <- C_EmpRate_APS1721 %>%
     filter(geographic_level == "lep") %>%
-    summarise(min(empRate, na.rm = T),.groups="drop")
+    summarise(min(empRate, na.rm = T), .groups = "drop")
   EmpRateMax <- C_EmpRate_APS1721 %>%
     filter(geographic_level == "lep") %>%
-    summarise(max(empRate, na.rm = T),.groups="drop")
+    summarise(max(empRate, na.rm = T), .groups = "drop")
 
   # APP ----
   # turn off lep 2 for overview page
@@ -161,14 +161,13 @@ server <- function(input, output, session) {
 
     empCntChange <- (empLine %>% filter(Year == 21))$Employment -
       (empLine %>% filter(Year == 20))$Employment
-    empCntMin <- empLine %>% summarise(min = min(Employment),.groups="drop")
-    empCntMax <- empLine %>% summarise(max = max(Employment),.groups="drop")
+    empCntMin <- empLine %>% summarise(min = min(Employment), .groups = "drop")
+    empCntMax <- empLine %>% summarise(max = max(Employment), .groups = "drop")
 
-    ggplot(empLine, aes(x = Year, y = Employment, group=area, text = paste0(
+    ggplot(empLine, aes(x = Year, y = Employment, group = area, text = paste0(
       "Year: ", year, "<br>",
       "Employment: ", format(Employment, big.mark = ","), "<br>"
-    )
-    )) +
+    ))) +
       geom_line(data = empLine %>% filter(Year <= 20)) +
       geom_ribbon(
         data = empLine %>% filter(Year >= 20),
@@ -267,13 +266,15 @@ server <- function(input, output, session) {
     empRateCntChange <- (empRateLine %>% filter(Year == 21, geographic_level == "lep"))$empRate -
       (empRateLine %>% filter(Year == 20, geographic_level == "lep"))$empRate
 
-    ggplot(empRateLine, aes(x = Year, y = empRate,
-                            group = area,
-                            text = paste0(
-                              "Year: ", year, "<br>",
-                              "Area: ", area, "<br>",
-                              "Employment rate: ", format(100 * empRate, digit = 2), "%<br>"
-                            ))) +
+    ggplot(empRateLine, aes(
+      x = Year, y = empRate,
+      group = area,
+      text = paste0(
+        "Year: ", year, "<br>",
+        "Area: ", area, "<br>",
+        "Employment rate: ", format(100 * empRate, digit = 2), "%<br>"
+      )
+    )) +
       geom_line(data = empRateLine %>% filter(Year <= 20, geographic_level == "lep")) +
       geom_line(data = empRateLine %>% filter(geographic_level == "country"), alpha = 0.5) +
       geom_ribbon(
@@ -333,7 +334,7 @@ server <- function(input, output, session) {
         year == "2022",
         LEP == input$lep1
       ) %>%
-      summarise(job.pc = sum(pc_total),.groups="drop")
+      summarise(job.pc = sum(pc_total), .groups = "drop")
 
     ### ONS job advert units change
     VacPcChange <- (C_Vacancy_England %>%
@@ -341,13 +342,13 @@ server <- function(input, output, session) {
         year == "2022",
         LEP == input$lep1
       ) %>%
-      summarise(job.pc = sum(pc_total),.groups="drop")
+      summarise(job.pc = sum(pc_total), .groups = "drop")
       - (C_Vacancy_England %>%
         filter(
           year == "2021",
           LEP == input$lep1
         ) %>%
-        summarise(job.pc = sum(pc_total),.groups="drop")))
+        summarise(job.pc = sum(pc_total), .groups = "drop")))
 
     # print with formatting
 
@@ -369,15 +370,15 @@ server <- function(input, output, session) {
         LEP == input$lep1
       ) %>%
       group_by(year) %>%
-      summarise(job.pc = sum(pc_total),.groups="drop") %>%
-      mutate(Year = as.numeric(substr(year, 3, 4)), LEP=input$lep1)
+      summarise(job.pc = sum(pc_total), .groups = "drop") %>%
+      mutate(Year = as.numeric(substr(year, 3, 4)), LEP = input$lep1)
 
     VacChange <- (VacLine %>% filter(Year == 22))$job.pc -
       (VacLine %>% filter(Year == 21))$job.pc
-    VacMin <- VacLine %>% summarise(min = min(job.pc),.groups="drop")
-    VacMax <- VacLine %>% summarise(max = max(job.pc),.groups="drop")
+    VacMin <- VacLine %>% summarise(min = min(job.pc), .groups = "drop")
+    VacMax <- VacLine %>% summarise(max = max(job.pc), .groups = "drop")
 
-    ggplot(VacLine, aes(x = Year, y = job.pc, group=LEP,  text = paste0(
+    ggplot(VacLine, aes(x = Year, y = job.pc, group = LEP, text = paste0(
       "Year: ", year, "<br>",
       "England vacancy share: ", format(100 * job.pc, digit = 2), "%<br>"
     ))) +
@@ -445,7 +446,7 @@ server <- function(input, output, session) {
         LEP == input$lep1,
         level_or_type == "Education and training: Total"
       ) %>%
-      summarise(ET_ach = sum(achievements),.groups="drop")
+      summarise(ET_ach = sum(achievements), .groups = "drop")
 
     # E&T achievements change
     ETachChange <- ((C_Achieve_ILR1621 %>%
@@ -454,14 +455,14 @@ server <- function(input, output, session) {
         LEP == input$lep1,
         level_or_type == "Education and training: Total"
       ) %>%
-      summarise(ET_ach = sum(achievements),.groups="drop"))
+      summarise(ET_ach = sum(achievements), .groups = "drop"))
     - (C_Achieve_ILR1621 %>%
         filter(
           time_period == "201920",
           LEP == input$lep1,
           level_or_type == "Education and training: Total"
         ) %>%
-        summarise(ET_ach = sum(achievements),.groups="drop")))
+        summarise(ET_ach = sum(achievements), .groups = "drop")))
 
     # print with formatting
     h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
@@ -485,15 +486,15 @@ server <- function(input, output, session) {
         time_period != "202122"
       ) %>%
       group_by(time_period) %>%
-      summarise(achievements = sum(achievements),.groups="drop") %>%
-      mutate(Year = as.numeric(substr(time_period, 3, 4)),LEP=input$lep1)
+      summarise(achievements = sum(achievements), .groups = "drop") %>%
+      mutate(Year = as.numeric(substr(time_period, 3, 4)), LEP = input$lep1)
 
     etCntChange <- (etLine %>% filter(Year == 20))$achievements -
       (etLine %>% filter(Year == 19))$achievements
-    etMin <- etLine %>% summarise(min = min(achievements),.groups="drop")
-    etMax <- etLine %>% summarise(max = max(achievements),.groups="drop")
+    etMin <- etLine %>% summarise(min = min(achievements), .groups = "drop")
+    etMax <- etLine %>% summarise(max = max(achievements), .groups = "drop")
 
-    ggplot(etLine, aes(x = Year, y = achievements, group=LEP, text = paste0(
+    ggplot(etLine, aes(x = Year, y = achievements, group = LEP, text = paste0(
       "Academic year: ", time_period, "<br>",
       "Achievements: ", format(achievements, big.mark = ","), "<br>"
     ))) +
@@ -549,7 +550,7 @@ server <- function(input, output, session) {
         LEP == input$lep1,
         level_or_type == "Apprenticeships: Total"
       ) %>%
-      summarise(App_ach = sum(achievements, na.rm = TRUE),.groups="drop")
+      summarise(App_ach = sum(achievements, na.rm = TRUE), .groups = "drop")
 
     # App achievements change
     AppachChange <- ((C_Achieve_ILR1621 %>%
@@ -558,14 +559,14 @@ server <- function(input, output, session) {
         LEP == input$lep1,
         level_or_type == "Apprenticeships: Total"
       ) %>%
-      summarise(App_ach = sum(achievements, na.rm = TRUE),.groups="drop"))
+      summarise(App_ach = sum(achievements, na.rm = TRUE), .groups = "drop"))
     - (C_Achieve_ILR1621 %>%
         filter(
           time_period == "201920",
           LEP == input$lep1,
           level_or_type == "Apprenticeships: Total"
         ) %>%
-        summarise(App_ach = sum(achievements, na.rm = TRUE),.groups="drop")))
+        summarise(App_ach = sum(achievements, na.rm = TRUE), .groups = "drop")))
 
     # print with formatting
     h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
@@ -590,15 +591,17 @@ server <- function(input, output, session) {
       ) %>%
       group_by(time_period) %>%
       summarise(achievements = sum(achievements, na.rm = TRUE)) %>%
-      mutate(Year = as.numeric(substr(time_period, 3, 4)),
-             LEP=input$lep1)
+      mutate(
+        Year = as.numeric(substr(time_period, 3, 4)),
+        LEP = input$lep1
+      )
 
     AppCntChange <- (AppLine %>% filter(Year == 20))$achievements -
       (AppLine %>% filter(Year == 19))$achievements
-    AppMin <- AppLine %>% summarise(min = min(achievements),.groups="drop")
-    AppMax <- AppLine %>% summarise(max = max(achievements),.groups="drop")
+    AppMin <- AppLine %>% summarise(min = min(achievements), .groups = "drop")
+    AppMax <- AppLine %>% summarise(max = max(achievements), .groups = "drop")
 
-    ggplot(AppLine, aes(x = Year, y = achievements, group=LEP, text = paste0(
+    ggplot(AppLine, aes(x = Year, y = achievements, group = LEP, text = paste0(
       "Academic year: ", time_period, "<br>",
       "Achievements: ", format(achievements, big.mark = ","), "<br>"
     ))) +
@@ -788,15 +791,18 @@ server <- function(input, output, session) {
       levels = c("England", input$lep1, input$lep2)
     )
 
-    ggplot(EmpRateTime, 
-           aes(x = year, y = empRate, 
-               color = Areas, group = Areas, 
-               text = paste0(
-                 "AY: ", year, "<br>",
-                 "Area: ", Areas, "<br>",
-                 "Employment rate: ", scales::percent(round(empRate, 2)), "<br>"
-                 )
-               )) +
+    ggplot(
+      EmpRateTime,
+      aes(
+        x = year, y = empRate,
+        color = Areas, group = Areas,
+        text = paste0(
+          "AY: ", year, "<br>",
+          "Area: ", Areas, "<br>",
+          "Employment rate: ", scales::percent(round(empRate, 2)), "<br>"
+        )
+      )
+    ) +
       geom_line() +
       theme_minimal() +
       theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
@@ -906,7 +912,7 @@ server <- function(input, output, session) {
             year == "2022",
             LEP == input$lep1
           ) %>%
-          summarise(job.pc = sum(pc_total),.groups="drop")), digits = 3),
+          summarise(job.pc = sum(pc_total), .groups = "drop")), digits = 3),
         "%"
       ),
       paste0("of online vacancies in England (Jan 2022) were in ", input$lep1),
@@ -923,7 +929,7 @@ server <- function(input, output, session) {
             year == "2022",
             LEP == input$lep2
           ) %>%
-          summarise(job.pc = sum(pc_total),.groups="drop")), digits = 3),
+          summarise(job.pc = sum(pc_total), .groups = "drop")), digits = 3),
         "%"
       ),
       paste0("of online vacancies in England (Jan 2022) were in ", input$lep2),
@@ -942,7 +948,7 @@ server <- function(input, output, session) {
             LEP == input$lep1
           ) %>%
           group_by(year) %>%
-          summarise(job.cnt = sum(vacancy_unit),.groups="drop") %>%
+          summarise(job.cnt = sum(vacancy_unit), .groups = "drop") %>%
           mutate(Row = 1:n()) %>%
           mutate(Percentage_Change = job.cnt / lag(job.cnt)) %>%
           ungroup() %>%
@@ -966,7 +972,7 @@ server <- function(input, output, session) {
             LEP == input$lep2
           ) %>%
           group_by(year) %>%
-          summarise(job.cnt = sum(vacancy_unit),.groups="drop") %>%
+          summarise(job.cnt = sum(vacancy_unit), .groups = "drop") %>%
           mutate(Row = 1:n()) %>%
           mutate(Percentage_Change = job.cnt / lag(job.cnt)) %>%
           ungroup() %>%
@@ -1009,20 +1015,22 @@ server <- function(input, output, session) {
         }) %>%
       select(-LA, -pc_total, -region, -England) %>%
       group_by(year, LEP) %>%
-      summarise(total = sum(vacancy_unit),.groups="drop")
+      summarise(total = sum(vacancy_unit), .groups = "drop")
     # add an extra column so the colours work in ggplot when sorting alphabetically
     JobTime$Areas <- factor(JobTime$LEP,
       levels = c(input$lep1, input$lep2)
     )
-    ggplot(JobTime, 
-           aes(x = year, y = total, colour = Areas, group = Areas, 
-               text = paste0(
-                 "Year: ", year, "<br>",
-                 "Area: ", Areas, "<br>",
-                 "Job vacancy units: ", round(total, 0), "<br>"
-                 )
-               )
-           ) +
+    ggplot(
+      JobTime,
+      aes(
+        x = year, y = total, colour = Areas, group = Areas,
+        text = paste0(
+          "Year: ", year, "<br>",
+          "Area: ", Areas, "<br>",
+          "Job vacancy units: ", round(total, 0), "<br>"
+        )
+      )
+    ) +
       geom_line() +
       theme_minimal() +
       labs(colour = "LEP") +
@@ -1081,7 +1089,7 @@ server <- function(input, output, session) {
           LEP == input$lep1,
           level_or_type == "Education and training: Total"
         ) %>%
-        summarise(App_ach = sum(achievements),.groups="drop")), scientific = FALSE, big.mark = ","),
+        summarise(App_ach = sum(achievements), .groups = "drop")), scientific = FALSE, big.mark = ","),
       paste0("20/21 adult education and training achievements in ", input$lep1),
       color = "blue"
     )
@@ -1096,7 +1104,7 @@ server <- function(input, output, session) {
           LEP == input$lep2,
           level_or_type == "Education and training: Total"
         ) %>%
-        summarise(App_ach = sum(achievements),.groups="drop")), scientific = FALSE, big.mark = ","),
+        summarise(App_ach = sum(achievements), .groups = "drop")), scientific = FALSE, big.mark = ","),
       paste0("20/21 adult education and training achievements in ", input$lep2),
       color = "orange"
     )
@@ -1112,7 +1120,7 @@ server <- function(input, output, session) {
           LEP == input$lep1,
           level_or_type == "Apprenticeships: Total"
         ) %>%
-        summarise(App_ach = sum(achievements),.groups="drop")), scientific = FALSE, big.mark = ","),
+        summarise(App_ach = sum(achievements), .groups = "drop")), scientific = FALSE, big.mark = ","),
       paste0("20/21 apprenticeship achievements in ", input$lep1),
       color = "blue"
     )
@@ -1127,7 +1135,7 @@ server <- function(input, output, session) {
           LEP == input$lep2,
           level_or_type == "Apprenticeships: Total"
         ) %>%
-        summarise(App_ach = sum(achievements),.groups="drop")), scientific = FALSE, big.mark = ","),
+        summarise(App_ach = sum(achievements), .groups = "drop")), scientific = FALSE, big.mark = ","),
       paste0("20/21 apprenticeship achievements in ", input$lep2),
       color = "orange"
     )
@@ -1176,7 +1184,7 @@ server <- function(input, output, session) {
       ) %>%
       mutate(AY = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
       group_by(AY, LEP, level_or_type) %>%
-      summarise(Achievements = sum(achievements),.groups="drop")
+      summarise(Achievements = sum(achievements), .groups = "drop")
     # add an extra column so the colours work in ggplot when sorting alphabetically
     FETime$Area <- factor(FETime$LEP,
       levels = c(input$lep1, input$lep2)
@@ -1220,7 +1228,7 @@ server <- function(input, output, session) {
       ) %>%
       select(LEP, SSA = ssa_t1_desc, Achievements = achievements) %>%
       group_by(LEP, SSA) %>%
-      summarise(Achievements = sum(Achievements),.groups="drop") %>%
+      summarise(Achievements = sum(Achievements), .groups = "drop") %>%
       ungroup()
 
     Ach_pc <- AchSSA_21 %>%
@@ -1379,7 +1387,7 @@ server <- function(input, output, session) {
         year == "2022",
         LEP == input$lep1
       ) %>%
-      summarise(job.unit = sum(vacancy_unit),.groups="drop"),
+      summarise(job.unit = sum(vacancy_unit), .groups = "drop"),
     "job vacancy units (Jan 22)",
     width = 12
     )
@@ -1392,13 +1400,13 @@ server <- function(input, output, session) {
         year == "2022",
         LEP == input$lep1
       ) %>%
-      summarise(job.unit = sum(vacancy_unit),.groups="drop"))
+      summarise(job.unit = sum(vacancy_unit), .groups = "drop"))
     - (C_Vacancy_England %>%
         filter(
           year == "2021",
           LEP == input$lep1
         ) %>%
-        summarise(job.unit = sum(vacancy_unit),.groups="drop")))
+        summarise(job.unit = sum(vacancy_unit), .groups = "drop")))
     valueBox(
       sprintf("%+.0f", x),
       subtitle = NULL,
@@ -1487,14 +1495,14 @@ server <- function(input, output, session) {
         LEP == input$lep1,
         level_or_type == "Education and training: Total"
       ) %>%
-      summarise(App_ach = sum(achievements),.groups="drop"))
+      summarise(App_ach = sum(achievements), .groups = "drop"))
     - (C_Achieve_ILR1621 %>%
         filter(
           time_period == "201920",
           LEP == input$lep1,
           level_or_type == "Education and training: Total"
         ) %>%
-        summarise(App_ach = sum(achievements),.groups="drop")))
+        summarise(App_ach = sum(achievements), .groups = "drop")))
     valueBox(
       sprintf("%+.0f", x),
       subtitle = NULL,
@@ -1527,14 +1535,14 @@ server <- function(input, output, session) {
         LEP == input$lep1,
         level_or_type == "Apprenticeships: Total"
       ) %>%
-      summarise(App_ach = sum(achievements),.groups="drop"))
+      summarise(App_ach = sum(achievements), .groups = "drop"))
     - (C_Achieve_ILR1621 %>%
         filter(
           time_period == "201920",
           LEP == input$lep1,
           level_or_type == "Apprenticeships: Total"
         ) %>%
-        summarise(App_ach = sum(achievements),.groups="drop")))
+        summarise(App_ach = sum(achievements), .groups = "drop")))
     valueBox(
       sprintf("%+.0f", x),
       subtitle = NULL,
