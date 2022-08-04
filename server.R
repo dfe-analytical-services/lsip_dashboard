@@ -46,19 +46,26 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "datatabset", "Skills")
   })
 
-  # Make sure second LEP filter doesn't include what has been chosen in lep1 filter
-  observe({
-    x <- unique(C_LEP2020) %>% filter(LEP != input$lep1)
-    updateSelectInput(session, "lep2", "Choose comparison LEP area", choices = c("\nNone", x)) # Add in a none so nothing is selected for 2nd LEP to start with
-  })
-
-  # find chart y axis min and max
+  # find emp chart y axis min and max
   EmpRateMin <- C_EmpRate_APS1721 %>%
     filter(geographic_level == "lep") %>%
     summarise(min(empRate, na.rm = T))
   EmpRateMax <- C_EmpRate_APS1721 %>%
     filter(geographic_level == "lep") %>%
     summarise(max(empRate, na.rm = T))
+
+  # APP ----
+  # turn off lep 2 for overview page
+  output$lep2_off <- renderUI({
+    if (input$datatabset == "Overview") {
+      p("")
+    } else {
+      selectInput("lep2", "Choose comparison LEP area",
+        choices = c("\nNone", unique(C_LEP2020) %>% filter(LEP != input$lep1)), # filter out lep1
+        selected = input$lep2 # select this so lep two is consistent across tabs
+      )
+    }
+  })
 
   # OVERVIEW ----
 
@@ -753,19 +760,23 @@ server <- function(input, output, session) {
       color = "orange"
     )
   })
+
   # turn off comparison boxes if none is selected
   output$emp_comp <- renderUI({
-    print(input$lep2)
-    if (input$lep2 == "\nNone") {
-      tagList(
-        br(),
-        p("")
-      )
+    if ("lep2" %in% names(input)) {
+      if (input$lep2 == "\nNone") {
+        tagList(
+          br(),
+          p("")
+        )
+      } else {
+        tagList(
+          valueBoxOutput("locland.emplcnt.2"),
+          valueBoxOutput("locland.emplrate.2")
+        )
+      }
     } else {
-      tagList(
-        valueBoxOutput("locland.emplcnt.2"),
-        valueBoxOutput("locland.emplrate.2")
-      )
+      p("")
     }
   })
 
@@ -778,7 +789,11 @@ server <- function(input, output, session) {
           geographic_level == "country", # cleans up for London and South East which is included as lep and gor
         area == "England" |
           area == input$lep1 |
-          area == input$lep2
+          area == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          }
       )
     # add an extra column so the colours work in ggplot when sorting alphabetically
     EmpRateTime$Areas <- factor(EmpRateTime$area,
@@ -813,7 +828,11 @@ server <- function(input, output, session) {
           geographic_level == "country", # cleans up for London and South East which is included as lep and gor
         area == "England" |
           area == input$lep1 |
-          area == input$lep2
+          area == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          }
       ) %>%
       select(-year, -geographic_level) %>%
       rename_with(str_to_sentence) %>% # capitalise column titles
@@ -970,17 +989,20 @@ server <- function(input, output, session) {
 
   # turn off comparison boxes if none is selected
   output$vac_comp <- renderUI({
-    print(input$lep2)
-    if (input$lep2 == "\nNone") {
-      tagList(
-        br(),
-        p("")
-      )
+    if ("lep2" %in% names(input)) {
+      if (input$lep2 == "\nNone") {
+        tagList(
+          br(),
+          p("")
+        )
+      } else {
+        tagList(
+          valueBoxOutput("jobad.pc.2"),
+          valueBoxOutput("jobad.ch.2")
+        )
+      }
     } else {
-      tagList(
-        valueBoxOutput("jobad.pc.2"),
-        valueBoxOutput("jobad.ch.2")
-      )
+      p("")
     }
   })
 
@@ -988,7 +1010,11 @@ server <- function(input, output, session) {
   jobad.time <- reactive({
     JobTime <- C_Vacancy_England %>%
       filter(LEP == input$lep1 |
-        LEP == input$lep2) %>%
+        LEP == if ("lep2" %in% names(input)) {
+          input$lep2
+        } else {
+          "\nNone"
+        }) %>%
       select(-LA, -pc_total, -region, -England) %>%
       group_by(year, LEP) %>%
       summarise(total = sum(vacancy_unit))
@@ -1113,17 +1139,20 @@ server <- function(input, output, session) {
 
   # turn off comparison boxes if none is selected
   output$skill_comp <- renderUI({
-    print(input$lep2)
-    if (input$lep2 == "\nNone") {
-      tagList(
-        br(),
-        p("")
-      )
+    if ("lep2" %in% names(input)) {
+      if (input$lep2 == "\nNone") {
+        tagList(
+          br(),
+          p("")
+        )
+      } else {
+        tagList(
+          valueBoxOutput("skisup.FEach.2"),
+          valueBoxOutput("skisup.APach.2")
+        )
+      }
     } else {
-      tagList(
-        valueBoxOutput("skisup.FEach.2"),
-        valueBoxOutput("skisup.APach.2")
-      )
+      p("")
     }
   })
 
@@ -1141,7 +1170,11 @@ server <- function(input, output, session) {
       filter(
         # area == "England" |
         LEP == input$lep1 |
-          LEP == input$lep2,
+          LEP == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          },
         level_or_type == input$skill_line,
         time_period != 202122
       ) %>%
@@ -1182,7 +1215,11 @@ server <- function(input, output, session) {
       filter(
         time_period == "202122",
         LEP == input$lep1 |
-          LEP == input$lep2
+          LEP == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          }
       ) %>%
       select(LEP, SSA = ssa_t1_desc, Achievements = achievements) %>%
       group_by(LEP, SSA) %>%
