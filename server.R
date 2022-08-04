@@ -814,7 +814,10 @@ server <- function(input, output, session) {
 
   output$EmpRate_time <- renderPlotly({
     ggplotly(EmpRate_time(), tooltip = "text") %>%
-      layout(legend = list(orientation = "h", x = 0, y = -0.1)) %>%
+      layout(
+        legend = list(orientation = "h", x = 0, y = -0.1),
+        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
 
@@ -1042,7 +1045,10 @@ server <- function(input, output, session) {
 
   output$jobad.time <- renderPlotly({
     ggplotly(jobad.time(), tooltip = c("text")) %>%
-      layout(legend = list(orientation = "h", x = 0, y = -0.1)) %>%
+      layout(
+        legend = list(orientation = "h", x = 0, y = -0.1),
+        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
 
@@ -1211,7 +1217,10 @@ server <- function(input, output, session) {
 
   output$Ach_time <- renderPlotly({
     ggplotly(Ach_time(), tooltip = c("text")) %>%
-      layout(legend = list(orientation = "h", x = 0, y = -0.1)) %>%
+      layout(
+        legend = list(orientation = "h", x = 0, y = -0.1),
+        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
 
@@ -1269,7 +1278,10 @@ server <- function(input, output, session) {
 
   output$Ach_SSA_pc <- renderPlotly({
     ggplotly(Ach_SSA_pc(), tooltip = c("text"), height = 474) %>%
-      layout(legend = list(orientation = "h", x = 0, y = -0.1)) %>%
+      layout(
+        legend = list(orientation = "h", x = 0, y = -0.1),
+        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
 
