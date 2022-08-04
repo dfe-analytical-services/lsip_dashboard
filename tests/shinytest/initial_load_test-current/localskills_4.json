@@ -1,0 +1,21 @@
+{
+  "input": {
+    "datatabset": "Employment",
+    "lep1": "London",
+    "link_to_tabpanel_employment": 0,
+    "link_to_tabpanel_employment2": 0,
+    "link_to_tabpanel_FE": 0,
+    "link_to_tabpanel_FE2": 0,
+    "link_to_tabpanel_overview": 0,
+    "link_to_tabpanel_vacancies": 0,
+    "link_to_tabpanel_vacancies2": 0,
+    "navbar": "Homepage",
+    "skill_line": "Apprenticeships (all ages)"
+  },
+  "output": {
+
+  },
+  "export": {
+
+  }
+}
