@@ -187,10 +187,11 @@ fluidPage(
           selectInput("lep1", "Choose primary LEP area",
             choices = C_LEP2020
           ),
-          # lep 2 is reactve to lep 1 so is populated in the server
-          selectInput("lep2", "Choose comparison LEP area",
-            choices = NULL
-          )
+          uiOutput("lep2_off")
+          # # lep 2 is reactve to lep 1 so is populated in the server
+          # selectInput("lep2", "Choose comparison LEP area",
+          #   choices = NULL
+          # )
         ),
 
         # next row is the data tabs

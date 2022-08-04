@@ -46,13 +46,7 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "datatabset", "Skills")
   })
 
-  # Make sure second LEP filter doesn't include what has been chosen in lep1 filter
-  observe({
-    x <- unique(C_LEP2020) %>% filter(LEP != input$lep1)
-    updateSelectInput(session, "lep2", "Choose comparison LEP area", choices = c("\nNone", x)) # Add in a none so nothing is selected for 2nd LEP to start with
-  })
-
-  # find chart y axis min and max
+  # find emp chart y axis min and max
   EmpRateMin <- C_EmpRate_APS1721 %>%
     filter(geographic_level == "lep") %>%
     summarise(min(empRate, na.rm = T))
@@ -60,6 +54,20 @@ server <- function(input, output, session) {
     filter(geographic_level == "lep") %>%
     summarise(max(empRate, na.rm = T))
 
+  # APP ----  
+  # turn off lep 2 for overview page
+  output$lep2_off <- renderUI({
+    print(input$datatabset)
+    if (input$datatabset == "Overview") {
+        p("")
+    } else {
+      selectInput("lep2", "Choose comparison LEP area",
+                    choices = c("\nNone",unique(C_LEP2020) %>% filter(LEP != input$lep1)),
+                  selected=input$lep2
+                   )
+    }
+  })
+  
   # OVERVIEW ----
 
   ### Downloads----
@@ -753,6 +761,7 @@ server <- function(input, output, session) {
       color = "orange"
     )
   })
+  
   # turn off comparison boxes if none is selected
   output$emp_comp <- renderUI({
     print(input$lep2)
