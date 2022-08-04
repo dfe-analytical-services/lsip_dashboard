@@ -798,14 +798,13 @@ server <- function(input, output, session) {
         x = year, y = empRate,
         color = Areas, group = Areas,
         text = paste0(
-          "AY: ", year, "<br>",
+          "Academic year: ", year, "<br>",
           "Area: ", Areas, "<br>",
           "Employment rate: ", scales::percent(round(empRate, 2)), "<br>"
         )
       )
     ) +
       geom_line() +
-
       theme_minimal() +
       theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
       scale_y_continuous(labels = scales::percent_format(accuracy = 1), limits = c(.65, .85)) +
@@ -952,7 +951,7 @@ server <- function(input, output, session) {
           group_by(year) %>%
           summarise(job.cnt = sum(vacancy_unit), .groups = "drop") %>%
           mutate(Row = 1:n()) %>%
-          mutate(Percentage_Change = job.cnt / lag(job.cnt)) %>%
+          mutate(Percentage_Change = (job.cnt / lag(job.cnt)) - 1) %>%
           ungroup() %>%
           filter(year == "2022") %>%
           select(Percentage_Change)), digits = 3),
@@ -976,7 +975,7 @@ server <- function(input, output, session) {
           group_by(year) %>%
           summarise(job.cnt = sum(vacancy_unit), .groups = "drop") %>%
           mutate(Row = 1:n()) %>%
-          mutate(Percentage_Change = job.cnt / lag(job.cnt)) %>%
+          mutate(Percentage_Change = (job.cnt / lag(job.cnt)) - 1) %>%
           ungroup() %>%
           filter(year == "2022") %>%
           select(Percentage_Change)), digits = 3),
@@ -1195,7 +1194,7 @@ server <- function(input, output, session) {
       x = AY, y = Achievements, colour = Area,
       group = interaction(level_or_type, LEP),
       text = paste0(
-        "AY: ", AY, "<br>",
+        "Academic year: ", AY, "<br>",
         "Area: ", Area, "<br>",
         "Achievements: ", format(Achievements, big.mark = ","), "<br>",
         "Provision: ", level_or_type, "<br>"
