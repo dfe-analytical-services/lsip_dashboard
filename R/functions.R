@@ -10,6 +10,6 @@ cond_color <- function(condition, true_color = "green") {
   if (is.na(condition)) {
     return("black")
   }
-  colours <- c("green", "red")
+  colours <- c("green", "#e00000")
   return(ifelse(condition, true_color, colours[!colours == true_color]))
 }
