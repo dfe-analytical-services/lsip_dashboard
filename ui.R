@@ -51,9 +51,12 @@ fluidPage(
           column(
             12,
             h1("Local Skills Dashboard"),
-            p("This dashboard brings together published data on local employment and skills. It provides a consistent baseline assessment of local skills landscapes for use by local actors."),
-            p("It aims to support employer bodies in developing Local Skills Improvement Plans."),
-            p("The dashboard displays published data from a variety of sources (APS, ILR and ONS online job vacancies) at Local Enterprise Partnership (LEP) geography. Trends can be compared between different LEPs and over time for some indicators. The underlying data contains national, regional, LEP and LA data and can be downloaded directly from the dashboard."),
+            p("Prototype dashboard showing statistics on local employment and skills in England, to support local skills planning and delivery (including Local Skills Improvement Plans)."),
+            p("The prototype dashboard shows a subset of employment and skills statistics at Local Enterprise Partnership (LEP) level, including:"), 
+            p("  •	Employment rates and employment distribution by occupation (source: ONS Annual Population Survey), ILR and ONS online job vacancies)"),
+            p("  •	Online job vacancy units (source: ONS Online Job Adverts)"),
+            p("  •	Further Education aim achievement volumes and achievements by sector subject area (source: DfE FE and Skills National Statistics)"),
+            p("  Trends can be compared between different LEPs and over time for some indicators. The underlying data contains national, regional, LEP and LA data and can be downloaded directly from the dashboard."),
             br(),
             "This dashboard has been produced to support the aims of the ",
             a(
@@ -164,11 +167,10 @@ fluidPage(
                 class = "panel-body",
                 p("Version 0.1. August 2022."),
                 h3("Future development"),
-                p("We plan to make the following improvements for the next release (October 2022):"),
-                tags$li("Integrating more data sources (e.g. ASHE earnings data, BRES enterprise data, HE learner data, OBSM learner outcomes);"),
-                tags$li("Providing more data breakdowns (e.g. employment by 3-digit SOC, qualification by subject and level, apprenticeships by enterprise size and sector);"),
-                tags$li("Adding new features, like the ability to choose the geography (LA, LEP, Region) and view data for one or multiple areas, combined or side-by-side."),
-                br(),
+                p("This dashboard will be developed with additional data and features in consultation with users. An updated dashboard will be released in Autumn 2022. This will include:"),
+                p("•	A wider range of statistics on employment and skills;"),
+                p("•	Additional data breakdowns;"),
+                p("•	New features, including the ability to view data at different geography levels (e.g. Local Authority District)."),
                 "If you have any feedback or suggestions for improvement, please contact us at ",
                 a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk", .noWS = c("after")), "."
               )
