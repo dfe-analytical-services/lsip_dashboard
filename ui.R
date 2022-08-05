@@ -53,10 +53,12 @@ fluidPage(
             h1("Local Skills Dashboard"),
             p("Prototype dashboard showing statistics on local employment and skills in England, to support local skills planning and delivery (including Local Skills Improvement Plans)."),
             p("The prototype dashboard shows a subset of employment and skills statistics at Local Enterprise Partnership (LEP) level, including:"),
-            p("  •	Employment rates and employment distribution by occupation (source: ONS Annual Population Survey), ILR and ONS online job vacancies)"),
-            p("  •	Online job vacancy units (source: ONS Online Job Adverts)"),
-            p("  •	Further Education aim achievement volumes and achievements by sector subject area (source: DfE FE and Skills National Statistics)"),
-            p("  Trends can be compared between different LEPs and over time for some indicators. The underlying data contains national, regional, LEP and LA data and can be downloaded directly from the dashboard."),
+            tags$ul(
+              tags$li("Employment rates and employment distribution by occupation (source: ONS Annual Population Survey), ILR and ONS online job vacancies)"),
+              tags$li("Online job vacancy units (source: ONS Online Job Adverts)"),
+              tags$li("Further Education aim achievement volumes and achievements by sector subject area (source: DfE FE and Skills National Statistics)"),
+            ),
+            p("Trends can be compared between different LEPs and over time for some indicators. The underlying data contains national, regional, LEP and LA data and can be downloaded directly from the dashboard."),
             br(),
             "This dashboard has been produced to support the aims of the ",
             a(
@@ -168,9 +170,11 @@ fluidPage(
                 p("Version 0.1. August 2022."),
                 h3("Future development"),
                 p("This dashboard will be developed with additional data and features in consultation with users. An updated dashboard will be released in Autumn 2022. This will include:"),
-                p("•	A wider range of statistics on employment and skills;"),
-                p("•	Additional data breakdowns;"),
-                p("•	New features, including the ability to view data at different geography levels (e.g. Local Authority District)."),
+                tags$ul(
+                  tags$li("A wider range of statistics on employment and skills;"),
+                  tags$li("Additional data breakdowns;"),
+                  tags$li("New features, including the ability to view data at different geography levels (e.g. Local Authority District)."),
+                ),
                 "If you have any feedback or suggestions for improvement, please contact us at ",
                 a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk", .noWS = c("after")), "."
               )
@@ -567,7 +571,7 @@ fluidPage(
                 details(
                   inputId = "FEdefs",
                   label = "FE definitions",
-                  p(
+                  tags$ul(
                     tags$li("FE and skills include all age apprenticeships and wider adult (19+) FE learning, such as community learning and education and training."),
                     tags$li("Further Education covers publicly-funded learning delivered by an FE institution, a training provider or within a local community. It also includes apprenticeships delivered in the workplace. It does not include higher education, unless delivered as part of an apprenticeship programme."),
                     tags$li("Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications."),
