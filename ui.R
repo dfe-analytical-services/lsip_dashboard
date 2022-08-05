@@ -52,7 +52,7 @@ fluidPage(
             12,
             h1("Local Skills Dashboard"),
             p("Prototype dashboard showing statistics on local employment and skills in England, to support local skills planning and delivery (including Local Skills Improvement Plans)."),
-            p("The prototype dashboard shows a subset of employment and skills statistics at Local Enterprise Partnership (LEP) level, including:"), 
+            p("The prototype dashboard shows a subset of employment and skills statistics at Local Enterprise Partnership (LEP) level, including:"),
             p("  •	Employment rates and employment distribution by occupation (source: ONS Annual Population Survey), ILR and ONS online job vacancies)"),
             p("  •	Online job vacancy units (source: ONS Online Job Adverts)"),
             p("  •	Further Education aim achievement volumes and achievements by sector subject area (source: DfE FE and Skills National Statistics)"),
