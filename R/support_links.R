@@ -1,11 +1,8 @@
 support_links <- function() {
   div(
     h2("Give us feedback"),
-    "This dashboard is a new service that we are developing. If you have any feedback or suggestions for improvements, please submit them using our ",
-    a(
-      href = "https://forms.office.com",
-      "feedback form", .noWS = c("after")
-    ), ".", br(),
+    "This dashboard is a new service that we are developing. If you have any feedback or suggestions for improvements, please contact us at ",
+    a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk", .noWS = c("after")), ".", br(),
     "If you spot any errors or bugs while using this dashboard, please screenshot and email them to ",
     a(href = "mailto:statistics.development@education.gov.uk", "statistics.development@education.gov.uk", .noWS = c("after")), ".",
     br(),
