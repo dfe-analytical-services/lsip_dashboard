@@ -26,8 +26,9 @@ C_LEP2020 <- I_LEP2020 %>%
 # Load missing LAD-LEP lookup. This happens because we have some old LADs in the ILR data that have since been made inactive. These do not feature in the most recent LAD-LEP matching. We have manually mapped these LADs to the latest LEPS (2021)
 I_missingLAD <- read.xlsx(xlsxFile = "./Data/missing_leps.xlsx", sheet = 2, skipEmptyRows = T)
 # Create LAD-LEP lookup table
-C_LADLEP2020 <- distinct(I_LEP2020, LAD21CD, LEP = LEP21NM1) %>%
-  bind_rows(I_missingLAD %>% filter(LAD21CD != "z") %>% select(LAD21CD, LEP = `LEP21.(manually.mapped)`))
+C_LADLEP2020 <- distinct(I_LEP2020, LAD21CD, LAD21NM, LEP = LEP21NM1) %>%
+  bind_rows(I_missingLAD %>% filter(LAD21CD != "z") %>% select(LAD21CD, LEP = `LEP21.(manually.mapped)`)) %>%
+  bind_rows(distinct(I_LEP2020 %>% filter(is.na(LEP21NM2) == FALSE), LAD21CD, LAD21NM, LEP = LEP21NM2))
 
 ## APS ----
 ### Core indicator 2: Employment by occupation ----
@@ -136,7 +137,7 @@ C_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
 format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
   colnames(x)[1] <- "area"
   x %>%
-    left_join(C_LADLEP2020, by = c("location_code" = "LAD21CD")) %>%
+    left_join(select(C_LADLEP2020, -LAD21NM), by = c("location_code" = "LAD21CD")) %>%
     relocate(LEP, .after = geographic_level) %>%
     relocate(time_period, .before = area) %>%
     rename_all(recode, e_and_t_aims_ach = "achievements")
@@ -168,7 +169,7 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
   x %>%
     gather(year, vacancy_unit, 3:8) %>%
     rename(LA = "Local.authority.[note.1]", region = "Region.[note.2]") %>%
-    left_join(distinct(I_LEP2020, LAD21NM, LEP = LEP21NM1), by = c("LA" = "LAD21NM")) %>%
+    left_join(select(C_LADLEP2020, -LAD21CD), by = c("LA" = "LAD21NM")) %>%
     relocate(LEP, .after = region) %>%
     relocate(year, .before = LA) %>%
     mutate(year = as.numeric(year))
