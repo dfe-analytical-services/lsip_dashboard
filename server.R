@@ -1206,7 +1206,7 @@ server <- function(input, output, session) {
       ) %>%
       mutate(AY = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
       group_by(AY, LEP, level_or_type) %>%
-      summarise(Achievements = sum(achievements), .groups = "drop")
+      summarise(Achievements = sum(achievements, na.rm = T), .groups = "drop")
     # add an extra column so the colours work in ggplot when sorting alphabetically
     FETime$Area <- factor(FETime$LEP,
       levels = c(input$lep1, input$lep2)
@@ -1253,7 +1253,7 @@ server <- function(input, output, session) {
       ) %>%
       select(LEP, SSA = ssa_t1_desc, Achievements = achievements) %>%
       group_by(LEP, SSA) %>%
-      summarise(Achievements = sum(Achievements), .groups = "drop") %>%
+      summarise(Achievements = sum(Achievements, na.rm = T), .groups = "drop") %>%
       ungroup()
 
     Ach_pc <- AchSSA_21 %>%
