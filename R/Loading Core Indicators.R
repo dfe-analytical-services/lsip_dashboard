@@ -131,7 +131,18 @@ D_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
 C_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
   mutate_at(c(4:10), as.numeric) %>% # Convert to numeric
-  mutate(empRate = .[[6]] / .[[4]])
+  mutate(empRate = .[[6]] / .[[4]])%>%
+  filter(
+    geographic_level == "lep"  # cleans up for London which is included as lep and gor
+   | area == "England"#for use as comparison
+  )%>%
+  mutate(Year = as.numeric(substr(year, 3, 4))) %>% #for use in charts
+  rename(Employment = `28  in employment `)#for use in charts
+
+#create max and min emp count and rate by LEP for use in setting axis
+C_EmpRate_APS1721_max_min <- C_EmpRate_APS1721 %>% 
+  group_by(area)%>%
+    summarise(minEmp = min(Employment),maxEmp=max(Employment))
 
 # Clean ILR column names, reorder and reformat
 format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
@@ -142,7 +153,6 @@ format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
     relocate(time_period, .before = area) %>%
     rename_all(recode, e_and_t_aims_ach = "achievements")
 }
-
 
 ## format achievements
 F_Achieve_ILR1621 <- format.AchieveSSA.ILR(I_Achieve_ILR1621)
