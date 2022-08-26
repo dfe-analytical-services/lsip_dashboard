@@ -94,7 +94,20 @@ D_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
 # create version to use in dashboard
 C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-  mutate_at(c(4:28), as.numeric) # Convert to numeric
+  mutate_at(c(4:28), as.numeric) %>% # Convert to numeric
+  filter(
+    year == "2021",
+    geographic_level == "lep" |
+      geographic_level == "country" # cleans up for London and South East which is included as lep and gor
+  ) %>%
+  select(-year, -geographic_level) %>%
+  rename_with(str_to_sentence) %>% # capitalise column titles
+  t() %>%
+  row_to_names(row_number = 1) %>%
+  as.data.frame() %>%
+  mutate_if(is.character, as.numeric) %>%
+  mutate(across(where(is.numeric), ~ round(prop.table(.), 4)))
+
 
 ## Employment level and rate ----
 format.EmpRate.APS <- function(x) {
@@ -131,18 +144,18 @@ D_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
 C_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
   mutate_at(c(4:10), as.numeric) %>% # Convert to numeric
-  mutate(empRate = .[[6]] / .[[4]])%>%
+  mutate(empRate = .[[6]] / .[[4]]) %>%
   filter(
-    geographic_level == "lep"  # cleans up for London which is included as lep and gor
-   | area == "England"#for use as comparison
-  )%>%
-  mutate(Year = as.numeric(substr(year, 3, 4))) %>% #for use in charts
-  rename(Employment = `28  in employment `)#for use in charts
+    geographic_level == "lep" # cleans up for London which is included as lep and gor
+    | area == "England" # for use as comparison
+  ) %>%
+  mutate(Year = as.numeric(substr(year, 3, 4))) %>% # for use in charts
+  rename(Employment = `28  in employment `) # for use in charts
 
-#create max and min emp count and rate by LEP for use in setting axis
-C_EmpRate_APS1721_max_min <- C_EmpRate_APS1721 %>% 
-  group_by(area)%>%
-    summarise(minEmp = min(Employment),maxEmp=max(Employment))
+# create max and min emp count and rate by LEP for use in setting axis
+C_EmpRate_APS1721_max_min <- C_EmpRate_APS1721 %>%
+  group_by(area) %>%
+  summarise(minEmp = min(Employment), maxEmp = max(Employment))
 
 # Clean ILR column names, reorder and reformat
 format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
@@ -162,7 +175,24 @@ D_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
 # create version to use in dashboard
 C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
   mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-  mutate(achievements = as.numeric(achievements))
+  mutate(achievements = as.numeric(achievements)) %>%
+  mutate(Year = as.numeric(substr(time_period, 3, 4))) %>% # add year name for charts
+  filter(time_period != "202122") %>% # ignore temporary data in the latest year
+  group_by(Year, time_period, LEP, level_or_type) %>%
+  summarise(Ach = sum(achievements), .groups = "drop") %>%
+  mutate(level_or_typeNeat = case_when(
+    level_or_type == "Further education and skills: Total" ~ "Total FE and skills provision",
+    level_or_type == "Education and training: Total" ~ "Education and training (adults only)",
+    level_or_type == "Community learning: Total" ~ "Community learning (adults only)",
+    level_or_type == "Apprenticeships: Total" ~ "Apprenticeships (all ages)",
+    TRUE ~ level_or_type
+  )) %>%
+  mutate(AY = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = ""))
+
+# create max and min vacancy pc by LEP for use in setting axis
+C_Achieve_ILR1621_max_min <- C_Achieve_ILR1621 %>%
+  group_by(LEP, level_or_type) %>%
+  summarise(minAch = min(Ach), maxAch = max(Ach), .groups = "drop")
 
 ## format achievements by SSA
 F_Achieve_ILR21 <- format.AchieveSSA.ILR(I_Achieve_ILR21)
@@ -170,9 +200,25 @@ F_Achieve_ILR21 <- format.AchieveSSA.ILR(I_Achieve_ILR21)
 D_Achieve_ILR21 <- F_Achieve_ILR21 %>%
   mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
 # create version to use in dashboard
-C_Achieve_ILR21 <- F_Achieve_ILR21 %>%
+# group by ssa and lep
+SSA_LEP_Achieve_ILR21 <- F_Achieve_ILR21 %>%
   mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-  mutate(achievements = as.numeric(achievements))
+  mutate(achievements = as.numeric(achievements)) %>%
+  filter(time_period == "202122") %>%
+  select(LEP, SSA = ssa_t1_desc, Achievements = achievements) %>%
+  group_by(LEP, SSA) %>%
+  summarise(Achievements = sum(Achievements, na.rm = T), .groups = "drop") %>%
+  ungroup()
+# group by ssa to get ssa totals
+Ach_pc_Achieve_ILR21 <- SSA_LEP_Achieve_ILR21 %>%
+  filter(SSA == "Total") %>%
+  select(LEP, Total = SSA, Total_ach = Achievements)
+# calculate ssa %s
+C_Achieve_ILR21 <- SSA_LEP_Achieve_ILR21 %>%
+  left_join(Ach_pc_Achieve_ILR21, by = "LEP") %>%
+  group_by(LEP) %>%
+  mutate(pc = Achievements / Total_ach) %>%
+  filter(SSA != "Total")
 
 # Reshape vacancy data to long, rename and reorder and reformat some columns
 format.Vacancy.ONS <- function(x) { # need to clean up colnames
@@ -188,13 +234,26 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
 # vacancy
 C_Vacancy_ONS1722 <- format.Vacancy.ONS(I_Vacancy_ONS1722)
 
-#vacancy data to use in dashboard
+# vacancy data to use in dashboard
 C_Vacancy_England <- C_Vacancy_ONS1722 %>%
   filter(!region %in% c("Wales", "Scotland", "Northern Ireland")) %>%
   group_by(year) %>%
   summarise(England = sum(vacancy_unit)) %>%
   right_join(C_Vacancy_ONS1722, by = "year") %>%
-  mutate(pc_total = vacancy_unit / England)%>%
-  mutate(Year = as.numeric(substr(year, 3, 4)))%>%
-  group_by(LEP,year,Year)%>%
-  summarise(jobpc = sum(pc_total),jobcnt = sum(vacancy_unit), .groups = "drop")
+  mutate(pc_total = vacancy_unit / England) %>%
+  mutate(Year = as.numeric(substr(year, 3, 4))) %>%
+  group_by(LEP, year, Year) %>%
+  summarise(jobpc = sum(pc_total), jobcnt = sum(vacancy_unit), .groups = "drop")
+
+# create max and min vacancy pc by LEP for use in setting axis
+C_Vacancy_England_max_min <- C_Vacancy_England %>%
+  group_by(LEP) %>%
+  summarise(minVac = min(jobpc), maxVac = max(jobpc))
+
+# create change vacancy pc by LEP
+C_Vacancy_England_change <- C_Vacancy_England %>%
+  filter(year == "2022" | year == "2021") %>%
+  mutate(Row = 1:n()) %>%
+  mutate(Percentage_Change = (jobcnt / lag(jobcnt)) - 1) %>%
+  filter(year == "2022") %>%
+  select(LEP, Percentage_Change)
