@@ -188,18 +188,13 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
 # vacancy
 C_Vacancy_ONS1722 <- format.Vacancy.ONS(I_Vacancy_ONS1722)
 
+#vacancy data to use in dashboard
 C_Vacancy_England <- C_Vacancy_ONS1722 %>%
   filter(!region %in% c("Wales", "Scotland", "Northern Ireland")) %>%
   group_by(year) %>%
   summarise(England = sum(vacancy_unit)) %>%
   right_join(C_Vacancy_ONS1722, by = "year") %>%
-  mutate(pc_total = vacancy_unit / England)
-
-# Combine into single workbook ----
-
-# list_of_datasets <- list("2.Emp by occupation" = C_EmpOcc_APS1721,
-#                         "5.Emp rate" = C_EmpRate_APS1721,
-#                         "12.FE achievements SSA"=C_Achieve_ILR21,
-#                         "x.FE achievements"=C_Achieve_ILR1621,
-#                         "22.Vacancies"=C_Vacancy_ONS1722)
-# write.xlsx(list_of_datasets, file = "202206CoreIndicators.xlsx")
+  mutate(pc_total = vacancy_unit / England)%>%
+  mutate(Year = as.numeric(substr(year, 3, 4)))%>%
+  group_by(LEP,year,Year)%>%
+  summarise(jobpc = sum(pc_total),jobcnt = sum(vacancy_unit), .groups = "drop")
