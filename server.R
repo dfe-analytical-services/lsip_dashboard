@@ -275,32 +275,28 @@ server <- function(input, output, session) {
   })
 
   #### ONS job advert units  ----
+  #get vac data for current lep
+  VacLEP<-reactive({
+    C_Vacancy_England %>%
+      filter(LEP == input$lep1)
+  })
+  #get 2022 values
+  Vac2022<-reactive({
+    VacLEP() %>%
+      filter(year == "2022")
+  })
+  #get 2021 values
+  Vac2021<-reactive({
+    VacLEP() %>%
+      filter(year == "2021")
+  })
   output$jobad.units <- renderUI({
-    VacPc <- C_Vacancy_England %>%
-      filter(
-        year == "2022",
-        LEP == input$lep1
-      ) %>%
-      summarise(job.pc = sum(pc_total), .groups = "drop")
-
     ### ONS job advert units change
-    VacPcChange <- (C_Vacancy_England %>%
-      filter(
-        year == "2022",
-        LEP == input$lep1
-      ) %>%
-      summarise(job.pc = sum(pc_total), .groups = "drop")
-      - (C_Vacancy_England %>%
-        filter(
-          year == "2021",
-          LEP == input$lep1
-        ) %>%
-        summarise(job.pc = sum(pc_total), .groups = "drop")))
+    VacPcChange <- Vac2022()$jobpc-Vac2021()$jobpc
 
     # print with formatting
-
     h4(span("2022", style = "font-size: 16px;font-weight:normal;"), br(),
-      paste0(format(100 * VacPc, digit = 2), "%"), br(),
+      paste0(format(100 * Vac2022()$jobpc, digit = 2), "%"), br(),
       span(
         paste0(sprintf("%+.1f", 100 * VacPcChange), "ppts"),
         style = paste0("font-size: 16px;color:", cond_color(VacPcChange > 0)) # colour formating
@@ -312,33 +308,26 @@ server <- function(input, output, session) {
 
   # Vacancy chart
   VacLineChart <- reactive({
-    VacLine <- C_Vacancy_England %>%
-      filter(
-        LEP == input$lep1
-      ) %>%
-      group_by(year) %>%
-      summarise(job.pc = sum(pc_total), .groups = "drop") %>%
-      mutate(Year = as.numeric(substr(year, 3, 4)), LEP = input$lep1)
+    VacLine <- VacLEP()
+    VacPcChange <- Vac2022()$jobpc-Vac2021()$jobpc
 
-    VacChange <- (VacLine %>% filter(Year == 22))$job.pc -
-      (VacLine %>% filter(Year == 21))$job.pc
-    VacMin <- VacLine %>% summarise(min = min(job.pc), .groups = "drop")
-    VacMax <- VacLine %>% summarise(max = max(job.pc), .groups = "drop")
+    VacMin <- VacLine %>% summarise(min = min(jobpc), .groups = "drop")
+    VacMax <- VacLine %>% summarise(max = max(jobpc), .groups = "drop")
 
-    ggplot(VacLine, aes(x = Year, y = job.pc, group = LEP, text = paste0(
+    ggplot(VacLine, aes(x = Year, y = jobpc, group = LEP, text = paste0(
       "Year: ", year, "<br>",
-      "England vacancy share: ", format(100 * job.pc, digit = 2), "%<br>"
+      "England vacancy share: ", format(100 * jobpc, digit = 2), "%<br>"
     ))) +
       geom_line(data = VacLine %>% filter(Year <= 21)) +
       geom_ribbon(
         data = VacLine %>% filter(Year >= 21),
-        aes(ymin = min(job.pc), ymax = job.pc),
-        fill = ifelse(VacChange > 0, "#00703c", "#d4351c"),
+        aes(ymin = min(jobpc), ymax = jobpc),
+        fill = ifelse(VacPcChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
         data = VacLine %>% filter(Year >= 21),
-        color = ifelse(VacChange > 0, "#00703c", "#d4351c")
+        color = ifelse(VacPcChange > 0, "#00703c", "#d4351c")
       ) +
       # add a blank line for the formatted tooltip
       theme_classic() +
@@ -837,7 +826,7 @@ server <- function(input, output, session) {
             year == "2022",
             LEP == input$lep1
           ) %>%
-          summarise(job.pc = sum(pc_total), .groups = "drop")), digits = 3),
+          summarise(jobpc = sum(pc_total), .groups = "drop")), digits = 3),
         "%"
       ),
       paste0("of online vacancies in England (Jan 2022) were in ", input$lep1),
@@ -854,7 +843,7 @@ server <- function(input, output, session) {
             year == "2022",
             LEP == input$lep2
           ) %>%
-          summarise(job.pc = sum(pc_total), .groups = "drop")), digits = 3),
+          summarise(jobpc = sum(pc_total), .groups = "drop")), digits = 3),
         "%"
       ),
       paste0("of online vacancies in England (Jan 2022) were in ", input$lep2),
@@ -873,9 +862,9 @@ server <- function(input, output, session) {
             LEP == input$lep1
           ) %>%
           group_by(year) %>%
-          summarise(job.cnt = sum(vacancy_unit), .groups = "drop") %>%
+          summarise(jobcnt = sum(vacancy_unit), .groups = "drop") %>%
           mutate(Row = 1:n()) %>%
-          mutate(Percentage_Change = (job.cnt / lag(job.cnt)) - 1) %>%
+          mutate(Percentage_Change = (jobcnt / lag(jobcnt)) - 1) %>%
           ungroup() %>%
           filter(year == "2022") %>%
           select(Percentage_Change)), digits = 3),
@@ -897,9 +886,9 @@ server <- function(input, output, session) {
             LEP == input$lep2
           ) %>%
           group_by(year) %>%
-          summarise(job.cnt = sum(vacancy_unit), .groups = "drop") %>%
+          summarise(jobcnt = sum(vacancy_unit), .groups = "drop") %>%
           mutate(Row = 1:n()) %>%
-          mutate(Percentage_Change = (job.cnt / lag(job.cnt)) - 1) %>%
+          mutate(Percentage_Change = (jobcnt / lag(jobcnt)) - 1) %>%
           ungroup() %>%
           filter(year == "2022") %>%
           select(Percentage_Change)), digits = 3),
