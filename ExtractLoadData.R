@@ -1,10 +1,8 @@
-#extract and transform data
-
 ####
-# Title: LSIP dashboard - proof of concept
+# Title: LSIP dashboard data extract and transform
 # Author: Hannah Cox/Paul James
 # Date: 18th May 2022
-# Last updated: 15th June 2022
+# Last updated: 30th Aug 2022
 ###
 
 # Load libraries ----
@@ -25,6 +23,8 @@ I_LEP2020 <- read.xlsx(xlsxFile = "./Data/OA11_LAD21_LSOA11_MSOA11_LEP21_EN_v3.x
 C_LEP2020 <- I_LEP2020 %>%
   distinct(LEP = LEP21NM1) %>%
   arrange(LEP)
+write.csv(C_LEP2020, file = "Data\\AppData\\C_LEP2020.csv", row.names = FALSE)
+
 # Load missing LAD-LEP lookup. This happens because we have some old LADs in the ILR data that have since been made inactive. These do not feature in the most recent LAD-LEP matching. We have manually mapped these LADs to the latest LEPS (2021)
 I_missingLAD <- read.xlsx(xlsxFile = "./Data/missing_leps.xlsx", sheet = 2, skipEmptyRows = T)
 # Create LAD-LEP lookup table
@@ -93,6 +93,7 @@ F_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
 # create downloadable version with new suppression rules
 D_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+write.csv(D_EmpOcc_APS1721, file = "Data\\AppData\\D_EmpOcc_APS1721.csv")
 # create version to use in dashboard
 C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
@@ -108,8 +109,10 @@ C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
   row_to_names(row_number = 1) %>%
   as.data.frame() %>%
   mutate_if(is.character, as.numeric) %>%
-  mutate(across(where(is.numeric), ~ round(prop.table(.), 4)))
+  mutate(across(where(is.numeric), ~ round(prop.table(.), 4))) %>%
+  rownames_to_column("Occupation")
 
+write.csv(C_EmpOcc_APS1721, file = "Data\\AppData\\C_EmpOcc_APS1721.csv", row.names = FALSE)
 
 ## Employment level and rate ----
 format.EmpRate.APS <- function(x) {
@@ -142,6 +145,9 @@ F_EmpRate_APS1721 <- format.EmpRate.APS(I_EmpRate_APS1721)
 # create downloadable version with new suppression rules
 D_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+
+write.csv(D_EmpRate_APS1721, file = "Data\\AppData\\D_EmpRate_APS1721.csv", row.names = FALSE)
+
 # create version to use in dashboard
 C_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
@@ -153,12 +159,15 @@ C_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
   ) %>%
   mutate(Year = as.numeric(substr(year, 3, 4))) %>% # for use in charts
   rename(Employment = `28  in employment `) # for use in charts
+write.csv(C_EmpRate_APS1721, file = "Data\\AppData\\C_EmpRate_APS1721.csv", row.names = FALSE)
 
 # create max and min emp count and rate by LEP for use in setting axis
 C_EmpRate_APS1721_max_min <- C_EmpRate_APS1721 %>%
   group_by(area) %>%
   summarise(minEmp = min(Employment), maxEmp = max(Employment))
+write.csv(C_EmpRate_APS1721_max_min, file = "Data\\AppData\\C_EmpRate_APS1721_max_min.csv", row.names = FALSE)
 
+# FE data cleaning
 # Clean ILR column names, reorder and reformat
 format.AchieveSSA.ILR <- function(x) { # need to clean up colnames
   colnames(x)[1] <- "area"
@@ -174,6 +183,8 @@ F_Achieve_ILR1621 <- format.AchieveSSA.ILR(I_Achieve_ILR1621)
 # create downloadable version with new suppression rules
 D_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
   mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+write.csv(D_Achieve_ILR1621, file = "Data\\AppData\\D_Achieve_ILR1621.csv", row.names = FALSE)
+
 # create version to use in dashboard
 C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
   mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
@@ -190,17 +201,21 @@ C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
     TRUE ~ level_or_type
   )) %>%
   mutate(AY = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = ""))
+write.csv(C_Achieve_ILR1621, file = "Data\\AppData\\C_Achieve_ILR1621.csv", row.names = FALSE)
 
 # create max and min vacancy pc by LEP for use in setting axis
 C_Achieve_ILR1621_max_min <- C_Achieve_ILR1621 %>%
   group_by(LEP, level_or_type) %>%
   summarise(minAch = min(Ach), maxAch = max(Ach), .groups = "drop")
+write.csv(C_Achieve_ILR1621_max_min, file = "Data\\AppData\\C_Achieve_ILR1621_max_min.csv", row.names = FALSE)
 
 ## format achievements by SSA
 F_Achieve_ILR21 <- format.AchieveSSA.ILR(I_Achieve_ILR21)
 # create downloadable version with new suppression rules
 D_Achieve_ILR21 <- F_Achieve_ILR21 %>%
   mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+write.csv(D_Achieve_ILR21, file = "Data\\AppData\\D_Achieve_ILR21.csv", row.names = FALSE)
+
 # create version to use in dashboard
 # group by ssa and lep
 SSA_LEP_Achieve_ILR21 <- F_Achieve_ILR21 %>%
@@ -221,7 +236,9 @@ C_Achieve_ILR21 <- SSA_LEP_Achieve_ILR21 %>%
   group_by(LEP) %>%
   mutate(pc = Achievements / Total_ach) %>%
   filter(SSA != "Total")
+write.csv(C_Achieve_ILR21, file = "Data\\AppData\\C_Achieve_ILR21.csv", row.names = FALSE)
 
+## Vacancy data
 # Reshape vacancy data to long, rename and reorder and reformat some columns
 format.Vacancy.ONS <- function(x) { # need to clean up colnames
   x %>%
@@ -233,8 +250,9 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
     mutate(year = as.numeric(year))
 }
 
-# vacancy
+# vacancy (for use in downloads)
 C_Vacancy_ONS1722 <- format.Vacancy.ONS(I_Vacancy_ONS1722)
+write.csv(C_Vacancy_ONS1722, file = "Data\\AppData\\C_Vacancy_ONS1722.csv", row.names = FALSE)
 
 # vacancy data to use in dashboard
 C_Vacancy_England <- C_Vacancy_ONS1722 %>%
@@ -246,11 +264,13 @@ C_Vacancy_England <- C_Vacancy_ONS1722 %>%
   mutate(Year = as.numeric(substr(year, 3, 4))) %>%
   group_by(LEP, year, Year) %>%
   summarise(jobpc = sum(pc_total), jobcnt = sum(vacancy_unit), .groups = "drop")
+write.csv(C_Vacancy_England, file = "Data\\AppData\\C_Vacancy_England.csv", row.names = FALSE)
 
 # create max and min vacancy pc by LEP for use in setting axis
 C_Vacancy_England_max_min <- C_Vacancy_England %>%
   group_by(LEP) %>%
   summarise(minVac = min(jobpc), maxVac = max(jobpc))
+write.csv(C_Vacancy_England_max_min, file = "Data\\AppData\\C_Vacancy_England_max_min.csv", row.names = FALSE)
 
 # create change vacancy pc by LEP
 C_Vacancy_England_change <- C_Vacancy_England %>%
@@ -259,3 +279,4 @@ C_Vacancy_England_change <- C_Vacancy_England %>%
   mutate(Percentage_Change = (jobcnt / lag(jobcnt)) - 1) %>%
   filter(year == "2022") %>%
   select(LEP, Percentage_Change)
+write.csv(C_Vacancy_England_change, file = "Data\\AppData\\C_Vacancy_England_change.csv", row.names = FALSE)

@@ -4,7 +4,6 @@
 #
 # ---------------------------------------------------------
 
-
 # Library calls ---------------------------------------------------------------------------------
 shhh <- suppressPackageStartupMessages # It's a library, so shhh!
 
@@ -28,8 +27,6 @@ shhh(library(scales)) # for comma 1,000s
 shhh(library(shinyBS))
 
 # renv::snapshot()
-
-#source("R/Loading Core Indicators.R")
 
 area_select <- c("Coast to Capital", "Greater Manchester", "England")
 # Functions ---------------------------------------------------------------------------------
@@ -83,6 +80,3 @@ appLoadingCSS <- "
   color: #FFFFFF;
 }
 "
-
-source("R/support_links.R")
-source("R/accessibility.R")
