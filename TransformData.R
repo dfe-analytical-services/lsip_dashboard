@@ -160,7 +160,7 @@ C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
   mutate(Year = as.numeric(substr(time_period, 3, 4))) %>% # add year name for charts
   filter(time_period != "202122") %>% # ignore temporary data in the latest year
   group_by(Year, time_period, LEP, level_or_type) %>%
-  summarise(Ach = sum(achievements), .groups = "drop") %>%
+  summarise(Ach = sum(achievements, na.rm = T), .groups = "drop") %>%
   mutate(level_or_typeNeat = case_when(
     level_or_type == "Further education and skills: Total" ~ "Total FE and skills provision",
     level_or_type == "Education and training: Total" ~ "Education and training (adults only)",
