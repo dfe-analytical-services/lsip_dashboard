@@ -201,14 +201,12 @@ fluidPage(
       sidebarLayout(
         sidebarPanel(
           width = 2,
-          selectInput("lep1", "Choose primary LEP area",
-            choices = C_LEP2020
-          ),
+          radioButtons("GeoType", 
+                       label = "Choose geography level:",
+                       choices = list("LEP"=1, "LSIP"=2)
+                       ,selected=1),
+          uiOutput("lep1_geo"),
           uiOutput("lep2_off")
-          # # lep 2 is reactve to lep 1 so is populated in the server
-          # selectInput("lep2", "Choose comparison LEP area",
-          #   choices = NULL
-          # )
         ),
 
         # next row is the data tabs

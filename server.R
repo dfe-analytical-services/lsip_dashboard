@@ -29,16 +29,36 @@ server <- function(input, output, session) {
   })
 
   # OVERVIEW ----
+  
+  # alter area dropdown depensing if lep or lsip
+  output$lep1_geo <- renderUI({
+    if (input$GeoType == 1) {
+      selectInput("lep1", "Choose primary LEP area",
+                  choices = C_LEP2020%>%filter(geographic_level=="LEP")%>%select(area)
+      )
+    } else {
+      selectInput("lep1", "Choose primary LEP area",
+                  choices = C_LEP2020%>%filter(geographic_level=="LSIP")%>%select(area)
+      )
+    }
+  })
 
   # turn off lep 2 for overview page (as not used here)
   output$lep2_off <- renderUI({
     if (input$datatabset == "Overview") {
       p("")
     } else {
-      selectInput("lep2", "Choose comparison LEP area",
-        choices = c("\nNone", unique(C_LEP2020) %>% filter(LEP != input$lep1)), # filter out lep1
-        selected = input$lep2 # select this so lep two is consistent across tabs
-      )
+      if (input$GeoType == 1) {
+        selectInput("lep2", "Choose comparison LEP area",
+                    choices =c("\nNone", C_LEP2020%>%filter(geographic_level=="LEP",area != input$lep1)%>%select(area)),
+                               selected = input$lep2
+        )
+      } else {
+        selectInput("lep2", "Choose comparison LEP area",
+                    choices =c("\nNone", C_LEP2020%>%filter(geographic_level=="LSIP",area != input$lep1)%>%select(area)),
+                    selected = input$lep2
+        )
+      }
     }
   })
 
