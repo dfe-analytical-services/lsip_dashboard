@@ -17,21 +17,32 @@ library(odbc)
 library(janitor)
 library(openxlsx)
 
-# list leps for dropdowns
+# list leps and LSIPs for dropdowns
 C_LEP2020 <- I_LEP2020 %>%
-  distinct(LEP = LEP21NM1) %>%
-  arrange(LEP)
+  distinct(area = LEP21NM1) %>%
+  arrange(area)%>%
+  mutate(geographic_level="LEP")%>%
+  bind_rows(
+    I_LEP2020 %>%
+      distinct(area = LSIP) %>%
+      arrange(area)%>%
+      mutate(geographic_level="LSIP")
+  )
 write.csv(C_LEP2020, file = "Data\\AppData\\C_LEP2020.csv", row.names = FALSE)
 
 # Create LAD-LEP lookup table
 C_LADLEP2020 <- distinct(I_LEP2020, LAD21CD, LAD21NM, LEP = LEP21NM1) %>%
   bind_rows(I_missingLAD %>% filter(LAD21CD != "z") %>% select(LAD21CD, LEP = `LEP21.(manually.mapped)`)) %>%
-  bind_rows(distinct(I_LEP2020 %>% filter(is.na(LEP21NM2) == FALSE), LAD21CD, LAD21NM, LEP = LEP21NM2))
+  bind_rows(distinct(I_LEP2020 %>% filter(LEP21NM2 != 0), LAD21CD, LAD21NM, LEP = LEP21NM2))
+
+# Create LAD-LSIP lookup table
+C_LADLSIP2020 <- distinct(I_LEP2020, LAD21CD, LAD21NM, LSIP) %>%
+  bind_rows(I_missingLAD %>% filter(LAD21CD != "z") %>% select(LAD21CD, LSIP = `LSIP21.(manually.mapped)`))
 
 # Data cleaning functions ----
 ## Employment by occupation ----
 format.EmpOcc.APS <- function(x) {
-  x %>%
+  reformat<-x %>%
     mutate(year = ifelse(annual.population.survey == "date", X2, NA)) %>% # tag time periods
     fill(year) %>% # fill time periods for all rows
     row_to_names(row_number = 4) %>% # set col names
@@ -55,6 +66,24 @@ format.EmpOcc.APS <- function(x) {
       .cols = starts_with("t09a_")
     ) %>%
     rename_with(~ gsub("[[:digit:]]+", "", .)) # remove numbers from occupations since they don't match the ONS ones
+    #create lsip file
+  addlsip<-reformat%>%filter(geographic_level=="ladu")%>%
+    left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
+    filter(is.na(LSIP)==FALSE)%>%#remove non-english
+    select(-area)%>%#get rid of ladu area
+    mutate(geographic_level="LSIP")%>%#rename as lsip
+    rename(area=LSIP)%>%
+    relocate(area, .before = geographic_level) %>%
+    mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+    mutate_at(c(4:28), as.numeric) %>% # Convert to numeric
+    group_by(year,area,geographic_level)%>%#sum for each LSIP
+    summarise(across(everything(), list(sum),na.rm = T))%>%
+    rename_with(~ gsub("_1", "", .))%>% # remove numbers cretaed by the summarise function
+    mutate_at(c(4:28), as.character) # Convert to sring to bind
+
+   # join together
+  bind_rows(reformat,addlsip)
+  
 }
 # format data
 F_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
