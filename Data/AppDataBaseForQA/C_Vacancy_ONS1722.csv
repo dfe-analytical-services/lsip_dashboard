@@ -1,0 +1,2023 @@
+"year","LA","region","LEP","vacancy_unit"
+2017,"Aberdeen City","Scotland",NA,18.2
+2017,"Aberdeenshire","Scotland",NA,9.6
+2017,"Adur","South East","Coast to Capital",4.1
+2017,"Amber Valley","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",9.6
+2017,"Angus","Scotland",NA,4
+2017,"Ards and North Down","Northern Ireland",NA,2.4
+2017,"Argyll and Bute","Scotland",NA,2.4
+2017,"Armagh City, Banbridge and Craigavon","Northern Ireland",NA,4.3
+2017,"Arun","South East","Coast to Capital",9.4
+2017,"Ashfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",6.5
+2017,"Ashford","South East","South East",15.9
+2017,"Babergh","East of England","New Anglia",4.9
+2017,"Barking and Dagenham","London","London",11.1
+2017,"Barnet","London","London",13.3
+2017,"Barnsley","Yorkshire And The Humber","Sheffield City Region",14.9
+2017,"Barrow-in-Furness","North West","Cumbria",2.9
+2017,"Basildon","East of England","South East",20.2
+2017,"Basingstoke and Deane","South East","Enterprise M3",33.1
+2017,"Bassetlaw","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",8.1
+2017,"Bath and North East Somerset","South West","West of England",19.8
+2017,"Bedford","East of England","South East Midlands",29.7
+2017,"Belfast","Northern Ireland",NA,29.6
+2017,"Bexley","London","London",9.3
+2017,"Birmingham","West Midlands","Greater Birmingham and Solihull",213.7
+2017,"Blaby","East Midlands","Leicester and Leicestershire",2.2
+2017,"Blackburn with Darwen","North West","Lancashire",12.5
+2017,"Blackpool","North West","Lancashire",12.2
+2017,"Blaenau Gwent","Wales",NA,2.8
+2017,"Bolton","North West","Greater Manchester",20.6
+2017,"Boston","East Midlands","Greater Lincolnshire",4.2
+2017,"Bournemouth, Christchurch and Poole","South West","Dorset",56.7
+2017,"Bracknell Forest","South East","Thames Valley Berkshire",13.4
+2017,"Bradford","Yorkshire And The Humber","Leeds City Region",39.8
+2017,"Braintree","East of England","South East",14
+2017,"Breckland","East of England","New Anglia",9.1
+2017,"Brent","London","London",8.8
+2017,"Brentwood","East of England","South East",10.3
+2017,"Bridgend","Wales",NA,8.3
+2017,"Brighton and Hove","South East","Coast to Capital",24.6
+2017,"Bristol, City of","South West","West of England",160.1
+2017,"Bromley","London","London",21.2
+2017,"Bromsgrove","West Midlands","Greater Birmingham and Solihull",7.2
+2017,"Bromsgrove","West Midlands","Worcestershire",7.2
+2017,"Broxbourne","East of England","Hertfordshire",7.1
+2017,"Broxtowe","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",2
+2017,"Buckinghamshire","South East","Buckinghamshire",93.3
+2017,"Burnley","North West","Lancashire",8.1
+2017,"Bury","North West","Greater Manchester",11.7
+2017,"Caerphilly","Wales",NA,5.8
+2017,"Calderdale","Yorkshire And The Humber","Leeds City Region",13.9
+2017,"Cambridge","East of England","Greater Cambridge and Greater Peterborough",56.9
+2017,"Camden","London","London",11.7
+2017,"Cannock Chase","West Midlands","Greater Birmingham and Solihull",10.5
+2017,"Cannock Chase","West Midlands","Stoke-on-Trent and Staffordshire",10.5
+2017,"Canterbury","South East","South East",14.3
+2017,"Cardiff","Wales",NA,59.8
+2017,"Carlisle","North West","Cumbria",9
+2017,"Carmarthenshire","Wales",NA,6.6
+2017,"Castle Point","East of England","South East",1.7
+2017,"Causeway Coast and Glens","Northern Ireland",NA,1
+2017,"Central Bedfordshire","East of England","South East Midlands",17.8
+2017,"Charnwood","East Midlands","Leicester and Leicestershire",11.9
+2017,"Chelmsford","East of England","South East",32.8
+2017,"Cheltenham","South West","Gloucestershire",27.3
+2017,"Cherwell","South East","Oxfordshire",24.4
+2017,"Cheshire East","North West","Cheshire and Warrington",34.7
+2017,"Cheshire West and Chester","North West","Cheshire and Warrington",29.4
+2017,"Chesterfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",13.3
+2017,"Chichester","South East","Coast to Capital",16.6
+2017,"Chorley","North West","Lancashire",6.3
+2017,"City of Edinburgh","Scotland",NA,66.7
+2017,"City of London","London","London",150
+2017,"Clackmannanshire","Scotland",NA,1.6
+2017,"Colchester","East of England","South East",28.9
+2017,"Conwy","Wales",NA,5.1
+2017,"Copeland","North West","Cumbria",2.2
+2017,"Cornwall","South West","Cornwall and Isles of Scilly",41.8
+2017,"Cotswold","South West","Gloucestershire",11.8
+2017,"County Durham","North East","North East",28.6
+2017,"Coventry","West Midlands","Coventry and Warwickshire",54.6
+2017,"Craven","Yorkshire And The Humber","York and North Yorkshire",7.9
+2017,"Crawley","South East","Coast to Capital",30
+2017,"Croydon","London","London",29.4
+2017,"Dacorum","East of England","Hertfordshire",24.5
+2017,"Darlington","North East","Tees Valley",9.6
+2017,"Dartford","South East","South East",21.3
+2017,"Denbighshire","Wales",NA,5.6
+2017,"Derby","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",43.3
+2017,"Derbyshire Dales","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",7.8
+2017,"Derry City and Strabane","Northern Ireland",NA,2.8
+2017,"Doncaster","Yorkshire And The Humber","Sheffield City Region",26.8
+2017,"Dorset","South West","Dorset",41.4
+2017,"Dover","South East","South East",7.6
+2017,"Dudley","West Midlands","Black Country",20.1
+2017,"Dumfries and Galloway","Scotland",NA,5.1
+2017,"Dundee City","Scotland",NA,7.4
+2017,"Ealing","London","London",12.7
+2017,"East Cambridgeshire","East of England","Greater Cambridge and Greater Peterborough",3.7
+2017,"East Devon","South West","Heart of the South West",5.6
+2017,"East Hampshire","South East","Enterprise M3",11.4
+2017,"East Hertfordshire","East of England","Hertfordshire",19.5
+2017,"East Lindsey","East Midlands","Greater Lincolnshire",5.2
+2017,"East Lothian","Scotland",NA,8.9
+2017,"East Staffordshire","West Midlands","Greater Birmingham and Solihull",8.8
+2017,"East Staffordshire","West Midlands","Stoke-on-Trent and Staffordshire",8.8
+2017,"East Suffolk","East of England","New Anglia",11.1
+2017,"Eastbourne","South East","South East",9.6
+2017,"Eastleigh","South East","Solent",11.8
+2017,"Eden","North West","Cumbria",2.8
+2017,"Elmbridge","South East","Enterprise M3",23.3
+2017,"Enfield","London","London",11.8
+2017,"Epping Forest","East of England","South East",12.7
+2017,"Epsom and Ewell","South East","Coast to Capital",12.6
+2017,"Erewash","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",3.9
+2017,"Exeter","South West","Heart of the South West",33.1
+2017,"Falkirk","Scotland",NA,16
+2017,"Fareham","South East","Solent",15.3
+2017,"Fenland","East of England","Greater Cambridge and Greater Peterborough",6
+2017,"Fife","Scotland",NA,16.3
+2017,"Flintshire","Wales",NA,7.4
+2017,"Folkestone and Hythe","South East","South East",7.9
+2017,"Forest of Dean","South West","Gloucestershire",2.5
+2017,"Fylde","North West","Lancashire",3.7
+2017,"Gateshead","North East","North East",10.3
+2017,"Gedling","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",2.4
+2017,"Glasgow City","Scotland",NA,83.1
+2017,"Gloucester","South West","Gloucestershire",26.4
+2017,"Gosport","South East","Solent",3.1
+2017,"Gravesham","South East","South East",6.8
+2017,"Great Yarmouth","East of England","New Anglia",3.9
+2017,"Greenwich","London","London",7.8
+2017,"Guildford","South East","Enterprise M3",43.7
+2017,"Hackney","London","London",6.6
+2017,"Halton","North West","Liverpool City Region",10.1
+2017,"Hambleton","Yorkshire And The Humber","York and North Yorkshire",6.1
+2017,"Harborough","East Midlands","Leicester and Leicestershire",9.2
+2017,"Haringey","London","London",2.4
+2017,"Harlow","East of England","South East",13.5
+2017,"Harrogate","Yorkshire And The Humber","York and North Yorkshire",20.9
+2017,"Harrow","London","London",10.4
+2017,"Hart","South East","Enterprise M3",6.9
+2017,"Hartlepool","North East","Tees Valley",1.9
+2017,"Hastings","South East","South East",4.9
+2017,"Havant","South East","Solent",9.1
+2017,"Havering","London","London",12
+2017,"Herefordshire, County of","West Midlands","The Marches",19.5
+2017,"Hertsmere","East of England","Hertfordshire",14.4
+2017,"Highland","Scotland",NA,11.8
+2017,"Hillingdon","London","London",25.5
+2017,"Horsham","South East","Coast to Capital",18.3
+2017,"Hounslow","London","London",23.1
+2017,"Huntingdonshire","East of England","Greater Cambridge and Greater Peterborough",21.6
+2017,"Hyndburn","North West","Lancashire",3.6
+2017,"Ipswich","East of England","New Anglia",27.1
+2017,"Isle of Wight","South East","Solent",5
+2017,"Islington","London","London",17.1
+2017,"Kensington and Chelsea","London","London",6.4
+2017,"King's Lynn and West Norfolk","East of England","New Anglia",9.3
+2017,"Kingston upon Hull, City of","Yorkshire And The Humber","Hull and East Yorkshire",17.1
+2017,"Kingston upon Thames","London","London",14
+2017,"Kirklees","Yorkshire And The Humber","Leeds City Region",22.9
+2017,"Lancaster","North West","Lancashire",11.1
+2017,"Leeds","Yorkshire And The Humber","Leeds City Region",154.3
+2017,"Leicester","East Midlands","Leicester and Leicestershire",51.4
+2017,"Lewes","South East","South East",7.4
+2017,"Lichfield","West Midlands","Greater Birmingham and Solihull",8
+2017,"Lichfield","West Midlands","Stoke-on-Trent and Staffordshire",8
+2017,"Lincoln","East Midlands","Greater Lincolnshire",16.3
+2017,"Liverpool","North West","Liverpool City Region",65.1
+2017,"Luton","East of England","South East Midlands",31.9
+2017,"Maidstone","South East","South East",30.3
+2017,"Maldon","East of England","South East",3.2
+2017,"Malvern Hills","West Midlands","Worcestershire",3.5
+2017,"Manchester","North West","Greater Manchester",239.4
+2017,"Mansfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",10.9
+2017,"Medway","South East","South East",18
+2017,"Melton","East Midlands","Leicester and Leicestershire",3.1
+2017,"Mendip","South West","Heart of the South West",9.4
+2017,"Merthyr Tydfil","Wales",NA,2.1
+2017,"Merton","London","London",6.3
+2017,"Mid Devon","South West","Heart of the South West",4.9
+2017,"Mid Suffolk","East of England","New Anglia",5.3
+2017,"Mid Sussex","South East","Coast to Capital",19.7
+2017,"Mid Ulster","Northern Ireland",NA,2.5
+2017,"Middlesbrough","Yorkshire And The Humber","Tees Valley",12.8
+2017,"Midlothian","Scotland",NA,5.9
+2017,"Milton Keynes","South East","South East Midlands",75.2
+2017,"Mole Valley","South East","Coast to Capital",15.4
+2017,"Monmouthshire","Wales",NA,4.8
+2017,"Moray","Scotland",NA,2.6
+2017,"Neath Port Talbot","Wales",NA,3.5
+2017,"New Forest","South East","Solent",10.7
+2017,"Newark and Sherwood","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",8.4
+2017,"Newcastle upon Tyne","North East","North East",64.6
+2017,"Newcastle-under-Lyme","West Midlands","Stoke-on-Trent and Staffordshire",3.8
+2017,"Newham","London","London",4.7
+2017,"Newport","Wales",NA,18.3
+2017,"North Ayrshire","Scotland",NA,2.8
+2017,"North Devon","South West","Heart of the South West",5.6
+2017,"North East Lincolnshire","Yorkshire And The Humber","Greater Lincolnshire",9.2
+2017,"North Hertfordshire","East of England","Hertfordshire",15.4
+2017,"North Kesteven","East Midlands","Greater Lincolnshire",3.5
+2017,"North Lanarkshire","Scotland",NA,8.8
+2017,"North Lincolnshire","Yorkshire And The Humber","Greater Lincolnshire",9.8
+2017,"North Northamptonshire","East Midlands","South East Midlands",33.2
+2017,"North Somerset","South West","West of England",11.6
+2017,"North Tyneside","North East","North East",4.6
+2017,"North West Leicestershire","East Midlands","Leicester and Leicestershire",8.7
+2017,"Northumberland","North East","North East",18.4
+2017,"Norwich","East of England","New Anglia",34
+2017,"Nottingham","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",71.4
+2017,"Nuneaton and Bedworth","West Midlands","Coventry and Warwickshire",8.4
+2017,"Oldham","North West","Greater Manchester",13.1
+2017,"Oxford","South East","Oxfordshire",52.2
+2017,"Pembrokeshire","Wales",NA,2.6
+2017,"Perth and Kinross","Scotland",NA,6.6
+2017,"Peterborough","East of England","Greater Cambridge and Greater Peterborough",37.5
+2017,"Plymouth","South West","Heart of the South West",22.2
+2017,"Portsmouth","South East","Solent",30.8
+2017,"Powys","Wales",NA,6.8
+2017,"Preston","North West","Lancashire",33.4
+2017,"Reading","South East","Thames Valley Berkshire",75.2
+2017,"Redbridge","East of England","London",5
+2017,"Redcar and Cleveland","Yorkshire And The Humber","Tees Valley",1.8
+2017,"Redditch","West Midlands","Greater Birmingham and Solihull",10.2
+2017,"Redditch","West Midlands","Worcestershire",10.2
+2017,"Reigate and Banstead","South East","Coast to Capital",25.4
+2017,"Renfrewshire","Scotland",NA,7.4
+2017,"Rhondda Cynon Taf","Wales",NA,6
+2017,"Ribble Valley","North West","Lancashire",3.5
+2017,"Richmond upon Thames","London","London",13.7
+2017,"Richmondshire","Yorkshire And The Humber","York and North Yorkshire",2
+2017,"Rochdale","North West","Greater Manchester",11.1
+2017,"Rochford","East of England","South East",3.3
+2017,"Rossendale","North West","Lancashire",2
+2017,"Rother","South East","South East",4.5
+2017,"Rotherham","Yorkshire And The Humber","Sheffield City Region",18.3
+2017,"Rugby","West Midlands","Coventry and Warwickshire",12.9
+2017,"Runnymede","South East","Enterprise M3",13.5
+2017,"Rushcliffe","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",3.2
+2017,"Rushmoor","South East","Enterprise M3",18.2
+2017,"Rutland","East Midlands","Greater Lincolnshire",2.8
+2017,"Salford","North West","Greater Manchester",14.2
+2017,"Sandwell","West Midlands","Black Country",20.3
+2017,"Scarborough","Yorkshire And The Humber","York and North Yorkshire",6.8
+2017,"Scottish Borders","Scotland",NA,17.4
+2017,"Sedgemoor","South West","Heart of the South West",12
+2017,"Sefton","North West","Liverpool City Region",9.8
+2017,"Selby","Yorkshire And The Humber","York and North Yorkshire",3.6
+2017,"Sevenoaks","South East","South East",15
+2017,"Sheffield","Yorkshire And The Humber","Sheffield City Region",67.9
+2017,"Shropshire","West Midlands","The Marches",30.5
+2017,"Slough","South East","Thames Valley Berkshire",36.4
+2017,"Solihull","West Midlands","Greater Birmingham and Solihull",22.9
+2017,"Somerset West and Taunton","South West","Heart of the South West",18.8
+2017,"South Ayrshire","Scotland",NA,5.2
+2017,"South Cambridgeshire","East of England","Greater Cambridge and Greater Peterborough",5.8
+2017,"South Derbyshire","West Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",4.1
+2017,"South Gloucestershire","South West","West of England",4.8
+2017,"South Holland","East Midlands","Greater Lincolnshire",6.4
+2017,"South Kesteven","East Midlands","Greater Lincolnshire",9.5
+2017,"South Lakeland","North West","Cumbria",7.5
+2017,"South Lanarkshire","Scotland",NA,8.5
+2017,"South Norfolk","East of England","New Anglia",5.5
+2017,"South Oxfordshire","South East","Oxfordshire",16.5
+2017,"South Ribble","North West","Lancashire",4
+2017,"South Somerset","South West","Heart of the South West",19.1
+2017,"South Staffordshire","West Midlands","Stoke-on-Trent and Staffordshire",1.5
+2017,"South Tyneside","North East","North East",4.5
+2017,"Southampton","South East","Solent",55.2
+2017,"Southend-on-Sea","East of England","South East",14.6
+2017,"Southwark","London","London",10.6
+2017,"Spelthorne","South East","Enterprise M3",12.7
+2017,"St Albans","East of England","Hertfordshire",25.3
+2017,"St. Helens","North West","Liverpool City Region",8.1
+2017,"Stafford","West Midlands","Stoke-on-Trent and Staffordshire",16.6
+2017,"Staffordshire Moorlands","West Midlands","Stoke-on-Trent and Staffordshire",3.6
+2017,"Stevenage","East of England","Hertfordshire",20
+2017,"Stirling","Scotland",NA,6.4
+2017,"Stockport","North West","Greater Manchester",31.2
+2017,"Stockton-on-Tees","North East","Tees Valley",8.4
+2017,"Stoke-on-Trent","West Midlands","Stoke-on-Trent and Staffordshire",28.6
+2017,"Stratford-on-Avon","West Midlands","Coventry and Warwickshire",17.6
+2017,"Stroud","South West","Gloucestershire",41.3
+2017,"Sunderland","North East","North East",16.4
+2017,"Surrey Heath","South East","Enterprise M3",18
+2017,"Sutton","London","London",5.7
+2017,"Swansea","Wales",NA,15.6
+2017,"Tandridge","South East","Coast to Capital",5.5
+2017,"Teignbridge","South West","Heart of the South West",6.8
+2017,"Telford and Wrekin","West Midlands","The Marches",19.2
+2017,"Test Valley","South East","Enterprise M3",13.4
+2017,"Tewkesbury","South West","Gloucestershire",8.4
+2017,"Thanet","South East","South East",5.8
+2017,"Three Rivers","East of England","Hertfordshire",6.4
+2017,"Tonbridge and Malling","South East","South East",16.1
+2017,"Torbay","South West","Heart of the South West",5.2
+2017,"Trafford","North West","Greater Manchester",20.9
+2017,"Tunbridge Wells","South East","South East",13.6
+2017,"Uttlesford","East of England","South East",7.3
+2017,"Vale of Glamorgan","Wales",NA,1.8
+2017,"Vale of White Horse","South East","Oxfordshire",15.8
+2017,"Wakefield","Yorkshire And The Humber","Leeds City Region",31.2
+2017,"Walsall","West Midlands","Black Country",18.3
+2017,"Waltham Forest","London","London",5.3
+2017,"Wandsworth","London","London",9
+2017,"Warrington","North West","Cheshire and Warrington",38.4
+2017,"Warwick","West Midlands","Coventry and Warwickshire",26.9
+2017,"Watford","East of England","Hertfordshire",19.1
+2017,"Waverley","South East","Enterprise M3",15.7
+2017,"Wealden","South East","South East",14
+2017,"Welwyn Hatfield","East of England","Hertfordshire",23.5
+2017,"West Berkshire","South East","Thames Valley Berkshire",28.7
+2017,"West Devon","South West","Heart of the South West",2.1
+2017,"West Dunbartonshire","Scotland",NA,2.3
+2017,"West Lancashire","North West","Lancashire",4.9
+2017,"West Lindsey","East Midlands","Greater Lincolnshire",3.6
+2017,"West Lothian","Scotland",NA,9.8
+2017,"West Northamptonshire","East Midlands","South East Midlands",79.5
+2017,"West Oxfordshire","South East","Oxfordshire",14.6
+2017,"West Suffolk","East of England","New Anglia",23.1
+2017,"Westminster","London","London",60
+2017,"Wigan","North West","Greater Manchester",14.7
+2017,"Wiltshire","South West","Swindon and Wiltshire",69.9
+2017,"Winchester","South East","Enterprise M3",19.3
+2017,"Windsor and Maidenhead","South East","Thames Valley Berkshire",33.6
+2017,"Wirral","North West","Liverpool City Region",14.5
+2017,"Woking","South East","Enterprise M3",24.6
+2017,"Wokingham","South East","Thames Valley Berkshire",11.6
+2017,"Wolverhampton","West Midlands","Black Country",25
+2017,"Worcester","West Midlands","Worcestershire",20.2
+2017,"Worthing","South East","Coast to Capital",10.9
+2017,"Wrexham","Wales",NA,11
+2017,"Wychavon","West Midlands","Worcestershire",9.2
+2017,"Wyre Forest","West Midlands","Greater Birmingham and Solihull",7
+2017,"Wyre Forest","West Midlands","Worcestershire",7
+2017,"York","Yorkshire And The Humber","York and North Yorkshire",10.2
+2018,"Aberdeen City","Scotland",NA,24.6
+2018,"Aberdeenshire","Scotland",NA,11.1
+2018,"Adur","South East","Coast to Capital",16
+2018,"Amber Valley","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",8.5
+2018,"Angus","Scotland",NA,5.5
+2018,"Ards and North Down","Northern Ireland",NA,2.6
+2018,"Argyll and Bute","Scotland",NA,3.1
+2018,"Armagh City, Banbridge and Craigavon","Northern Ireland",NA,5.4
+2018,"Arun","South East","Coast to Capital",9.1
+2018,"Ashfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",5.2
+2018,"Ashford","South East","South East",18.8
+2018,"Babergh","East of England","New Anglia",3.9
+2018,"Barking and Dagenham","London","London",7.6
+2018,"Barnet","London","London",17.7
+2018,"Barnsley","Yorkshire And The Humber","Sheffield City Region",12.9
+2018,"Barrow-in-Furness","North West","Cumbria",2.4
+2018,"Basildon","East of England","South East",21.4
+2018,"Basingstoke and Deane","South East","Enterprise M3",40.4
+2018,"Bassetlaw","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",7.5
+2018,"Bath and North East Somerset","South West","West of England",20.2
+2018,"Bedford","East of England","South East Midlands",29.7
+2018,"Belfast","Northern Ireland",NA,37.5
+2018,"Bexley","London","London",12.1
+2018,"Birmingham","West Midlands","Greater Birmingham and Solihull",216.6
+2018,"Blaby","East Midlands","Leicester and Leicestershire",2.7
+2018,"Blackburn with Darwen","North West","Lancashire",14.6
+2018,"Blackpool","North West","Lancashire",10.5
+2018,"Blaenau Gwent","Wales",NA,7.5
+2018,"Bolton","North West","Greater Manchester",24.6
+2018,"Boston","East Midlands","Greater Lincolnshire",6.1
+2018,"Bournemouth, Christchurch and Poole","South West","Dorset",65
+2018,"Bracknell Forest","South East","Thames Valley Berkshire",19.4
+2018,"Bradford","Yorkshire And The Humber","Leeds City Region",38.5
+2018,"Braintree","East of England","South East",15.4
+2018,"Breckland","East of England","New Anglia",9.2
+2018,"Brent","London","London",11.9
+2018,"Brentwood","East of England","South East",10.6
+2018,"Bridgend","Wales",NA,10.8
+2018,"Brighton and Hove","South East","Coast to Capital",35.5
+2018,"Bristol, City of","South West","West of England",156.1
+2018,"Bromley","London","London",28.1
+2018,"Bromsgrove","West Midlands","Greater Birmingham and Solihull",7.2
+2018,"Bromsgrove","West Midlands","Worcestershire",7.2
+2018,"Broxbourne","East of England","Hertfordshire",13.5
+2018,"Broxtowe","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",1.4
+2018,"Buckinghamshire","South East","Buckinghamshire",109.7
+2018,"Burnley","North West","Lancashire",13.9
+2018,"Bury","North West","Greater Manchester",10.9
+2018,"Caerphilly","Wales",NA,6.3
+2018,"Calderdale","Yorkshire And The Humber","Leeds City Region",13.9
+2018,"Cambridge","East of England","Greater Cambridge and Greater Peterborough",76.5
+2018,"Camden","London","London",13
+2018,"Cannock Chase","West Midlands","Greater Birmingham and Solihull",10.1
+2018,"Cannock Chase","West Midlands","Stoke-on-Trent and Staffordshire",10.1
+2018,"Canterbury","South East","South East",14.4
+2018,"Cardiff","Wales",NA,58.2
+2018,"Carlisle","North West","Cumbria",7
+2018,"Carmarthenshire","Wales",NA,9.4
+2018,"Castle Point","East of England","South East",6.3
+2018,"Causeway Coast and Glens","Northern Ireland",NA,1.5
+2018,"Central Bedfordshire","East of England","South East Midlands",23.3
+2018,"Charnwood","East Midlands","Leicester and Leicestershire",16
+2018,"Chelmsford","East of England","South East",29.8
+2018,"Cheltenham","South West","Gloucestershire",30.6
+2018,"Cherwell","South East","Oxfordshire",26.2
+2018,"Cheshire East","North West","Cheshire and Warrington",52.9
+2018,"Cheshire West and Chester","North West","Cheshire and Warrington",52.1
+2018,"Chesterfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",11.1
+2018,"Chichester","South East","Coast to Capital",16
+2018,"Chorley","North West","Lancashire",6.7
+2018,"City of Edinburgh","Scotland",NA,72.5
+2018,"City of London","London","London",134.7
+2018,"Clackmannanshire","Scotland",NA,1.6
+2018,"Colchester","East of England","South East",23.1
+2018,"Conwy","Wales",NA,5.3
+2018,"Copeland","North West","Cumbria",2.6
+2018,"Cornwall","South West","Cornwall and Isles of Scilly",47.2
+2018,"Cotswold","South West","Gloucestershire",12.6
+2018,"County Durham","North East","North East",40.7
+2018,"Coventry","West Midlands","Coventry and Warwickshire",50.9
+2018,"Craven","Yorkshire And The Humber","York and North Yorkshire",3.9
+2018,"Crawley","South East","Coast to Capital",31.5
+2018,"Croydon","London","London",34.8
+2018,"Dacorum","East of England","Hertfordshire",19.4
+2018,"Darlington","North East","Tees Valley",8.9
+2018,"Dartford","South East","South East",20.6
+2018,"Denbighshire","Wales",NA,5.6
+2018,"Derby","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",38.4
+2018,"Derbyshire Dales","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",5.6
+2018,"Derry City and Strabane","Northern Ireland",NA,3.1
+2018,"Doncaster","Yorkshire And The Humber","Sheffield City Region",22.9
+2018,"Dorset","South West","Dorset",48.6
+2018,"Dover","South East","South East",11.4
+2018,"Dudley","West Midlands","Black Country",18.2
+2018,"Dumfries and Galloway","Scotland",NA,6.3
+2018,"Dundee City","Scotland",NA,6.6
+2018,"Ealing","London","London",14.3
+2018,"East Cambridgeshire","East of England","Greater Cambridge and Greater Peterborough",6.9
+2018,"East Devon","South West","Heart of the South West",12.7
+2018,"East Hampshire","South East","Enterprise M3",9.7
+2018,"East Hertfordshire","East of England","Hertfordshire",23.5
+2018,"East Lindsey","East Midlands","Greater Lincolnshire",9
+2018,"East Lothian","Scotland",NA,6.3
+2018,"East Staffordshire","West Midlands","Greater Birmingham and Solihull",9.7
+2018,"East Staffordshire","West Midlands","Stoke-on-Trent and Staffordshire",9.7
+2018,"East Suffolk","East of England","New Anglia",20.4
+2018,"Eastbourne","South East","South East",7.8
+2018,"Eastleigh","South East","Solent",26
+2018,"Eden","North West","Cumbria",4.2
+2018,"Elmbridge","South East","Enterprise M3",29.8
+2018,"Enfield","London","London",11.4
+2018,"Epping Forest","East of England","South East",28.9
+2018,"Epsom and Ewell","South East","Coast to Capital",13
+2018,"Erewash","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",4.3
+2018,"Exeter","South West","Heart of the South West",28.8
+2018,"Falkirk","Scotland",NA,5.3
+2018,"Fareham","South East","Solent",16.5
+2018,"Fenland","East of England","Greater Cambridge and Greater Peterborough",7
+2018,"Fife","Scotland",NA,16.8
+2018,"Flintshire","Wales",NA,7.1
+2018,"Folkestone and Hythe","South East","South East",6.9
+2018,"Forest of Dean","South West","Gloucestershire",5.1
+2018,"Fylde","North West","Lancashire",6.6
+2018,"Gateshead","North East","North East",10.9
+2018,"Gedling","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",21.6
+2018,"Glasgow City","Scotland",NA,77.1
+2018,"Gloucester","South West","Gloucestershire",22.2
+2018,"Gosport","South East","Solent",3.7
+2018,"Gravesham","South East","South East",7.3
+2018,"Great Yarmouth","East of England","New Anglia",4.4
+2018,"Greenwich","London","London",7
+2018,"Guildford","South East","Enterprise M3",53.1
+2018,"Hackney","London","London",7
+2018,"Halton","North West","Liverpool City Region",10.6
+2018,"Hambleton","Yorkshire And The Humber","York and North Yorkshire",6.7
+2018,"Harborough","East Midlands","Leicester and Leicestershire",9.6
+2018,"Haringey","London","London",2.4
+2018,"Harlow","East of England","South East",11.5
+2018,"Harrogate","Yorkshire And The Humber","York and North Yorkshire",23.4
+2018,"Harrow","London","London",14.5
+2018,"Hart","South East","Enterprise M3",8.2
+2018,"Hartlepool","North East","Tees Valley",2
+2018,"Hastings","South East","South East",5.1
+2018,"Havant","South East","Solent",9.9
+2018,"Havering","London","London",16.7
+2018,"Herefordshire, County of","West Midlands","The Marches",21.2
+2018,"Hertsmere","East of England","Hertfordshire",13.8
+2018,"Highland","Scotland",NA,15.3
+2018,"Hillingdon","London","London",30.6
+2018,"Horsham","South East","Coast to Capital",23.3
+2018,"Hounslow","London","London",33.3
+2018,"Huntingdonshire","East of England","Greater Cambridge and Greater Peterborough",22.7
+2018,"Hyndburn","North West","Lancashire",4.4
+2018,"Ipswich","East of England","New Anglia",23.7
+2018,"Isle of Wight","South East","Solent",7.4
+2018,"Islington","London","London",216.1
+2018,"Kensington and Chelsea","London","London",6.1
+2018,"King's Lynn and West Norfolk","East of England","New Anglia",9.5
+2018,"Kingston upon Hull, City of","Yorkshire And The Humber","Hull and East Yorkshire",17.5
+2018,"Kingston upon Thames","London","London",15.2
+2018,"Kirklees","Yorkshire And The Humber","Leeds City Region",27.5
+2018,"Lancaster","North West","Lancashire",8.5
+2018,"Leeds","Yorkshire And The Humber","Leeds City Region",151.6
+2018,"Leicester","East Midlands","Leicester and Leicestershire",43.9
+2018,"Lewes","South East","South East",9.2
+2018,"Lichfield","West Midlands","Greater Birmingham and Solihull",11.8
+2018,"Lichfield","West Midlands","Stoke-on-Trent and Staffordshire",11.8
+2018,"Lincoln","East Midlands","Greater Lincolnshire",13.7
+2018,"Liverpool","North West","Liverpool City Region",69.1
+2018,"Luton","East of England","South East Midlands",36.8
+2018,"Maidstone","South East","South East",36.2
+2018,"Maldon","East of England","South East",2.8
+2018,"Malvern Hills","West Midlands","Worcestershire",3.7
+2018,"Manchester","North West","Greater Manchester",289.7
+2018,"Mansfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",12.1
+2018,"Medway","South East","South East",22.6
+2018,"Melton","East Midlands","Leicester and Leicestershire",4.7
+2018,"Mendip","South West","Heart of the South West",19.1
+2018,"Merthyr Tydfil","Wales",NA,1.8
+2018,"Merton","London","London",6.4
+2018,"Mid Devon","South West","Heart of the South West",14.4
+2018,"Mid Suffolk","East of England","New Anglia",5.4
+2018,"Mid Sussex","South East","Coast to Capital",25.6
+2018,"Mid Ulster","Northern Ireland",NA,2.4
+2018,"Middlesbrough","Yorkshire And The Humber","Tees Valley",12.4
+2018,"Midlothian","Scotland",NA,22.8
+2018,"Milton Keynes","South East","South East Midlands",80
+2018,"Mole Valley","South East","Coast to Capital",20.3
+2018,"Monmouthshire","Wales",NA,4.7
+2018,"Moray","Scotland",NA,2.8
+2018,"Neath Port Talbot","Wales",NA,4
+2018,"New Forest","South East","Solent",11.8
+2018,"Newark and Sherwood","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",5.7
+2018,"Newcastle upon Tyne","North East","North East",53.7
+2018,"Newcastle-under-Lyme","West Midlands","Stoke-on-Trent and Staffordshire",2.6
+2018,"Newham","London","London",6.2
+2018,"Newport","Wales",NA,17.8
+2018,"North Ayrshire","Scotland",NA,3
+2018,"North Devon","South West","Heart of the South West",6.5
+2018,"North East Lincolnshire","Yorkshire And The Humber","Greater Lincolnshire",9.4
+2018,"North Hertfordshire","East of England","Hertfordshire",14.8
+2018,"North Kesteven","East Midlands","Greater Lincolnshire",2.9
+2018,"North Lanarkshire","Scotland",NA,10.6
+2018,"North Lincolnshire","Yorkshire And The Humber","Greater Lincolnshire",19
+2018,"North Northamptonshire","East Midlands","South East Midlands",34.1
+2018,"North Somerset","South West","West of England",13.8
+2018,"North Tyneside","North East","North East",5.9
+2018,"North West Leicestershire","East Midlands","Leicester and Leicestershire",11.7
+2018,"Northumberland","North East","North East",18.4
+2018,"Norwich","East of England","New Anglia",41
+2018,"Nottingham","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",56.8
+2018,"Nuneaton and Bedworth","West Midlands","Coventry and Warwickshire",28.6
+2018,"Oldham","North West","Greater Manchester",9.9
+2018,"Oxford","South East","Oxfordshire",44.1
+2018,"Pembrokeshire","Wales",NA,2.5
+2018,"Perth and Kinross","Scotland",NA,7.6
+2018,"Peterborough","East of England","Greater Cambridge and Greater Peterborough",41.6
+2018,"Plymouth","South West","Heart of the South West",19.6
+2018,"Portsmouth","South East","Solent",30.7
+2018,"Powys","Wales",NA,13.2
+2018,"Preston","North West","Lancashire",25.3
+2018,"Reading","South East","Thames Valley Berkshire",64.9
+2018,"Redbridge","East of England","London",7.7
+2018,"Redcar and Cleveland","Yorkshire And The Humber","Tees Valley",3.1
+2018,"Redditch","West Midlands","Greater Birmingham and Solihull",9.5
+2018,"Redditch","West Midlands","Worcestershire",9.5
+2018,"Reigate and Banstead","South East","Coast to Capital",20.8
+2018,"Renfrewshire","Scotland",NA,7.3
+2018,"Rhondda Cynon Taf","Wales",NA,6.9
+2018,"Ribble Valley","North West","Lancashire",2.9
+2018,"Richmond upon Thames","London","London",15.2
+2018,"Richmondshire","Yorkshire And The Humber","York and North Yorkshire",5.5
+2018,"Rochdale","North West","Greater Manchester",16.6
+2018,"Rochford","East of England","South East",3.4
+2018,"Rossendale","North West","Lancashire",5.7
+2018,"Rother","South East","South East",6.2
+2018,"Rotherham","Yorkshire And The Humber","Sheffield City Region",17.4
+2018,"Rugby","West Midlands","Coventry and Warwickshire",14.6
+2018,"Runnymede","South East","Enterprise M3",16.4
+2018,"Rushcliffe","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",2.2
+2018,"Rushmoor","South East","Enterprise M3",18.4
+2018,"Rutland","East Midlands","Greater Lincolnshire",4.2
+2018,"Salford","North West","Greater Manchester",15.9
+2018,"Sandwell","West Midlands","Black Country",20.6
+2018,"Scarborough","Yorkshire And The Humber","York and North Yorkshire",6.8
+2018,"Scottish Borders","Scotland",NA,4.1
+2018,"Sedgemoor","South West","Heart of the South West",13.1
+2018,"Sefton","North West","Liverpool City Region",10.2
+2018,"Selby","Yorkshire And The Humber","York and North Yorkshire",5.2
+2018,"Sevenoaks","South East","South East",16.7
+2018,"Sheffield","Yorkshire And The Humber","Sheffield City Region",64.5
+2018,"Shropshire","West Midlands","The Marches",37.2
+2018,"Slough","South East","Thames Valley Berkshire",36.4
+2018,"Solihull","West Midlands","Greater Birmingham and Solihull",25.9
+2018,"Somerset West and Taunton","South West","Heart of the South West",16.8
+2018,"South Ayrshire","Scotland",NA,4.6
+2018,"South Cambridgeshire","East of England","Greater Cambridge and Greater Peterborough",30
+2018,"South Derbyshire","West Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",12.7
+2018,"South Gloucestershire","South West","West of England",3.8
+2018,"South Holland","East Midlands","Greater Lincolnshire",5.9
+2018,"South Kesteven","East Midlands","Greater Lincolnshire",11.1
+2018,"South Lakeland","North West","Cumbria",10.2
+2018,"South Lanarkshire","Scotland",NA,6.7
+2018,"South Norfolk","East of England","New Anglia",5
+2018,"South Oxfordshire","South East","Oxfordshire",21.2
+2018,"South Ribble","North West","Lancashire",12
+2018,"South Somerset","South West","Heart of the South West",22.8
+2018,"South Staffordshire","West Midlands","Stoke-on-Trent and Staffordshire",2
+2018,"South Tyneside","North East","North East",3.4
+2018,"Southampton","South East","Solent",43.6
+2018,"Southend-on-Sea","East of England","South East",10.2
+2018,"Southwark","London","London",41.7
+2018,"Spelthorne","South East","Enterprise M3",13.5
+2018,"St Albans","East of England","Hertfordshire",23.6
+2018,"St. Helens","North West","Liverpool City Region",8.6
+2018,"Stafford","West Midlands","Stoke-on-Trent and Staffordshire",23.2
+2018,"Staffordshire Moorlands","West Midlands","Stoke-on-Trent and Staffordshire",2.3
+2018,"Stevenage","East of England","Hertfordshire",16.7
+2018,"Stirling","Scotland",NA,7.7
+2018,"Stockport","North West","Greater Manchester",30.6
+2018,"Stockton-on-Tees","North East","Tees Valley",8.5
+2018,"Stoke-on-Trent","West Midlands","Stoke-on-Trent and Staffordshire",20.9
+2018,"Stratford-on-Avon","West Midlands","Coventry and Warwickshire",17.5
+2018,"Stroud","South West","Gloucestershire",20.6
+2018,"Sunderland","North East","North East",17
+2018,"Surrey Heath","South East","Enterprise M3",16.3
+2018,"Sutton","London","London",10.5
+2018,"Swansea","Wales",NA,13.1
+2018,"Tandridge","South East","Coast to Capital",7.5
+2018,"Teignbridge","South West","Heart of the South West",8.2
+2018,"Telford and Wrekin","West Midlands","The Marches",21.9
+2018,"Test Valley","South East","Enterprise M3",21.1
+2018,"Tewkesbury","South West","Gloucestershire",8.1
+2018,"Thanet","South East","South East",8
+2018,"Three Rivers","East of England","Hertfordshire",16.2
+2018,"Tonbridge and Malling","South East","South East",21.2
+2018,"Torbay","South West","Heart of the South West",5.2
+2018,"Trafford","North West","Greater Manchester",23.1
+2018,"Tunbridge Wells","South East","South East",17.1
+2018,"Uttlesford","East of England","South East",12.8
+2018,"Vale of Glamorgan","Wales",NA,2.2
+2018,"Vale of White Horse","South East","Oxfordshire",17.8
+2018,"Wakefield","Yorkshire And The Humber","Leeds City Region",31.9
+2018,"Walsall","West Midlands","Black Country",17.1
+2018,"Waltham Forest","London","London",4.7
+2018,"Wandsworth","London","London",10.1
+2018,"Warrington","North West","Cheshire and Warrington",42.3
+2018,"Warwick","West Midlands","Coventry and Warwickshire",30.1
+2018,"Watford","East of England","Hertfordshire",25.7
+2018,"Waverley","South East","Enterprise M3",18.8
+2018,"Wealden","South East","South East",17.5
+2018,"Welwyn Hatfield","East of England","Hertfordshire",30.6
+2018,"West Berkshire","South East","Thames Valley Berkshire",55.2
+2018,"West Devon","South West","Heart of the South West",2.4
+2018,"West Dunbartonshire","Scotland",NA,3.3
+2018,"West Lancashire","North West","Lancashire",6.4
+2018,"West Lindsey","East Midlands","Greater Lincolnshire",4
+2018,"West Lothian","Scotland",NA,10.7
+2018,"West Northamptonshire","East Midlands","South East Midlands",63.2
+2018,"West Oxfordshire","South East","Oxfordshire",17.4
+2018,"West Suffolk","East of England","New Anglia",23.1
+2018,"Westminster","London","London",98.4
+2018,"Wigan","North West","Greater Manchester",17.1
+2018,"Wiltshire","South West","Swindon and Wiltshire",85.2
+2018,"Winchester","South East","Enterprise M3",20.4
+2018,"Windsor and Maidenhead","South East","Thames Valley Berkshire",32.8
+2018,"Wirral","North West","Liverpool City Region",15.7
+2018,"Woking","South East","Enterprise M3",23.4
+2018,"Wokingham","South East","Thames Valley Berkshire",12.4
+2018,"Wolverhampton","West Midlands","Black Country",27.2
+2018,"Worcester","West Midlands","Worcestershire",16.6
+2018,"Worthing","South East","Coast to Capital",12.4
+2018,"Wrexham","Wales",NA,13.7
+2018,"Wychavon","West Midlands","Worcestershire",16.4
+2018,"Wyre Forest","West Midlands","Greater Birmingham and Solihull",10.6
+2018,"Wyre Forest","West Midlands","Worcestershire",10.6
+2018,"York","Yorkshire And The Humber","York and North Yorkshire",10.5
+2019,"Aberdeen City","Scotland",NA,30.4
+2019,"Aberdeenshire","Scotland",NA,12
+2019,"Adur","South East","Coast to Capital",14
+2019,"Amber Valley","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",7
+2019,"Angus","Scotland",NA,5.7
+2019,"Ards and North Down","Northern Ireland",NA,2.6
+2019,"Argyll and Bute","Scotland",NA,4.1
+2019,"Armagh City, Banbridge and Craigavon","Northern Ireland",NA,5.1
+2019,"Arun","South East","Coast to Capital",9.2
+2019,"Ashfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",4.2
+2019,"Ashford","South East","South East",18.6
+2019,"Babergh","East of England","New Anglia",3.5
+2019,"Barking and Dagenham","London","London",9
+2019,"Barnet","London","London",16.2
+2019,"Barnsley","Yorkshire And The Humber","Sheffield City Region",10.5
+2019,"Barrow-in-Furness","North West","Cumbria",3.3
+2019,"Basildon","East of England","South East",20
+2019,"Basingstoke and Deane","South East","Enterprise M3",35.6
+2019,"Bassetlaw","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",6.6
+2019,"Bath and North East Somerset","South West","West of England",28.8
+2019,"Bedford","East of England","South East Midlands",24.7
+2019,"Belfast","Northern Ireland",NA,42.4
+2019,"Bexley","London","London",11.8
+2019,"Birmingham","West Midlands","Greater Birmingham and Solihull",184.4
+2019,"Blaby","East Midlands","Leicester and Leicestershire",3.1
+2019,"Blackburn with Darwen","North West","Lancashire",12
+2019,"Blackpool","North West","Lancashire",8
+2019,"Blaenau Gwent","Wales",NA,6.9
+2019,"Bolton","North West","Greater Manchester",21.6
+2019,"Boston","East Midlands","Greater Lincolnshire",4.6
+2019,"Bournemouth, Christchurch and Poole","South West","Dorset",56
+2019,"Bracknell Forest","South East","Thames Valley Berkshire",21.2
+2019,"Bradford","Yorkshire And The Humber","Leeds City Region",34.8
+2019,"Braintree","East of England","South East",13.1
+2019,"Breckland","East of England","New Anglia",8.2
+2019,"Brent","London","London",10.7
+2019,"Brentwood","East of England","South East",9.8
+2019,"Bridgend","Wales",NA,6.4
+2019,"Brighton and Hove","South East","Coast to Capital",38.2
+2019,"Bristol, City of","South West","West of England",170.6
+2019,"Bromley","London","London",25.3
+2019,"Bromsgrove","West Midlands","Greater Birmingham and Solihull",6.9
+2019,"Bromsgrove","West Midlands","Worcestershire",6.9
+2019,"Broxbourne","East of England","Hertfordshire",13.3
+2019,"Broxtowe","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",1.6
+2019,"Buckinghamshire","South East","Buckinghamshire",102.2
+2019,"Burnley","North West","Lancashire",11.1
+2019,"Bury","North West","Greater Manchester",9
+2019,"Caerphilly","Wales",NA,5.7
+2019,"Calderdale","Yorkshire And The Humber","Leeds City Region",13.9
+2019,"Cambridge","East of England","Greater Cambridge and Greater Peterborough",65.9
+2019,"Camden","London","London",13.7
+2019,"Cannock Chase","West Midlands","Greater Birmingham and Solihull",7.3
+2019,"Cannock Chase","West Midlands","Stoke-on-Trent and Staffordshire",7.3
+2019,"Canterbury","South East","South East",14.4
+2019,"Cardiff","Wales",NA,56
+2019,"Carlisle","North West","Cumbria",6.6
+2019,"Carmarthenshire","Wales",NA,8.4
+2019,"Castle Point","East of England","South East",5.5
+2019,"Causeway Coast and Glens","Northern Ireland",NA,1.4
+2019,"Central Bedfordshire","East of England","South East Midlands",20.3
+2019,"Charnwood","East Midlands","Leicester and Leicestershire",12.8
+2019,"Chelmsford","East of England","South East",27.1
+2019,"Cheltenham","South West","Gloucestershire",27.8
+2019,"Cherwell","South East","Oxfordshire",22.4
+2019,"Cheshire East","North West","Cheshire and Warrington",43.2
+2019,"Cheshire West and Chester","North West","Cheshire and Warrington",39.9
+2019,"Chesterfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",10.8
+2019,"Chichester","South East","Coast to Capital",14.5
+2019,"Chorley","North West","Lancashire",6.7
+2019,"City of Edinburgh","Scotland",NA,85.2
+2019,"City of London","London","London",123
+2019,"Clackmannanshire","Scotland",NA,1
+2019,"Colchester","East of England","South East",20.5
+2019,"Conwy","Wales",NA,3.1
+2019,"Copeland","North West","Cumbria",2.2
+2019,"Cornwall","South West","Cornwall and Isles of Scilly",36.6
+2019,"Cotswold","South West","Gloucestershire",10.1
+2019,"County Durham","North East","North East",33.7
+2019,"Coventry","West Midlands","Coventry and Warwickshire",36.4
+2019,"Craven","Yorkshire And The Humber","York and North Yorkshire",3.7
+2019,"Crawley","South East","Coast to Capital",28.6
+2019,"Croydon","London","London",35
+2019,"Dacorum","East of England","Hertfordshire",19.4
+2019,"Darlington","North East","Tees Valley",7.8
+2019,"Dartford","South East","South East",21.4
+2019,"Denbighshire","Wales",NA,3.5
+2019,"Derby","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",30.3
+2019,"Derbyshire Dales","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",4.2
+2019,"Derry City and Strabane","Northern Ireland",NA,3.4
+2019,"Doncaster","Yorkshire And The Humber","Sheffield City Region",17.7
+2019,"Dorset","South West","Dorset",41.8
+2019,"Dover","South East","South East",10.2
+2019,"Dudley","West Midlands","Black Country",15.5
+2019,"Dumfries and Galloway","Scotland",NA,4.4
+2019,"Dundee City","Scotland",NA,7.6
+2019,"Ealing","London","London",14.8
+2019,"East Cambridgeshire","East of England","Greater Cambridge and Greater Peterborough",5.2
+2019,"East Devon","South West","Heart of the South West",9.2
+2019,"East Hampshire","South East","Enterprise M3",9.8
+2019,"East Hertfordshire","East of England","Hertfordshire",21.5
+2019,"East Lindsey","East Midlands","Greater Lincolnshire",8.2
+2019,"East Lothian","Scotland",NA,6.1
+2019,"East Staffordshire","West Midlands","Greater Birmingham and Solihull",9.1
+2019,"East Staffordshire","West Midlands","Stoke-on-Trent and Staffordshire",9.1
+2019,"East Suffolk","East of England","New Anglia",18.8
+2019,"Eastbourne","South East","South East",8.4
+2019,"Eastleigh","South East","Solent",22.5
+2019,"Eden","North West","Cumbria",3.3
+2019,"Elmbridge","South East","Enterprise M3",27.4
+2019,"Enfield","London","London",12.5
+2019,"Epping Forest","East of England","South East",23.2
+2019,"Epsom and Ewell","South East","Coast to Capital",11.3
+2019,"Erewash","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",3.2
+2019,"Exeter","South West","Heart of the South West",28.5
+2019,"Falkirk","Scotland",NA,5.1
+2019,"Fareham","South East","Solent",16.2
+2019,"Fenland","East of England","Greater Cambridge and Greater Peterborough",5.2
+2019,"Fife","Scotland",NA,18.2
+2019,"Flintshire","Wales",NA,6
+2019,"Folkestone and Hythe","South East","South East",7.6
+2019,"Forest of Dean","South West","Gloucestershire",2.1
+2019,"Fylde","North West","Lancashire",5.8
+2019,"Gateshead","North East","North East",9.5
+2019,"Gedling","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",17.7
+2019,"Glasgow City","Scotland",NA,80.1
+2019,"Gloucester","South West","Gloucestershire",22.4
+2019,"Gosport","South East","Solent",3.6
+2019,"Gravesham","South East","South East",7.5
+2019,"Great Yarmouth","East of England","New Anglia",4.5
+2019,"Greenwich","London","London",6.1
+2019,"Guildford","South East","Enterprise M3",50
+2019,"Hackney","London","London",8.2
+2019,"Halton","North West","Liverpool City Region",10.5
+2019,"Hambleton","Yorkshire And The Humber","York and North Yorkshire",5.8
+2019,"Harborough","East Midlands","Leicester and Leicestershire",7.3
+2019,"Haringey","London","London",3.1
+2019,"Harlow","East of England","South East",11.4
+2019,"Harrogate","Yorkshire And The Humber","York and North Yorkshire",19.8
+2019,"Harrow","London","London",13.5
+2019,"Hart","South East","Enterprise M3",8.3
+2019,"Hartlepool","North East","Tees Valley",3.3
+2019,"Hastings","South East","South East",5.4
+2019,"Havant","South East","Solent",8.9
+2019,"Havering","London","London",14.4
+2019,"Herefordshire, County of","West Midlands","The Marches",17.1
+2019,"Hertsmere","East of England","Hertfordshire",14.1
+2019,"Highland","Scotland",NA,13.8
+2019,"Hillingdon","London","London",30.3
+2019,"Horsham","South East","Coast to Capital",21.5
+2019,"Hounslow","London","London",32
+2019,"Huntingdonshire","East of England","Greater Cambridge and Greater Peterborough",20.2
+2019,"Hyndburn","North West","Lancashire",3.7
+2019,"Ipswich","East of England","New Anglia",23.4
+2019,"Isle of Wight","South East","Solent",5.6
+2019,"Islington","London","London",173.1
+2019,"Kensington and Chelsea","London","London",5
+2019,"King's Lynn and West Norfolk","East of England","New Anglia",7.1
+2019,"Kingston upon Hull, City of","Yorkshire And The Humber","Hull and East Yorkshire",14.5
+2019,"Kingston upon Thames","London","London",15.1
+2019,"Kirklees","Yorkshire And The Humber","Leeds City Region",24.6
+2019,"Lancaster","North West","Lancashire",7.3
+2019,"Leeds","Yorkshire And The Humber","Leeds City Region",139.3
+2019,"Leicester","East Midlands","Leicester and Leicestershire",39.8
+2019,"Lewes","South East","South East",7.6
+2019,"Lichfield","West Midlands","Greater Birmingham and Solihull",9.2
+2019,"Lichfield","West Midlands","Stoke-on-Trent and Staffordshire",9.2
+2019,"Lincoln","East Midlands","Greater Lincolnshire",12.9
+2019,"Liverpool","North West","Liverpool City Region",63.5
+2019,"Luton","East of England","South East Midlands",29.3
+2019,"Maidstone","South East","South East",31.6
+2019,"Maldon","East of England","South East",2.9
+2019,"Malvern Hills","West Midlands","Worcestershire",3.1
+2019,"Manchester","North West","Greater Manchester",277.1
+2019,"Mansfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",10.5
+2019,"Medway","South East","South East",23.7
+2019,"Melton","East Midlands","Leicester and Leicestershire",3
+2019,"Mendip","South West","Heart of the South West",15.2
+2019,"Merthyr Tydfil","Wales",NA,2.4
+2019,"Merton","London","London",7.1
+2019,"Mid Devon","South West","Heart of the South West",11.6
+2019,"Mid Suffolk","East of England","New Anglia",3.9
+2019,"Mid Sussex","South East","Coast to Capital",23.1
+2019,"Mid Ulster","Northern Ireland",NA,3.3
+2019,"Middlesbrough","Yorkshire And The Humber","Tees Valley",9
+2019,"Midlothian","Scotland",NA,12.3
+2019,"Milton Keynes","South East","South East Midlands",69.7
+2019,"Mole Valley","South East","Coast to Capital",19.3
+2019,"Monmouthshire","Wales",NA,4.7
+2019,"Moray","Scotland",NA,2.9
+2019,"Neath Port Talbot","Wales",NA,3.2
+2019,"New Forest","South East","Solent",13
+2019,"Newark and Sherwood","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",5.9
+2019,"Newcastle upon Tyne","North East","North East",47.5
+2019,"Newcastle-under-Lyme","West Midlands","Stoke-on-Trent and Staffordshire",4.3
+2019,"Newham","London","London",6.9
+2019,"Newport","Wales",NA,17.7
+2019,"North Ayrshire","Scotland",NA,3.3
+2019,"North Devon","South West","Heart of the South West",6
+2019,"North East Lincolnshire","Yorkshire And The Humber","Greater Lincolnshire",8.3
+2019,"North Hertfordshire","East of England","Hertfordshire",15.7
+2019,"North Kesteven","East Midlands","Greater Lincolnshire",3
+2019,"North Lanarkshire","Scotland",NA,10
+2019,"North Lincolnshire","Yorkshire And The Humber","Greater Lincolnshire",14.3
+2019,"North Northamptonshire","East Midlands","South East Midlands",29.1
+2019,"North Somerset","South West","West of England",12.6
+2019,"North Tyneside","North East","North East",5
+2019,"North West Leicestershire","East Midlands","Leicester and Leicestershire",10.2
+2019,"Northumberland","North East","North East",16.1
+2019,"Norwich","East of England","New Anglia",33.7
+2019,"Nottingham","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",54.9
+2019,"Nuneaton and Bedworth","West Midlands","Coventry and Warwickshire",21.6
+2019,"Oldham","North West","Greater Manchester",9.9
+2019,"Oxford","South East","Oxfordshire",43.8
+2019,"Pembrokeshire","Wales",NA,2.5
+2019,"Perth and Kinross","Scotland",NA,6.6
+2019,"Peterborough","East of England","Greater Cambridge and Greater Peterborough",37
+2019,"Plymouth","South West","Heart of the South West",18.5
+2019,"Portsmouth","South East","Solent",28.3
+2019,"Powys","Wales",NA,6.3
+2019,"Preston","North West","Lancashire",24.2
+2019,"Reading","South East","Thames Valley Berkshire",62.8
+2019,"Redbridge","East of England","London",6.4
+2019,"Redcar and Cleveland","Yorkshire And The Humber","Tees Valley",2.4
+2019,"Redditch","West Midlands","Greater Birmingham and Solihull",7.4
+2019,"Redditch","West Midlands","Worcestershire",7.4
+2019,"Reigate and Banstead","South East","Coast to Capital",24.7
+2019,"Renfrewshire","Scotland",NA,7.8
+2019,"Rhondda Cynon Taf","Wales",NA,5.7
+2019,"Ribble Valley","North West","Lancashire",3.5
+2019,"Richmond upon Thames","London","London",14.2
+2019,"Richmondshire","Yorkshire And The Humber","York and North Yorkshire",4.8
+2019,"Rochdale","North West","Greater Manchester",14.8
+2019,"Rochford","East of England","South East",3.2
+2019,"Rossendale","North West","Lancashire",4.9
+2019,"Rother","South East","South East",5.4
+2019,"Rotherham","Yorkshire And The Humber","Sheffield City Region",17.5
+2019,"Rugby","West Midlands","Coventry and Warwickshire",12.6
+2019,"Runnymede","South East","Enterprise M3",16.5
+2019,"Rushcliffe","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",2.2
+2019,"Rushmoor","South East","Enterprise M3",17.7
+2019,"Rutland","East Midlands","Greater Lincolnshire",2.9
+2019,"Salford","North West","Greater Manchester",15
+2019,"Sandwell","West Midlands","Black Country",16
+2019,"Scarborough","Yorkshire And The Humber","York and North Yorkshire",6.6
+2019,"Scottish Borders","Scotland",NA,3.5
+2019,"Sedgemoor","South West","Heart of the South West",10
+2019,"Sefton","North West","Liverpool City Region",10
+2019,"Selby","Yorkshire And The Humber","York and North Yorkshire",4.3
+2019,"Sevenoaks","South East","South East",17.4
+2019,"Sheffield","Yorkshire And The Humber","Sheffield City Region",60.1
+2019,"Shropshire","West Midlands","The Marches",27.7
+2019,"Slough","South East","Thames Valley Berkshire",29.7
+2019,"Solihull","West Midlands","Greater Birmingham and Solihull",24.8
+2019,"Somerset West and Taunton","South West","Heart of the South West",15.7
+2019,"South Ayrshire","Scotland",NA,4.4
+2019,"South Cambridgeshire","East of England","Greater Cambridge and Greater Peterborough",24.7
+2019,"South Derbyshire","West Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",10.3
+2019,"South Gloucestershire","South West","West of England",4
+2019,"South Holland","East Midlands","Greater Lincolnshire",4.9
+2019,"South Kesteven","East Midlands","Greater Lincolnshire",10.2
+2019,"South Lakeland","North West","Cumbria",8.8
+2019,"South Lanarkshire","Scotland",NA,7.4
+2019,"South Norfolk","East of England","New Anglia",4.4
+2019,"South Oxfordshire","South East","Oxfordshire",19.3
+2019,"South Ribble","North West","Lancashire",11.3
+2019,"South Somerset","South West","Heart of the South West",19.1
+2019,"South Staffordshire","West Midlands","Stoke-on-Trent and Staffordshire",1.9
+2019,"South Tyneside","North East","North East",4.4
+2019,"Southampton","South East","Solent",40.6
+2019,"Southend-on-Sea","East of England","South East",11.1
+2019,"Southwark","London","London",10.1
+2019,"Spelthorne","South East","Enterprise M3",14.8
+2019,"St Albans","East of England","Hertfordshire",20
+2019,"St. Helens","North West","Liverpool City Region",8.9
+2019,"Stafford","West Midlands","Stoke-on-Trent and Staffordshire",18.6
+2019,"Staffordshire Moorlands","West Midlands","Stoke-on-Trent and Staffordshire",2.5
+2019,"Stevenage","East of England","Hertfordshire",18.6
+2019,"Stirling","Scotland",NA,5.8
+2019,"Stockport","North West","Greater Manchester",24.8
+2019,"Stockton-on-Tees","North East","Tees Valley",8.2
+2019,"Stoke-on-Trent","West Midlands","Stoke-on-Trent and Staffordshire",19.6
+2019,"Stratford-on-Avon","West Midlands","Coventry and Warwickshire",14.2
+2019,"Stroud","South West","Gloucestershire",15.2
+2019,"Sunderland","North East","North East",14.4
+2019,"Surrey Heath","South East","Enterprise M3",13.2
+2019,"Sutton","London","London",9.2
+2019,"Swansea","Wales",NA,11.2
+2019,"Tandridge","South East","Coast to Capital",9.1
+2019,"Teignbridge","South West","Heart of the South West",7.5
+2019,"Telford and Wrekin","West Midlands","The Marches",19.2
+2019,"Test Valley","South East","Enterprise M3",19.7
+2019,"Tewkesbury","South West","Gloucestershire",7.7
+2019,"Thanet","South East","South East",6.1
+2019,"Three Rivers","East of England","Hertfordshire",15.5
+2019,"Tonbridge and Malling","South East","South East",19.9
+2019,"Torbay","South West","Heart of the South West",6.1
+2019,"Trafford","North West","Greater Manchester",18.4
+2019,"Tunbridge Wells","South East","South East",17.6
+2019,"Uttlesford","East of England","South East",11.5
+2019,"Vale of Glamorgan","Wales",NA,1.5
+2019,"Vale of White Horse","South East","Oxfordshire",18.5
+2019,"Wakefield","Yorkshire And The Humber","Leeds City Region",31.8
+2019,"Walsall","West Midlands","Black Country",11.6
+2019,"Waltham Forest","London","London",3.9
+2019,"Wandsworth","London","London",9.1
+2019,"Warrington","North West","Cheshire and Warrington",36.6
+2019,"Warwick","West Midlands","Coventry and Warwickshire",23.5
+2019,"Watford","East of England","Hertfordshire",27.2
+2019,"Waverley","South East","Enterprise M3",18.9
+2019,"Wealden","South East","South East",15.1
+2019,"Welwyn Hatfield","East of England","Hertfordshire",23.8
+2019,"West Berkshire","South East","Thames Valley Berkshire",43.7
+2019,"West Devon","South West","Heart of the South West",2
+2019,"West Dunbartonshire","Scotland",NA,3.9
+2019,"West Lancashire","North West","Lancashire",5.3
+2019,"West Lindsey","East Midlands","Greater Lincolnshire",3.8
+2019,"West Lothian","Scotland",NA,11.2
+2019,"West Northamptonshire","East Midlands","South East Midlands",57.9
+2019,"West Oxfordshire","South East","Oxfordshire",16.8
+2019,"West Suffolk","East of England","New Anglia",21.2
+2019,"Westminster","London","London",30.1
+2019,"Wigan","North West","Greater Manchester",14.9
+2019,"Wiltshire","South West","Swindon and Wiltshire",70.8
+2019,"Winchester","South East","Enterprise M3",16.1
+2019,"Windsor and Maidenhead","South East","Thames Valley Berkshire",34.3
+2019,"Wirral","North West","Liverpool City Region",14.6
+2019,"Woking","South East","Enterprise M3",22
+2019,"Wokingham","South East","Thames Valley Berkshire",14.3
+2019,"Wolverhampton","West Midlands","Black Country",21
+2019,"Worcester","West Midlands","Worcestershire",14.5
+2019,"Worthing","South East","Coast to Capital",10.6
+2019,"Wrexham","Wales",NA,9.8
+2019,"Wychavon","West Midlands","Worcestershire",13.9
+2019,"Wyre Forest","West Midlands","Greater Birmingham and Solihull",8.6
+2019,"Wyre Forest","West Midlands","Worcestershire",8.6
+2019,"York","Yorkshire And The Humber","York and North Yorkshire",11.1
+2020,"Aberdeen City","Scotland",NA,30.7
+2020,"Aberdeenshire","Scotland",NA,11.7
+2020,"Adur","South East","Coast to Capital",4.9
+2020,"Amber Valley","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",6.9
+2020,"Angus","Scotland",NA,4.1
+2020,"Ards and North Down","Northern Ireland",NA,2
+2020,"Argyll and Bute","Scotland",NA,2.9
+2020,"Armagh City, Banbridge and Craigavon","Northern Ireland",NA,2.3
+2020,"Arun","South East","Coast to Capital",8.5
+2020,"Ashfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",3.5
+2020,"Ashford","South East","South East",9.3
+2020,"Babergh","East of England","New Anglia",3.2
+2020,"Barking and Dagenham","London","London",7.9
+2020,"Barnet","London","London",13.9
+2020,"Barnsley","Yorkshire And The Humber","Sheffield City Region",9.3
+2020,"Barrow-in-Furness","North West","Cumbria",4.1
+2020,"Basildon","East of England","South East",16.8
+2020,"Basingstoke and Deane","South East","Enterprise M3",30.3
+2020,"Bassetlaw","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",7.9
+2020,"Bath and North East Somerset","South West","West of England",21.6
+2020,"Bedford","East of England","South East Midlands",19.8
+2020,"Belfast","Northern Ireland",NA,18.7
+2020,"Bexley","London","London",9
+2020,"Birmingham","West Midlands","Greater Birmingham and Solihull",141.9
+2020,"Blaby","East Midlands","Leicester and Leicestershire",2.5
+2020,"Blackburn with Darwen","North West","Lancashire",13.4
+2020,"Blackpool","North West","Lancashire",10
+2020,"Blaenau Gwent","Wales",NA,6.7
+2020,"Bolton","North West","Greater Manchester",14.1
+2020,"Boston","East Midlands","Greater Lincolnshire",3.8
+2020,"Bournemouth, Christchurch and Poole","South West","Dorset",44.4
+2020,"Bracknell Forest","South East","Thames Valley Berkshire",15.7
+2020,"Bradford","Yorkshire And The Humber","Leeds City Region",28.3
+2020,"Braintree","East of England","South East",11.4
+2020,"Breckland","East of England","New Anglia",7.8
+2020,"Brent","London","London",8.3
+2020,"Brentwood","East of England","South East",8.5
+2020,"Bridgend","Wales",NA,4.6
+2020,"Brighton and Hove","South East","Coast to Capital",34.8
+2020,"Bristol, City of","South West","West of England",141.5
+2020,"Bromley","London","London",21.6
+2020,"Bromsgrove","West Midlands","Greater Birmingham and Solihull",6.4
+2020,"Bromsgrove","West Midlands","Worcestershire",6.4
+2020,"Broxbourne","East of England","Hertfordshire",6.2
+2020,"Broxtowe","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",1.3
+2020,"Buckinghamshire","South East","Buckinghamshire",91.5
+2020,"Burnley","North West","Lancashire",6.9
+2020,"Bury","North West","Greater Manchester",9.5
+2020,"Caerphilly","Wales",NA,8.8
+2020,"Calderdale","Yorkshire And The Humber","Leeds City Region",11.2
+2020,"Cambridge","East of England","Greater Cambridge and Greater Peterborough",57.1
+2020,"Camden","London","London",13.1
+2020,"Cannock Chase","West Midlands","Greater Birmingham and Solihull",6.1
+2020,"Cannock Chase","West Midlands","Stoke-on-Trent and Staffordshire",6.1
+2020,"Canterbury","South East","South East",12.9
+2020,"Cardiff","Wales",NA,60.7
+2020,"Carlisle","North West","Cumbria",6.5
+2020,"Carmarthenshire","Wales",NA,5.8
+2020,"Castle Point","East of England","South East",1.7
+2020,"Causeway Coast and Glens","Northern Ireland",NA,0.8
+2020,"Central Bedfordshire","East of England","South East Midlands",17.4
+2020,"Charnwood","East Midlands","Leicester and Leicestershire",10.4
+2020,"Chelmsford","East of England","South East",27.6
+2020,"Cheltenham","South West","Gloucestershire",25.2
+2020,"Cherwell","South East","Oxfordshire",20.6
+2020,"Cheshire East","North West","Cheshire and Warrington",37.9
+2020,"Cheshire West and Chester","North West","Cheshire and Warrington",34.2
+2020,"Chesterfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",12.2
+2020,"Chichester","South East","Coast to Capital",13.3
+2020,"Chorley","North West","Lancashire",6.1
+2020,"City of Edinburgh","Scotland",NA,60.9
+2020,"City of London","London","London",187.3
+2020,"Clackmannanshire","Scotland",NA,1.2
+2020,"Colchester","East of England","South East",21.7
+2020,"Conwy","Wales",NA,2.9
+2020,"Copeland","North West","Cumbria",3.1
+2020,"Cornwall","South West","Cornwall and Isles of Scilly",33.7
+2020,"Cotswold","South West","Gloucestershire",9.8
+2020,"County Durham","North East","North East",27
+2020,"Coventry","West Midlands","Coventry and Warwickshire",34.9
+2020,"Craven","Yorkshire And The Humber","York and North Yorkshire",3.3
+2020,"Crawley","South East","Coast to Capital",26.7
+2020,"Croydon","London","London",31.7
+2020,"Dacorum","East of England","Hertfordshire",18.6
+2020,"Darlington","North East","Tees Valley",6.8
+2020,"Dartford","South East","South East",15.1
+2020,"Denbighshire","Wales",NA,3
+2020,"Derby","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",29.1
+2020,"Derbyshire Dales","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",4.4
+2020,"Derry City and Strabane","Northern Ireland",NA,1.2
+2020,"Doncaster","Yorkshire And The Humber","Sheffield City Region",18.8
+2020,"Dorset","South West","Dorset",42.2
+2020,"Dover","South East","South East",5.7
+2020,"Dudley","West Midlands","Black Country",14
+2020,"Dumfries and Galloway","Scotland",NA,3.9
+2020,"Dundee City","Scotland",NA,7.6
+2020,"Ealing","London","London",12.2
+2020,"East Cambridgeshire","East of England","Greater Cambridge and Greater Peterborough",4.3
+2020,"East Devon","South West","Heart of the South West",6.2
+2020,"East Hampshire","South East","Enterprise M3",9.7
+2020,"East Hertfordshire","East of England","Hertfordshire",18.9
+2020,"East Lindsey","East Midlands","Greater Lincolnshire",4.4
+2020,"East Lothian","Scotland",NA,4.4
+2020,"East Staffordshire","West Midlands","Greater Birmingham and Solihull",7.1
+2020,"East Staffordshire","West Midlands","Stoke-on-Trent and Staffordshire",7.1
+2020,"East Suffolk","East of England","New Anglia",9.9
+2020,"Eastbourne","South East","South East",7.7
+2020,"Eastleigh","South East","Solent",9.9
+2020,"Eden","North West","Cumbria",2.6
+2020,"Elmbridge","South East","Enterprise M3",19.6
+2020,"Enfield","London","London",15.5
+2020,"Epping Forest","East of England","South East",9.1
+2020,"Epsom and Ewell","South East","Coast to Capital",11.1
+2020,"Erewash","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",3
+2020,"Exeter","South West","Heart of the South West",31.4
+2020,"Falkirk","Scotland",NA,3.6
+2020,"Fareham","South East","Solent",13.9
+2020,"Fenland","East of England","Greater Cambridge and Greater Peterborough",4.6
+2020,"Fife","Scotland",NA,13.9
+2020,"Flintshire","Wales",NA,6.8
+2020,"Folkestone and Hythe","South East","South East",5.6
+2020,"Forest of Dean","South West","Gloucestershire",1.9
+2020,"Fylde","North West","Lancashire",3.5
+2020,"Gateshead","North East","North East",7.1
+2020,"Gedling","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",2.9
+2020,"Glasgow City","Scotland",NA,70.4
+2020,"Gloucester","South West","Gloucestershire",25.5
+2020,"Gosport","South East","Solent",3.3
+2020,"Gravesham","South East","South East",4.8
+2020,"Great Yarmouth","East of England","New Anglia",3.4
+2020,"Greenwich","London","London",6.2
+2020,"Guildford","South East","Enterprise M3",37
+2020,"Hackney","London","London",5.9
+2020,"Halton","North West","Liverpool City Region",9.8
+2020,"Hambleton","Yorkshire And The Humber","York and North Yorkshire",6.2
+2020,"Harborough","East Midlands","Leicester and Leicestershire",6.9
+2020,"Haringey","London","London",2.6
+2020,"Harlow","East of England","South East",10.7
+2020,"Harrogate","Yorkshire And The Humber","York and North Yorkshire",20.3
+2020,"Harrow","London","London",14.1
+2020,"Hart","South East","Enterprise M3",8
+2020,"Hartlepool","North East","Tees Valley",2.4
+2020,"Hastings","South East","South East",5.7
+2020,"Havant","South East","Solent",9
+2020,"Havering","London","London",10
+2020,"Herefordshire, County of","West Midlands","The Marches",14.4
+2020,"Hertsmere","East of England","Hertfordshire",14.2
+2020,"Highland","Scotland",NA,12.1
+2020,"Hillingdon","London","London",26.3
+2020,"Horsham","South East","Coast to Capital",17.4
+2020,"Hounslow","London","London",21.2
+2020,"Huntingdonshire","East of England","Greater Cambridge and Greater Peterborough",18.8
+2020,"Hyndburn","North West","Lancashire",2.6
+2020,"Ipswich","East of England","New Anglia",21.6
+2020,"Isle of Wight","South East","Solent",6
+2020,"Islington","London","London",7.9
+2020,"Kensington and Chelsea","London","London",5.6
+2020,"King's Lynn and West Norfolk","East of England","New Anglia",5.9
+2020,"Kingston upon Hull, City of","Yorkshire And The Humber","Hull and East Yorkshire",13.8
+2020,"Kingston upon Thames","London","London",14.1
+2020,"Kirklees","Yorkshire And The Humber","Leeds City Region",20.1
+2020,"Lancaster","North West","Lancashire",14.5
+2020,"Leeds","Yorkshire And The Humber","Leeds City Region",130.4
+2020,"Leicester","East Midlands","Leicester and Leicestershire",41.4
+2020,"Lewes","South East","South East",6.4
+2020,"Lichfield","West Midlands","Greater Birmingham and Solihull",7.3
+2020,"Lichfield","West Midlands","Stoke-on-Trent and Staffordshire",7.3
+2020,"Lincoln","East Midlands","Greater Lincolnshire",13.5
+2020,"Liverpool","North West","Liverpool City Region",52.4
+2020,"Luton","East of England","South East Midlands",23.9
+2020,"Maidstone","South East","South East",22.8
+2020,"Maldon","East of England","South East",2.1
+2020,"Malvern Hills","West Midlands","Worcestershire",2.8
+2020,"Manchester","North West","Greater Manchester",239.9
+2020,"Mansfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",9.2
+2020,"Medway","South East","South East",15
+2020,"Melton","East Midlands","Leicester and Leicestershire",2.8
+2020,"Mendip","South West","Heart of the South West",16
+2020,"Merthyr Tydfil","Wales",NA,1.4
+2020,"Merton","London","London",8.5
+2020,"Mid Devon","South West","Heart of the South West",5
+2020,"Mid Suffolk","East of England","New Anglia",4.5
+2020,"Mid Sussex","South East","Coast to Capital",18.7
+2020,"Mid Ulster","Northern Ireland",NA,2.1
+2020,"Middlesbrough","Yorkshire And The Humber","Tees Valley",7.8
+2020,"Midlothian","Scotland",NA,22.9
+2020,"Milton Keynes","South East","South East Midlands",59.2
+2020,"Mole Valley","South East","Coast to Capital",16.3
+2020,"Monmouthshire","Wales",NA,3.9
+2020,"Moray","Scotland",NA,2.5
+2020,"Neath Port Talbot","Wales",NA,3
+2020,"New Forest","South East","Solent",13.1
+2020,"Newark and Sherwood","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",5.6
+2020,"Newcastle upon Tyne","North East","North East",40.9
+2020,"Newcastle-under-Lyme","West Midlands","Stoke-on-Trent and Staffordshire",4.7
+2020,"Newham","London","London",7.5
+2020,"Newport","Wales",NA,17.7
+2020,"North Ayrshire","Scotland",NA,2.5
+2020,"North Devon","South West","Heart of the South West",4.4
+2020,"North East Lincolnshire","Yorkshire And The Humber","Greater Lincolnshire",7.1
+2020,"North Hertfordshire","East of England","Hertfordshire",21
+2020,"North Kesteven","East Midlands","Greater Lincolnshire",3
+2020,"North Lanarkshire","Scotland",NA,9.1
+2020,"North Lincolnshire","Yorkshire And The Humber","Greater Lincolnshire",6.7
+2020,"North Northamptonshire","East Midlands","South East Midlands",27.2
+2020,"North Somerset","South West","West of England",19.9
+2020,"North Tyneside","North East","North East",3.6
+2020,"North West Leicestershire","East Midlands","Leicester and Leicestershire",7.9
+2020,"Northumberland","North East","North East",14.3
+2020,"Norwich","East of England","New Anglia",29.1
+2020,"Nottingham","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",61.1
+2020,"Nuneaton and Bedworth","West Midlands","Coventry and Warwickshire",8.2
+2020,"Oldham","North West","Greater Manchester",9.8
+2020,"Oxford","South East","Oxfordshire",44.1
+2020,"Pembrokeshire","Wales",NA,3.7
+2020,"Perth and Kinross","Scotland",NA,5.3
+2020,"Peterborough","East of England","Greater Cambridge and Greater Peterborough",26.4
+2020,"Plymouth","South West","Heart of the South West",17.8
+2020,"Portsmouth","South East","Solent",25
+2020,"Powys","Wales",NA,8
+2020,"Preston","North West","Lancashire",26.9
+2020,"Reading","South East","Thames Valley Berkshire",71
+2020,"Redbridge","East of England","London",4.5
+2020,"Redcar and Cleveland","Yorkshire And The Humber","Tees Valley",2.5
+2020,"Redditch","West Midlands","Greater Birmingham and Solihull",6.9
+2020,"Redditch","West Midlands","Worcestershire",6.9
+2020,"Reigate and Banstead","South East","Coast to Capital",23.1
+2020,"Renfrewshire","Scotland",NA,7.6
+2020,"Rhondda Cynon Taf","Wales",NA,4.9
+2020,"Ribble Valley","North West","Lancashire",2
+2020,"Richmond upon Thames","London","London",16.7
+2020,"Richmondshire","Yorkshire And The Humber","York and North Yorkshire",1.8
+2020,"Rochdale","North West","Greater Manchester",9.5
+2020,"Rochford","East of England","South East",3.4
+2020,"Rossendale","North West","Lancashire",2.1
+2020,"Rother","South East","South East",6.2
+2020,"Rotherham","Yorkshire And The Humber","Sheffield City Region",11.8
+2020,"Rugby","West Midlands","Coventry and Warwickshire",10.6
+2020,"Runnymede","South East","Enterprise M3",14.1
+2020,"Rushcliffe","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",2.3
+2020,"Rushmoor","South East","Enterprise M3",18.8
+2020,"Rutland","East Midlands","Greater Lincolnshire",3.3
+2020,"Salford","North West","Greater Manchester",8.9
+2020,"Sandwell","West Midlands","Black Country",13.1
+2020,"Scarborough","Yorkshire And The Humber","York and North Yorkshire",5.8
+2020,"Scottish Borders","Scotland",NA,3
+2020,"Sedgemoor","South West","Heart of the South West",9.6
+2020,"Sefton","North West","Liverpool City Region",8.4
+2020,"Selby","Yorkshire And The Humber","York and North Yorkshire",3.1
+2020,"Sevenoaks","South East","South East",12.1
+2020,"Sheffield","Yorkshire And The Humber","Sheffield City Region",47.1
+2020,"Shropshire","West Midlands","The Marches",30.4
+2020,"Slough","South East","Thames Valley Berkshire",25.8
+2020,"Solihull","West Midlands","Greater Birmingham and Solihull",16.8
+2020,"Somerset West and Taunton","South West","Heart of the South West",15.9
+2020,"South Ayrshire","Scotland",NA,2.8
+2020,"South Cambridgeshire","East of England","Greater Cambridge and Greater Peterborough",6.4
+2020,"South Derbyshire","West Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",4.4
+2020,"South Gloucestershire","South West","West of England",4.4
+2020,"South Holland","East Midlands","Greater Lincolnshire",5.1
+2020,"South Kesteven","East Midlands","Greater Lincolnshire",8.6
+2020,"South Lakeland","North West","Cumbria",7
+2020,"South Lanarkshire","Scotland",NA,6
+2020,"South Norfolk","East of England","New Anglia",4.8
+2020,"South Oxfordshire","South East","Oxfordshire",17.7
+2020,"South Ribble","North West","Lancashire",4.6
+2020,"South Somerset","South West","Heart of the South West",17.4
+2020,"South Staffordshire","West Midlands","Stoke-on-Trent and Staffordshire",1.7
+2020,"South Tyneside","North East","North East",3.7
+2020,"Southampton","South East","Solent",43.2
+2020,"Southend-on-Sea","East of England","South East",13.3
+2020,"Southwark","London","London",9.3
+2020,"Spelthorne","South East","Enterprise M3",11.9
+2020,"St Albans","East of England","Hertfordshire",18.8
+2020,"St. Helens","North West","Liverpool City Region",8.9
+2020,"Stafford","West Midlands","Stoke-on-Trent and Staffordshire",10.9
+2020,"Staffordshire Moorlands","West Midlands","Stoke-on-Trent and Staffordshire",2.1
+2020,"Stevenage","East of England","Hertfordshire",19.5
+2020,"Stirling","Scotland",NA,4.9
+2020,"Stockport","North West","Greater Manchester",25.3
+2020,"Stockton-on-Tees","North East","Tees Valley",6.9
+2020,"Stoke-on-Trent","West Midlands","Stoke-on-Trent and Staffordshire",21
+2020,"Stratford-on-Avon","West Midlands","Coventry and Warwickshire",13
+2020,"Stroud","South West","Gloucestershire",29.8
+2020,"Sunderland","North East","North East",11.9
+2020,"Surrey Heath","South East","Enterprise M3",12
+2020,"Sutton","London","London",8.2
+2020,"Swansea","Wales",NA,15.3
+2020,"Tandridge","South East","Coast to Capital",5.8
+2020,"Teignbridge","South West","Heart of the South West",5.7
+2020,"Telford and Wrekin","West Midlands","The Marches",15.2
+2020,"Test Valley","South East","Enterprise M3",14.4
+2020,"Tewkesbury","South West","Gloucestershire",7
+2020,"Thanet","South East","South East",4.6
+2020,"Three Rivers","East of England","Hertfordshire",6.6
+2020,"Tonbridge and Malling","South East","South East",14
+2020,"Torbay","South West","Heart of the South West",6.2
+2020,"Trafford","North West","Greater Manchester",17.5
+2020,"Tunbridge Wells","South East","South East",12.6
+2020,"Uttlesford","East of England","South East",9.4
+2020,"Vale of Glamorgan","Wales",NA,1.3
+2020,"Vale of White Horse","South East","Oxfordshire",16.8
+2020,"Wakefield","Yorkshire And The Humber","Leeds City Region",26.5
+2020,"Walsall","West Midlands","Black Country",9.9
+2020,"Waltham Forest","London","London",4
+2020,"Wandsworth","London","London",9.7
+2020,"Warrington","North West","Cheshire and Warrington",26
+2020,"Warwick","West Midlands","Coventry and Warwickshire",20.2
+2020,"Watford","East of England","Hertfordshire",17.6
+2020,"Waverley","South East","Enterprise M3",14.6
+2020,"Wealden","South East","South East",17.5
+2020,"Welwyn Hatfield","East of England","Hertfordshire",19.5
+2020,"West Berkshire","South East","Thames Valley Berkshire",22.7
+2020,"West Devon","South West","Heart of the South West",2.4
+2020,"West Dunbartonshire","Scotland",NA,2.6
+2020,"West Lancashire","North West","Lancashire",5.6
+2020,"West Lindsey","East Midlands","Greater Lincolnshire",3.4
+2020,"West Lothian","Scotland",NA,12.1
+2020,"West Northamptonshire","East Midlands","South East Midlands",60.8
+2020,"West Oxfordshire","South East","Oxfordshire",18.5
+2020,"West Suffolk","East of England","New Anglia",19
+2020,"Westminster","London","London",24.1
+2020,"Wigan","North West","Greater Manchester",12.8
+2020,"Wiltshire","South West","Swindon and Wiltshire",65.8
+2020,"Winchester","South East","Enterprise M3",16.8
+2020,"Windsor and Maidenhead","South East","Thames Valley Berkshire",28.1
+2020,"Wirral","North West","Liverpool City Region",11.1
+2020,"Woking","South East","Enterprise M3",19
+2020,"Wokingham","South East","Thames Valley Berkshire",11.2
+2020,"Wolverhampton","West Midlands","Black Country",15.9
+2020,"Worcester","West Midlands","Worcestershire",14
+2020,"Worthing","South East","Coast to Capital",9.9
+2020,"Wrexham","Wales",NA,10.5
+2020,"Wychavon","West Midlands","Worcestershire",8.7
+2020,"Wyre Forest","West Midlands","Greater Birmingham and Solihull",6.3
+2020,"Wyre Forest","West Midlands","Worcestershire",6.3
+2020,"York","Yorkshire And The Humber","York and North Yorkshire",15.2
+2021,"Aberdeen City","Scotland",NA,12.2
+2021,"Aberdeenshire","Scotland",NA,8.7
+2021,"Adur","South East","Coast to Capital",3.8
+2021,"Amber Valley","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",9.1
+2021,"Angus","Scotland",NA,4.6
+2021,"Ards and North Down","Northern Ireland",NA,0.9
+2021,"Argyll and Bute","Scotland",NA,3.7
+2021,"Armagh City, Banbridge and Craigavon","Northern Ireland",NA,2
+2021,"Arun","South East","Coast to Capital",6.6
+2021,"Ashfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",4.6
+2021,"Ashford","South East","South East",10
+2021,"Babergh","East of England","New Anglia",2.7
+2021,"Barking and Dagenham","London","London",4.2
+2021,"Barnet","London","London",11.4
+2021,"Barnsley","Yorkshire And The Humber","Sheffield City Region",10.7
+2021,"Barrow-in-Furness","North West","Cumbria",3.4
+2021,"Basildon","East of England","South East",14.3
+2021,"Basingstoke and Deane","South East","Enterprise M3",20.5
+2021,"Bassetlaw","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",9.6
+2021,"Bath and North East Somerset","South West","West of England",16
+2021,"Bedford","East of England","South East Midlands",16.2
+2021,"Belfast","Northern Ireland",NA,31.3
+2021,"Bexley","London","London",6.9
+2021,"Birmingham","West Midlands","Greater Birmingham and Solihull",109.7
+2021,"Blaby","East Midlands","Leicester and Leicestershire",2
+2021,"Blackburn with Darwen","North West","Lancashire",12.8
+2021,"Blackpool","North West","Lancashire",7.3
+2021,"Blaenau Gwent","Wales",NA,8.4
+2021,"Bolton","North West","Greater Manchester",14.4
+2021,"Boston","East Midlands","Greater Lincolnshire",3.4
+2021,"Bournemouth, Christchurch and Poole","South West","Dorset",32.1
+2021,"Bracknell Forest","South East","Thames Valley Berkshire",10.6
+2021,"Bradford","Yorkshire And The Humber","Leeds City Region",26.9
+2021,"Braintree","East of England","South East",8.1
+2021,"Breckland","East of England","New Anglia",9.5
+2021,"Brent","London","London",6.2
+2021,"Brentwood","East of England","South East",6.7
+2021,"Bridgend","Wales",NA,6
+2021,"Brighton and Hove","South East","Coast to Capital",22.6
+2021,"Bristol, City of","South West","West of England",106.3
+2021,"Bromley","London","London",15.9
+2021,"Bromsgrove","West Midlands","Greater Birmingham and Solihull",4.4
+2021,"Bromsgrove","West Midlands","Worcestershire",4.4
+2021,"Broxbourne","East of England","Hertfordshire",5
+2021,"Broxtowe","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",1.1
+2021,"Buckinghamshire","South East","Buckinghamshire",61.5
+2021,"Burnley","North West","Lancashire",7
+2021,"Bury","North West","Greater Manchester",7.9
+2021,"Caerphilly","Wales",NA,6
+2021,"Calderdale","Yorkshire And The Humber","Leeds City Region",10.4
+2021,"Cambridge","East of England","Greater Cambridge and Greater Peterborough",26.4
+2021,"Camden","London","London",8.6
+2021,"Cannock Chase","West Midlands","Greater Birmingham and Solihull",6.2
+2021,"Cannock Chase","West Midlands","Stoke-on-Trent and Staffordshire",6.2
+2021,"Canterbury","South East","South East",11.6
+2021,"Cardiff","Wales",NA,39.7
+2021,"Carlisle","North West","Cumbria",8.3
+2021,"Carmarthenshire","Wales",NA,6.3
+2021,"Castle Point","East of England","South East",1.5
+2021,"Causeway Coast and Glens","Northern Ireland",NA,1
+2021,"Central Bedfordshire","East of England","South East Midlands",16.2
+2021,"Charnwood","East Midlands","Leicester and Leicestershire",10.7
+2021,"Chelmsford","East of England","South East",19.1
+2021,"Cheltenham","South West","Gloucestershire",16.7
+2021,"Cherwell","South East","Oxfordshire",15.2
+2021,"Cheshire East","North West","Cheshire and Warrington",35
+2021,"Cheshire West and Chester","North West","Cheshire and Warrington",29.4
+2021,"Chesterfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",10.4
+2021,"Chichester","South East","Coast to Capital",8.6
+2021,"Chorley","North West","Lancashire",6.2
+2021,"City of Edinburgh","Scotland",NA,43
+2021,"City of London","London","London",86.9
+2021,"Clackmannanshire","Scotland",NA,2.3
+2021,"Colchester","East of England","South East",16.9
+2021,"Conwy","Wales",NA,5.1
+2021,"Copeland","North West","Cumbria",5.5
+2021,"Cornwall","South West","Cornwall and Isles of Scilly",41.8
+2021,"Cotswold","South West","Gloucestershire",6.3
+2021,"County Durham","North East","North East",31.1
+2021,"Coventry","West Midlands","Coventry and Warwickshire",26.7
+2021,"Craven","Yorkshire And The Humber","York and North Yorkshire",3.1
+2021,"Crawley","South East","Coast to Capital",15.1
+2021,"Croydon","London","London",18.7
+2021,"Dacorum","East of England","Hertfordshire",13.1
+2021,"Darlington","North East","Tees Valley",7.7
+2021,"Dartford","South East","South East",13.6
+2021,"Denbighshire","Wales",NA,4.6
+2021,"Derby","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",27.7
+2021,"Derbyshire Dales","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",6.2
+2021,"Derry City and Strabane","Northern Ireland",NA,1.2
+2021,"Doncaster","Yorkshire And The Humber","Sheffield City Region",20.6
+2021,"Dorset","South West","Dorset",32.3
+2021,"Dover","South East","South East",6.8
+2021,"Dudley","West Midlands","Black Country",12.3
+2021,"Dumfries and Galloway","Scotland",NA,6.9
+2021,"Dundee City","Scotland",NA,7
+2021,"Ealing","London","London",9
+2021,"East Cambridgeshire","East of England","Greater Cambridge and Greater Peterborough",7.3
+2021,"East Devon","South West","Heart of the South West",7.5
+2021,"East Hampshire","South East","Enterprise M3",6.9
+2021,"East Hertfordshire","East of England","Hertfordshire",12.7
+2021,"East Lindsey","East Midlands","Greater Lincolnshire",5.8
+2021,"East Lothian","Scotland",NA,8.4
+2021,"East Staffordshire","West Midlands","Greater Birmingham and Solihull",8.9
+2021,"East Staffordshire","West Midlands","Stoke-on-Trent and Staffordshire",8.9
+2021,"East Suffolk","East of England","New Anglia",12.7
+2021,"Eastbourne","South East","South East",6.7
+2021,"Eastleigh","South East","Solent",6.2
+2021,"Eden","North West","Cumbria",3.4
+2021,"Elmbridge","South East","Enterprise M3",10.5
+2021,"Enfield","London","London",11
+2021,"Epping Forest","East of England","South East",8.2
+2021,"Epsom and Ewell","South East","Coast to Capital",6.6
+2021,"Erewash","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",4.1
+2021,"Exeter","South West","Heart of the South West",26.4
+2021,"Falkirk","Scotland",NA,5.5
+2021,"Fareham","South East","Solent",9.8
+2021,"Fenland","East of England","Greater Cambridge and Greater Peterborough",7.8
+2021,"Fife","Scotland",NA,14.8
+2021,"Flintshire","Wales",NA,8
+2021,"Folkestone and Hythe","South East","South East",6.3
+2021,"Forest of Dean","South West","Gloucestershire",2.8
+2021,"Fylde","North West","Lancashire",4.1
+2021,"Gateshead","North East","North East",8.5
+2021,"Gedling","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",2.5
+2021,"Glasgow City","Scotland",NA,53.2
+2021,"Gloucester","South West","Gloucestershire",19.6
+2021,"Gosport","South East","Solent",2.7
+2021,"Gravesham","South East","South East",5.1
+2021,"Great Yarmouth","East of England","New Anglia",4.5
+2021,"Greenwich","London","London",4.4
+2021,"Guildford","South East","Enterprise M3",25.5
+2021,"Hackney","London","London",4.6
+2021,"Halton","North West","Liverpool City Region",9.5
+2021,"Hambleton","Yorkshire And The Humber","York and North Yorkshire",6.1
+2021,"Harborough","East Midlands","Leicester and Leicestershire",6.3
+2021,"Haringey","London","London",2.8
+2021,"Harlow","East of England","South East",7.4
+2021,"Harrogate","Yorkshire And The Humber","York and North Yorkshire",14.8
+2021,"Harrow","London","London",8.5
+2021,"Hart","South East","Enterprise M3",3.8
+2021,"Hartlepool","North East","Tees Valley",5.6
+2021,"Hastings","South East","South East",4.1
+2021,"Havant","South East","Solent",7.6
+2021,"Havering","London","London",7.5
+2021,"Herefordshire, County of","West Midlands","The Marches",15.7
+2021,"Hertsmere","East of England","Hertfordshire",9.2
+2021,"Highland","Scotland",NA,15
+2021,"Hillingdon","London","London",15.8
+2021,"Horsham","South East","Coast to Capital",12.9
+2021,"Hounslow","London","London",31.8
+2021,"Huntingdonshire","East of England","Greater Cambridge and Greater Peterborough",15.3
+2021,"Hyndburn","North West","Lancashire",3.8
+2021,"Ipswich","East of England","New Anglia",16.7
+2021,"Isle of Wight","South East","Solent",10
+2021,"Islington","London","London",11.5
+2021,"Kensington and Chelsea","London","London",3.9
+2021,"King's Lynn and West Norfolk","East of England","New Anglia",8.8
+2021,"Kingston upon Hull, City of","Yorkshire And The Humber","Hull and East Yorkshire",13.3
+2021,"Kingston upon Thames","London","London",7.7
+2021,"Kirklees","Yorkshire And The Humber","Leeds City Region",21.2
+2021,"Lancaster","North West","Lancashire",11.6
+2021,"Leeds","Yorkshire And The Humber","Leeds City Region",103.2
+2021,"Leicester","East Midlands","Leicester and Leicestershire",35.9
+2021,"Lewes","South East","South East",6.2
+2021,"Lichfield","West Midlands","Greater Birmingham and Solihull",6.6
+2021,"Lichfield","West Midlands","Stoke-on-Trent and Staffordshire",6.6
+2021,"Lincoln","East Midlands","Greater Lincolnshire",12.9
+2021,"Liverpool","North West","Liverpool City Region",48.8
+2021,"Luton","East of England","South East Midlands",12.2
+2021,"Maidstone","South East","South East",18.9
+2021,"Maldon","East of England","South East",2.7
+2021,"Malvern Hills","West Midlands","Worcestershire",3.4
+2021,"Manchester","North West","Greater Manchester",186.7
+2021,"Mansfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",8.1
+2021,"Medway","South East","South East",16
+2021,"Melton","East Midlands","Leicester and Leicestershire",2.6
+2021,"Mendip","South West","Heart of the South West",11.9
+2021,"Merthyr Tydfil","Wales",NA,2
+2021,"Merton","London","London",5.7
+2021,"Mid Devon","South West","Heart of the South West",4.7
+2021,"Mid Suffolk","East of England","New Anglia",7.4
+2021,"Mid Sussex","South East","Coast to Capital",10.1
+2021,"Mid Ulster","Northern Ireland",NA,2
+2021,"Middlesbrough","Yorkshire And The Humber","Tees Valley",9.1
+2021,"Midlothian","Scotland",NA,13.5
+2021,"Milton Keynes","South East","South East Midlands",38.7
+2021,"Mole Valley","South East","Coast to Capital",9.3
+2021,"Monmouthshire","Wales",NA,5.9
+2021,"Moray","Scotland",NA,2.9
+2021,"Neath Port Talbot","Wales",NA,4.4
+2021,"New Forest","South East","Solent",10.1
+2021,"Newark and Sherwood","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",6.4
+2021,"Newcastle upon Tyne","North East","North East",33.9
+2021,"Newcastle-under-Lyme","West Midlands","Stoke-on-Trent and Staffordshire",6.4
+2021,"Newham","London","London",6.5
+2021,"Newport","Wales",NA,16
+2021,"North Ayrshire","Scotland",NA,4.1
+2021,"North Devon","South West","Heart of the South West",5.1
+2021,"North East Lincolnshire","Yorkshire And The Humber","Greater Lincolnshire",8.2
+2021,"North Hertfordshire","East of England","Hertfordshire",12.6
+2021,"North Kesteven","East Midlands","Greater Lincolnshire",4.3
+2021,"North Lanarkshire","Scotland",NA,7.7
+2021,"North Lincolnshire","Yorkshire And The Humber","Greater Lincolnshire",8.8
+2021,"North Northamptonshire","East Midlands","South East Midlands",30.2
+2021,"North Somerset","South West","West of England",17.4
+2021,"North Tyneside","North East","North East",3.8
+2021,"North West Leicestershire","East Midlands","Leicester and Leicestershire",6.9
+2021,"Northumberland","North East","North East",15.6
+2021,"Norwich","East of England","New Anglia",26.4
+2021,"Nottingham","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",53.2
+2021,"Nuneaton and Bedworth","West Midlands","Coventry and Warwickshire",8.5
+2021,"Oldham","North West","Greater Manchester",11.2
+2021,"Oxford","South East","Oxfordshire",30.6
+2021,"Pembrokeshire","Wales",NA,4.6
+2021,"Perth and Kinross","Scotland",NA,5.5
+2021,"Peterborough","East of England","Greater Cambridge and Greater Peterborough",24.6
+2021,"Plymouth","South West","Heart of the South West",20.6
+2021,"Portsmouth","South East","Solent",21.4
+2021,"Powys","Wales",NA,8.9
+2021,"Preston","North West","Lancashire",23.3
+2021,"Reading","South East","Thames Valley Berkshire",46.9
+2021,"Redbridge","East of England","London",3.1
+2021,"Redcar and Cleveland","Yorkshire And The Humber","Tees Valley",3
+2021,"Redditch","West Midlands","Greater Birmingham and Solihull",5.5
+2021,"Redditch","West Midlands","Worcestershire",5.5
+2021,"Reigate and Banstead","South East","Coast to Capital",12.4
+2021,"Renfrewshire","Scotland",NA,6.2
+2021,"Rhondda Cynon Taf","Wales",NA,7.5
+2021,"Ribble Valley","North West","Lancashire",1.9
+2021,"Richmond upon Thames","London","London",9.3
+2021,"Richmondshire","Yorkshire And The Humber","York and North Yorkshire",2.4
+2021,"Rochdale","North West","Greater Manchester",9.2
+2021,"Rochford","East of England","South East",2.7
+2021,"Rossendale","North West","Lancashire",2.6
+2021,"Rother","South East","South East",5
+2021,"Rotherham","Yorkshire And The Humber","Sheffield City Region",12.3
+2021,"Rugby","West Midlands","Coventry and Warwickshire",8.8
+2021,"Runnymede","South East","Enterprise M3",8
+2021,"Rushcliffe","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",2
+2021,"Rushmoor","South East","Enterprise M3",8.6
+2021,"Rutland","East Midlands","Greater Lincolnshire",3.3
+2021,"Salford","North West","Greater Manchester",8.1
+2021,"Sandwell","West Midlands","Black Country",11.4
+2021,"Scarborough","Yorkshire And The Humber","York and North Yorkshire",4.6
+2021,"Scottish Borders","Scotland",NA,6.2
+2021,"Sedgemoor","South West","Heart of the South West",9.7
+2021,"Sefton","North West","Liverpool City Region",7.8
+2021,"Selby","Yorkshire And The Humber","York and North Yorkshire",4.9
+2021,"Sevenoaks","South East","South East",9.7
+2021,"Sheffield","Yorkshire And The Humber","Sheffield City Region",39.9
+2021,"Shropshire","West Midlands","The Marches",28.5
+2021,"Slough","South East","Thames Valley Berkshire",15.6
+2021,"Solihull","West Midlands","Greater Birmingham and Solihull",10.4
+2021,"Somerset West and Taunton","South West","Heart of the South West",14.3
+2021,"South Ayrshire","Scotland",NA,3.4
+2021,"South Cambridgeshire","East of England","Greater Cambridge and Greater Peterborough",4.9
+2021,"South Derbyshire","West Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",5.4
+2021,"South Gloucestershire","South West","West of England",6.2
+2021,"South Holland","East Midlands","Greater Lincolnshire",6.3
+2021,"South Kesteven","East Midlands","Greater Lincolnshire",8.8
+2021,"South Lakeland","North West","Cumbria",6.2
+2021,"South Lanarkshire","Scotland",NA,6.5
+2021,"South Norfolk","East of England","New Anglia",7.7
+2021,"South Oxfordshire","South East","Oxfordshire",12.6
+2021,"South Ribble","North West","Lancashire",4.7
+2021,"South Somerset","South West","Heart of the South West",16.1
+2021,"South Staffordshire","West Midlands","Stoke-on-Trent and Staffordshire",2.3
+2021,"South Tyneside","North East","North East",4
+2021,"Southampton","South East","Solent",32.8
+2021,"Southend-on-Sea","East of England","South East",7.9
+2021,"Southwark","London","London",8.2
+2021,"Spelthorne","South East","Enterprise M3",7.2
+2021,"St Albans","East of England","Hertfordshire",12.1
+2021,"St. Helens","North West","Liverpool City Region",7.1
+2021,"Stafford","West Midlands","Stoke-on-Trent and Staffordshire",12.1
+2021,"Staffordshire Moorlands","West Midlands","Stoke-on-Trent and Staffordshire",4.6
+2021,"Stevenage","East of England","Hertfordshire",13.2
+2021,"Stirling","Scotland",NA,4.3
+2021,"Stockport","North West","Greater Manchester",20.4
+2021,"Stockton-on-Tees","North East","Tees Valley",6.7
+2021,"Stoke-on-Trent","West Midlands","Stoke-on-Trent and Staffordshire",22.6
+2021,"Stratford-on-Avon","West Midlands","Coventry and Warwickshire",9.5
+2021,"Stroud","South West","Gloucestershire",42.2
+2021,"Sunderland","North East","North East",12.1
+2021,"Surrey Heath","South East","Enterprise M3",8.6
+2021,"Sutton","London","London",2.6
+2021,"Swansea","Wales",NA,14
+2021,"Tandridge","South East","Coast to Capital",4
+2021,"Teignbridge","South West","Heart of the South West",5.8
+2021,"Telford and Wrekin","West Midlands","The Marches",13.9
+2021,"Test Valley","South East","Enterprise M3",12.8
+2021,"Tewkesbury","South West","Gloucestershire",6.6
+2021,"Thanet","South East","South East",5.3
+2021,"Three Rivers","East of England","Hertfordshire",5
+2021,"Tonbridge and Malling","South East","South East",11.1
+2021,"Torbay","South West","Heart of the South West",6.6
+2021,"Trafford","North West","Greater Manchester",12.5
+2021,"Tunbridge Wells","South East","South East",9.1
+2021,"Uttlesford","East of England","South East",5
+2021,"Vale of Glamorgan","Wales",NA,2.5
+2021,"Vale of White Horse","South East","Oxfordshire",13.8
+2021,"Wakefield","Yorkshire And The Humber","Leeds City Region",26.5
+2021,"Walsall","West Midlands","Black Country",10.3
+2021,"Waltham Forest","London","London",3.9
+2021,"Wandsworth","London","London",6.2
+2021,"Warrington","North West","Cheshire and Warrington",27.3
+2021,"Warwick","West Midlands","Coventry and Warwickshire",15.2
+2021,"Watford","East of England","Hertfordshire",15.1
+2021,"Waverley","South East","Enterprise M3",9.9
+2021,"Wealden","South East","South East",12.3
+2021,"Welwyn Hatfield","East of England","Hertfordshire",13.9
+2021,"West Berkshire","South East","Thames Valley Berkshire",16.1
+2021,"West Devon","South West","Heart of the South West",4.3
+2021,"West Dunbartonshire","Scotland",NA,2.4
+2021,"West Lancashire","North West","Lancashire",6.2
+2021,"West Lindsey","East Midlands","Greater Lincolnshire",4.5
+2021,"West Lothian","Scotland",NA,13.6
+2021,"West Northamptonshire","East Midlands","South East Midlands",45.4
+2021,"West Oxfordshire","South East","Oxfordshire",14.3
+2021,"West Suffolk","East of England","New Anglia",15.2
+2021,"Westminster","London","London",16.8
+2021,"Wigan","North West","Greater Manchester",13.4
+2021,"Wiltshire","South West","Swindon and Wiltshire",52.5
+2021,"Winchester","South East","Enterprise M3",11.4
+2021,"Windsor and Maidenhead","South East","Thames Valley Berkshire",15.2
+2021,"Wirral","North West","Liverpool City Region",12.2
+2021,"Woking","South East","Enterprise M3",12
+2021,"Wokingham","South East","Thames Valley Berkshire",7.8
+2021,"Wolverhampton","West Midlands","Black Country",14.8
+2021,"Worcester","West Midlands","Worcestershire",11.5
+2021,"Worthing","South East","Coast to Capital",7.6
+2021,"Wrexham","Wales",NA,9.8
+2021,"Wychavon","West Midlands","Worcestershire",6.9
+2021,"Wyre Forest","West Midlands","Greater Birmingham and Solihull",5.8
+2021,"Wyre Forest","West Midlands","Worcestershire",5.8
+2021,"York","Yorkshire And The Humber","York and North Yorkshire",10.3
+2022,"Aberdeen City","Scotland",NA,26.9
+2022,"Aberdeenshire","Scotland",NA,18.3
+2022,"Adur","South East","Coast to Capital",7.8
+2022,"Amber Valley","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",13
+2022,"Angus","Scotland",NA,7.9
+2022,"Ards and North Down","Northern Ireland",NA,2
+2022,"Argyll and Bute","Scotland",NA,7.3
+2022,"Armagh City, Banbridge and Craigavon","Northern Ireland",NA,3.5
+2022,"Arun","South East","Coast to Capital",14.3
+2022,"Ashfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",8
+2022,"Ashford","South East","South East",14.9
+2022,"Babergh","East of England","New Anglia",5.6
+2022,"Barking and Dagenham","London","London",12.8
+2022,"Barnet","London","London",23.6
+2022,"Barnsley","Yorkshire And The Humber","Sheffield City Region",16.2
+2022,"Barrow-in-Furness","North West","Cumbria",4.6
+2022,"Basildon","East of England","South East",22.3
+2022,"Basingstoke and Deane","South East","Enterprise M3",36.4
+2022,"Bassetlaw","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",12.4
+2022,"Bath and North East Somerset","South West","West of England",27.9
+2022,"Bedford","East of England","South East Midlands",32.2
+2022,"Belfast","Northern Ireland",NA,49.3
+2022,"Bexley","London","London",16.9
+2022,"Birmingham","West Midlands","Greater Birmingham and Solihull",213.1
+2022,"Blaby","East Midlands","Leicester and Leicestershire",6.1
+2022,"Blackburn with Darwen","North West","Lancashire",19.6
+2022,"Blackpool","North West","Lancashire",11.3
+2022,"Blaenau Gwent","Wales",NA,10.3
+2022,"Bolton","North West","Greater Manchester",23.3
+2022,"Boston","East Midlands","Greater Lincolnshire",4.6
+2022,"Bournemouth, Christchurch and Poole","South West","Dorset",56.3
+2022,"Bracknell Forest","South East","Thames Valley Berkshire",20.9
+2022,"Bradford","Yorkshire And The Humber","Leeds City Region",42.3
+2022,"Braintree","East of England","South East",15.5
+2022,"Breckland","East of England","New Anglia",12.5
+2022,"Brent","London","London",16.8
+2022,"Brentwood","East of England","South East",9.4
+2022,"Bridgend","Wales",NA,8.9
+2022,"Brighton and Hove","South East","Coast to Capital",36.5
+2022,"Bristol, City of","South West","West of England",189.1
+2022,"Bromley","London","London",32.7
+2022,"Bromsgrove","West Midlands","Greater Birmingham and Solihull",9.5
+2022,"Bromsgrove","West Midlands","Worcestershire",9.5
+2022,"Broxbourne","East of England","Hertfordshire",10.8
+2022,"Broxtowe","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",3.4
+2022,"Buckinghamshire","South East","Buckinghamshire",113
+2022,"Burnley","North West","Lancashire",11.9
+2022,"Bury","North West","Greater Manchester",14.3
+2022,"Caerphilly","Wales",NA,10.5
+2022,"Calderdale","Yorkshire And The Humber","Leeds City Region",16.6
+2022,"Cambridge","East of England","Greater Cambridge and Greater Peterborough",60.9
+2022,"Camden","London","London",24.8
+2022,"Cannock Chase","West Midlands","Greater Birmingham and Solihull",10.2
+2022,"Cannock Chase","West Midlands","Stoke-on-Trent and Staffordshire",10.2
+2022,"Canterbury","South East","South East",16.7
+2022,"Cardiff","Wales",NA,64.5
+2022,"Carlisle","North West","Cumbria",12
+2022,"Carmarthenshire","Wales",NA,11.2
+2022,"Castle Point","East of England","South East",2.6
+2022,"Causeway Coast and Glens","Northern Ireland",NA,1.3
+2022,"Central Bedfordshire","East of England","South East Midlands",44
+2022,"Charnwood","East Midlands","Leicester and Leicestershire",18.7
+2022,"Chelmsford","East of England","South East",31.2
+2022,"Cheltenham","South West","Gloucestershire",32.2
+2022,"Cherwell","South East","Oxfordshire",34.6
+2022,"Cheshire East","North West","Cheshire and Warrington",60.9
+2022,"Cheshire West and Chester","North West","Cheshire and Warrington",53.7
+2022,"Chesterfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",14.7
+2022,"Chichester","South East","Coast to Capital",18.2
+2022,"Chorley","North West","Lancashire",7.7
+2022,"City of Edinburgh","Scotland",NA,89.8
+2022,"City of London","London","London",277.1
+2022,"Clackmannanshire","Scotland",NA,3.8
+2022,"Colchester","East of England","South East",27.3
+2022,"Conwy","Wales",NA,9.5
+2022,"Copeland","North West","Cumbria",7.8
+2022,"Cornwall","South West","Cornwall and Isles of Scilly",59.4
+2022,"Cotswold","South West","Gloucestershire",14.2
+2022,"County Durham","North East","North East",55.2
+2022,"Coventry","West Midlands","Coventry and Warwickshire",42.2
+2022,"Craven","Yorkshire And The Humber","York and North Yorkshire",5.1
+2022,"Crawley","South East","Coast to Capital",36.8
+2022,"Croydon","London","London",42.1
+2022,"Dacorum","East of England","Hertfordshire",26.3
+2022,"Darlington","North East","Tees Valley",12.9
+2022,"Dartford","South East","South East",22.2
+2022,"Denbighshire","Wales",NA,7.9
+2022,"Derby","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",43
+2022,"Derbyshire Dales","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",8.8
+2022,"Derry City and Strabane","Northern Ireland",NA,1.8
+2022,"Doncaster","Yorkshire And The Humber","Sheffield City Region",31.1
+2022,"Dorset","South West","Dorset",51.4
+2022,"Dover","South East","South East",10.4
+2022,"Dudley","West Midlands","Black Country",23.6
+2022,"Dumfries and Galloway","Scotland",NA,10.9
+2022,"Dundee City","Scotland",NA,12.6
+2022,"Ealing","London","London",21
+2022,"East Cambridgeshire","East of England","Greater Cambridge and Greater Peterborough",15.3
+2022,"East Devon","South West","Heart of the South West",14.5
+2022,"East Hampshire","South East","Enterprise M3",12.3
+2022,"East Hertfordshire","East of England","Hertfordshire",29.2
+2022,"East Lindsey","East Midlands","Greater Lincolnshire",9.7
+2022,"East Lothian","Scotland",NA,9.4
+2022,"East Staffordshire","West Midlands","Greater Birmingham and Solihull",17.1
+2022,"East Staffordshire","West Midlands","Stoke-on-Trent and Staffordshire",17.1
+2022,"East Suffolk","East of England","New Anglia",21
+2022,"Eastbourne","South East","South East",11.2
+2022,"Eastleigh","South East","Solent",11.3
+2022,"Eden","North West","Cumbria",5.4
+2022,"Elmbridge","South East","Enterprise M3",25
+2022,"Enfield","London","London",20.7
+2022,"Epping Forest","East of England","South East",15
+2022,"Epsom and Ewell","South East","Coast to Capital",13.1
+2022,"Erewash","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",7
+2022,"Exeter","South West","Heart of the South West",42.2
+2022,"Falkirk","Scotland",NA,10.8
+2022,"Fareham","South East","Solent",17.3
+2022,"Fenland","East of England","Greater Cambridge and Greater Peterborough",11.4
+2022,"Fife","Scotland",NA,24.1
+2022,"Flintshire","Wales",NA,12.6
+2022,"Folkestone and Hythe","South East","South East",10
+2022,"Forest of Dean","South West","Gloucestershire",5.1
+2022,"Fylde","North West","Lancashire",8.4
+2022,"Gateshead","North East","North East",18.8
+2022,"Gedling","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",5.1
+2022,"Glasgow City","Scotland",NA,95.9
+2022,"Gloucester","South West","Gloucestershire",30
+2022,"Gosport","South East","Solent",4.9
+2022,"Gravesham","South East","South East",9.6
+2022,"Great Yarmouth","East of England","New Anglia",7.2
+2022,"Greenwich","London","London",8.9
+2022,"Guildford","South East","Enterprise M3",41.3
+2022,"Hackney","London","London",10.8
+2022,"Halton","North West","Liverpool City Region",15.2
+2022,"Hambleton","Yorkshire And The Humber","York and North Yorkshire",9
+2022,"Harborough","East Midlands","Leicester and Leicestershire",14.9
+2022,"Haringey","London","London",7.6
+2022,"Harlow","East of England","South East",12.1
+2022,"Harrogate","Yorkshire And The Humber","York and North Yorkshire",25.4
+2022,"Harrow","London","London",14.6
+2022,"Hart","South East","Enterprise M3",8.9
+2022,"Hartlepool","North East","Tees Valley",4.6
+2022,"Hastings","South East","South East",6.1
+2022,"Havant","South East","Solent",12.1
+2022,"Havering","London","London",13.7
+2022,"Herefordshire, County of","West Midlands","The Marches",26.5
+2022,"Hertsmere","East of England","Hertfordshire",18
+2022,"Highland","Scotland",NA,26.7
+2022,"Hillingdon","London","London",33.9
+2022,"Horsham","South East","Coast to Capital",20.3
+2022,"Hounslow","London","London",32.5
+2022,"Huntingdonshire","East of England","Greater Cambridge and Greater Peterborough",26.7
+2022,"Hyndburn","North West","Lancashire",7.8
+2022,"Ipswich","East of England","New Anglia",32.6
+2022,"Isle of Wight","South East","Solent",10.9
+2022,"Islington","London","London",38.2
+2022,"Kensington and Chelsea","London","London",16.4
+2022,"King's Lynn and West Norfolk","East of England","New Anglia",12.1
+2022,"Kingston upon Hull, City of","Yorkshire And The Humber","Hull and East Yorkshire",19.3
+2022,"Kingston upon Thames","London","London",15.9
+2022,"Kirklees","Yorkshire And The Humber","Leeds City Region",32.4
+2022,"Lancaster","North West","Lancashire",19.6
+2022,"Leeds","Yorkshire And The Humber","Leeds City Region",170.2
+2022,"Leicester","East Midlands","Leicester and Leicestershire",60.6
+2022,"Lewes","South East","South East",20.2
+2022,"Lichfield","West Midlands","Greater Birmingham and Solihull",13.4
+2022,"Lichfield","West Midlands","Stoke-on-Trent and Staffordshire",13.4
+2022,"Lincoln","East Midlands","Greater Lincolnshire",15.1
+2022,"Liverpool","North West","Liverpool City Region",89.8
+2022,"Luton","East of England","South East Midlands",21.7
+2022,"Maidstone","South East","South East",30.6
+2022,"Maldon","East of England","South East",4.1
+2022,"Malvern Hills","West Midlands","Worcestershire",11.9
+2022,"Manchester","North West","Greater Manchester",312.4
+2022,"Mansfield","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",11.6
+2022,"Medway","South East","South East",24.5
+2022,"Melton","East Midlands","Leicester and Leicestershire",6.1
+2022,"Mendip","South West","Heart of the South West",21.6
+2022,"Merthyr Tydfil","Wales",NA,2.9
+2022,"Merton","London","London",11.9
+2022,"Mid Devon","South West","Heart of the South West",8.3
+2022,"Mid Suffolk","East of England","New Anglia",7.3
+2022,"Mid Sussex","South East","Coast to Capital",21.6
+2022,"Mid Ulster","Northern Ireland",NA,2.9
+2022,"Middlesbrough","Yorkshire And The Humber","Tees Valley",11.8
+2022,"Midlothian","Scotland",NA,22.1
+2022,"Milton Keynes","South East","South East Midlands",79.6
+2022,"Mole Valley","South East","Coast to Capital",18.6
+2022,"Monmouthshire","Wales",NA,8.1
+2022,"Moray","Scotland",NA,6.9
+2022,"Neath Port Talbot","Wales",NA,6.3
+2022,"New Forest","South East","Solent",18.8
+2022,"Newark and Sherwood","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",11.4
+2022,"Newcastle upon Tyne","North East","North East",63.1
+2022,"Newcastle-under-Lyme","West Midlands","Stoke-on-Trent and Staffordshire",9.7
+2022,"Newham","London","London",18.3
+2022,"Newport","Wales",NA,26.3
+2022,"North Ayrshire","Scotland",NA,6.3
+2022,"North Devon","South West","Heart of the South West",15.1
+2022,"North East Lincolnshire","Yorkshire And The Humber","Greater Lincolnshire",11
+2022,"North Hertfordshire","East of England","Hertfordshire",20.4
+2022,"North Kesteven","East Midlands","Greater Lincolnshire",6.6
+2022,"North Lanarkshire","Scotland",NA,16.4
+2022,"North Lincolnshire","Yorkshire And The Humber","Greater Lincolnshire",12.5
+2022,"North Northamptonshire","East Midlands","South East Midlands",50.4
+2022,"North Somerset","South West","West of England",23.7
+2022,"North Tyneside","North East","North East",10.5
+2022,"North West Leicestershire","East Midlands","Leicester and Leicestershire",13.4
+2022,"Northumberland","North East","North East",33.2
+2022,"Norwich","East of England","New Anglia",44.1
+2022,"Nottingham","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",80.3
+2022,"Nuneaton and Bedworth","West Midlands","Coventry and Warwickshire",13.2
+2022,"Oldham","North West","Greater Manchester",16.9
+2022,"Oxford","South East","Oxfordshire",57.6
+2022,"Pembrokeshire","Wales",NA,8.7
+2022,"Perth and Kinross","Scotland",NA,13.6
+2022,"Peterborough","East of England","Greater Cambridge and Greater Peterborough",44.8
+2022,"Plymouth","South West","Heart of the South West",31.2
+2022,"Portsmouth","South East","Solent",30.6
+2022,"Powys","Wales",NA,15
+2022,"Preston","North West","Lancashire",38.1
+2022,"Reading","South East","Thames Valley Berkshire",81
+2022,"Redbridge","East of England","London",11.3
+2022,"Redcar and Cleveland","Yorkshire And The Humber","Tees Valley",4.7
+2022,"Redditch","West Midlands","Greater Birmingham and Solihull",11.7
+2022,"Redditch","West Midlands","Worcestershire",11.7
+2022,"Reigate and Banstead","South East","Coast to Capital",23.1
+2022,"Renfrewshire","Scotland",NA,13.2
+2022,"Rhondda Cynon Taf","Wales",NA,9.5
+2022,"Ribble Valley","North West","Lancashire",3.2
+2022,"Richmond upon Thames","London","London",26.7
+2022,"Richmondshire","Yorkshire And The Humber","York and North Yorkshire",4
+2022,"Rochdale","North West","Greater Manchester",18.2
+2022,"Rochford","East of England","South East",5.1
+2022,"Rossendale","North West","Lancashire",4.6
+2022,"Rother","South East","South East",8.7
+2022,"Rotherham","Yorkshire And The Humber","Sheffield City Region",22.3
+2022,"Rugby","West Midlands","Coventry and Warwickshire",18.9
+2022,"Runnymede","South East","Enterprise M3",15.3
+2022,"Rushcliffe","East Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",5.1
+2022,"Rushmoor","South East","Enterprise M3",15.1
+2022,"Rutland","East Midlands","Greater Lincolnshire",5.4
+2022,"Salford","North West","Greater Manchester",17.5
+2022,"Sandwell","West Midlands","Black Country",22.8
+2022,"Scarborough","Yorkshire And The Humber","York and North Yorkshire",8.4
+2022,"Scottish Borders","Scotland",NA,7.9
+2022,"Sedgemoor","South West","Heart of the South West",20.3
+2022,"Sefton","North West","Liverpool City Region",14.6
+2022,"Selby","Yorkshire And The Humber","York and North Yorkshire",6.6
+2022,"Sevenoaks","South East","South East",17.8
+2022,"Sheffield","Yorkshire And The Humber","Sheffield City Region",64
+2022,"Shropshire","West Midlands","The Marches",44.6
+2022,"Slough","South East","Thames Valley Berkshire",35.1
+2022,"Solihull","West Midlands","Greater Birmingham and Solihull",24.6
+2022,"Somerset West and Taunton","South West","Heart of the South West",26.3
+2022,"South Ayrshire","Scotland",NA,6.2
+2022,"South Cambridgeshire","East of England","Greater Cambridge and Greater Peterborough",13.9
+2022,"South Derbyshire","West Midlands","Derby, Derbyshire, Nottingham and Nottinghamshire",8.6
+2022,"South Gloucestershire","South West","West of England",19.1
+2022,"South Holland","East Midlands","Greater Lincolnshire",8.2
+2022,"South Kesteven","East Midlands","Greater Lincolnshire",13.2
+2022,"South Lakeland","North West","Cumbria",11.9
+2022,"South Lanarkshire","Scotland",NA,13.4
+2022,"South Norfolk","East of England","New Anglia",9.4
+2022,"South Oxfordshire","South East","Oxfordshire",24.1
+2022,"South Ribble","North West","Lancashire",9
+2022,"South Somerset","South West","Heart of the South West",25
+2022,"South Staffordshire","West Midlands","Stoke-on-Trent and Staffordshire",5
+2022,"South Tyneside","North East","North East",7.2
+2022,"Southampton","South East","Solent",49
+2022,"Southend-on-Sea","East of England","South East",10.2
+2022,"Southwark","London","London",23.8
+2022,"Spelthorne","South East","Enterprise M3",14
+2022,"St Albans","East of England","Hertfordshire",26.1
+2022,"St. Helens","North West","Liverpool City Region",13.6
+2022,"Stafford","West Midlands","Stoke-on-Trent and Staffordshire",17
+2022,"Staffordshire Moorlands","West Midlands","Stoke-on-Trent and Staffordshire",5.1
+2022,"Stevenage","East of England","Hertfordshire",19.3
+2022,"Stirling","Scotland",NA,8.5
+2022,"Stockport","North West","Greater Manchester",33.5
+2022,"Stockton-on-Tees","North East","Tees Valley",14.3
+2022,"Stoke-on-Trent","West Midlands","Stoke-on-Trent and Staffordshire",29.6
+2022,"Stratford-on-Avon","West Midlands","Coventry and Warwickshire",19.1
+2022,"Stroud","South West","Gloucestershire",57.1
+2022,"Sunderland","North East","North East",26.6
+2022,"Surrey Heath","South East","Enterprise M3",14.9
+2022,"Sutton","London","London",7.6
+2022,"Swansea","Wales",NA,28.4
+2022,"Tandridge","South East","Coast to Capital",8.8
+2022,"Teignbridge","South West","Heart of the South West",12.2
+2022,"Telford and Wrekin","West Midlands","The Marches",25.5
+2022,"Test Valley","South East","Enterprise M3",18.2
+2022,"Tewkesbury","South West","Gloucestershire",14.3
+2022,"Thanet","South East","South East",8.6
+2022,"Three Rivers","East of England","Hertfordshire",12.7
+2022,"Tonbridge and Malling","South East","South East",20.8
+2022,"Torbay","South West","Heart of the South West",9.5
+2022,"Trafford","North West","Greater Manchester",25.7
+2022,"Tunbridge Wells","South East","South East",16.6
+2022,"Uttlesford","East of England","South East",11.4
+2022,"Vale of Glamorgan","Wales",NA,3.9
+2022,"Vale of White Horse","South East","Oxfordshire",25.7
+2022,"Wakefield","Yorkshire And The Humber","Leeds City Region",41
+2022,"Walsall","West Midlands","Black Country",19.9
+2022,"Waltham Forest","London","London",9.9
+2022,"Wandsworth","London","London",18.5
+2022,"Warrington","North West","Cheshire and Warrington",54.1
+2022,"Warwick","West Midlands","Coventry and Warwickshire",34.1
+2022,"Watford","East of England","Hertfordshire",26.7
+2022,"Waverley","South East","Enterprise M3",17.5
+2022,"Wealden","South East","South East",22.2
+2022,"Welwyn Hatfield","East of England","Hertfordshire",29.3
+2022,"West Berkshire","South East","Thames Valley Berkshire",28.4
+2022,"West Devon","South West","Heart of the South West",5.9
+2022,"West Dunbartonshire","Scotland",NA,5.1
+2022,"West Lancashire","North West","Lancashire",10.8
+2022,"West Lindsey","East Midlands","Greater Lincolnshire",6.3
+2022,"West Lothian","Scotland",NA,21.1
+2022,"West Northamptonshire","East Midlands","South East Midlands",73.1
+2022,"West Oxfordshire","South East","Oxfordshire",17
+2022,"West Suffolk","East of England","New Anglia",28.9
+2022,"Westminster","London","London",190.8
+2022,"Wigan","North West","Greater Manchester",29.2
+2022,"Wiltshire","South West","Swindon and Wiltshire",76.3
+2022,"Winchester","South East","Enterprise M3",25.2
+2022,"Windsor and Maidenhead","South East","Thames Valley Berkshire",36.6
+2022,"Wirral","North West","Liverpool City Region",20.7
+2022,"Woking","South East","Enterprise M3",24.9
+2022,"Wokingham","South East","Thames Valley Berkshire",18.8
+2022,"Wolverhampton","West Midlands","Black Country",28
+2022,"Worcester","West Midlands","Worcestershire",18.9
+2022,"Worthing","South East","Coast to Capital",12
+2022,"Wrexham","Wales",NA,17.2
+2022,"Wychavon","West Midlands","Worcestershire",14.2
+2022,"Wyre Forest","West Midlands","Greater Birmingham and Solihull",9.5
+2022,"Wyre Forest","West Midlands","Worcestershire",9.5
+2022,"York","Yorkshire And The Humber","York and North Yorkshire",20.2
