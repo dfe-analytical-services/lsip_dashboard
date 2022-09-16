@@ -19,13 +19,13 @@ library(openxlsx)
 
 # list leps and LSIPs for dropdowns
 C_LEP2020 <- I_LEP2020 %>%
-  distinct(area = LEP21NM1) %>%
-  arrange(area)%>%
+  distinct(Area = LEP21NM1) %>%
+  arrange(Area)%>%
   mutate(geographic_level="LEP")%>%
   bind_rows(
     I_LEP2020 %>%
-      distinct(area = LSIP) %>%
-      arrange(area)%>%
+      distinct(Area = LSIP) %>%
+      arrange(Area)%>%
       mutate(geographic_level="LSIP")
   )
 write.csv(C_LEP2020, file = "Data\\AppData\\C_LEP2020.csv", row.names = FALSE)
@@ -97,9 +97,10 @@ C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
   mutate_at(c(4:28), as.numeric) %>% # Convert to numeric
   filter(
     year == "2021",
-    geographic_level == "lep" |
-      geographic_level == "country" # cleans up for London and South East which is included as lep and gor
+    geographic_level != "ladu" &
+      geographic_level != "gor" # cleans up for London and South East which is included as lep and gor
   ) %>%
+  mutate(area=paste(area,geographic_level))%>% #avoid duplicate lsip and lep names
   select(-year, -geographic_level) %>%
   rename_with(str_to_sentence) %>% # capitalise column titles
   t() %>%
@@ -151,8 +152,8 @@ C_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
   mutate_at(c(4:10), as.numeric) %>% # Convert to numeric
   mutate(empRate = .[[6]] / .[[4]]) %>%
   filter(
-    geographic_level == "lep" # cleans up for London which is included as lep and gor
-    | area == "England" # for use as comparison
+    geographic_level != "ladu" #not needed for the dashboard currently
+    & geographic_level != "gor"
   ) %>%
   mutate(Year = as.numeric(substr(year, 3, 4))) %>% # for use in charts
   rename(Employment = `28  in employment `) # for use in charts
