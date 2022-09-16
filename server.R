@@ -739,6 +739,7 @@ server <- function(input, output, session) {
   EmpOcc <- reactive({
     EmpOcc <- C_EmpOcc_APS1721 %>%
       select(
+        "Occupation",
         "England", input$lep1,
         if ("lep2" %in% names(input)) {
           if (input$lep2 == "\nNone") {
@@ -752,8 +753,8 @@ server <- function(input, output, session) {
 
   output$EmpOcc <- renderDataTable({
     df <- EmpOcc()
-    datatable(df, options = list(order = list(2, "desc"))) %>%
-      formatPercentage(1:ncol(df), 1)
+    datatable(df, options = list(order = list(2, "desc")), rownames = FALSE) %>%
+      formatPercentage(2:ncol(df), 1)
   })
 
   # VACANCIES ----
