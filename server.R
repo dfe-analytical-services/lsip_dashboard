@@ -32,13 +32,13 @@ server <- function(input, output, session) {
   
   # alter area dropdown depensing if lep or lsip
   output$lep1_geo <- renderUI({
-    if (input$GeoType == 1) {
+    if (input$GeoType == "LEP") {
       selectInput("lep1", "Choose primary LEP area",
-                  choices = C_LEP2020%>%filter(geographic_level=="LEP")%>%select(area)
+                  choices = C_LEP2020%>%filter(geographic_level=="LEP")%>%select(Area)
       )
     } else {
-      selectInput("lep1", "Choose primary LEP area",
-                  choices = C_LEP2020%>%filter(geographic_level=="LSIP")%>%select(area)
+      selectInput("lep1", "Choose primary LSIP area",
+                  choices = C_LEP2020%>%filter(geographic_level=="LSIP")%>%select(Area)
       )
     }
   })
@@ -760,7 +760,7 @@ server <- function(input, output, session) {
     EmpOcc <- C_EmpOcc_APS1721 %>%
       select(
         "Occupation",
-        "England", input$lep1,
+        "England", paste(input$lep1,input$GeoType),
         if ("lep2" %in% names(input)) {
           if (input$lep2 == "\nNone") {
 

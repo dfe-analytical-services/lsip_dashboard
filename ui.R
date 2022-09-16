@@ -203,8 +203,8 @@ fluidPage(
           width = 2,
           radioButtons("GeoType", 
                        label = "Choose geography level:",
-                       choices = list("LEP"=1, "LSIP"=2)
-                       ,selected=1),
+                       choices = list("LEP", "LSIP")
+                       ,selected="LEP"),
           uiOutput("lep1_geo"),
           uiOutput("lep2_off")
         ),
