@@ -49,12 +49,7 @@ fluidPage(
 
     tabPanel(
       "Homepage",
-      fluidPage(
-        gov_row(column(
-          width = 12,
-          style = "background-color:#6a282a;color: #FFFFFF;font-size: 16px",
-          "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
-        )),
+      gov_main_layout(
         gov_row(
           column(
             12,
@@ -75,10 +70,7 @@ fluidPage(
               .noWS = c("after")
             ),
             ".",
-            box(
-              width = 12,
-              p(" ")
-            )
+            column(width = 12, br(" "))
           ),
 
           ## Left panel -------------------------------------------------------
@@ -240,15 +232,6 @@ fluidPage(
     # Create the accessibility statement-----------------
     tabPanel(
       "Accessibility",
-      gov_row(column(
-        width = 12,
-        style = "background-color:#6a282a;color: #FFFFFF;font-size: 16px",
-        "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
-      )),
-      box(
-        width = 12,
-        p(" ")
-      ),
       h2("Accessibility statement"),
       br("This accessibility statement applies to the Local Skills dashboard.
             This dashboard is run by the Department for Education. We want as many people as possible to be able to use this application,
@@ -280,15 +263,6 @@ fluidPage(
 
     tabPanel(
       "Support and feedback",
-      gov_row(column(
-        width = 12,
-        style = "background-color:#6a282a;color: #FFFFFF;font-size: 16px",
-        "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
-      )),
-      box(
-        width = 12,
-        p(" ")
-      ),
       support_links() # defined in R/supporting_links.R
     )
   ), # End of navBarPage
