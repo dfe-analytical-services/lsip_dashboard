@@ -1,53 +1,61 @@
 fluidPage(
+  title = tags$head(tags$link(
+    rel = "shortcut icon",
+    href = "dfefavicon.png"
+  )),
   shinyjs::useShinyjs(),
-  includeCSS("www/dfe_shiny_gov_style.css"),
-  title = "Unit for Future Skills - Local Skills Dashboard",
+  useShinydashboard(),
+  tags$head(
+    tags$link(
+      rel = "stylesheet",
+      type = "text/css",
+      href = "dfe_shiny_gov_style.css"
+    )
+  ),
   # use_tota11y(), # accessibility layer for local testing
 
   # Set metadata for browser ==================================================
 
   tags$html(lang = "en"),
-  # meta_general(
-  #   application_name = "DfE Analytical Services R-Shiny Template",
-  #   description = "R-Shiny template for use by DfE external data dashboards",
-  #   robots = "index,follow",
-  #   generator = "R-Shiny",
-  #   subject = "Education data dashboards",
-  #   rating = "General",
-  #   referrer = "no-referrer"
-  # ),
-
+  tags$head(
+    tags$meta(name="application_name", content="Unit for Future Skills - Local Skills Dashboard"),
+    tags$meta(name="description", content="Data dashboard presenting Local Skills data from the Unit for Future Skills in the Department for Education."),
+    tags$meta(name="subject", content="Education data dashboards.")
+  ),
   # Set title for search engines
   HTML("<title>Local Skills Dashboard</title>"),
-  tagList(
-    tags$head(tags$style(HTML("
-                           .navbar-nav {
-                           float: none !important;
-                           }
-                           .navbar-nav > li:nth-child(4) {
-                           float: right;
-                           }
-                           ")))
-  ),
   tags$head(includeHTML(("google-analytics.html"))),
-
+  shinyGovstyle::header(
+    main_text = "DfE",
+    main_link = "https://www.gov.uk/government/organisations/department-for-education",
+    secondary_text = "Unit for Future Skills - Local Skills Dashboard",
+    logo = "images/DfE_logo.png"
+  ),
+  shinyGovstyle::banner(
+    "beta banner",
+    "beta",
+    paste0(
+      "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this."
+    )
+  ),
+  
   # Navbar ====================================================================
-  navbarPage(
+  navlistPanel(
     id = "navbar",
-    title = "",
-    collapsible = TRUE,
-
+    widths = c(2, 8),
+    well = FALSE,
+    
     # HOMEPAGE ============================================================
 
     tabPanel(
       "Homepage",
       fluidPage(
-        fluidRow(column(
+        gov_row(column(
           width = 12,
           style = "background-color:#6a282a;color: #FFFFFF;font-size: 16px",
           "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
         )),
-        fluidRow(
+        gov_row(
           column(
             12,
             h1("Local Skills Dashboard"),
@@ -180,308 +188,76 @@ fluidPage(
               )
             )
           ), # end of right panel
-        ) # end of FluidRow
+        ) # end of gov_row
       ) # end of FluidPage
     ), # end of Tab Panel
 
     # APP ----
 
     tabPanel(
-      "Dashboard",
-      fluidRow(column(
-        width = 12,
-        style = "background-color:#6a282a;color: #FFFFFF;font-size: 16px",
-        "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
-      )),
-      box(
-        width = 12,
-        p(" ")
-      ),
-      # choice row
-      sidebarLayout(
-        sidebarPanel(
-          width = 2,
-          selectInput("lep1", "Choose primary LEP area",
+      "Local Skills",
+      gov_main_layout(
+      gov_row(
+        column(
+          width=12,
+          div(
+            class = "well",
+            style = "min-height: 100%; height: 100%; overflow-y: visible",
+            gov_row(
+              column(
+                width=6,
+              selectInput("lep1", "Choose primary LEP area",
             choices = C_LEP2020
+          )
           ),
-          uiOutput("lep2_off")
+          column(
+            width=6,
+            uiOutput("lep2_off")
+          )
           # # lep 2 is reactve to lep 1 so is populated in the server
           # selectInput("lep2", "Choose comparison LEP area",
           #   choices = NULL
           # )
+            )
+        )
+        )
         ),
 
         # next row is the data tabs
-        mainPanel(
-          width = 10,
+        column(
+          width = 12,
           tabsetPanel(
             id = "datatabset",
-
-            # OVERVIEW ----
-            tabPanel(
-              "Overview",
-              ## Main panel ----
-              box(
-                width = 12,
-                uiOutput("page0title", style = "font-size: 24px;"),
-                div("Change metrics are measured since the same period the year before.", style = "font-size: 16px; font-style: italic;"),
-                br(),
-                fluidRow(
-                  # left column
-                  column(
-                    width = 5,
-                    style = "background-color:#f3f2f1;",
-                    h2("Labour market"),
-                    h3("People employed"),
-                    fluidRow(
-                      column(
-                        width = 4,
-                        div(
-                          title = "Source: APS. 2021 calendar year",
-                          uiOutput("locland.emplcnt0"),
-                        )
-                      ),
-                      column(
-                        width = 7,
-                        plotlyOutput("empLineChart", height = 81)
-                      )
-                    ),
-                    h3("Employment rate"),
-                    fluidRow(
-                      column(
-                        width = 4,
-                        div(
-                          title = "Source: APS. 2021 calendar year",
-                          uiOutput("locland.emplrate0"),
-                        )
-                      ),
-                      column(
-                        width = 7,
-                        plotlyOutput("empRateLineChart", height = 81)
-                      )
-                    ),
-                    # third row - link to emp tab
-                    box(
-                      width = 12,
-                      actionLink("link_to_tabpanel_employment2", "Find out more about employment"),
-                      align = "right"
-                    ),
-                    box(
-                      width = 12,
-                      p(" ")
-                    ),
-                    # fourth row - vacancies
-                    h3("Job vacancy share"),
-                    fluidRow(
-                      column(
-                        width = 4,
-                        div(
-                          title = "Source: ONS (Adzuna). Jan 2022. Share of job vacancies in England.",
-                          uiOutput("jobad.units"),
-                        )
-                      ),
-                      column(
-                        width = 7,
-                        plotlyOutput("VacLineChart", height = 81)
-                      )
-                    ),
-                    box(
-                      width = 12,
-                      actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies"),
-                      align = "right"
-                    )
-                  ),
-                  column(width = 1), # column split
-                  # right column
-                  column(
-                    width = 5,
-                    style = "background-color:#f3f2f1;",
-                    h2("Skills landscape"),
-                    h3("Education and training achievements"),
-                    fluidRow(
-                      column(
-                        width = 4,
-                        div(
-                          title = "Source: ILR AY20/21",
-                          uiOutput("skisup.ETach"),
-                        )
-                      ),
-                      column(
-                        width = 7,
-                        plotlyOutput("etLineChart", height = 81)
-                      )
-                    ),
-                    h3("Apprenticeship achievements"),
-                    fluidRow(
-                      column(
-                        width = 4,
-                        div(
-                          title = "Source: ILR AY20/21",
-                          uiOutput("skisup.APPach"),
-                        )
-                      ),
-                      column(
-                        width = 7,
-                        plotlyOutput("AppLineChart", height = 81)
-                      )
-                    ),
-                    # 6th row - link to app data
-                    box(
-                      width = 12,
-                      actionLink("link_to_tabpanel_FE2", "Find out more about skills"),
-                      align = "right"
-                    ),
-                  ) # end of right column
-                ), # end of data row
-                ### Downloads-------------
-                br(),
-                fluidRow(
-                  column(
-                    width = 3,
-                    downloadButton(
-                      outputId = "download_btn0a",
-                      label = "All data   ",
-                      icon = shiny::icon("download"),
-                      class = "downloadButton"
-                    )
-                  ),
-                  column(
-                    width = 9,
-                    "Download all available indicators for all geographies (LEPs, LAs, Regions and England)",
-                  )
-                ),
-                fluidRow(
-                  column(
-                    width = 3,
-                    downloadButton(
-                      outputId = "download_btn0b",
-                      label = "Current LEP",
-                      icon = shiny::icon("download"),
-                      class = "downloadButton"
-                    )
-                  ),
-                  column(width = 9, "Or just for the currently chosen LEP")
-                ),
-                box(
-                  width = 12,
-                  p(" ")
-                )
-              ) # end of main pane box
-            ), # end of Overview tab
-
-            # EMPLOYMENT  ----
-            tabPanel(
-              "Employment",
-              ## Main panel ----
-              box(
-                width = 12,
-                uiOutput("page1title", style = "font-size: 24px;"),
-                div("Data is from the Annual Population Survey. Years represent calendar years. All figures are for 16-64 except the occupation split table which is all ages.", style = "font-size: 16px; font-style: italic;"),
-                br(),
-
-                ### KPI boxes ----
-                box(
-                  width = 12,
-                  valueBoxOutput("locland.emplcnt"),
-                  valueBoxOutput("locland.emplrate")
-                ),
-                box(
-                  width = 12,
-                  uiOutput("emp_comp")
-                ),
-                box(
-                  width = 12,
-                  p(" ")
-                ),
-                ### Employment rate over time line chart ----
-                column(
-                  width = 6,
-                  p("Employment rate trend", style = "font-size:20px;"),
-                  plotlyOutput("EmpRate_time")
-                ),
-                ### Employment percentage by occupation data table ----
-                column(
-                  width = 6,
-                  p("Employment percentage by occupation (sub-major SOC group)", style = "font-size:20px;"),
-                  dataTableOutput("EmpOcc")
-                ),
-                # br(),
-                # column(
-                #   width = 12,
-                #   p("Employment rates", style = "font-size:20px;"),
-                #   plotlyOutput("EmpRate_dot")
-                # ),
-
-                ### Downloads-------------
-                box(
-                  width = 12,
-                  p(" ")
-                ),
-                fluidRow(
-                  column(
-                    width = 3,
-                    downloadButton(
-                      outputId = "download_btn1a",
-                      label = "All data   ",
-                      icon = shiny::icon("download"),
-                      class = "downloadButton"
-                    )
-                  ),
-                  column(
-                    width = 9,
-                    "Download employment indicators for all geographies (LEPs, LAs, Regions and England)",
-                  )
-                ), # end of row
-                fluidRow(
-                  column(
-                    width = 3,
-                    downloadButton(
-                      outputId = "download_btn1b",
-                      label = "Current LEP",
-                      icon = shiny::icon("download"),
-                      class = "downloadButton"
-                    )
-                  ),
-                  column(width = 9, p("Or just for the currently chosen LEP")),
-                  box(
-                    width = 12,
-                    p(" ")
-                  )
-                ) # end of row
-              ) # end of main panel
-            ), # end of Local Landscape tab
-
+            panel_overview(),
+            panel_employment(),
             # VACANCIES ---------------
             tabPanel(
               "Vacancies",
               ## Main panel ----
-              box(
+              column(
                 width = 12,
                 uiOutput("page3title", style = "font-size: 24px;"),
                 div("Data is from ONS using Adzuna online job adverts. Data for each year is the average of vacancies across January of that year.", style = "font-size: 16px; font-style: italic;"),
                 br(),
                 ### KPI boxes ----
-                box(
+                column(
                   width = 12,
                   valueBoxOutput("jobad.pc"),
                   valueBoxOutput("jobad.ch"),
                 ), # end of box
-                box(
+                column(
                   width = 12,
                   uiOutput("vac_comp")
                 ),
-                box(
+                column(
                   width = 12,
                   p(" ")
                 ),
-                box(
+                column(
                   width = 12,
                   ### Online job vacancy units over time line chart ----
-                  column(
-                    width = 12,
-                    p("Online job vacancy unit trend", style = "font-size:20px;"),
-                    plotlyOutput("jobad.time")
-                  ),
+                  p("Online job vacancy unit trend", style = "font-size:20px;"),
+                  plotlyOutput("jobad.time")
                 ), # end of box
                 details(
                   inputId = "SubsLev",
@@ -491,7 +267,7 @@ fluidPage(
                 ),
                 ### Downloads-------------
                 br(),
-                fluidRow(
+                gov_row(
                   column(
                     width = 3,
                     downloadButton(
@@ -506,7 +282,7 @@ fluidPage(
                     "Download vacancy indicators for all geographies (LEPs, LAs, Regions and England)",
                   )
                 ), # end of row
-                fluidRow(
+                gov_row(
                   column(
                     width = 3,
                     downloadButton(
@@ -517,46 +293,44 @@ fluidPage(
                     )
                   ),
                   column(width = 9, p("Or just for the currently chosen LEP")),
-                  box(
-                    width = 12,
-                    p(" ")
-                  )
-                ) # end of row
+                ), # end of row
+                column(width=12,br(""))
               ) # end of main panel
             ), # end of Skills Supply tab
             # FE ----
             tabPanel(
               "Skills",
               # Main panel
-              box(
+              column(
                 width = 12,
                 uiOutput("page2title", style = "font-size: 24px;"),
                 div("Data from Individualised Learner Records for FE and skills learners. Years shown are academic years.", style = "font-size: 16px; font-style: italic;"),
                 br(),
                 ### KPI boxes ----
-                box(
+                column(
                   width = 12,
                   valueBoxOutput("skisup.FEach"),
                   valueBoxOutput("skisup.APach"),
                 ),
-                box(
+                column(
                   width = 12,
                   uiOutput("skill_comp")
                 ),
-                box(
-                  width = 12,
-                  p(" ")
-                ),
-                box(
+                gov_row(
                   width = 12,
                   ### Achievements over time line chart ----
                   column(
                     width = 6,
                     p("FE and skills learner achievement trend", style = "font-size:20px;"),
-                    p("Choose provision group:"),
+                    div(
+                      class = "well",
+                      style = "min-height: 100%; height: 100%; overflow-y: visible",
+                      p("Choose provision group:"),
                     selectizeInput("skill_line", NULL,
                       choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and skills provision")
+                    )
                     ),
+                    
                     plotlyOutput("Ach_time"),
                     p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total.", style = "font-style: italic;")
                   ),
@@ -581,11 +355,7 @@ fluidPage(
                   )
                 ),
                 ### Downloads-------------
-                box(
-                  width = 12,
-                  p(" ")
-                ),
-                fluidRow(
+                gov_row(
                   column(
                     width = 3,
                     downloadButton(
@@ -600,7 +370,7 @@ fluidPage(
                     "Download FE and skills indicators for all geographies (LEPs, LAs, Regions and England)",
                   )
                 ), # end of row
-                fluidRow(
+                gov_row(
                   column(
                     width = 3,
                     downloadButton(
@@ -610,12 +380,9 @@ fluidPage(
                       class = "downloadButton"
                     )
                   ),
-                  column(width = 9, p("Or just for the currently chosen LEP")),
-                  box(
-                    width = 12,
-                    p(" ")
-                  )
-                ) # end of row
+                  column(width = 9, p("Or just for the currently chosen LEP"))
+                ), # end of row
+                column(width = 12, br(""))
               ) # end of main panel
             ) # sills panel
           ) # end of dashboard tabset panel
@@ -626,7 +393,7 @@ fluidPage(
     # Create the accessibility statement-----------------
     tabPanel(
       "Accessibility",
-      fluidRow(column(
+      gov_row(column(
         width = 12,
         style = "background-color:#6a282a;color: #FFFFFF;font-size: 16px",
         "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
@@ -666,7 +433,7 @@ fluidPage(
 
     tabPanel(
       "Support and feedback",
-      fluidRow(column(
+      gov_row(column(
         width = 12,
         style = "background-color:#6a282a;color: #FFFFFF;font-size: 16px",
         "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.",
@@ -765,7 +532,7 @@ fluidPage(
 #         uiOutput("page6title", style = "font-size: 24px;"),
 #         div("Change measured since the same time year", style = "font-size: 16px; font-style: italic;"),
 #         br(),
-#         fluidRow(
+#         gov_row(
 #           # left column
 #           column(
 #             width = 6,
