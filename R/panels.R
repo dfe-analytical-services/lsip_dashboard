@@ -1,7 +1,7 @@
 panel_overview <- function(){
   tabPanel(
     "Overview",
-    ## Main panel ----
+      column(width=12,br("")),
       column(
         width = 12,
         uiOutput("page0title", style = "font-size: 24px;"),
@@ -152,8 +152,8 @@ panel_overview <- function(){
 panel_employment <- function(){
   tabPanel(
     "Employment",
-    ## Main panel ----
-      column(
+    column(width=12,br("")),
+    column(
         width = 12,
         uiOutput("page1title", style = "font-size: 24px;"),
         div("Data is from the Annual Population Survey. Years represent calendar years. All figures are for 16-64 except the occupation split table which is all ages.", style = "font-size: 16px; font-style: italic;"),
@@ -227,4 +227,169 @@ panel_employment <- function(){
       ),# end of row
       column(width = 12, br(""))
   ) # end of Local Landscape tab
+}
+
+panel_vacancies <- function(){
+  tabPanel(
+    "Vacancies",
+    column(width=12,br("")),
+    column(
+      width = 12,
+      uiOutput("page3title", style = "font-size: 24px;"),
+      div("Data is from ONS using Adzuna online job adverts. Data for each year is the average of vacancies across January of that year.", style = "font-size: 16px; font-style: italic;"),
+      br(),
+      ### KPI boxes ----
+      column(
+        width = 12,
+        valueBoxOutput("jobad.pc"),
+        valueBoxOutput("jobad.ch"),
+      ), # end of box
+      column(
+        width = 12,
+        uiOutput("vac_comp")
+      ),
+      column(
+        width = 12,
+        p(" ")
+      ),
+      column(
+        width = 12,
+        ### Online job vacancy units over time line chart ----
+        p("Online job vacancy unit trend", style = "font-size:20px;"),
+        plotlyOutput("jobad.time")
+      ), # end of box
+      details(
+        inputId = "SubsLev",
+        label = "Chart information",
+        help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
+              The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between LEPS and over time, but do not represent true job vacancy volumes."
+      ),
+      ### Downloads-------------
+      br(),
+      gov_row(
+        column(
+          width = 3,
+          downloadButton(
+            outputId = "download_btn3a",
+            label = "All data   ",
+            icon = shiny::icon("download"),
+            class = "downloadButton"
+          )
+        ),
+        column(
+          width = 9,
+          "Download vacancy indicators for all geographies (LEPs, LAs, Regions and England)",
+        )
+      ), # end of row
+      gov_row(
+        column(
+          width = 3,
+          downloadButton(
+            outputId = "download_btn3b",
+            label = "Current LEP",
+            icon = shiny::icon("download"),
+            class = "downloadButton"
+          )
+        ),
+        column(width = 9, p("Or just for the currently chosen LEP")),
+      ), # end of row
+      column(width=12,br(""))
+    ) # end of main panel
+  ) # end of Skills Supply tab
+}
+
+
+panel_skills <- function(){
+  tabPanel(
+    "Skills",
+    column(width=12,br("")),
+    column(
+      width = 12,
+      uiOutput("page2title", style = "font-size: 24px;"),
+      div("Data from Individualised Learner Records for FE and skills learners. Years shown are academic years.", style = "font-size: 16px; font-style: italic;"),
+      br(),
+      ### KPI boxes ----
+      column(
+        width = 12,
+        valueBoxOutput("skisup.FEach"),
+        valueBoxOutput("skisup.APach")
+      ),
+      column(
+        width = 12,
+        uiOutput("skill_comp")
+      ),
+      tabsetPanel(
+        ### Achievements over time line chart ----
+        tabPanel(
+          "Achievements over time",
+        column(
+          width = 12,
+          p("FE and skills learner achievement trend", style = "font-size:20px;"),
+          div(
+            class = "well",
+            style = "min-height: 100%; height: 100%; overflow-y: visible",
+            p("Choose provision group:"),
+            selectizeInput("skill_line", NULL,
+                           choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and skills provision")
+            )
+          ),
+          
+          plotlyOutput("Ach_time"),
+          p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total.", style = "font-style: italic;")
+        )
+        ),
+        ### FE achievements by SSA----
+        tabPanel(
+          "Achievements by SSA",
+          column(
+          width = 12,
+          p("All FE and skills learner achievements by SSA tier 1 (AY21/22 Aug to Jan provisional data)", style = "font-size:20px;"),
+          plotlyOutput("Ach_SSA_pc")
+        )
+        )
+      ), # end of charts box
+      ### FE definitions----
+      details(
+        inputId = "FEdefs",
+        label = "FE definitions",
+        tags$ul(
+          tags$li("FE and skills include all age apprenticeships and wider adult (19+) FE learning, such as community learning and education and training."),
+          tags$li("Further Education covers publicly-funded learning delivered by an FE institution, a training provider or within a local community. It also includes apprenticeships delivered in the workplace. It does not include higher education, unless delivered as part of an apprenticeship programme."),
+          tags$li("Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications."),
+          tags$li("Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups."),
+          tags$li("Education and training is mainly classroom-based adult FE that is not an apprenticeship or community learning."),
+          tags$li("Achievements are the number of learners who successfully complete an individual aim in an academic year. ")
+        )
+      )
+    ), 
+    column(width = 12, br("")),
+    gov_row(
+      column(
+          width = 3,
+          downloadButton(
+            outputId = "download_btn2a",
+            label = "All data   ",
+            icon = shiny::icon("download"),
+            class = "downloadButton"
+          )
+        ),
+        column(
+          width = 9,
+          "Download FE and skills indicators for all geographies (LEPs, LAs, Regions and England)"
+        )
+      ), # end of row
+      gov_row(
+        column(
+          width = 3,
+          downloadButton(
+            outputId = "download_btn2b",
+            label = "Current LEP",
+            icon = shiny::icon("download"),
+            class = "downloadButton"
+          )
+        ),
+        column(width = 9, p("Or just for the currently chosen LEP"))
+      ), # end of row
+      column(width = 12, br(""))
+  ) # sills panel
 }
