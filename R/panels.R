@@ -47,10 +47,6 @@ panel_overview <- function(){
               actionLink("link_to_tabpanel_employment2", "Find out more about employment"),
               align = "right"
             ),
-            box(
-              width = 12,
-              p(" ")
-            ),
             # fourth row - vacancies
             h3("Job vacancy share"),
             gov_row(

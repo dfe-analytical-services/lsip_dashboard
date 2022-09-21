@@ -49,8 +49,6 @@ fluidPage(
 
     tabPanel(
       "Homepage",
-      gov_main_layout(
-        gov_row(
           column(
             12,
             h1("Local Skills Dashboard"),
@@ -180,8 +178,6 @@ fluidPage(
               )
             )
           ), # end of right panel
-        ) # end of gov_row
-      ) # end of FluidPage
     ), # end of Tab Panel
 
     # APP ----
@@ -232,6 +228,8 @@ fluidPage(
     # Create the accessibility statement-----------------
     tabPanel(
       "Accessibility",
+      column(
+        width=12,
       h2("Accessibility statement"),
       br("This accessibility statement applies to the Local Skills dashboard.
             This dashboard is run by the Department for Education. We want as many people as possible to be able to use this application,
@@ -258,6 +256,7 @@ fluidPage(
         a(href = "mailto:statistics.development@education.gov.uk", "statistics.development@education.gov.uk")
       ),
       br()
+      )
     ), # End of accessibility tab
     # Support links ===========================================================
 

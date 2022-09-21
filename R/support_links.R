@@ -1,5 +1,6 @@
 support_links <- function() {
-  div(
+  column(
+    width=12,
     h2("Give us feedback"),
     "This dashboard is a new service that we are developing. If you have any feedback or suggestions for improvements, please contact us at ",
     a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk", .noWS = c("after")), ".", br(),
@@ -18,11 +19,6 @@ support_links <- function() {
     "The source code for this dashboard is available in our ",
     a(href = "https://github.com/dfe-analytical-services/lsip_dashboard", "GitHub repository", .noWS = c("after")),
     ".",
-    br(),
-    br(),
-    br(),
-    br(),
-    br(),
-    br()
+    column(12,br(""))
   )
 }
