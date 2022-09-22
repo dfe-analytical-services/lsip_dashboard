@@ -18,9 +18,9 @@ fluidPage(
 
   tags$html(lang = "en"),
   tags$head(
-    tags$meta(name="application_name", content="Unit for Future Skills - Local Skills Dashboard"),
-    tags$meta(name="description", content="Data dashboard presenting Local Skills data from the Unit for Future Skills in the Department for Education."),
-    tags$meta(name="subject", content="Education data dashboards.")
+    tags$meta(name = "application_name", content = "Unit for Future Skills - Local Skills Dashboard"),
+    tags$meta(name = "description", content = "Data dashboard presenting Local Skills data from the Unit for Future Skills in the Department for Education."),
+    tags$meta(name = "subject", content = "Education data dashboards.")
   ),
   # Set title for search engines
   HTML("<title>Local Skills Dashboard</title>"),
@@ -38,17 +38,19 @@ fluidPage(
       "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this."
     )
   ),
-  
+
   # Navbar ====================================================================
   navlistPanel(
     id = "navbar",
     widths = c(2, 8),
     well = FALSE,
-    
+
     # HOMEPAGE ============================================================
 
     tabPanel(
       "Homepage",
+      gov_main_layout(
+        gov_row(
           column(
             12,
             h1("Local Skills Dashboard"),
@@ -177,7 +179,9 @@ fluidPage(
                 a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk", .noWS = c("after")), "."
               )
             )
-          ), # end of right panel
+          )
+        )
+      ) # end of right panel
     ), # end of Tab Panel
 
     # APP ----
@@ -185,30 +189,30 @@ fluidPage(
     tabPanel(
       "Local Skills",
       gov_main_layout(
-      gov_row(
-        column(
-          width=12,
-          div(
-            class = "well",
-            style = "min-height: 100%; height: 100%; overflow-y: visible",
-            gov_row(
-              column(
-                width=6,
-              selectInput("lep1", "Choose primary LEP area",
-            choices = C_LEP2020
-          )
-          ),
+        gov_row(
           column(
-            width=6,
-            uiOutput("lep2_off")
-          )
-          # # lep 2 is reactve to lep 1 so is populated in the server
-          # selectInput("lep2", "Choose comparison LEP area",
-          #   choices = NULL
-          # )
+            width = 12,
+            div(
+              class = "well",
+              style = "min-height: 100%; height: 100%; overflow-y: visible",
+              gov_row(
+                column(
+                  width = 6,
+                  selectInput("lep1", "Choose primary LEP area",
+                    choices = C_LEP2020
+                  )
+                ),
+                column(
+                  width = 6,
+                  uiOutput("lep2_off")
+                )
+                # # lep 2 is reactve to lep 1 so is populated in the server
+                # selectInput("lep2", "Choose comparison LEP area",
+                #   choices = NULL
+                # )
+              )
             )
-        )
-        )
+          )
         ),
 
         # next row is the data tabs
@@ -228,34 +232,38 @@ fluidPage(
     # Create the accessibility statement-----------------
     tabPanel(
       "Accessibility",
-      column(
-        width=12,
-      h2("Accessibility statement"),
-      br("This accessibility statement applies to the Local Skills dashboard.
+      gov_main_layout(
+        gov_row(
+          column(
+            width = 12,
+            h2("Accessibility statement"),
+            br("This accessibility statement applies to the Local Skills dashboard.
             This dashboard is run by the Department for Education. We want as many people as possible to be able to use this application,
             and have actively developed this dashboard with accessibilty in mind."),
-      h3("WCAG 2.1 compliance"),
-      br("We follow the reccomendations of the ", a(href = "https://www.w3.org/TR/WCAG21/", "WCAG 2.1 requirements. "), "This application has been checked using the ", a(href = "https://github.com/ewenme/shinya11y", "Shinya11y tool "), ", which did not detect accessibility issues.
+            h3("WCAG 2.1 compliance"),
+            br("We follow the reccomendations of the ", a(href = "https://www.w3.org/TR/WCAG21/", "WCAG 2.1 requirements. "), "This application has been checked using the ", a(href = "https://github.com/ewenme/shinya11y", "Shinya11y tool "), ", which did not detect accessibility issues.
              This dashboard also fully passes the accessibility audits checked by the ", a(href = "https://developers.google.com/web/tools/lighthouse", "Google Developer Lighthouse tool"), ". This means that this dashboard:"),
-      tags$div(tags$ul(
-        tags$li("uses colours that have sufficient contrast"),
-        tags$li("allows you to zoom in up to 300% without the text spilling off the screen"),
-        tags$li("has its performance regularly monitored, with a team working on any feedback to improve accessibility for all users")
-      )),
-      h3("Limitations"),
-      br("We recognise that there are still potential issues with accessibility in this dashboard, but we will continue
+            tags$div(tags$ul(
+              tags$li("uses colours that have sufficient contrast"),
+              tags$li("allows you to zoom in up to 300% without the text spilling off the screen"),
+              tags$li("has its performance regularly monitored, with a team working on any feedback to improve accessibility for all users")
+            )),
+            h3("Limitations"),
+            br("We recognise that there are still potential issues with accessibility in this dashboard, but we will continue
              to review updates to technology available to us to keep improving accessibility for all of our users. For example, these
             are known issues that we will continue to monitor and improve:"),
-      tags$div(tags$ul(
-        tags$li("Keyboard navigation through the interactive charts is currently limited, and some features are unavailable for keyboard only users"),
-        tags$li("Alternative text in interactive charts is limited to titles and could be more descriptive (although this data is available in csv format)")
-      )),
-      h3("Feedback"),
-      br(
-        "If you have any feedback on how we could further improve the accessibility of this dashboard, please contact us at",
-        a(href = "mailto:statistics.development@education.gov.uk", "statistics.development@education.gov.uk")
-      ),
-      br()
+            tags$div(tags$ul(
+              tags$li("Keyboard navigation through the interactive charts is currently limited, and some features are unavailable for keyboard only users"),
+              tags$li("Alternative text in interactive charts is limited to titles and could be more descriptive (although this data is available in csv format)")
+            )),
+            h3("Feedback"),
+            br(
+              "If you have any feedback on how we could further improve the accessibility of this dashboard, please contact us at",
+              a(href = "mailto:statistics.development@education.gov.uk", "statistics.development@education.gov.uk")
+            ),
+            br()
+          )
+        )
       )
     ), # End of accessibility tab
     # Support links ===========================================================
