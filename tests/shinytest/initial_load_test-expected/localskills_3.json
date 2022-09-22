@@ -22,11 +22,90 @@
 
     ],
     "EmpOcc_columns_selected": null,
-    "EmpOcc_rows_all": null,
-    "EmpOcc_rows_current": null,
+    "EmpOcc_rows_all": [
+      1,
+      3,
+      18,
+      12,
+      6,
+      11,
+      5,
+      25,
+      4,
+      20,
+      2,
+      15,
+      21,
+      16,
+      7,
+      24,
+      22,
+      19,
+      13,
+      10,
+      23,
+      17,
+      8,
+      9,
+      14
+    ],
+    "EmpOcc_rows_current": [
+      1,
+      3,
+      18,
+      12,
+      6,
+      11,
+      5,
+      25,
+      4,
+      20
+    ],
     "EmpOcc_rows_selected": null,
     "EmpOcc_search": "",
-    "EmpOcc_state": null,
+    "EmpOcc_state": {
+      "start": 0,
+      "length": 10,
+      "order": [
+        2,
+        "desc"
+      ],
+      "search": {
+        "search": "",
+        "smart": true,
+        "regex": false,
+        "caseInsensitive": true
+      },
+      "columns": [
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        },
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        },
+        {
+          "visible": true,
+          "search": {
+            "search": "",
+            "smart": true,
+            "regex": false,
+            "caseInsensitive": true
+          }
+        }
+      ]
+    },
     "lep1": "Cheshire and Warrington",
     "lep2": "\nNone",
     "link_to_tabpanel_employment": 0,
