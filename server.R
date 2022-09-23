@@ -30,15 +30,17 @@ server <- function(input, output, session) {
 
   # OVERVIEW ----
   
-  # alter area dropdown depensing if lep or lsip
+  # alter area dropdown depending if lep or lsip
   output$lep1_geo <- renderUI({
     if (input$GeoType == "LEP") {
       selectInput("lep1", "Choose primary LEP area",
-                  choices = C_LEP2020%>%filter(geographic_level=="LEP")%>%select(Area)
+                  choices = C_LEP2020%>%filter(geographic_level=="LEP")%>%select(Area),
+                  selected = input$lep1
       )
     } else {
       selectInput("lep1", "Choose primary LSIP area",
-                  choices = C_LEP2020%>%filter(geographic_level=="LSIP")%>%select(Area)
+                  choices = C_LEP2020%>%filter(geographic_level=="LSIP")%>%select(Area),
+                  selected = input$lep1
       )
     }
   })
@@ -190,6 +192,9 @@ server <- function(input, output, session) {
   )
 
   output$empLineChart <- renderPlotly({
+    validate(
+      need(input$lep1 != "", "") # if area not yet loaded don't try to load ch
+    )
     ggplotly(empLineChart(),
       tooltip = "text",
       height = 81
