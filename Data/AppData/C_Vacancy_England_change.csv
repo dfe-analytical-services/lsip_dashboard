@@ -44,7 +44,7 @@
 "LSIP","Liverpool City Region",0.802107728337236
 "LEP","London",1.94405182567727
 "LEP","New Anglia",0.619175627240143
-"LSIP","Norfolk and Suffolk (Greater Anglia)",0.619175627240143
+"LSIP","Norfolk and Suffolk ",0.619175627240143
 "LEP","North East",0.968807339449541
 "LSIP","North East",0.935368043087971
 "LSIP","North of Tyne",1.00375234521576
@@ -69,7 +69,7 @@
 "LSIP","The Marches",0.662650602409638
 "LSIP","West Midlands and Warwickshire",0.933922558922559
 "LEP","West of England",0.78067169294037
-"LSIP","West of England (inc North Somerset)",0.78067169294037
+"LSIP","West of England and North Somerset",0.78067169294037
 "LSIP","West Yorkshire",0.607332624867163
 "LEP","Worcestershire",1.01866666666667
 "LSIP","Worcestershire",1.01866666666667

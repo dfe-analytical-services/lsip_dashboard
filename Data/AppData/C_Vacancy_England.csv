@@ -269,12 +269,12 @@
 "New Anglia","LEP",2020,20,0.0223514000327493,109.2
 "New Anglia","LEP",2021,21,0.0281818181818182,111.6
 "New Anglia","LEP",2022,22,0.0246366536689117,180.7
-"Norfolk and Suffolk (Greater Anglia)","LSIP",2017,17,0.0236221867800815,133.3
-"Norfolk and Suffolk (Greater Anglia)","LSIP",2018,18,0.0226065894481881,145.6
-"Norfolk and Suffolk (Greater Anglia)","LSIP",2019,19,0.0224776009920184,128.7
-"Norfolk and Suffolk (Greater Anglia)","LSIP",2020,20,0.0223514000327493,109.2
-"Norfolk and Suffolk (Greater Anglia)","LSIP",2021,21,0.0281818181818182,111.6
-"Norfolk and Suffolk (Greater Anglia)","LSIP",2022,22,0.0246366536689117,180.7
+"Norfolk and Suffolk ","LSIP",2017,17,0.0236221867800815,133.3
+"Norfolk and Suffolk ","LSIP",2018,18,0.0226065894481881,145.6
+"Norfolk and Suffolk ","LSIP",2019,19,0.0224776009920184,128.7
+"Norfolk and Suffolk ","LSIP",2020,20,0.0223514000327493,109.2
+"Norfolk and Suffolk ","LSIP",2021,21,0.0281818181818182,111.6
+"Norfolk and Suffolk ","LSIP",2022,22,0.0246366536689117,180.7
 "North East","LEP",2017,17,0.0261208576998051,147.4
 "North East","LEP",2018,18,0.0232897556128311,150
 "North East","LEP",2019,19,0.0228094381473008,130.6
@@ -419,12 +419,12 @@
 "West of England","LEP",2020,20,0.038357622400524,187.4
 "West of England","LEP",2021,21,0.0368434343434343,145.9
 "West of England","LEP",2022,22,0.0354211545278543,259.8
-"West of England (inc North Somerset)","LSIP",2017,17,0.0347864611022506,196.3
-"West of England (inc North Somerset)","LSIP",2018,18,0.0301058907555197,193.9
-"West of England (inc North Somerset)","LSIP",2019,19,0.0377246450215694,216
-"West of England (inc North Somerset)","LSIP",2020,20,0.038357622400524,187.4
-"West of England (inc North Somerset)","LSIP",2021,21,0.0368434343434343,145.9
-"West of England (inc North Somerset)","LSIP",2022,22,0.0354211545278543,259.8
+"West of England and North Somerset","LSIP",2017,17,0.0347864611022506,196.3
+"West of England and North Somerset","LSIP",2018,18,0.0301058907555197,193.9
+"West of England and North Somerset","LSIP",2019,19,0.0377246450215694,216
+"West of England and North Somerset","LSIP",2020,20,0.038357622400524,187.4
+"West of England and North Somerset","LSIP",2021,21,0.0368434343434343,145.9
+"West of England and North Somerset","LSIP",2022,22,0.0354211545278543,259.8
 "West Yorkshire","LSIP",2017,17,0.0464469253942938,262.1
 "West Yorkshire","LSIP",2018,18,0.0408968108561314,263.4
 "West Yorkshire","LSIP",2019,19,0.0426847372373684,244.4

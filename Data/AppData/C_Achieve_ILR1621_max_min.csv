@@ -239,10 +239,14 @@
 "LSIP","Liverpool City Region","Community learning: Total",9840,19410
 "LSIP","Liverpool City Region","Education and training: Total",23060,33690
 "LSIP","Liverpool City Region","Further education and skills: Total",36280,60190
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Apprenticeships: Total",4260,7700
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Community learning: Total",4700,8820
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Education and training: Total",12590,17490
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Further education and skills: Total",23560,32360
+"LSIP","Norfolk and Suffolk ","Apprenticeships: Total",4260,5750
+"LSIP","Norfolk and Suffolk ","Community learning: Total",4700,8650
+"LSIP","Norfolk and Suffolk ","Education and training: Total",11530,16170
+"LSIP","Norfolk and Suffolk ","Further education and skills: Total",23560,30090
+"LSIP","Norfolk and Suffolk (Greater Anglia)","Apprenticeships: Total",1890,1950
+"LSIP","Norfolk and Suffolk (Greater Anglia)","Community learning: Total",1350,1690
+"LSIP","Norfolk and Suffolk (Greater Anglia)","Education and training: Total",4420,4790
+"LSIP","Norfolk and Suffolk (Greater Anglia)","Further education and skills: Total",7830,8160
 "LSIP","North East","Apprenticeships: Total",4160,10470
 "LSIP","North East","Community learning: Total",5410,12440
 "LSIP","North East","Education and training: Total",23190,32780
@@ -291,10 +295,10 @@
 "LSIP","West Midlands and Warwickshire","Community learning: Total",10840,24590
 "LSIP","West Midlands and Warwickshire","Education and training: Total",49450,76410
 "LSIP","West Midlands and Warwickshire","Further education and skills: Total",67650,113150
-"LSIP","West of England (inc North Somerset)","Apprenticeships: Total",2860,4980
-"LSIP","West of England (inc North Somerset)","Community learning: Total",3500,4060
-"LSIP","West of England (inc North Somerset)","Education and training: Total",10560,16070
-"LSIP","West of England (inc North Somerset)","Further education and skills: Total",17520,24890
+"LSIP","West of England and North Somerset","Apprenticeships: Total",2860,4980
+"LSIP","West of England and North Somerset","Community learning: Total",3500,4060
+"LSIP","West of England and North Somerset","Education and training: Total",10560,16070
+"LSIP","West of England and North Somerset","Further education and skills: Total",17520,24890
 "LSIP","West Yorkshire","Apprenticeships: Total",6660,13120
 "LSIP","West Yorkshire","Community learning: Total",9040,17300
 "LSIP","West Yorkshire","Education and training: Total",33620,42320

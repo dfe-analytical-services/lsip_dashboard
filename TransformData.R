@@ -388,9 +388,14 @@ C_Vacancy_ONS1722 <- format.Vacancy.ONS(I_Vacancy_ONS1722)
 write.csv(C_Vacancy_ONS1722, file = "Data\\AppData\\C_Vacancy_ONS1722.csv", row.names = FALSE)
 
 # vacancy data to use in dashboard
-C_Vacancy_England <- C_Vacancy_ONS1722 %>%
-  mutate_at(c(4:4), as.numeric) %>% # Convert to numeric
-  filter(geographic_level=="GOR" & !area %in% c("Wales", "Scotland", "Northern Ireland")) %>%
+C_Vacancy_England <- 
+  #work with original file to utilise the relationship between LA and region (to get to only England)
+  I_Vacancy_ONS1722 %>%
+  gather(year, vacancy_unit, 3:8) %>%
+  rename(LA = "Local.authority.[note.1]", region = "Region.[note.2]") %>%
+  relocate(year, .before = LA) %>%
+  mutate(year = as.numeric(year),vacancy_unit=as.numeric(vacancy_unit))%>%
+  filter(!region %in% c("Wales", "Scotland", "Northern Ireland")) %>%
   group_by(year) %>%
   summarise(England = sum(vacancy_unit)) %>%
   right_join(C_Vacancy_ONS1722 %>%
