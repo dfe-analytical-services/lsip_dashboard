@@ -29,18 +29,18 @@ server <- function(input, output, session) {
   })
 
   # OVERVIEW ----
-  
+
   # alter area dropdown depending if lep or lsip
   output$lep1_geo <- renderUI({
     if (input$GeoType == "LEP") {
       selectInput("lep1", "Choose primary LEP area",
-                  choices = C_LEP2020%>%filter(geographic_level=="LEP")%>%select(Area),
-                  selected = input$lep1
+        choices = C_LEP2020 %>% filter(geographic_level == "LEP") %>% select(Area),
+        selected = input$lep1
       )
     } else {
       selectInput("lep1", "Choose primary LSIP area",
-                  choices = C_LEP2020%>%filter(geographic_level=="LSIP")%>%select(Area),
-                  selected = input$lep1
+        choices = C_LEP2020 %>% filter(geographic_level == "LSIP") %>% select(Area),
+        selected = input$lep1
       )
     }
   })
@@ -52,13 +52,13 @@ server <- function(input, output, session) {
     } else {
       if (input$GeoType == "LEP") {
         selectInput("lep2", "Choose comparison LEP area",
-                    choices =c("\nNone", C_LEP2020%>%filter(geographic_level=="LEP",Area != input$lep1)%>%select(Area)),
-                               selected = input$lep2
+          choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LEP", Area != input$lep1) %>% select(Area)),
+          selected = input$lep2
         )
       } else {
         selectInput("lep2", "Choose comparison LSIP area",
-                    choices =c("\nNone", C_LEP2020%>%filter(geographic_level=="LSIP",Area != input$lep1)%>%select(Area)),
-                    selected = input$lep2
+          choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LSIP", Area != input$lep1) %>% select(Area)),
+          selected = input$lep2
         )
       }
     }
@@ -111,7 +111,7 @@ server <- function(input, output, session) {
   # get emp data for current lep
   empLEP <- reactive({
     C_EmpRate_APS1721 %>%
-      filter(area == input$lep1, geographic_level==input$GeoType)
+      filter(area == input$lep1, geographic_level == input$GeoType)
   })
   # get 2021 values
   emp2021 <- reactive({
@@ -235,7 +235,7 @@ server <- function(input, output, session) {
   empRateLineChart <- reactive({
     empRateChange <- emp2021()$empRate - emp2020()$empRate
     empRateLine <- C_EmpRate_APS1721 %>%
-      filter((geographic_level==input$GeoType & area == input$lep1) | (geographic_level=="COUNTRY" & area == "England"))
+      filter((geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"))
 
     ggplot(empRateLine, aes(
       x = Year, y = empRate,
@@ -303,7 +303,7 @@ server <- function(input, output, session) {
   # get vac data for current area chosen
   VacArea <- reactive({
     C_Vacancy_England %>%
-      filter(area == input$lep1,geographic_level==input$GeoType)
+      filter(area == input$lep1, geographic_level == input$GeoType)
   })
   # get 2022 values
   Vac2022 <- reactive({
@@ -338,7 +338,7 @@ server <- function(input, output, session) {
     VacLine <- VacArea()
     VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
 
-    VacMinMax <- C_Vacancy_England_max_min %>% filter(area == input$lep1,geographic_level==input$GeoType)
+    VacMinMax <- C_Vacancy_England_max_min %>% filter(area == input$lep1, geographic_level == input$GeoType)
 
     ggplot(VacLine, aes(x = Year, y = jobpc, group = area, text = paste0(
       "Year: ", year, "<br>",
@@ -400,7 +400,8 @@ server <- function(input, output, session) {
   # get EandT data for current lep
   EtLEP <- reactive({
     C_Achieve_ILR1621 %>%
-      filter(geographic_level==input$GeoType,
+      filter(
+        geographic_level == input$GeoType,
         area == input$lep1,
         level_or_type == "Education and training: Total"
       )
@@ -439,7 +440,8 @@ server <- function(input, output, session) {
   etLineChart <- reactive({
     etLine <- EtLEP()
     etCntChange <- Et2021()$achievements - Et1920()$achievements
-    EtMinMax <- C_Achieve_ILR1621_max_min %>% filter(geographic_level==input$GeoType,
+    EtMinMax <- C_Achieve_ILR1621_max_min %>% filter(
+      geographic_level == input$GeoType,
       area == input$lep1,
       level_or_type == "Education and training: Total"
     )
@@ -499,7 +501,8 @@ server <- function(input, output, session) {
   # get App data for current lep
   AppLEP <- reactive({
     C_Achieve_ILR1621 %>%
-      filter(geographic_level==input$GeoType,
+      filter(
+        geographic_level == input$GeoType,
         area == input$lep1,
         level_or_type == "Apprenticeships: Total"
       )
@@ -537,7 +540,8 @@ server <- function(input, output, session) {
   AppLineChart <- reactive({
     AppLine <- AppLEP()
     AppCntChange <- App2021()$achievements - App1920()$achievements
-    AppMinMax <- C_Achieve_ILR1621_max_min %>% filter(geographic_level==input$GeoType,
+    AppMinMax <- C_Achieve_ILR1621_max_min %>% filter(
+      geographic_level == input$GeoType,
       area == input$lep1,
       level_or_type == "Apprenticeships: Total"
     )
@@ -654,7 +658,8 @@ server <- function(input, output, session) {
     valueBox(
       paste0(
         format(100. * (C_EmpRate_APS1721 %>%
-          filter(geographic_level==input$GeoType,
+          filter(
+            geographic_level == input$GeoType,
             area == input$lep2,
             year == "2021"
           )
@@ -682,7 +687,8 @@ server <- function(input, output, session) {
   output$locland.emplcnt.2 <- renderValueBox({
     valueBox(
       format((C_EmpRate_APS1721 %>%
-        filter(geographic_level==input$GeoType,
+        filter(
+          geographic_level == input$GeoType,
           area == input$lep2,
           year == "2021"
         )
@@ -717,15 +723,16 @@ server <- function(input, output, session) {
   EmpRate_time <- reactive({
     EmpRateTime <- C_EmpRate_APS1721 %>%
       select(year, area, geographic_level, empRate) %>%
-      filter(geographic_level==input$GeoType |geographic_level=="COUNTRY", 
+      filter(
+        geographic_level == input$GeoType | geographic_level == "COUNTRY",
         (area == "England" |
           area == input$lep1 |
           area == if ("lep2" %in% names(input)) {
             input$lep2
           } else {
             "\nNone"
-          }
-      ))
+          })
+      )
     # add an extra column so the colours work in ggplot when sorting alphabetically
     EmpRateTime$Areas <- factor(EmpRateTime$area,
       levels = c("England", input$lep1, input$lep2)
@@ -763,17 +770,17 @@ server <- function(input, output, session) {
   ## Employment by occupation data table ----
   EmpOcc <- reactive({
     EmpOcc <- C_EmpOcc_APS1721 %>%
-      filter(geographic_level==input$GeoType |geographic_level=="COUNTRY", 
-              (area == "England" |
-                 area == input$lep1 |
-                 area == if ("lep2" %in% names(input)) {
-                   input$lep2
-                 } else {
-                   "\nNone"
-                 }
-              )
-             )%>%
-      select(-year,-geographic_level)%>%
+      filter(
+        geographic_level == input$GeoType | geographic_level == "COUNTRY",
+        (area == "England" |
+          area == input$lep1 |
+          area == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          })
+      ) %>%
+      select(-year, -geographic_level) %>%
       rename_with(str_to_sentence) %>%
       t() %>%
       row_to_names(row_number = 1) %>%
@@ -809,7 +816,7 @@ server <- function(input, output, session) {
 
   # Download current LEP indicators
   filtered_data3 <- reactive({
-    list("2.Vacancies" = filter(C_Vacancy_ONS1722, area == input$lep1, geographic_level==input$GeoType))
+    list("2.Vacancies" = filter(C_Vacancy_ONS1722, area == input$lep1, geographic_level == input$GeoType))
   })
   output$download_btn3b <- downloadHandler(
     filename = function() {
@@ -840,7 +847,7 @@ server <- function(input, output, session) {
       paste0(
         format(100. *
           (C_Vacancy_England %>%
-            filter(area == input$lep2,geographic_level==input$GeoType, year == "2022"))$jobpc,
+            filter(area == input$lep2, geographic_level == input$GeoType, year == "2022"))$jobpc,
         digits = 3
         ),
         "%"
@@ -855,7 +862,7 @@ server <- function(input, output, session) {
     valueBox(
       paste0(
         format(100. * (C_Vacancy_England_change %>%
-          filter(area == input$lep1,geographic_level==input$GeoType))$Percentage_Change,
+          filter(area == input$lep1, geographic_level == input$GeoType))$Percentage_Change,
         digits = 3
         ),
         "%"
@@ -871,7 +878,7 @@ server <- function(input, output, session) {
     valueBox(
       paste0(
         format(100. * (C_Vacancy_England_change %>%
-          filter(area == input$lep2,geographic_level==input$GeoType))$Percentage_Change,
+          filter(area == input$lep2, geographic_level == input$GeoType))$Percentage_Change,
         digits = 3
         ),
         "%"
@@ -903,7 +910,7 @@ server <- function(input, output, session) {
   ## Online job vacancy units over time line chart ----
   jobad.time <- reactive({
     JobTime <- C_Vacancy_England %>%
-      filter(geographic_level==input$GeoType & (area == input$lep1 |
+      filter(geographic_level == input$GeoType & (area == input$lep1 |
         area == if ("lep2" %in% names(input)) {
           input$lep2
         } else {
@@ -994,7 +1001,8 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       format((C_Achieve_ILR1621 %>%
-        filter(geographic_level==input$GeoType,
+        filter(
+          geographic_level == input$GeoType,
           area == input$lep2, time_period == "202021",
           level_or_type == "Education and training: Total"
         ))$achievements, scientific = FALSE, big.mark = ","),
@@ -1017,8 +1025,9 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       format((C_Achieve_ILR1621 %>%
-        filter(geographic_level==input$GeoType,
-               area == input$lep2, time_period == "202021",
+        filter(
+          geographic_level == input$GeoType,
+          area == input$lep2, time_period == "202021",
           level_or_type == "Apprenticeships: Total"
         ))$achievements, scientific = FALSE, big.mark = ","),
       paste0("20/21 apprenticeship achievements in ", input$lep2),
@@ -1048,13 +1057,14 @@ server <- function(input, output, session) {
   ## Achievements over time line chart ----
   Ach_time <- reactive({
     FETime <- C_Achieve_ILR1621 %>%
-      filter(geographic_level==input$GeoType &
-             (area == input$lep1 |
-          (area == if ("lep2" %in% names(input)) {
-            input$lep2
-          } else {
-            "\nNone"
-          })
+      filter(
+        geographic_level == input$GeoType &
+          (area == input$lep1 |
+            (area == if ("lep2" %in% names(input)) {
+              input$lep2
+            } else {
+              "\nNone"
+            })
           ),
         level_or_typeNeat == input$skill_line
       )
@@ -1094,13 +1104,15 @@ server <- function(input, output, session) {
   ## Achievements pc bar chart ----
   Ach_SSA_pc <- reactive({
     AchSSA_21 <- C_Achieve_ILR21 %>%
-      filter(geographic_level==input$GeoType,
+      filter(
+        geographic_level == input$GeoType,
         (area == input$lep1 |
-        area == if ("lep2" %in% names(input)) {
-          input$lep2
-        } else {
-          "\nNone"
-        }))
+          area == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          })
+      )
 
     # add an extra column so the colours work in ggplot when sorting alphabetically
     AchSSA_21$Area <- factor(AchSSA_21$area,
@@ -1128,8 +1140,9 @@ server <- function(input, output, session) {
   })
 
   output$Ach_SSA_pc <- renderPlotly({
-    ggplotly(Ach_SSA_pc()
-    , tooltip = c("text"), height = 474) %>%
+    ggplotly(Ach_SSA_pc(),
+      tooltip = c("text"), height = 474
+    ) %>%
       layout(
         legend = list(orientation = "h", x = 0, y = -0.1),
         xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
