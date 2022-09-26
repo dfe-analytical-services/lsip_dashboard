@@ -201,10 +201,11 @@ fluidPage(
       sidebarLayout(
         sidebarPanel(
           width = 2,
-          radioButtons("GeoType", 
-                       label = "Choose geography level:",
-                       choices = list("LEP", "LSIP")
-                       ,selected="LEP"),
+          radioButtons("GeoType",
+            label = "Choose geography level:",
+            choices = list("LEP", "LSIP"),
+            selected = "LEP"
+          ),
           uiOutput("lep1_geo"),
           uiOutput("lep2_off")
         ),
