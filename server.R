@@ -92,9 +92,9 @@ server <- function(input, output, session) {
     list(
       "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
       "1b.Emp rate" = filter(D_EmpRate_APS1721, geographic_level == input$GeoType, area == input$lep1),
-      "2.Vacancies" = filter(C_Vacancy_ONS1722, LEP == input$lep1),
-      "3a.FE achievements SSA" = filter(D_Achieve_ILR21, LEP == input$lep1),
-      "3b.FE achievements" = filter(D_Achieve_ILR1621, LEP == input$lep1)
+      "2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType,area == input$lep1),
+      "3a.FE achievements SSA" = filter(D_Achieve_ILR21, geographic_level == input$GeoType,area == input$lep1),
+      "3b.FE achievements" = filter(D_Achieve_ILR1621, geographic_level == input$GeoType,area == input$lep1)
     )
   })
   output$download_btn0b <- downloadHandler(
@@ -816,7 +816,7 @@ server <- function(input, output, session) {
 
   # Download current LEP indicators
   filtered_data3 <- reactive({
-    list("2.Vacancies" = filter(C_Vacancy_ONS1722, area == input$lep1, geographic_level == input$GeoType))
+    list("2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1))
   })
   output$download_btn3b <- downloadHandler(
     filename = function() {
@@ -974,8 +974,8 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data2 <- reactive({
     list(
-      "3a.FE achievements SSA" = filter(D_Achieve_ILR21, LEP == input$lep1),
-      "3b.FE achievements" = filter(D_Achieve_ILR1621, LEP == input$lep1)
+      "3a.FE achievements SSA" = filter(D_Achieve_ILR21, geographic_level == input$GeoType, area == input$lep1),
+      "3b.FE achievements" = filter(D_Achieve_ILR1621, geographic_level == input$GeoType, area == input$lep1)
     )
   })
   output$download_btn2b <- downloadHandler(
