@@ -52,13 +52,13 @@ fluidPage(
             12,
             h1("Local Skills Dashboard"),
             p("Prototype dashboard showing statistics on local employment and skills in England, to support local skills planning and delivery (including Local Skills Improvement Plans)."),
-            p("The prototype dashboard shows a subset of employment and skills statistics at Local Enterprise Partnership (LEP) level, including:"),
+            p("The prototype dashboard shows a subset of employment and skills statistics at Local Enterprise Partnership (LEP) or local skills improvement plan area (LSIP) level, including:"),
             tags$ul(
               tags$li("Employment rates and employment distribution by occupation (source: ONS Annual Population Survey), ILR and ONS online job vacancies)"),
               tags$li("Online job vacancy units (source: ONS Online Job Adverts)"),
               tags$li("Further Education aim achievement volumes and achievements by sector subject area (source: DfE FE and Skills National Statistics)"),
             ),
-            p("Trends can be compared between different LEPs and over time for some indicators. The underlying data contains national, regional, LEP and LA data and can be downloaded directly from the dashboard."),
+            p("Trends can be compared between different LEPs/LSIPs and over time for some indicators. The underlying data contains national, regional, LEP, LSIP and LA data and can be downloaded directly from the dashboard."),
             br(),
             "This dashboard has been produced to support the aims of the ",
             a(
@@ -89,23 +89,23 @@ fluidPage(
                 h2("Dashboard"),
                 p("This page contains the different dashboard tabs."),
                 h3(actionLink("link_to_tabpanel_overview", "Overview")),
-                p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, Further Education (FE) and skills achievement volumes. It shows year-on-year change for each indicator."),
-                p("The download buttons download all indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
+                p("This tab provides a summary of employment and skills metrics at LEP or LSIP level. It displays employment volume, employment rate, proportion of online vacancies, Further Education (FE) and skills achievement volumes. It shows year-on-year change for each indicator."),
+                p("The download buttons download all indicators for the selected LEP/LSIP or for all available geographies (England, region, LEP, LSIP, LA)."),
                 # h2("Labour market"),
                 h3(actionLink("link_to_tabpanel_employment", "Employment")),
-                p("This tab contains employment indicators at LEP level. These can be compared to England and a comparator LEP."),
-                p("The line chart shows employment rate over time for the chosen LEP. The table displays employment distribution by occupation (sub-major SOC group)."),
-                p("The download buttons download employment indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
+                p("This tab contains employment indicators at LEP or LSIP level. These can be compared to England and a comparator LEP/LSIP."),
+                p("The line chart shows employment rate over time for the chosen LEP/LSIP. The table displays employment distribution by occupation (sub-major SOC group)."),
+                p("The download buttons download employment indicators for the selected LEP/LSIP or for all available geographies (England, region, LEP, LSIP, LA)."),
                 h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
-                p("This tab contains online job vacancies indicators at LEP level. These can be compared to England and a comparator LEP."),
+                p("This tab contains online job vacancies indicators at LEP or LSIP level. These can be compared to England and a comparator LEP/LSIP."),
                 p("The line chart shows change in online job vacancy units over time. Units are not real volumes but represent a fixed number of job adverts to be used for comparisons over time and between areas."),
-                p("The download buttons download vacancy indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
+                p("The download buttons download vacancy indicators for the selected LEP/LSIP or for all available geographies (England, region, LEP, LSIP, LA)."),
                 # h2("Skills landscape"),
                 h3(actionLink("link_to_tabpanel_FE", "Skills")),
-                p("This tab provides a summary of further education (FE) and skills statistics at LEP level. These can be compared to another LEP."),
+                p("This tab provides a summary of further education (FE) and skills statistics at LEP or LSIP level. These can be compared to another LEP/LSIP."),
                 p("The line chart shows achievement volumes over time for apprenticeships, education & training and community learning."),
                 p("The bar chart displays distribution of FE and skills achievements by SSA for the latest available period."),
-                p("The download buttons download FE and skills indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
+                p("The download buttons download FE and skills indicators for the selected LEP/LSIP or for all available geographies (England, region, LEP, LSIP, LA)."),
               )
             )
           ), # end of left panel
@@ -126,7 +126,7 @@ fluidPage(
                   h2("Labour market"),
                   h3("Annual Population Survey (APS)"),
                   p("A continuous household survey covering the UK.
-                             The dashboard uses employment volumes and rates for each LEP and split by sub-major SOC 2010 grouping.
+                             The dashboard uses employment volumes and rates for each LEP or LSIP and split by sub-major SOC 2010 grouping.
                              The data are for interviews conducted over the calendar year (2017-2021 are shown).
                              "),
                   a(
@@ -346,7 +346,7 @@ fluidPage(
                   ),
                   column(
                     width = 9,
-                    "Download all available indicators for all geographies (LEPs, LAs, Regions and England)",
+                    "Download all available indicators for all geographies (LEPs, LSIPs, LAs, Regions and England)",
                   )
                 ),
                 fluidRow(
@@ -354,12 +354,12 @@ fluidPage(
                     width = 3,
                     downloadButton(
                       outputId = "download_btn0b",
-                      label = "Current LEP",
+                      label = "Current LEP/LSIP",
                       icon = shiny::icon("download"),
                       class = "downloadButton"
                     )
                   ),
-                  column(width = 9, "Or just for the currently chosen LEP")
+                  column(width = 9, "Or just for the currently chosen LEP/LSIP")
                 ),
                 box(
                   width = 12,
@@ -428,7 +428,7 @@ fluidPage(
                   ),
                   column(
                     width = 9,
-                    "Download employment indicators for all geographies (LEPs, LAs, Regions and England)",
+                    "Download employment indicators for all geographies (LEPs, LSIPs, LAs, Regions and England)",
                   )
                 ), # end of row
                 fluidRow(
@@ -436,12 +436,12 @@ fluidPage(
                     width = 3,
                     downloadButton(
                       outputId = "download_btn1b",
-                      label = "Current LEP",
+                      label = "Current LEP/LSIP",
                       icon = shiny::icon("download"),
                       class = "downloadButton"
                     )
                   ),
-                  column(width = 9, p("Or just for the currently chosen LEP")),
+                  column(width = 9, p("Or just for the currently chosen LEP/LSIP")),
                   box(
                     width = 12,
                     p(" ")
@@ -486,7 +486,7 @@ fluidPage(
                   inputId = "SubsLev",
                   label = "Chart information",
                   help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
-              The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between LEPS and over time, but do not represent true job vacancy volumes."
+              The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between LEPs/LSIPs and over time, but do not represent true job vacancy volumes."
                 ),
                 ### Downloads-------------
                 br(),
@@ -502,7 +502,7 @@ fluidPage(
                   ),
                   column(
                     width = 9,
-                    "Download vacancy indicators for all geographies (LEPs, LAs, Regions and England)",
+                    "Download vacancy indicators for all geographies (LEPs, LSIPs, LAs, Regions and England)",
                   )
                 ), # end of row
                 fluidRow(
@@ -510,12 +510,12 @@ fluidPage(
                     width = 3,
                     downloadButton(
                       outputId = "download_btn3b",
-                      label = "Current LEP",
+                      label = "Current LEP/LSIP",
                       icon = shiny::icon("download"),
                       class = "downloadButton"
                     )
                   ),
-                  column(width = 9, p("Or just for the currently chosen LEP")),
+                  column(width = 9, p("Or just for the currently chosen LEP/LSIP")),
                   box(
                     width = 12,
                     p(" ")
@@ -596,7 +596,7 @@ fluidPage(
                   ),
                   column(
                     width = 9,
-                    "Download FE and skills indicators for all geographies (LEPs, LAs, Regions and England)",
+                    "Download FE and skills indicators for all geographies (LEPs, LSIPs, LAs, Regions and England)",
                   )
                 ), # end of row
                 fluidRow(
@@ -604,12 +604,12 @@ fluidPage(
                     width = 3,
                     downloadButton(
                       outputId = "download_btn2b",
-                      label = "Current LEP",
+                      label = "Current LEP/LSIP",
                       icon = shiny::icon("download"),
                       class = "downloadButton"
                     )
                   ),
-                  column(width = 9, p("Or just for the currently chosen LEP")),
+                  column(width = 9, p("Or just for the currently chosen LEP/LSIP")),
                   box(
                     width = 12,
                     p(" ")
@@ -682,375 +682,3 @@ fluidPage(
   shinyGovstyle::footer(TRUE)
 )
 
-# FUTURE DEVELOPMENT ---------------
-#   navbarMenu(
-#    "Future development",
-# tabPanel(
-#   "Future development",
-#   mainPanel(
-#     width = 12,
-#     p("We will be seeking feedback on this version 1 of the local skills dashboard to inform our version 2.
-#         We do have a number of improvements we will implement in version 2:  "),
-#     br(),
-#     p("Overview page", style = "font-size:20px;"),
-#     p("V2 will include a number of key indicators to this page including: average salary, FE skill level, and HE data. "),
-#     p("V2 will also include the functionality to filter the indicators by sector or occupation. "),
-#     p("V2 overview page mockup:", style = "font-style: italic"),
-#     img(src = "OverviewV2.png"),
-#     br(),
-#     p("Apprenticeships page", style = "font-size:20px;"),
-#     p("V2 will show:"),
-#     p("Starts and achievements timeseries."),
-#     p("Distribution by level, SSA, enterprise size, and enterprise sector."),
-#     p("Most common apprenticeships within selected provision, level, SSA, sector."),
-#     p("Information about which providers/employers deliver these apprenticeships."),
-#     br(),
-#     p("HE page", style = "font-size:20px;"),
-#     p("V2 will show HE participants and qualifiers by subject."),
-#     br(),
-#     p("FE page", style = "font-size:20px;"),
-#     p("V2 will show learner outcomes by type of provision."),
-#   )
-# ), # enedx of future development
-#   # Overview ---------------
-#   tabPanel(
-#     "Overview v2",
-#     sidebarLayout(
-#       ## Side panel ----
-#       sidebarPanel(
-#         width = 2,
-#         br(),
-#         ### LEP 1 input ---------------
-#         selectizeInput("lepOver2",
-#           "Choose the area(s) you want to look at",
-#           choices = C_LEP2020,
-#           selected = "England" # ,multiple=TRUE
-#         ),
-#         radioButtons("OccSect",
-#           "Do you want to look at a particular sector or occupation group?",
-#           choices = list(
-#             "Occupation" = 1,
-#             "Sector" = 2
-#           ),
-#           selected = 1
-#         ),
-#         selectizeInput("Occ-Sector",
-#           "Choose sector/occupation",
-#           choices = c("Sector 1", "Sector 2", "...")
-#         ),
-#         ### Help text --------------------
-#         helpText("Download all available indicators for all geographies (LEPs, LAs, Regions and England):",
-#           style = "font-style: italic;"
-#         ),
-#         ### Download button -------------
-#         downloadButton(
-#           outputId = "download_btnOver2a",
-#           label = "All data",
-#           icon = icon("download")
-#         ),
-#         helpText("Or just for the currently chosen LEP:",
-#           style = "font-style: italic;"
-#         ),
-#         downloadButton(
-#           outputId = "download_btnOver2b",
-#           label = "Current LEP",
-#           icon = icon("download")
-#         )
-#       ), # end of side panel
-#       ## Main panel ----
-#       mainPanel(
-#         width = 10,
-#         ### Title ----
-#         uiOutput("page6title", style = "font-size: 24px;"),
-#         div("Change measured since the same time year", style = "font-size: 16px; font-style: italic;"),
-#         br(),
-#         fluidRow(
-#           # left column
-#           column(
-#             width = 6,
-#             div(
-#               div(
-#                 class = "panel panel-info",
-#                 div(
-#                   class = "panel-heading",
-#                   style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;text-align:center",
-#                   h2("Labour market")
-#                 ),
-#                 div(
-#                   class = "panel-body",
-#                   # first row - emp vol
-#                   tags$div(
-#                     title = "Source: APS. 2021 calendar year",
-#                     valueBoxOutput("locland.emplcntOver2", width = 8),
-#                     valueBoxOutput("locland.emplcntchangeOver2", width = 4)
-#                   ),
-#                   box(
-#                     width = 12,
-#                     p(" ")
-#                   ),
-#                   # second row - emp rate
-#                   tags$div(
-#                     title = "Source: APS. 2021 calendar year",
-#                     valueBoxOutput("locland.emplrateOver2", width = 8),
-#                     valueBoxOutput("locland.emplchangeOver2", width = 4)
-#                   ),
-#                   box(
-#                     width = 12,
-#                     actionLink("link_to_tabpanel_employment3", "Find out more about employment"),
-#                     align = "right"
-#                   ),
-#                   # third row - link to emp tab
-#                   # fourth row - vacancies
-#                   tags$div(
-#                     title = "Source: ONS (Adzuna). Jan 2022",
-#                     valueBoxOutput("jobad.unitsOver2", width = 8),
-#                     valueBoxOutput("jobad.changeOver2", width = 4)
-#                   ),
-#                   # fifth row - link to vacancy data
-#                   box(
-#                     width = 12,
-#                     actionLink("link_to_tabpanel_vacancies3", "Find out more about vacancies"),
-#                     align = "right"
-#                   ),
-#                   tags$div(
-#                     # title="Source: ?????",
-#                     valueBoxOutput("earn.avgOver2", width = 8),
-#                     valueBoxOutput("earn.changeOver2", width = 4)
-#                   ),
-#                   box(
-#                     width = 12,
-#                     actionLink("link_to_tabpanel_earnings3", "Find out more about earnings"),
-#                     align = "right"
-#                   )
-#                 )
-#               )
-#             ),
-#           ),
-#           # right column
-#           column(
-#             width = 6,
-#             div(
-#               div(
-#                 class = "panel panel-info",
-#                 div(
-#                   class = "panel-heading",
-#                   style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;text-align:center",
-#                   h2("Skills landscape")
-#                 ),
-#                 div(
-#                   class = "panel-body",
-#                   # first row - level 4 starts
-#                   tags$div(
-#                     # title="Source:?",
-#                     valueBoxOutput("skills.l4Over2", width = 8),
-#                     valueBoxOutput("skills.l4changeOver2", width = 4)
-#                   ),
-#                   box(
-#                     width = 12,
-#                     p(" ")
-#                   ),
-#                   # 3rd row - E&T
-#                   tags$div(
-#                     title = "Source:ILR AY20/21",
-#                     valueBoxOutput("skisup.ETachOver2", width = 8),
-#                     valueBoxOutput("skisup.ETachChangeOver2", width = 4)
-#                   ),
-#                   box(
-#                     width = 12,
-#                     p(" ")
-#                   ),
-#                   # 5th row - apps
-#                   tags$div(
-#                     title = "Source:ILR AY20/21",
-#                     valueBoxOutput("skisup.APPachOver2", width = 8),
-#                     valueBoxOutput("skisup.APPachChangeOver2", width = 4)
-#                   ),
-#                   # 6th row - link to app data
-#                   box(
-#                     width = 12,
-#                     actionLink("link_to_tabpanel_FE3", "Find out more about skills"),
-#                     align = "right"
-#                   ),
-#                   # 7th row - HE
-#                   tags$div(
-#                     # title="Source:?",
-#                     valueBoxOutput("he.entrantsOver2", width = 8),
-#                     valueBoxOutput("he.entrantschangeOver2", width = 4)
-#                   ),
-#                   # 8th row - link to HE data
-#                   box(
-#                     width = 12,
-#                     actionLink("link_to_tabpanel_HE3", "Find out more about HE"),
-#                     align = "right"
-#                   ),
-#                 )
-#               )
-#             ),
-#           ),
-#         )
-#       )
-#     ) # end of side bar layout
-#   ), # end of Overview tab
-#
-#   # APPS ---------------
-#   tabPanel(
-#     "Apprenticeships",
-#     sidebarLayout(
-#       ## Side panel ----
-#       sidebarPanel(
-#         width = 2,
-#         ### Help text --------------------
-#         helpText("Choose a Local Area to view outcome trends",
-#           style = "font-style: italic;"
-#         ),
-#         br(),
-#         ### LEP 7 input ---------------
-#         selectizeInput("lepAppa",
-#           "Choose a primary LEP:",
-#           choices = C_LEP2020,
-#           selected = "England",
-#         ),
-#         ### LEP 8 input ------------
-#         selectizeInput("lepAppb", # Make no selection an option
-#           "Choose a comparison LEP (optional):",
-#           choices = c("\nNone", unique(C_LEP2020))
-#         ),
-#         ### Help text --------------------
-#         helpText("Download apprenticeship indicators for all geographies (LEPs, LAs, Regions and England):",
-#           style = "font-style: italic;"
-#         ),
-#         ### Download buttons -------------
-#         downloadButton(
-#           outputId = "download_btnAppa",
-#           label = "All data",
-#           icon = icon("download")
-#         ),
-#         helpText("Or just for the currently chosen LEP:",
-#           style = "font-style: italic;"
-#         ),
-#         downloadButton(
-#           outputId = "download_btnAppb",
-#           label = "Current LEP",
-#           icon = icon("download")
-#         ),
-#       ), # end of side panel
-#       ## Main panel ----
-#       mainPanel(
-#         width = 10,
-#         ### Title ----
-#         uiOutput("page7title", style = "font-size: 24px;"),
-#         br(),
-#         p("We will show:"), br(),
-#         p("Starts and achievements timeseries."), br(),
-#         p("Distribution by level, SSA, enterprise size, and enterprise sector."), br(),
-#         p("Most common apprenticeships within selected provision, level, SSA, sector."), br(),
-#         p("Information about which providers/employers deliver these apprenticeships."),
-#       ) # end of main panel
-#     ) # end of side bar layout
-#   ), # end of earnings tab
-#
-#   # HE ---------------
-#   tabPanel(
-#     "HE",
-#     sidebarLayout(
-#       ## Side panel ----
-#       sidebarPanel(
-#         width = 2,
-#         ### Help text --------------------
-#         helpText("Choose a Local Area to view skill demand trends",
-#           style = "font-style: italic;"
-#         ),
-#         br(),
-#         ### LEP 9 input ---------------
-#         selectizeInput("lep9",
-#           "Choose a primary LEP:",
-#           choices = C_LEP2020,
-#           selected = "England",
-#         ),
-#         ### LEP 10 input ------------
-#         selectizeInput("lep10", # Make no selection an option
-#           "Choose a comparison LEP (optional):",
-#           choices = c("\nNone", unique(C_LEP2020))
-#         ),
-#         ### Help text --------------------
-#         helpText("Download HE indicators for all geographies (LEPs, LAs, Regions and England):",
-#           style = "font-style: italic;"
-#         ),
-#         ### Download buttons -------------
-#         downloadButton(
-#           outputId = "download_btn5a",
-#           label = "All data",
-#           icon = icon("download")
-#         ),
-#         helpText("Or just for the currently chosen LEP:",
-#           style = "font-style: italic;"
-#         ),
-#         downloadButton(
-#           outputId = "download_btn5b",
-#           label = "Current LEP",
-#           icon = icon("download")
-#         ),
-#       ), # end of side panel
-#       ## Main panel ----
-#       # Show a plot of the generated distribution
-#       mainPanel(
-#         width = 10,
-#         ### Title ----
-#         uiOutput("page5title", style = "font-size: 24px;"),
-#         br(),
-#         p("Page will show HE participants and qualifiers by subject"),
-#       ) # end of main panel
-#     ) # end of side bar layout
-#   ), # end of HE tab
-#   # OUTCOMES ---------------
-#   tabPanel(
-#     "Outcomes",
-#     sidebarLayout(
-#       ## Side panel ----
-#       sidebarPanel(
-#         width = 2,
-#         ### Help text --------------------
-#         helpText("Choose a Local Area to view outcome trends",
-#           style = "font-style: italic;"
-#         ),
-#         br(),
-#         ### LEP 7 input ---------------
-#         selectizeInput("lep7",
-#           "Choose a primary LEP:",
-#           choices = C_LEP2020,
-#           selected = "England",
-#         ),
-#         ### LEP 8 input ------------
-#         selectizeInput("lep8", # Make no selection an option
-#           "Choose a comparison LEP (optional):",
-#           choices = c("\nNone", unique(C_LEP2020))
-#         ),
-#         ### Help text --------------------
-#         helpText("Download outcome indicators for all geographies (LEPs, LAs, Regions and England):",
-#           style = "font-style: italic;"
-#         ),
-#         ### Download buttons -------------
-#         downloadButton(
-#           outputId = "download_btn4a",
-#           label = "All data",
-#           icon = icon("download")
-#         ),
-#         helpText("Or just for the currently chosen LEP:",
-#           style = "font-style: italic;"
-#         ),
-#         downloadButton(
-#           outputId = "download_btn4b",
-#           label = "Current LEP",
-#           icon = icon("download")
-#         ),
-#       ), # end of side panel
-#       ## Main panel ----
-#       mainPanel(
-#         width = 10,
-#         ### Title ----
-#         uiOutput("page4title", style = "font-size: 24px;"), br(),
-#         p("Page will show learner outcomes by type of provision"),
-#       ) # end of main panel
-#     ) # end of side bar layout
-#   ), # end of earnings tab
-# ), # end of future development nav bar
