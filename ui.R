@@ -24,13 +24,31 @@ fluidPage(
   ),
   # Set title for search engines
   HTML("<title>Local Skills Dashboard</title>"),
-  tags$head(includeHTML(("google-analytics.html"))),
-  shinyGovstyle::header(
-    main_text = "DfE",
-    main_link = "https://www.gov.uk/government/organisations/department-for-education",
-    secondary_text = "Unit for Future Skills - Local Skills Dashboard",
-    logo = "images/DfE_logo.png"
-  ),
+  tags$head(includeHTML(("google-analytics.html")),
+            tags$style(HTML(".no-left-pad{
+    padding-left: 0px;
+}"))),
+  # shinyGovstyle::header(
+  #   main_text = "DfE",
+  #   main_link = "https://www.gov.uk/government/organisations/department-for-education",
+  #   secondary_text = "Unit for Future Skills - Local Skills Dashboard",
+  #   logo = "images/DfE_logo.png"
+  # ),
+  HTML('<header class="govuk-header" role="banner">
+    <div class="govuk-header__container">
+    <div class="govuk-header__logo" style="width: 25%; margin-left: 15px;">
+    <a href="https://www.gov.uk/government/organisations/department-for-education" class="govuk-header__link govuk-header__link--homepage">
+    <span class="govuk-header__logotype">
+    <img src="images/DfE_logo.png" class="govuk-header__logotype-crown-fallback-image"/>
+    <span class="govuk-header__logotype-text">DfE</span>
+    </span>
+    </a>
+    </div>
+    <div class="govuk-header__content style="width: 75%;"">
+    <a href="https://www.gov.uk/government/groups/unit-for-future-skills" class="govuk-header__link govuk-header__link--service-name">Unit for Future Skills - Local Skills Dashboard</a>
+    </div>
+    </div>
+    </header>'),
   shinyGovstyle::banner(
     "beta banner",
     "beta",
@@ -42,7 +60,7 @@ fluidPage(
   # Navbar ====================================================================
   navlistPanel(
     id = "navbar",
-    widths = c(2, 8),
+    widths = c(2, 10),#TemAdj from 8 to 10
     well = FALSE,
 
     # HOMEPAGE ============================================================
