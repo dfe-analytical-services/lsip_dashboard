@@ -155,9 +155,10 @@ panel_employment <- function() {
       br(),
 
       ### KPI boxes ----
-      column(
+      column(style="padding-left: 0px;",#AdjTem
         width = 12,
-        valueBoxOutput("locland.emplcnt"),
+        HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="locland.emplcnt" ></div>'),#AdjTem
+        #valueBoxOutput("locland.emplcnt"),#AdjTem
         valueBoxOutput("locland.emplrate")
       ),
       column(

@@ -127,3 +127,7 @@ a {
 #monospaced-title {
         font-family: monospace;
       }
+      
+.no-left-pad{
+    padding-left: 0px;
+}
