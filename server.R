@@ -679,7 +679,8 @@ server <- function(input, output, session) {
         )
       } else {
         tagList(
-          valueBoxOutput("locland.emplcnt.2"),
+          HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="locland.emplcnt.2"></div>'),
+          #valueBoxOutput("locland.emplcnt.2"),
           valueBoxOutput("locland.emplrate.2")
         )
       }

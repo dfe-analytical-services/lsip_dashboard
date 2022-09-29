@@ -25,8 +25,19 @@ fluidPage(
   # Set title for search engines
   HTML("<title>Local Skills Dashboard</title>"),
   tags$head(includeHTML(("google-analytics.html")),
+            #remove leftpadding on the value boxes
+            #remove the max width of the main panel so spreads across screen
             tags$style(HTML(".no-left-pad{
     padding-left: 0px;
+            }
+
+.govuk-width-container {
+    max-width: 100%;
+}
+.clear-box-colours{
+background:0;
+border-top:0;
+box-shadow:none;
 }"))),
   # shinyGovstyle::header(
   #   main_text = "DfE",
@@ -36,7 +47,7 @@ fluidPage(
   # ),
   HTML('<header class="govuk-header" role="banner">
     <div class="govuk-header__container">
-    <div class="govuk-header__logo" style="width: 25%; margin-left: 15px;">
+    <div class="govuk-header__logo" style="width: 15%; margin-left: 15px;">
     <a href="https://www.gov.uk/government/organisations/department-for-education" class="govuk-header__link govuk-header__link--homepage">
     <span class="govuk-header__logotype">
     <img src="images/DfE_logo.png" class="govuk-header__logotype-crown-fallback-image"/>
@@ -44,7 +55,7 @@ fluidPage(
     </span>
     </a>
     </div>
-    <div class="govuk-header__content style="width: 75%;"">
+    <div class="govuk-header__content" style="width: 70%; text-align: center;">
     <a href="https://www.gov.uk/government/groups/unit-for-future-skills" class="govuk-header__link govuk-header__link--service-name">Unit for Future Skills - Local Skills Dashboard</a>
     </div>
     </div>
@@ -234,7 +245,7 @@ fluidPage(
         ),
 
         # next row is the data tabs
-        column(
+        column(style="padding-left: 0px;",#AdjTem remove padding to left so alligns
           width = 12,
           tabsetPanel(
             id = "datatabset",
