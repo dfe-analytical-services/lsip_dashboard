@@ -41,12 +41,19 @@ panel_overview <- function() {
               plotlyOutput("empRateLineChart", height = 81)
             )
           ),
-          # third row - link to emp tab
-          box(
-            width = 12,
-            actionLink("link_to_tabpanel_employment2", "Find out more about employment"),
-            align = "right"
-          ),
+          # third row - link to emp tab 
+          HTML('<div class="col-sm-12">
+            <div class="box clear-box-colours">
+            <div class="box-body" align="right">
+            <a id="link_to_tabpanel_employment2" href="#" class="action-button">Find out more about employment</a>
+            </div>
+            </div>
+            </div>'),
+          # box(
+          #   width = 12,
+          #   actionLink("link_to_tabpanel_employment2", "Find out more about employment"),
+          #   align = "right"
+          # ),
           # fourth row - vacancies
           h3("Job vacancy share"),
           gov_row(
@@ -62,11 +69,18 @@ panel_overview <- function() {
               plotlyOutput("VacLineChart", height = 81)
             )
           ),
-          box(
-            width = 12,
-            actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies"),
-            align = "right"
-          )
+          HTML('<div class="col-sm-12">
+  <div class="box clear-box-colours">
+    <div class="box-body" align="right">
+      <a id="link_to_tabpanel_vacancies2" href="#" class="action-button">Find out more about vacancies</a>
+    </div>
+  </div>
+</div>')
+          # box(
+          #   width = 12,
+          #   actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies"),
+          #   align = "right"
+          # )
         ),
         column(width = 1), # column split
         # right column
@@ -103,11 +117,18 @@ panel_overview <- function() {
             )
           ),
           # 6th row - link to app data
-          box(
-            width = 12,
-            actionLink("link_to_tabpanel_FE2", "Find out more about skills"),
-            align = "right"
-          ),
+          HTML('<div class="col-sm-12">
+  <div class="box clear-box-colours">
+    <div class="box-body" align="right">
+      <a id="link_to_tabpanel_FE2" href="#" class="action-button">Find out more about skills</a>
+    </div>
+  </div>
+</div>'),
+          # box(
+          #   width = 12,
+          #   actionLink("link_to_tabpanel_FE2", "Find out more about skills"),
+          #   align = "right"
+          # ),
         ) # end of right column
       ), # end of data row
       ### Downloads-------------
@@ -161,7 +182,7 @@ panel_employment <- function() {
         #valueBoxOutput("locland.emplcnt"),#AdjTem
         valueBoxOutput("locland.emplrate")
       ),
-      column(
+      column(style="padding-left: 0px;",#AdjTem remove padding to left so alligns
         width = 12,
         uiOutput("emp_comp")
       ),
@@ -170,7 +191,7 @@ panel_employment <- function() {
         p(" ")
       ),
       ### Employment rate over time line chart ----
-      column(
+      column(style="padding-left: 0px;",#AdjTem remove padding to left so alligns
         width = 6,
         p("Employment rate trend", style = "font-size:20px;"),
         plotlyOutput("EmpRate_time")
