@@ -1,17 +1,13 @@
 panel_overview <- function() {
   tabPanel(
     "Overview",
-    column(width = 12, br("")),
-    column(
-      width = 12,
-      uiOutput("page0title", style = "font-size: 24px;"),
-      div("Change metrics are measured since the same period the year before.", style = "font-size: 16px; font-style: italic;"),
-      br(),
-      gov_row(
+      h1(uiOutput("page0title")),
+      p("Change metrics are measured since the same period the year before."),
+      gov_row(column(width=12,
         # left column
         column(
-          width = 5,
-          style = "background-color:#f3f2f1;",
+          width = 6,
+          style = "background-color:#f3f2f1;border-right: 5px solid white;",
           h2("Labour market"),
           h3("People employed"),
           gov_row(
@@ -23,7 +19,7 @@ panel_overview <- function() {
               )
             ),
             column(
-              width = 7,
+              width = 8,
               plotlyOutput("empLineChart", height = 81)
             )
           ),
@@ -37,7 +33,7 @@ panel_overview <- function() {
               )
             ),
             column(
-              width = 7,
+              width = 8,
               plotlyOutput("empRateLineChart", height = 81)
             )
           ),
@@ -65,7 +61,7 @@ panel_overview <- function() {
               )
             ),
             column(
-              width = 7,
+              width = 8,
               plotlyOutput("VacLineChart", height = 81)
             )
           ),
@@ -82,11 +78,10 @@ panel_overview <- function() {
           #   align = "right"
           # )
         ),
-        column(width = 1), # column split
         # right column
         column(
-          width = 5,
-          style = "background-color:#f3f2f1;",
+          width = 6,
+          style = "background-color:#f3f2f1;border-right: 5px solid white;",
           h2("Skills landscape"),
           h3("Education and training achievements"),
           gov_row(
@@ -98,7 +93,7 @@ panel_overview <- function() {
               )
             ),
             column(
-              width = 7,
+              width = 8,
               plotlyOutput("etLineChart", height = 81)
             )
           ),
@@ -112,7 +107,7 @@ panel_overview <- function() {
               )
             ),
             column(
-              width = 7,
+              width = 8,
               plotlyOutput("AppLineChart", height = 81)
             )
           ),
@@ -130,6 +125,7 @@ panel_overview <- function() {
           #   align = "right"
           # ),
         ) # end of right column
+      )
       ), # end of data row
       ### Downloads-------------
       br(),
@@ -159,8 +155,7 @@ panel_overview <- function() {
           )
         ),
         column(width = 9, "Or just for the currently chosen LEP")
-      )
-    ),
+      ),
     column(width = 12, br(""))
   )
 }
@@ -168,47 +163,31 @@ panel_overview <- function() {
 panel_employment <- function() {
   tabPanel(
     "Employment",
-    column(width = 12, br("")),
-    column(
-      width = 12,
-      uiOutput("page1title", style = "font-size: 24px;"),
-      div("Data is from the Annual Population Survey. Years represent calendar years. All figures are for 16-64 except the occupation split table which is all ages.", style = "font-size: 16px; font-style: italic;"),
-      br(),
-
+      h1(uiOutput("page1title")),
+      p("Data is from the Annual Population Survey. Years represent calendar years. All figures are for 16-64 except the occupation split table which is all ages."),
       ### KPI boxes ----
-      column(style="padding-left: 0px;",#AdjTem
-        width = 12,
-        HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="locland.emplcnt" ></div>'),#AdjTem
-        #valueBoxOutput("locland.emplcnt"),#AdjTem
-        HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="locland.emplrate" ></div>'),#AdjTem
-        #valueBoxOutput("locland.emplrate")
+    fluidRow(
+        valueBoxOutput("locland.emplcnt"),
+        valueBoxOutput("locland.emplrate")
       ),
-      column(style="padding-left: 0px;",#AdjTem remove padding to left so aligns
-        width = 12,
+    fluidRow(
         uiOutput("emp_comp")
       ),
-      column(
-        width = 12,
-        p(" ")
-      ),
       ### Employment rate over time line chart ----
-      column(style="padding-left: 0px;",#AdjTem remove padding to left so aligns
+    fluidRow(column(
         width = 6,
         p("Employment rate trend", style = "font-size:20px;"),
         plotlyOutput("EmpRate_time")
       ),
       ### Employment percentage by occupation data table ----
-      column(style="padding-left: 0px;",#AdjTem remove padding to left so aligns
+      column(
         width = 6,
         p("Employment percentage by occupation (sub-major SOC group)", style = "font-size:20px;"),
         dataTableOutput("EmpOcc")
-      ),
+      )),
 
       ### Downloads-------------
-      column(
-        width = 12,
-        p(" ")
-      ),
+    br(),
       gov_row(
         column(
           width = 3,
@@ -235,7 +214,6 @@ panel_employment <- function() {
           )
         ),
         column(width = 9, p("Or just for the currently chosen LEP"))
-      )
     ), # end of row
     column(width = 12, br(""))
   ) # end of Local Landscape tab
@@ -244,40 +222,28 @@ panel_employment <- function() {
 panel_vacancies <- function() {
   tabPanel(
     "Vacancies",
-    column(width = 12, br("")),
-    column(
-      width = 12,
-      uiOutput("page3title", style = "font-size: 24px;"),
-      div("Data is from ONS using Adzuna online job adverts. Data for each year is the average of vacancies across January of that year.", style = "font-size: 16px; font-style: italic;"),
-      br(),
+      h1(uiOutput("page3title")),
+      p("Data is from ONS using Adzuna online job adverts. Data for each year is the average of vacancies across January of that year."),
       ### KPI boxes ----
-      column(style="padding-left: 0px;",#AdjTem remove padding to left so aligns
-        width = 12,
-        HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="jobad.pc" ></div>'),#AdjTem
-        #valueBoxOutput("jobad.pc"),#AdjTem
-        HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="jobad.ch" ></div>')#AdjTem
-        #valueBoxOutput("jobad.ch"),#AdjTem
+    fluidRow(
+        valueBoxOutput("jobad.pc"),
+        valueBoxOutput("jobad.ch"),
       ), # end of box
-      column(style="padding-left: 0px;",#AdjTem remove padding to left so aligns
-        width = 12,
+    fluidRow(
         uiOutput("vac_comp")
       ),
-      column(
-        width = 12,
-        p(" ")
-      ),
-      column(style="padding-left: 0px;",#AdjTem remove padding to left so aligns
+    fluidRow(column(
         width = 12,
         ### Online job vacancy units over time line chart ----
         p("Online job vacancy unit trend", style = "font-size:20px;"),
         plotlyOutput("jobad.time")
-      ), # end of box
-      details(
+      )), # end of box
+    fluidRow(details(
         inputId = "SubsLev",
         label = "Chart information",
         help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
               The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between LEPS and over time, but do not represent true job vacancy volumes."
-      ),
+      )),
       ### Downloads-------------
       br(),
       gov_row(
@@ -308,7 +274,6 @@ panel_vacancies <- function() {
         column(width = 9, p("Or just for the currently chosen LEP")),
       ), # end of row
       column(width = 12, br(""))
-    ) # end of main panel
   ) # end of Skills Supply tab
 }
 
@@ -316,12 +281,8 @@ panel_vacancies <- function() {
 panel_skills <- function() {
   tabPanel(
     "Skills",
-    fluidRow(br("")),
-    fluidRow(column(
-      width = 12,
-      uiOutput("page2title", style = "font-size: 24px;"),
-      div("Data from Individualised Learner Records for FE and skills learners. Years shown are academic years.", style = "font-size: 16px; font-style: italic;"),
-      br())),
+      h1(uiOutput("page2title")),
+      p("Data from Individualised Learner Records for FE and skills learners. Years shown are academic years."),
       ### KPI boxes ----
     fluidRow(
         valueBoxOutput("skisup.FEach"),
@@ -351,7 +312,7 @@ panel_skills <- function() {
             p("All FE and skills learner achievements by SSA tier 1 (AY21/22 Aug to Jan provisional data)", style = "font-size:20px;"),
             plotlyOutput("Ach_SSA_pc")
           )),
-    column(width = 12, br("")),
+    column(width = 12, br("")),#put in to push below the fixed height chart
     column(width = 12, br("")),
     ### FE definitions----
     fluidRow(column(width=12,
@@ -397,5 +358,5 @@ panel_skills <- function() {
       column(width = 9, p("Or just for the currently chosen LEP"))
     ), # end of row
     column(width = 12, br(""))
-  ) # sills panel
+  ) # skills panel
 }
