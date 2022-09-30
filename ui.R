@@ -24,13 +24,11 @@ fluidPage(
   ),
   # Set title for search engines
   HTML("<title>Local Skills Dashboard</title>"),
-  tags$head(includeHTML(("google-analytics.html")),
-            #remove leftpadding on the value boxes
-            #remove the max width of the main panel so spreads across screen
-            tags$style(HTML(".no-left-pad{
-    padding-left: 0px;
-            }
-
+  tags$head(includeHTML(("google-analytics.html"))),
+  
+  #internal CSS
+  #remove the max width of the main panel so spreads across screen
+  tags$head(tags$style(HTML("
 .govuk-width-container {
     max-width: 100%;
 }
@@ -39,12 +37,8 @@ background:0;
 border-top:0;
 box-shadow:none;
 }"))),
-  # shinyGovstyle::header(
-  #   main_text = "DfE",
-  #   main_link = "https://www.gov.uk/government/organisations/department-for-education",
-  #   secondary_text = "Unit for Future Skills - Local Skills Dashboard",
-  #   logo = "images/DfE_logo.png"
-  # ),
+  
+  #Force the top nav bar to left allign and centre the title
   HTML('<header class="govuk-header" role="banner">
     <div class="govuk-header__container">
     <div class="govuk-header__logo" style="width: 15%; margin-left: 15px;">
@@ -60,6 +54,14 @@ box-shadow:none;
     </div>
     </div>
     </header>'),
+  #This is the old code if we need it
+  # shinyGovstyle::header(
+  #   main_text = "DfE",
+  #   main_link = "https://www.gov.uk/government/organisations/department-for-education",
+  #   secondary_text = "Unit for Future Skills - Local Skills Dashboard",
+  #   logo = "images/DfE_logo.png"
+  # ),
+  
   shinyGovstyle::banner(
     "beta banner",
     "beta",
@@ -71,7 +73,7 @@ box-shadow:none;
   # Navbar ====================================================================
   navlistPanel(
     id = "navbar",
-    widths = c(2, 10),#TemAdj from 8 to 10
+    widths = c(2, 10),
     well = FALSE,
 
     # HOMEPAGE ============================================================
@@ -80,8 +82,6 @@ box-shadow:none;
       "Homepage",
       gov_main_layout(
         gov_row(
-          column(
-            12,
             h1("Local Skills Dashboard"),
             p("Prototype dashboard showing statistics on local employment and skills in England, to support local skills planning and delivery (including Local Skills Improvement Plans)."),
             p("The prototype dashboard shows a subset of employment and skills statistics at Local Enterprise Partnership (LEP) level, including:"),
@@ -91,36 +91,29 @@ box-shadow:none;
               tags$li("Further Education aim achievement volumes and achievements by sector subject area (source: DfE FE and Skills National Statistics)"),
             ),
             p("Trends can be compared between different LEPs and over time for some indicators. The underlying data contains national, regional, LEP and LA data and can be downloaded directly from the dashboard."),
-            br(),
-            "This dashboard has been produced to support the aims of the ",
+            p("This dashboard has been produced to support the aims of the ",
             a(
               href = "https://www.gov.uk/government/groups/unit-for-future-skills",
               "Unit for Future Skills",
               .noWS = c("after")
+            ),"."
             ),
-            ".",
-            column(width = 12, br(" "))
-          ),
 
           ## Left panel -------------------------------------------------------
-          column(
+          column(style="padding-left: 0px",
             6,
-            # div(
             div(
               class = "panel panel-info",
               div(
                 class = "panel-heading",
                 style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-                h2("Contents")
+                h2("Dashboard contents")
               ),
               div(
                 class = "panel-body",
-                h2("Dashboard"),
-                p("This page contains the different dashboard tabs."),
                 h3(actionLink("link_to_tabpanel_overview", "Overview")),
                 p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, Further Education (FE) and skills achievement volumes. It shows year-on-year change for each indicator."),
                 p("The download buttons download all indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
-                # h2("Labour market"),
                 h3(actionLink("link_to_tabpanel_employment", "Employment")),
                 p("This tab contains employment indicators at LEP level. These can be compared to England and a comparator LEP."),
                 p("The line chart shows employment rate over time for the chosen LEP. The table displays employment distribution by occupation (sub-major SOC group)."),
@@ -129,7 +122,6 @@ box-shadow:none;
                 p("This tab contains online job vacancies indicators at LEP level. These can be compared to England and a comparator LEP."),
                 p("The line chart shows change in online job vacancy units over time. Units are not real volumes but represent a fixed number of job adverts to be used for comparisons over time and between areas."),
                 p("The download buttons download vacancy indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
-                # h2("Skills landscape"),
                 h3(actionLink("link_to_tabpanel_FE", "Skills")),
                 p("This tab provides a summary of further education (FE) and skills statistics at LEP level. These can be compared to another LEP."),
                 p("The line chart shows achievement volumes over time for apprenticeships, education & training and community learning."),
@@ -140,9 +132,8 @@ box-shadow:none;
           ), # end of left panel
 
           ## Right panel ------------------------------------------------------
-          column(
+          column(style="padding-left: 0px;",
             6,
-            div(
               div(
                 class = "panel panel-info",
                 div(
@@ -185,7 +176,6 @@ box-shadow:none;
                     .noWS = c("after", "before")
                   )
                 )
-              )
             ),
             div(
               class = "panel panel-info",
@@ -204,8 +194,8 @@ box-shadow:none;
                   tags$li("Additional data breakdowns;"),
                   tags$li("New features, including the ability to view data at different geography levels (e.g. Local Authority District)."),
                 ),
-                "If you have any feedback or suggestions for improvement, please contact us at ",
-                a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk", .noWS = c("after")), "."
+                p("If you have any feedback or suggestions for improvement, please contact us at ",
+                a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk", .noWS = c("after")), ".")
               )
             )
           )
