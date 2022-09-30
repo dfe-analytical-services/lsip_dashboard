@@ -3,7 +3,7 @@ panel_overview <- function() {
     "Overview",
       h1(uiOutput("page0title")),
       p("Change metrics are measured since the same period the year before."),
-      gov_row(column(width=12,
+      gov_row(style="padding-left: 15px",#indent slightly so box aligns
         # left column
         column(
           width = 6,
@@ -13,7 +13,7 @@ panel_overview <- function() {
           gov_row(
             column(
               width = 4,
-              div(
+              div(#need a div to add hover over title
                 title = "Source: APS. 2021 calendar year",
                 uiOutput("locland.emplcnt0"),
               )
@@ -38,18 +38,8 @@ panel_overview <- function() {
             )
           ),
           # third row - link to emp tab 
-          HTML('<div class="col-sm-12">
-            <div class="box clear-box-colours">
-            <div class="box-body" align="right">
-            <a id="link_to_tabpanel_employment2" href="#" class="action-button">Find out more about employment</a>
-            </div>
-            </div>
-            </div>'),
-          # box(
-          #   width = 12,
-          #   actionLink("link_to_tabpanel_employment2", "Find out more about employment"),
-          #   align = "right"
-          # ),
+          fluidRow(style="text-align: right;padding-right:15px;padding-top:15px;",
+            actionLink("link_to_tabpanel_employment2", "Find out more about employment")),
           # fourth row - vacancies
           h3("Job vacancy share"),
           gov_row(
@@ -65,18 +55,9 @@ panel_overview <- function() {
               plotlyOutput("VacLineChart", height = 81)
             )
           ),
-          HTML('<div class="col-sm-12">
-  <div class="box clear-box-colours">
-    <div class="box-body" align="right">
-      <a id="link_to_tabpanel_vacancies2" href="#" class="action-button">Find out more about vacancies</a>
-    </div>
-  </div>
-</div>')
-          # box(
-          #   width = 12,
-          #   actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies"),
-          #   align = "right"
-          # )
+          fluidRow(style="text-align: right;padding-right:15px;padding-top:15px;",
+                   actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies")),
+          br()
         ),
         # right column
         column(
@@ -112,20 +93,10 @@ panel_overview <- function() {
             )
           ),
           # 6th row - link to app data
-          HTML('<div class="col-sm-12">
-  <div class="box clear-box-colours">
-    <div class="box-body" align="right">
-      <a id="link_to_tabpanel_FE2" href="#" class="action-button">Find out more about skills</a>
-    </div>
-  </div>
-</div>'),
-          # box(
-          #   width = 12,
-          #   actionLink("link_to_tabpanel_FE2", "Find out more about skills"),
-          #   align = "right"
-          # ),
+          fluidRow(style="text-align: right;padding-right:15px;padding-top:15px;",
+                   actionLink("link_to_tabpanel_FE2", "Find out more about skills")),
+br()
         ) # end of right column
-      )
       ), # end of data row
       ### Downloads-------------
       br(),
@@ -232,13 +203,13 @@ panel_vacancies <- function() {
     fluidRow(
         uiOutput("vac_comp")
       ),
-    fluidRow(column(
-        width = 12,
+    fluidRow(style="padding-left: 15px",#indent slightly so box aligns
         ### Online job vacancy units over time line chart ----
         p("Online job vacancy unit trend", style = "font-size:20px;"),
         plotlyOutput("jobad.time")
-      )), # end of box
-    fluidRow(details(
+      ), # end of box
+    fluidRow(style="padding-left: 15px",#indent slightly so box aligns
+      details(
         inputId = "SubsLev",
         label = "Chart information",
         help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
@@ -292,8 +263,7 @@ panel_skills <- function() {
         uiOutput("skill_comp")
       ),
         ### Achievements over time line chart ----
-    fluidRow(column(
-            width = 12,
+    fluidRow(style="padding-left: 15px",#indent slightly so box aligns
             p("FE and skills learner achievement trend", style = "font-size:20px;"),
             div(
               class = "well",
@@ -305,17 +275,16 @@ panel_skills <- function() {
             ),
             plotlyOutput("Ach_time"),
             p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total.", style = "font-style: italic;")
-          )),
+          ),
         ### FE achievements by SSA----
-    fluidRow(column(
-            width = 12,
+    fluidRow(style="padding-left: 15px",#indent slightly so box aligns
             p("All FE and skills learner achievements by SSA tier 1 (AY21/22 Aug to Jan provisional data)", style = "font-size:20px;"),
             plotlyOutput("Ach_SSA_pc")
-          )),
+          ),
     column(width = 12, br("")),#put in to push below the fixed height chart
     column(width = 12, br("")),
     ### FE definitions----
-    fluidRow(column(width=12,
+    fluidRow(style="padding-left: 15px",#indent slightly so box aligns
            details(
              inputId = "FEdefs",
              label = "FE definitions",
@@ -328,7 +297,6 @@ panel_skills <- function() {
                tags$li("Achievements are the number of learners who successfully complete an individual aim in an academic year. ")
              )
            )
-    )
     ),
     gov_row(
       column(
