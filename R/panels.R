@@ -180,9 +180,10 @@ panel_employment <- function() {
         width = 12,
         HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="locland.emplcnt" ></div>'),#AdjTem
         #valueBoxOutput("locland.emplcnt"),#AdjTem
-        valueBoxOutput("locland.emplrate")
+        HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="locland.emplrate" ></div>'),#AdjTem
+        #valueBoxOutput("locland.emplrate")
       ),
-      column(style="padding-left: 0px;",#AdjTem remove padding to left so alligns
+      column(style="padding-left: 0px;",#AdjTem remove padding to left so aligns
         width = 12,
         uiOutput("emp_comp")
       ),
@@ -191,23 +192,17 @@ panel_employment <- function() {
         p(" ")
       ),
       ### Employment rate over time line chart ----
-      column(style="padding-left: 0px;",#AdjTem remove padding to left so alligns
+      column(style="padding-left: 0px;",#AdjTem remove padding to left so aligns
         width = 6,
         p("Employment rate trend", style = "font-size:20px;"),
         plotlyOutput("EmpRate_time")
       ),
       ### Employment percentage by occupation data table ----
-      column(
+      column(style="padding-left: 0px;",#AdjTem remove padding to left so aligns
         width = 6,
         p("Employment percentage by occupation (sub-major SOC group)", style = "font-size:20px;"),
         dataTableOutput("EmpOcc")
       ),
-      # br(),
-      # column(
-      #   width = 12,
-      #   p("Employment rates", style = "font-size:20px;"),
-      #   plotlyOutput("EmpRate_dot")
-      # ),
 
       ### Downloads-------------
       column(
@@ -256,12 +251,14 @@ panel_vacancies <- function() {
       div("Data is from ONS using Adzuna online job adverts. Data for each year is the average of vacancies across January of that year.", style = "font-size: 16px; font-style: italic;"),
       br(),
       ### KPI boxes ----
-      column(
+      column(style="padding-left: 0px;",#AdjTem remove padding to left so aligns
         width = 12,
-        valueBoxOutput("jobad.pc"),
-        valueBoxOutput("jobad.ch"),
+        HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="jobad.pc" ></div>'),#AdjTem
+        #valueBoxOutput("jobad.pc"),#AdjTem
+        HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="jobad.ch" ></div>')#AdjTem
+        #valueBoxOutput("jobad.ch"),#AdjTem
       ), # end of box
-      column(
+      column(style="padding-left: 0px;",#AdjTem remove padding to left so aligns
         width = 12,
         uiOutput("vac_comp")
       ),
@@ -269,7 +266,7 @@ panel_vacancies <- function() {
         width = 12,
         p(" ")
       ),
-      column(
+      column(style="padding-left: 0px;",#AdjTem remove padding to left so aligns
         width = 12,
         ### Online job vacancy units over time line chart ----
         p("Online job vacancy unit trend", style = "font-size:20px;"),
@@ -319,27 +316,22 @@ panel_vacancies <- function() {
 panel_skills <- function() {
   tabPanel(
     "Skills",
-    column(width = 12, br("")),
-    column(
+    fluidRow(br("")),
+    fluidRow(column(
       width = 12,
       uiOutput("page2title", style = "font-size: 24px;"),
       div("Data from Individualised Learner Records for FE and skills learners. Years shown are academic years.", style = "font-size: 16px; font-style: italic;"),
-      br(),
+      br())),
       ### KPI boxes ----
-      column(
-        width = 12,
+    fluidRow(
         valueBoxOutput("skisup.FEach"),
         valueBoxOutput("skisup.APach")
       ),
-      column(
-        width = 12,
+    fluidRow(
         uiOutput("skill_comp")
       ),
-      tabsetPanel(
         ### Achievements over time line chart ----
-        tabPanel(
-          "Achievements over time",
-          column(
+    fluidRow(column(
             width = 12,
             p("FE and skills learner achievement trend", style = "font-size:20px;"),
             div(
@@ -352,33 +344,31 @@ panel_skills <- function() {
             ),
             plotlyOutput("Ach_time"),
             p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total.", style = "font-style: italic;")
-          )
-        ),
+          )),
         ### FE achievements by SSA----
-        tabPanel(
-          "Achievements by SSA",
-          column(
+    fluidRow(column(
             width = 12,
             p("All FE and skills learner achievements by SSA tier 1 (AY21/22 Aug to Jan provisional data)", style = "font-size:20px;"),
             plotlyOutput("Ach_SSA_pc")
-          )
-        )
-      ), # end of charts box
-      ### FE definitions----
-      details(
-        inputId = "FEdefs",
-        label = "FE definitions",
-        tags$ul(
-          tags$li("FE and skills include all age apprenticeships and wider adult (19+) FE learning, such as community learning and education and training."),
-          tags$li("Further Education covers publicly-funded learning delivered by an FE institution, a training provider or within a local community. It also includes apprenticeships delivered in the workplace. It does not include higher education, unless delivered as part of an apprenticeship programme."),
-          tags$li("Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications."),
-          tags$li("Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups."),
-          tags$li("Education and training is mainly classroom-based adult FE that is not an apprenticeship or community learning."),
-          tags$li("Achievements are the number of learners who successfully complete an individual aim in an academic year. ")
-        )
-      )
-    ),
+          )),
     column(width = 12, br("")),
+    column(width = 12, br("")),
+    ### FE definitions----
+    fluidRow(column(width=12,
+           details(
+             inputId = "FEdefs",
+             label = "FE definitions",
+             tags$ul(
+               tags$li("FE and skills include all age apprenticeships and wider adult (19+) FE learning, such as community learning and education and training."),
+               tags$li("Further Education covers publicly-funded learning delivered by an FE institution, a training provider or within a local community. It also includes apprenticeships delivered in the workplace. It does not include higher education, unless delivered as part of an apprenticeship programme."),
+               tags$li("Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications."),
+               tags$li("Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups."),
+               tags$li("Education and training is mainly classroom-based adult FE that is not an apprenticeship or community learning."),
+               tags$li("Achievements are the number of learners who successfully complete an individual aim in an academic year. ")
+             )
+           )
+    )
+    ),
     gov_row(
       column(
         width = 3,

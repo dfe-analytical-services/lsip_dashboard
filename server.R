@@ -679,9 +679,10 @@ server <- function(input, output, session) {
         )
       } else {
         tagList(
-          HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="locland.emplcnt.2"></div>'),
-          #valueBoxOutput("locland.emplcnt.2"),
-          valueBoxOutput("locland.emplrate.2")
+          HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="locland.emplcnt.2"></div>'),#AdjTem
+          #valueBoxOutput("locland.emplcnt.2"),#AdjTem
+          HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="locland.emplrate.2"></div>')#AdjTem
+          #valueBoxOutput("locland.emplrate.2")#AdjTem
         )
       }
     } else {
@@ -860,8 +861,10 @@ server <- function(input, output, session) {
         )
       } else {
         tagList(
-          valueBoxOutput("jobad.pc.2"),
-          valueBoxOutput("jobad.ch.2")
+          HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="jobad.pc.2"></div>'),#AdjTem
+          #valueBoxOutput("jobad.pc.2"),#AdjTem
+          HTML('<div class="shiny-html-output col-sm-4 no-left-pad" id="jobad.ch.2"></div>')#AdjTem
+          #valueBoxOutput("jobad.ch.2")#AdjTem
         )
       }
     } else {
@@ -1011,7 +1014,6 @@ server <- function(input, output, session) {
         )
       }
     } else {
-      p("")
     }
   })
 
