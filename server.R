@@ -9,22 +9,22 @@ server <- function(input, output, session) {
   # HOMEPAGE ----
   # Create link to overview tab
   observeEvent(input$link_to_tabpanel_overview, {
-    updateTabsetPanel(session, "navbar", "Dashboard") # Get into app
+    updateTabsetPanel(session, "navbar", "Local Skills") # Get into app
     updateTabsetPanel(session, "datatabset", "Overview") # then pick tab
   })
   # Create link to employment data tab
   observeEvent(input$link_to_tabpanel_employment, {
-    updateTabsetPanel(session, "navbar", "Dashboard")
+    updateTabsetPanel(session, "navbar", "Local Skills")
     updateTabsetPanel(session, "datatabset", "Employment")
   })
   # Create link to vacancy data tab
   observeEvent(input$link_to_tabpanel_vacancies, {
-    updateTabsetPanel(session, "navbar", "Dashboard")
+    updateTabsetPanel(session, "navbar", "Local Skills")
     updateTabsetPanel(session, "datatabset", "Vacancies")
   })
   # Create link to skills data tab
   observeEvent(input$link_to_tabpanel_FE, {
-    updateTabsetPanel(session, "navbar", "Dashboard")
+    updateTabsetPanel(session, "navbar", "Local Skills")
     updateTabsetPanel(session, "datatabset", "Skills")
   })
 
