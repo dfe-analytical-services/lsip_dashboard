@@ -32,11 +32,7 @@ fluidPage(
 .govuk-width-container {
     max-width: 100%;
 }
-.clear-box-colours{
-background:0;
-border-top:0;
-box-shadow:none;
-}"))),
+"))),
   
   #Force the top nav bar to left allign and centre the title
   HTML('<header class="govuk-header" role="banner">
