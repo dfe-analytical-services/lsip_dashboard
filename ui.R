@@ -138,7 +138,7 @@ fluidPage(
                   h3("ONS Online Job Adverts"),
                   p("These data tables are created based upon online job adverts data provided by Adzuna.
                              Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022. The monthly average is derived from weekly snapshots in January.
-                             The dashboard shows job 'units' which is the number of job adverts divided a set value for all regions. It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across regions or to follow trends over time."),
+                             The dashboard shows job 'units' which is the number of job adverts divided a by set value for all regions. It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across regions or to follow trends over time."),
                   a(
                     href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/onlinejobadvertsbyitl1regionandlocalauthority",
                     "Job adverts data on ONS",
@@ -346,7 +346,7 @@ fluidPage(
                   ),
                   column(
                     width = 9,
-                    "Download all available indicators for all geographies (LEPs, LSIPs, LAs, Regions and England)",
+                    "Download all available indicators for all geographies (LEPs, LSIPs, LAs, regions and England)",
                   )
                 ),
                 fluidRow(
@@ -428,7 +428,7 @@ fluidPage(
                   ),
                   column(
                     width = 9,
-                    "Download employment indicators for all geographies (LEPs, LSIPs, LAs, Regions and England)",
+                    "Download employment indicators for all geographies (LEPs, LSIPs, LAs, regions and England)",
                   )
                 ), # end of row
                 fluidRow(
@@ -502,7 +502,7 @@ fluidPage(
                   ),
                   column(
                     width = 9,
-                    "Download vacancy indicators for all geographies (LEPs, LSIPs, LAs, Regions and England)",
+                    "Download vacancy indicators for all geographies (LEPs, LSIPs, LAs, regions and England)",
                   )
                 ), # end of row
                 fluidRow(
@@ -596,7 +596,7 @@ fluidPage(
                   ),
                   column(
                     width = 9,
-                    "Download FE and skills indicators for all geographies (LEPs, LSIPs, LAs, Regions and England)",
+                    "Download FE and skills indicators for all geographies (LEPs, LSIPs, LAs, regions and England)",
                   )
                 ), # end of row
                 fluidRow(
