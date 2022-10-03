@@ -82,7 +82,9 @@ fluidPage(
 
     tabPanel(
       "Homepage",
-      gov_main_layout(
+      #gov_main_layout(
+                      div(id="main",class="govuk-width-container",style="margin-right: max(15px, calc(15px + env(safe-area-inset-right)));",
+                          shiny::tags$main(class = "govuk-main-wrapper",
         gov_row(
             h1("Local Skills Dashboard"),
             p("Prototype dashboard showing statistics on local employment and skills in England, to support local skills planning and delivery (including Local Skills Improvement Plans)."),
@@ -202,14 +204,16 @@ fluidPage(
             )
           )
         )
-      ) # end of right panel
+      )) # end of right panel
     ), # end of Tab Panel
 
     # APP ----
 
     tabPanel(
       "Local Skills",
-      gov_main_layout(
+      #gov_main_layout(
+        div(id="main",class="govuk-width-container",style="margin-right: max(15px, calc(15px + env(safe-area-inset-right)));",
+            shiny::tags$main(class = "govuk-main-wrapper",
         gov_row(
             div(
               class = "well",
@@ -239,7 +243,7 @@ fluidPage(
             panel_skills()
           ) # end of dashboard tabset panel
         ) # end of dashboard navbar
-      ) # end of app data row
+      ) )# end of app data row
     ), # end of app tab panel
 
     # Create the accessibility statement-----------------
