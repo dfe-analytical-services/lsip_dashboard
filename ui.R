@@ -37,7 +37,7 @@ fluidPage(
   #Force the top nav bar to left allign and centre the title
   HTML('<header class="govuk-header" role="banner">
     <div class="govuk-header__container">
-    <div class="govuk-header__logo" style="width: 15%; margin-left: 15px;">
+    <div class="govuk-header__logo" style="width: 15%; margin-left: 15px;float:left;">
     <a href="https://www.gov.uk/government/organisations/department-for-education" class="govuk-header__link govuk-header__link--homepage">
     <span class="govuk-header__logotype">
     <img src="images/DfE_logo.png" class="govuk-header__logotype-crown-fallback-image"/>
@@ -45,7 +45,7 @@ fluidPage(
     </span>
     </a>
     </div>
-    <div class="govuk-header__content" style="width: 70%; text-align: center;">
+    <div class="govuk-header__content" style="width: 70%; text-align: center;float:left;">
     <a href="https://www.gov.uk/government/groups/unit-for-future-skills" class="govuk-header__link govuk-header__link--service-name">Unit for Future Skills - Local Skills Dashboard</a>
     </div>
     </div>
