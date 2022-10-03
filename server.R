@@ -109,7 +109,7 @@ server <- function(input, output, session) {
   ## KPIs and charts----
 
   # get emp data for current lep
-  empLEP <- reactive({
+  empLEP <- eventReactive(input$lep1,{
     C_EmpRate_APS1721 %>%
       filter(area == input$lep1, geographic_level == input$GeoType)
   })
@@ -145,7 +145,7 @@ server <- function(input, output, session) {
   })
 
   # Emp chart
-  empLineChart <- reactive({
+  empLineChart <- eventReactive(input$lep1,{
     # call 2020 to 2021 change  for chosen LEP
     empCntChange <- emp2021()$Employment - emp2020()$Employment
     empLine <- empLEP()
@@ -232,7 +232,7 @@ server <- function(input, output, session) {
   EmpRateMax <- C_EmpRate_APS1721 %>%
     summarise(max(empRate, na.rm = T), .groups = "drop")
 
-  empRateLineChart <- reactive({
+  empRateLineChart <- eventReactive(input$lep1,{
     empRateChange <- emp2021()$empRate - emp2020()$empRate
     empRateLine <- C_EmpRate_APS1721 %>%
       filter((geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"))
@@ -301,7 +301,7 @@ server <- function(input, output, session) {
 
   #### ONS job advert units  ----
   # get vac data for current area chosen
-  VacArea <- reactive({
+  VacArea <- eventReactive(input$lep1,{
     C_Vacancy_England %>%
       filter(area == input$lep1, geographic_level == input$GeoType)
   })
@@ -334,7 +334,7 @@ server <- function(input, output, session) {
   })
 
   # Vacancy chart
-  VacLineChart <- reactive({
+  VacLineChart <- eventReactive(input$lep1,{
     VacLine <- VacArea()
     VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
 
@@ -398,7 +398,7 @@ server <- function(input, output, session) {
   #### E&T achievements ----
 
   # get EandT data for current lep
-  EtLEP <- reactive({
+  EtLEP <- eventReactive(input$lep1,{
     C_Achieve_ILR1621 %>%
       filter(
         geographic_level == input$GeoType,
@@ -437,7 +437,7 @@ server <- function(input, output, session) {
   })
 
   # e and t chart
-  etLineChart <- reactive({
+  etLineChart <- eventReactive(input$lep1,{
     etLine <- EtLEP()
     etCntChange <- Et2021()$achievements - Et1920()$achievements
     EtMinMax <- C_Achieve_ILR1621_max_min %>% filter(
@@ -499,7 +499,7 @@ server <- function(input, output, session) {
 
   #### App achievements ----
   # get App data for current lep
-  AppLEP <- reactive({
+  AppLEP <- eventReactive(input$lep1,{
     C_Achieve_ILR1621 %>%
       filter(
         geographic_level == input$GeoType,
@@ -537,7 +537,7 @@ server <- function(input, output, session) {
   })
 
   # app chart
-  AppLineChart <- reactive({
+  AppLineChart <- eventReactive(input$lep1,{
     AppLine <- AppLEP()
     AppCntChange <- App2021()$achievements - App1920()$achievements
     AppMinMax <- C_Achieve_ILR1621_max_min %>% filter(
@@ -720,7 +720,7 @@ server <- function(input, output, session) {
   })
 
   ## Employment rate over time line graph ----
-  EmpRate_time <- reactive({
+  EmpRate_time <- eventReactive(c(input$lep1,input$lep2),{
     EmpRateTime <- C_EmpRate_APS1721 %>%
       select(year, area, geographic_level, empRate) %>%
       filter(
@@ -768,7 +768,7 @@ server <- function(input, output, session) {
   })
 
   ## Employment by occupation data table ----
-  EmpOcc <- reactive({
+  EmpOcc <- eventReactive(c(input$lep1,input$lep2),{
     EmpOcc <- C_EmpOcc_APS1721 %>%
       filter(
         geographic_level == input$GeoType | geographic_level == "COUNTRY",
@@ -908,7 +908,7 @@ server <- function(input, output, session) {
   })
 
   ## Online job vacancy units over time line chart ----
-  jobad.time <- reactive({
+  jobad.time <- eventReactive(c(input$lep1,input$lep2),{
     JobTime <- C_Vacancy_England %>%
       filter(geographic_level == input$GeoType & (area == input$lep1 |
         area == if ("lep2" %in% names(input)) {
@@ -1055,7 +1055,7 @@ server <- function(input, output, session) {
   })
 
   ## Achievements over time line chart ----
-  Ach_time <- reactive({
+  Ach_time <- eventReactive(c(input$lep1,input$lep2),{
     FETime <- C_Achieve_ILR1621 %>%
       filter(
         geographic_level == input$GeoType &
@@ -1102,7 +1102,7 @@ server <- function(input, output, session) {
   })
 
   ## Achievements pc bar chart ----
-  Ach_SSA_pc <- reactive({
+  Ach_SSA_pc <- eventReactive(c(input$lep1,input$lep2),{
     AchSSA_21 <- C_Achieve_ILR21 %>%
       filter(
         geographic_level == input$GeoType,
