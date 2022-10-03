@@ -3,7 +3,7 @@ panel_overview <- function() {
     "Overview",
       h1(uiOutput("page0title")),
       p("Change metrics are measured since the same period the year before."),
-      gov_row(style="padding-left: 15px",#indent slightly so box aligns
+      gov_row(style="padding-left: 15px;padding-right: 15px;",#indent slightly so box aligns
         # left column
         column(
           width = 6,
@@ -203,7 +203,7 @@ panel_vacancies <- function() {
     fluidRow(
         uiOutput("vac_comp")
       ),
-    fluidRow(style="padding-left: 15px",#indent slightly so box aligns
+    fluidRow(style="padding-left: 15px;padding-right: 15px",#indent slightly so box aligns
         ### Online job vacancy units over time line chart ----
         p("Online job vacancy unit trend", style = "font-size:20px;"),
         plotlyOutput("jobad.time")
@@ -263,7 +263,7 @@ panel_skills <- function() {
         uiOutput("skill_comp")
       ),
         ### Achievements over time line chart ----
-    fluidRow(style="padding-left: 15px",#indent slightly so box aligns
+    fluidRow(style="padding-left: 15px;padding-right: 15px;",#indent slightly so box aligns
             p("FE and skills learner achievement trend", style = "font-size:20px;"),
             div(
               class = "well",
