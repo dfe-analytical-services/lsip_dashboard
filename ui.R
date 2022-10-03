@@ -58,13 +58,19 @@ fluidPage(
   #   logo = "images/DfE_logo.png"
   # ),
   
-  shinyGovstyle::banner(
-    "beta banner",
-    "beta",
-    paste0(
-      "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this."
-    )
-  ),
+  HTML('<div class="govuk-phase-banner govuk-width-container govuk-main-wrapper" id="beta banner" style="margin-left:0px;margin-right:0px">
+  <p class="govuk-phase-banner__content">
+    <strong class="govuk-tag govuk-phase-banner__content__tag ">beta</strong>
+    <span class="govuk-phase-banner__text">Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.</span>
+  </p>
+</div>'),
+  # shinyGovstyle::banner(
+  #   "beta banner",
+  #   "beta",
+  #   paste0(
+  #     "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this."
+  #   )
+  # ),
 
   # Navbar ====================================================================
   navlistPanel(
