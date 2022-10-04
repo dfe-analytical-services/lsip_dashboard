@@ -171,58 +171,30 @@ fluidPage(
     tabPanel(
       "Data",
       h1("Data sources"),
-      fluidRow(
+      fluidRow(style="padding-left:15px;padding-right:15px;",
         column(12,
-      fluidRow(tableOutput('DataTbl'))
+      fluidRow(dataTableOutput('DataTbl'))
     )
     ),
+    br(),
     fluidRow(
       column(12,
-      div(
-        class = "panel panel-info",
-        div(
-          class = "panel-heading",
-          style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-          h2("Data sources")
-        ),
-        div(
-          class = "panel-body",
-          h2("Labour market"),
+             h2("Data information"),
           h3("Annual Population Survey (APS)"),
           p("A continuous household survey covering the UK.
                              The dashboard uses employment volumes and rates for each LEP and split by sub-major SOC 2010 grouping.
                              The data are for interviews conducted over the calendar year (2017-2021 are shown).
                              "),
-          a(
-            href = "https://www.nomisweb.co.uk/datasets/apsnew",
-            "APS data on Nomis",
-            .noWS = c("after")
-          ),
-          br(),
           h3("ONS Online Job Adverts"),
           p("These data tables are created based upon online job adverts data provided by Adzuna.
                              Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022. The monthly average is derived from weekly snapshots in January.
                              The dashboard shows job 'units' which is the number of job adverts divided a set value for all regions. It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across regions or to follow trends over time."),
-          a(
-            href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/onlinejobadvertsbyitl1regionandlocalauthority",
-            "Job adverts data on ONS",
-            .noWS = c("after")
-          ),
-          br(),
-          h2("Skills landscape"),
           h3("Individualised Learner Records (ILR)"),
           p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England.
                              The dashboard uses FE and skills learner achievements over time (AY1617-21/22 (provisional data to January for 21/22)) split by apprenticeships, community learning, education and training.
                              The data is taken from the FE and Skills official statistics."),
-          a(
-            href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills",
-            "ILR data on EES",
-            .noWS = c("after", "before")
-          )
         )
       )
-    )
-    )
     ),
     # APP ----
 
