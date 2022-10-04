@@ -18,7 +18,7 @@ fluidPage(
   # ),
 
   # Set title for search engines
-  HTML("<title>Local Skills Dashboard</title>"),
+  HTML("<title>Local Skills Dashboard - Preprod</title>"),
   tagList(
     tags$head(tags$style(HTML("
                            .navbar-nav {
