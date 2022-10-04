@@ -27,7 +27,8 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbar", "Local Skills")
     updateTabsetPanel(session, "datatabset", "Skills")
   })
-  output$DataTbl <- renderTable({ I_DataTable}) 
+  output$DataTbl <- renderDataTable({ 
+    DT::datatable(I_DataTable,escape = FALSE, options = list(dom = 't'),rownames= FALSE)}) 
 
   # OVERVIEW ----
 
