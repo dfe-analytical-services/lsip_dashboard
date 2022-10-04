@@ -127,6 +127,7 @@ fluidPage(
                   h3("Annual Population Survey (APS)"),
                   p("A continuous household survey covering the UK.
                              The dashboard uses employment volumes and rates for each LEP or LSIP and split by sub-major SOC 2010 grouping.
+                             Data for each LSIP are aggregated from the published, rounded LA data, so there may be some small rounding errors in the LSIP totals. 
                              The data are for interviews conducted over the calendar year (2017-2021 are shown).
                              "),
                   a(
@@ -149,7 +150,8 @@ fluidPage(
                   h3("Individualised Learner Records (ILR)"),
                   p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England.
                              The dashboard uses FE and skills learner achievements over time (AY1617-21/22 (provisional data to January for 21/22)) split by apprenticeships, community learning, education and training.
-                             The data is taken from the FE and Skills official statistics."),
+                                                 Data for each  and LSIP are aggregated from the published, rounded LA data, so there may be some small rounding errors in the LSIP/LEP totals. 
+                    The data is taken from the FE and Skills official statistics."),
                   a(
                     href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills",
                     "ILR data on EES",
