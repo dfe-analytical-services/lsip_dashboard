@@ -57,3 +57,8 @@ folder <- "7_ONSvacancy"
 sheetNum <- "1"
 firstRow <- 4
 I_Vacancy_ONS1722 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T, startRow = firstRow)
+
+## Load data table ----
+folder <- "8_DataTable"
+sheetNum <- 1
+I_DataTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
