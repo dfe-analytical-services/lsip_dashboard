@@ -281,21 +281,20 @@ panel_skills <- function() {
 column(12,
       h2("FE and skills learner achievement trend"),
       div(
-        class = "well",
-        style = "min-height: 100%; height: 100%; overflow-y: visible",
-        p("Choose provision group:"),
-        selectizeInput("skill_line", NULL,
+        class = "filterRow",
+        selectizeInput("skill_line", "Choose provision group:",
           choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and skills provision")
-        )
+        ),
+        br()
       ),
       plotlyOutput("Ach_time"),
-      p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total.", style = "font-style: italic;")
+      p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total.")
     )
     ),
     ### FE achievements by SSA----
     fluidRow(
       column(12,
-      p("All FE and skills learner achievements by SSA tier 1 (AY21/22 Aug to Jan provisional data)", style = "font-size:20px;"),
+      h1("All FE and skills learner achievements by SSA tier 1 (AY21/22 Aug to Jan provisional data)"),
       plotlyOutput("Ach_SSA_pc")
     )
 ),

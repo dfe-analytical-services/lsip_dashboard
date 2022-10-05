@@ -34,10 +34,9 @@ fluidPage(
 }
 
 .filterRow{
-            background-color: #1d70b8;
-            margin: 15px 0px 15px 15px;
-            padding-top:15px;
-            border-radius: 4px;
+background-color: #1d70b8;
+border-radius: 4px;
+padding: 15px 15px 0px 15px;
 }
           
 .chartBox{
@@ -222,9 +221,11 @@ padding-top:15px
 
     tabPanel(
       "Local Skills",
-          fluidRow(style="margin-right: 15px;",
+          fluidRow(
             column(12,
-                   class="filterRow",
+                   br(),
+                   div(
+                   class = "filterRow",
                    fluidRow(
             column(
                   width = 6,
@@ -237,6 +238,8 @@ padding-top:15px
                   uiOutput("lep2_off")
                 )
           )
+            ),
+          br(),
             )
           ),#end of filters row
 
