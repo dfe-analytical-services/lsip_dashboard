@@ -27,8 +27,74 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbar", "Local Skills")
     updateTabsetPanel(session, "datatabset", "Skills")
   })
+
+  # create table download datasets
+  output$downloadData1 <- downloadHandler(
+    filename = function() {
+      "EmploymentRateIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "1b.Emp rate" = D_EmpRate_APS1721
+      ), path = file)
+    }
+  )
+  output$downloadData2 <- downloadHandler(
+    filename = function() {
+      "EmploymentByOccupationIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "1a.Emp by occupation" = D_EmpOcc_APS1721
+      ), path = file)
+    }
+  )
+  output$downloadData3 <- downloadHandler(
+    filename = function() {
+      "VacancyIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "2.Vacancies" = C_Vacancy_ONS1722
+      ), path = file)
+    }
+  )
+  output$downloadData4 <- downloadHandler(
+    filename = function() {
+      "AcheivementIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "3b.FE achievements" = D_Achieve_ILR1621
+      ), path = file)
+    }
+  )
+  output$downloadData5 <- downloadHandler(
+    filename = function() {
+      "AchievementBySSAIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "3a.FE achievements SSA" = D_Achieve_ILR21
+      ), path = file)
+    }
+  )
+
+  # create download links
+  output$hidden_downloads <- renderUI(
+    lapply(1:5, function(i) {
+      downloadLink(paste0("downloadData", i), "download", class = "hiddenLink")
+    })
+  )
+  # create data table to show
   output$DataTbl <- renderDataTable({
-    DT::datatable(I_DataTable, escape = FALSE, options = list(dom = "t"), rownames = FALSE)
+    DT::datatable(I_DataTable %>%
+      mutate("Dashboard data" = lapply(
+        1:n(),
+        function(i) {
+          paste0('<a href="#" onClick=document.getElementById("downloadData', i, '").click() >Download</a>')
+        }
+      )), escape = FALSE, options = list(dom = "t"), rownames = FALSE)
   })
 
   # OVERVIEW ----

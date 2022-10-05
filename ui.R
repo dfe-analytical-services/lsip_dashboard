@@ -38,7 +38,7 @@ background-color: #1d70b8;
 border-radius: 4px;
 padding: 15px 15px 0px 15px;
 }
-          
+
 .chartBox{
 background-color:#f3f2f1;
 border-right: 5px solid white;
@@ -49,6 +49,10 @@ text-align: right;
 padding-right:15px;
 padding-top:15px
 }
+
+                    .hiddenLink {
+                      visibility: hidden;
+                    }
 "))),
 
   # Force the top nav bar to left allign and centre the title
@@ -120,7 +124,7 @@ padding-top:15px
             ), "."
           )
         )
-      ),#end intro text row
+      ), # end intro text row
 
       ## dashboard contents -------------------------------------------------------
       fluidRow(
@@ -184,79 +188,82 @@ padding-top:15px
             )
           )
         )
-      ) #end of version control row
+      ) # end of version control row
     ), # end of Tab Panel
 
     tabPanel(
       "Data",
-          fluidRow(
-            column(
-              12,
-              h1("Data sources"),
-              dataTableOutput("DataTbl")
-            )
-          ),#end of data table row
-          br(),
-          fluidRow(
-            column(
-              12,
-              h2("Data information"),
-              h3("Annual Population Survey (APS)"),
-              p("A continuous household survey covering the UK.
+      fluidRow(
+        column(
+          12,
+          h1("Data sources"),
+          dataTableOutput("DataTbl"),
+          uiOutput("hidden_downloads")
+        )
+      ), # end of data table row
+      br(),
+      fluidRow(
+        column(
+          12,
+          h2("Data information"),
+          h3("Annual Population Survey (APS)"),
+          p("A continuous household survey covering the UK.
                              The dashboard uses employment volumes and rates for each LEP and split by sub-major SOC 2010 grouping.
                              The data are for interviews conducted over the calendar year (2017-2021 are shown).
                              "),
-              h3("ONS Online Job Adverts"),
-              p("These data tables are created based upon online job adverts data provided by Adzuna.
+          h3("ONS Online Job Adverts"),
+          p("These data tables are created based upon online job adverts data provided by Adzuna.
                              Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022. The monthly average is derived from weekly snapshots in January.
                              The dashboard shows job 'units' which is the number of job adverts divided a set value for all regions. It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across regions or to follow trends over time."),
-              h3("Individualised Learner Records (ILR)"),
-              p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England.
+          h3("Individualised Learner Records (ILR)"),
+          p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England.
                              The dashboard uses FE and skills learner achievements over time (AY1617-21/22 (provisional data to January for 21/22)) split by apprenticeships, community learning, education and training.
                              The data is taken from the FE and Skills official statistics."),
-            )
-          )#end of data information row
-    ),#end of data tab
+        )
+      ) # end of data information row
+    ), # end of data tab
     # APP ----
 
     tabPanel(
       "Local Skills",
-          fluidRow(
-            column(12,
-                   br(),
-                   div(
-                   class = "filterRow",
-                   fluidRow(
-            column(
-                  width = 6,
-                  selectInput("lep1", "Choose primary LEP area",
-                    choices = C_LEP2020
-                  )
-                ),
-                column(
-                  width = 6,
-                  uiOutput("lep2_off")
-                )
-          )
-            ),
+      fluidRow(
+        column(
+          12,
           br(),
+          div(
+            class = "filterRow",
+            fluidRow(
+              column(
+                width = 6,
+                selectInput("lep1", "Choose primary LEP area",
+                  choices = C_LEP2020
+                )
+              ),
+              column(
+                width = 6,
+                uiOutput("lep2_off")
+              )
             )
-          ),#end of filters row
+          ),
+          br(),
+        )
+      ), # end of filters row
 
-          # next row is the data tabs
-          fluidRow(
-            column(12,
-            tabsetPanel(
-              id = "datatabset",
-              panel_overview(),
-              panel_employment(),
-              panel_vacancies(),
-              panel_skills()
-            ) # end of dashboard tabset panel
-          ) # end of dashboard navbar
-          )
-        
-    #  ) # end of app data row
+      # next row is the data tabs
+      fluidRow(
+        column(
+          12,
+          tabsetPanel(
+            id = "datatabset",
+            panel_overview(),
+            panel_employment(),
+            panel_vacancies(),
+            panel_skills()
+          ) # end of dashboard tabset panel
+        ) # end of dashboard navbar
+      )
+
+      #  ) # end of app data row
     ), # end of app tab panel
 
     # Create the accessibility statement-----------------

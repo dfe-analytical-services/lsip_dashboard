@@ -213,21 +213,23 @@ panel_vacancies <- function() {
       uiOutput("vac_comp")
     ),
     fluidRow(
-      column(12,
-      ### Online job vacancy units over time line chart ----
-      h2("Online job vacancy unit trend"),
-      plotlyOutput("jobad.time")
-    )
+      column(
+        12,
+        ### Online job vacancy units over time line chart ----
+        h2("Online job vacancy unit trend"),
+        plotlyOutput("jobad.time")
+      )
     ), # end of box
     fluidRow(
-column(12,
-      details(
-        inputId = "SubsLev",
-        label = "Chart information",
-        help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
+      column(
+        12,
+        details(
+          inputId = "SubsLev",
+          label = "Chart information",
+          help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
               The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between LEPS and over time, but do not represent true job vacancy volumes."
+        )
       )
-    )
     ),
     ### Downloads-------------
     br(),
@@ -278,45 +280,48 @@ panel_skills <- function() {
     ),
     ### Achievements over time line chart ----
     fluidRow(
-column(12,
-      h2("FE and skills learner achievement trend"),
-      div(
-        class = "filterRow",
-        selectizeInput("skill_line", "Choose provision group:",
-          choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and skills provision")
+      column(
+        12,
+        h2("FE and skills learner achievement trend"),
+        div(
+          class = "filterRow",
+          selectizeInput("skill_line", "Choose provision group:",
+            choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and skills provision")
+          ),
+          br()
         ),
-        br()
-      ),
-      plotlyOutput("Ach_time"),
-      p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total.")
-    )
+        plotlyOutput("Ach_time"),
+        p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total.")
+      )
     ),
     ### FE achievements by SSA----
     fluidRow(
-      column(12,
-      h1("All FE and skills learner achievements by SSA tier 1 (AY21/22 Aug to Jan provisional data)"),
-      plotlyOutput("Ach_SSA_pc")
-    )
-),
+      column(
+        12,
+        h1("All FE and skills learner achievements by SSA tier 1 (AY21/22 Aug to Jan provisional data)"),
+        plotlyOutput("Ach_SSA_pc")
+      )
+    ),
     column(width = 12, br("")), # put in to push below the fixed height chart
     column(width = 12, br("")),
     ### FE definitions----
     fluidRow(
-column(12,
-      details(
-        inputId = "FEdefs",
-        label = "FE definitions",
-        tags$ul(
-          tags$li("FE and skills include all age apprenticeships and wider adult (19+) FE learning, such as community learning and education and training."),
-          tags$li("Further Education covers publicly-funded learning delivered by an FE institution, a training provider or within a local community. It also includes apprenticeships delivered in the workplace. It does not include higher education, unless delivered as part of an apprenticeship programme."),
-          tags$li("Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications."),
-          tags$li("Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups."),
-          tags$li("Education and training is mainly classroom-based adult FE that is not an apprenticeship or community learning."),
-          tags$li("Achievements are the number of learners who successfully complete an individual aim in an academic year. ")
+      column(
+        12,
+        details(
+          inputId = "FEdefs",
+          label = "FE definitions",
+          tags$ul(
+            tags$li("FE and skills include all age apprenticeships and wider adult (19+) FE learning, such as community learning and education and training."),
+            tags$li("Further Education covers publicly-funded learning delivered by an FE institution, a training provider or within a local community. It also includes apprenticeships delivered in the workplace. It does not include higher education, unless delivered as part of an apprenticeship programme."),
+            tags$li("Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications."),
+            tags$li("Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups."),
+            tags$li("Education and training is mainly classroom-based adult FE that is not an apprenticeship or community learning."),
+            tags$li("Achievements are the number of learners who successfully complete an individual aim in an academic year. ")
+          )
         )
       )
-    )
-),
+    ),
     fluidRow(
       column(
         width = 3,
