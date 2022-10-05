@@ -37,3 +37,6 @@ C_Vacancy_ONS1722 <- read.csv(file = "./Data/AppData/C_Vacancy_ONS1722.csv", che
 C_Vacancy_England <- read.csv(file = "./Data/AppData/C_Vacancy_England.csv", check.names = FALSE)
 C_Vacancy_England_max_min <- read.csv(file = "./Data/AppData/C_Vacancy_England_max_min.csv", check.names = FALSE)
 C_Vacancy_England_change <- read.csv(file = "./Data/AppData/C_Vacancy_England_change.csv", check.names = FALSE)
+
+## Data table ----
+I_DataTable <- read.csv(file = "./Data/AppData/I_DataTable.csv", check.names = FALSE)
