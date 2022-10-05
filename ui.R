@@ -23,6 +23,7 @@ fluidPage(
     tags$meta(name = "subject", content = "Education data dashboards.")
   ),
   # Set title for search engines
+
   HTML("<title>Local Skills Dashboard</title>"),
   tags$head(includeHTML(("google-analytics.html"))),
 
