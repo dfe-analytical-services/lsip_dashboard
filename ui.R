@@ -234,16 +234,17 @@ padding-top:15px
           div(
             class = "filterRow",
             fluidRow(
-            column(style="color:#fff",
-            width=4,
-            selectInput("GeoType", "Choose geography level:",
-                        choices = list("LEP", "LSIP"),
-                        selected = "LEP"
-            )
-            ),
+              column(
+                style = "color:#fff",
+                width = 4,
+                selectInput("GeoType", "Choose geography level:",
+                  choices = list("LEP", "LSIP"),
+                  selected = "LEP"
+                )
+              ),
               column(
                 width = 4,
-uiOutput("lep1_geo"),
+                uiOutput("lep1_geo"),
               ),
               column(
                 width = 4,

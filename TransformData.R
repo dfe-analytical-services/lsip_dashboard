@@ -266,8 +266,8 @@ format.AchieveSSA.ILR <- function(x) {
     group_by(time_period, area, geographic_level, ssa_t1_desc) %>% # sum for each LSIP
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    mutate_at(c(5:5), as.character)  # Convert to sring to bind
-    
+    mutate_at(c(5:5), as.character) # Convert to sring to bind
+
   # create lsip file
   addLSIP <- x %>%
     filter(geographic_level == "localAuthorityDistrict") %>%
@@ -282,10 +282,10 @@ format.AchieveSSA.ILR <- function(x) {
     group_by(time_period, area, geographic_level, ssa_t1_desc) %>% # sum for each LSIP
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    mutate_at(c(5:5), as.character)  # Convert to sring to bind
+    mutate_at(c(5:5), as.character) # Convert to sring to bind
 
   # join together
-  bind_rows(x %>% select(-location_code, -notional_nvq_level, -ethnicity_group, -gender), addLEP, addLSIP)%>%
+  bind_rows(x %>% select(-location_code, -notional_nvq_level, -ethnicity_group, -gender), addLEP, addLSIP) %>%
     rename_all(recode, e_and_t_aims_ach = "achievements")
 }
 
