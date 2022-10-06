@@ -51,9 +51,9 @@ padding-right:15px;
 padding-top:15px
 }
 
-                    .hiddenLink {
-                      visibility: hidden;
-                    }
+.hiddenLink {
+  visibility: hidden;
+}
 "))),
 
   # Force the top nav bar to left allign and centre the title
@@ -234,20 +234,20 @@ padding-top:15px
           div(
             class = "filterRow",
             fluidRow(
-            column(
-            width=3,
-                      radioButtons("GeoType",
-            label = "Choose geography level:",
-            choices = list("LEP", "LSIP"),
-            selected = "LEP"
-          )
-            ),
               column(
-                width = 3,
-uiOutput("lep1_geo"),
+                style = "color:#fff",
+                width = 4,
+                selectInput("GeoType", "Choose geography level:",
+                  choices = list("LEP", "LSIP"),
+                  selected = "LEP"
+                )
               ),
               column(
-                width = 3,
+                width = 4,
+                uiOutput("lep1_geo"),
+              ),
+              column(
+                width = 4,
                 uiOutput("lep2_off")
               )
             )
