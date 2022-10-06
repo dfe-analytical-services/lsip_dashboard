@@ -234,14 +234,20 @@ padding-top:15px
           div(
             class = "filterRow",
             fluidRow(
+            column(
+            width=3,
+                      radioButtons("GeoType",
+            label = "Choose geography level:",
+            choices = list("LEP", "LSIP"),
+            selected = "LEP"
+          )
+            ),
               column(
-                width = 6,
-                selectInput("lep1", "Choose primary LEP area",
-                  choices = C_LEP2020
-                )
+                width = 3,
+uiOutput("lep1_geo"),
               ),
               column(
-                width = 6,
+                width = 3,
                 uiOutput("lep2_off")
               )
             )

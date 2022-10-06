@@ -10,9 +10,9 @@
 # Load libraries ----
 library(openxlsx)
 
-## Load list of LEPs 2020 ----
-folder <- "1_LEPlist"
-sheetNum <- 1
+## Load list of LEPs 2020 and LA-LSIP lookup ----
+folder <- "1_GeogLkup"
+sheetNum <- "LAD21 - LSIP - LEP21"
 I_LEP2020 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 # Load missing LAD-LEP lookup. This happens because we have some old LADs in the ILR data that have since been made inactive. These do not feature in the most recent LAD-LEP matching. We have manually mapped these LADs to the latest LEPS (2021)
