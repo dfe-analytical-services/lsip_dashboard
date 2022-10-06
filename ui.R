@@ -29,7 +29,8 @@ fluidPage(
 
   # internal CSS
   # remove the max width of the main panel so spreads across screen
-  tags$head(tags$style(HTML("
+  tags$head(
+    tags$style(HTML("
 .govuk-width-container {
     max-width: 100%;
 }
@@ -56,18 +57,18 @@ padding-top:15px
 }
 
 /* styles for menu button - move to stylesheet */
-    
+
     #menuButton {
       display: none;
       width: auto;
     }
-    
+
     .menuBtn {
       color: #fff;
       float: left;
       padding: 10px;
     }
-    
+
         .menuBtn:focus {
       color: #fff;
       background-color: #000;
@@ -80,34 +81,35 @@ padding-top:15px
       }
       .nav-stacked.active {
         display: block;
-      }  
-    
+      }
+
       #menuButton {
         display: block;
       }
-    
+
       .menuBtn.active {
         background-color: #fff;
         color: #000;
       }
-      
+
       /* end of styles for menu button */
-    
+
     }
 
 ")),
-            tags$script(HTML(
-              '
+    tags$script(HTML(
+      '
     /* javascript function for menu button */
     function collapseMenu() {
       var x = document.getElementById("navbar");
       x.classList.toggle("active");
-      
+
       var x = document.getElementById("menuButton");
       x.classList.toggle("active");
     }
-    '))
-            ),
+    '
+    ))
+  ),
 
   # Force the top nav bar to left allign and centre the title
   HTML('<header class="govuk-header" role="banner">
