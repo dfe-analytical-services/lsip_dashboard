@@ -427,3 +427,7 @@ C_Vacancy_England_change <- C_Vacancy_England %>%
   filter(year == "2022") %>%
   select(geographic_level, area, Percentage_Change)
 write.csv(C_Vacancy_England_change, file = "Data\\AppData\\C_Vacancy_England_change.csv", row.names = FALSE)
+
+# Tidy up data table
+names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
+write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
