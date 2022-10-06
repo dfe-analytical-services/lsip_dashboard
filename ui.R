@@ -54,7 +54,60 @@ padding-top:15px
 .hiddenLink {
   visibility: hidden;
 }
-"))),
+
+/* styles for menu button - move to stylesheet */
+    
+    #menuButton {
+      display: none;
+      width: auto;
+    }
+    
+    .menuBtn {
+      color: #fff;
+      float: left;
+      padding: 10px;
+    }
+    
+        .menuBtn:focus {
+      color: #fff;
+      background-color: #000;
+    }
+
+
+    @media (max-width: 767px) {
+      .nav-stacked {
+        display: none;
+      }
+      .nav-stacked.active {
+        display: block;
+      }  
+    
+      #menuButton {
+        display: block;
+      }
+    
+      .menuBtn.active {
+        background-color: #fff;
+        color: #000;
+      }
+      
+      /* end of styles for menu button */
+    
+    }
+
+")),
+            tags$script(HTML(
+              '
+    /* javascript function for menu button */
+    function collapseMenu() {
+      var x = document.getElementById("navbar");
+      x.classList.toggle("active");
+      
+      var x = document.getElementById("menuButton");
+      x.classList.toggle("active");
+    }
+    '))
+            ),
 
   # Force the top nav bar to left allign and centre the title
   HTML('<header class="govuk-header" role="banner">
@@ -68,8 +121,10 @@ padding-top:15px
     </a>
     </div>
     <div class="govuk-header__content" style="width: 70%; text-align: center;float:left;">
-    <a href="https://www.gov.uk/government/groups/unit-for-future-skills" class="govuk-header__link govuk-header__link--service-name">Unit for Future Skills - Local Skills Dashboard</a>
+    <a href="https://www.gov.uk/government/groups/unit-for-future-skills" class="govuk-header__link govuk-header__link--service-name" style="font-size: 24px;">Unit for Future Skills - Local Skills Dashboard</a>
     </div>
+        <a href="javascript:void(0);" id="menuButton" class="menuBtn" onclick="collapseMenu()">
+    <i class="fa fa-bars" style="font-size:24px;"></i></a>
     </div>
     </header>'),
   # This is the old code if we need it
