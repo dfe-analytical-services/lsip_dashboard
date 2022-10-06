@@ -427,3 +427,275 @@ C_Vacancy_England_change <- C_Vacancy_England %>%
   filter(year == "2022") %>%
   select(geographic_level, area, Percentage_Change)
 write.csv(C_Vacancy_England_change, file = "Data\\AppData\\C_Vacancy_England_change.csv", row.names = FALSE)
+
+
+## APS - emoloyment by industry data
+# Reshape vacancy data to long, rename and reorder and reformat some columns
+
+format.empind.APS <- function(x) {
+  reformat <- x %>%
+    mutate(year = ifelse(annual.population.survey == "date", X2, NA)) %>% # tag time periods
+    fill(year) %>% # fill time periods for all rows
+    row_to_names(row_number = 4) %>% # set col names
+    clean_names() %>%
+    select(-starts_with("na")) %>% # remove na columns (flags and confidence)
+    mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
+    filter(check == 1) %>%
+    filter(!grepl("nomisweb", area)) %>%
+    select(year = apr_2017_mar_2018, area, everything(), -check) %>% # reorder and remove
+    mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
+    mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
+    mutate(area = case_when(
+      area == "Hull and East Riding" ~ "Hull and East Yorkshire",
+      area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+      TRUE ~ area
+    )) %>% # Rename so matches official name
+    relocate(geographic_level, year, .after = area) %>%
+    mutate(year = as.numeric(substr(year, 5, 8))) %>%
+    rename_with(
+      .fn = ~ str_replace_all(.x, c("t13a_" = "", "all_people" = "", "(sic 2007)" = "", "_" = " ", "sic" = "")),
+      .cols = starts_with("t13a_")
+    ) %>%
+    rename_with(~ gsub("[[:digit:]]+", "", .)) %>% # remove numbers from occupations since they don't match the ONS ones
+    mutate(geographic_level = toupper(geographic_level))
+  
+  addlsip <- reformat %>%
+    filter(geographic_level == "LADU") %>%
+    left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
+    filter(is.na(LSIP) == FALSE) %>% # remove non-english
+    select(-area) %>% # get rid of ladu area
+    mutate(geographic_level = "LSIP") %>% # rename as lsip
+    rename(area = LSIP) %>%
+    relocate(area, .before = geographic_level) %>%
+    mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+    mutate_at(c(4:12), as.numeric) %>% # Convert to numeric
+    group_by(year, area, geographic_level) %>% # sum for each LSIP
+    summarise(across(everything(), list(sum), na.rm = T)) %>%
+    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+    mutate_at(c(4:12), as.character) # Convert to sring to bind
+  
+  # join together
+  bind_rows(reformat, addlsip)
+  
+  
+}
+
+
+F_empind_APS1722 <- format.empind.APS(I_EmpInd_APS1721)
+
+#Downloadable version
+D_empind_APS1721 <- F_empind_APS1722 %>%
+  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+#Write the data to folder
+
+## APS - Skill level of the working age population (% 16-64 year olds qualified to Level 2, level 3, level 4+)
+# Reshape vacancy data to long, rename and reorder and reformat some columns
+
+format.skills.APS <- function(x) {
+  reformat <- x %>%
+    mutate(year = ifelse(annual.population.survey == "date", X2, NA)) %>% # tag time periods
+    fill(year)%>% # fill time periods for all rows
+    row_to_names(row_number = 4)%>% # set col names
+    clean_names()%>%
+    select(-starts_with("na"))%>% # remove na columns (flags and confidence)
+    mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
+    filter(check == 1) %>%
+    filter(!grepl("nomisweb", area)) %>%
+    select(year = jan_2021_dec_2021, area, everything(), -check) %>% # reorder and remove
+    mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
+    mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
+    mutate(area = case_when(
+      area == "Hull and East Riding" ~ "Hull and East Yorkshire",
+      area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+      TRUE ~ area
+    )) %>% # Rename so matches official name
+    relocate(geographic_level, year, .after = area) %>%
+    mutate(year = as.numeric(substr(year, 5, 8))) %>%
+    rename_with(
+      .fn = ~ str_replace_all(.x, c("t19_" = "", "_" = " ", "all people" = "")),
+      .cols = starts_with("t19_")
+    ) %>%
+    # rename_with(~ gsub("[[:digit:]]+", "", .)) %>% # remove numbers from occupations since they don't match the ONS ones
+    mutate(geographic_level = toupper(geographic_level))
+  
+  addlsip <- reformat %>%
+    filter(geographic_level == "LADU") %>%
+    left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
+    filter(is.na(LSIP) == FALSE) %>% # remove non-english
+    select(-area) %>% # get rid of ladu area
+    mutate(geographic_level = "LSIP") %>% # rename as lsip
+    rename(area = LSIP) %>%
+    relocate(area, .before = geographic_level) %>%
+    mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+    mutate_at(c(4:38), as.numeric) %>% # Convert to numeric
+    group_by(year, area, geographic_level) %>% # sum for each LSIP
+    summarise(across(everything(), list(sum), na.rm = T)) %>%
+    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+    mutate_at(c(4:38), as.character) # Convert to sring to bind
+  
+  # join together
+  bind_rows(reformat, addlsip)
+  
+}
+
+F_skillsnvq_APS2021 <- format.skills.APS(I_Skillsnvq_APS2021)
+
+#Downloadable version
+D_skillsnvq_APS2021 <- F_skillsnvq_APS2021 %>%
+  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+#write the data to folder
+
+
+## UK Business Count - employment by enterprise
+# Reshape vacancy data to long, rename and reorder and reformat some columns
+
+format.empent.UBC <- function(x) {
+  reformat <- x %>%
+    rename(business_counts = "UK.Business.Counts.-.enterprises.by.industry.and.employment.size.band") %>%
+    mutate(year = ifelse(business_counts == "date", X2, NA)) %>% # tag time periods
+    fill(year) %>%
+    row_to_names(row_number = 5) %>% # set col names
+    clean_names() %>%
+    rename(year = "x2018") %>%
+    mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
+    filter(check == 1) %>%
+    filter(!grepl("nomisweb", area)) %>%
+    select(area, everything(), -check) %>% # reorder and remove
+    mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
+    mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
+    mutate(area = case_when(
+      area == "Hull and East Riding" ~ "Hull and East Yorkshire",
+      area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+      TRUE ~ area
+    )) %>%
+    relocate(geographic_level, year, .after = area) %>%
+    mutate(geographic_level = toupper(geographic_level))
+  
+  addlsip <- reformat %>%
+    filter(geographic_level == "LADU") %>%
+    left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
+    filter(is.na(LSIP) == FALSE) %>% # remove non-english
+    select(-area) %>% # get rid of ladu area
+    mutate(geographic_level = "LSIP") %>% # rename as lsip
+    rename(area = LSIP) %>%
+    relocate(area, .before = geographic_level) %>%
+    mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+    mutate_at(c(4:8), as.numeric) %>% # Convert to numeric
+    group_by(year, area, geographic_level) %>% # sum for each LSIP
+    summarise(across(everything(), list(sum), na.rm = T)) %>%
+    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+    rename(small_10_to_49 = "small0_to_49") %>%
+    mutate_at(c(4:8), as.character) # Convert to sring to bind
+  
+  # join together
+  bind_rows(reformat, addlsip)
+}
+
+
+F_empent_UBC1822 <- format.empent.UBC(I_EmpEnt_APS1721)
+
+#Downloadable version
+D_empent_UBC1822 <- F_empent_UBC1822 %>%
+  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+#write the data to folder
+
+## National Pupil Register - Key Stage 4 Destinations
+# Reshape vacancy data to long, rename and reorder and reformat some columns
+
+format.ks4 <- function(x) {
+  colnames(x)[1] <- "area"
+  
+  # create lep file
+  addLEP <- x %>%
+    left_join(select(C_LADLEP2020, -LAD21NM), by = c("location_code" = "LAD21CD")) %>%
+    filter(is.na(LEP) == FALSE) %>% # remove non-english
+    select(-area, -location_code) %>% # get rid of ladu area
+    mutate(geographic_level = "LEP") %>% # rename as lsip
+    rename(area = LEP) %>%
+    relocate(area, .before = geographic_level) %>%
+    mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+    mutate_at(c(8:13), as.numeric) %>% # Convert to numeric
+    select(-data_type, -institution_group, -level_methodology, -characteristic) %>%
+    group_by(area, geographic_level, time_period) %>% # sum for each LSIP
+    summarise(across(everything(), list(sum), na.rm = T)) %>%
+    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+    mutate_at(c(4:9), as.character) # Convert to sring to bind
+  
+  addLSIP <- x %>%
+    left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
+    filter(is.na(LSIP) == FALSE) %>% # remove non-english
+    select(-area, -location_code) %>% # get rid of ladu area
+    mutate(geographic_level = "LSIP") %>% # rename as lsip
+    rename(area = LSIP) %>%
+    relocate(area, .before = geographic_level) %>%
+    mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+    mutate_at(c(8:13), as.numeric) %>% # Convert to numeric
+    select(-data_type, -institution_group, -level_methodology, -characteristic) %>%
+    group_by(area, geographic_level, time_period) %>% # sum for each LSIP
+    summarise(across(everything(), list(sum), na.rm = T)) %>%
+    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+    mutate_at(c(4:9), as.character) # Convert to string to bind
+  
+  # join together
+  bind_rows(addLEP, addLSIP)
+  
+}    
+
+F_KS4destin_ILR1920<- format.ks4(I_KS4destin_ILR1920)  
+
+#Downloadable data
+D_KS4destin_ILR1920 <- F_KS4destin_ILR1920 %>%
+  mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+#write data to folder
+
+## National Pupil Register - Key Stage 5 Destinations
+# Reshape vacancy data to long, rename and reorder and reformat some columns
+
+format.ks5 <- function(x) {
+  colnames(x)[1] <- "area"
+  
+  # create lep file
+  addLEP <- x %>%
+    left_join(select(C_LADLEP2020, -LAD21NM), by = c("location_code" = "LAD21CD")) %>%
+    filter(is.na(LEP) == FALSE) %>% # remove non-english
+    select(-area, -location_code) %>% # get rid of ladu area
+    mutate(geographic_level = "LEP") %>% # rename as lsip
+    rename(area = LEP) %>%
+    relocate(area, .before = geographic_level) %>%
+    mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+    mutate_at(c(9:14), as.numeric) %>% # Convert to numeric
+    select(-data_type, -institution_group, -level_methodology, -characteristic) %>%
+    group_by(area, geographic_level, time_period, cohort_level_group) %>% # sum for each LSIP
+    summarise(across(everything(), list(sum), na.rm = T)) %>%
+    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+    mutate_at(c(5:10), as.character) # Convert to sring to bind
+  
+  addLSIP <- x %>%
+    left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
+    filter(is.na(LSIP) == FALSE) %>% # remove non-english
+    select(-area, -location_code) %>% # get rid of ladu area
+    mutate(geographic_level = "LSIP") %>% # rename as lsip
+    rename(area = LSIP) %>%
+    relocate(area, .before = geographic_level) %>%
+    mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+    mutate_at(c(9:14), as.numeric) %>% # Convert to numeric
+    select(-data_type, -institution_group, -level_methodology, -characteristic) %>%
+    group_by(area, geographic_level, time_period, cohort_level_group) %>% # sum for each LSIP
+    summarise(across(everything(), list(sum), na.rm = T)) %>%
+    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+    mutate_at(c(5:10), as.character) # Convert to string to bind
+  
+  # join together
+  bind_rows(addLEP, addLSIP)
+  
+} 
+
+F_KS5destin_ILR1920 <- format.ks5(I_KS5destin_ILR1920)
+
+#downloadable version
+D_KS5destin_ILR1920 <- F_KS5destin_ILR1920 %>%
+  mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+#write data to folder - todo
+
+
+
