@@ -99,15 +99,37 @@ server <- function(input, output, session) {
 
   # OVERVIEW ----
 
+  # alter area dropdown depending if lep or lsip
+  output$lep1_geo <- renderUI({
+    if (input$GeoType == "LEP") {
+      selectInput("lep1", "Choose primary LEP area",
+        choices = C_LEP2020 %>% filter(geographic_level == "LEP") %>% select(Area),
+        selected = input$lep1
+      )
+    } else {
+      selectInput("lep1", "Choose primary LSIP area",
+        choices = C_LEP2020 %>% filter(geographic_level == "LSIP") %>% select(Area),
+        selected = input$lep1
+      )
+    }
+  })
+
   # turn off lep 2 for overview page (as not used here)
   output$lep2_off <- renderUI({
     if (input$datatabset == "Overview") {
       p("")
     } else {
-      selectInput("lep2", "Choose comparison LEP area",
-        choices = c("\nNone", unique(C_LEP2020) %>% filter(LEP != input$lep1)), # filter out lep1
-        selected = input$lep2 # select this so lep two is consistent across tabs
-      )
+      if (input$GeoType == "LEP") {
+        selectInput("lep2", "Choose comparison LEP area",
+          choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LEP", Area != input$lep1) %>% select(Area)),
+          selected = input$lep2
+        )
+      } else {
+        selectInput("lep2", "Choose comparison LSIP area",
+          choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LSIP", Area != input$lep1) %>% select(Area)),
+          selected = input$lep2
+        )
+      }
     }
   })
 
@@ -137,11 +159,11 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data0 <- reactive({
     list(
-      "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == "lep", area == input$lep1),
-      "1b.Emp rate" = filter(D_EmpRate_APS1721, geographic_level == "lep", area == input$lep1),
-      "2.Vacancies" = filter(C_Vacancy_ONS1722, LEP == input$lep1),
-      "3a.FE achievements SSA" = filter(D_Achieve_ILR21, LEP == input$lep1),
-      "3b.FE achievements" = filter(D_Achieve_ILR1621, LEP == input$lep1)
+      "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
+      "1b.Emp rate" = filter(D_EmpRate_APS1721, geographic_level == input$GeoType, area == input$lep1),
+      "2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType,area == input$lep1),
+      "3a.FE achievements SSA" = filter(D_Achieve_ILR21, geographic_level == input$GeoType,area == input$lep1),
+      "3b.FE achievements" = filter(D_Achieve_ILR1621, geographic_level == input$GeoType,area == input$lep1)
     )
   })
   output$download_btn0b <- downloadHandler(
@@ -156,9 +178,9 @@ server <- function(input, output, session) {
   ## KPIs and charts----
 
   # get emp data for current lep
-  empLEP <- reactive({
+  empLEP <- eventReactive(input$lep1,{
     C_EmpRate_APS1721 %>%
-      filter(area == input$lep1)
+      filter(area == input$lep1, geographic_level == input$GeoType)
   })
   # get 2021 values
   emp2021 <- reactive({
@@ -192,7 +214,7 @@ server <- function(input, output, session) {
   })
 
   # Emp chart
-  empLineChart <- reactive({
+  empLineChart <- eventReactive(input$lep1,{
     # call 2020 to 2021 change  for chosen LEP
     empCntChange <- emp2021()$Employment - emp2020()$Employment
     empLine <- empLEP()
@@ -239,6 +261,9 @@ server <- function(input, output, session) {
   )
 
   output$empLineChart <- renderPlotly({
+    validate(
+      need(input$lep1 != "", "") # if area not yet loaded don't try to load ch
+    )
     ggplotly(empLineChart(),
       tooltip = "text",
       height = 81
@@ -276,10 +301,10 @@ server <- function(input, output, session) {
   EmpRateMax <- C_EmpRate_APS1721 %>%
     summarise(max(empRate, na.rm = T), .groups = "drop")
 
-  empRateLineChart <- reactive({
+  empRateLineChart <- eventReactive(input$lep1,{
     empRateChange <- emp2021()$empRate - emp2020()$empRate
     empRateLine <- C_EmpRate_APS1721 %>%
-      filter(area == input$lep1 | area == "England")
+      filter((geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"))
 
     ggplot(empRateLine, aes(
       x = Year, y = empRate,
@@ -290,16 +315,16 @@ server <- function(input, output, session) {
         "Employment rate: ", format(100 * empRate, digit = 2), "%<br>"
       )
     )) +
-      geom_line(data = empRateLine %>% filter(Year <= 20, geographic_level == "lep")) +
-      geom_line(data = empRateLine %>% filter(geographic_level == "country"), alpha = 0.5) +
+      geom_line(data = empRateLine %>% filter(Year <= 20, geographic_level == input$GeoType)) +
+      geom_line(data = empRateLine %>% filter(geographic_level == "COUNTRY"), alpha = 0.5) +
       geom_ribbon(
-        data = empRateLine %>% filter(Year >= 20, geographic_level == "lep"),
+        data = empRateLine %>% filter(Year >= 20, geographic_level == input$GeoType),
         aes(ymin = min(empRate), ymax = empRate),
         fill = ifelse(empRateChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = empRateLine %>% filter(Year >= 20, geographic_level == "lep"),
+        data = empRateLine %>% filter(Year >= 20, geographic_level == input$GeoType),
         color = ifelse(empRateChange > 0, "#00703c", "#d4351c")
       ) +
       theme_classic() +
@@ -344,19 +369,19 @@ server <- function(input, output, session) {
   })
 
   #### ONS job advert units  ----
-  # get vac data for current lep
-  VacLEP <- reactive({
+  # get vac data for current area chosen
+  VacArea <- eventReactive(input$lep1,{
     C_Vacancy_England %>%
-      filter(LEP == input$lep1)
+      filter(area == input$lep1, geographic_level == input$GeoType)
   })
   # get 2022 values
   Vac2022 <- reactive({
-    VacLEP() %>%
+    VacArea() %>%
       filter(year == "2022")
   })
   # get 2021 values
   Vac2021 <- reactive({
-    VacLEP() %>%
+    VacArea() %>%
       filter(year == "2021")
   })
 
@@ -378,13 +403,13 @@ server <- function(input, output, session) {
   })
 
   # Vacancy chart
-  VacLineChart <- reactive({
-    VacLine <- VacLEP()
+  VacLineChart <- eventReactive(input$lep1,{
+    VacLine <- VacArea()
     VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
 
-    VacMinMax <- C_Vacancy_England_max_min %>% filter(LEP == input$lep1)
+    VacMinMax <- C_Vacancy_England_max_min %>% filter(area == input$lep1, geographic_level == input$GeoType)
 
-    ggplot(VacLine, aes(x = Year, y = jobpc, group = LEP, text = paste0(
+    ggplot(VacLine, aes(x = Year, y = jobpc, group = area, text = paste0(
       "Year: ", year, "<br>",
       "England vacancy share: ", format(100 * jobpc, digit = 2), "%<br>"
     ))) +
@@ -442,10 +467,11 @@ server <- function(input, output, session) {
   #### E&T achievements ----
 
   # get EandT data for current lep
-  EtLEP <- reactive({
+  EtLEP <- eventReactive(input$lep1,{
     C_Achieve_ILR1621 %>%
       filter(
-        LEP == input$lep1,
+        geographic_level == input$GeoType,
+        area == input$lep1,
         level_or_type == "Education and training: Total"
       )
   })
@@ -461,10 +487,10 @@ server <- function(input, output, session) {
   })
 
   output$skisup.ETach <- renderUI({
-    ETach <- Et2021()$Ach
+    ETach <- Et2021()$achievements
 
     # E&T achievements change
-    ETachChange <- Et2021()$Ach - Et1920()$Ach
+    ETachChange <- Et2021()$achievements - Et1920()$achievements
 
     # print with formatting
     h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
@@ -480,22 +506,23 @@ server <- function(input, output, session) {
   })
 
   # e and t chart
-  etLineChart <- reactive({
+  etLineChart <- eventReactive(input$lep1,{
     etLine <- EtLEP()
-    etCntChange <- Et2021()$Ach - Et1920()$Ach
+    etCntChange <- Et2021()$achievements - Et1920()$achievements
     EtMinMax <- C_Achieve_ILR1621_max_min %>% filter(
-      LEP == input$lep1,
+      geographic_level == input$GeoType,
+      area == input$lep1,
       level_or_type == "Education and training: Total"
     )
 
-    ggplot(etLine, aes(x = Year, y = Ach, group = LEP, text = paste0(
+    ggplot(etLine, aes(x = Year, y = achievements, group = area, text = paste0(
       "Academic year: ", time_period, "<br>",
-      "Achievements: ", format(Ach, big.mark = ","), "<br>"
+      "Achievements: ", format(achievements, big.mark = ","), "<br>"
     ))) +
       geom_line(data = etLine %>% filter(Year <= 19)) +
       geom_ribbon(
         data = etLine %>% filter(Year >= 19),
-        aes(ymin = min(Ach), ymax = Ach),
+        aes(ymin = min(achievements), ymax = achievements),
         fill = ifelse(etCntChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
@@ -541,10 +568,11 @@ server <- function(input, output, session) {
 
   #### App achievements ----
   # get App data for current lep
-  AppLEP <- reactive({
+  AppLEP <- eventReactive(input$lep1,{
     C_Achieve_ILR1621 %>%
       filter(
-        LEP == input$lep1,
+        geographic_level == input$GeoType,
+        area == input$lep1,
         level_or_type == "Apprenticeships: Total"
       )
   })
@@ -559,10 +587,10 @@ server <- function(input, output, session) {
       filter(time_period == "201920")
   })
   output$skisup.APPach <- renderUI({
-    Appach <- App2021()$Ach
+    Appach <- App2021()$achievements
 
     # E&T achievements change
-    AppachChange <- App2021()$Ach - App1920()$Ach
+    AppachChange <- App2021()$achievements - App1920()$achievements
 
     # print with formatting
     h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
@@ -578,23 +606,24 @@ server <- function(input, output, session) {
   })
 
   # app chart
-  AppLineChart <- reactive({
+  AppLineChart <- eventReactive(input$lep1,{
     AppLine <- AppLEP()
-    AppCntChange <- App2021()$Ach - App1920()$Ach
+    AppCntChange <- App2021()$achievements - App1920()$achievements
     AppMinMax <- C_Achieve_ILR1621_max_min %>% filter(
-      LEP == input$lep1,
+      geographic_level == input$GeoType,
+      area == input$lep1,
       level_or_type == "Apprenticeships: Total"
     )
 
 
-    ggplot(AppLine, aes(x = Year, y = Ach, group = LEP, text = paste0(
+    ggplot(AppLine, aes(x = Year, y = achievements, group = area, text = paste0(
       "Academic year: ", time_period, "<br>",
-      "Achievements: ", format(Ach, big.mark = ","), "<br>"
+      "Achievements: ", format(achievements, big.mark = ","), "<br>"
     ))) +
       geom_line(data = AppLine %>% filter(Year <= 19)) +
       geom_ribbon(
         data = AppLine %>% filter(Year >= 19),
-        aes(ymin = min(Ach), ymax = Ach),
+        aes(ymin = min(achievements), ymax = achievements),
         fill = ifelse(AppCntChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
@@ -667,8 +696,8 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data1 <- reactive({
     list(
-      "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == "lep", area == input$lep1),
-      "1b.Emp rate" = filter(D_EmpRate_APS1721, geographic_level == "lep", area == input$lep1)
+      "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
+      "1b.Emp rate" = filter(D_EmpRate_APS1721, geographic_level == input$GeoType, area == input$lep1)
     )
   })
   output$download_btn1b <- downloadHandler(
@@ -699,6 +728,7 @@ server <- function(input, output, session) {
       paste0(
         format(100. * (C_EmpRate_APS1721 %>%
           filter(
+            geographic_level == input$GeoType,
             area == input$lep2,
             year == "2021"
           )
@@ -727,6 +757,7 @@ server <- function(input, output, session) {
     valueBox(
       format((C_EmpRate_APS1721 %>%
         filter(
+          geographic_level == input$GeoType,
           area == input$lep2,
           year == "2021"
         )
@@ -758,17 +789,18 @@ server <- function(input, output, session) {
   })
 
   ## Employment rate over time line graph ----
-  EmpRate_time <- reactive({
+  EmpRate_time <- eventReactive(c(input$lep1,input$lep2),{
     EmpRateTime <- C_EmpRate_APS1721 %>%
       select(year, area, geographic_level, empRate) %>%
       filter(
-        area == "England" |
+        geographic_level == input$GeoType | geographic_level == "COUNTRY",
+        (area == "England" |
           area == input$lep1 |
           area == if ("lep2" %in% names(input)) {
             input$lep2
           } else {
             "\nNone"
-          }
+          })
       )
     # add an extra column so the colours work in ggplot when sorting alphabetically
     EmpRateTime$Areas <- factor(EmpRateTime$area,
@@ -805,19 +837,26 @@ server <- function(input, output, session) {
   })
 
   ## Employment by occupation data table ----
-  EmpOcc <- reactive({
+  EmpOcc <- eventReactive(c(input$lep1,input$lep2),{
     EmpOcc <- C_EmpOcc_APS1721 %>%
-      select(
-        "Occupation",
-        "England", input$lep1,
-        if ("lep2" %in% names(input)) {
-          if (input$lep2 == "\nNone") {
-
-          } else {
+      filter(
+        geographic_level == input$GeoType | geographic_level == "COUNTRY",
+        (area == "England" |
+          area == input$lep1 |
+          area == if ("lep2" %in% names(input)) {
             input$lep2
-          }
-        } else {}
-      )
+          } else {
+            "\nNone"
+          })
+      ) %>%
+      select(-year, -geographic_level) %>%
+      rename_with(str_to_sentence) %>%
+      t() %>%
+      row_to_names(row_number = 1) %>%
+      as.data.frame() %>%
+      mutate_if(is.character, as.numeric) %>%
+      mutate(across(where(is.numeric), ~ round(prop.table(.), 4))) %>%
+      rownames_to_column("Occupation")
   })
 
   output$EmpOcc <- renderDataTable({
@@ -846,7 +885,7 @@ server <- function(input, output, session) {
 
   # Download current LEP indicators
   filtered_data3 <- reactive({
-    list("2.Vacancies" = filter(C_Vacancy_ONS1722, LEP == input$lep1))
+    list("2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1))
   })
   output$download_btn3b <- downloadHandler(
     filename = function() {
@@ -858,7 +897,7 @@ server <- function(input, output, session) {
   )
 
   ## KPIs ----
-  ### ONS job advert unit percent of total LEP 1
+  ### ONS job advert unit percent of total area 1
   output$jobad.pc <- renderValueBox({
     valueBox(
       paste0(
@@ -877,7 +916,7 @@ server <- function(input, output, session) {
       paste0(
         format(100. *
           (C_Vacancy_England %>%
-            filter(LEP == input$lep2, year == "2022"))$jobpc,
+            filter(area == input$lep2, geographic_level == input$GeoType, year == "2022"))$jobpc,
         digits = 3
         ),
         "%"
@@ -892,7 +931,7 @@ server <- function(input, output, session) {
     valueBox(
       paste0(
         format(100. * (C_Vacancy_England_change %>%
-          filter(LEP == input$lep1))$Percentage_Change,
+          filter(area == input$lep1, geographic_level == input$GeoType))$Percentage_Change,
         digits = 3
         ),
         "%"
@@ -908,7 +947,7 @@ server <- function(input, output, session) {
     valueBox(
       paste0(
         format(100. * (C_Vacancy_England_change %>%
-          filter(LEP == input$lep2))$Percentage_Change,
+          filter(area == input$lep2, geographic_level == input$GeoType))$Percentage_Change,
         digits = 3
         ),
         "%"
@@ -938,17 +977,17 @@ server <- function(input, output, session) {
   })
 
   ## Online job vacancy units over time line chart ----
-  jobad.time <- reactive({
+  jobad.time <- eventReactive(c(input$lep1,input$lep2),{
     JobTime <- C_Vacancy_England %>%
-      filter(LEP == input$lep1 |
-        LEP == if ("lep2" %in% names(input)) {
+      filter(geographic_level == input$GeoType & (area == input$lep1 |
+        area == if ("lep2" %in% names(input)) {
           input$lep2
         } else {
           "\nNone"
-        })
+        }))
 
     # add an extra column so the colours work in ggplot when sorting alphabetically
-    JobTime$Areas <- factor(JobTime$LEP,
+    JobTime$Areas <- factor(JobTime$area,
       levels = c(input$lep1, input$lep2)
     )
 
@@ -965,7 +1004,6 @@ server <- function(input, output, session) {
     ) +
       geom_line() +
       theme_minimal() +
-      labs(colour = "LEP") +
       theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
       labs(shape = "", colour = "") +
       scale_color_manual(values = c("#1d70b8", "#F46A25"))
@@ -1005,8 +1043,8 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data2 <- reactive({
     list(
-      "3a.FE achievements SSA" = filter(D_Achieve_ILR21, LEP == input$lep1),
-      "3b.FE achievements" = filter(D_Achieve_ILR1621, LEP == input$lep1)
+      "3a.FE achievements SSA" = filter(D_Achieve_ILR21, geographic_level == input$GeoType, area == input$lep1),
+      "3b.FE achievements" = filter(D_Achieve_ILR1621, geographic_level == input$GeoType, area == input$lep1)
     )
   })
   output$download_btn2b <- downloadHandler(
@@ -1022,7 +1060,7 @@ server <- function(input, output, session) {
   ### FE achievements -----
   output$skisup.FEach <- renderValueBox({
     # Put value into box to plug into app
-    valueBox(format(Et2021()$Ach, scientific = FALSE, big.mark = ","),
+    valueBox(format(Et2021()$achievements, scientific = FALSE, big.mark = ","),
       paste0("20/21 adult education and training achievements in ", input$lep1),
       color = "blue"
     )
@@ -1033,9 +1071,10 @@ server <- function(input, output, session) {
     valueBox(
       format((C_Achieve_ILR1621 %>%
         filter(
-          LEP == input$lep2, time_period == "202021",
+          geographic_level == input$GeoType,
+          area == input$lep2, time_period == "202021",
           level_or_type == "Education and training: Total"
-        ))$Ach, scientific = FALSE, big.mark = ","),
+        ))$achievements, scientific = FALSE, big.mark = ","),
       paste0("20/21 adult education and training achievements in ", input$lep2),
       color = "orange"
     )
@@ -1045,7 +1084,7 @@ server <- function(input, output, session) {
   output$skisup.APach <- renderValueBox({
     # Put value into box to plug into app
     valueBox(
-      format(App2021()$Ach, scientific = FALSE, big.mark = ","),
+      format(App2021()$achievements, scientific = FALSE, big.mark = ","),
       paste0("20/21 apprenticeship achievements in ", input$lep1),
       color = "blue"
     )
@@ -1056,9 +1095,10 @@ server <- function(input, output, session) {
     valueBox(
       format((C_Achieve_ILR1621 %>%
         filter(
-          LEP == input$lep2, time_period == "202021",
+          geographic_level == input$GeoType,
+          area == input$lep2, time_period == "202021",
           level_or_type == "Apprenticeships: Total"
-        ))$Ach, scientific = FALSE, big.mark = ","),
+        ))$achievements, scientific = FALSE, big.mark = ","),
       paste0("20/21 apprenticeship achievements in ", input$lep2),
       color = "orange"
     )
@@ -1083,29 +1123,31 @@ server <- function(input, output, session) {
   })
 
   ## Achievements over time line chart ----
-  Ach_time <- reactive({
+  Ach_time <- eventReactive(c(input$lep1,input$lep2),{
     FETime <- C_Achieve_ILR1621 %>%
       filter(
-        LEP == input$lep1 |
-          LEP == if ("lep2" %in% names(input)) {
-            input$lep2
-          } else {
-            "\nNone"
-          },
+        geographic_level == input$GeoType &
+          (area == input$lep1 |
+            (area == if ("lep2" %in% names(input)) {
+              input$lep2
+            } else {
+              "\nNone"
+            })
+          ),
         level_or_typeNeat == input$skill_line
       )
 
     # add an extra column so the colours work in ggplot when sorting alphabetically
-    FETime$Area <- factor(FETime$LEP,
+    FETime$Area <- factor(FETime$area,
       levels = c(input$lep1, input$lep2)
     )
     ggplot(FETime, aes(
-      x = AY, y = Ach, colour = Area,
-      group = interaction(level_or_typeNeat, LEP),
+      x = AY, y = achievements, colour = Area,
+      group = interaction(level_or_typeNeat, area),
       text = paste0(
         "Academic year: ", AY, "<br>",
         "Area: ", Area, "<br>",
-        "Achievements: ", format(Ach, big.mark = ","), "<br>",
+        "Achievements: ", format(achievements, big.mark = ","), "<br>",
         "Provision: ", level_or_typeNeat, "<br>"
       )
     )) +
@@ -1128,20 +1170,23 @@ server <- function(input, output, session) {
   })
 
   ## Achievements pc bar chart ----
-  Ach_SSA_pc <- reactive({
+  Ach_SSA_pc <- eventReactive(c(input$lep1,input$lep2),{
     AchSSA_21 <- C_Achieve_ILR21 %>%
-      filter(LEP == input$lep1 |
-        LEP == if ("lep2" %in% names(input)) {
-          input$lep2
-        } else {
-          "\nNone"
-        })
+      filter(
+        geographic_level == input$GeoType,
+        (area == input$lep1 |
+          area == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          })
+      )
 
     # add an extra column so the colours work in ggplot when sorting alphabetically
-    AchSSA_21$Area <- factor(AchSSA_21$LEP,
+    AchSSA_21$Area <- factor(AchSSA_21$area,
       levels = c(input$lep1, input$lep2)
     )
-    Ach_SSA_pc <- ggplot(AchSSA_21, aes(x = reorder(SSA, desc(SSA)), y = pc, fill = Area, text = paste0(
+    ggplot(AchSSA_21, aes(x = reorder(SSA, desc(SSA)), y = pc, fill = Area, text = paste0(
       "SSA: ", SSA, "<br>",
       "Area: ", Area, "<br>",
       "Percentage of achievements: ", scales::percent(round(pc, 2)), "<br>",
@@ -1163,7 +1208,9 @@ server <- function(input, output, session) {
   })
 
   output$Ach_SSA_pc <- renderPlotly({
-    ggplotly(Ach_SSA_pc(), tooltip = c("text"), height = 474) %>%
+    ggplotly(Ach_SSA_pc(),
+      tooltip = c("text"), height = 474
+    ) %>%
       layout(
         legend = list(orientation = "h", x = 0, y = -0.1),
         xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
