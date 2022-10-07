@@ -36,9 +36,13 @@ fluidPage(
 }
 
 .filterRow{
-background-color: #1d70b8;
+background-color: #f3f2f1; /*#1d70b8*/
 border-radius: 4px;
 padding: 15px 15px 0px 15px;
+}
+/*filter labels*/
+.control-label {
+    color: #000;
 }
 
 .chartBox{
@@ -306,7 +310,6 @@ padding-top:15px
             class = "filterRow",
             fluidRow(
               column(
-                style = "color:#fff",
                 width = 4,
                 selectInput("GeoType", "Choose geography level:",
                   choices = list("LEP", "LSIP"),
