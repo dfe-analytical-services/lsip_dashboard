@@ -42,7 +42,7 @@ I_EmpRate_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.fi
 ### Employment by industry --------
 # Geog and date as above
 # Employment by industry (SIC 2007) and flexibility
-folder <- "_APSempind"
+folder <- "9_APSempind"
 sheetNum <- 1
 I_EmpInd_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
@@ -50,7 +50,7 @@ I_EmpInd_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.fil
 ### Skill level of the working age population (% 16-64 year olds qualified to Level 2, level 3, level 4+) 
 # Geog and date as above
 # Qualification by age - NVQ
-folder <- "_APSskillsnvq"
+folder <- "10_APSskillsnvq"
 sheetNum <- 1
 I_Skillsnvq_APS2021 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
@@ -62,7 +62,7 @@ I_Skillsnvq_APS2021 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.
 # Geography: England, LEPs, regions, LADs (as of April 2021)
 # Date: 12 months to Dec 2017-2021
 # Cell: UK Business Counts - enterprises by industry and employment size band 
-folder <- "UBCempent"
+folder <- "11_UBCempent"
 sheetNum <- 1
 I_EmpEnt_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
@@ -78,15 +78,17 @@ I_Achieve_ILR21 <- read.csv(file = paste0("./Data/", folder, "/", list.files(pat
 folder <- "6_ILRach"
 I_Achieve_ILR1621 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
-#KS4 AY15/16 - 19/20 - KS4 detinations
-# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/key-stage-4-destination-measures#subjectTabs-createTable
-folder <- "KS4destin"
-I_KS4destin_ILR1920 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
-#KS5 AY17/18 - 19/20 - KS5 detinations
+#National pupil register 
+#KS4 AY15/16 - 19/20 - K4 destinations
+# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/key-stage-4-destination-measures#subjectTabs-createTable
+folder <- "12_KS4destin"
+I_KS4destin_1920 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+
+#KS5 AY17/18 - 19/20 - KS5 destinations
 # Permalink:https://explore-education-statistics.service.gov.uk/data-tables/16-18-destination-measures#subjectTabs-createTable
-folder <- "KS5destin"
-I_KS5destin_ILR1920 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+folder <- "13_KS5destin"
+I_KS5destin_1920 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 
 ## ONS
