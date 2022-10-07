@@ -80,13 +80,13 @@ I_Achieve_ILR1621 <- read.csv(file = paste0("./Data/", folder, "/", list.files(p
 
 
 #National pupil register 
-#KS4 AY15/16 - 19/20 - K4 destinations
-# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/key-stage-4-destination-measures#subjectTabs-createTable
+#KS4 AY15/16 - 19/20 - KS4 destinations
+# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/c9f44a09-4239-40d6-8f07-87c2b97fc5fc
 folder <- "12_KS4destin"
 I_KS4destin_1920 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 #KS5 AY17/18 - 19/20 - KS5 destinations
-# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/16-18-destination-measures#subjectTabs-createTable
+# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/6ed2058c-1ff4-4e13-b167-3b15bb6a0675
 folder <- "13_KS5destin"
 I_KS5destin_1920 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
