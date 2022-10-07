@@ -428,6 +428,7 @@ C_Vacancy_England_change <- C_Vacancy_England %>%
   select(geographic_level, area, Percentage_Change)
 write.csv(C_Vacancy_England_change, file = "Data\\AppData\\C_Vacancy_England_change.csv", row.names = FALSE)
 
+<<<<<<< HEAD
 
 ## APS - emoloyment by industry data
 # Reshape vacancy data to long, rename and reorder and reformat some columns
@@ -699,3 +700,8 @@ D_KS5destin_ILR1920 <- F_KS5destin_ILR1920 %>%
 
 
 
+=======
+# Tidy up data table
+names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
+write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
+>>>>>>> 10403e224a87d15536f6412fa560c6d8033a3fd0
