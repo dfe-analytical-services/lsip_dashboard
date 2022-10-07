@@ -95,6 +95,20 @@ padding-top:15px
       /* end of styles for menu button */
 
     }
+    
+    /* style KPI boxes*/
+    
+.small-box.bg-geo1{
+    background-color: #12436D !important; 
+    color: #fff;
+    padding: 2px 2px 4px 12px;
+}
+
+.small-box.bg-geo2{
+    background-color: #28A197 !important; 
+    color: #fff;
+    padding: 2px 2px 4px 12px;
+}
 
 ")),
     tags$script(HTML(
