@@ -1123,7 +1123,7 @@ server <- function(input, output, session) {
   })
 
   ## Achievements over time line chart ----
-  Ach_time <- eventReactive(c(input$lep1, input$lep2), {
+  Ach_time <- eventReactive(c(input$lep1, input$lep2, input$skill_line), {
     FETime <- C_Achieve_ILR1621 %>%
       filter(
         geographic_level == input$GeoType &
