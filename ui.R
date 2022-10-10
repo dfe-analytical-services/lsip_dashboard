@@ -220,12 +220,13 @@ padding-top:15px
           p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England.
                              The dashboard uses FE and skills learner achievements over time (AY1617-21/22 (provisional data to January for 21/22)) split by apprenticeships, community learning, education and training.
                              The data is taken from the FE and Skills official statistics."),
-          h3("National pupil Register (NPR)"),
+          h3("National Pupil Database (NPD)"),
           p("Statistics showing the number of young people going into education and, employment or apprenticeship the year after reaching the end of:"),
           tags$ul(
             tags$li("Key Stage 4 (year 10 & 11, usually involving GCSEs)"),
-            tags$li("Key Stage 5 (16-18, often involving A Levels, T levels or another 2-year vocational education programme)"),
-          ),
+            tags$li("Key Stage 5 (16-18, often involving A Levels, T levels or another 2-year vocational education programme)")),
+          h3("UK Business Count (UBC)"),
+          p("A record of the number of enterprises from the Inter Departmental Business Register (IDBR), which is broken down by employment size band, detailed industry (5 digit SIC2007) and legal status")
         )
       ) # end of data information row
     ), # end of data tab

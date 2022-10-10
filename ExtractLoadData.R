@@ -79,7 +79,7 @@ folder <- "6_ILRach"
 I_Achieve_ILR1621 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 
-#National pupil register 
+#National pupil database 
 #KS4 AY15/16 - 19/20 - KS4 destinations
 # Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/c9f44a09-4239-40d6-8f07-87c2b97fc5fc
 folder <- "12_KS4destin"
