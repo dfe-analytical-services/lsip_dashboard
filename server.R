@@ -79,10 +79,67 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
+  
+  output$downloadData6 <- downloadHandler(
+    filename = function() {
+      "EmploymentbyIndustryIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "4a.Employment by Industry" = D_empind_APS1721
+      ), path = file)
+    }
+  )
+  
+  output$downloadData7 <- downloadHandler(
+    filename = function() {
+      "EmploymentbyqualificationIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "5a.Employment by qualification" = D_Skillsnvq_APS2021
+      ), path = file)
+    }
+  )
+  
+  output$downloadData8 <- downloadHandler(
+    filename = function() {
+      "EnterprisebyemploymentsizeIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "6a.Enterprise by employment size" = D_empent_UBC1822
+      ), path = file)
+    }
+  )
+  
+  
+  output$downloadData9 <- downloadHandler(
+    filename = function() {
+      "Keystage4destinationsIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "7a.Key Stage 4 destinations" = D_KS4destin_1920
+      ), path = file)
+    }
+  )
+  
+  output$downloadData10 <- downloadHandler(
+    filename = function() {
+      "Keystage5destinationsIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "8a.Key Stage 5 destinations" = D_KS5destin_1920
+      ), path = file)
+    }
+  )
+  
 
   # create download links
   output$hidden_downloads <- renderUI(
-    lapply(1:5, function(i) {
+    lapply(1:10, function(i) {
       downloadLink(paste0("downloadData", i), "download", class = "hiddenLink")
     })
   )
