@@ -56,7 +56,7 @@ I_Skillsnvq_APS2021 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.
 
 
 ### UK Business Count
-# Employment by enterprise size
+# Enterprise by employment size
 # Download from https://www.nomisweb.co.uk/query/construct/summary.asp?mode=construct&version=0&dataset=142
 # Query data
 # Geography: England, LEPs, regions, LADs (as of April 2021)

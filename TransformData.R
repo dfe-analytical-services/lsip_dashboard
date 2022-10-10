@@ -475,8 +475,17 @@ format.empind.APS <- function(x) {
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:12), as.character) # Convert to sring to bind
   
-  # join together
-  bind_rows(reformat, addlsip)
+  # join together and rename columns
+  LEP_LSIP <- bind_rows(reformat, addlsip) %>%
+    rename("Agriculture and Fishing" = " a agricuture fishing   ",
+           "Energy and Water" = " b d e energy water   ",
+           "Manufacturing" = " c manufacturing   ",
+           "Construction" = " f construction   ",
+           "Distribution, Hotel and Restaurants" = " g i distribution hotels restaurants   ",
+           "Transport and Communication" = " h j transport communication   ",
+           "Banking, Finance and Insurance" = " k n banking finance insurance etc   ",
+           "Public Administration, Education and Health" = " o q public admin education health   ",
+           "Other Services" = " r u other services   ")
   
   
 }
@@ -536,12 +545,48 @@ format.skills.APS <- function(x) {
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:38), as.character) # Convert to sring to bind
   
-  # join together
-  bind_rows(reformat, addlsip)
+  # join together and rename columns
+  LEP_LSIP <- bind_rows(reformat, addlsip) %>%
+    rename("Total aged 16-64 NVQ1" = "2 total  aged 16 64 nvq1",
+           "Total aged 16-64 NVQ2" = "3 total  aged 16 64 nvq2",
+           "Total aged 16-64 trade apprenticeships"  = "4 total  aged 16 64 trade apprenticeships",
+           "Total aged 16-64 NVQ3"= "5 total  aged 16 64 nvq3",
+           "Total aged 16-64 NVQ4" = "6 total  aged 16 64 nvq4",
+           "Total aged 16-19 NVQ1" = "23 total  aged 16 19 nvq1",
+           "Total aged 16-19 NVQ2" =  "24 total  aged 16 19 nvq2",
+           "Total aged 16-19 trade apprenticeships" = "25 total  aged 16 19 trade apprenticeships",
+           "Total aged 16-19 NVQ3" = "26 total  aged 16 19 nvq3",
+           "Total aged 16-19 NVQ4" = "27 total  aged 16 19 nvq4",
+           "Total aged 20-24 NVQ1" = "30 total  aged 20 24 nvq1",
+           "Total aged 20-24 NVQ2" =  "31 total  aged 20 24 nvq2",
+           "Total aged 20-24 trade apprenticeships" = "32 total  aged 20 24 trade apprenticeships",
+           "Total aged 20-24 NVQ3" = "33 total  aged 20 24 nvq3",
+           "Total aged 20-24 NVQ4" = "34 total  aged 20 24 nvq4",
+           "Total aged 25-29 NVQ1" = "37 total  aged 25 29 nvq1",
+           "Total aged 25-29 NVQ2" =  "38 total  aged 25 29 nvq2",
+           "Total aged 25-29 trade apprenticeships" = "39 total  aged 25 29 trade apprenticeships",
+           "Total aged 25-29 NVQ3" = "40 total  aged 25 29 nvq3",
+           "Total aged 25-29 NVQ4" = "41 total  aged 25 29 nvq4",
+           "Total aged 30-39 NVQ1" = "44 total  aged 30 39 nvq1",
+           "Total aged 30-39 NVQ2" =  "45 total  aged 30 39 nvq2",
+           "Total aged 30-39 trade apprenticeships" = "46 total  aged 30 39 trade apprenticeships",
+           "Total aged 30-39 NVQ3" = "47 total  aged 30 39 nvq3",
+           "Total aged 30-39 NVQ4" = "48 total  aged 30 39 nvq4",
+           "Total aged 40-49 NVQ1" = "51 total  aged 40 49 nvq1",
+           "Total aged 40-49 NVQ2" =  "52 total  aged 40 49 nvq2",
+           "Total aged 40-49 trade apprenticeships" = "53 total  aged 40 49 trade apprenticeships",
+           "Total aged 40-49 NVQ3" = "54 total  aged 40 49 nvq3",
+           "Total aged 40-49 NVQ4" = "55 total  aged 40 49 nvq4",
+           "Total aged 50-64 NVQ1" = "58 total  aged 50 64 nvq1",
+           "Total aged 50-64 NVQ2" =  "59 total  aged 50 64 nvq2",
+           "Total aged 50-64 trade apprenticeships" = "60 total  aged 50 64 trade apprenticeships",
+           "Total aged 50-64 NVQ3" = "61 total  aged 50 64 nvq3",
+           "Total aged 50-64 NVQ4" = "62 total  aged 50 64 nvq4")
   
 }
 
 F_skillsnvq_APS2021 <- format.skills.APS(I_Skillsnvq_APS2021)
+
 
 #Downloadable version
 D_skillsnvq_APS2021 <- F_skillsnvq_APS2021 %>%
@@ -550,7 +595,7 @@ D_skillsnvq_APS2021 <- F_skillsnvq_APS2021 %>%
 write.csv(D_skillsnvq_APS2021, file = "Data\\AppData\\D_skillsnvq_APS2021.csv", row.names = FALSE)
 
 
-## UK Business Count - employment by enterprise
+## UK Business Count - Enterprise by employment size
 # Reshape vacancy data to long, rename and reorder and reformat some columns
 
 format.empent.UBC <- function(x) {
@@ -591,8 +636,13 @@ format.empent.UBC <- function(x) {
     rename(small_10_to_49 = "small0_to_49") %>%
     mutate_at(c(4:8), as.character) # Convert to sring to bind
   
-  # join together
-  bind_rows(reformat, addlsip)
+  # join together and rename columns
+  LEP_LSIP <- bind_rows(reformat, addlsip) %>%
+    rename("Total Enterprises" = "total",
+           "Total Enterprises Micro 0-9" = "micro_0_to_9",
+           "Total Enterprises Small 10-49" = "small_10_to_49",
+           "Total Enterprises Medium 50-249" = "medium_sized_50_to_249",
+           "Total Enterprises Large 250" = "large_250")
 }
 
 

@@ -49,7 +49,7 @@ D_empind_APS1721 <- read.csv(file = "./Data/AppData/D_empind_APS1721.csv", check
 # data for download
 D_skillsnvq_APS2021 <- read.csv(file = "./Data/AppData/D_skillsnvq_APS2021.csv", check.names = FALSE)
 
-## Employment by enterprise size ----
+## Enterprise by employment size ----
 # data for download
 D_empent_UBC1822 <- read.csv(file = "./Data/AppData/D_empent_UBC1822.csv", check.names = FALSE)
 
