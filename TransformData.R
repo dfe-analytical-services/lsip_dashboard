@@ -692,8 +692,15 @@ format.ks4 <- function(x) {
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:9), as.character) # Convert to string to bind
   
-  # join together
-  bind_rows(addLEP, addLSIP)
+  # join together and rename columns
+  LEP_LSIP <- bind_rows(addLEP, addLSIP) %>%
+    rename("Total Completed Key Stage 4" = "cohort",
+           "Unknown" = "all_unknown",
+           "Not Recored as a Sustained Destination" = "all_notsust",
+           "Sustained Education" = "education",
+           "Sustained Employment" = "all_work",
+           "Sustained Apprenticeships" = "appren") %>%
+    relocate('Total Completed Key Stage 4', .before = 'Unknown')
   
 }    
 
@@ -744,8 +751,16 @@ format.ks5 <- function(x) {
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(5:10), as.character) # Convert to string to bind
   
-  # join together
-  bind_rows(addLEP, addLSIP)
+  # join together and rename columns
+  LEP_LSIP <- bind_rows(addLEP, addLSIP) %>%
+    rename("Total Completed Key Stage 4" = "cohort",
+           "Unknown" = "all_unknown",
+           "Not Recored as a Sustained Destination" = "all_notsust",
+           "Sustained Education" = "education",
+           "Sustained Employment" = "all_work",
+           "Sustained Apprenticeships" = "appren",
+           "Cohort Group" = "cohort_level_group") %>%
+    relocate('Total Completed Key Stage 4',  .before = "Cohort Group")
   
 } 
 
