@@ -100,7 +100,14 @@ padding-top:15px
 
     }
     
-    /* style KPI boxes*/
+    /* style KPI boxes
+    #12436D - govt analytical function blue
+    #AAE3F0 - dfe corp turquoise 40% tint
+    #28A197 - govt analytical function turquoise
+    #DAEEBF - dfe corp lime 40% tint
+    #718ea7 - govt analytical function blue 40% tint
+    #7ec7c1 - govt analytical function turquoise 40% tint
+    */
     
 .small-box.bg-geo1{
     background-color: #12436D !important; 
