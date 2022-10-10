@@ -655,7 +655,7 @@ D_empent_UBC1822 <- F_empent_UBC1822 %>%
 write.csv(D_empent_UBC1822, file = "Data\\AppData\\D_empent_UBC1822.csv", row.names = FALSE)
 
 
-## National Pupil database - Key Stage 4 Destinations
+## National Pupil Database - Key Stage 4 Destinations
 # Reshape vacancy data to long, rename and reorder and reformat some columns
 
 format.ks4 <- function(x) {
@@ -714,7 +714,7 @@ write.csv(D_KS4destin_1920, file = "Data\\AppData\\D_KS4destin_1920.csv", row.na
 
 
 
-## National Pupil database  - Key Stage 5 Destinations
+## National Pupil Database  - Key Stage 5 Destinations
 # Reshape vacancy data to long, rename and reorder and reformat some columns
 
 format.ks5 <- function(x) {
