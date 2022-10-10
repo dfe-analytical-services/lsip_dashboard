@@ -119,7 +119,7 @@ panel_overview <- function() {
       ),
       column(
         width = 9,
-        "Download all available indicators for all geographies (LEPs, LAs, Regions and England)",
+        "Download all available indicators for all geographies (LEPs, LSIPs, LAs, Regions and England)",
       )
     ),
     fluidRow(
@@ -127,12 +127,12 @@ panel_overview <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn0b",
-          label = "Current LEP",
+          label = "Current LEP/LSIP",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
       ),
-      column(width = 9, "Or just for the currently chosen LEP")
+      column(width = 9, "Or just for the currently chosen LEP/LSIPs")
     ),
     column(width = 12, br(""))
   )
@@ -180,7 +180,7 @@ panel_employment <- function() {
       ),
       column(
         width = 9,
-        "Download employment indicators for all geographies (LEPs, LAs, Regions and England)",
+        "Download employment indicators for all geographies (LEPs, LSIPs, LAs, Regions and England)",
       )
     ), # end of row
     fluidRow(
@@ -188,12 +188,12 @@ panel_employment <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn1b",
-          label = "Current LEP",
+          label = "Current LEP/LSIP",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Or just for the currently chosen LEP"))
+      column(width = 9, p("Or just for the currently chosen LEP/LSIP"))
     ), # end of row
     column(width = 12, br(""))
   ) # end of Local Landscape tab
@@ -227,7 +227,7 @@ panel_vacancies <- function() {
           inputId = "SubsLev",
           label = "Chart information",
           help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
-              The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between LEPS and over time, but do not represent true job vacancy volumes."
+              The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between LEPs/LSIPs and over time, but do not represent true job vacancy volumes."
         )
       )
     ),
@@ -245,7 +245,7 @@ panel_vacancies <- function() {
       ),
       column(
         width = 9,
-        "Download vacancy indicators for all geographies (LEPs, LAs, Regions and England)",
+        "Download vacancy indicators for all geographies (LEPs, LSIPs, LAs, regions)",
       )
     ), # end of row
     fluidRow(
@@ -253,12 +253,12 @@ panel_vacancies <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn3b",
-          label = "Current LEP",
+          label = "Current LEP/LSIP",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Or just for the currently chosen LEP")),
+      column(width = 9, p("Or just for the currently chosen LEP/LSIP")),
     ), # end of row
     column(width = 12, br(""))
   ) # end of Skills Supply tab
@@ -298,7 +298,7 @@ panel_skills <- function() {
     fluidRow(
       column(
         12,
-        h1("All FE and skills learner achievements by SSA tier 1 (AY21/22 Aug to Jan provisional data)"),
+        h1("All FE and skills learner achievements by SSA tier 1 (AY21/22 August to April provisional data)"),
         plotlyOutput("Ach_SSA_pc")
       )
     ),
@@ -334,7 +334,7 @@ panel_skills <- function() {
       ),
       column(
         width = 9,
-        "Download FE and skills indicators for all geographies (LEPs, LAs, Regions and England)"
+        "Download FE and skills indicators for all geographies (LEPs, LSIPs, LAs, regions and England)"
       )
     ), # end of row
     fluidRow(
@@ -342,12 +342,12 @@ panel_skills <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn2b",
-          label = "Current LEP",
+          label = "Current LEP/LSIP",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Or just for the currently chosen LEP"))
+      column(width = 9, p("Or just for the currently chosen LEP/LSIP"))
     ), # end of row
     column(width = 12, br(""))
   ) # skills panel

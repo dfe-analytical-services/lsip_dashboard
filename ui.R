@@ -166,13 +166,13 @@ padding-top:15px
           12,
           h1("Local Skills Dashboard"),
           p("Prototype dashboard showing statistics on local employment and skills in England, to support local skills planning and delivery (including Local Skills Improvement Plans)."),
-          p("The prototype dashboard shows a subset of employment and skills statistics at Local Enterprise Partnership (LEP) level, including:"),
+          p("The prototype dashboard shows a subset of employment and skills statistics at Local Enterprise Partnership (LEP) and local skills improvement plan area (LSIP) level, including:"),
           tags$ul(
             tags$li("Employment rates and employment distribution by occupation (source: ONS Annual Population Survey), ILR and ONS online job vacancies)"),
             tags$li("Online job vacancy units (source: ONS Online Job Adverts)"),
             tags$li("Further Education aim achievement volumes and achievements by sector subject area (source: DfE FE and Skills National Statistics)"),
           ),
-          p("Trends can be compared between different LEPs and over time for some indicators. The underlying data contains national, regional, LEP and LA data and can be downloaded directly from the dashboard."),
+          p("Trends can be compared between different LEPs/LSIPs and over time for some indicators. The underlying data contains national, regional, LEP, LSIP and LA data and can be downloaded directly from the dashboard."),
           p(
             "This dashboard has been produced to support the aims of the ",
             a(
@@ -198,21 +198,21 @@ padding-top:15px
             div(
               class = "panel-body",
               h3(actionLink("link_to_tabpanel_overview", "Overview")),
-              p("This tab provides a summary of employment and skills metrics at LEP level. It displays employment volume, employment rate, proportion of online vacancies, Further Education (FE) and skills achievement volumes. It shows year-on-year change for each indicator."),
-              p("The download buttons download all indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
+              p("This tab provides a summary of employment and skills metrics at LEP/LSIP level. It displays employment volume, employment rate, proportion of online vacancies, Further Education (FE) and skills achievement volumes. It shows year-on-year change for each indicator."),
+              p("The download buttons download all indicators for the selected LEP/LSIP or for all available geographies (England, region, LEP, LSIP, LA)."),
               h3(actionLink("link_to_tabpanel_employment", "Employment")),
-              p("This tab contains employment indicators at LEP level. These can be compared to England and a comparator LEP."),
-              p("The line chart shows employment rate over time for the chosen LEP. The table displays employment distribution by occupation (sub-major SOC group)."),
-              p("The download buttons download employment indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
+              p("This tab contains employment indicators at LEP/LSIP level. These can be compared to England and a comparator LEP/LSIP."),
+              p("The line chart shows employment rate over time for the chosen LEP/LSIP. The table displays employment distribution by occupation (sub-major SOC group)."),
+              p("The download buttons download employment indicators for the selected LEP/LSIP or for all available geographies (England, region, LEP, , LA)."),
               h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
-              p("This tab contains online job vacancies indicators at LEP level. These can be compared to England and a comparator LEP."),
+              p("This tab contains online job vacancies indicators at LEP/LSIP level. These can be compared to England and a comparator LEP/LSIP."),
               p("The line chart shows change in online job vacancy units over time. Units are not real volumes but represent a fixed number of job adverts to be used for comparisons over time and between areas."),
-              p("The download buttons download vacancy indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
+              p("The download buttons download vacancy indicators for the selected LEP/LSIP or for all available geographies (England, region, LEP, LSIP, LA)."),
               h3(actionLink("link_to_tabpanel_FE", "Skills")),
-              p("This tab provides a summary of further education (FE) and skills statistics at LEP level. These can be compared to another LEP."),
+              p("This tab provides a summary of further education (FE) and skills statistics at LEP/LSIP level. These can be compared to another LEP/LSIP."),
               p("The line chart shows achievement volumes over time for apprenticeships, education & training and community learning."),
               p("The bar chart displays distribution of FE and skills achievements by SSA for the latest available period."),
-              p("The download buttons download FE and skills indicators for the selected LEP or for all available geographies (England, region, LEP, LA)."),
+              p("The download buttons download FE and skills indicators for the selected LEP/LSIP or for all available geographies (England, region, LEP, LSIP, LA)."),
             )
           )
         )
@@ -266,8 +266,9 @@ padding-top:15px
           h2("Data information"),
           h3("Annual Population Survey (APS)"),
           p("A continuous household survey covering the UK.
-                             The dashboard uses employment volumes and rates for each LEP and split by sub-major SOC 2010 grouping.
+                             The dashboard uses employment volumes and rates for each LEP/LSIP and split by sub-major SOC 2010 grouping.
                              The data are for interviews conducted over the calendar year (2017-2021 are shown).
+                             Totals for LSIPs are calculated by adding up the relevant LAs. Since the published LA volumes are rounded, there may be a small rounding error in the LSIP total.
                              "),
           h3("ONS Online Job Adverts"),
           p("These data tables are created based upon online job adverts data provided by Adzuna.
@@ -275,8 +276,10 @@ padding-top:15px
                              The dashboard shows job 'units' which is the number of job adverts divided a set value for all regions. It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across regions or to follow trends over time."),
           h3("Individualised Learner Records (ILR)"),
           p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England.
-                             The dashboard uses FE and skills learner achievements over time (AY1617-21/22 (provisional data to January for 21/22)) split by apprenticeships, community learning, education and training.
-                             The data is taken from the FE and Skills official statistics."),
+                             The dashboard uses FE and skills learner achievements over time (AY1617-21/22 (provisional data to April for 21/22)) split by apprenticeships, community learning, education and training.
+                             The data is taken from the FE and Skills official statistics.
+                             Totals for LSIPs and LEPs are calculated by adding up the relevant LAs. Since the published LA volumes are rounded, there may be a small rounding error in the LSIP and LEP totals.
+"),
         )
       ) # end of data information row
     ), # end of data tab
