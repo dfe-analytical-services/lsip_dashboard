@@ -429,7 +429,7 @@ C_Vacancy_England_change <- C_Vacancy_England %>%
 write.csv(C_Vacancy_England_change, file = "Data\\AppData\\C_Vacancy_England_change.csv", row.names = FALSE)
 
 ## APS - employment by industry data
-# Reshape vacancy data to long, rename and reorder and reformat some columns
+# Reshape data to long, rename and reorder and reformat some columns
 
 format.empind.APS <- function(x) {
   reformat <- x %>%
@@ -499,7 +499,7 @@ D_empind_APS1721 <- F_empind_APS1722 %>%
 write.csv(D_empind_APS1721, file = "Data\\AppData\\D_empind_APS1721.csv", row.names = FALSE)
 
 ## APS - Skill level of the working age population (% 16-64 year olds qualified to Level 2, level 3, level 4+)
-# Reshape vacancy data to long, rename and reorder and reformat some columns
+# Reshape data to long, rename and reorder and reformat some columns
 
 format.skills.APS <- function(x) {
   reformat <- x %>%
@@ -594,7 +594,7 @@ write.csv(D_skillsnvq_APS2021, file = "Data\\AppData\\D_skillsnvq_APS2021.csv", 
 
 
 ## UK Business Count - Enterprise by employment size
-# Reshape vacancy data to long, rename and reorder and reformat some columns
+# Reshape data to long, rename and reorder and reformat some columns
 
 format.empent.UBC <- function(x) {
   reformat <- x %>%
@@ -654,7 +654,7 @@ write.csv(D_empent_UBC1822, file = "Data\\AppData\\D_empent_UBC1822.csv", row.na
 
 
 ## National Pupil Database - Key Stage 4 Destinations
-# Reshape vacancy data to long, rename and reorder and reformat some columns
+# Reshape data to long, rename and reorder and reformat some columns
 
 format.ks4 <- function(x) {
   colnames(x)[1] <- "area"
@@ -702,18 +702,18 @@ format.ks4 <- function(x) {
   
 }    
 
-F_KS4destin_1920<- format.ks4(I_KS4destin_1920)  
+F_KS4destin_1520<- format.ks4(I_KS4destin_1520)  
 
 #Downloadable data
-D_KS4destin_1920 <- F_KS4destin_1920 %>%
+D_KS4destin_1520 <- F_KS4destin_1520 %>%
   mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
 #write data to folder
-write.csv(D_KS4destin_1920, file = "Data\\AppData\\D_KS4destin_1920.csv", row.names = FALSE)
+write.csv(D_KS4destin_1520, file = "Data\\AppData\\D_KS4destin_1520.csv", row.names = FALSE)
 
 
 
 ## National Pupil Database  - Key Stage 5 Destinations
-# Reshape vacancy data to long, rename and reorder and reformat some columns
+# Reshape data to long, rename and reorder and reformat some columns
 
 format.ks5 <- function(x) {
   colnames(x)[1] <- "area"
@@ -762,13 +762,13 @@ format.ks5 <- function(x) {
   
 } 
 
-F_KS5destin_1920 <- format.ks5(I_KS5destin_1920)
+F_KS5destin_1520 <- format.ks5(I_KS5destin_1520)
 
 #downloadable version
-D_KS5destin_1920 <- F_KS5destin_1920 %>%
+D_KS5destin_1520 <- F_KS5destin_1520 %>%
   mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
 #write data to folder - todo
-write.csv(D_KS5destin_1920, file = "Data\\AppData\\D_KS5destin_1920.csv", row.names = FALSE)
+write.csv(D_KS5destin_1520, file = "Data\\AppData\\D_KS5destin_1520.csv", row.names = FALSE)
 
 
 
