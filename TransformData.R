@@ -694,7 +694,7 @@ format.ks4 <- function(x) {
   LEP_LSIP <- bind_rows(addLEP, addLSIP) %>%
     rename("Total Completed Key Stage 4" = "cohort",
            "Unknown" = "all_unknown",
-           "Not Recored as a Sustained Destination" = "all_notsust",
+           "Not Recorded as a Sustained Destination" = "all_notsust",
            "Sustained Education" = "education",
            "Sustained Employment" = "all_work",
            "Sustained Apprenticeships" = "appren") %>%
@@ -753,7 +753,7 @@ format.ks5 <- function(x) {
   LEP_LSIP <- bind_rows(addLEP, addLSIP) %>%
     rename("Total Completed Key Stage 4" = "cohort",
            "Unknown" = "all_unknown",
-           "Not Recored as a Sustained Destination" = "all_notsust",
+           "Not Recorded as a Sustained Destination" = "all_notsust",
            "Sustained Education" = "education",
            "Sustained Employment" = "all_work",
            "Sustained Apprenticeships" = "appren",
