@@ -226,7 +226,7 @@ padding-top:15px
             tags$li("Key Stage 4 (year 10 & 11, usually involving GCSEs)"),
             tags$li("Key Stage 5 (16-18, often involving A Levels, T levels or another 2-year vocational education programme)")),
           h3("UK Business Count (UBC)"),
-          p("A record of the number of enterprises from the Inter Departmental Business Register (IDBR), which is broken down by employment size band, detailed industry (5 digit SIC2007) and legal status")
+          p("A record of the number of enterprises from the Inter Departmental Business Register (IDBR), which is broken down by employment size band, detailed industry (5 digit SIC2007) and legal status.")
         )
       ) # end of data information row
     ), # end of data tab

@@ -428,8 +428,6 @@ C_Vacancy_England_change <- C_Vacancy_England %>%
   select(geographic_level, area, Percentage_Change)
 write.csv(C_Vacancy_England_change, file = "Data\\AppData\\C_Vacancy_England_change.csv", row.names = FALSE)
 
-<<<<<<< HEAD
-
 ## APS - employment by industry data
 # Reshape vacancy data to long, rename and reorder and reformat some columns
 

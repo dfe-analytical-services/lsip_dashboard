@@ -1,4 +1,4 @@
-"area","geographic_level","year"," a agricuture fishing   "," b d e energy water   "," c manufacturing   "," f construction   "," g i distribution hotels restaurants   "," h j transport communication   "," k n banking finance insurance etc   "," o q public admin education health   "," r u other services   "
+"area","geographic_level","year","Agriculture and Fishing","Energy and Water","Manufacturing","Construction","Distribution, Hotel and Restaurants","Transport and Communication","Banking, Finance and Insurance","Public Administration, Education and Health","Other Services"
 "Adur","LADU",2017,"c","c","3200","2400","5700","3500","3400","8900","2400"
 "Arun","LADU",2017,"1300","c","4700","5400","20400","3000","12400","19700","5100"
 "Ashford","LADU",2017,"2000","1300","3500","9300","13400","6000","5300","16700","4800"
