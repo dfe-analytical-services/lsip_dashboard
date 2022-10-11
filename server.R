@@ -97,10 +97,11 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list(
-        "5a.Employment by qualification" = D_Skillsnvq_APS2021
+        "4a.Employment by qaulification" = D_skillsnvq_APS2021
       ), path = file)
     }
   )
+  
   
   output$downloadData8 <- downloadHandler(
     filename = function() {
@@ -120,7 +121,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list(
-        "7a.Key Stage 4 destinations" = D_KS4destin_1920
+        "7a.Key Stage 4 destinations" = D_KS4destin_1520
       ), path = file)
     }
   )
@@ -131,7 +132,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list(
-        "8a.Key Stage 5 destinations" = D_KS5destin_1920
+        "8a.Key Stage 5 destinations" = D_KS5destin_1520
       ), path = file)
     }
   )
