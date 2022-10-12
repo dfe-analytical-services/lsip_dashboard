@@ -458,6 +458,7 @@ format.empind.APS <- function(x) {
     rename_with(~ gsub("[[:digit:]]+", "", .)) %>% # remove numbers from occupations since they don't match the ONS ones
     mutate(geographic_level = toupper(geographic_level))
   
+  # create lsip file
   addlsip <- reformat %>%
     filter(geographic_level == "LADU") %>%
     left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
@@ -488,7 +489,7 @@ format.empind.APS <- function(x) {
   
 }
 
-
+## format employment by industry
 F_empind_APS1722 <- format.empind.APS(I_EmpInd_APS1721)
 
 #Downloadable version
@@ -528,6 +529,7 @@ format.skills.APS <- function(x) {
     # rename_with(~ gsub("[[:digit:]]+", "", .)) %>% # remove numbers from occupations since they don't match the ONS ones
     mutate(geographic_level = toupper(geographic_level))
   
+  # create lsip file
   addlsip <- reformat %>%
     filter(geographic_level == "LADU") %>%
     left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
@@ -583,6 +585,7 @@ format.skills.APS <- function(x) {
   
 }
 
+## format skills
 F_skillsnvq_APS2021 <- format.skills.APS(I_Skillsnvq_APS2021)
 
 
@@ -618,6 +621,7 @@ format.empent.UBC <- function(x) {
     relocate(geographic_level, year, .after = area) %>%
     mutate(geographic_level = toupper(geographic_level))
   
+  # create lsip file
   addlsip <- reformat %>%
     filter(geographic_level == "LADU") %>%
     left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
@@ -643,7 +647,7 @@ format.empent.UBC <- function(x) {
            "Total Enterprises Large 250" = "large_250")
 }
 
-
+## format UBC
 F_empent_UBC1822 <- format.empent.UBC(I_EmpEnt_APS1721)
 
 #Downloadable version
@@ -675,6 +679,7 @@ format.ks4 <- function(x) {
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:9), as.character) # Convert to sring to bind
   
+  # create lsip file
   addLSIP <- x %>%
     left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
     filter(is.na(LSIP) == FALSE) %>% # remove non-english
@@ -702,6 +707,7 @@ format.ks4 <- function(x) {
   
 }    
 
+## format KS4
 F_KS4destin_1520<- format.ks4(I_KS4destin_1520)  
 
 #Downloadable data
@@ -734,6 +740,7 @@ format.ks5 <- function(x) {
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(5:10), as.character) # Convert to sring to bind
   
+  # create lsip file
   addLSIP <- x %>%
     left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
     filter(is.na(LSIP) == FALSE) %>% # remove non-english
@@ -762,6 +769,7 @@ format.ks5 <- function(x) {
   
 } 
 
+## format KS5
 F_KS5destin_1520 <- format.ks5(I_KS5destin_1520)
 
 #downloadable version
