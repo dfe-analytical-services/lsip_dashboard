@@ -109,7 +109,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list(
-        "6a.Enterprise by employment size" = D_empent_UBC1822
+        "6a.Enterprise by emp size" = D_empent_UBC1822
       ), path = file)
     }
   )
