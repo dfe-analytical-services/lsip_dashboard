@@ -93,11 +93,11 @@ server <- function(input, output, session) {
   
   output$downloadData7 <- downloadHandler(
     filename = function() {
-      "EmploymentbyqualificationIndicators.xlsx"
+      "Skilllevelbyage.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
-        "4a.Employment by qaulification" = D_skillsnvq_APS2021
+        "4a.Skill level by age" = D_skillsnvq_APS2021
       ), path = file)
     }
   )

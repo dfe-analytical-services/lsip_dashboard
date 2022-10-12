@@ -208,25 +208,30 @@ padding-top:15px
           12,
           h2("Data information"),
           h3("Annual Population Survey (APS)"),
-          p("A continuous household survey covering the UK.
-                             The dashboard uses employment volumes and rates for each LEP and split by sub-major SOC 2010 grouping.
-                             The data are for interviews conducted over the calendar year (2017-2021 are shown).
-                             "),
+          p("The Annual Population Survey (APS) is a continuous household survey, covering the UK. The topics covered include employment and
+          unemployment, as well as housing, ethnicity, religion, health and education. The dashboard shows employment volumes and rates for each
+          LEP/LSIP and split by sub-major Standard Occupational Classification (SOC) 2010 grouping. Totals for LEP/LSIP areas are calculated by adding
+          up the relevant local authorities (LAs). Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP totals."),
           h3("ONS Online Job Adverts"),
-          p("These data tables are created based upon online job adverts data provided by Adzuna.
-                             Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022. The monthly average is derived from weekly snapshots in January.
-                             The dashboard shows job 'units' which is the number of job adverts divided a set value for all regions. It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across regions or to follow trends over time."),
-          h3("Individualised Learner Records (ILR)"),
-          p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England.
-                             The dashboard uses FE and skills learner achievements over time (AY1617-21/22 (provisional data to January for 21/22)) split by apprenticeships, community learning, education and training.
-                             The data is taken from the FE and Skills official statistics."),
+          p("These data tables are created based upon online job adverts data provided by Adzuna. Each time point in the series covers a monthly average
+          of the volume of online job adverts in the month of January for the years 2017 to 2022. The dashboard shows job 'units' which is the number of
+          job adverts divided a set value for all regions. It is therefore not an indication of the real volume of job adverts, but can be used in comparisons
+          across areas or to follow trends over time. Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs). Since the
+          published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP totals."),
+          h3("Individualised Learner Records"),
+          p("The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education
+          and skills sector in England. The dashboard shows further education and skills learner achievements over time split by apprenticeships, community
+          learning, education and training. Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs). Since the published
+          LA volumes are rounded, there may be a small rounding error in the LEP/LSIP totals."),
           h3("Statistics: destinations of key stage 4 and 16 to 18 (KS5) students"),
-          p("Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education and, employment or apprenticeship the year after reaching the end of:"),
+          p("Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education and, employment or apprenticeship
+            the year after reaching the end of:"),
           tags$ul(
             tags$li("Key Stage 4 (year 10 & 11, usually involving GCSEs)"),
             tags$li("Key Stage 5 (16-18, often involving A Levels, T levels or another 2-year vocational education programme)")),
           h3("UK Business Count (UBC)"),
-          p("A record of the number of enterprises from the Inter Departmental Business Register (IDBR), which is broken down by employment size band, detailed industry (5 digit SIC2007) and legal status.")
+          p("A record of the number of enterprises from the Inter Departmental Business Register (IDBR), which is broken down by employment size band, detailed
+            industry (5 digit SIC2007) and legal status.")
         )
       ) # end of data information row
     ), # end of data tab
