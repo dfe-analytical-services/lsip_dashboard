@@ -166,22 +166,48 @@ padding-top:15px
         column(
           12,
           h1("Local Skills Dashboard"),
-          p("Prototype dashboard showing statistics on local employment and skills in England, to support local skills planning and delivery (including Local Skills Improvement Plans)."),
-          p("The prototype dashboard shows a subset of employment and skills statistics at Local Enterprise Partnership (LEP) and local skills improvement plan area (LSIP) level, including:"),
-          tags$ul(
-            tags$li("Employment rates and employment distribution by occupation (source: ONS Annual Population Survey), ILR and ONS online job vacancies)"),
-            tags$li("Online job vacancy units (source: ONS Online Job Adverts)"),
-            tags$li("Further Education aim achievement volumes and achievements by sector subject area (source: DfE FE and Skills National Statistics)"),
-          ),
-          p("Trends can be compared between different LEPs/LSIPs and over time for some indicators. The underlying data contains national, regional, LEP, LSIP and LA data and can be downloaded directly from the dashboard."),
+          p("This prototype dashboard shows statistics on local employment and skills in England, to support local skills planning and delivery.  
+            It includes a subset of employment and skills statistics that can be viewed for two geographic areas: Local Enterprise Partnership (LEP) and Local Skills Improvement Plan (LSIP) areas.  
+            The underlying data can also contains breakdowns by Local Authority and region and can be downloaded using the links on each page or directly from the downloads page."),
+          p("The dashboard currently uses data that is published by the Office for National Statistics (ONS) and the Department for Education (DfE).  
+            It currently only includes a small number of sources and will be gradually updated to include further sources and functionality."),
           p(
-            "This dashboard has been produced to support the aims of the ",
+            "This dashboard does not currently include any information on the labour market outcomes of training.  
+            Separate tools are available that have been developed to help understand these data through the links below, or from the ",
             a(
               href = "https://www.gov.uk/government/groups/unit-for-future-skills",
               "Unit for Future Skills",
               .noWS = c("after")
-            ), "."
-          )
+            ), " webpage."
+          ),
+          tags$ul(
+            tags$li("Graduate outcomes (",
+                    a(
+                      href = "https://explore-education-statistics.service.gov.uk/find-statistics/graduate-outcomes-leo",
+                      "official statistics",
+                      .noWS = c("after","before")
+                    ),
+                    ")(",
+                    a(
+                      href = "https://department-for-education.shinyapps.io/leo-graduate-industry-dashboard",
+                      "dashboard",
+                      .noWS = c("after","before")
+                    ),
+                    ")"),
+            tags$li("Outcome based success measures (",
+                    a(
+                      href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-outcome-based-success-measures",
+                      "official statistics",
+                      .noWS = c("after","before")
+                    ),
+                    ")(",
+                    a(
+                      href = "https://app.powerbi.com/view?r=eyJrIjoiOGYxYmU5ODktN2U1NC00ZjU4LWIwMTgtZDAzMDljMzVlNTE0IiwidCI6ImZhZDI3N2M5LWM2MGEtNGRhMS1iNWYzLWIzYjhiMzRhODJmOSIsImMiOjh9&pageName=ReportSection836f307d5071a434f3a2",
+                      "dashboard",
+                      .noWS = c("after","before")
+                    ),
+                    ")"),
+          ),
         )
       ), # end intro text row
 
@@ -194,27 +220,28 @@ padding-top:15px
             div(
               class = "panel-heading",
               style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-              h2("Dashboard contents")
+              h2("User Guide")
             ),
             div(
               class = "panel-body",
+              h2("Dashboard pages"),
+              p("There are four pages which focus on different parts of the jobs and skills market. 
+                Each page includes options to download all of the indicators shown for either just the selected LEP or LSIP area or for all available geographies."),
               h3(actionLink("link_to_tabpanel_overview", "Overview")),
-              p("This tab provides a summary of employment and skills metrics at LEP/LSIP level. It displays employment volume, employment rate, proportion of online vacancies, Further Education (FE) and skills achievement volumes. It shows year-on-year change for each indicator."),
-              p("The download buttons download all indicators for the selected LEP/LSIP or for all available geographies (England, region, LEP, LSIP, LA)."),
+              p("This page provides a summary of labour market and skills information for the selected LEP or LSIP area.  
+                It includes a time series of data on employment, online job adverts, and further education and skills achievements."),
               h3(actionLink("link_to_tabpanel_employment", "Employment")),
-              p("This tab contains employment indicators at LEP/LSIP level. These can be compared to England and a comparator LEP/LSIP."),
-              p("The line chart shows employment rate over time for the chosen LEP/LSIP. The table displays employment distribution by occupation (sub-major SOC group)."),
-              p("The download buttons download employment indicators for the selected LEP/LSIP or for all available geographies (England, region, LEP, , LA)."),
+              p("This page includes information on employment for the selected LEP or LSIP area, and the option to compare against another area.  
+                It includes data on employment rates over time, and the share of employment for occupations."),
               h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
-              p("This tab contains online job vacancies indicators at LEP/LSIP level. These can be compared to England and a comparator LEP/LSIP."),
-              p("The line chart shows change in online job vacancy units over time. Units are not real volumes but represent a fixed number of job adverts to be used for comparisons over time and between areas."),
-              p("The download buttons download vacancy indicators for the selected LEP/LSIP or for all available geographies (England, region, LEP, LSIP, LA)."),
+              p("This page includes experimental data on the share of online job adverts for the selected LEP or LSIP area, and the option to compare against another area. 
+                The data has been included temporarily, and will be replaced when ONS release further, more detailed, experimental data on online job adverts (currently planned before the end of 2022)."),
               h3(actionLink("link_to_tabpanel_FE", "Skills")),
-              p("This tab provides a summary of further education (FE) and skills statistics at LEP/LSIP level. These can be compared to another LEP/LSIP."),
-              p("The line chart shows achievement volumes over time for apprenticeships, education & training and community learning."),
-              p("The bar chart displays distribution of FE and skills achievements by SSA for the latest available period."),
-              p("The download buttons download FE and skills indicators for the selected LEP/LSIP or for all available geographies (England, region, LEP, LSIP, LA)."),
-            )
+              p("This page includes information on training activity for the selected LEP or LSIP area, and the option to compare against another area.  
+                It includes data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period."),
+              h2(actionLink("link_to_tabpanel_data", "Data download page")),
+              p("The data download page includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
+              )
           )
         )
       ), # end of dashboard contents row
@@ -251,7 +278,7 @@ padding-top:15px
     ), # end of Tab Panel
 
     tabPanel(
-      "Data",
+      "Data download",
       fluidRow(
         column(
           12,

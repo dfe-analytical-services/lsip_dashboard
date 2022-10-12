@@ -268,7 +268,6 @@ panel_skills <- function() {
   tabPanel(
     "Skills",
     h1(uiOutput("page2title")),
-    p("Data from Individualised Learner Records for FE and skills learners. Years shown are academic years."),
     ### KPI boxes ----
     fluidRow(
       valueBoxOutput("skisup.FEach"),
@@ -297,7 +296,7 @@ panel_skills <- function() {
     fluidRow(
       column(
         12,
-        h1("All FE and skills learner achievements by SSA tier 1 (AY21/22 August to April provisional data)"),
+        h1("Further education and skills achievements by sector subject area: Aug 2021 to Apr 2022 (provisional)"),
         plotlyOutput("Ach_SSA_pc")
       )
     ),
@@ -309,7 +308,7 @@ panel_skills <- function() {
         12,
         details(
           inputId = "FEdefs",
-          label = "FE definitions",
+          label = "Further education and skills definitions",
           tags$ul(
             tags$li("FE and skills include all age apprenticeships and wider adult (19+) FE learning, such as community learning and education and training."),
             tags$li("Further Education covers publicly-funded learning delivered by an FE institution, a training provider or within a local community. It also includes apprenticeships delivered in the workplace. It does not include higher education, unless delivered as part of an apprenticeship programme."),
@@ -333,7 +332,7 @@ panel_skills <- function() {
       ),
       column(
         width = 9,
-        "Download FE and skills indicators for all geographies (LEPs, LSIPs, LAs, regions and England)"
+        "Download skills data for all geographies (LEPs, LISP areas, LAs, regions and England)"
       )
     ), # end of row
     fluidRow(
@@ -346,7 +345,7 @@ panel_skills <- function() {
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Or just for the currently chosen LEP/LSIP"))
+      column(width = 9, p("Download skills data for the selected LEP/LSIP area"))
     ), # end of row
     column(width = 12, br(""))
   ) # skills panel
