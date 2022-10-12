@@ -55,8 +55,8 @@ D_empent_UBC1822 <- read.csv(file = "./Data/AppData/D_empent_UBC1822.csv", check
 
 ## KS4 destinations ----
 # data for download
-D_KS4destin_1520 <- read.csv(file = "./Data/AppData/D_KS4destin_1920.csv", check.names = FALSE)
+D_KS4destin_1520 <- read.csv(file = "./Data/AppData/D_KS4destin_1520.csv", check.names = FALSE)
 
 ## KS5 destinations ----
 # data for download
-D_KS5destin_1520 <- read.csv(file = "./Data/AppData/D_KS5destin_1920.csv", check.names = FALSE)
+D_KS5destin_1520 <- read.csv(file = "./Data/AppData/D_KS5destin_1520.csv", check.names = FALSE)

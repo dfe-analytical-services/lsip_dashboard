@@ -441,7 +441,7 @@ format.empind.APS <- function(x) {
     mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
     filter(check == 1) %>%
     filter(!grepl("nomisweb", area)) %>%
-    select(year = apr_2017_mar_2018, area, everything(), -check) %>% # reorder and remove
+    select(year = jul_2017_jun_2018, area, everything(), -check) %>% # reorder and remove
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
     mutate(area = case_when(
