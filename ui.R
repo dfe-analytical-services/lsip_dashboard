@@ -19,7 +19,7 @@ fluidPage(
   tags$html(lang = "en"),
   tags$head(
     tags$meta(name = "application_name", content = "Unit for Future Skills - Local Skills Dashboard"),
-    tags$meta(name = "description", content = "Data dashboard presenting Local Skills data from the Unit for Future Skills in the Department for Education."),
+    tags$meta(name = "description", content = "Data dashboard presenting Local skills data from the Unit for Future Skills in the Department for Education."),
     tags$meta(name = "subject", content = "Education data dashboards.")
   ),
   # Set title for search engines
@@ -140,7 +140,8 @@ padding-top:15px
   HTML('<div class="govuk-phase-banner govuk-width-container govuk-main-wrapper" id="beta banner" style="margin-left:0px;margin-right:0px">
   <p class="govuk-phase-banner__content">
     <strong class="govuk-tag govuk-phase-banner__content__tag ">beta</strong>
-    <span class="govuk-phase-banner__text">Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this.</span>
+    <span class="govuk-phase-banner__text">We are aware of performance issues that require some users to reload the page. We are working to fix this.
+</span>
   </p>
 </div>'),
   # shinyGovstyle::banner(
@@ -286,7 +287,7 @@ padding-top:15px
     # APP ----
 
     tabPanel(
-      "Local Skills",
+      "Local skills",
       fluidRow(
         column(
           12,
@@ -297,7 +298,7 @@ padding-top:15px
               column(
                 style = "color:#fff",
                 width = 4,
-                selectInput("GeoType", "Choose geography level:",
+                selectInput("GeoType", "Choose geography",
                   choices = list("LEP", "LSIP"),
                   selected = "LEP"
                 )
@@ -340,7 +341,7 @@ padding-top:15px
         column(
           width = 12,
           h1("Accessibility statement"),
-          p("This accessibility statement applies to the Local Skills dashboard.
+          p("This accessibility statement applies to the Local skills dashboard.
             This dashboard is run by the Department for Education. We want as many people as possible to be able to use this application,
             and have actively developed this dashboard with accessibilty in mind."),
           h2("WCAG 2.1 compliance"),

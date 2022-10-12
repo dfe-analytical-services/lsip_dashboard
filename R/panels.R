@@ -44,7 +44,7 @@ panel_overview <- function() {
           actionLink("link_to_tabpanel_employment2", "Find out more about employment")
         ),
         # fourth row - vacancies
-        h3("Job vacancy share"),
+        h3("Job vacancy share (experimental)"),
         fluidRow(
           column(
             width = 4,
@@ -68,7 +68,7 @@ panel_overview <- function() {
       column(
         width = 6,
         class = "chartBox",
-        h2("Skills landscape"),
+        h2("Skills"),
         h3("Education and training achievements"),
         fluidRow(
           column(
@@ -119,7 +119,7 @@ panel_overview <- function() {
       ),
       column(
         width = 9,
-        "Download all available indicators for all geographies (LEPs, LSIPs, LAs, Regions and England)",
+        "Download all data for all geographies (LEPs, LISP areas, LAs, regions and England)",
       )
     ),
     fluidRow(
@@ -132,7 +132,7 @@ panel_overview <- function() {
           class = "downloadButton"
         )
       ),
-      column(width = 9, "Or just for the currently chosen LEP/LSIPs")
+      column(width = 9, "Download all data for the selected LEP/LSIP area")
     ),
     column(width = 12, br(""))
   )
@@ -142,7 +142,6 @@ panel_employment <- function() {
   tabPanel(
     "Employment",
     h1(uiOutput("page1title")),
-    p("Data is from the Annual Population Survey. Years represent calendar years. All figures are for 16-64 except the occupation split table which is all ages."),
     ### KPI boxes ----
     fluidRow(
       valueBoxOutput("locland.emplcnt"),
@@ -155,13 +154,13 @@ panel_employment <- function() {
     fluidRow(
       column(
         width = 6,
-        h2("Employment rate trend"),
+        h2("Employment rates: Jun 2017 to Jun 2022"),
         plotlyOutput("EmpRate_time")
       ),
       ### Employment percentage by occupation data table ----
       column(
         width = 6,
-        h2("Employment percentage by occupation (sub-major SOC group)"),
+        h2("Employment share by occupation: Dec 2021"),
         dataTableOutput("EmpOcc")
       )
     ),
@@ -180,7 +179,7 @@ panel_employment <- function() {
       ),
       column(
         width = 9,
-        "Download employment indicators for all geographies (LEPs, LSIPs, LAs, Regions and England)",
+        "Download employment data for all geographies (LEPs, LISP areas, LAs, regions and England)",
       )
     ), # end of row
     fluidRow(
@@ -193,7 +192,7 @@ panel_employment <- function() {
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Or just for the currently chosen LEP/LSIP"))
+      column(width = 9, p("Download employment data for the selected LEP/LSIP area"))
     ), # end of row
     column(width = 12, br(""))
   ) # end of Local Landscape tab
@@ -203,7 +202,7 @@ panel_vacancies <- function() {
   tabPanel(
     "Vacancies",
     h1(uiOutput("page3title")),
-    p("Data is from ONS using Adzuna online job adverts. Data for each year is the average of vacancies across January of that year."),
+    p("The data on this page uses experimental online job advert estimates produced by ONS using Adzuna data. "),
     ### KPI boxes ----
     fluidRow(
       valueBoxOutput("jobad.pc"),
@@ -216,7 +215,7 @@ panel_vacancies <- function() {
       column(
         12,
         ### Online job vacancy units over time line chart ----
-        h2("Online job vacancy unit trend"),
+        h2("Monthly average units of job adverts: Jan 2017 to Jan 2022"),
         plotlyOutput("jobad.time")
       )
     ), # end of box
@@ -225,7 +224,7 @@ panel_vacancies <- function() {
         12,
         details(
           inputId = "SubsLev",
-          label = "Chart information",
+          label = "Further education and skills definitions",
           help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
               The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between LEPs/LSIPs and over time, but do not represent true job vacancy volumes."
         )
@@ -245,7 +244,7 @@ panel_vacancies <- function() {
       ),
       column(
         width = 9,
-        "Download vacancy indicators for all geographies (LEPs, LSIPs, LAs, regions)",
+        "Download vacancies data for all geographies (LEPs, LISP areas, LAs, regions and England)",
       )
     ), # end of row
     fluidRow(
@@ -258,7 +257,7 @@ panel_vacancies <- function() {
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Or just for the currently chosen LEP/LSIP")),
+      column(width = 9, p("Download vacancies data for the selected LEP/LSIP area")),
     ), # end of row
     column(width = 12, br(""))
   ) # end of Skills Supply tab
@@ -282,10 +281,10 @@ panel_skills <- function() {
     fluidRow(
       column(
         12,
-        h2("FE and skills learner achievement trend"),
+        h2("Further education and skills achievements: 2016/17 to 2020/21"),
         div(
           class = "filterRow",
-          selectizeInput("skill_line", "Choose provision group:",
+          selectizeInput("skill_line", "Choose type of training",
             choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and skills provision")
           ),
           br()
