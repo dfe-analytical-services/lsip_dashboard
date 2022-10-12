@@ -9,22 +9,22 @@ server <- function(input, output, session) {
   # HOMEPAGE ----
   # Create link to overview tab
   observeEvent(input$link_to_tabpanel_overview, {
-    updateTabsetPanel(session, "navbar", "Local Skills") # Get into app
+    updateTabsetPanel(session, "navbar", "Local skills") # Get into app
     updateTabsetPanel(session, "datatabset", "Overview") # then pick tab
   })
   # Create link to employment data tab
   observeEvent(input$link_to_tabpanel_employment, {
-    updateTabsetPanel(session, "navbar", "Local Skills")
+    updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Employment")
   })
   # Create link to vacancy data tab
   observeEvent(input$link_to_tabpanel_vacancies, {
-    updateTabsetPanel(session, "navbar", "Local Skills")
+    updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Vacancies")
   })
   # Create link to skills data tab
   observeEvent(input$link_to_tabpanel_FE, {
-    updateTabsetPanel(session, "navbar", "Local Skills")
+    updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Skills")
   })
 
@@ -135,7 +135,7 @@ server <- function(input, output, session) {
 
   # define page title
   output$page0title <- renderUI({
-    paste0(input$lep1, ": overview of local landscape")
+    paste0("Overview of local landscape in ",input$lep1)
   })
 
   ### Downloads----
@@ -676,7 +676,10 @@ server <- function(input, output, session) {
   # EMPLOYMENT ----
   # define page title
   output$page1title <- renderUI({
-    paste0(input$lep1, " employment trends")
+    paste0("Employment in ",input$lep1, 
+           if ("lep2" %in% names(input)) {
+             if (input$lep2 == "\nNone") {
+             } else {paste0(" compared to ",input$lep2)}})
   })
 
   ### Downloads----
@@ -718,7 +721,7 @@ server <- function(input, output, session) {
         format(100. * emp2021()$empRate, digits = 2),
         "%"
       ),
-      paste0("employment rate in 2021 in ", input$lep1),
+      paste0("employment rate in June 2022 in ", input$lep1),
       color = "blue"
     )
   })
@@ -735,7 +738,7 @@ server <- function(input, output, session) {
         )$empRate, digits = 2),
         "%"
       ),
-      paste0("employment rate in 2021 in ", input$lep2),
+      paste0("employment rate in June 2022 in ", input$lep2),
       color = "orange"
     )
   })
@@ -748,7 +751,7 @@ server <- function(input, output, session) {
         scientific = FALSE, big.mark = ","
       ),
       # add subtitle to explain what it's showing
-      paste0("in employment in 2021 in ", input$lep1),
+      paste0("in employment in June 2022 in ", input$lep1),
       color = "blue"
     )
   })
@@ -764,7 +767,7 @@ server <- function(input, output, session) {
       )$Employment,
       scientific = FALSE, big.mark = ","
       ),
-      paste0("in employment in 2021 in ", input$lep2),
+      paste0("in employment in June 2022 in ", input$lep2),
       color = "orange"
     )
   })
