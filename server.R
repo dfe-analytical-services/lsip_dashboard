@@ -39,7 +39,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list(
-        "1b.Emp rate" = D_EmpRate_APS1721
+        "1b.Emp rate" = D_EmpRate_APS1822
       ), path = file)
     }
   )
@@ -146,7 +146,7 @@ server <- function(input, output, session) {
   # download all indicators
   list_of_datasets0 <- list(
     "1a.Emp by occupation" = D_EmpOcc_APS1721,
-    "1b.Emp rate" = D_EmpRate_APS1721,
+    "1b.Emp rate" = D_EmpRate_APS1822,
     "2.Vacancies" = C_Vacancy_ONS1722,
     "3a.FE achievements SSA" = D_Achieve_ILR21,
     "3b.FE achievements" = D_Achieve_ILR1621
@@ -164,7 +164,7 @@ server <- function(input, output, session) {
   filtered_data0 <- reactive({
     list(
       "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
-      "1b.Emp rate" = filter(D_EmpRate_APS1721, geographic_level == input$GeoType, area == input$lep1),
+      "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, area == input$lep1),
       "2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1),
       "3a.FE achievements SSA" = filter(D_Achieve_ILR21, geographic_level == input$GeoType, area == input$lep1),
       "3b.FE achievements" = filter(D_Achieve_ILR1621, geographic_level == input$GeoType, area == input$lep1)
@@ -183,7 +183,7 @@ server <- function(input, output, session) {
 
   # get emp data for current lep
   empLEP <- eventReactive(input$lep1, {
-    C_EmpRate_APS1721 %>%
+    C_EmpRate_APS1822 %>%
       filter(area == input$lep1, geographic_level == input$GeoType)
   })
   # get 2022 values
@@ -200,12 +200,12 @@ server <- function(input, output, session) {
   #### Employment count ----
   output$locland.emplcnt0 <- renderUI({
     # call 2022 and 2021 values for chosen LEP
-    empCnt2021 <- emp2022()$Employment
+    empCnt2022 <- emp2022()$Employment
     empCntChange <- emp2022()$Employment - emp2021()$Employment
 
     # print with formatting
     h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
-      format(empCnt2021, big.mark = ","), br(),
+      format(empCnt2022, big.mark = ","), br(),
       span(
         format_pm(empCntChange) # plus-minus and comma sep formatting
         ,
@@ -224,7 +224,7 @@ server <- function(input, output, session) {
     empLine <- empLEP()
 
     # find min and max for lep
-    empCntMinMax <- C_EmpRate_APS1721_max_min %>%
+    empCntMinMax <- C_EmpRate_APS1822_max_min %>%
       filter(area == input$lep1)
 
     ggplot(empLine, aes(x = Year, y = Employment, group = area, text = paste0(
@@ -282,12 +282,12 @@ server <- function(input, output, session) {
   #### Employment rate -----
   output$locland.emplrate0 <- renderUI({
     # call 2021 values and 21-22 change for chosen LEP
-    empRate2021 <- emp2022()$empRate
+    empRate2022 <- emp2022()$empRate
     empRateChange <- emp2022()$empRate - emp2021()$empRate
 
     # print with formatting
     h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
-      paste0(format(100 * empRate2021, digit = 2), "%"), br(),
+      paste0(format(100 * empRate2022, digit = 2), "%"), br(),
       span(
         paste0(sprintf("%+.0f", 100 * empRateChange), "ppts"),
         style = paste0("font-size: 16px;color:", cond_color(empRateChange > 0)) # colour formating
@@ -300,14 +300,14 @@ server <- function(input, output, session) {
   # Emp chart
 
   # find emp chart y axis min and max
-  EmpRateMin <- C_EmpRate_APS1721 %>%
+  EmpRateMin <- C_EmpRate_APS1822 %>%
     summarise(min(empRate, na.rm = T), .groups = "drop")
-  EmpRateMax <- C_EmpRate_APS1721 %>%
+  EmpRateMax <- C_EmpRate_APS1822 %>%
     summarise(max(empRate, na.rm = T), .groups = "drop")
 
   empRateLineChart <- eventReactive(input$lep1, {
     empRateChange <- emp2022()$empRate - emp2021()$empRate
-    empRateLine <- C_EmpRate_APS1721 %>%
+    empRateLine <- C_EmpRate_APS1822 %>%
       filter((geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"))
 
     ggplot(empRateLine, aes(
@@ -694,7 +694,7 @@ server <- function(input, output, session) {
   ### Downloads----
   list_of_datasets1 <- list(
     "1a.Emp by occupation" = D_EmpOcc_APS1721,
-    "1b.Emp rate" = D_EmpRate_APS1721
+    "1b.Emp rate" = D_EmpRate_APS1822
   )
   output$download_btn1a <- downloadHandler(
     filename = function() {
@@ -709,7 +709,7 @@ server <- function(input, output, session) {
   filtered_data1 <- reactive({
     list(
       "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
-      "1b.Emp rate" = filter(D_EmpRate_APS1721, geographic_level == input$GeoType, area == input$lep1)
+      "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, area == input$lep1)
     )
   })
   output$download_btn1b <- downloadHandler(
@@ -738,7 +738,7 @@ server <- function(input, output, session) {
   output$locland.emplrate.2 <- renderValueBox({
     valueBox(
       paste0(
-        format(100. * (C_EmpRate_APS1721 %>%
+        format(100. * (C_EmpRate_APS1822 %>%
           filter(
             geographic_level == input$GeoType,
             area == input$lep2,
@@ -767,7 +767,7 @@ server <- function(input, output, session) {
 
   output$locland.emplcnt.2 <- renderValueBox({
     valueBox(
-      format((C_EmpRate_APS1721 %>%
+      format((C_EmpRate_APS1822 %>%
         filter(
           geographic_level == input$GeoType,
           area == input$lep2,
@@ -802,7 +802,7 @@ server <- function(input, output, session) {
 
   ## Employment rate over time line graph ----
   EmpRate_time <- eventReactive(c(input$lep1, input$lep2), {
-    EmpRateTime <- C_EmpRate_APS1721 %>%
+    EmpRateTime <- C_EmpRate_APS1822 %>%
       select(year, area, geographic_level, empRate) %>%
       filter(
         geographic_level == input$GeoType | geographic_level == "COUNTRY",
