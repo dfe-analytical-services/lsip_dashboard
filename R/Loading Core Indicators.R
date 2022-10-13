@@ -12,10 +12,10 @@ C_EmpOcc_APS1721 <- read.csv(file = "./Data/AppData/C_EmpOcc_APS1721.csv", check
 
 ## Employment level and rate ----
 # data for download
-D_EmpRate_APS1721 <- read.csv(file = "./Data/AppData/D_EmpRate_APS1721.csv", check.names = FALSE)
+D_EmpRate_APS1822 <- read.csv(file = "./Data/AppData/D_EmpRate_APS1822.csv", check.names = FALSE)
 # data for dashboard
-C_EmpRate_APS1721 <- read.csv(file = "./Data/AppData/C_EmpRate_APS1721.csv", check.names = FALSE)
-C_EmpRate_APS1721_max_min <- read.csv(file = "./Data/AppData/C_EmpRate_APS1721_max_min.csv", check.names = FALSE)
+C_EmpRate_APS1822 <- read.csv(file = "./Data/AppData/C_EmpRate_APS1822.csv", check.names = FALSE)
+C_EmpRate_APS1822_max_min <- read.csv(file = "./Data/AppData/C_EmpRate_APS1822_max_min.csv", check.names = FALSE)
 
 ## FE achievements ----
 # data for download
