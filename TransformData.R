@@ -150,15 +150,15 @@ format.EmpRate.APS <- function(x) {
 }
 
 # format data
-F_EmpRate_APS1721 <- format.EmpRate.APS(I_EmpRate_APS1721)
+F_EmpRate_APS1822 <- format.EmpRate.APS(I_EmpRate_APS1822)
 # create downloadable version with new suppression rules
-D_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
+D_EmpRate_APS1822 <- F_EmpRate_APS1822 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
 
-write.csv(D_EmpRate_APS1721, file = "Data\\AppData\\D_EmpRate_APS1721.csv", row.names = FALSE)
+write.csv(D_EmpRate_APS1822, file = "Data\\AppData\\D_EmpRate_APS1822.csv", row.names = FALSE)
 
 # create version to use in dashboard
-C_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
+C_EmpRate_APS1822 <- F_EmpRate_APS1822 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
   mutate_at(c(4:10), as.numeric) %>% # Convert to numeric
   mutate(empRate = .[[6]] / .[[4]]) %>%
@@ -168,13 +168,13 @@ C_EmpRate_APS1721 <- F_EmpRate_APS1721 %>%
   ) %>%
   mutate(Year = as.numeric(substr(year, 3, 4))) %>% # for use in charts
   rename(Employment = `28  in employment `) # for use in charts
-write.csv(C_EmpRate_APS1721, file = "Data\\AppData\\C_EmpRate_APS1721.csv", row.names = FALSE)
+write.csv(C_EmpRate_APS1822, file = "Data\\AppData\\C_EmpRate_APS1822.csv", row.names = FALSE)
 
 # create max and min emp count and rate by LEP for use in setting axis
-C_EmpRate_APS1721_max_min <- C_EmpRate_APS1721 %>%
+C_EmpRate_APS1822_max_min <- C_EmpRate_APS1822 %>%
   group_by(area) %>%
   summarise(minEmp = min(Employment), maxEmp = max(Employment))
-write.csv(C_EmpRate_APS1721_max_min, file = "Data\\AppData\\C_EmpRate_APS1721_max_min.csv", row.names = FALSE)
+write.csv(C_EmpRate_APS1822_max_min, file = "Data\\AppData\\C_EmpRate_APS1822_max_min.csv", row.names = FALSE)
 
 # FE data cleaning
 # Clean ILR column names, reorder and reformat
