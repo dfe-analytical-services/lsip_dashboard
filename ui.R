@@ -255,20 +255,23 @@ padding-top:15px
             div(
               class = "panel-heading",
               style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-              h2("Version control")
+              h2("Update history")
             ),
             div(
               class = "panel-body",
-              p("Version 0.1. August 2022."),
-              h3("Future development"),
-              p("This dashboard will be developed with additional data and features in consultation with users. An updated dashboard will be released in Autumn 2022. This will include:"),
-              tags$ul(
-                tags$li("A wider range of statistics on employment and skills;"),
-                tags$li("Additional data breakdowns;"),
-                tags$li("New features, including the ability to view data at different geography levels (e.g. Local Authority District)."),
-              ),
+              h2("Latest update"),
+              p("18 Oct 2022 (0.2.1)"),
+              p("Added option to view LSIP geographies, included new data download page, updated dashboard styling, and included additional data sources on data download page."),
+              h3("Previous updates"),
+              p("16 Sep 2022 (0.1.2)"),
+              p("Applied fixes to improve background performance."),
+              br(),
+              p("8 Aug 2022 (0.1.1)"),
+              p("Release initial prototype."),
+              h2("Future development"),
+              p("The dashboard will be kept up to date with the latest data shortly after it is released – check the data downloads page for dates when new data is published."),
               p(
-                "If you have any feedback or suggestions for improvement, please contact us at ",
+                "We will be regularly adding more data and visualisations to the dashboard based on the user feedback we have received.  If there are further data or dashboard features that you would find useful please contact us at ",
                 a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk", .noWS = c("after")), "."
               )
             )
@@ -292,23 +295,26 @@ padding-top:15px
         column(
           12,
           h2("Data information"),
-          h3("Annual Population Survey (APS)"),
-          p("A continuous household survey covering the UK.
-                             The dashboard uses employment volumes and rates for each LEP/LSIP and split by sub-major SOC 2010 grouping.
-                             The data are for interviews conducted over the calendar year (2017-2021 are shown).
-                             Totals for LSIPs are calculated by adding up the relevant LAs. Since the published LA volumes are rounded, there may be a small rounding error in the LSIP total.
-                             "),
-          h3("ONS Online Job Adverts"),
-          p("These data tables are created based upon online job adverts data provided by Adzuna.
-                             Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022. The monthly average is derived from weekly snapshots in January.
-                             The dashboard shows job 'units' which is the number of job adverts divided a set value for all regions. It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across regions or to follow trends over time."),
-          h3("Individualised Learner Records (ILR)"),
-          p("The ILR is an on-going collection of data about learners from training providers in the Further Education (FE) and Skills sector in England.
-                             The dashboard uses FE and skills learner achievements over time (AY1617-21/22 (provisional data to April for 21/22)) split by apprenticeships, community learning, education and training.
-                             The data is taken from the FE and Skills official statistics.
-                             Totals for LSIPs and LEPs are calculated by adding up the relevant LAs. Since the published LA volumes are rounded, there may be a small rounding error in the LSIP and LEP totals.
-"),
-        )
+          h3("Annual Population Survey"),
+          p("The Annual Population Survey (APS) is a continuous household survey, covering the UK. 
+            The topics covered include employment and unemployment, as well as housing, ethnicity, religion, health and education. 
+            The dashboard shows employment volumes and rates for each LEP/LSIP and split by sub-major Standard Occupational Classification (SOC) 2010 grouping. 
+            Totals for LSIP areas are calculated by adding up the relevant local authorities (LAs). 
+            Since the published LA volumes are rounded, there may be a small rounding error in the LSIP totals."),
+          h3("ONS online job adverts"),
+          p("These data tables are created based upon online job adverts data provided by Adzuna. 
+            Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022. 
+            The dashboard shows job 'units' which is the number of job adverts divided a set value for all regions. 
+            It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across areas or to follow trends over time. 
+            Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs). 
+            Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP totals."),
+          h3("Individualised Learner Records"),
+          p("The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England. 
+          The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training. 
+          Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs). 
+            Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP totals."),
+        br()
+          )
       ) # end of data information row
     ), # end of data tab
     # APP ----

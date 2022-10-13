@@ -150,18 +150,43 @@ panel_employment <- function() {
     fluidRow(
       uiOutput("emp_comp")
     ),
+    details(label="Data notes",
+            inputId = "empKPISource",
+            p("Source: Annual Population Survey",
+              tags$ul(
+                tags$li("1. Figures are for 16-64 year olds.")
+              )
+            )
+    ),
     ### Employment rate over time line chart ----
     fluidRow(
       column(
         width = 6,
-        h2("Employment rates: Jun 2017 to Jun 2022"),
-        plotlyOutput("EmpRate_time")
+        h2("Employment rates: 2017 to 2022"),
+        plotlyOutput("EmpRate_time"),
+        details(label="Data notes",
+          inputId = "empRateSource",
+          p("Source: Annual Population Survey",
+          tags$ul(
+            tags$li("1. Figures are for 16-64 year olds."),
+            tags$li("2. Years represent Jul-Jun period. So 2017 is the Jul 2016 – June 2017 period.")
+                  )
+          )
+        )
       ),
       ### Employment percentage by occupation data table ----
       column(
         width = 6,
-        h2("Employment share by occupation: Dec 2021"),
-        dataTableOutput("EmpOcc")
+        h2("Employment share by occupation: Jan-Dec 2021"),
+        dataTableOutput("EmpOcc"),
+        details(label="Data notes",
+                inputId = "empOccSource",
+                p("Source: Annual Population Survey",
+                  tags$ul(
+                    tags$li("1. Figures are for all age groups.")
+                  )
+                )
+        )
       )
     ),
 
@@ -211,6 +236,14 @@ panel_vacancies <- function() {
     fluidRow(
       uiOutput("vac_comp")
     ),
+    details(label="Data notes",
+            inputId = "vacKPISource",
+            p("Source: Adzuna",
+              tags$ul(
+                tags$li("1. Figures refer to the average estimates over the month of January in each year.")
+              )
+            )
+    ),
     fluidRow(
       column(
         12,
@@ -219,12 +252,20 @@ panel_vacancies <- function() {
         plotlyOutput("jobad.time")
       )
     ), # end of box
+    details(label="Data notes",
+            inputId = "vacKPISource",
+            p("Source: Adzuna",
+              tags$ul(
+                tags$li("1. Figures refer to the average estimates over the month of January in each year.")
+              )
+            )
+    ),
     fluidRow(
       column(
         12,
         details(
           inputId = "SubsLev",
-          label = "Further education and skills definitions",
+          label = "Job vacancy data information",
           help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
               The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between LEPs/LSIPs and over time, but do not represent true job vacancy volumes."
         )
@@ -276,6 +317,16 @@ panel_skills <- function() {
     fluidRow(
       uiOutput("skill_comp")
     ),
+    details(label="Data notes",
+            inputId = "FEKPISource",
+            p("Source: Individualised Learner Record",
+              tags$ul(
+                tags$li("1. Total achievements are the count of learners that achieved at any point duding the stated academic period."),
+                tags$li("2. Learners achieving more than one course will appear only once in the grand total."),
+                tags$li("3. Years shown represent academic years.")
+                )
+            )
+    ),
     ### Achievements over time line chart ----
     fluidRow(
       column(
@@ -289,7 +340,17 @@ panel_skills <- function() {
           br()
         ),
         plotlyOutput("Ach_time"),
-        p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total.")
+        p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total."),
+        details(label="Data notes",
+                inputId = "FEKPISource",
+                p("Source: Individualised Learner Record",
+                  tags$ul(
+                    tags$li("1. Total achievements are the count of learners that achieved at any point duding the stated academic period."),
+                    tags$li("2. Learners achieving more than one course will appear only once in the grand total."),
+                    tags$li("3. Years shown represent academic years.")
+                  )
+                )
+        ),
       )
     ),
     ### FE achievements by SSA----
@@ -302,6 +363,16 @@ panel_skills <- function() {
     ),
     column(width = 12, br("")), # put in to push below the fixed height chart
     column(width = 12, br("")),
+    details(label="Data notes",
+            inputId = "FEKPISource",
+            p("Source: Individualised Learner Record",
+              tags$ul(
+                tags$li("1. Total achievements are the count of learners that achieved at any point duding the stated academic period."),
+                tags$li("2. Learners achieving more than one course will appear only once in the grand total."),
+                tags$li("3. Years shown represent academic years.")
+              )
+            )
+    ),
     ### FE definitions----
     fluidRow(
       column(

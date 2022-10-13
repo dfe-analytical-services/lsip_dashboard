@@ -204,7 +204,7 @@ server <- function(input, output, session) {
     empCntChange <- emp2021()$Employment - emp2020()$Employment
 
     # print with formatting
-    h4(span("2021", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
       format(empCnt2021, big.mark = ","), br(),
       span(
         format_pm(empCntChange) # plus-minus and comma sep formatting
@@ -286,7 +286,7 @@ server <- function(input, output, session) {
     empRateChange <- emp2021()$empRate - emp2020()$empRate
 
     # print with formatting
-    h4(span("2021", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
       paste0(format(100 * empRate2021, digit = 2), "%"), br(),
       span(
         paste0(sprintf("%+.0f", 100 * empRateChange), "ppts"),
@@ -725,7 +725,7 @@ server <- function(input, output, session) {
         format(100. * emp2021()$empRate, digits = 2),
         "%"
       ),
-      paste0("employment rate in June 2022 in ", input$lep1),
+      paste0("employment rate Jul-Jun 2022 in ", input$lep1),
       color = "blue"
     )
   })
@@ -742,7 +742,7 @@ server <- function(input, output, session) {
         )$empRate, digits = 2),
         "%"
       ),
-      paste0("employment rate in June 2022 in ", input$lep2),
+      paste0("employment rate Jul-Jun 2022 in ", input$lep2),
       color = "orange"
     )
   })
@@ -755,7 +755,7 @@ server <- function(input, output, session) {
         scientific = FALSE, big.mark = ","
       ),
       # add subtitle to explain what it's showing
-      paste0("in employment in June 2022 in ", input$lep1),
+      paste0("in employment Jul-Jun 2022 in ", input$lep1),
       color = "blue"
     )
   })
@@ -771,7 +771,7 @@ server <- function(input, output, session) {
       )$Employment,
       scientific = FALSE, big.mark = ","
       ),
-      paste0("in employment in June 2022 in ", input$lep2),
+      paste0("in employment Jul-Jun 2022 in ", input$lep2),
       color = "orange"
     )
   })
