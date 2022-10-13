@@ -408,7 +408,7 @@ server <- function(input, output, session) {
 
   # Vacancy chart
   VacLineChart <- eventReactive(input$lep1, {
-    VacLine <- VacArea()%>%filter(year>=2018)
+    VacLine <- VacArea() %>% filter(year >= 2018)
     VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
 
     VacMinMax <- C_Vacancy_England_max_min %>% filter(area == input$lep1, geographic_level == input$GeoType)
