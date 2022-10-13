@@ -449,7 +449,7 @@ format.empind.APS <- function(x) {
       area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
       TRUE ~ area
     )) %>% # Rename so matches official name
-    relocate(geographic_level, year, .after = area) %>%
+    relocate(geographic_level, year, .before = area) %>%
     mutate(year = as.numeric(substr(year, 5, 8))) %>%
     rename_with(
       .fn = ~ str_replace_all(.x, c("t13a_" = "", "all_people" = "", "(sic 2007)" = "", "_" = " ", "sic" = "")),
@@ -485,7 +485,9 @@ format.empind.APS <- function(x) {
            "Banking, Finance and Insurance" = " k n banking finance insurance etc   ",
            "Public Administration, Education and Health" = " o q public admin education health   ",
            "Other Services" = " r u other services   ") %>%
-    filter(geographic_level %in%  c("LSIP", "LEP"))
+    filter(geographic_level %in%  c("LSIP", "LEP")) %>%
+    relocate(area, .before = geographic_level) %>%
+    relocate(year, .before = area)
   
   
 }
@@ -598,7 +600,9 @@ format.skills.APS <- function(x) {
            "50-64 NVQ3" = "61 total  aged 50 64 nvq3",
            "50-64 NVQ4" = "62 total  aged 50 64 nvq4",
            "50-64 Other Qualifications" = "63 total  aged 50 64 other qualifications") %>%
-    filter(geographic_level %in%  c("LSIP", "LEP"))
+    filter(geographic_level %in%  c("LSIP", "LEP")) %>%
+    relocate(area, .before = geographic_level) %>%
+    relocate(year, .before = area)
   
 }
 
@@ -661,7 +665,9 @@ format.empent.UBC <- function(x) {
            "Total Enterprises Micro 0-9" = "micro_0_to_9",
            "Total Enterprises Small 10-49" = "small_10_to_49",
            "Total Enterprises Medium 50-249" = "medium_sized_50_to_249",
-           "Total Enterprises Large 250" = "large_250")
+           "Total Enterprises Large 250" = "large_250") %>%
+    relocate(area, .before = geographic_level) %>%
+    relocate(year, .before = area)
 }
 
 ## format UBC
@@ -720,7 +726,9 @@ format.ks4 <- function(x) {
            "Sustained Education" = "education",
            "Sustained Employment" = "all_work",
            "Sustained Apprenticeships" = "appren") %>%
-    relocate('Total Completed Key Stage 4', .before = 'Unknown')
+    relocate('Total Completed Key Stage 4', .before = 'Unknown') %>%
+    relocate(area, .before = geographic_level) %>%
+    relocate(time_period, .before = area)
   
 }    
 
@@ -782,18 +790,20 @@ format.ks5 <- function(x) {
            "Sustained Employment" = "all_work",
            "Sustained Apprenticeships" = "appren",
            "Cohort Group" = "cohort_level_group") %>%
-    relocate('Total Completed Key Stage 4',  .before = "Cohort Group")
+    relocate('Total Completed Key Stage 4',  .before = "Cohort Group") %>%
+    relocate(area, .before = geographic_level) %>%
+    relocate(time_period, .before = area)
   
 } 
 
 ## format KS5
-F_KS5destin_1520 <- format.ks5(I_KS5destin_1520)
+F_KS5destin_1720 <- format.ks5(I_KS5destin_1720)
 
 #downloadable version
-D_KS5destin_1520 <- F_KS5destin_1520 %>%
+D_KS5destin_1720 <- F_KS5destin_1720 %>%
   mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
 #write data to folder - todo
-write.csv(D_KS5destin_1520, file = "Data\\AppData\\D_KS5destin_1520.csv", row.names = FALSE)
+write.csv(D_KS5destin_1720, file = "Data\\AppData\\D_KS5destin_1720.csv", row.names = FALSE)
 
 
 

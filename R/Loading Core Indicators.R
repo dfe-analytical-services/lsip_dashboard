@@ -47,7 +47,7 @@ D_empind_APS1721 <- read.csv(file = "./Data/AppData/D_empind_APS1721.csv", check
 
 ## Employment by skill level ----
 # data for download
-D_skillsnvq_APS2021 <- read.csv(file = "./Data/AppData/D_skillsnvq_APS2021.csv", check.names = FALSE)
+D_skillsnvq_APS1721 <- read.csv(file = "./Data/AppData/D_skillsnvq_APS1721.csv", check.names = FALSE)
 
 ## Enterprise by employment size ----
 # data for download
@@ -59,4 +59,4 @@ D_KS4destin_1520 <- read.csv(file = "./Data/AppData/D_KS4destin_1520.csv", check
 
 ## KS5 destinations ----
 # data for download
-D_KS5destin_1520 <- read.csv(file = "./Data/AppData/D_KS5destin_1520.csv", check.names = FALSE)
+D_KS5destin_1720 <- read.csv(file = "./Data/AppData/D_KS5destin_1720.csv", check.names = FALSE)

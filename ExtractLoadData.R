@@ -88,7 +88,7 @@ I_KS4destin_1520 <- read.csv(file = paste0("./Data/", folder, "/", list.files(pa
 #KS5 AY17/18 - 19/20 - KS5 destinations
 # Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/6ed2058c-1ff4-4e13-b167-3b15bb6a0675
 folder <- "13_KS5destin"
-I_KS5destin_1520 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+I_KS5destin_1720 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 
 ## ONS
