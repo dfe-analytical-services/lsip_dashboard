@@ -139,7 +139,7 @@ server <- function(input, output, session) {
 
   # define page title
   output$page0title <- renderUI({
-    paste0("Overview of local landscape in ",input$lep1)
+    paste0("Overview of local landscape in ", input$lep1)
   })
 
   ### Downloads----
@@ -680,10 +680,15 @@ server <- function(input, output, session) {
   # EMPLOYMENT ----
   # define page title
   output$page1title <- renderUI({
-    paste0("Employment in ",input$lep1, 
-           if ("lep2" %in% names(input)) {
-             if (input$lep2 == "\nNone") {
-             } else {paste0(" compared to ",input$lep2)}})
+    paste0(
+      "Employment in ", input$lep1,
+      if ("lep2" %in% names(input)) {
+        if (input$lep2 == "\nNone") {
+        } else {
+          paste0(" compared to ", input$lep2)
+        }
+      }
+    )
   })
 
   ### Downloads----
@@ -875,10 +880,15 @@ server <- function(input, output, session) {
   # VACANCIES ----
   # define page title
   output$page3title <- renderUI({
-    paste0("Job vacancies in ",input$lep1, 
-           if ("lep2" %in% names(input)) {
-      if (input$lep2 == "\nNone") {
-      } else {paste0(" compared to ",input$lep2)}})
+    paste0(
+      "Job vacancies in ", input$lep1,
+      if ("lep2" %in% names(input)) {
+        if (input$lep2 == "\nNone") {
+        } else {
+          paste0(" compared to ", input$lep2)
+        }
+      }
+    )
   })
 
   ### Downloads----
@@ -1032,10 +1042,15 @@ server <- function(input, output, session) {
   # FE ----
   # define page title
   output$page2title <- renderUI({
-    paste0("Skills training in ",input$lep1,
-           if ("lep2" %in% names(input)) {
-             if (input$lep2 == "\nNone") {
-             } else {paste0(" compared to ",input$lep2)}})
+    paste0(
+      "Skills training in ", input$lep1,
+      if ("lep2" %in% names(input)) {
+        if (input$lep2 == "\nNone") {
+        } else {
+          paste0(" compared to ", input$lep2)
+        }
+      }
+    )
   })
 
   ### Downloads----

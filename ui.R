@@ -166,13 +166,13 @@ padding-top:15px
         column(
           12,
           h1("Local Skills Dashboard"),
-          p("This prototype dashboard shows statistics on local employment and skills in England, to support local skills planning and delivery.  
-            It includes a subset of employment and skills statistics that can be viewed for two geographic areas: Local Enterprise Partnership (LEP) and Local Skills Improvement Plan (LSIP) areas.  
+          p("This prototype dashboard shows statistics on local employment and skills in England, to support local skills planning and delivery.
+            It includes a subset of employment and skills statistics that can be viewed for two geographic areas: Local Enterprise Partnership (LEP) and Local Skills Improvement Plan (LSIP) areas.
             The underlying data can also contains breakdowns by Local Authority and region and can be downloaded using the links on each page or directly from the downloads page."),
-          p("The dashboard currently uses data that is published by the Office for National Statistics (ONS) and the Department for Education (DfE).  
+          p("The dashboard currently uses data that is published by the Office for National Statistics (ONS) and the Department for Education (DfE).
             It currently only includes a small number of sources and will be gradually updated to include further sources and functionality."),
           p(
-            "This dashboard does not currently include any information on the labour market outcomes of training.  
+            "This dashboard does not currently include any information on the labour market outcomes of training.
             Separate tools are available that have been developed to help understand these data through the links below, or from the ",
             a(
               href = "https://www.gov.uk/government/groups/unit-for-future-skills",
@@ -181,32 +181,36 @@ padding-top:15px
             ), " webpage."
           ),
           tags$ul(
-            tags$li("Graduate outcomes (",
-                    a(
-                      href = "https://explore-education-statistics.service.gov.uk/find-statistics/graduate-outcomes-leo",
-                      "official statistics",
-                      .noWS = c("after","before")
-                    ),
-                    ")(",
-                    a(
-                      href = "https://department-for-education.shinyapps.io/leo-graduate-industry-dashboard",
-                      "dashboard",
-                      .noWS = c("after","before")
-                    ),
-                    ")"),
-            tags$li("Outcome based success measures (",
-                    a(
-                      href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-outcome-based-success-measures",
-                      "official statistics",
-                      .noWS = c("after","before")
-                    ),
-                    ")(",
-                    a(
-                      href = "https://app.powerbi.com/view?r=eyJrIjoiOGYxYmU5ODktN2U1NC00ZjU4LWIwMTgtZDAzMDljMzVlNTE0IiwidCI6ImZhZDI3N2M5LWM2MGEtNGRhMS1iNWYzLWIzYjhiMzRhODJmOSIsImMiOjh9&pageName=ReportSection836f307d5071a434f3a2",
-                      "dashboard",
-                      .noWS = c("after","before")
-                    ),
-                    ")"),
+            tags$li(
+              "Graduate outcomes (",
+              a(
+                href = "https://explore-education-statistics.service.gov.uk/find-statistics/graduate-outcomes-leo",
+                "official statistics",
+                .noWS = c("after", "before")
+              ),
+              ")(",
+              a(
+                href = "https://department-for-education.shinyapps.io/leo-graduate-industry-dashboard",
+                "dashboard",
+                .noWS = c("after", "before")
+              ),
+              ")"
+            ),
+            tags$li(
+              "Outcome based success measures (",
+              a(
+                href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-outcome-based-success-measures",
+                "official statistics",
+                .noWS = c("after", "before")
+              ),
+              ")(",
+              a(
+                href = "https://app.powerbi.com/view?r=eyJrIjoiOGYxYmU5ODktN2U1NC00ZjU4LWIwMTgtZDAzMDljMzVlNTE0IiwidCI6ImZhZDI3N2M5LWM2MGEtNGRhMS1iNWYzLWIzYjhiMzRhODJmOSIsImMiOjh9&pageName=ReportSection836f307d5071a434f3a2",
+                "dashboard",
+                .noWS = c("after", "before")
+              ),
+              ")"
+            ),
           ),
         )
       ), # end intro text row
@@ -225,23 +229,23 @@ padding-top:15px
             div(
               class = "panel-body",
               h2("Dashboard pages"),
-              p("There are four pages which focus on different parts of the jobs and skills market. 
+              p("There are four pages which focus on different parts of the jobs and skills market.
                 Each page includes options to download all of the indicators shown for either just the selected LEP or LSIP area or for all available geographies."),
               h3(actionLink("link_to_tabpanel_overview", "Overview")),
-              p("This page provides a summary of labour market and skills information for the selected LEP or LSIP area.  
+              p("This page provides a summary of labour market and skills information for the selected LEP or LSIP area.
                 It includes a time series of data on employment, online job adverts, and further education and skills achievements."),
               h3(actionLink("link_to_tabpanel_employment", "Employment")),
-              p("This page includes information on employment for the selected LEP or LSIP area, and the option to compare against another area.  
+              p("This page includes information on employment for the selected LEP or LSIP area, and the option to compare against another area.
                 It includes data on employment rates over time, and the share of employment for occupations."),
               h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
-              p("This page includes experimental data on the share of online job adverts for the selected LEP or LSIP area, and the option to compare against another area. 
+              p("This page includes experimental data on the share of online job adverts for the selected LEP or LSIP area, and the option to compare against another area.
                 The data has been included temporarily, and will be replaced when ONS release further, more detailed, experimental data on online job adverts (currently planned before the end of 2022)."),
               h3(actionLink("link_to_tabpanel_FE", "Skills")),
-              p("This page includes information on training activity for the selected LEP or LSIP area, and the option to compare against another area.  
+              p("This page includes information on training activity for the selected LEP or LSIP area, and the option to compare against another area.
                 It includes data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period."),
               h2(actionLink("link_to_tabpanel_data", "Data download page")),
               p("The data download page includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
-              )
+            )
           )
         )
       ), # end of dashboard contents row
@@ -296,25 +300,25 @@ padding-top:15px
           12,
           h2("Data information"),
           h3("Annual Population Survey"),
-          p("The Annual Population Survey (APS) is a continuous household survey, covering the UK. 
-            The topics covered include employment and unemployment, as well as housing, ethnicity, religion, health and education. 
-            The dashboard shows employment volumes and rates for each LEP/LSIP and split by sub-major Standard Occupational Classification (SOC) 2010 grouping. 
-            Totals for LSIP areas are calculated by adding up the relevant local authorities (LAs). 
+          p("The Annual Population Survey (APS) is a continuous household survey, covering the UK.
+            The topics covered include employment and unemployment, as well as housing, ethnicity, religion, health and education.
+            The dashboard shows employment volumes and rates for each LEP/LSIP and split by sub-major Standard Occupational Classification (SOC) 2010 grouping.
+            Totals for LSIP areas are calculated by adding up the relevant local authorities (LAs).
             Since the published LA volumes are rounded, there may be a small rounding error in the LSIP totals."),
           h3("ONS online job adverts"),
-          p("These data tables are created based upon online job adverts data provided by Adzuna. 
-            Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022. 
-            The dashboard shows job 'units' which is the number of job adverts divided a set value for all regions. 
-            It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across areas or to follow trends over time. 
-            Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs). 
+          p("These data tables are created based upon online job adverts data provided by Adzuna.
+            Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
+            The dashboard shows job 'units' which is the number of job adverts divided a set value for all regions.
+            It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across areas or to follow trends over time.
+            Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs).
             Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP totals."),
           h3("Individualised Learner Records"),
-          p("The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England. 
-          The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training. 
-          Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs). 
+          p("The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
+          The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training.
+          Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs).
             Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP totals."),
-        br()
-          )
+          br()
+        )
       ) # end of data information row
     ), # end of data tab
     # APP ----
@@ -332,7 +336,10 @@ padding-top:15px
                 style = "color:#fff",
                 width = 4,
                 selectInput("GeoType", "Choose geography",
-                  choices = list("LEP", "LSIP"),
+                  choices = c(
+                    "Local Enterprise Partnership (LEP)" = "LEP",
+                    "Local Skills Improvement Plan (LSIP)" = "LSIP"
+                  ),
                   selected = "LEP"
                 )
               ),
