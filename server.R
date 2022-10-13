@@ -9,23 +9,27 @@ server <- function(input, output, session) {
   # HOMEPAGE ----
   # Create link to overview tab
   observeEvent(input$link_to_tabpanel_overview, {
-    updateTabsetPanel(session, "navbar", "Local Skills") # Get into app
+    updateTabsetPanel(session, "navbar", "Local skills") # Get into app
     updateTabsetPanel(session, "datatabset", "Overview") # then pick tab
   })
   # Create link to employment data tab
   observeEvent(input$link_to_tabpanel_employment, {
-    updateTabsetPanel(session, "navbar", "Local Skills")
+    updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Employment")
   })
   # Create link to vacancy data tab
   observeEvent(input$link_to_tabpanel_vacancies, {
-    updateTabsetPanel(session, "navbar", "Local Skills")
+    updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Vacancies")
   })
   # Create link to skills data tab
   observeEvent(input$link_to_tabpanel_FE, {
-    updateTabsetPanel(session, "navbar", "Local Skills")
+    updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Skills")
+  })
+  # Create link to data tab
+  observeEvent(input$link_to_tabpanel_data, {
+    updateTabsetPanel(session, "navbar", "Data download")
   })
 
   # create table download datasets
@@ -135,7 +139,7 @@ server <- function(input, output, session) {
 
   # define page title
   output$page0title <- renderUI({
-    paste0(input$lep1, ": overview of local landscape")
+    paste0("Overview of local landscape in ", input$lep1)
   })
 
   ### Downloads----
@@ -200,7 +204,7 @@ server <- function(input, output, session) {
     empCntChange <- emp2021()$Employment - emp2020()$Employment
 
     # print with formatting
-    h4(span("2021", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
       format(empCnt2021, big.mark = ","), br(),
       span(
         format_pm(empCntChange) # plus-minus and comma sep formatting
@@ -282,7 +286,7 @@ server <- function(input, output, session) {
     empRateChange <- emp2021()$empRate - emp2020()$empRate
 
     # print with formatting
-    h4(span("2021", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
       paste0(format(100 * empRate2021, digit = 2), "%"), br(),
       span(
         paste0(sprintf("%+.0f", 100 * empRateChange), "ppts"),
@@ -391,7 +395,7 @@ server <- function(input, output, session) {
     VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
 
     # print with formatting
-    h4(span("2022", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("2022 (Jan)", style = "font-size: 16px;font-weight:normal;"), br(),
       paste0(format(100 * Vac2022()$jobpc, digit = 2), "%"), br(),
       span(
         paste0(sprintf("%+.1f", 100 * VacPcChange), "ppts"),
@@ -676,7 +680,15 @@ server <- function(input, output, session) {
   # EMPLOYMENT ----
   # define page title
   output$page1title <- renderUI({
-    paste0(input$lep1, " employment trends")
+    paste0(
+      "Employment in ", input$lep1,
+      if ("lep2" %in% names(input)) {
+        if (input$lep2 == "\nNone") {
+        } else {
+          paste0(" compared to ", input$lep2)
+        }
+      }
+    )
   })
 
   ### Downloads----
@@ -718,7 +730,7 @@ server <- function(input, output, session) {
         format(100. * emp2021()$empRate, digits = 2),
         "%"
       ),
-      paste0("employment rate in 2021 in ", input$lep1),
+      paste0("employment rate Jul-Jun 2022 in ", input$lep1),
       color = "blue"
     )
   })
@@ -735,7 +747,7 @@ server <- function(input, output, session) {
         )$empRate, digits = 2),
         "%"
       ),
-      paste0("employment rate in 2021 in ", input$lep2),
+      paste0("employment rate Jul-Jun 2022 in ", input$lep2),
       color = "orange"
     )
   })
@@ -748,7 +760,7 @@ server <- function(input, output, session) {
         scientific = FALSE, big.mark = ","
       ),
       # add subtitle to explain what it's showing
-      paste0("in employment in 2021 in ", input$lep1),
+      paste0("in employment Jul-Jun 2022 in ", input$lep1),
       color = "blue"
     )
   })
@@ -764,7 +776,7 @@ server <- function(input, output, session) {
       )$Employment,
       scientific = FALSE, big.mark = ","
       ),
-      paste0("in employment in 2021 in ", input$lep2),
+      paste0("in employment Jul-Jun 2022 in ", input$lep2),
       color = "orange"
     )
   })
@@ -868,7 +880,15 @@ server <- function(input, output, session) {
   # VACANCIES ----
   # define page title
   output$page3title <- renderUI({
-    paste0(input$lep1, " vacancy trends")
+    paste0(
+      "Job vacancies in ", input$lep1,
+      if ("lep2" %in% names(input)) {
+        if (input$lep2 == "\nNone") {
+        } else {
+          paste0(" compared to ", input$lep2)
+        }
+      }
+    )
   })
 
   ### Downloads----
@@ -904,7 +924,7 @@ server <- function(input, output, session) {
         format(100. * Vac2022()$jobpc, digits = 3),
         "%"
       ),
-      paste0("of online vacancies in England (Jan 2022) were in ", input$lep1),
+      paste0("of online job adverts in England (Jan 2022) were in ", input$lep1),
       color = "blue"
     )
   })
@@ -921,7 +941,7 @@ server <- function(input, output, session) {
         ),
         "%"
       ),
-      paste0("of online vacancies in England (Jan 2022) were in ", input$lep2),
+      paste0("of online job adverts in England (Jan 2022) were in ", input$lep2),
       color = "orange"
     )
   })
@@ -936,7 +956,7 @@ server <- function(input, output, session) {
         ),
         "%"
       ),
-      paste0("change in online job vacancies in ", input$lep1, " from Jan 2021 to Jan 2022"),
+      paste0("change in online job adverts in ", input$lep1, " from Jan 2021 to Jan 2022"),
       color = "blue"
     )
   })
@@ -952,7 +972,7 @@ server <- function(input, output, session) {
         ),
         "%"
       ),
-      paste0("change in online job vacancies in ", input$lep2, " from Jan 2021 to Jan 2022"),
+      paste0("change in online job adverts in ", input$lep2, " from Jan 2021 to Jan 2022"),
       color = "orange"
     )
   })
@@ -1022,7 +1042,15 @@ server <- function(input, output, session) {
   # FE ----
   # define page title
   output$page2title <- renderUI({
-    paste0(input$lep1, " Further Education (FE) and skills supply trends")
+    paste0(
+      "Skills training in ", input$lep1,
+      if ("lep2" %in% names(input)) {
+        if (input$lep2 == "\nNone") {
+        } else {
+          paste0(" compared to ", input$lep2)
+        }
+      }
+    )
   })
 
   ### Downloads----
@@ -1061,7 +1089,7 @@ server <- function(input, output, session) {
   output$skisup.FEach <- renderValueBox({
     # Put value into box to plug into app
     valueBox(format(Et2021()$achievements, scientific = FALSE, big.mark = ","),
-      paste0("20/21 adult education and training achievements in ", input$lep1),
+      paste0("adult education and training achievements in 2020/21 in ", input$lep1),
       color = "blue"
     )
   })
@@ -1075,7 +1103,7 @@ server <- function(input, output, session) {
           area == input$lep2, time_period == "202021",
           level_or_type == "Education and training: Total"
         ))$achievements, scientific = FALSE, big.mark = ","),
-      paste0("20/21 adult education and training achievements in ", input$lep2),
+      paste0("adult education and training achievements in 2020/21 in ", input$lep2),
       color = "orange"
     )
   })
@@ -1085,7 +1113,7 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       format(App2021()$achievements, scientific = FALSE, big.mark = ","),
-      paste0("20/21 apprenticeship achievements in ", input$lep1),
+      paste0("apprenticeship achievements in 2020/21 in ", input$lep1),
       color = "blue"
     )
   })
@@ -1099,7 +1127,7 @@ server <- function(input, output, session) {
           area == input$lep2, time_period == "202021",
           level_or_type == "Apprenticeships: Total"
         ))$achievements, scientific = FALSE, big.mark = ","),
-      paste0("20/21 apprenticeship achievements in ", input$lep2),
+      paste0("apprenticeship achievements in 2020/21 in ", input$lep2),
       color = "orange"
     )
   })
