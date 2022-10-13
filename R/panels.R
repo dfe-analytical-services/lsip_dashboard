@@ -151,13 +151,10 @@ panel_employment <- function() {
       uiOutput("emp_comp")
     ),
     details(
-      label = "Data notes",
+      label = "Source: Annual Population Survey",
       inputId = "empKPISource",
-      p(
-        "Source: Annual Population Survey",
-        tags$ul(
-          tags$li("1. Figures are for 16-64 year olds.")
-        )
+      tags$ol(
+        tags$li("Figures are for 16-64 year olds.")
       )
     ),
     ### Employment rate over time line chart ----
@@ -167,14 +164,11 @@ panel_employment <- function() {
         h2("Employment rates: 2017 to 2022"),
         plotlyOutput("EmpRate_time"),
         details(
-          label = "Data notes",
+          label = "Source: Annual Population Survey",
           inputId = "empRateSource",
-          p(
-            "Source: Annual Population Survey",
-            tags$ul(
-              tags$li("1. Figures are for 16-64 year olds."),
-              tags$li("2. Years represent Jul-Jun period. So 2017 is the Jul 2016 – June 2017 period.")
-            )
+          tags$ol(
+            tags$li("Figures are for 16-64 year olds."),
+            tags$li("Years represent Jul-Jun period. So 2017 is the Jul 2016 – June 2017 period.")
           )
         )
       ),
@@ -184,13 +178,10 @@ panel_employment <- function() {
         h2("Employment share by occupation: Jan-Dec 2021"),
         dataTableOutput("EmpOcc"),
         details(
-          label = "Data notes",
+          label = "Source: Annual Population Survey",
           inputId = "empOccSource",
-          p(
-            "Source: Annual Population Survey",
-            tags$ul(
-              tags$li("1. Figures are for all age groups.")
-            )
+          tags$ol(
+            tags$li("Figures are for all age groups.")
           )
         )
       )
@@ -243,13 +234,10 @@ panel_vacancies <- function() {
       uiOutput("vac_comp")
     ),
     details(
-      label = "Data notes",
+      label = "Source: Adzuna",
       inputId = "vacKPISource",
-      p(
-        "Source: Adzuna",
-        tags$ul(
-          tags$li("1. Figures refer to the average estimates over the month of January in each year.")
-        )
+      tags$ol(
+        tags$li("Figures refer to the average estimates over the month of January in each year.")
       )
     ),
     fluidRow(
@@ -261,13 +249,10 @@ panel_vacancies <- function() {
       )
     ), # end of box
     details(
-      label = "Data notes",
+      label = "Source: Adzuna",
       inputId = "vacKPISource",
-      p(
-        "Source: Adzuna",
-        tags$ul(
-          tags$li("1. Figures refer to the average estimates over the month of January in each year.")
-        )
+      tags$ol(
+        tags$li("Figures refer to the average estimates over the month of January in each year.")
       )
     ),
     fluidRow(
@@ -328,15 +313,12 @@ panel_skills <- function() {
       uiOutput("skill_comp")
     ),
     details(
-      label = "Data notes",
+      label = "Source: Individualised Learner Record",
       inputId = "FEKPISource",
-      p(
-        "Source: Individualised Learner Record",
-        tags$ul(
-          tags$li("1. Total achievements are the count of learners that achieved at any point duding the stated academic period."),
-          tags$li("2. Learners achieving more than one course will appear only once in the grand total."),
-          tags$li("3. Years shown represent academic years.")
-        )
+      tags$ol(
+        tags$li("Total achievements are the count of learners that achieved at any point during the stated academic period."),
+        tags$li("Learners achieving more than one course will appear only once in the grand total."),
+        tags$li("Years shown represent academic years.")
       )
     ),
     ### Achievements over time line chart ----
@@ -352,17 +334,13 @@ panel_skills <- function() {
           br()
         ),
         plotlyOutput("Ach_time"),
-        p("Total achievements are the count of learners that achieved at any point during the stated academic period. Learners achieving more than one course will appear only once in the grand total."),
         details(
-          label = "Data notes",
+          label = "Source: Individualised Learner Record",
           inputId = "FEKPISource",
-          p(
-            "Source: Individualised Learner Record",
-            tags$ul(
-              tags$li("1. Total achievements are the count of learners that achieved at any point duding the stated academic period."),
-              tags$li("2. Learners achieving more than one course will appear only once in the grand total."),
-              tags$li("3. Years shown represent academic years.")
-            )
+          tags$ol(
+            tags$li("Total achievements are the count of learners that achieved at any point during the stated academic period."),
+            tags$li("Learners achieving more than one course will appear only once in the grand total."),
+            tags$li("Years shown represent academic years.")
           )
         ),
       )
@@ -371,22 +349,19 @@ panel_skills <- function() {
     fluidRow(
       column(
         12,
-        h1("Further education and skills achievements by sector subject area: Aug 2021 to Apr 2022 (provisional)"),
+        h2("Further education and skills achievements by sector subject area: Aug 2021 to Apr 2022 (provisional)"),
         plotlyOutput("Ach_SSA_pc")
       )
     ),
     column(width = 12, br("")), # put in to push below the fixed height chart
     column(width = 12, br("")),
     details(
-      label = "Data notes",
+      label = "Source: Individualised Learner Record",
       inputId = "FEKPISource",
-      p(
-        "Source: Individualised Learner Record",
-        tags$ul(
-          tags$li("1. Total achievements are the count of learners that achieved at any point duding the stated academic period."),
-          tags$li("2. Learners achieving more than one course will appear only once in the grand total."),
-          tags$li("3. Years shown represent academic years.")
-        )
+      tags$ol(
+        tags$li("Total achievements are the count of learners that achieved at any point during the stated academic period."),
+        tags$li("Learners achieving more than one course will appear only once in the grand total."),
+        tags$li("Years shown represent academic years.")
       )
     ),
     ### FE definitions----

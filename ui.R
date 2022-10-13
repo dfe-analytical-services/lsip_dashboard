@@ -243,8 +243,8 @@ padding-top:15px
               h3(actionLink("link_to_tabpanel_FE", "Skills")),
               p("This page includes information on training activity for the selected LEP or LSIP area, and the option to compare against another area.
                 It includes data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period."),
-              h2(actionLink("link_to_tabpanel_data", "Data download page")),
-              p("The data download page includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
+              h2("Data download page"),
+              p("The", actionLink("link_to_tabpanel_data", "data download page"), " includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
             )
           )
         )
@@ -266,12 +266,17 @@ padding-top:15px
               h2("Latest update"),
               p("18 Oct 2022 (0.2.1)"),
               p("Added option to view LSIP geographies, included new data download page, updated dashboard styling, and included additional data sources on data download page."),
-              h3("Previous updates"),
-              p("16 Sep 2022 (0.1.2)"),
-              p("Applied fixes to improve background performance."),
-              br(),
-              p("8 Aug 2022 (0.1.1)"),
-              p("Release initial prototype."),
+              details(
+                label = "Previous updates",
+                inputId = "PreviousUpdate",
+                p(
+                  p("16 Sep 2022 (0.1.2)"),
+                  p("Applied fixes to improve background performance."),
+                  br(),
+                  p("8 Aug 2022 (0.1.1)"),
+                  p("Release initial prototype.")
+                )
+              ),
               h2("Future development"),
               p("The dashboard will be kept up to date with the latest data shortly after it is released – check the data downloads page for dates when new data is published."),
               p(
