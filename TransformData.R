@@ -51,7 +51,8 @@ format.EmpOcc.APS <- function(x) {
     mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
     filter(check == 1) %>%
     filter(!grepl("nomisweb", area)) %>%
-    select(year = jan_2017_dec_2017, area, everything(), -check) %>% # reorder and remove
+    mutate(year=2022) %>%
+    select(year, area, everything(), -check, -jul_2021_jun_2022) %>% # reorder and remove
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
     mutate(area = case_when(
@@ -60,10 +61,9 @@ format.EmpOcc.APS <- function(x) {
       TRUE ~ area
     )) %>% # Rename so matches official name
     relocate(geographic_level, .after = area) %>%
-    mutate(year = as.numeric(substr(year, 5, 8))) %>%
     rename_with(
-      .fn = ~ str_replace_all(.x, c("t09a_" = "", "all_people" = "", "soc2010" = "", "_" = " ")),
-      .cols = starts_with("t09a_")
+      .fn = ~ str_replace_all(.x, c("t09b_" = "", "all_people" = "", "soc2020" = "", "_" = " ")),
+      .cols = starts_with("t09b_")
     ) %>%
     rename_with(~ gsub("[[:digit:]]+", "", .)) %>% # remove numbers from occupations since they don't match the ONS ones
     mutate(geographic_level = toupper(geographic_level))
@@ -78,23 +78,23 @@ format.EmpOcc.APS <- function(x) {
     rename(area = LSIP) %>%
     relocate(area, .before = geographic_level) %>%
     mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-    mutate_at(c(4:28), as.numeric) %>% # Convert to numeric
+    mutate_at(c(4:29), as.numeric) %>% # Convert to numeric
     group_by(year, area, geographic_level) %>% # sum for each LSIP
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    mutate_at(c(4:28), as.character) # Convert to sring to bind
+    mutate_at(c(4:29), as.character) # Convert to sring to bind
 
   # join together
   bind_rows(reformat, addlsip)
 }
 # format data
-F_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
+F_EmpOcc_APS22 <- format.EmpOcc.APS(I_EmpOcc_APS22)
 # create downloadable version with new suppression rules
-D_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
+D_EmpOcc_APS22 <- F_EmpOcc_APS22 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
-write.csv(D_EmpOcc_APS1721, file = "Data\\AppData\\D_EmpOcc_APS1721.csv", row.names = FALSE)
+write.csv(D_EmpOcc_APS22, file = "Data\\AppData\\D_EmpOcc_APS22.csv", row.names = FALSE)
 # create version to use in dashboard
-C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
+C_EmpOcc_APS22 <- F_EmpOcc_APS22 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
   mutate_at(c(4:28), as.numeric) %>% # Convert to numeric
   filter(
@@ -102,7 +102,7 @@ C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
     geographic_level != "LADU" &
       geographic_level != "GOR" # cleans up for London and South East which is included as lep and gor
   )
-write.csv(C_EmpOcc_APS1721, file = "Data\\AppData\\C_EmpOcc_APS1721.csv", row.names = FALSE)
+write.csv(C_EmpOcc_APS22, file = "Data\\AppData\\C_EmpOcc_APS22.csv", row.names = FALSE)
 
 ## Employment level and rate ----
 format.EmpRate.APS <- function(x) {

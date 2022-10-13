@@ -49,7 +49,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list(
-        "1a.Emp by occupation" = D_EmpOcc_APS1721
+        "1a.Emp by occupation" = D_EmpOcc_APS22
       ), path = file)
     }
   )
@@ -145,7 +145,7 @@ server <- function(input, output, session) {
   ### Downloads----
   # download all indicators
   list_of_datasets0 <- list(
-    "1a.Emp by occupation" = D_EmpOcc_APS1721,
+    "1a.Emp by occupation" = D_EmpOcc_APS22,
     "1b.Emp rate" = D_EmpRate_APS1822,
     "2.Vacancies" = C_Vacancy_ONS1722,
     "3a.FE achievements SSA" = D_Achieve_ILR21,
@@ -163,7 +163,7 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data0 <- reactive({
     list(
-      "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
+      "1a.Emp by occupation" = filter(D_EmpOcc_APS22, geographic_level == input$GeoType, area == input$lep1),
       "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, area == input$lep1),
       "2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1),
       "3a.FE achievements SSA" = filter(D_Achieve_ILR21, geographic_level == input$GeoType, area == input$lep1),
@@ -693,7 +693,7 @@ server <- function(input, output, session) {
 
   ### Downloads----
   list_of_datasets1 <- list(
-    "1a.Emp by occupation" = D_EmpOcc_APS1721,
+    "1a.Emp by occupation" = D_EmpOcc_APS22,
     "1b.Emp rate" = D_EmpRate_APS1822
   )
   output$download_btn1a <- downloadHandler(
@@ -708,7 +708,7 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data1 <- reactive({
     list(
-      "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
+      "1a.Emp by occupation" = filter(D_EmpOcc_APS22, geographic_level == input$GeoType, area == input$lep1),
       "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, area == input$lep1)
     )
   })
@@ -850,7 +850,7 @@ server <- function(input, output, session) {
 
   ## Employment by occupation data table ----
   EmpOcc <- eventReactive(c(input$lep1, input$lep2), {
-    EmpOcc <- C_EmpOcc_APS1721 %>%
+    EmpOcc <- C_EmpOcc_APS22 %>%
       filter(
         geographic_level == input$GeoType | geographic_level == "COUNTRY",
         (area == "England" |
