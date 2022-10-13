@@ -186,22 +186,22 @@ server <- function(input, output, session) {
     C_EmpRate_APS1721 %>%
       filter(area == input$lep1, geographic_level == input$GeoType)
   })
+  # get 2022 values
+  emp2022 <- reactive({
+    empLEP() %>%
+      filter(year == "2022")
+  })
   # get 2021 values
   emp2021 <- reactive({
     empLEP() %>%
       filter(year == "2021")
   })
-  # get 2020 values
-  emp2020 <- reactive({
-    empLEP() %>%
-      filter(year == "2020")
-  })
 
   #### Employment count ----
   output$locland.emplcnt0 <- renderUI({
-    # call 2020 and 2021 values for chosen LEP
-    empCnt2021 <- emp2021()$Employment
-    empCntChange <- emp2021()$Employment - emp2020()$Employment
+    # call 2022 and 2021 values for chosen LEP
+    empCnt2021 <- emp2022()$Employment
+    empCntChange <- emp2022()$Employment - emp2021()$Employment
 
     # print with formatting
     h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
@@ -219,8 +219,8 @@ server <- function(input, output, session) {
 
   # Emp chart
   empLineChart <- eventReactive(input$lep1, {
-    # call 2020 to 2021 change  for chosen LEP
-    empCntChange <- emp2021()$Employment - emp2020()$Employment
+    # call 2022 to 2021 change  for chosen LEP
+    empCntChange <- emp2022()$Employment - emp2021()$Employment
     empLine <- empLEP()
 
     # find min and max for lep
@@ -231,15 +231,15 @@ server <- function(input, output, session) {
       "Year: ", year, "<br>",
       "Employment: ", format(Employment, big.mark = ","), "<br>"
     ))) +
-      geom_line(data = empLine %>% filter(Year <= 20)) +
+      geom_line(data = empLine %>% filter(Year <= 21)) +
       geom_ribbon(
-        data = empLine %>% filter(Year >= 20),
+        data = empLine %>% filter(Year >= 21),
         aes(ymin = min(Employment), ymax = Employment),
         fill = ifelse(empCntChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = empLine %>% filter(Year >= 20),
+        data = empLine %>% filter(Year >= 21),
         color = ifelse(empCntChange > 0, "#00703c", "#d4351c")
       ) +
       theme_classic() +
@@ -281,9 +281,9 @@ server <- function(input, output, session) {
 
   #### Employment rate -----
   output$locland.emplrate0 <- renderUI({
-    # call 2021 values and 20-21 change for chosen LEP
-    empRate2021 <- emp2021()$empRate
-    empRateChange <- emp2021()$empRate - emp2020()$empRate
+    # call 2021 values and 21-22 change for chosen LEP
+    empRate2021 <- emp2022()$empRate
+    empRateChange <- emp2022()$empRate - emp2021()$empRate
 
     # print with formatting
     h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
@@ -306,7 +306,7 @@ server <- function(input, output, session) {
     summarise(max(empRate, na.rm = T), .groups = "drop")
 
   empRateLineChart <- eventReactive(input$lep1, {
-    empRateChange <- emp2021()$empRate - emp2020()$empRate
+    empRateChange <- emp2022()$empRate - emp2021()$empRate
     empRateLine <- C_EmpRate_APS1721 %>%
       filter((geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"))
 
@@ -319,16 +319,16 @@ server <- function(input, output, session) {
         "Employment rate: ", format(100 * empRate, digit = 2), "%<br>"
       )
     )) +
-      geom_line(data = empRateLine %>% filter(Year <= 20, geographic_level == input$GeoType)) +
+      geom_line(data = empRateLine %>% filter(Year <= 21, geographic_level == input$GeoType)) +
       geom_line(data = empRateLine %>% filter(geographic_level == "COUNTRY"), alpha = 0.5) +
       geom_ribbon(
-        data = empRateLine %>% filter(Year >= 20, geographic_level == input$GeoType),
+        data = empRateLine %>% filter(Year >= 21, geographic_level == input$GeoType),
         aes(ymin = min(empRate), ymax = empRate),
         fill = ifelse(empRateChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = empRateLine %>% filter(Year >= 20, geographic_level == input$GeoType),
+        data = empRateLine %>% filter(Year >= 21, geographic_level == input$GeoType),
         color = ifelse(empRateChange > 0, "#00703c", "#d4351c")
       ) +
       theme_classic() +
@@ -408,7 +408,7 @@ server <- function(input, output, session) {
 
   # Vacancy chart
   VacLineChart <- eventReactive(input$lep1, {
-    VacLine <- VacArea()
+    VacLine <- VacArea()%>%filter(year>=2018)
     VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
 
     VacMinMax <- C_Vacancy_England_max_min %>% filter(area == input$lep1, geographic_level == input$GeoType)
@@ -727,7 +727,7 @@ server <- function(input, output, session) {
   output$locland.emplrate <- renderValueBox({
     valueBox(
       paste0(
-        format(100. * emp2021()$empRate, digits = 2),
+        format(100. * emp2022()$empRate, digits = 2),
         "%"
       ),
       paste0("employment rate Jul-Jun 2022 in ", input$lep1),
@@ -756,7 +756,7 @@ server <- function(input, output, session) {
     # Put value into box to plug into app
     valueBox(
       # take input number
-      format(emp2021()$Employment,
+      format(emp2022()$Employment,
         scientific = FALSE, big.mark = ","
       ),
       # add subtitle to explain what it's showing

@@ -123,7 +123,7 @@ format.EmpRate.APS <- function(x) {
       area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
       TRUE ~ area
     )) %>% # Rename so matches official name
-    select(year = x2017, area, everything(), -check) %>% # reorder and remove
+    select(year = x2018, area, everything(), -check) %>% # reorder and remove
     relocate(geographic_level, .after = area) %>%
     rename_with(
       .fn = ~ str_replace_all(.x, c("t01_" = "", "all_people" = "", "aged_16_64" = "", "_" = " ")),
@@ -261,7 +261,7 @@ format.AchieveSSA.ILR <- function(x) {
     mutate(geographic_level = "LEP") %>% # rename as lsip
     rename(area = LEP) %>%
     relocate(area, .before = geographic_level) %>%
-    mutate_at(vars(-time_period, -area, -geographic_level, -ssa_t1_desc), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+    mutate_at(vars(-time_period, -area, -geographic_level, -ssa_t1_desc), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "","low"=""))) %>% # convert to blank to avoid error msg
     mutate_at(c(5:5), as.numeric) %>% # Convert to numeric
     group_by(time_period, area, geographic_level, ssa_t1_desc) %>% # sum for each LSIP
     summarise(across(everything(), list(sum), na.rm = T)) %>%
@@ -277,7 +277,7 @@ format.AchieveSSA.ILR <- function(x) {
     mutate(geographic_level = "LSIP") %>% # rename as lsip
     rename(area = LSIP) %>%
     relocate(area, .before = geographic_level) %>%
-    mutate_at(vars(-time_period, -area, -geographic_level, -ssa_t1_desc), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+    mutate_at(vars(-time_period, -area, -geographic_level, -ssa_t1_desc), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "","low"=""))) %>% # convert to blank to avoid error msg
     mutate_at(c(5:5), as.numeric) %>% # Convert to numeric
     group_by(time_period, area, geographic_level, ssa_t1_desc) %>% # sum for each LSIP
     summarise(across(everything(), list(sum), na.rm = T)) %>%
@@ -415,6 +415,7 @@ write.csv(C_Vacancy_England, file = "Data\\AppData\\C_Vacancy_England.csv", row.
 
 # create max and min vacancy pc by LEP for use in setting axis
 C_Vacancy_England_max_min <- C_Vacancy_England %>%
+  filter(year>=2018)%>% #only showing past 5 years in chart
   group_by(geographic_level, area) %>%
   summarise(minVac = min(jobpc), maxVac = max(jobpc))
 write.csv(C_Vacancy_England_max_min, file = "Data\\AppData\\C_Vacancy_England_max_min.csv", row.names = FALSE)
