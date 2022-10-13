@@ -512,8 +512,8 @@ format.skills.APS <- function(x) {
     select(-starts_with("na"))%>% # remove na columns (flags and confidence)
     mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
     filter(check == 1) %>%
-    filter(!grepl("nomisweb", "//www.ons.gov.uk/news/statementsandletters/occupationaldatainonssurveys.", area)) %>%
-    select(year = jan_2021_dec_2021, area, everything(), -check) %>% # reorder and remove
+    filter(!grepl("nomisweb", area)) %>%
+    select(year = jan_2017_dec_2017, area, everything(), -check) %>% # reorder and remove
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
     mutate(area = case_when(
@@ -549,68 +549,68 @@ format.skills.APS <- function(x) {
   
   # join together and rename columns
   LEP_LSIP <- bind_rows(reformat, addlsip)%>%
-    rename("Total aged 16-64 None" = "1 total  aged 16 64 none",
-           "Total aged 16-64 NVQ1" = "2 total  aged 16 64 nvq1",
-           "Total aged 16-64 NVQ2" = "3 total  aged 16 64 nvq2",
-           "Total aged 16-64 trade apprenticeships"  = "4 total  aged 16 64 trade apprenticeships",
-           "Total aged 16-64 NVQ3"= "5 total  aged 16 64 nvq3",
-           "Total aged 16-64 NVQ4" = "6 total  aged 16 64 nvq4",
-           "Total aged 16-64 Other Qualifications" = "7 total  aged 16 64 other qualifications",
-           "Total aged 16-19 None" = "22 total  aged 16 19 none",
-           "Total aged 16-19 NVQ1" = "23 total  aged 16 19 nvq1",
-           "Total aged 16-19 NVQ2" =  "24 total  aged 16 19 nvq2",
-           "Total aged 16-19 trade apprenticeships" = "25 total  aged 16 19 trade apprenticeships",
-           "Total aged 16-19 NVQ3" = "26 total  aged 16 19 nvq3",
-           "Total aged 16-19 NVQ4" = "27 total  aged 16 19 nvq4",
-           "Total aged 16-19 Other Qualifications" = "28 total  aged 16 19 other qualifications",
-           "Total aged 20-24 None" = "29 total  aged 20 24 none",
-           "Total aged 20-24 NVQ1" = "30 total  aged 20 24 nvq1",
-           "Total aged 20-24 NVQ2" =  "31 total  aged 20 24 nvq2",
-           "Total aged 20-24 trade apprenticeships" = "32 total  aged 20 24 trade apprenticeships",
-           "Total aged 20-24 NVQ3" = "33 total  aged 20 24 nvq3",
-           "Total aged 20-24 NVQ4" = "34 total  aged 20 24 nvq4",
-           "Total aged 20-24 Other Qualifications" = "35 total  aged 20 24 other qualifications",
-           "Total aged 25-29 None" = "36 total  aged 25 29 none",
-           "Total aged 25-29 NVQ1" = "37 total  aged 25 29 nvq1",
-           "Total aged 25-29 NVQ2" =  "38 total  aged 25 29 nvq2",
-           "Total aged 25-29 trade apprenticeships" = "39 total  aged 25 29 trade apprenticeships",
-           "Total aged 25-29 NVQ3" = "40 total  aged 25 29 nvq3",
-           "Total aged 25-29 NVQ4" = "41 total  aged 25 29 nvq4",
-           "Total aged 25-29 Other Qualifications" = "42 total  aged 25 29 other qualifications",
-           "Total aged 30-39 None" = "43 total  aged 30 39 none",
-           "Total aged 30-39 NVQ1" = "44 total  aged 30 39 nvq1",
-           "Total aged 30-39 NVQ2" =  "45 total  aged 30 39 nvq2",
-           "Total aged 30-39 trade apprenticeships" = "46 total  aged 30 39 trade apprenticeships",
-           "Total aged 30-39 NVQ3" = "47 total  aged 30 39 nvq3",
-           "Total aged 30-39 NVQ4" = "48 total  aged 30 39 nvq4",
-           "Total aged 30-39 Other Qualifications" = "49 total  aged 30 39 other qualifications",
-           "Total aged 40-49 None" = "50 total  aged 40 49 none",
-           "Total aged 40-49 NVQ1" = "51 total  aged 40 49 nvq1",
-           "Total aged 40-49 NVQ2" =  "52 total  aged 40 49 nvq2",
-           "Total aged 40-49 trade apprenticeships" = "53 total  aged 40 49 trade apprenticeships",
-           "Total aged 40-49 NVQ3" = "54 total  aged 40 49 nvq3",
-           "Total aged 40-49 NVQ4" = "55 total  aged 40 49 nvq4",
-           "Total aged 40-49 Other Qualifications" = "56 total  aged 40 49 other qualifications",
-           "Total aged 50-64 None" = "57 total  aged 50 64 none",
-           "Total aged 50-64 NVQ1" = "58 total  aged 50 64 nvq1",
-           "Total aged 50-64 NVQ2" =  "59 total  aged 50 64 nvq2",
-           "Total aged 50-64 trade apprenticeships" = "60 total  aged 50 64 trade apprenticeships",
-           "Total aged 50-64 NVQ3" = "61 total  aged 50 64 nvq3",
-           "Total aged 50-64 NVQ4" = "62 total  aged 50 64 nvq4",
-           "Total aged 50-64 Other Qualifications" = "63 total  aged 50 64 other qualifications") %>%
+    rename("16-64 None" = "1 total  aged 16 64 none",
+           "16-64 NVQ1" = "2 total  aged 16 64 nvq1",
+           "16-64 NVQ2" = "3 total  aged 16 64 nvq2",
+           "16-64 trade apprenticeships"  = "4 total  aged 16 64 trade apprenticeships",
+           "16-64 NVQ3"= "5 total  aged 16 64 nvq3",
+           "16-64 NVQ4" = "6 total  aged 16 64 nvq4",
+           "16-64 Other Qualifications" = "7 total  aged 16 64 other qualifications",
+           "16-19 None" = "22 total  aged 16 19 none",
+           "16-19 NVQ1" = "23 total  aged 16 19 nvq1",
+           "16-19 NVQ2" =  "24 total  aged 16 19 nvq2",
+           "16-19 trade apprenticeships" = "25 total  aged 16 19 trade apprenticeships",
+           "16-19 NVQ3" = "26 total  aged 16 19 nvq3",
+           "16-19 NVQ4" = "27 total  aged 16 19 nvq4",
+           "16-19 Other Qualifications" = "28 total  aged 16 19 other qualifications",
+           "20-24 None" = "29 total  aged 20 24 none",
+           "20-24 NVQ1" = "30 total  aged 20 24 nvq1",
+           "20-24 NVQ2" =  "31 total  aged 20 24 nvq2",
+           "20-24 trade apprenticeships" = "32 total  aged 20 24 trade apprenticeships",
+           "20-24 NVQ3" = "33 total  aged 20 24 nvq3",
+           "20-24 NVQ4" = "34 total  aged 20 24 nvq4",
+           "20-24 Other Qualifications" = "35 total  aged 20 24 other qualifications",
+           "25-29 None" = "36 total  aged 25 29 none",
+           "25-29 NVQ1" = "37 total  aged 25 29 nvq1",
+           "25-29 NVQ2" =  "38 total  aged 25 29 nvq2",
+           "25-29 trade apprenticeships" = "39 total  aged 25 29 trade apprenticeships",
+           "25-29 NVQ3" = "40 total  aged 25 29 nvq3",
+           "25-29 NVQ4" = "41 total  aged 25 29 nvq4",
+           "25-29 Other Qualifications" = "42 total  aged 25 29 other qualifications",
+           "30-39 None" = "43 total  aged 30 39 none",
+           "30-39 NVQ1" = "44 total  aged 30 39 nvq1",
+           "30-39 NVQ2" =  "45 total  aged 30 39 nvq2",
+           "30-39 trade apprenticeships" = "46 total  aged 30 39 trade apprenticeships",
+           "30-39 NVQ3" = "47 total  aged 30 39 nvq3",
+           "30-39 NVQ4" = "48 total  aged 30 39 nvq4",
+           "30-39 Other Qualifications" = "49 total  aged 30 39 other qualifications",
+           "40-49 None" = "50 total  aged 40 49 none",
+           "40-49 NVQ1" = "51 total  aged 40 49 nvq1",
+           "40-49 NVQ2" =  "52 total  aged 40 49 nvq2",
+           "40-49 trade apprenticeships" = "53 total  aged 40 49 trade apprenticeships",
+           "40-49 NVQ3" = "54 total  aged 40 49 nvq3",
+           "40-49 NVQ4" = "55 total  aged 40 49 nvq4",
+           "40-49 Other Qualifications" = "56 total  aged 40 49 other qualifications",
+           "50-64 None" = "57 total  aged 50 64 none",
+           "50-64 NVQ1" = "58 total  aged 50 64 nvq1",
+           "50-64 NVQ2" =  "59 total  aged 50 64 nvq2",
+           "50-64 trade apprenticeships" = "60 total  aged 50 64 trade apprenticeships",
+           "50-64 NVQ3" = "61 total  aged 50 64 nvq3",
+           "50-64 NVQ4" = "62 total  aged 50 64 nvq4",
+           "50-64 Other Qualifications" = "63 total  aged 50 64 other qualifications") %>%
     filter(geographic_level %in%  c("LSIP", "LEP"))
   
 }
 
 ## format skills
-F_skillsnvq_APS2021 <- format.skills.APS(I_Skillsnvq_APS2021)
+F_skillsnvq_APS1721 <- format.skills.APS(I_Skillsnvq_APS1721)
 
 
 #Downloadable version
-D_skillsnvq_APS2021 <- F_skillsnvq_APS2021 %>%
+D_skillsnvq_APS1721 <- F_skillsnvq_APS1721 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
 #write the data to folder
-write.csv(D_skillsnvq_APS2021, file = "Data\\AppData\\D_skillsnvq_APS2021.csv", row.names = FALSE)
+write.csv(D_skillsnvq_APS1721, file = "Data\\AppData\\D_skillsnvq_APS1721.csv", row.names = FALSE)
 
 
 ## UK Business Count - Enterprise by employment size

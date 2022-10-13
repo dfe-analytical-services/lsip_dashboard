@@ -52,7 +52,7 @@ I_EmpInd_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.fil
 # Qualification by age - NVQ
 folder <- "10_APSskillsnvq"
 sheetNum <- 1
-I_Skillsnvq_APS2021 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+I_Skillsnvq_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 
 ### UK Business Count
