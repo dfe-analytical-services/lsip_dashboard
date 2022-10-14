@@ -97,7 +97,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list(
-        "4a.Skill level by age" = D_skillsnvq_APS2021
+        "5a.Skill level by age" = D_skillsnvq_APS1721
       ), path = file)
     }
   )
@@ -132,7 +132,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list(
-        "8a.Key Stage 5 destinations" = D_KS5destin_1520
+        "8a.Key Stage 5 destinations" = D_KS5destin_1720
       ), path = file)
     }
   )
@@ -203,7 +203,12 @@ server <- function(input, output, session) {
     "1b.Emp rate" = D_EmpRate_APS1721,
     "2.Vacancies" = C_Vacancy_ONS1722,
     "3a.FE achievements SSA" = D_Achieve_ILR21,
-    "3b.FE achievements" = D_Achieve_ILR1621
+    "3b.FE achievements" = D_Achieve_ILR1621,
+    "4a.Employment by Industry" = D_empind_APS1721,
+    "5a.Skill level by age" = D_skillsnvq_APS1721,
+    "6a.Enterprise by emp size" = D_empent_UBC1822,
+    "7a.Key Stage 4 destinations" = D_KS4destin_1520,
+    "8a.Key Stage 5 destinations" = D_KS5destin_1720
   )
   output$download_btn0a <- downloadHandler(
     filename = function() {
