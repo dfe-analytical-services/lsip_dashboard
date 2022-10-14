@@ -5,12 +5,12 @@ server <- function(input, output, session) {
 
   hide(id = "loading-content", anim = TRUE, animType = "fade")
   show("app-content")
-  
-  #Load chart colours: 
-  #England, geo1, geo2
-  chartColors3 = c("#BFBFBF", "#12436D", "#28A197")
-  #geo1, geo2
-  chartColors2 = c("#12436D", "#28A197")
+
+  # Load chart colours:
+  # England, geo1, geo2
+  chartColors3 <- c("#BFBFBF", "#12436D", "#28A197")
+  # geo1, geo2
+  chartColors2 <- c("#12436D", "#28A197")
 
   # HOMEPAGE ----
   # Create link to overview tab
@@ -401,7 +401,7 @@ server <- function(input, output, session) {
     VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
 
     # print with formatting
-    h4(span("2022 (Jan)", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("Jan 2022", style = "font-size: 16px;font-weight:normal;"), br(),
       paste0(format(100 * Vac2022()$jobpc, digit = 2), "%"), br(),
       span(
         paste0(sprintf("%+.1f", 100 * VacPcChange), "ppts"),
@@ -731,9 +731,12 @@ server <- function(input, output, session) {
 
   ### Employment rate -----
   output$locland.emplrate <- renderValueBox({
-    div(class="col-sm-4",
-      div(class="small-box bg-geo1",
-        div(class="inner",
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
           h3(paste0(
             format(100. * emp2022()$empRate, digits = 2),
             "%"
@@ -745,54 +748,63 @@ server <- function(input, output, session) {
   })
 
   output$locland.emplrate.2 <- renderValueBox({
-    div(class="col-sm-4",
-        div(class="small-box bg-geo2",
-            div(class="inner",
-                h3(paste0(
-                  format(100. * (C_EmpRate_APS1822 %>%
-                                   filter(
-                                     geographic_level == input$GeoType,
-                                     area == input$lep2,
-                                     year == "2022"
-                                   )
-                  )$empRate, digits = 2),
-                  "%"
-                )),
-                p(paste0("employment rate Jul-Jun 2022 in ", input$lep2)),
-            )
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(paste0(
+            format(100. * (C_EmpRate_APS1822 %>%
+              filter(
+                geographic_level == input$GeoType,
+                area == input$lep2,
+                year == "2022"
+              )
+            )$empRate, digits = 2),
+            "%"
+          )),
+          p(paste0("employment rate Jul-Jun 2022 in ", input$lep2)),
         )
+      )
     )
   })
   ### Employment count ----
   output$locland.emplcnt <- renderValueBox({
-    div(class="col-sm-4",
-        div(class="small-box bg-geo1",
-            div(class="inner",
-                h3(format(emp2022()$Employment,
-                          scientific = FALSE, big.mark = ","
-                )),
-                p(paste0("in employment Jul-Jun 2022 in ", input$lep1)),
-            )
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
+          h3(format(emp2022()$Employment,
+            scientific = FALSE, big.mark = ","
+          )),
+          p(paste0("in employment Jul-Jun 2022 in ", input$lep1)),
         )
+      )
     )
   })
 
   output$locland.emplcnt.2 <- renderValueBox({
-    div(class="col-sm-4",
-        div(class="small-box bg-geo2",
-            div(class="inner",
-                h3(format((C_EmpRate_APS1822 %>%
-                             filter(
-                               geographic_level == input$GeoType,
-                               area == input$lep2,
-                               year == "2022"
-                             )
-                )$Employment,
-                scientific = FALSE, big.mark = ","
-                )),
-                p(paste0("in employment Jul-Jun 2022 in ", input$lep2)),
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(format((C_EmpRate_APS1822 %>%
+            filter(
+              geographic_level == input$GeoType,
+              area == input$lep2,
+              year == "2022"
             )
+          )$Employment,
+          scientific = FALSE, big.mark = ","
+          )),
+          p(paste0("in employment Jul-Jun 2022 in ", input$lep2)),
         )
+      )
     )
   })
 
@@ -934,73 +946,84 @@ server <- function(input, output, session) {
   ## KPIs ----
   ### ONS job advert unit percent of total area 1
   output$jobad.pc <- renderValueBox({
-    div(class="col-sm-4",
-        div(class="small-box bg-geo1",
-            div(class="inner",
-                h3(paste0(
-                  format(100. * Vac2022()$jobpc, digits = 3),
-                  "%"
-                )),
-                p(paste0("of online job adverts in England (Jan 2022) were in ", input$lep1)),
-            )
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
+          h3(paste0(
+            format(100. * Vac2022()$jobpc, digits = 2),
+            "%"
+          )),
+          p(paste0("of online job adverts in England (Jan 2022) were in ", input$lep1)),
         )
+      )
     )
   })
 
   ### ONS job advert unit percent of total LEP 1
   output$jobad.pc.2 <- renderValueBox({
-    div(class="col-sm-4",
-        div(class="small-box bg-geo2",
-            div(class="inner",
-                h3(paste0(
-                  format(100. *
-                           (C_Vacancy_England %>%
-                              filter(area == input$lep2, geographic_level == input$GeoType, year == "2022"))$jobpc,
-                         digits = 3
-                  ),
-                  "%"
-                )),
-                p(paste0("of online job adverts in England (Jan 2022) were in ", input$lep2)),
-            )
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(paste0(
+            format(100. *
+              (C_Vacancy_England %>%
+                filter(area == input$lep2, geographic_level == input$GeoType, year == "2022"))$jobpc,
+            digits = 2
+            ),
+            "%"
+          )),
+          p(paste0("of online job adverts in England (Jan 2022) were in ", input$lep2)),
         )
+      )
     )
   })
 
   ### ONS job advert unit change  LEP 1
   output$jobad.ch <- renderValueBox({
-
-    div(class="col-sm-4",
-        div(class="small-box bg-geo1",
-            div(class="inner",
-                h3(paste0(
-                  format(100. * (C_Vacancy_England_change %>%
-                                   filter(area == input$lep1, geographic_level == input$GeoType))$Percentage_Change,
-                         digits = 3
-                  ),
-                  "%"
-                )),
-                p(paste0("change in online job adverts in ", input$lep1, " from Jan 
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
+          h3(paste0(
+            format(100. * (C_Vacancy_England_change %>%
+              filter(area == input$lep1, geographic_level == input$GeoType))$Percentage_Change,
+            digits = 2
+            ),
+            "%"
+          )),
+          p(paste0("change in online job adverts in ", input$lep1, " from Jan
                 to Jan 2022")),
-            )
         )
+      )
     )
   })
 
   ### ONS job advert unit change  LEP 2
   output$jobad.ch.2 <- renderValueBox({
-    div(class="col-sm-4",
-        div(class="small-box bg-geo2",
-            div(class="inner",
-                h3(paste0(
-                  format(100. * (C_Vacancy_England_change %>%
-                                   filter(area == input$lep2, geographic_level == input$GeoType))$Percentage_Change,
-                         digits = 3
-                  ),
-                  "%"
-                )),
-                p(paste0("change in online job adverts in ", input$lep2, " from Jan 2021 to Jan 2022")),
-            )
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(paste0(
+            format(100. * (C_Vacancy_England_change %>%
+              filter(area == input$lep2, geographic_level == input$GeoType))$Percentage_Change,
+            digits = 2
+            ),
+            "%"
+          )),
+          p(paste0("change in online job adverts in ", input$lep2, " from Jan 2021 to Jan 2022")),
         )
+      )
     )
   })
 
@@ -1114,57 +1137,69 @@ server <- function(input, output, session) {
   ## KPIs ----
   ### FE achievements -----
   output$skisup.FEach <- renderValueBox({
-    div(class="col-sm-4",
-        div(class="small-box bg-geo1",
-            div(class="inner",
-                h3(format(Et2021()$achievements, scientific = FALSE, big.mark = ",")),
-                p(paste0("adult education and training achievements in 2020/21 in ", input$lep1)),
-            )
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
+          h3(format(Et2021()$achievements, scientific = FALSE, big.mark = ",")),
+          p(paste0("adult education and training achievements in 2020/21 in ", input$lep1)),
         )
+      )
     )
   })
 
-  output$skisup.FEach.2 <- renderValueBox({  
-    div(class="col-sm-4",
-        div(class="small-box bg-geo2",
-            div(class="inner",
-                h3(format((C_Achieve_ILR1621 %>%
-                             filter(
-                               geographic_level == input$GeoType,
-                               area == input$lep2, time_period == "202021",
-                               level_or_type == "Education and training: Total"
-                             ))$achievements, scientific = FALSE, big.mark = ",")),
-                p(paste0("adult education and training achievements in 2020/21 in ", input$lep2)),
-            )
+  output$skisup.FEach.2 <- renderValueBox({
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(format((C_Achieve_ILR1621 %>%
+            filter(
+              geographic_level == input$GeoType,
+              area == input$lep2, time_period == "202021",
+              level_or_type == "Education and training: Total"
+            ))$achievements, scientific = FALSE, big.mark = ",")),
+          p(paste0("adult education and training achievements in 2020/21 in ", input$lep2)),
         )
+      )
     )
   })
 
   ### Apprenticeship achievements ----
   output$skisup.APach <- renderValueBox({
-    div(class="col-sm-4",
-        div(class="small-box bg-geo1",
-            div(class="inner",
-                h3(format(App2021()$achievements, scientific = FALSE, big.mark = ",")),
-                p(paste0("apprenticeship achievements in 2020/21 in ", input$lep1)),
-            )
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
+          h3(format(App2021()$achievements, scientific = FALSE, big.mark = ",")),
+          p(paste0("apprenticeship achievements in 2020/21 in ", input$lep1)),
         )
+      )
     )
   })
 
   output$skisup.APach.2 <- renderValueBox({
-    div(class="col-sm-4",
-        div(class="small-box bg-geo2",
-            div(class="inner",
-                h3(format((C_Achieve_ILR1621 %>%
-                             filter(
-                               geographic_level == input$GeoType,
-                               area == input$lep2, time_period == "202021",
-                               level_or_type == "Apprenticeships: Total"
-                             ))$achievements, scientific = FALSE, big.mark = ",")),
-                p(paste0("apprenticeship achievements in 2020/21 in ", input$lep2)),
-            )
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(format((C_Achieve_ILR1621 %>%
+            filter(
+              geographic_level == input$GeoType,
+              area == input$lep2, time_period == "202021",
+              level_or_type == "Apprenticeships: Total"
+            ))$achievements, scientific = FALSE, big.mark = ",")),
+          p(paste0("apprenticeship achievements in 2020/21 in ", input$lep2)),
         )
+      )
     )
   })
 
