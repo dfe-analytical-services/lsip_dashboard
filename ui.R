@@ -99,7 +99,7 @@ padding-top:15px
       /* end of styles for menu button */
 
     }
-    
+
     /* style KPI boxes
     #12436D - govt analytical function blue
     #AAE3F0 - dfe corp turquoise 40% tint
@@ -108,15 +108,15 @@ padding-top:15px
     #718ea7 - govt analytical function blue 40% tint
     #7ec7c1 - govt analytical function turquoise 40% tint
     */
-    
+
 .small-box.bg-geo1{
-    background-color: #12436D !important; 
+    background-color: #12436D !important;
     color: #fff;
     padding: 2px 2px 4px 12px;
 }
 
 .small-box.bg-geo2{
-    background-color: #28A197 !important; 
+    background-color: #28A197 !important;
     color: #fff;
     padding: 2px 2px 4px 12px;
 }
