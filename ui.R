@@ -36,9 +36,13 @@ fluidPage(
 }
 
 .filterRow{
-background-color: #1d70b8;
+background-color: #f3f2f1; /*#1d70b8*/
 border-radius: 4px;
 padding: 15px 15px 0px 15px;
+}
+/*filter labels*/
+.control-label {
+    color: #000;
 }
 
 .chartBox{
@@ -95,6 +99,27 @@ padding-top:15px
       /* end of styles for menu button */
 
     }
+    
+    /* style KPI boxes
+    #12436D - govt analytical function blue
+    #AAE3F0 - dfe corp turquoise 40% tint
+    #28A197 - govt analytical function turquoise
+    #DAEEBF - dfe corp lime 40% tint
+    #718ea7 - govt analytical function blue 40% tint
+    #7ec7c1 - govt analytical function turquoise 40% tint
+    */
+    
+.small-box.bg-geo1{
+    background-color: #12436D !important; 
+    color: #fff;
+    padding: 2px 2px 4px 12px;
+}
+
+.small-box.bg-geo2{
+    background-color: #28A197 !important; 
+    color: #fff;
+    padding: 2px 2px 4px 12px;
+}
 
 ")),
     tags$script(HTML(
@@ -338,7 +363,6 @@ padding-top:15px
             class = "filterRow",
             fluidRow(
               column(
-                style = "color:#fff",
                 width = 4,
                 selectInput("GeoType", "Choose geography",
                   choices = c(

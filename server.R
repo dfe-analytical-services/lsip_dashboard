@@ -5,6 +5,12 @@ server <- function(input, output, session) {
 
   hide(id = "loading-content", anim = TRUE, animType = "fade")
   show("app-content")
+  
+  #Load chart colours: 
+  #England, geo1, geo2
+  chartColors3 = c("#BFBFBF", "#12436D", "#28A197")
+  #geo1, geo2
+  chartColors2 = c("#12436D", "#28A197")
 
   # HOMEPAGE ----
   # Create link to overview tab
@@ -725,59 +731,68 @@ server <- function(input, output, session) {
 
   ### Employment rate -----
   output$locland.emplrate <- renderValueBox({
-    valueBox(
-      paste0(
-        format(100. * emp2022()$empRate, digits = 2),
-        "%"
-      ),
-      paste0("employment rate Jul-Jun 2022 in ", input$lep1),
-      color = "blue"
+    div(class="col-sm-4",
+      div(class="small-box bg-geo1",
+        div(class="inner",
+          h3(paste0(
+            format(100. * emp2022()$empRate, digits = 2),
+            "%"
+          )),
+          p(paste0("employment rate Jul-Jun 2022 in ", input$lep1)),
+        )
+      )
     )
   })
 
   output$locland.emplrate.2 <- renderValueBox({
-    valueBox(
-      paste0(
-        format(100. * (C_EmpRate_APS1822 %>%
-          filter(
-            geographic_level == input$GeoType,
-            area == input$lep2,
-            year == "2021"
-          )
-        )$empRate, digits = 2),
-        "%"
-      ),
-      paste0("employment rate Jul-Jun 2022 in ", input$lep2),
-      color = "orange"
+    div(class="col-sm-4",
+        div(class="small-box bg-geo2",
+            div(class="inner",
+                h3(paste0(
+                  format(100. * (C_EmpRate_APS1822 %>%
+                                   filter(
+                                     geographic_level == input$GeoType,
+                                     area == input$lep2,
+                                     year == "2022"
+                                   )
+                  )$empRate, digits = 2),
+                  "%"
+                )),
+                p(paste0("employment rate Jul-Jun 2022 in ", input$lep2)),
+            )
+        )
     )
   })
   ### Employment count ----
   output$locland.emplcnt <- renderValueBox({
-    # Put value into box to plug into app
-    valueBox(
-      # take input number
-      format(emp2022()$Employment,
-        scientific = FALSE, big.mark = ","
-      ),
-      # add subtitle to explain what it's showing
-      paste0("in employment Jul-Jun 2022 in ", input$lep1),
-      color = "blue"
+    div(class="col-sm-4",
+        div(class="small-box bg-geo1",
+            div(class="inner",
+                h3(format(emp2022()$Employment,
+                          scientific = FALSE, big.mark = ","
+                )),
+                p(paste0("in employment Jul-Jun 2022 in ", input$lep1)),
+            )
+        )
     )
   })
 
   output$locland.emplcnt.2 <- renderValueBox({
-    valueBox(
-      format((C_EmpRate_APS1822 %>%
-        filter(
-          geographic_level == input$GeoType,
-          area == input$lep2,
-          year == "2021"
+    div(class="col-sm-4",
+        div(class="small-box bg-geo2",
+            div(class="inner",
+                h3(format((C_EmpRate_APS1822 %>%
+                             filter(
+                               geographic_level == input$GeoType,
+                               area == input$lep2,
+                               year == "2022"
+                             )
+                )$Employment,
+                scientific = FALSE, big.mark = ","
+                )),
+                p(paste0("in employment Jul-Jun 2022 in ", input$lep2)),
+            )
         )
-      )$Employment,
-      scientific = FALSE, big.mark = ","
-      ),
-      paste0("in employment Jul-Jun 2022 in ", input$lep2),
-      color = "orange"
     )
   })
 
@@ -836,7 +851,7 @@ server <- function(input, output, session) {
       theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
       scale_y_continuous(labels = scales::percent_format(accuracy = 1), limits = c(.65, .85)) +
       labs(colour = "") +
-      scale_color_manual(values = c("#28a197", "#1d70b8", "#F46A25"))
+      scale_color_manual(values = chartColors3)
   })
 
   output$EmpRate_time <- renderPlotly({
@@ -919,61 +934,73 @@ server <- function(input, output, session) {
   ## KPIs ----
   ### ONS job advert unit percent of total area 1
   output$jobad.pc <- renderValueBox({
-    valueBox(
-      paste0(
-        format(100. * Vac2022()$jobpc, digits = 3),
-        "%"
-      ),
-      paste0("of online job adverts in England (Jan 2022) were in ", input$lep1),
-      color = "blue"
+    div(class="col-sm-4",
+        div(class="small-box bg-geo1",
+            div(class="inner",
+                h3(paste0(
+                  format(100. * Vac2022()$jobpc, digits = 3),
+                  "%"
+                )),
+                p(paste0("of online job adverts in England (Jan 2022) were in ", input$lep1)),
+            )
+        )
     )
   })
 
   ### ONS job advert unit percent of total LEP 1
   output$jobad.pc.2 <- renderValueBox({
-    # Put value into box to plug into app
-    valueBox(
-      paste0(
-        format(100. *
-          (C_Vacancy_England %>%
-            filter(area == input$lep2, geographic_level == input$GeoType, year == "2022"))$jobpc,
-        digits = 3
-        ),
-        "%"
-      ),
-      paste0("of online job adverts in England (Jan 2022) were in ", input$lep2),
-      color = "orange"
+    div(class="col-sm-4",
+        div(class="small-box bg-geo2",
+            div(class="inner",
+                h3(paste0(
+                  format(100. *
+                           (C_Vacancy_England %>%
+                              filter(area == input$lep2, geographic_level == input$GeoType, year == "2022"))$jobpc,
+                         digits = 3
+                  ),
+                  "%"
+                )),
+                p(paste0("of online job adverts in England (Jan 2022) were in ", input$lep2)),
+            )
+        )
     )
   })
 
   ### ONS job advert unit change  LEP 1
   output$jobad.ch <- renderValueBox({
-    valueBox(
-      paste0(
-        format(100. * (C_Vacancy_England_change %>%
-          filter(area == input$lep1, geographic_level == input$GeoType))$Percentage_Change,
-        digits = 3
-        ),
-        "%"
-      ),
-      paste0("change in online job adverts in ", input$lep1, " from Jan 2021 to Jan 2022"),
-      color = "blue"
+
+    div(class="col-sm-4",
+        div(class="small-box bg-geo1",
+            div(class="inner",
+                h3(paste0(
+                  format(100. * (C_Vacancy_England_change %>%
+                                   filter(area == input$lep1, geographic_level == input$GeoType))$Percentage_Change,
+                         digits = 3
+                  ),
+                  "%"
+                )),
+                p(paste0("change in online job adverts in ", input$lep1, " from Jan 
+                to Jan 2022")),
+            )
+        )
     )
   })
 
   ### ONS job advert unit change  LEP 2
   output$jobad.ch.2 <- renderValueBox({
-    # Put value into box to plug into app
-    valueBox(
-      paste0(
-        format(100. * (C_Vacancy_England_change %>%
-          filter(area == input$lep2, geographic_level == input$GeoType))$Percentage_Change,
-        digits = 3
-        ),
-        "%"
-      ),
-      paste0("change in online job adverts in ", input$lep2, " from Jan 2021 to Jan 2022"),
-      color = "orange"
+    div(class="col-sm-4",
+        div(class="small-box bg-geo2",
+            div(class="inner",
+                h3(paste0(
+                  format(100. * (C_Vacancy_England_change %>%
+                                   filter(area == input$lep2, geographic_level == input$GeoType))$Percentage_Change,
+                         digits = 3
+                  ),
+                  "%"
+                )),
+                p(paste0("change in online job adverts in ", input$lep2, " from Jan 2021 to Jan 2022")),
+            )
+        )
     )
   })
 
@@ -1026,7 +1053,7 @@ server <- function(input, output, session) {
       theme_minimal() +
       theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
       labs(shape = "", colour = "") +
-      scale_color_manual(values = c("#1d70b8", "#F46A25"))
+      scale_color_manual(values = chartColors2)
   })
 
   output$jobad.time <- renderPlotly({
@@ -1087,48 +1114,57 @@ server <- function(input, output, session) {
   ## KPIs ----
   ### FE achievements -----
   output$skisup.FEach <- renderValueBox({
-    # Put value into box to plug into app
-    valueBox(format(Et2021()$achievements, scientific = FALSE, big.mark = ","),
-      paste0("adult education and training achievements in 2020/21 in ", input$lep1),
-      color = "blue"
+    div(class="col-sm-4",
+        div(class="small-box bg-geo1",
+            div(class="inner",
+                h3(format(Et2021()$achievements, scientific = FALSE, big.mark = ",")),
+                p(paste0("adult education and training achievements in 2020/21 in ", input$lep1)),
+            )
+        )
     )
   })
 
-  output$skisup.FEach.2 <- renderValueBox({
-    # Put value into box to plug into app
-    valueBox(
-      format((C_Achieve_ILR1621 %>%
-        filter(
-          geographic_level == input$GeoType,
-          area == input$lep2, time_period == "202021",
-          level_or_type == "Education and training: Total"
-        ))$achievements, scientific = FALSE, big.mark = ","),
-      paste0("adult education and training achievements in 2020/21 in ", input$lep2),
-      color = "orange"
+  output$skisup.FEach.2 <- renderValueBox({  
+    div(class="col-sm-4",
+        div(class="small-box bg-geo2",
+            div(class="inner",
+                h3(format((C_Achieve_ILR1621 %>%
+                             filter(
+                               geographic_level == input$GeoType,
+                               area == input$lep2, time_period == "202021",
+                               level_or_type == "Education and training: Total"
+                             ))$achievements, scientific = FALSE, big.mark = ",")),
+                p(paste0("adult education and training achievements in 2020/21 in ", input$lep2)),
+            )
+        )
     )
   })
 
   ### Apprenticeship achievements ----
   output$skisup.APach <- renderValueBox({
-    # Put value into box to plug into app
-    valueBox(
-      format(App2021()$achievements, scientific = FALSE, big.mark = ","),
-      paste0("apprenticeship achievements in 2020/21 in ", input$lep1),
-      color = "blue"
+    div(class="col-sm-4",
+        div(class="small-box bg-geo1",
+            div(class="inner",
+                h3(format(App2021()$achievements, scientific = FALSE, big.mark = ",")),
+                p(paste0("apprenticeship achievements in 2020/21 in ", input$lep1)),
+            )
+        )
     )
   })
 
   output$skisup.APach.2 <- renderValueBox({
-    # Put value into box to plug into app
-    valueBox(
-      format((C_Achieve_ILR1621 %>%
-        filter(
-          geographic_level == input$GeoType,
-          area == input$lep2, time_period == "202021",
-          level_or_type == "Apprenticeships: Total"
-        ))$achievements, scientific = FALSE, big.mark = ","),
-      paste0("apprenticeship achievements in 2020/21 in ", input$lep2),
-      color = "orange"
+    div(class="col-sm-4",
+        div(class="small-box bg-geo2",
+            div(class="inner",
+                h3(format((C_Achieve_ILR1621 %>%
+                             filter(
+                               geographic_level == input$GeoType,
+                               area == input$lep2, time_period == "202021",
+                               level_or_type == "Apprenticeships: Total"
+                             ))$achievements, scientific = FALSE, big.mark = ",")),
+                p(paste0("apprenticeship achievements in 2020/21 in ", input$lep2)),
+            )
+        )
     )
   })
 
@@ -1185,7 +1221,7 @@ server <- function(input, output, session) {
       labs(shape = "", colour = "") +
       scale_y_continuous(label = comma) +
       xlab("Year") +
-      scale_color_manual(values = c("#1d70b8", "#F46A25"))
+      scale_color_manual(values = chartColors2)
   })
 
   output$Ach_time <- renderPlotly({
@@ -1232,7 +1268,7 @@ server <- function(input, output, session) {
         legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank()
       ) +
-      scale_fill_manual(values = c("#1d70b8", "#F46A25"))
+      scale_fill_manual(values = chartColors2)
   })
 
   output$Ach_SSA_pc <- renderPlotly({
