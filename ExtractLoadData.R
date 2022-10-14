@@ -81,7 +81,7 @@ I_Achieve_ILR1621 <- read.csv(file = paste0("./Data/", folder, "/", list.files(p
 
 #National pupil database 
 #KS4 AY15/16 - 19/20 - KS4 destinations
-# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/c9f44a09-4239-40d6-8f07-87c2b97fc5fc
+# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/61db0688-4ec0-4cfe-9e83-24d4ea9d078e
 folder <- "12_KS4destin"
 I_KS4destin_1520 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
