@@ -51,7 +51,7 @@ format.EmpOcc.APS <- function(x) {
     mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
     filter(check == 1) %>%
     filter(!grepl("nomisweb", area)) %>%
-    mutate(year=2022) %>%
+    mutate(year = 2022) %>%
     select(year, area, everything(), -check, -jul_2021_jun_2022) %>% # reorder and remove
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>% # Tidy up Area names
@@ -98,7 +98,7 @@ C_EmpOcc_APS22 <- F_EmpOcc_APS22 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
   mutate_at(c(4:28), as.numeric) %>% # Convert to numeric
   filter(
-    year == "2021",
+    year == "2022",
     geographic_level != "LADU" &
       geographic_level != "GOR" # cleans up for London and South East which is included as lep and gor
   )
