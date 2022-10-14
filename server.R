@@ -15,23 +15,27 @@ server <- function(input, output, session) {
   # HOMEPAGE ----
   # Create link to overview tab
   observeEvent(input$link_to_tabpanel_overview, {
-    updateTabsetPanel(session, "navbar", "Local Skills") # Get into app
+    updateTabsetPanel(session, "navbar", "Local skills") # Get into app
     updateTabsetPanel(session, "datatabset", "Overview") # then pick tab
   })
   # Create link to employment data tab
   observeEvent(input$link_to_tabpanel_employment, {
-    updateTabsetPanel(session, "navbar", "Local Skills")
+    updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Employment")
   })
   # Create link to vacancy data tab
   observeEvent(input$link_to_tabpanel_vacancies, {
-    updateTabsetPanel(session, "navbar", "Local Skills")
+    updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Vacancies")
   })
   # Create link to skills data tab
   observeEvent(input$link_to_tabpanel_FE, {
-    updateTabsetPanel(session, "navbar", "Local Skills")
+    updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Skills")
+  })
+  # Create link to data tab
+  observeEvent(input$link_to_tabpanel_data, {
+    updateTabsetPanel(session, "navbar", "Data download")
   })
 
   # create table download datasets
@@ -41,7 +45,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list(
-        "1b.Emp rate" = D_EmpRate_APS1721
+        "1b.Emp rate" = D_EmpRate_APS1822
       ), path = file)
     }
   )
@@ -141,14 +145,14 @@ server <- function(input, output, session) {
 
   # define page title
   output$page0title <- renderUI({
-    paste0(input$lep1, ": overview of local landscape")
+    paste0("Overview of local landscape in ", input$lep1)
   })
 
   ### Downloads----
   # download all indicators
   list_of_datasets0 <- list(
     "1a.Emp by occupation" = D_EmpOcc_APS1721,
-    "1b.Emp rate" = D_EmpRate_APS1721,
+    "1b.Emp rate" = D_EmpRate_APS1822,
     "2.Vacancies" = C_Vacancy_ONS1722,
     "3a.FE achievements SSA" = D_Achieve_ILR21,
     "3b.FE achievements" = D_Achieve_ILR1621
@@ -166,7 +170,7 @@ server <- function(input, output, session) {
   filtered_data0 <- reactive({
     list(
       "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
-      "1b.Emp rate" = filter(D_EmpRate_APS1721, geographic_level == input$GeoType, area == input$lep1),
+      "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, area == input$lep1),
       "2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1),
       "3a.FE achievements SSA" = filter(D_Achieve_ILR21, geographic_level == input$GeoType, area == input$lep1),
       "3b.FE achievements" = filter(D_Achieve_ILR1621, geographic_level == input$GeoType, area == input$lep1)
@@ -185,29 +189,29 @@ server <- function(input, output, session) {
 
   # get emp data for current lep
   empLEP <- eventReactive(input$lep1, {
-    C_EmpRate_APS1721 %>%
+    C_EmpRate_APS1822 %>%
       filter(area == input$lep1, geographic_level == input$GeoType)
+  })
+  # get 2022 values
+  emp2022 <- reactive({
+    empLEP() %>%
+      filter(year == "2022")
   })
   # get 2021 values
   emp2021 <- reactive({
     empLEP() %>%
       filter(year == "2021")
   })
-  # get 2020 values
-  emp2020 <- reactive({
-    empLEP() %>%
-      filter(year == "2020")
-  })
 
   #### Employment count ----
   output$locland.emplcnt0 <- renderUI({
-    # call 2020 and 2021 values for chosen LEP
-    empCnt2021 <- emp2021()$Employment
-    empCntChange <- emp2021()$Employment - emp2020()$Employment
+    # call 2022 and 2021 values for chosen LEP
+    empCnt2022 <- emp2022()$Employment
+    empCntChange <- emp2022()$Employment - emp2021()$Employment
 
     # print with formatting
-    h4(span("2021", style = "font-size: 16px;font-weight:normal;"), br(),
-      format(empCnt2021, big.mark = ","), br(),
+    h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
+      format(empCnt2022, big.mark = ","), br(),
       span(
         format_pm(empCntChange) # plus-minus and comma sep formatting
         ,
@@ -221,27 +225,27 @@ server <- function(input, output, session) {
 
   # Emp chart
   empLineChart <- eventReactive(input$lep1, {
-    # call 2020 to 2021 change  for chosen LEP
-    empCntChange <- emp2021()$Employment - emp2020()$Employment
+    # call 2022 to 2021 change  for chosen LEP
+    empCntChange <- emp2022()$Employment - emp2021()$Employment
     empLine <- empLEP()
 
     # find min and max for lep
-    empCntMinMax <- C_EmpRate_APS1721_max_min %>%
+    empCntMinMax <- C_EmpRate_APS1822_max_min %>%
       filter(area == input$lep1)
 
     ggplot(empLine, aes(x = Year, y = Employment, group = area, text = paste0(
       "Year: ", year, "<br>",
       "Employment: ", format(Employment, big.mark = ","), "<br>"
     ))) +
-      geom_line(data = empLine %>% filter(Year <= 20)) +
+      geom_line(data = empLine %>% filter(Year <= 21)) +
       geom_ribbon(
-        data = empLine %>% filter(Year >= 20),
+        data = empLine %>% filter(Year >= 21),
         aes(ymin = min(Employment), ymax = Employment),
         fill = ifelse(empCntChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = empLine %>% filter(Year >= 20),
+        data = empLine %>% filter(Year >= 21),
         color = ifelse(empCntChange > 0, "#00703c", "#d4351c")
       ) +
       theme_classic() +
@@ -283,13 +287,13 @@ server <- function(input, output, session) {
 
   #### Employment rate -----
   output$locland.emplrate0 <- renderUI({
-    # call 2021 values and 20-21 change for chosen LEP
-    empRate2021 <- emp2021()$empRate
-    empRateChange <- emp2021()$empRate - emp2020()$empRate
+    # call 2021 values and 21-22 change for chosen LEP
+    empRate2022 <- emp2022()$empRate
+    empRateChange <- emp2022()$empRate - emp2021()$empRate
 
     # print with formatting
-    h4(span("2021", style = "font-size: 16px;font-weight:normal;"), br(),
-      paste0(format(100 * empRate2021, digit = 2), "%"), br(),
+    h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
+      paste0(format(100 * empRate2022, digit = 2), "%"), br(),
       span(
         paste0(sprintf("%+.0f", 100 * empRateChange), "ppts"),
         style = paste0("font-size: 16px;color:", cond_color(empRateChange > 0)) # colour formating
@@ -302,14 +306,14 @@ server <- function(input, output, session) {
   # Emp chart
 
   # find emp chart y axis min and max
-  EmpRateMin <- C_EmpRate_APS1721 %>%
+  EmpRateMin <- C_EmpRate_APS1822 %>%
     summarise(min(empRate, na.rm = T), .groups = "drop")
-  EmpRateMax <- C_EmpRate_APS1721 %>%
+  EmpRateMax <- C_EmpRate_APS1822 %>%
     summarise(max(empRate, na.rm = T), .groups = "drop")
 
   empRateLineChart <- eventReactive(input$lep1, {
-    empRateChange <- emp2021()$empRate - emp2020()$empRate
-    empRateLine <- C_EmpRate_APS1721 %>%
+    empRateChange <- emp2022()$empRate - emp2021()$empRate
+    empRateLine <- C_EmpRate_APS1822 %>%
       filter((geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"))
 
     ggplot(empRateLine, aes(
@@ -321,16 +325,16 @@ server <- function(input, output, session) {
         "Employment rate: ", format(100 * empRate, digit = 2), "%<br>"
       )
     )) +
-      geom_line(data = empRateLine %>% filter(Year <= 20, geographic_level == input$GeoType)) +
+      geom_line(data = empRateLine %>% filter(Year <= 21, geographic_level == input$GeoType)) +
       geom_line(data = empRateLine %>% filter(geographic_level == "COUNTRY"), alpha = 0.5) +
       geom_ribbon(
-        data = empRateLine %>% filter(Year >= 20, geographic_level == input$GeoType),
+        data = empRateLine %>% filter(Year >= 21, geographic_level == input$GeoType),
         aes(ymin = min(empRate), ymax = empRate),
         fill = ifelse(empRateChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = empRateLine %>% filter(Year >= 20, geographic_level == input$GeoType),
+        data = empRateLine %>% filter(Year >= 21, geographic_level == input$GeoType),
         color = ifelse(empRateChange > 0, "#00703c", "#d4351c")
       ) +
       theme_classic() +
@@ -397,7 +401,7 @@ server <- function(input, output, session) {
     VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
 
     # print with formatting
-    h4(span("2022", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("2022 (Jan)", style = "font-size: 16px;font-weight:normal;"), br(),
       paste0(format(100 * Vac2022()$jobpc, digit = 2), "%"), br(),
       span(
         paste0(sprintf("%+.1f", 100 * VacPcChange), "ppts"),
@@ -410,7 +414,7 @@ server <- function(input, output, session) {
 
   # Vacancy chart
   VacLineChart <- eventReactive(input$lep1, {
-    VacLine <- VacArea()
+    VacLine <- VacArea() %>% filter(year >= 2018)
     VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
 
     VacMinMax <- C_Vacancy_England_max_min %>% filter(area == input$lep1, geographic_level == input$GeoType)
@@ -682,13 +686,21 @@ server <- function(input, output, session) {
   # EMPLOYMENT ----
   # define page title
   output$page1title <- renderUI({
-    paste0(input$lep1, " employment trends")
+    paste0(
+      "Employment in ", input$lep1,
+      if ("lep2" %in% names(input)) {
+        if (input$lep2 == "\nNone") {
+        } else {
+          paste0(" compared to ", input$lep2)
+        }
+      }
+    )
   })
 
   ### Downloads----
   list_of_datasets1 <- list(
     "1a.Emp by occupation" = D_EmpOcc_APS1721,
-    "1b.Emp rate" = D_EmpRate_APS1721
+    "1b.Emp rate" = D_EmpRate_APS1822
   )
   output$download_btn1a <- downloadHandler(
     filename = function() {
@@ -703,7 +715,7 @@ server <- function(input, output, session) {
   filtered_data1 <- reactive({
     list(
       "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
-      "1b.Emp rate" = filter(D_EmpRate_APS1721, geographic_level == input$GeoType, area == input$lep1)
+      "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, area == input$lep1)
     )
   })
   output$download_btn1b <- downloadHandler(
@@ -723,10 +735,10 @@ server <- function(input, output, session) {
       div(class="small-box bg-geo1",
         div(class="inner",
           h3(paste0(
-            format(100. * emp2021()$empRate, digits = 2),
+            format(100. * emp2022()$empRate, digits = 2),
             "%"
           )),
-          p(paste0("employment rate in 2021 in ", input$lep1)),
+          p(paste0("employment rate Jul-Jun 2022 in ", input$lep1)),
         )
       )
     )
@@ -737,16 +749,16 @@ server <- function(input, output, session) {
         div(class="small-box bg-geo2",
             div(class="inner",
                 h3(paste0(
-                  format(100. * (C_EmpRate_APS1721 %>%
+                  format(100. * (C_EmpRate_APS1822 %>%
                                    filter(
                                      geographic_level == input$GeoType,
                                      area == input$lep2,
-                                     year == "2021"
+                                     year == "2022"
                                    )
                   )$empRate, digits = 2),
                   "%"
                 )),
-                p(paste0("employment rate in 2021 in ", input$lep2)),
+                p(paste0("employment rate Jul-Jun 2022 in ", input$lep2)),
             )
         )
     )
@@ -756,10 +768,10 @@ server <- function(input, output, session) {
     div(class="col-sm-4",
         div(class="small-box bg-geo1",
             div(class="inner",
-                h3(format(emp2021()$Employment,
+                h3(format(emp2022()$Employment,
                           scientific = FALSE, big.mark = ","
                 )),
-                p(paste0("in employment in 2021 in ", input$lep1)),
+                p(paste0("in employment Jul-Jun 2022 in ", input$lep1)),
             )
         )
     )
@@ -769,16 +781,16 @@ server <- function(input, output, session) {
     div(class="col-sm-4",
         div(class="small-box bg-geo2",
             div(class="inner",
-                h3(format((C_EmpRate_APS1721 %>%
+                h3(format((C_EmpRate_APS1822 %>%
                              filter(
                                geographic_level == input$GeoType,
                                area == input$lep2,
-                               year == "2021"
+                               year == "2022"
                              )
                 )$Employment,
                 scientific = FALSE, big.mark = ","
                 )),
-                p(paste0("in employment in 2021 in ", input$lep2)),
+                p(paste0("in employment Jul-Jun 2022 in ", input$lep2)),
             )
         )
     )
@@ -805,7 +817,7 @@ server <- function(input, output, session) {
 
   ## Employment rate over time line graph ----
   EmpRate_time <- eventReactive(c(input$lep1, input$lep2), {
-    EmpRateTime <- C_EmpRate_APS1721 %>%
+    EmpRateTime <- C_EmpRate_APS1822 %>%
       select(year, area, geographic_level, empRate) %>%
       filter(
         geographic_level == input$GeoType | geographic_level == "COUNTRY",
@@ -883,7 +895,15 @@ server <- function(input, output, session) {
   # VACANCIES ----
   # define page title
   output$page3title <- renderUI({
-    paste0(input$lep1, " vacancy trends")
+    paste0(
+      "Job vacancies in ", input$lep1,
+      if ("lep2" %in% names(input)) {
+        if (input$lep2 == "\nNone") {
+        } else {
+          paste0(" compared to ", input$lep2)
+        }
+      }
+    )
   })
 
   ### Downloads----
@@ -921,7 +941,7 @@ server <- function(input, output, session) {
                   format(100. * Vac2022()$jobpc, digits = 3),
                   "%"
                 )),
-                p(paste0("of online vacancies in England (Jan 2022) were in ", input$lep1)),
+                p(paste0("of online job adverts in England (Jan 2022) were in ", input$lep1)),
             )
         )
     )
@@ -940,7 +960,7 @@ server <- function(input, output, session) {
                   ),
                   "%"
                 )),
-                p(paste0("of online vacancies in England (Jan 2022) were in ", input$lep2)),
+                p(paste0("of online job adverts in England (Jan 2022) were in ", input$lep2)),
             )
         )
     )
@@ -948,6 +968,7 @@ server <- function(input, output, session) {
 
   ### ONS job advert unit change  LEP 1
   output$jobad.ch <- renderValueBox({
+
     div(class="col-sm-4",
         div(class="small-box bg-geo1",
             div(class="inner",
@@ -958,7 +979,8 @@ server <- function(input, output, session) {
                   ),
                   "%"
                 )),
-                p(paste0("change in online job vacancies in ", input$lep1, " from Jan 2021 to Jan 2022")),
+                p(paste0("change in online job adverts in ", input$lep1, " from Jan 
+                to Jan 2022")),
             )
         )
     )
@@ -976,7 +998,7 @@ server <- function(input, output, session) {
                   ),
                   "%"
                 )),
-                p(paste0("change in online job vacancies in ", input$lep2, " from Jan 2021 to Jan 2022")),
+                p(paste0("change in online job adverts in ", input$lep2, " from Jan 2021 to Jan 2022")),
             )
         )
     )
@@ -1047,7 +1069,15 @@ server <- function(input, output, session) {
   # FE ----
   # define page title
   output$page2title <- renderUI({
-    paste0(input$lep1, " Further Education (FE) and skills supply trends")
+    paste0(
+      "Skills training in ", input$lep1,
+      if ("lep2" %in% names(input)) {
+        if (input$lep2 == "\nNone") {
+        } else {
+          paste0(" compared to ", input$lep2)
+        }
+      }
+    )
   })
 
   ### Downloads----
@@ -1088,14 +1118,13 @@ server <- function(input, output, session) {
         div(class="small-box bg-geo1",
             div(class="inner",
                 h3(format(Et2021()$achievements, scientific = FALSE, big.mark = ",")),
-                p(paste0("20/21 adult education and training achievements in ", input$lep1)),
+                p(paste0("adult education and training achievements in 2020/21 in ", input$lep1)),
             )
         )
     )
   })
 
-  output$skisup.FEach.2 <- renderValueBox({
-    
+  output$skisup.FEach.2 <- renderValueBox({  
     div(class="col-sm-4",
         div(class="small-box bg-geo2",
             div(class="inner",
@@ -1105,7 +1134,7 @@ server <- function(input, output, session) {
                                area == input$lep2, time_period == "202021",
                                level_or_type == "Education and training: Total"
                              ))$achievements, scientific = FALSE, big.mark = ",")),
-                p(paste0("20/21 adult education and training achievements in ", input$lep2)),
+                p(paste0("adult education and training achievements in 2020/21 in ", input$lep2)),
             )
         )
     )
@@ -1117,7 +1146,7 @@ server <- function(input, output, session) {
         div(class="small-box bg-geo1",
             div(class="inner",
                 h3(format(App2021()$achievements, scientific = FALSE, big.mark = ",")),
-                p(paste0("20/21 apprenticeship achievements in ", input$lep1)),
+                p(paste0("apprenticeship achievements in 2020/21 in ", input$lep1)),
             )
         )
     )
@@ -1133,7 +1162,7 @@ server <- function(input, output, session) {
                                area == input$lep2, time_period == "202021",
                                level_or_type == "Apprenticeships: Total"
                              ))$achievements, scientific = FALSE, big.mark = ",")),
-                p(paste0("20/21 apprenticeship achievements in ", input$lep2)),
+                p(paste0("apprenticeship achievements in 2020/21 in ", input$lep2)),
             )
         )
     )
