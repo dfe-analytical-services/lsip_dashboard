@@ -6,9 +6,9 @@ C_LEP2020 <- read.csv(file = "./Data/AppData/C_LEP2020.csv", check.names = FALSE
 
 ## Employment by occupation ----
 # data for download
-D_EmpOcc_APS1721 <- read.csv(file = "./Data/AppData/D_EmpOcc_APS1721.csv", check.names = FALSE)
+D_EmpOcc_APS22 <- read.csv(file = "./Data/AppData/D_EmpOcc_APS22.csv", check.names = FALSE)
 # data for dashboard
-C_EmpOcc_APS1721 <- read.csv(file = "./Data/AppData/C_EmpOcc_APS1721.csv", check.names = FALSE)
+C_EmpOcc_APS22 <- read.csv(file = "./Data/AppData/C_EmpOcc_APS22.csv", check.names = FALSE)
 
 ## Employment level and rate ----
 # data for download

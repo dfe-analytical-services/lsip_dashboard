@@ -29,7 +29,7 @@ I_missingLAD <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(p
 # Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people
 folder <- "3_APSempOcc"
 sheetNum <- 1
-I_EmpOcc_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+I_EmpOcc_APS22 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 
 ### Employment level and rate ------------

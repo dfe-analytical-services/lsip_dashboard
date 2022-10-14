@@ -175,7 +175,7 @@ panel_employment <- function() {
       ### Employment percentage by occupation data table ----
       column(
         width = 6,
-        h2("Employment share by occupation: Jan-Dec 2021"),
+        h2("Employment share by occupation: Jul-Jun 2022"),
         dataTableOutput("EmpOcc"),
         details(
           label = "Source: Annual Population Survey",
