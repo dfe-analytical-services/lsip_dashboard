@@ -181,7 +181,9 @@ panel_employment <- function() {
           label = "Source: Annual Population Survey",
           inputId = "empOccSource",
           tags$ol(
-            tags$li("Figures are for all age groups.")
+            tags$li("Figures are for all age groups."),
+            tags$li("For LSIPs, only the top 5 occupations of the primary LSIP are shown.
+                    LSIP volumes are aggregated from LAs and this can cause rounding issues for smaller volume occupations.")
           )
         )
       )
