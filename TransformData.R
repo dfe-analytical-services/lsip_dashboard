@@ -558,7 +558,7 @@ format.skills.APS <- function(x) {
            "16-64 NVQ3"= "5 total  aged 16 64 nvq3",
            "16-64 NVQ4" = "6 total  aged 16 64 nvq4",
            "16-64 Other Qualifications" = "7 total  aged 16 64 other qualifications") %>%
-    filter(geographic_level %in%  c("LSIP", "LEP","LADU")) %>%
+    filter(geographic_level %in%  c("LSIP", "LEP","LADU", "COUNTRY")) %>%
     relocate(area, .before = geographic_level) %>%
     relocate(year, .before = area)
   
