@@ -314,43 +314,6 @@ padding-top:15px
       ) # end of version control row
     ), # end of Tab Panel
 
-    tabPanel(
-      "Data download",
-      fluidRow(
-        column(
-          12,
-          h1("Data sources"),
-          dataTableOutput("DataTbl"),
-          uiOutput("hidden_downloads")
-        )
-      ), # end of data table row
-      br(),
-      fluidRow(
-        column(
-          12,
-          h2("Data information"),
-          h3("Annual Population Survey"),
-          p("The Annual Population Survey (APS) is a continuous household survey, covering the UK.
-            The topics covered include employment and unemployment, as well as housing, ethnicity, religion, health and education.
-            The dashboard shows employment volumes and rates for each LEP/LSIP and split by sub-major Standard Occupational Classification (SOC) 2010 grouping.
-            Totals for LSIP areas are calculated by adding up the relevant local authorities (LAs).
-            Since the published LA volumes are rounded, there may be a small rounding error in the LSIP totals."),
-          h3("ONS online job adverts"),
-          p("These data tables are created based upon online job adverts data provided by Adzuna.
-            Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
-            The dashboard shows job 'units' which is the number of job adverts divided a set value for all regions.
-            It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across areas or to follow trends over time.
-            Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs).
-            Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP totals."),
-          h3("Individualised Learner Records"),
-          p("The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
-          The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training.
-          Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs).
-            Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP totals."),
-          br()
-        )
-      ) # end of data information row
-    ), # end of data tab
     # APP ----
 
     tabPanel(
@@ -402,6 +365,44 @@ padding-top:15px
 
       #  ) # end of app data row
     ), # end of app tab panel
+
+    tabPanel(
+      "Data & downloads",
+      fluidRow(
+        column(
+          12,
+          h1("Data sources"),
+          dataTableOutput("DataTbl"),
+          uiOutput("hidden_downloads")
+        )
+      ), # end of data table row
+      br(),
+      fluidRow(
+        column(
+          12,
+          h2("Data information"),
+          h3("Annual Population Survey"),
+          p("The Annual Population Survey (APS) is a continuous household survey, covering the UK.
+            The topics covered include employment and unemployment, as well as housing, ethnicity, religion, health and education.
+            The dashboard shows employment volumes and rates for each LEP/LSIP and split by sub-major Standard Occupational Classification (SOC) 2010 grouping.
+            Totals for LSIP areas are calculated by adding up the relevant local authorities (LAs).
+            Since the published LA volumes are rounded, there may be a small rounding error in the LSIP totals."),
+          h3("ONS online job adverts"),
+          p("These data tables are created based upon online job adverts data provided by Adzuna.
+            Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
+            The dashboard shows job 'units' which is the number of job adverts divided a set value for all regions.
+            It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across areas or to follow trends over time.
+            Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs).
+            Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP totals."),
+          h3("Individualised Learner Records"),
+          p("The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
+          The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training.
+          Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs).
+            Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP totals."),
+          br()
+        )
+      ) # end of data information row
+    ), # end of data tab
 
     # Create the accessibility statement-----------------
     tabPanel(
