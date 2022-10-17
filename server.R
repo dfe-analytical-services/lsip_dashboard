@@ -35,7 +35,7 @@ server <- function(input, output, session) {
   })
   # Create link to data tab
   observeEvent(input$link_to_tabpanel_data, {
-    updateTabsetPanel(session, "navbar", "Data download")
+    updateTabsetPanel(session, "navbar", "Data & downloads")
   })
 
   # create table download datasets
