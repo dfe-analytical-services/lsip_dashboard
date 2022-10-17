@@ -882,7 +882,7 @@ server <- function(input, output, session) {
         geographic_level == input$GeoType | geographic_level == "COUNTRY",
         (area == "England" |
           area == input$lep1 |
-          area == if ("lep2" %in% names(input)) {
+          area == if (("lep2" %in% names(input)) & (input$GeoType == "LEP")) {
             input$lep2
           } else {
             "\nNone"
@@ -890,6 +890,7 @@ server <- function(input, output, session) {
       ) %>%
       select(-year, -geographic_level) %>%
       rename_with(str_to_sentence) %>%
+      select_if(~ !any(is.na(.))) %>% # remove any na columsn to get rid of any that aren't top 5
       t() %>%
       row_to_names(row_number = 1) %>%
       as.data.frame() %>%

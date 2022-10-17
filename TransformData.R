@@ -82,20 +82,29 @@ format.EmpOcc.APS <- function(x) {
     group_by(year, area, geographic_level) %>% # sum for each LSIP
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    mutate_at(c(4:28), as.character) # Convert to sring to bind
+
+    pivot_longer(-c(year, area, geographic_level), names_to = "occupation", values_to = "frequency") %>%
+    group_by(year, area, geographic_level) %>%
+    slice_max(order_by = frequency, n = 5) %>% # find top 5
+    pivot_wider(names_from = occupation, values_from = frequency, values_fill = 9999999) %>% # unpivot
+    mutate_at(c(4:15), as.character) # Convert to sring to bind
+
+
 
   # join together
-  bind_rows(reformat, addlsip)
+  bind <- bind_rows(reformat, addlsip)
+  bind[is.na(bind)] <- "9999999" # reaplce nas with error code
+  bind
 }
 # format data
 F_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
 # create downloadable version with new suppression rules
 D_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
-  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x", "9999999" = "x")))
 write.csv(D_EmpOcc_APS1721, file = "Data\\AppData\\D_EmpOcc_APS1721.csv", row.names = FALSE)
 # create version to use in dashboard
 C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
-  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "9999999" = ""))) %>% # convert to blank to avoid error msg
   mutate_at(c(4:28), as.numeric) %>% # Convert to numeric
   filter(
     year == "2021",
