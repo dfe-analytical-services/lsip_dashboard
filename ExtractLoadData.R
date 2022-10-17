@@ -69,7 +69,7 @@ I_EmpEnt_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.fil
 
 ## ILR
 ### AY21/22 achievements by SSAt1 and LAD ------------
-## Permalink: https://explore-education-statistics.service.gov.uk/data-tables/permalink/c390bb3f-8577-40f1-869c-fc8a8195516e
+## Permalink: https://explore-education-statistics.service.gov.uk/data-tables/permalink/61db0688-4ec0-4cfe-9e83-24d4ea9d078e
 folder <- "5_ILRachSSA"
 I_Achieve_ILR21 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
@@ -81,7 +81,7 @@ I_Achieve_ILR1621 <- read.csv(file = paste0("./Data/", folder, "/", list.files(p
 
 #National pupil database 
 #KS4 AY15/16 - 19/20 - KS4 destinations
-# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/61db0688-4ec0-4cfe-9e83-24d4ea9d078e
+# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/5262399e-5eb4-4cdd-b755-2e7b871f450b
 folder <- "12_KS4destin"
 I_KS4destin_1520 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 

@@ -485,7 +485,7 @@ format.empind.APS <- function(x) {
            "Banking, Finance and Insurance" = " k n banking finance insurance etc   ",
            "Public Administration, Education and Health" = " o q public admin education health   ",
            "Other Services" = " r u other services   ") %>%
-    filter(geographic_level %in%  c("LSIP", "LEP")) %>%
+    filter(geographic_level %in%  c("LSIP", "LEP", "LADU", "COUNTRY")) %>%
     relocate(area, .before = geographic_level) %>%
     relocate(year, .before = area)
   
@@ -624,6 +624,7 @@ format.empent.UBC <- function(x) {
            "Total Enterprises Small 10-49" = "small_10_to_49",
            "Total Enterprises Medium 50-249" = "medium_sized_50_to_249",
            "Total Enterprises Large 250" = "large_250") %>%
+    filter(geographic_level %in%  c("LSIP", "LEP","LADU", "COUNTRY")) %>%
     relocate(area, .before = geographic_level) %>%
     relocate(year, .before = area)
 }
@@ -643,6 +644,12 @@ write.csv(D_empent_UBC1822, file = "Data\\AppData\\D_empent_UBC1822.csv", row.na
 
 format.ks4 <- function(x) {
   colnames(x)[1] <- "area"
+  
+  addladu <- x %>%
+    select(-location_code, -characteristic, -data_type, -institution_group, -level_methodology) %>%
+    mutate(geographic_level = replace(geographic_level, geographic_level == "localAuthorityDistrict", "LADU")) %>%
+    mutate_at(c(4:9), as.character) # Convert to string to bind
+
   
   # create lep file
   addLEP <- x %>%
@@ -677,7 +684,7 @@ format.ks4 <- function(x) {
     mutate_at(c(4:9), as.character) # Convert to string to bind
   
   # join together and rename columns
-  LEP_LSIP <- bind_rows(addLEP, addLSIP) %>%
+  LEP_LSIP <- bind_rows(addladu, addLEP, addLSIP) %>%
     rename("Total Completed Key Stage 4" = "cohort",
            "Unknown" = "all_unknown",
            "Not Recorded as a Sustained Destination" = "all_notsust",
@@ -706,6 +713,13 @@ write.csv(D_KS4destin_1520, file = "Data\\AppData\\D_KS4destin_1520.csv", row.na
 
 format.ks5 <- function(x) {
   colnames(x)[1] <- "area"
+  
+  
+  addladu <- x %>%
+    select(-location_code, -characteristic, -data_type, -institution_group, -level_methodology) %>%
+    mutate(geographic_level = replace(geographic_level, geographic_level == "localAuthority", "LADU")) %>%
+    mutate_at(c(5:10), as.character) # Convert to string to bind
+  
   
   # create lep file
   addLEP <- x %>%
@@ -740,7 +754,7 @@ format.ks5 <- function(x) {
     mutate_at(c(5:10), as.character) # Convert to string to bind
   
   # join together and rename columns
-  LEP_LSIP <- bind_rows(addLEP, addLSIP) %>%
+  LEP_LSIP <- bind_rows(addladu, addLEP, addLSIP) %>%
     rename("Total Completed Key Stage 4" = "cohort",
            "Unknown" = "all_unknown",
            "Not Recorded as a Sustained Destination" = "all_notsust",
