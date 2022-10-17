@@ -71,7 +71,7 @@ server <- function(input, output, session) {
   )
   output$downloadData4 <- downloadHandler(
     filename = function() {
-      "AcheivementIndicators.xlsx"
+      "AchievementIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
@@ -890,13 +890,15 @@ server <- function(input, output, session) {
       ) %>%
       select(-year, -geographic_level) %>%
       rename_with(str_to_sentence) %>%
-      select_if(~ !any(is.na(.))) %>% # remove any na columsn to get rid of any that aren't top 5
       t() %>%
       row_to_names(row_number = 1) %>%
       as.data.frame() %>%
       mutate_if(is.character, as.numeric) %>%
+      mutate_at(c(2), ~ replace(., is.na(.), 0)) %>%
       mutate(across(where(is.numeric), ~ round(prop.table(.), 4))) %>%
-      rownames_to_column("Occupation")
+      filter(.[[2]] > 0) %>%
+      rownames_to_column("Occupation") %>%
+      filter(Occupation != "Alloccsremain")
   })
 
   output$EmpOcc <- renderDataTable({
