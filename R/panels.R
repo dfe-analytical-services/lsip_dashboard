@@ -177,13 +177,14 @@ panel_employment <- function() {
         width = 6,
         h2("Employment share by occupation: Jan-Dec 2021"),
         dataTableOutput("EmpOcc"),
+        br(),
         details(
           label = "Source: Annual Population Survey",
           inputId = "empOccSource",
           tags$ol(
             tags$li("Figures are for all age groups."),
-            tags$li("For LSIPs, only the top 5 occupations of the primary LSIP are shown.
-                    LSIP volumes are aggregated from LAs and this can cause rounding issues for smaller volume occupations.")
+            tags$li("LSIP area totals are calculated by adding up the relevant local authorities, which may lead to rounding errors."),
+            tags$li("Only the top 5 occupations are shown for LSIP areas.")
           )
         )
       )
