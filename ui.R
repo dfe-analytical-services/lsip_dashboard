@@ -297,7 +297,7 @@ padding-top:15px
               class = "panel-body",
               h2("Latest update"),
               p("18 Oct 2022 (0.2.1)"),
-              p("Added option to view LSIP geographies, included new data download page, updated dashboard styling, and included additional data sources on data download page."),
+              p("Added option to view LSIP geographies, included new data download page, and updated dashboard styling."),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
