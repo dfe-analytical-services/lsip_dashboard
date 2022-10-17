@@ -71,7 +71,7 @@ server <- function(input, output, session) {
   )
   output$downloadData4 <- downloadHandler(
     filename = function() {
-      "AcheivementIndicators.xlsx"
+      "AchievementIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
@@ -888,12 +888,8 @@ server <- function(input, output, session) {
             "\nNone"
           })
       ) %>%
-      # filter(
-      # geographic_level == "LSIP" | geographic_level == "COUNTRY",
-      # (area == "England" |area == "Cumbria"))%>%
       select(-year, -geographic_level) %>%
       rename_with(str_to_sentence) %>%
-      # select_if(~ !any(is.na(.))) %>% # remove any na columsn to get rid of any that aren't top 5
       t() %>%
       row_to_names(row_number = 1) %>%
       as.data.frame() %>%
