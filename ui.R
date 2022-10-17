@@ -255,19 +255,26 @@ padding-top:15px
               class = "panel-body",
               h2("Dashboard pages"),
               p("There are four pages which focus on different parts of the jobs and skills market.
-                Each page includes options to download all of the indicators shown for either just the selected LEP or LSIP area or for all available geographies."),
+                Each page includes options to download all of the indicators shown for either just the selected LEP or LSIP area or for all available geographies.
+                Where published figures are not available, totals for LEP and LSIP areas are calculated by adding up the relevant local authorities.
+                As local authority volumes are rounded and small volumes are suppressed, there may be rounding errors in the LEP and LSIP area totals."),
               h3(actionLink("link_to_tabpanel_overview", "Overview")),
               p("This page provides a summary of labour market and skills information for the selected LEP or LSIP area.
                 It includes a time series of data on employment, online job adverts, and further education and skills achievements."),
               h3(actionLink("link_to_tabpanel_employment", "Employment")),
               p("This page includes information on employment for the selected LEP or LSIP area, and the option to compare against another area.
-                It includes data on employment rates over time, and the share of employment for occupations."),
+                It includes data on employment rates over time, and the share of employment for occupations.
+                LEP breakdowns come directly from published data however totals for LSIP areas are calculated by adding up the relevant local authorities which are rounded and subject to suppression, so there may be small differences in figures for LEPs and LSIPs that cover the same geographical areas.
+                Only the top 5 occupations are shown for LSIP areas as these figures are calculated from rounded local authority data where small volumes are supressed.
+                The data available for LSIP areas will be improved in future versions of this dashboard."),
               h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
               p("This page includes experimental data on the share of online job adverts for the selected LEP or LSIP area, and the option to compare against another area.
-                The data has been included temporarily, and will be replaced when ONS release further, more detailed, experimental data on online job adverts (currently planned before the end of 2022)."),
+                The data has been included temporarily, and will be replaced when ONS release further, more detailed, experimental data on online job adverts (currently planned before the end of 2022).
+                LEP and LSIP area totals are calculated by adding up the relevant local authorities."),
               h3(actionLink("link_to_tabpanel_FE", "Skills")),
               p("This page includes information on training activity for the selected LEP or LSIP area, and the option to compare against another area.
-                It includes data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period."),
+                It includes data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period.
+                LEP and LSIP area totals are calculated by adding up the relevant local authorities."),
               h2("Data download page"),
               p("The", actionLink("link_to_tabpanel_data", "data download page"), " includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
             )
