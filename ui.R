@@ -264,8 +264,8 @@ padding-top:15px
               h3(actionLink("link_to_tabpanel_employment", "Employment")),
               p("This page includes information on employment for the selected LEP or LSIP area, and the option to compare against another area.
                 It includes data on employment rates over time, and the share of employment for occupations.
-                LEP breakdowns come directly from published data however totals for LSIP areas are calculated by adding up the relevant local authorities which are rounded and subject to suppression, so there may be small differences in figures for LEPs and LSIPs that cover the same geographical areas.
-                Only the top 5 occupations are shown for LSIP areas as these figures are calculated from rounded local authority data where small volumes are supressed.
+LEP breakdowns come directly from published data; however, totals for LSIP areas are calculated by adding up the relevant local authorities which are rounded and subject to suppression, so there may be small differences in figures for LEPs and LSIPs that cover the same geographical areas.
+Only the top 5 occupations are shown for LSIP areas as these figures are calculated from rounded local authority data where small volumes are supressed.
                 The data available for LSIP areas will be improved in future versions of this dashboard."),
               h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
               p("This page includes experimental data on the share of online job adverts for the selected LEP or LSIP area, and the option to compare against another area.
