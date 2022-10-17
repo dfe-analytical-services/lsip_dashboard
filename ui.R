@@ -401,7 +401,7 @@ padding-top:15px
             It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across areas or to follow trends over time.
             Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs).
             Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP totals."),
-          h3("Individualised Learner Records"),
+          h3("Individualised Learner Record"),
           p("The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
           The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training.
           Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs).
