@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - main
+      - development
 
 name: deploy-shiny
 
@@ -29,6 +30,15 @@ jobs:
       - uses: r-lib/actions/setup-r@master
         with:
           r-version: ${{ matrix.config.r }}
+
+      - name: Set env vars (dev)
+        if: endsWith(github.ref, '/development')
+        run: |
+          echo "SHINYAPP_NAME=local-skills-dashboard-preprod" >> $GITHUB_ENV
+      - name: Set env vars (prod)
+        if: endsWith(github.ref, '/main')
+        run: |
+          echo "SHINYAPP_NAME=local-skills-dashboard" >> $GITHUB_ENV
 
       - name: Cache R packages
         if: runner.os != 'Windows'
@@ -61,4 +71,4 @@ jobs:
         run: >
           Rscript
           -e "rsconnect::setAccountInfo(name = 'department-for-education', token = '${{secrets.SHINYAPPS_TOKEN}}', secret = '${{secrets.SHINYAPPS_SECRET}}')"
-          -e "rsconnect::deployApp(appName='local-skills-dashboard')"
+          -e "rsconnect::deployApp(appName=${{SHINYAPP_NAME}})"
