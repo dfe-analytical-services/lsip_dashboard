@@ -142,8 +142,8 @@ padding-top:15px
     <div class="govuk-header__logo" style="width: 15%; margin-left: 15px;float:left;">
     <a href="https://www.gov.uk/government/organisations/department-for-education" class="govuk-header__link govuk-header__link--homepage">
     <span class="govuk-header__logotype">
-    <img src="images/DfE_logo.png" class="govuk-header__logotype-crown-fallback-image"/>
-    <span class="govuk-header__logotype-text">DfE</span>
+    <img src="images/DfE_logo_landscape.png" class="govuk-header__logotype-crown-fallback-image"/>
+    <span class="govuk-header__logotype-text"></span>
     </span>
     </a>
     </div>
