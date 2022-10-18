@@ -78,19 +78,19 @@ format.EmpOcc.APS <- function(x) {
     rename(area = LSIP) %>%
     relocate(area, .before = geographic_level) %>%
     mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-    mutate_at(c(4:28), as.numeric) %>% # Convert to numeric
+    mutate_at(c(4:29), as.numeric) %>% # Convert to numeric
     group_by(year, area, geographic_level) %>% # sum for each LSIP
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    mutate(allOccs = rowSums(across(where(is.numeric)))) %>% # get total for LSIP
     pivot_longer(-c(year, area, geographic_level), names_to = "occupation", values_to = "frequency") %>%
     group_by(year, area, geographic_level) %>%
     slice_max(order_by = frequency, n = 6) %>% # find top 5
     pivot_wider(names_from = occupation, values_from = frequency, values_fill = 9999999) %>% # unpivot
-    mutate_at(c(4:16), as.character) # Convert to sring to bind
+    mutate_at(c(4:19), as.character) # Convert to sring to bind
 
   # join together
-  bind <- bind_rows(reformat, addlsip)
+  bind <- bind_rows(reformat, addlsip) %>%
+    rename(allOccs = t__all_aged__over_in_employment_all_people) # get total for LSIP
   bind[is.na(bind)] <- "9999999" # reaplce nas with error code
   bind
 }
@@ -103,22 +103,18 @@ D_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
 write.csv(D_EmpOcc_APS1721, file = "Data\\AppData\\D_EmpOcc_APS1721.csv", row.names = FALSE)
 # create version to use in dashboard
 C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
-  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "9999999" = ""))) %>% # convert to blank to avoid error msg
-  mutate_at(c(4:29), as.numeric) %>% # Convert to numeric
-  mutate(allOccs = case_when(
-    geographic_level != "LSIP" ~ 0,
-    TRUE ~ allOccs
-  )) %>%
-  mutate(allOccsRemain = case_when(
-    geographic_level != "LSIP" ~ 0,
-    TRUE ~ rowSums(across(where(is.numeric)), na.rm = TRUE) - allOccs
-  )) %>%
-  select(-allOccs) %>%
   filter(
     year == "2021",
     geographic_level != "LADU" &
       geographic_level != "GOR" # cleans up for London and South East which is included as lep and gor
-  )
+  ) %>%
+  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "9999999" = ""))) %>% # convert to blank to avoid error msg
+  mutate_at(c(4:29), as.numeric) %>% # Convert to numeric
+  mutate(allOccsRemain = allOccs -
+    rowSums(select(., -allOccs, -year, -area, -geographic_level), na.rm = TRUE)) %>%
+  mutate(allOccsRemain = case_when(allOccsRemain <= 0 ~ 0, TRUE ~ allOccsRemain)) %>%
+  select(-allOccs)
+
 write.csv(C_EmpOcc_APS1721, file = "Data\\AppData\\C_EmpOcc_APS1721.csv", row.names = FALSE)
 
 ## Employment level and rate ----
