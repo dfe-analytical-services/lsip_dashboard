@@ -39,7 +39,7 @@ jobs:
       - name: Set env vars (prod)
         if: endsWith(github.ref, '/main')
         run: |
-          echo "SHINYAPP_NAME=local-skills-dashboard" >> $GITHUB_ENV
+          echo 'SHINYAPP_NAME="local-skills-dashboard"' >> $GITHUB_ENV
 
       - name: Cache R packages
         if: runner.os != 'Windows'
