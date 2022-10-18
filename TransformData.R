@@ -471,7 +471,6 @@ format.empind.APS <- function(x) {
     mutate_at(c(4:12), as.numeric) %>% # Convert to numeric
     group_by(year, area, geographic_level) %>% # sum for each LSIP
     summarise(across(everything(), list(sum), na.rm = T)) %>%
-    mutate_at(vars(-year, -area, -geographic_level), ~ replace(., which(.==0), "!")) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:12), as.character) # Convert to sring to bind
   
@@ -494,14 +493,10 @@ format.empind.APS <- function(x) {
 }
 
 ## format employment by industry
-F_empind_APS1722 <- format.empind.APS(I_EmpInd_APS1721)
+F_empind_APS1721 <- format.empind.APS(I_EmpInd_APS1721)
 
-
-
-#mutate(across(c(-year, -area, -geographic_level), ~replace(., . == 0, !))) %>%
-mutate_at(vars(-year, -area, -geographic_level), ~ replace(., which(.==0), !)) %>%
 #Downloadable version
-D_empind_APS1721 <- F_empind_APS1722 %>%
+D_empind_APS1721 <- F_empind_APS1721 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
 #Write the data to folder
 
@@ -571,7 +566,6 @@ format.skills.APS <- function(x) {
 
 ## format skills
 F_skillsnvq_APS1721 <- format.skills.APS(I_Skillsnvq_APS1721)
-
 
 #Downloadable version
 D_skillsnvq_APS1721 <- F_skillsnvq_APS1721 %>%

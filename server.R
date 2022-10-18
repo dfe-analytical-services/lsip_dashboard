@@ -49,7 +49,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  output$downloadData3 <- downloadHandler(
+  output$downloadData6 <- downloadHandler(
     filename = function() {
       "VacancyIndicators.xlsx"
     },
@@ -59,7 +59,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  output$downloadData4 <- downloadHandler(
+  output$downloadData7 <- downloadHandler(
     filename = function() {
       "AcheivementIndicators.xlsx"
     },
@@ -69,7 +69,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  output$downloadData5 <- downloadHandler(
+  output$downloadData8 <- downloadHandler(
     filename = function() {
       "AchievementBySSAIndicators.xlsx"
     },
@@ -80,7 +80,7 @@ server <- function(input, output, session) {
     }
   )
   
-  output$downloadData6 <- downloadHandler(
+  output$downloadData3 <- downloadHandler(
     filename = function() {
       "EmploymentbyIndustryIndicators.xlsx"
     },
@@ -91,7 +91,7 @@ server <- function(input, output, session) {
     }
   )
   
-  output$downloadData7 <- downloadHandler(
+  output$downloadData4 <- downloadHandler(
     filename = function() {
       "Skilllevelbyage.xlsx"
     },
@@ -103,7 +103,7 @@ server <- function(input, output, session) {
   )
   
   
-  output$downloadData8 <- downloadHandler(
+  output$downloadData5 <- downloadHandler(
     filename = function() {
       "EnterprisebyemploymentsizeIndicators.xlsx"
     },
