@@ -183,8 +183,9 @@ panel_employment <- function() {
           inputId = "empOccSource",
           tags$ol(
             tags$li("Figures are for all age groups."),
-            tags$li("LSIP area totals are calculated by adding up the relevant local authorities, which may lead to rounding errors."),
-            tags$li("Only the top 5 occupations are shown for LSIP areas.")
+            tags$li("LSIP area totals are calculated by adding up the relevant local authorities, which may lead to rounding errors and differences compared to equivalent LEPs."),
+            tags$li("Only the top 5 occupations are shown for LSIP areas."),
+            tags$li("Percentages are based on proportion of total employment in LEP/LSIP.")
           )
         )
       )
