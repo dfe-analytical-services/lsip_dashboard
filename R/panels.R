@@ -330,13 +330,13 @@ panel_skills <- function() {
       column(
         12,
         h2("Further education and skills achievements: 2016/17 to 2020/21"),
-        div(
-          class = "filterRow",
-          selectizeInput("skill_line", "Choose type of training",
-            choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and skills provision")
-          ),
-          br()
-        ),
+        # div(
+        #   class = "filterRow",
+        #   selectizeInput("skill_line", "Choose type of training",
+        #     choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and skills provision")
+        #   ),
+        #   br()
+        # ),
         plotlyOutput("Ach_time"),
         details(
           label = "Source: Individualised Learner Record",

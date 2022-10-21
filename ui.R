@@ -350,6 +350,16 @@ Only the top 5 occupations are shown for LSIP areas as these figures are calcula
                 width = 4,
                 uiOutput("lep2_off")
               )
+            ),
+            fluidRow(
+              column(
+                width=4,
+                uiOutput("type_on")
+              ),
+              column(
+                width=4,
+                uiOutput("age_on")
+              )
             )
           ),
           br(),
