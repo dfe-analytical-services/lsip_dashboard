@@ -1174,7 +1174,7 @@ server <- function(input, output, session) {
                          level_or_typeNeat == input$skill_line,
                          age_group==input$ageGroup
                        ))$achievements, scientific = FALSE, big.mark = ",")),
-          p(paste0("adult education and training achievements in 2020/21 in ", input$lep1)),
+          p(paste0("achievements in 2020/21 in ", input$lep1)),
         )
       )
     )
@@ -1194,7 +1194,7 @@ server <- function(input, output, session) {
               level_or_typeNeat == input$skill_line,
               age_group==input$ageGroup
             ))$achievements, scientific = FALSE, big.mark = ",")),
-          p(paste0("adult education and training achievements in 2020/21 in ", input$lep2)),
+          p(paste0("achievements in 2020/21 in ", input$lep2)),
         )
       )
     )
