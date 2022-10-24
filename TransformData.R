@@ -246,14 +246,19 @@ C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
   mutate_at(vars(starts,participation, achievements,starts_rate_per_100000_population,participation_rate_per_100000_population,achievements_rate_per_100000_population), as.numeric) %>% # Convert to numeric
   mutate(Year = as.numeric(substr(time_period, 3, 4))) %>% # add year name for charts
   filter(time_period != "202122") %>% # ignore temporary data in the latest year
-  mutate(level_or_typeNeat = case_when(
-    level_or_type == "Further education and skills: Total" ~ "Total FE and skills provision",
-    level_or_type == "Education and training: Total" ~ "Education and training (adults only)",
-    level_or_type == "Community learning: Total" ~ "Community learning (adults only)",
-    level_or_type == "Apprenticeships: Total" ~ "Apprenticeships (all ages)",
-    TRUE ~ level_or_type
+  mutate(typeNeat = case_when(
+    apprenticeships_or_further_education == "Further education and skills" ~ "Total FE and skills provision",
+    apprenticeships_or_further_education == "Education and training" ~ "Education and training (adults only)",
+    apprenticeships_or_further_education == "Community Learning" ~ "Community learning (adults only)",
+    apprenticeships_or_further_education == "Apprenticeships" ~ "Apprenticeships (all ages)",
+    TRUE ~ apprenticeships_or_further_education
   )) %>%
-  mutate(AY = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = ""))
+  mutate(AY = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = ""))%>%
+
+  arrange(fct_relevel(level_or_type,'Education and training: Total','Community learning: Total','Apprenticeships: Total','Further education and skills: Total'))%>%
+arrange(fct_relevel(age_group,'Total','Under 19','19-24','25+'))%>%
+  arrange(fct_relevel(typeNeat,'Total FE and skills provision'))
+  
 write.csv(C_Achieve_ILR1621, file = "Data\\AppData\\C_Achieve_ILR1621.csv", row.names = FALSE)
 
 # create max and min vacancy pc by LEP for use in setting axis
