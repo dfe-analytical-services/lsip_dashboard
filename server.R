@@ -147,7 +147,8 @@ server <- function(input, output, session) {
   output$age_on <- renderUI({
     if (input$datatabset == "Skills") {
       selectInput("ageGroup", "Choose age group",
-                  choices = c("Total","Under 19","19-24","25+")
+                  choices =C_Achieve_ILR1621%>%filter(apprenticeships_or_further_education==input$typeGroup,level_or_type==input$levelGroup)%>%distinct(Age=age_group)%>%
+                    arrange(fct_relevel(Age,'Total','Under 19','19-24','25+'))
       )
     } else {
     }
@@ -155,9 +156,21 @@ server <- function(input, output, session) {
   
   output$type_on <- renderUI({
     if (input$datatabset == "Skills") {
-      selectizeInput("skill_line", "Choose type of training",
-                         choices = c("Total FE and skills provision","Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)")
-                        )
+      selectizeInput("typeGroup", "Choose type of training",
+     choices=C_Achieve_ILR1621%>%distinct(Type=apprenticeships_or_further_education)%>%
+       arrange(fct_relevel(Type,'Further education and skills'))
+                      )
+    } else {
+    }
+  })
+  
+  output$level_on <- renderUI({
+    if (input$datatabset == "Skills") {
+      selectizeInput("levelGroup", "Choose level of training",
+                     choices =C_Achieve_ILR1621%>%
+                       arrange(fct_relevel(level_or_type,'Education and training: Total','Community learning: Total','Apprenticeships: Total','Further education and skills: Total'))%>%
+                       filter(apprenticeships_or_further_education==input$typeGroup)%>%distinct(Level=level_or_type)
+      )
     } else {
     }
   })
@@ -1171,7 +1184,7 @@ server <- function(input, output, session) {
                        filter(
                          geographic_level == input$GeoType,
                          area == input$lep1, time_period == "202021",
-                         level_or_typeNeat == input$skill_line,
+                         level_or_type == input$levelGroup,
                          age_group==input$ageGroup
                        ))$achievements, scientific = FALSE, big.mark = ",")),
           p(paste0("achievements in 2020/21 in ", input$lep1)),
@@ -1191,7 +1204,7 @@ server <- function(input, output, session) {
             filter(
               geographic_level == input$GeoType,
               area == input$lep2, time_period == "202021",
-              level_or_typeNeat == input$skill_line,
+              level_or_type == input$levelGroup,
               age_group==input$ageGroup
             ))$achievements, scientific = FALSE, big.mark = ",")),
           p(paste0("achievements in 2020/21 in ", input$lep2)),
@@ -1212,7 +1225,7 @@ server <- function(input, output, session) {
                        filter(
                          geographic_level == input$GeoType,
                          area == input$lep1, time_period == "202021",
-                         level_or_typeNeat == input$skill_line,
+                         level_or_type == input$levelGroup,
                          age_group==input$ageGroup
                        ))$achievements_rate_per_100000_population, scientific = FALSE, big.mark = ",")),
           p(paste0(" achievement rate per 100,000 in 2020/21 in ", input$lep1)),
@@ -1232,7 +1245,7 @@ server <- function(input, output, session) {
             filter(
               geographic_level == input$GeoType,
               area == input$lep2, time_period == "202021",
-              level_or_typeNeat == input$skill_line,
+              level_or_type == input$levelGroup,
               age_group==input$ageGroup
             ))$achievements_rate_per_100000_population, scientific = FALSE, big.mark = ",")),
           p(paste0("achievement rate per 100,000 in 2020/21 in ", input$lep2)),
@@ -1260,7 +1273,7 @@ server <- function(input, output, session) {
   })
 
   ## Achievements over time line chart ----
-  Ach_time <- eventReactive(c(input$lep1, input$lep2, input$skill_line,input$ageGroup), {
+  Ach_time <- eventReactive(c(input$lep1, input$lep2, input$levelGroup,input$ageGroup), {
     FETime <- C_Achieve_ILR1621 %>%
       filter(
         geographic_level == input$GeoType &
@@ -1271,7 +1284,7 @@ server <- function(input, output, session) {
               "\nNone"
             })
           ),
-        level_or_typeNeat == input$skill_line,
+        level_or_type == input$levelGroup,
         age_group==input$ageGroup
       )
 
