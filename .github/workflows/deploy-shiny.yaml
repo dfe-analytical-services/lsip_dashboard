@@ -39,8 +39,7 @@ jobs:
       - name: Set env vars (prod)
         if: endsWith(github.ref, '/main')
         run: |
-          echo 'SHINYAPP_NAME="local-skills-dashboard"' >> $GITHUB_ENV
-
+          echo "SHINYAPP_NAME='local-skills-dashboard'">> $GITHUB_ENV
       - name: Cache R packages
         if: runner.os != 'Windows'
         uses: actions/cache@v1
@@ -73,4 +72,3 @@ jobs:
           Rscript
           -e "rsconnect::setAccountInfo(name = 'department-for-education', token = '${{secrets.SHINYAPPS_TOKEN}}', secret = '${{secrets.SHINYAPPS_SECRET}}')"
           -e "rsconnect::deployApp(appName=${{env.SHINYAPP_NAME}})"
-
