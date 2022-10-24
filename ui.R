@@ -121,6 +121,12 @@ padding-top:15px
     padding: 2px 2px 4px 12px;
 }
 
+.small-box.bg-geo3{
+    background-color: #BFBFBF !important;
+    color: #fff;
+    padding: 2px 2px 4px 12px;
+}
+
 ")),
     tags$script(HTML(
       '
@@ -363,6 +369,12 @@ Only the top 5 occupations are shown for LSIP areas as these figures are calcula
               column(
                 width=4,
                 uiOutput("age_on")
+              )
+            ),
+            fluidRow(
+              column(
+                width=4,
+                uiOutput("metric_on")
               )
             )
           ),

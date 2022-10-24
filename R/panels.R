@@ -311,7 +311,8 @@ panel_skills <- function() {
     ### KPI boxes ----
     fluidRow(
       valueBoxOutput("skisup.FEach"),
-      valueBoxOutput("skisup.APach")
+      valueBoxOutput("skisup.APach"),
+      valueBoxOutput("skisup.APach.national")
     ),
     fluidRow(
       uiOutput("skill_comp")
@@ -329,7 +330,7 @@ panel_skills <- function() {
     fluidRow(
       column(
         12,
-        h2("Further education and skills achievements: 2016/17 to 2020/21"),
+        h2(uiOutput("feLineTitle")),
         # div(
         #   class = "filterRow",
         #   selectizeInput("skill_line", "Choose type of training",
