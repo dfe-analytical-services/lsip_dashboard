@@ -89,10 +89,44 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
+  
+  output$downloadData6 <- downloadHandler(
+    filename = function() {
+      "EnterprisebyemploymentsizeIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "4a.Enterprise by emp size" = D_empent_UBC1822
+      ), path = file)
+    }
+  )
+  
+  
+  output$downloadData7 <- downloadHandler(
+    filename = function() {
+      "Keystage4destinationsIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "5a.Key Stage 4 destinations" = D_KS4destin_1520
+      ), path = file)
+    }
+  )
+  
+  output$downloadData8 <- downloadHandler(
+    filename = function() {
+      "Keystage5destinationsIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "6a.Key Stage 5 destinations" = D_KS5destin_1720
+      ), path = file)
+    }
+  )
 
   # create download links
   output$hidden_downloads <- renderUI(
-    lapply(1:5, function(i) {
+    lapply(1:8, function(i) {
       downloadLink(paste0("downloadData", i), "download", class = "hiddenLink")
     })
   )
@@ -155,7 +189,10 @@ server <- function(input, output, session) {
     "1b.Emp rate" = D_EmpRate_APS1822,
     "2.Vacancies" = C_Vacancy_ONS1722,
     "3a.FE achievements SSA" = D_Achieve_ILR21,
-    "3b.FE achievements" = D_Achieve_ILR1621
+    "3b.FE achievements" = D_Achieve_ILR1621,
+    "4a.Enterprise by emp size" = D_empent_UBC1822,
+    "5a.Key Stage 4 destinations" = D_KS4destin_1520,
+    "6a.Key Stage 5 destinations" = D_KS5destin_1720
   )
   output$download_btn0a <- downloadHandler(
     filename = function() {
