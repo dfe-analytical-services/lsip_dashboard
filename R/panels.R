@@ -119,7 +119,7 @@ panel_overview <- function() {
       ),
       column(
         width = 9,
-        "Download all data for all geographies (LEPs, LISP areas, LAs, regions and England)",
+        "Download all data for all geographies (LEPs, LSIP areas, LAs, regions and England)",
       )
     ),
     fluidRow(
@@ -205,7 +205,7 @@ panel_employment <- function() {
       ),
       column(
         width = 9,
-        "Download employment data for all geographies (LEPs, LISP areas, LAs, regions and England)",
+        "Download employment data for all geographies (LEPs, LSIP areas, LAs, regions and England)",
       )
     ), # end of row
     fluidRow(
@@ -284,7 +284,7 @@ panel_vacancies <- function() {
       ),
       column(
         width = 9,
-        "Download vacancies data for all geographies (LEPs, LISP areas, LAs, regions and England)",
+        "Download vacancies data for all geographies (LEPs, LSIP areas, LAs, regions and England)",
       )
     ), # end of row
     fluidRow(
@@ -398,7 +398,7 @@ panel_skills <- function() {
       ),
       column(
         width = 9,
-        "Download skills data for all geographies (LEPs, LISP areas, LAs, regions and England)"
+        "Download skills data for all geographies (LEPs, LSIP areas, LAs, regions and England)"
       )
     ), # end of row
     fluidRow(
