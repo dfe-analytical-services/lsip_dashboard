@@ -38,5 +38,18 @@ C_Vacancy_England <- read.csv(file = "./Data/AppData/C_Vacancy_England.csv", che
 C_Vacancy_England_max_min <- read.csv(file = "./Data/AppData/C_Vacancy_England_max_min.csv", check.names = FALSE)
 C_Vacancy_England_change <- read.csv(file = "./Data/AppData/C_Vacancy_England_change.csv", check.names = FALSE)
 
+## Enterprise by employment size ----
+# data for download
+D_empent_UBC1822 <- read.csv(file = "./Data/AppData/D_empent_UBC1822.csv", check.names = FALSE)
+
+## KS4 destinations ----
+# data for download
+D_KS4destin_1520 <- read.csv(file = "./Data/AppData/D_KS4destin_1520.csv", check.names = FALSE)
+
+## KS5 destinations ----
+# data for download
+D_KS5destin_1720 <- read.csv(file = "./Data/AppData/D_KS5destin_1720.csv", check.names = FALSE)
+
+
 ## Data table ----
 I_DataTable <- read.csv(file = "./Data/AppData/I_DataTable.csv", check.names = FALSE)
