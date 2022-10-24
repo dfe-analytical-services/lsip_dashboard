@@ -108,7 +108,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list(
-        "5a.Key Stage 4 destinations" = D_KS4destin_1520
+        "5a.Key Stage 4 destinations" = D_KS4destin_1521
       ), path = file)
     }
   )
@@ -119,7 +119,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list(
-        "6a.Key Stage 5 destinations" = D_KS5destin_1720
+        "6a.Key Stage 5 destinations" = D_KS5destin_1721
       ), path = file)
     }
   )
@@ -191,8 +191,8 @@ server <- function(input, output, session) {
     "3a.FE achievements SSA" = D_Achieve_ILR21,
     "3b.FE achievements" = D_Achieve_ILR1621,
     "4a.Enterprise by emp size" = D_empent_UBC1822,
-    "5a.Key Stage 4 destinations" = D_KS4destin_1520,
-    "6a.Key Stage 5 destinations" = D_KS5destin_1720
+    "5a.Key Stage 4 destinations" = D_KS4destin_1521,
+    "6a.Key Stage 5 destinations" = D_KS5destin_1721
   )
   output$download_btn0a <- downloadHandler(
     filename = function() {
