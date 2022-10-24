@@ -192,6 +192,19 @@ write.csv(C_EmpRate_APS1822_max_min, file = "Data\\AppData\\C_EmpRate_APS1822_ma
 # FE data cleaning
 # Clean ILR column names, reorder and reformat
 format.Achieve.ILR <- function(x) {
+  
+  addLA<-x%>%
+    filter(geographic_level == "Local authority district") %>%
+    select(-time_identifier,-country_code,-country_name,-region_code,-region_name,-old_la_code
+           ,-lad_code,-pcon_code,-pcon_name,-new_la_code,-la_name) %>% # get rid of ladu area
+    rename(area = lad_name)
+  
+  addCountry<-x%>%
+    filter(geographic_level == "National") %>%
+    select(-time_identifier,-country_code,-region_code,-region_name,-old_la_code
+           ,-lad_code,-pcon_code,-pcon_name,-new_la_code,-la_name,-lad_name) %>% # get rid of ladu area
+    rename(area = country_name)
+    
   # create lep file
   addLEP <- x %>%
     filter(geographic_level == "Local authority district") %>%
@@ -229,7 +242,7 @@ format.Achieve.ILR <- function(x) {
     mutate_at(vars(starts,participation, achievements,starts_rate_per_100000_population,participation_rate_per_100000_population,achievements_rate_per_100000_population), as.character) # Convert to string to bind
 
   # join together
-  bind_rows(addLEP, addLSIP)
+  bind_rows(addLA,addCountry,addLEP, addLSIP)
 }
 
 ## format achievements
@@ -241,8 +254,8 @@ write.csv(D_Achieve_ILR1621, file = "Data\\AppData\\D_Achieve_ILR1621.csv", row.
 
 # create version to use in dashboard
 C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
-  #filter(geographic_level != "localAuthorityDistrict", geographic_level != "region", geographic_level != "country") %>%
-  #mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+  filter(geographic_level == "LEP"  |  geographic_level == "LSIP" |  geographic_level == "National") %>%
+  mutate_at(vars(starts,participation, achievements,starts_rate_per_100000_population,participation_rate_per_100000_population,achievements_rate_per_100000_population), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "","z"="","low"=""))) %>% # convert to blank to avoid error msg
   mutate_at(vars(starts,participation, achievements,starts_rate_per_100000_population,participation_rate_per_100000_population,achievements_rate_per_100000_population), as.numeric) %>% # Convert to numeric
   mutate(Year = as.numeric(substr(time_period, 3, 4))) %>% # add year name for charts
   filter(time_period != "202122") %>% # ignore temporary data in the latest year
