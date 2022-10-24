@@ -566,13 +566,13 @@ format.ks4 <- function(x) {
 }    
 
 ## format KS4
-F_KS4destin_1520<- format.ks4(I_KS4destin_1520)  
+F_KS4destin_1521 <- format.ks4(I_KS4destin_1521)  
 
 #Downloadable data
-D_KS4destin_1520 <- F_KS4destin_1520 %>%
+D_KS4destin_1521 <- F_KS4destin_1521 %>%
   mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
 #write data to folder
-write.csv(D_KS4destin_1520, file = "Data\\AppData\\D_KS4destin_1520.csv", row.names = FALSE)
+write.csv(D_KS4destin_1521, file = "Data\\AppData\\D_KS4destin_1521.csv", row.names = FALSE)
 
 
 
@@ -585,7 +585,7 @@ format.ks5 <- function(x) {
   
   addladu <- x %>%
     select(-location_code, -characteristic, -data_type, -institution_group, -level_methodology) %>%
-    mutate(geographic_level = replace(geographic_level, geographic_level == "localAuthority", "LADU")) %>%
+    mutate(geographic_level = replace(geographic_level, geographic_level == "localAuthorityDistrict", "LADU")) %>%
     mutate_at(c(5:10), as.character) # Convert to string to bind
   
   
@@ -637,13 +637,13 @@ format.ks5 <- function(x) {
 } 
 
 ## format KS5
-F_KS5destin_1720 <- format.ks5(I_KS5destin_1720)
+F_KS5destin_1721 <- format.ks5(I_KS5destin_1721)
 
 #downloadable version
-D_KS5destin_1720 <- F_KS5destin_1720 %>%
+D_KS5destin_1721 <- F_KS5destin_1721 %>%
   mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
 #write data to folder - todo
-write.csv(D_KS5destin_1720, file = "Data\\AppData\\D_KS5destin_1720.csv", row.names = FALSE)
+write.csv(D_KS5destin_1721, file = "Data\\AppData\\D_KS5destin_1721.csv", row.names = FALSE)
 
 
 # Tidy up data table

@@ -72,15 +72,15 @@ I_EmpEnt_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.fil
 
 
 #National pupil database 
-#KS4 AY15/16 - 19/20 - KS4 destinations
-# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/5262399e-5eb4-4cdd-b755-2e7b871f450b
+#KS4 AY15/16 - 20/21 - KS4 destinations
+# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/75e2be32-3c51-4790-2c28-08dab0fa305d
 folder <- "10_KS4destin"
-I_KS4destin_1520 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+I_KS4destin_1521 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
-#KS5 AY17/18 - 19/20 - KS5 destinations
-# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/6ed2058c-1ff4-4e13-b167-3b15bb6a0675
+#KS5 AY17/18 - 20/21 - KS5 destinations
+# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/62b04091-a13b-40e9-52d9-08dab0fd4449
 folder <- "11_KS5destin"
-I_KS5destin_1720 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+I_KS5destin_1721 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 
 ## Load data table ----
