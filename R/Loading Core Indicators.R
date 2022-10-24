@@ -41,14 +41,6 @@ C_Vacancy_England_change <- read.csv(file = "./Data/AppData/C_Vacancy_England_ch
 ## Data table ----
 I_DataTable <- read.csv(file = "./Data/AppData/I_DataTable.csv", check.names = FALSE)
 
-## Employment by industry ----
-# data for download
-D_empind_APS1721 <- read.csv(file = "./Data/AppData/D_empind_APS1721.csv", check.names = FALSE)
-
-## Employment by skill level ----
-# data for download
-D_skillsnvq_APS1721 <- read.csv(file = "./Data/AppData/D_skillsnvq_APS1721.csv", check.names = FALSE)
-
 ## Enterprise by employment size ----
 # data for download
 D_empent_UBC1822 <- read.csv(file = "./Data/AppData/D_empent_UBC1822.csv", check.names = FALSE)

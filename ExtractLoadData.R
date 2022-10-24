@@ -39,22 +39,6 @@ folder <- "4_APSempRate"
 sheetNum <- 1
 I_EmpRate_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
-### Employment by industry --------
-# Geog and date as above
-# Employment by industry (SIC 2007) and flexibility
-folder <- "9_APSempind"
-sheetNum <- 1
-I_EmpInd_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
-
-
-### Skill level of the working age population (% 16-64 year olds qualified to Level 2, level 3, level 4+) 
-# Geog and date as above
-# Qualification by age - NVQ
-folder <- "10_APSskillsnvq"
-sheetNum <- 1
-I_Skillsnvq_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
-
-
 ### UK Business Count
 # Enterprise by employment size
 # Download from https://www.nomisweb.co.uk/query/construct/summary.asp?mode=construct&version=0&dataset=142
@@ -62,7 +46,7 @@ I_Skillsnvq_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.
 # Geography: England, LEPs, regions, LADs (as of April 2021)
 # Date: 12 months to Dec 2017-2021
 # Cell: UK Business Counts - enterprises by industry and employment size band 
-folder <- "11_UBCempent"
+folder <- "9_UBCempent"
 sheetNum <- 1
 I_EmpEnt_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
@@ -82,12 +66,12 @@ I_Achieve_ILR1621 <- read.csv(file = paste0("./Data/", folder, "/", list.files(p
 #National pupil database 
 #KS4 AY15/16 - 19/20 - KS4 destinations
 # Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/5262399e-5eb4-4cdd-b755-2e7b871f450b
-folder <- "12_KS4destin"
+folder <- "10_KS4destin"
 I_KS4destin_1520 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 #KS5 AY17/18 - 19/20 - KS5 destinations
 # Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/6ed2058c-1ff4-4e13-b167-3b15bb6a0675
-folder <- "13_KS5destin"
+folder <- "11_KS5destin"
 I_KS5destin_1720 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 
