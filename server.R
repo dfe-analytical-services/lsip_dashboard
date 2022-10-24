@@ -147,8 +147,9 @@ server <- function(input, output, session) {
   output$age_on <- renderUI({
     if (input$datatabset == "Skills") {
       selectInput("ageGroup", "Choose age group",
-                  choices =C_Achieve_ILR1621%>%filter(apprenticeships_or_further_education==input$typeGroup,level_or_type==input$levelGroup)%>%distinct(Age=age_group)%>%
-                    arrange(fct_relevel(Age,'Total','Under 19','19-24','25+'))
+                  choices =C_Achieve_ILR1621%>%
+                    filter(typeNeat==input$typeGroup,level_or_type==input$levelGroup)%>%
+                    distinct(Age=age_group)
       )
     } else {
     }
@@ -157,8 +158,7 @@ server <- function(input, output, session) {
   output$type_on <- renderUI({
     if (input$datatabset == "Skills") {
       selectizeInput("typeGroup", "Choose type of training",
-     choices=C_Achieve_ILR1621%>%distinct(Type=apprenticeships_or_further_education)%>%
-       arrange(fct_relevel(Type,'Further education and skills'))
+     choices=C_Achieve_ILR1621%>%distinct(Type=typeNeat)
                       )
     } else {
     }
@@ -168,8 +168,7 @@ server <- function(input, output, session) {
     if (input$datatabset == "Skills") {
       selectizeInput("levelGroup", "Choose level of training",
                      choices =C_Achieve_ILR1621%>%
-                       arrange(fct_relevel(level_or_type,'Education and training: Total','Community learning: Total','Apprenticeships: Total','Further education and skills: Total'))%>%
-                       filter(apprenticeships_or_further_education==input$typeGroup)%>%distinct(Level=level_or_type)
+                       filter(typeNeat==input$typeGroup)%>%distinct(Level=level_or_type)
       )
     } else {
     }
@@ -1294,12 +1293,12 @@ server <- function(input, output, session) {
     )
     ggplot(FETime, aes(
       x = AY, y = achievements, colour = Area,
-      group = interaction(level_or_typeNeat, area),
+      group = interaction(level_or_type, area),
       text = paste0(
         "Academic year: ", AY, "<br>",
         "Area: ", Area, "<br>",
         "Achievements: ", format(achievements, big.mark = ","), "<br>",
-        "Provision: ", level_or_typeNeat, "<br>"
+        "Provision: ", level_or_type, "<br>"
       )
     )) +
       geom_line() +
