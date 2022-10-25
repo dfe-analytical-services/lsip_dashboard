@@ -414,7 +414,8 @@ Only the top 5 occupations are shown for LSIP areas as these figures are calcula
             employment or apprenticeship in the year following completion of their qualification:"),
           tags$ul(
             tags$li("Key Stage 4 (year 10 and 11 students) includes GCSEs and equivalent qualifications"),
-            tags$li("Key Stage 5 (students 16-18 years) includes A Levels, T levels and other 2-year vocational education programmes.")),
+            tags$li("Key Stage 5 (students 16-18 years) includes A Levels, T levels and other 2-year vocational education programmes.")
+          ),
           h3("UK Business Count (UBC)"),
           p("A record of the number of enterprises from the Inter Departmental Business Register (IDBR), which is broken down by employment size band, detailed
             industry (5 digit SIC2007) and legal status."),
