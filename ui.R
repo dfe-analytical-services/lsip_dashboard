@@ -142,8 +142,8 @@ padding-top:15px
     <div class="govuk-header__logo" style="width: 15%; margin-left: 15px;float:left;">
     <a href="https://www.gov.uk/government/organisations/department-for-education" class="govuk-header__link govuk-header__link--homepage">
     <span class="govuk-header__logotype">
-    <img src="images/DfE_logo.png" class="govuk-header__logotype-crown-fallback-image"/>
-    <span class="govuk-header__logotype-text">DfE</span>
+    <img src="images/DfE_logo_landscape.png" height=32 width=146/>
+    <span class="govuk-header__logotype-text"></span>
     </span>
     </a>
     </div>
@@ -296,12 +296,15 @@ Only the top 5 occupations are shown for LSIP areas as these figures are calcula
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("18 Oct 2022 (0.2.1)"),
-              p("Added option to view LSIP geographies, included new data download page, and updated dashboard styling."),
+              p("25 Oct 2022 (0.2.2)"),
+              p("Applied fixes and included new datasets to the data sources page."),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("18 Oct 2022 (0.2.1)"),
+                  p("Added option to view LSIP geographies, included new data download page, and updated dashboard styling."),
+                  br(),
                   p("16 Sep 2022 (0.1.2)"),
                   p("Applied fixes to improve background performance."),
                   br(),
@@ -406,6 +409,15 @@ Only the top 5 occupations are shown for LSIP areas as these figures are calcula
           The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training.
           Totals for LEP/LSIP areas are calculated by adding up the relevant local authorities (LAs).
             Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP totals."),
+          h3("KS4 and KS5 destinations"),
+          p("Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education and,
+            employment or apprenticeship in the year following completion of their qualification:"),
+          tags$ul(
+            tags$li("Key Stage 4 (year 10 and 11 students) includes GCSEs and equivalent qualifications"),
+            tags$li("Key Stage 5 (students 16-18 years) includes A Levels, T levels and other 2-year vocational education programmes.")),
+          h3("UK Business Count (UBC)"),
+          p("A record of the number of enterprises from the Inter Departmental Business Register (IDBR), which is broken down by employment size band, detailed
+            industry (5 digit SIC2007) and legal status."),
           br()
         )
       ) # end of data information row

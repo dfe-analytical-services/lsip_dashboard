@@ -58,6 +58,31 @@ sheetNum <- "1"
 firstRow <- 4
 I_Vacancy_ONS1722 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T, startRow = firstRow)
 
+
+### UK Business Count
+# Enterprise by employment size
+# Download from https://www.nomisweb.co.uk/query/construct/summary.asp?mode=construct&version=0&dataset=142
+# Query data
+# Geography: England, LEPs, regions, LADs (as of April 2021)
+# Date: 12 months to Dec 2017-2021
+# Cell: UK Business Counts - enterprises by industry and employment size band 
+folder <- "9_UBCempent"
+sheetNum <- 1
+I_EmpEnt_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+
+
+#National pupil database 
+#KS4 AY15/16 - 20/21 - KS4 destinations
+# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/75e2be32-3c51-4790-2c28-08dab0fa305d
+folder <- "10_KS4destin"
+I_KS4destin_1521 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+
+#KS5 AY17/18 - 20/21 - KS5 destinations
+# Permalink:https://explore-education-statistics.service.gov.uk/data-tables/permalink/62b04091-a13b-40e9-52d9-08dab0fd4449
+folder <- "11_KS5destin"
+I_KS5destin_1721 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+
+
 ## Load data table ----
 folder <- "8_DataTable"
 sheetNum <- 1
