@@ -268,7 +268,9 @@ padding-top:15px
                 a(
                   href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
                   "article",
-                  .noWS = c("after")), "."),
+                  .noWS = c("after")
+                ), "."
+              ),
               h3(actionLink("link_to_tabpanel_employment", "Employment")),
               p("This page includes information on employment for the selected LEP or LSIP area, and the option to compare against another area. It includes data on employment rates over time, and the share of employment for occupations."),
               p("LEP breakdowns come directly from published data; however, totals for LSIP areas are calculated by adding up the relevant local authorities which are rounded and subject to suppression, so there may be small differences in figures for LEPs and LSIPs that cover the same geographical areas."),
@@ -411,8 +413,9 @@ padding-top:15px
             a(
               href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
               "article",
-              .noWS = c("after")), "."
-            ),
+              .noWS = c("after")
+            ), "."
+          ),
           h3("ONS online job adverts"),
           p("These data tables are created based upon online job adverts data provided by Adzuna.
             Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
