@@ -627,7 +627,7 @@ format.ks5 <- function(x) {
   # join together and rename columns
   LEP_LSIP <- bind_rows(addladu, addLEP, addLSIP) %>%
     rename(
-      "Total Completed Key Stage 4" = "cohort",
+      "Total Completed Key Stage 5" = "cohort",
       "Unknown" = "all_unknown",
       "Not Recorded as a Sustained Destination" = "all_notsust",
       "Sustained Education" = "education",
@@ -635,7 +635,7 @@ format.ks5 <- function(x) {
       "Sustained Apprenticeships" = "appren",
       "Cohort Group" = "cohort_level_group"
     ) %>%
-    relocate("Total Completed Key Stage 4", .before = "Cohort Group") %>%
+    relocate("Total Completed Key Stage 5", .before = "Cohort Group") %>%
     relocate(area, .before = geographic_level) %>%
     relocate(time_period, .before = area)
 }
