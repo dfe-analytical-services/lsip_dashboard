@@ -31,7 +31,7 @@ dfTestInputs <- data.frame(
     "datatabset", "lep1", "lep2"
   ),
   value = c(
-    "Local Skills",
+    "Local skills",
     "Overview", "Cheshire and Warrington",
     "Employment", "London", "Greater Manchester",
     "Vacancies", "London", "Greater Manchester",
