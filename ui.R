@@ -297,7 +297,7 @@ Only the top 5 occupations are shown for LSIP areas as these figures are calcula
               class = "panel-body",
               h2("Latest update"),
               p("25 Oct 2022 (0.2.2)"),
-              p("Applied fixes and included new datasets to data sources page."),
+              p("Applied fixes and included new datasets to the data sources page."),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
