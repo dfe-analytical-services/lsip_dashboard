@@ -89,7 +89,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
+
   output$downloadData6 <- downloadHandler(
     filename = function() {
       "EnterprisebyemploymentsizeIndicators.xlsx"
@@ -100,8 +100,8 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
-  
+
+
   output$downloadData7 <- downloadHandler(
     filename = function() {
       "Keystage4destinationsIndicators.xlsx"
@@ -112,7 +112,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
+
   output$downloadData8 <- downloadHandler(
     filename = function() {
       "Keystage5destinationsIndicators.xlsx"
