@@ -261,12 +261,21 @@ padding-top:15px
               h3(actionLink("link_to_tabpanel_overview", "Overview")),
               p("This page provides a summary of labour market and skills information for the selected LEP or LSIP area.
                 It includes a time series of data on employment, online job adverts, and further education and skills achievements."),
+              p(
+                "ONS have announced that there is an issue with the collection of their occupational data surveys.
+            As such please see this data with caution.
+                    For more information see this ONS  ",
+                a(
+                  href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
+                  "article",
+                  .noWS = c("after")
+                ), "."
+              ),
               h3(actionLink("link_to_tabpanel_employment", "Employment")),
-              p("This page includes information on employment for the selected LEP or LSIP area, and the option to compare against another area.
-                It includes data on employment rates over time, and the share of employment for occupations.
-LEP breakdowns come directly from published data; however, totals for LSIP areas are calculated by adding up the relevant local authorities which are rounded and subject to suppression, so there may be small differences in figures for LEPs and LSIPs that cover the same geographical areas.
-Only the top 5 occupations are shown for LSIP areas as these figures are calculated from rounded local authority data where small volumes are supressed.
-                The data available for LSIP areas will be improved in future versions of this dashboard."),
+              p("This page includes information on employment for the selected LEP or LSIP area, and the option to compare against another area. It includes data on employment rates over time, and the share of employment for occupations."),
+              p("LEP breakdowns come directly from published data; however, totals for LSIP areas are calculated by adding up the relevant local authorities which are rounded and subject to suppression, so there may be small differences in figures for LEPs and LSIPs that cover the same geographical areas."),
+              p("Only the top 5 occupations are shown for LSIP areas as these figures are calculated from rounded local authority data where small volumes are supressed."),
+              p("The data available for LSIP areas will be improved in future versions of this dashboard."),
               h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
               p("This page includes experimental data on the share of online job adverts for the selected LEP or LSIP area, and the option to compare against another area.
                 The data has been included temporarily, and will be replaced when ONS release further, more detailed, experimental data on online job adverts (currently planned before the end of 2022).
@@ -397,6 +406,16 @@ Only the top 5 occupations are shown for LSIP areas as these figures are calcula
             The dashboard shows employment volumes and rates for each LEP/LSIP and split by sub-major Standard Occupational Classification (SOC) 2010 grouping.
             Totals for LSIP areas are calculated by adding up the relevant local authorities (LAs).
             Since the published LA volumes are rounded, there may be a small rounding error in the LSIP totals."),
+          p(
+            "ONS have announced that there is an issue with the collection of their occupational data surveys.
+            As such please see this data with caution.
+                    For more information see this ONS  ",
+            a(
+              href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
+              "article",
+              .noWS = c("after")
+            ), "."
+          ),
           h3("ONS online job adverts"),
           p("These data tables are created based upon online job adverts data provided by Adzuna.
             Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
@@ -414,7 +433,8 @@ Only the top 5 occupations are shown for LSIP areas as these figures are calcula
             employment or apprenticeship in the year following completion of their qualification:"),
           tags$ul(
             tags$li("Key Stage 4 (year 10 and 11 students) includes GCSEs and equivalent qualifications"),
-            tags$li("Key Stage 5 (students 16-18 years) includes A Levels, T levels and other 2-year vocational education programmes.")),
+            tags$li("Key Stage 5 (students 16-18 years) includes A Levels, T levels and other 2-year vocational education programmes.")
+          ),
           h3("UK Business Count (UBC)"),
           p("A record of the number of enterprises from the Inter Departmental Business Register (IDBR), which is broken down by employment size band, detailed
             industry (5 digit SIC2007) and legal status."),
