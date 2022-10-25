@@ -1,7 +1,8 @@
 {
   "input": {
     "datatabset": "Overview",
-    "lep1": "Black Country",
+    "GeoType": "LEP",
+    "link_to_tabpanel_data": 0,
     "link_to_tabpanel_employment": 0,
     "link_to_tabpanel_employment2": 0,
     "link_to_tabpanel_FE": 0,
