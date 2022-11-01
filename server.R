@@ -142,43 +142,65 @@ server <- function(input, output, session) {
       }
     }
   })
-  
+
   # turn on extra filters where used
   output$age_on <- renderUI({
     if (input$datatabset == "Skills") {
       selectInput("ageGroup", "Choose age group",
-                  choices =C_Achieve_ILR1621%>%
-                    filter(typeNeat==if ("typeGroup" %in% names(input)) {input$typeGroup} else {"Total FE and skills provision"},
-                             level_or_type == if ("levelGroup" %in% names(input)) {input$levelGroup} else {"Further education and skills: Total"})%>%
-                    distinct(Age=age_group)
+        choices = C_Achieve_ILR1621 %>%
+          filter(
+            typeNeat == if ("typeGroup" %in% names(input)) {
+              input$typeGroup
+            } else {
+              "Total FE and skills provision"
+            },
+            level_or_type == if ("levelGroup" %in% names(input)) {
+              input$levelGroup
+            } else {
+              "Further education and skills: Total"
+            }
+          ) %>%
+          distinct(Age = age_group)
       )
     } else {
     }
   })
-  
+
   output$type_on <- renderUI({
     if (input$datatabset == "Skills") {
       selectizeInput("typeGroup", "Choose type of training",
-     choices=C_Achieve_ILR1621%>%distinct(Type=typeNeat)
-                      )
-    } else {
-    }
-  })
-  
-  output$level_on <- renderUI({
-    if (input$datatabset == "Skills") {
-      selectizeInput("levelGroup", "Choose level of training",
-                     choices =C_Achieve_ILR1621%>%
-                       filter(typeNeat==if ("typeGroup" %in% names(input)) {input$typeGroup} else {"Total FE and skills provision"})%>%distinct(Level=level_or_type)
+        choices = C_Achieve_ILR1621 %>% distinct(Type = typeNeat)
       )
     } else {
     }
   })
-  
+
+  output$level_on <- renderUI({
+    if (input$datatabset == "Skills") {
+      selectizeInput("levelGroup", "Choose level of training",
+        choices = C_Achieve_ILR1621 %>%
+          filter(typeNeat == if ("typeGroup" %in% names(input)) {
+            input$typeGroup
+          } else {
+            "Total FE and skills provision"
+          }) %>% distinct(Level = level_or_type)
+      )
+    } else {
+    }
+  })
+
   output$metric_on <- renderUI({
     if (input$datatabset == "Skills") {
       selectizeInput("metricGroup", "Choose metric",
-                     choices=c("Achievements"="achievements","Starts"="starts","Participation"="participation")
+        choices = if ("typeGroup" %in% names(input)) {
+          if (input$typeGroup == "Apprenticeships (all ages)") {
+            c("Achievements" = "achievements", "Starts (apprenticeships only)" = "starts", "Participation" = "participation")
+          } else {
+            c("Achievements" = "achievements", "Participation" = "participation")
+          }
+        } else {
+          c("Achievements" = "achievements", "Participation" = "participation")
+        }
       )
     } else {
     }
@@ -524,7 +546,7 @@ server <- function(input, output, session) {
         geographic_level == input$GeoType,
         area == input$lep1,
         level_or_type == "Education and training: Total",
-        age_group=="Total"
+        age_group == "Total"
       )
   })
   # get 20/21 values
@@ -626,7 +648,7 @@ server <- function(input, output, session) {
         geographic_level == input$GeoType,
         area == input$lep1,
         level_or_type == "Apprenticeships: Total",
-        age_group=="Total"
+        age_group == "Total"
       )
   })
   # get 20/21 values
@@ -1190,14 +1212,23 @@ server <- function(input, output, session) {
         div(
           class = "inner",
           h3(format((C_Achieve_ILR1621 %>%
-                       filter(
-                         geographic_level == input$GeoType,
-                         area == input$lep1, time_period == "202021",
-                         level_or_type == if ("levelGroup" %in% names(input)) {input$levelGroup} else {"Further education and skills: Total"},
-                         age_group==if ("ageGroup" %in% names(input)) {input$ageGroup} else{"Total"})%>%
-                         select(input$metricGroup)
-                         )[1,1], scientific = FALSE, big.mark = ",")),
-          p(paste0(input$metricGroup," in 2020/21 in ", input$lep1)),
+            filter(
+              geographic_level == input$GeoType,
+              area == input$lep1, time_period == "202021",
+              level_or_type == if ("levelGroup" %in% names(input)) {
+                input$levelGroup
+              } else {
+                "Further education and skills: Total"
+              },
+              age_group == if ("ageGroup" %in% names(input)) {
+                input$ageGroup
+              } else {
+                "Total"
+              }
+            ) %>%
+            select(input$metricGroup)
+          )[1, 1], scientific = FALSE, big.mark = ",")),
+          p(paste0(input$metricGroup, " in 2020/21 in ", input$lep1)),
         )
       )
     )
@@ -1214,11 +1245,20 @@ server <- function(input, output, session) {
             filter(
               geographic_level == input$GeoType,
               area == input$lep2, time_period == "202021",
-              level_or_type == if ("levelGroup" %in% names(input)) {input$levelGroup} else {"Further education and skills: Total"},
-              age_group==if ("ageGroup" %in% names(input)) {input$ageGroup} else{"Total"})%>%
-                select(input$metricGroup)
-            )[1,1], scientific = FALSE, big.mark = ",")),
-          p(paste0(input$metricGroup," in 2020/21 in ", input$lep2)),
+              level_or_type == if ("levelGroup" %in% names(input)) {
+                input$levelGroup
+              } else {
+                "Further education and skills: Total"
+              },
+              age_group == if ("ageGroup" %in% names(input)) {
+                input$ageGroup
+              } else {
+                "Total"
+              }
+            ) %>%
+            select(input$metricGroup)
+          )[1, 1], scientific = FALSE, big.mark = ",")),
+          p(paste0(input$metricGroup, " in 2020/21 in ", input$lep2)),
         )
       )
     )
@@ -1232,15 +1272,24 @@ server <- function(input, output, session) {
         class = "small-box bg-geo1",
         div(
           class = "inner",
-          h3(format((C_Achieve_ILR1621 %>%
-                       filter(
-                         geographic_level == input$GeoType,
-                         area == input$lep1, time_period == "202021",
-                         level_or_type == if ("levelGroup" %in% names(input)) {input$levelGroup} else {"Further education and skills: Total"},
-                         age_group==if ("ageGroup" %in% names(input)) {input$ageGroup} else{"Total"})%>%
-                       select(paste0(input$metricGroup,"_rate_per_100000_population"))
-          )[1,1],  scientific = FALSE, big.mark = ",")),
-          p(paste0(input$metricGroup," rate per 100,000 in 2020/21 in ", input$lep1)),
+          h3(format(round((C_Achieve_ILR1621 %>%
+            filter(
+              geographic_level == input$GeoType,
+              area == input$lep1, time_period == "202021",
+              level_or_type == if ("levelGroup" %in% names(input)) {
+                input$levelGroup
+              } else {
+                "Further education and skills: Total"
+              },
+              age_group == if ("ageGroup" %in% names(input)) {
+                input$ageGroup
+              } else {
+                "Total"
+              }
+            ) %>%
+            select(paste0(input$metricGroup, "_rate_per_100000_population"))
+          )[1, 1], 0), scientific = FALSE, big.mark = ",", nsmall = 0)),
+          p(paste0(input$metricGroup, " rate per 100,000 in 2020/21 in ", input$lep1)),
         )
       )
     )
@@ -1253,20 +1302,29 @@ server <- function(input, output, session) {
         class = "small-box bg-geo2",
         div(
           class = "inner",
-          h3(format((C_Achieve_ILR1621 %>%
+          h3(format(round((C_Achieve_ILR1621 %>%
             filter(
               geographic_level == input$GeoType,
               area == input$lep2, time_period == "202021",
-              level_or_type == if ("levelGroup" %in% names(input)) {input$levelGroup} else {"Further education and skills: Total"},
-              age_group==if ("ageGroup" %in% names(input)) {input$ageGroup} else{"Total"})%>%
-              select(paste0(input$metricGroup,"_rate_per_100000_population"))
-          )[1,1], scientific = FALSE, big.mark = ",")),
-          p(paste0(input$metricGroup," rate per 100,000 in 2020/21 in ", input$lep2)),
+              level_or_type == if ("levelGroup" %in% names(input)) {
+                input$levelGroup
+              } else {
+                "Further education and skills: Total"
+              },
+              age_group == if ("ageGroup" %in% names(input)) {
+                input$ageGroup
+              } else {
+                "Total"
+              }
+            ) %>%
+            select(paste0(input$metricGroup, "_rate_per_100000_population"))
+          )[1, 1], 0), scientific = FALSE, big.mark = ",", nsmall = 0)),
+          p(paste0(input$metricGroup, " rate per 100,000 in 2020/21 in ", input$lep2)),
         )
       )
     )
   })
-  
+
   output$skisup.APach.national <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -1275,14 +1333,23 @@ server <- function(input, output, session) {
         div(
           class = "inner",
           h3(format((C_Achieve_ILR1621 %>%
-                       filter(
-                         geographic_level == "National",
-                         time_period == "202021",
-                         level_or_type == if ("levelGroup" %in% names(input)) {input$levelGroup} else {"Further education and skills: Total"},
-                         age_group==if ("ageGroup" %in% names(input)) {input$ageGroup} else{"Total"})%>%
-                       select(paste0(input$metricGroup,"_rate_per_100000_population"))
-          )[1,1],scientific = FALSE, big.mark = ",")),
-          p(input$metricGroup," rate per 100,000 in 2020/21 in England"),
+            filter(
+              geographic_level == "National",
+              time_period == "202021",
+              level_or_type == if ("levelGroup" %in% names(input)) {
+                input$levelGroup
+              } else {
+                "Further education and skills: Total"
+              },
+              age_group == if ("ageGroup" %in% names(input)) {
+                input$ageGroup
+              } else {
+                "Total"
+              }
+            ) %>%
+            select(paste0(input$metricGroup, "_rate_per_100000_population"))
+          )[1, 1], scientific = FALSE, big.mark = ",")),
+          p(input$metricGroup, " rate per 100,000 in 2020/21 in England"),
         )
       )
     )
@@ -1307,26 +1374,34 @@ server <- function(input, output, session) {
   })
 
   ## Achievements over time line chart ----
-  #title
+  # title
   output$feLineTitle <- renderUI({
     paste0(str_to_sentence(input$metricGroup), ": 2016/17 to 2020/21")
   })
-  
-  Ach_time <- eventReactive(c(input$lep1, input$lep2, input$levelGroup,input$ageGroup,input$metricGroup), {
+
+  Ach_time <- eventReactive(c(input$lep1, input$lep2, input$levelGroup, input$ageGroup, input$metricGroup), {
     FETime <- C_Achieve_ILR1621 %>%
       filter(
         geographic_level == input$GeoType,
-          (area == input$lep1 |
-            (area == if ("lep2" %in% names(input)) {
-              input$lep2
-            } else {
-              "\nNone"
-            })
-          ),
-        level_or_type == if ("levelGroup" %in% names(input)) {input$levelGroup} else {"Further education and skills: Total"},
-        age_group==if ("ageGroup" %in% names(input)) {input$ageGroup} else{"Total"}
-      )%>%
-      select(area,AY,level_or_type,age_group,metric=input$metricGroup)
+        (area == input$lep1 |
+          (area == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          })
+        ),
+        level_or_type == if ("levelGroup" %in% names(input)) {
+          input$levelGroup
+        } else {
+          "Further education and skills: Total"
+        },
+        age_group == if ("ageGroup" %in% names(input)) {
+          input$ageGroup
+        } else {
+          "Total"
+        }
+      ) %>%
+      select(area, AY, level_or_type, age_group, metric = input$metricGroup)
 
     # add an extra column so the colours work in ggplot when sorting alphabetically
     FETime$Area <- factor(FETime$area,
@@ -1338,7 +1413,7 @@ server <- function(input, output, session) {
       text = paste0(
         "Academic year: ", AY, "<br>",
         "Area: ", Area, "<br>",
-        str_to_sentence(input$metricGroup),": ", format(metric, big.mark = ","), "<br>",
+        str_to_sentence(input$metricGroup), ": ", format(metric, big.mark = ","), "<br>",
         "Provision and level: ", level_or_type, "<br>",
         "Age: ", age_group, "<br>"
       )

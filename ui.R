@@ -359,21 +359,21 @@ Only the top 5 occupations are shown for LSIP areas as these figures are calcula
             ),
             fluidRow(
               column(
-                width=4,
+                width = 4,
                 uiOutput("type_on")
               ),
               column(
-                width=4,
+                width = 4,
                 uiOutput("level_on")
               ),
               column(
-                width=4,
+                width = 4,
                 uiOutput("age_on")
               )
             ),
             fluidRow(
               column(
-                width=4,
+                width = 4,
                 uiOutput("metric_on")
               )
             )
