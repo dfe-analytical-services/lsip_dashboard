@@ -331,13 +331,6 @@ panel_skills <- function() {
       column(
         12,
         h2(uiOutput("feLineTitle")),
-        # div(
-        #   class = "filterRow",
-        #   selectizeInput("skill_line", "Choose type of training",
-        #     choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and skills provision")
-        #   ),
-        #   br()
-        # ),
         plotlyOutput("Ach_time"),
         details(
           label = "Source: Individualised Learner Record",
@@ -354,19 +347,50 @@ panel_skills <- function() {
     fluidRow(
       column(
         12,
-        h2("Further education and skills achievements by sector subject area: Aug 2021 to Apr 2022 (provisional)"),
-        plotlyOutput("Ach_SSA_pc")
+        h2("Further education and skills training by sector subject area: Aug 2021 to Apr 2022 (provisional)"),
       )
     ),
+    fluidRow(
+      column(
+        12,
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              4,
+              selectizeInput("levelBar", "Choose level of training",
+                choices = c("Total", "1", "2", "3", "4+", "E", "Not Assigned")
+              )
+            ),
+            column(
+              4,
+              selectizeInput("sexBar", "Choose gender",
+                choices = c("Total", "Female", "Male")
+              )
+            ),
+            column(
+              4,
+              selectizeInput("metricBar", "Choose metric",
+                choices = c("Achievements", "Enrolments")
+              )
+            )
+          )
+        )
+      )
+    ),
+    fluidRow(column(
+      12,
+      plotlyOutput("Ach_SSA_pc")
+    )),
     column(width = 12, br("")), # put in to push below the fixed height chart
     column(width = 12, br("")),
     details(
       label = "Source: Individualised Learner Record",
       inputId = "FEKPISource",
       tags$ol(
-        tags$li("Total achievements are the count of learners that achieved at any point during the stated academic period."),
-        tags$li("Learners achieving more than one course will appear only once in the grand total."),
-        tags$li("Years shown represent academic years.")
+        tags$li("Not Applicable/Not Known' levels includes aims where a qualification either has no level or may be taken at several levels."),
+        tags$li("Aim enrolments are a count of enrolments at aim level (including component aims) for each stated academic period. Learners will be counted for each aim they are studying and so can be counted more than once."),
+        tags$li("Aim achievements are a count of aims achieved (including component aims) for each stated academic period. Learners will be counted for each aim they achieve and so can be counted more than once."),
       )
     ),
     ### FE definitions----

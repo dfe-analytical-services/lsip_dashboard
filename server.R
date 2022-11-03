@@ -1287,7 +1287,11 @@ server <- function(input, output, session) {
                 "Total"
               }
             ) %>%
-            select(paste0(input$metricGroup, "_rate_per_100000_population"))
+            select(if ("metricGroup" %in% names(input)) {
+              paste0(input$metricGroup, "_rate_per_100000_population")
+            } else {
+              "achievements_rate_per_100000_population"
+            })
           )[1, 1], 0), scientific = FALSE, big.mark = ",", nsmall = 0)),
           p(paste0(input$metricGroup, " rate per 100,000 in 2020/21 in ", input$lep1)),
         )
@@ -1317,7 +1321,11 @@ server <- function(input, output, session) {
                 "Total"
               }
             ) %>%
-            select(paste0(input$metricGroup, "_rate_per_100000_population"))
+            select(if ("metricGroup" %in% names(input)) {
+              paste0(input$metricGroup, "_rate_per_100000_population")
+            } else {
+              "achievements_rate_per_100000_population"
+            })
           )[1, 1], 0), scientific = FALSE, big.mark = ",", nsmall = 0)),
           p(paste0(input$metricGroup, " rate per 100,000 in 2020/21 in ", input$lep2)),
         )
@@ -1347,7 +1355,11 @@ server <- function(input, output, session) {
                 "Total"
               }
             ) %>%
-            select(paste0(input$metricGroup, "_rate_per_100000_population"))
+            select(if ("metricGroup" %in% names(input)) {
+              paste0(input$metricGroup, "_rate_per_100000_population")
+            } else {
+              "achievements_rate_per_100000_population"
+            })
           )[1, 1], scientific = FALSE, big.mark = ",")),
           p(input$metricGroup, " rate per 100,000 in 2020/21 in England"),
         )
@@ -1401,7 +1413,13 @@ server <- function(input, output, session) {
           "Total"
         }
       ) %>%
-      select(area, AY, level_or_type, age_group, metric = input$metricGroup)
+      select(area, AY, level_or_type, age_group,
+        metric = if ("metricGroup" %in% names(input)) {
+          input$metricGroup
+        } else {
+          "achievements"
+        }
+      )
 
     # add an extra column so the colours work in ggplot when sorting alphabetically
     FETime$Area <- factor(FETime$area,
@@ -1437,7 +1455,7 @@ server <- function(input, output, session) {
   })
 
   ## Achievements pc bar chart ----
-  Ach_SSA_pc <- eventReactive(c(input$lep1, input$lep2), {
+  Ach_SSA_pc <- eventReactive(c(input$lep1, input$lep2, input$levelBar, input$sexBar, input$metricBar), {
     AchSSA_21 <- C_Achieve_ILR21 %>%
       filter(
         geographic_level == input$GeoType,
@@ -1446,8 +1464,12 @@ server <- function(input, output, session) {
             input$lep2
           } else {
             "\nNone"
-          })
-      )
+          }),
+        Level == input$levelBar,
+        sex == input$sexBar
+      ) %>%
+      mutate(pc = case_when(input$metricBar == "Achievements" ~ pcAch, TRUE ~ pcEnr)) %>%
+      select(area, SSA, metric = input$metricBar, pc)
 
     # add an extra column so the colours work in ggplot when sorting alphabetically
     AchSSA_21$Area <- factor(AchSSA_21$area,
@@ -1456,8 +1478,8 @@ server <- function(input, output, session) {
     ggplot(AchSSA_21, aes(x = reorder(SSA, desc(SSA)), y = pc, fill = Area, text = paste0(
       "SSA: ", SSA, "<br>",
       "Area: ", Area, "<br>",
-      "Percentage of achievements: ", scales::percent(round(pc, 2)), "<br>",
-      "Achievements: ", Achievements, "<br>"
+      "Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(pc, 2)), "<br>",
+      input$metricBar, ": ", metric, "<br>"
     ))) +
       geom_col(
         position = "dodge"

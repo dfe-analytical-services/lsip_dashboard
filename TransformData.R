@@ -326,45 +326,44 @@ write.csv(C_Achieve_ILR1621_max_min, file = "Data\\AppData\\C_Achieve_ILR1621_ma
 
 ## format achievements by SSA
 format.AchieveSSA.ILR <- function(x) {
-  colnames(x)[1] <- "area"
-
   # create lep file
   addLEP <- x %>%
     filter(geographic_level == "localAuthorityDistrict") %>%
     left_join(select(C_LADLEP2020, -LAD21NM), by = c("location_code" = "LAD21CD")) %>%
     filter(is.na(LEP) == FALSE) %>% # remove non-english
-    select(-area, -location_code, -notional_nvq_level, -ethnicity_group, -gender) %>% # get rid of ladu area
+    select(-location, -location_code, -ethnicity_group) %>% # get rid of ladu area
     mutate(geographic_level = "LEP") %>% # rename as lsip
     rename(area = LEP) %>%
     relocate(area, .before = geographic_level) %>%
-    mutate_at(vars(-time_period, -area, -geographic_level, -ssa_t1_desc), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "low" = ""))) %>% # convert to blank to avoid error msg
-    mutate_at(c(5:5), as.numeric) %>% # Convert to numeric
-    group_by(time_period, area, geographic_level, ssa_t1_desc) %>% # sum for each LSIP
+    mutate_at(vars(e_and_t_aims_ach, e_and_t_aims_enrolments), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "low" = ""))) %>% # convert to blank to avoid error msg
+    mutate_at(vars(e_and_t_aims_ach, e_and_t_aims_enrolments), as.numeric) %>% # Convert to numeric
+    group_by(time_period, area, geographic_level, ssa_t1_desc, notional_nvq_level, sex) %>% # sum for each LSIP
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    mutate_at(c(5:5), as.character) # Convert to sring to bind
+    mutate_at(vars(e_and_t_aims_ach, e_and_t_aims_enrolments), as.character) # Convert to sring to bind
 
   # create lsip file
   addLSIP <- x %>%
     filter(geographic_level == "localAuthorityDistrict") %>%
-    left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
+    left_join(select(C_LADLSIP2020, -LAD21CD), by = c("location" = "LAD21NM")) %>%
     filter(is.na(LSIP) == FALSE) %>% # remove non-english
-    select(-area, -location_code, -notional_nvq_level, -ethnicity_group, -gender) %>% # get rid of ladu area
+    select(-location, -location_code, -ethnicity_group) %>% # get rid of ladu area
     mutate(geographic_level = "LSIP") %>% # rename as lsip
     rename(area = LSIP) %>%
     relocate(area, .before = geographic_level) %>%
-    mutate_at(vars(-time_period, -area, -geographic_level, -ssa_t1_desc), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "low" = ""))) %>% # convert to blank to avoid error msg
-    mutate_at(c(5:5), as.numeric) %>% # Convert to numeric
-    group_by(time_period, area, geographic_level, ssa_t1_desc) %>% # sum for each LSIP
+    mutate_at(vars(e_and_t_aims_ach, e_and_t_aims_enrolments), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "low" = ""))) %>% # convert to blank to avoid error msg
+    mutate_at(vars(e_and_t_aims_ach, e_and_t_aims_enrolments), as.numeric) %>% # Convert to numeric
+    group_by(time_period, area, geographic_level, ssa_t1_desc, notional_nvq_level, sex) %>% # sum for each LSIP
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    mutate_at(c(5:5), as.character) # Convert to sring to bind
+    mutate_at(vars(e_and_t_aims_ach, e_and_t_aims_enrolments), as.character) # Convert to sring to bind
 
   # join together
-  bind_rows(x %>% select(-location_code, -notional_nvq_level, -ethnicity_group, -gender), addLEP, addLSIP) %>%
-    rename_all(recode, e_and_t_aims_ach = "achievements")
+  bind_rows(x %>% select(-location_code, -ethnicity_group) %>% rename(area = location), addLEP, addLSIP) %>%
+    mutate(e_and_t_aims_ach = case_when(e_and_t_aims_ach == "0" ~ "low", TRUE ~ e_and_t_aims_ach)) %>% # recode missing numbers as low
+    mutate(e_and_t_aims_enrolments = case_when(e_and_t_aims_enrolments == "0" ~ "low", TRUE ~ e_and_t_aims_enrolments)) %>% # recode missing numbers as low
+    rename_all(recode, e_and_t_aims_ach = "achievements", e_and_t_aims_enrolments = "enrolments")
 }
-
 
 F_Achieve_ILR21 <- format.AchieveSSA.ILR(I_Achieve_ILR21)
 # create downloadable version with new suppression rules
@@ -376,19 +375,19 @@ write.csv(D_Achieve_ILR21, file = "Data\\AppData\\D_Achieve_ILR21.csv", row.name
 # group by ssa and lep
 SSA_LEP_Achieve_ILR21 <- F_Achieve_ILR21 %>%
   filter(geographic_level != "localAuthorityDistrict", geographic_level != "region", geographic_level != "country") %>%
-  mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-  mutate(Achievements = as.numeric(achievements)) %>%
+  mutate_at(vars(achievements, enrolments), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "low" = ""))) %>% # convert to blank to avoid error msg
+  mutate(Achievements = as.numeric(achievements), Enrolments = as.numeric(enrolments)) %>%
   filter(time_period == "202122") %>%
-  select(geographic_level, area, SSA = ssa_t1_desc, Achievements)
+  select(geographic_level, area, SSA = ssa_t1_desc, Level = notional_nvq_level, sex, Achievements, Enrolments)
 # group by ssa to get ssa totals
 Ach_pc_Achieve_ILR21 <- SSA_LEP_Achieve_ILR21 %>%
   filter(SSA == "Total") %>%
-  select(geographic_level, area, Total = SSA, Total_ach = Achievements)
+  select(geographic_level, area, Level, sex, Total = SSA, Total_ach = Achievements, Total_enr = Enrolments)
 # calculate ssa %s
 C_Achieve_ILR21 <- SSA_LEP_Achieve_ILR21 %>%
-  left_join(Ach_pc_Achieve_ILR21, by = c("geographic_level", "area")) %>%
-  group_by(geographic_level, area) %>%
-  mutate(pc = Achievements / Total_ach) %>%
+  left_join(Ach_pc_Achieve_ILR21, by = c("geographic_level", "area", "Level", "sex")) %>%
+  group_by(geographic_level, area, Level, sex) %>%
+  mutate(pcAch = Achievements / Total_ach, pcEnr = Enrolments / Total_enr) %>%
   filter(SSA != "Total")
 write.csv(C_Achieve_ILR21, file = "Data\\AppData\\C_Achieve_ILR21.csv", row.names = FALSE)
 
