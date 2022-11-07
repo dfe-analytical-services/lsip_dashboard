@@ -308,6 +308,35 @@ panel_skills <- function() {
   tabPanel(
     "Skills",
     h1(uiOutput("page2title")),
+    fluidRow(
+      column(
+        12,
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              width = 4,
+              uiOutput("type_on")
+            ),
+            column(
+              width = 4,
+              uiOutput("level_on")
+            ),
+            column(
+              width = 4,
+              uiOutput("age_on")
+            )
+          ),
+          fluidRow(
+            column(
+              width = 4,
+              uiOutput("metric_on")
+            )
+          )
+        )
+      )
+    ),
+    br(),
     ### KPI boxes ----
     fluidRow(
       valueBoxOutput("skisup.FEach"),
@@ -327,6 +356,22 @@ panel_skills <- function() {
       )
     ),
     ### Achievements over time line chart ----
+    # fluidRow(
+    #   column(
+    #     12,
+    #     div(
+    #       class = "filterRow",
+    #       fluidRow(
+    #         column(
+    #           4,
+    #           selectizeInput("splitLine", "Choose split",
+    #                          choices = c("None", "Provision"="typeNeat", "Level"="level_or_type", "Age"="age_group")
+    #           )
+    #         )
+    #       )
+    #     )
+    #   )
+    # ),
     fluidRow(
       column(
         12,
