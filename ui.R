@@ -349,7 +349,8 @@ padding-top:15px
                 selectInput("GeoType", "Choose geography",
                   choices = c(
                     "Local Enterprise Partnership (LEP)" = "LEP",
-                    "Local Skills Improvement Plan (LSIP)" = "LSIP"
+                    "Local Skills Improvement Plan (LSIP)" = "LSIP",
+                    "Mayoral Combined Authority (MCA)" = "MCA"
                   ),
                   selected = "LEP"
                 )

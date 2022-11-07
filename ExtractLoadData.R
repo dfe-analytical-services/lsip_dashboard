@@ -20,6 +20,12 @@ folder <- "2_LEPmissing"
 sheetNum <- 2
 I_missingLAD <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
+#Load MCA lookup
+folder <- "12_MCA_lookup"
+sheetNum <- 1
+I_mcalookup <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+
+
 ## APS ----
 ### Employment by occupation ----
 # Download from https://www.nomisweb.co.uk/datasets/apsnew
