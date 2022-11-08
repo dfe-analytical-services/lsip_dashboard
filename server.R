@@ -136,7 +136,7 @@ server <- function(input, output, session) {
       mutate("Dashboard data" = lapply(
         1:n(),
         function(i) {
-          paste0('<a href="#" onClick=document.getElementById("downloadData', i, '").click() >Download</a>')
+          paste0('<a onClick=document.getElementById("downloadData', i, '").click() >Download</a>')
         }
       )), escape = FALSE, options = list(dom = "t"), rownames = FALSE)
   })
