@@ -31,7 +31,8 @@ C_LEP2020 <- I_LEP2020 %>%
   bind_rows(
     I_mcalookup %>%
       distinct(Area = CAUTH21NM) %>%
-      mutate(geographic_level = "MCA"))
+      mutate(geographic_level = "MCA")) %>%
+  mutate(Area = trimws(Area, which = c("right")))
 
 
 write.csv(C_LEP2020, file = "Data\\AppData\\C_LEP2020.csv", row.names = FALSE)
@@ -39,11 +40,17 @@ write.csv(C_LEP2020, file = "Data\\AppData\\C_LEP2020.csv", row.names = FALSE)
 # Create LAD-LEP lookup table
 C_LADLEP2020 <- distinct(I_LEP2020, LAD21CD, LAD21NM, LEP = LEP21NM1) %>%
   bind_rows(I_missingLAD %>% filter(LAD21CD != "z") %>% select(LAD21CD, LEP = `LEP21.(manually.mapped)`)) %>%
-  bind_rows(distinct(I_LEP2020 %>% filter(LEP21NM2 != 0), LAD21CD, LAD21NM, LEP = LEP21NM2))
+  bind_rows(distinct(I_LEP2020 %>% filter(LEP21NM2 != 0), LAD21CD, LAD21NM, LEP = LEP21NM2)) 
+  
 
 # Create LAD-LSIP lookup table
 C_LADLSIP2020 <- distinct(I_LEP2020, LAD21CD, LAD21NM, LSIP) %>%
-  bind_rows(I_missingLAD %>% filter(LAD21CD != "z") %>% select(LAD21CD, LAD21NM = area, LSIP = `LSIP21.(manually.mapped)`))
+  bind_rows(I_missingLAD %>% filter(LAD21CD != "z") %>% select(LAD21CD, LAD21NM = area, LSIP = `LSIP21.(manually.mapped)`))%>%
+  mutate(LSIP = trimws(LSIP, which = c("right")))
+
+#create mca lookup
+C_mcalookup <- I_mcalookup
+
 
 # Data cleaning functions ----
 ## Employment by occupation ----
@@ -65,6 +72,7 @@ format.EmpOcc.APS <- function(x) {
     mutate(area = case_when(
       area == "Hull and East Riding" ~ "Hull and East Yorkshire",
       area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+      area == "Heart of the South" ~ "Heart of the South-West",
       TRUE ~ area
     )) %>%
     mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
@@ -123,6 +131,7 @@ format.EmpRate.APS <- function(x) {
     mutate(area = case_when(
       area == "Hull and East Riding" ~ "Hull and East Yorkshire",
       area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+      area == "Heart of the South" ~ "Heart of the South-West",
       TRUE ~ area
     )) %>%
     mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
