@@ -75,6 +75,7 @@ format.EmpOcc.APS <- function(x) {
       area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
       area == "Heart of the South" ~ "Heart of the South-West",
       area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
+      area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
       TRUE ~ area
     )) %>%
     mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
@@ -497,6 +498,9 @@ format.empent.UBC <- function(x) {
     mutate(area = case_when(
       area == "Hull and East Riding" ~ "Hull and East Yorkshire",
       area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+      area == "Heart of the South" ~ "Heart of the South-West",
+      area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
+      area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
       TRUE ~ area
     )) %>%
     mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
