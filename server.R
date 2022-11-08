@@ -929,7 +929,7 @@ server <- function(input, output, session) {
         geographic_level == input$GeoType | geographic_level == "COUNTRY",
         (area == "England" |
           area == input$lep1 |
-          area == if (("lep2" %in% names(input)) & (input$GeoType == "LEP")) {
+          area == if (("lep2" %in% names(input))) {
             input$lep2
           } else {
             "\nNone"
