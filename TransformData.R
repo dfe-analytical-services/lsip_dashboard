@@ -31,6 +31,7 @@ C_LEP2020 <- I_LEP2020 %>%
   bind_rows(
     I_mcalookup %>%
       distinct(Area = CAUTH21NM) %>%
+      arrange(Area) %>%
       mutate(geographic_level = "MCA")) %>%
   mutate(Area = trimws(Area, which = c("right")))
 
@@ -73,6 +74,7 @@ format.EmpOcc.APS <- function(x) {
       area == "Hull and East Riding" ~ "Hull and East Yorkshire",
       area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
       area == "Heart of the South" ~ "Heart of the South-West",
+      area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
       TRUE ~ area
     )) %>%
     mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
@@ -132,6 +134,8 @@ format.EmpRate.APS <- function(x) {
       area == "Hull and East Riding" ~ "Hull and East Yorkshire",
       area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
       area == "Heart of the South" ~ "Heart of the South-West",
+      area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
+      area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
       TRUE ~ area
     )) %>%
     mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
