@@ -324,8 +324,8 @@ server <- function(input, output, session) {
     empCntMinMax <- C_EmpRate_APS1822_max_min %>%
       filter(area == input$lep1)
 
-    ggplot(empLine, aes(x = Year, y = Employment, group = area, text = paste0(
-      "Year: ", year, "<br>",
+    ggplot(empLine, aes(x = Year-1, y = Employment, group = area, text = paste0(
+      "Year: Jul-Jun ", year, "<br>",
       "Employment: ", format(Employment, big.mark = ","), "<br>"
     ))) +
       geom_line(data = empLine %>% filter(Year <= 21)) +
@@ -408,10 +408,10 @@ server <- function(input, output, session) {
       filter((geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"))
 
     ggplot(empRateLine, aes(
-      x = Year, y = empRate,
+      x = Year-1, y = empRate,
       group = area,
       text = paste0(
-        "Year: ", year, "<br>",
+        "Year: Jul-Jun ", year, "<br>",
         "Area: ", area, "<br>",
         "Employment rate: ", format(100 * empRate, digit = 2), "%<br>"
       )
@@ -511,7 +511,7 @@ server <- function(input, output, session) {
     VacMinMax <- C_Vacancy_England_max_min %>% filter(area == input$lep1, geographic_level == input$GeoType)
 
     ggplot(VacLine, aes(x = Year, y = jobpc, group = area, text = paste0(
-      "Year: ", year, "<br>",
+      "Period: Jan ", year, "<br>",
       "England vacancy share: ", format(100 * jobpc, digit = 2), "%<br>"
     ))) +
       geom_line(data = VacLine %>% filter(Year <= 21)) +
@@ -942,10 +942,10 @@ server <- function(input, output, session) {
     ggplot(
       EmpRateTime,
       aes(
-        x = year, y = empRate,
+        x = year-1, y = empRate,
         color = Areas, group = Areas,
         text = paste0(
-          "Academic year: ", year, "<br>",
+          "Year: Jul-Jun ", year, "<br>",
           "Area: ", Areas, "<br>",
           "Employment rate: ", scales::percent(round(empRate, 2)), "<br>"
         )
@@ -1254,8 +1254,7 @@ server <- function(input, output, session) {
                 "Total"
               }
             ) %>%
-            select(input$metricGroup) %>%
-            summarise(sum(.))
+            select(input$metricGroup)
           )[1, 1], scientific = FALSE, big.mark = ",")),
           p(paste0(input$metricGroup, " in 2020/21 in ", input$lep1)),
         )
@@ -1285,8 +1284,7 @@ server <- function(input, output, session) {
                 "Total"
               }
             ) %>%
-            select(input$metricGroup) %>%
-            summarise(sum(.))
+            select(input$metricGroup)
           )[1, 1], scientific = FALSE, big.mark = ",")),
           p(paste0(input$metricGroup, " in 2020/21 in ", input$lep2)),
         )
@@ -1321,8 +1319,7 @@ server <- function(input, output, session) {
               paste0(input$metricGroup, "_rate_per_100000_population")
             } else {
               "achievements_rate_per_100000_population"
-            }) %>%
-            summarise(sum(.))
+            })
           )[1, 1], 0), scientific = FALSE, big.mark = ",", nsmall = 0)),
           p(paste0(input$metricGroup, " rate per 100,000 in 2020/21 in ", input$lep1)),
         )
@@ -1418,7 +1415,7 @@ server <- function(input, output, session) {
     paste0(str_to_sentence(input$metricGroup), ": 2016/17 to 2020/21")
   })
 
-  Ach_time <- eventReactive(c(input$lep1, input$lep2, input$levelGroup, input$ageGroup, input$metricGroup, input$splitLine), {
+  Ach_time <- eventReactive(c(input$lep1, input$lep2, input$levelGroup, input$ageGroup, input$metricGroup), {#, input$splitLine), {
     FETime <- C_Achieve_ILR1621 %>%
       filter(
         geographic_level == input$GeoType,

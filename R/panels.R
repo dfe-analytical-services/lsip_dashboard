@@ -161,7 +161,7 @@ panel_employment <- function() {
     fluidRow(
       column(
         width = 6,
-        h2("Employment rates: 2018 to 2022"),
+        h2("Employment rates: Jul-Jun 2018 to Jul-Jun 2022"),
         plotlyOutput("EmpRate_time"),
         details(
           label = "Source: Annual Population Survey",
