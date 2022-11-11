@@ -1,358 +1,4 @@
 "geographic_level","area","level_or_type","minAch","maxAch"
-<<<<<<< HEAD
-"LEP","Black Country","Apprenticeships: Total",3820,7810
-"LEP","Black Country","Community learning: Total",3960,10320
-"LEP","Black Country","Education and training: Total",17680,25590
-"LEP","Black Country","Further education and skills: Total",24810,40430
-"LEP","Buckinghamshire","Apprenticeships: Total",1000,1590
-"LEP","Buckinghamshire","Community learning: Total",2140,4610
-"LEP","Buckinghamshire","Education and training: Total",3430,3940
-"LEP","Buckinghamshire","Further education and skills: Total",7200,9730
-"LEP","Cheshire and Warrington","Apprenticeships: Total",2490,4950
-"LEP","Cheshire and Warrington","Community learning: Total",2470,7530
-"LEP","Cheshire and Warrington","Education and training: Total",8030,12090
-"LEP","Cheshire and Warrington","Further education and skills: Total",13150,23940
-"LEP","Coast to Capital","Apprenticeships: Total",2870,5230
-"LEP","Coast to Capital","Community learning: Total",3990,8680
-"LEP","Coast to Capital","Education and training: Total",12450,15610
-"LEP","Coast to Capital","Further education and skills: Total",20560,29780
-"LEP","Cornwall and Isles of Scilly","Apprenticeships: Total",1720,3480
-"LEP","Cornwall and Isles of Scilly","Community learning: Total",1940,4550
-"LEP","Cornwall and Isles of Scilly","Education and training: Total",6340,7990
-"LEP","Cornwall and Isles of Scilly","Further education and skills: Total",10150,15580
-"LEP","Coventry and Warwickshire","Apprenticeships: Total",2390,4440
-"LEP","Coventry and Warwickshire","Community learning: Total",2140,4870
-"LEP","Coventry and Warwickshire","Education and training: Total",9790,12520
-"LEP","Coventry and Warwickshire","Further education and skills: Total",14920,21280
-"LEP","Cumbria","Apprenticeships: Total",1880,3710
-"LEP","Cumbria","Community learning: Total",1240,3780
-"LEP","Cumbria","Education and training: Total",4510,7040
-"LEP","Cumbria","Further education and skills: Total",7970,13540
-"LEP","Derby, Derbyshire, Nottingham and Nottinghamshire","Apprenticeships: Total",6620,13230
-"LEP","Derby, Derbyshire, Nottingham and Nottinghamshire","Community learning: Total",7380,20090
-"LEP","Derby, Derbyshire, Nottingham and Nottinghamshire","Education and training: Total",26940,34290
-"LEP","Derby, Derbyshire, Nottingham and Nottinghamshire","Further education and skills: Total",41150,65520
-"LEP","Dorset","Apprenticeships: Total",2750,4690
-"LEP","Dorset","Community learning: Total",1400,3590
-"LEP","Dorset","Education and training: Total",6240,8410
-"LEP","Dorset","Further education and skills: Total",11450,15790
-"LEP","Enterprise M3","Apprenticeships: Total",3210,5710
-"LEP","Enterprise M3","Community learning: Total",6950,14220
-"LEP","Enterprise M3","Education and training: Total",9910,11760
-"LEP","Enterprise M3","Further education and skills: Total",21800,32130
-"LEP","Gloucestershire","Apprenticeships: Total",1650,3000
-"LEP","Gloucestershire","Community learning: Total",1750,3150
-"LEP","Gloucestershire","Education and training: Total",4990,6570
-"LEP","Gloucestershire","Further education and skills: Total",9560,11710
-"LEP","Greater Birmingham and Solihull","Apprenticeships: Total",5320,11560
-"LEP","Greater Birmingham and Solihull","Community learning: Total",6410,14350
-"LEP","Greater Birmingham and Solihull","Education and training: Total",28580,46660
-"LEP","Greater Birmingham and Solihull","Further education and skills: Total",38740,67220
-"LEP","Greater Cambridge and Greater Peterborough","Apprenticeships: Total",1780,3300
-"LEP","Greater Cambridge and Greater Peterborough","Community learning: Total",1800,8740
-"LEP","Greater Cambridge and Greater Peterborough","Education and training: Total",6710,8610
-"LEP","Greater Cambridge and Greater Peterborough","Further education and skills: Total",11140,19760
-"LEP","Greater Lincolnshire","Apprenticeships: Total",3280,6180
-"LEP","Greater Lincolnshire","Community learning: Total",6300,10730
-"LEP","Greater Lincolnshire","Education and training: Total",12990,17340
-"LEP","Greater Lincolnshire","Further education and skills: Total",21870,32860
-"LEP","Greater Manchester","Apprenticeships: Total",8170,16280
-"LEP","Greater Manchester","Community learning: Total",12960,25060
-"LEP","Greater Manchester","Education and training: Total",38290,53210
-"LEP","Greater Manchester","Further education and skills: Total",55830,86980
-"LEP","Heart of South West","Apprenticeships: Total",760,770
-"LEP","Heart of South West","Community learning: Total",610,1770
-"LEP","Heart of South West","Education and training: Total",2110,2200
-"LEP","Heart of South West","Further education and skills: Total",3590,4810
-"LEP","Heart of the South West","Apprenticeships: Total",5810,10090
-"LEP","Heart of the South West","Community learning: Total",6940,12860
-"LEP","Heart of the South West","Education and training: Total",19700,24280
-"LEP","Heart of the South West","Further education and skills: Total",33140,45600
-"LEP","Hertfordshire","Apprenticeships: Total",2230,3860
-"LEP","Hertfordshire","Community learning: Total",4710,6590
-"LEP","Hertfordshire","Education and training: Total",7800,9940
-"LEP","Hertfordshire","Further education and skills: Total",15240,19620
-"LEP","Hull and East Yorkshire","Apprenticeships: Total",2840,4880
-"LEP","Hull and East Yorkshire","Community learning: Total",1420,4350
-"LEP","Hull and East Yorkshire","Education and training: Total",7910,13280
-"LEP","Hull and East Yorkshire","Further education and skills: Total",12260,22290
-"LEP","Lancashire","Apprenticeships: Total",4850,10020
-"LEP","Lancashire","Community learning: Total",9590,18780
-"LEP","Lancashire","Education and training: Total",19570,29800
-"LEP","Lancashire","Further education and skills: Total",31920,56740
-"LEP","Leeds City Region","Apprenticeships: Total",6660,13120
-"LEP","Leeds City Region","Community learning: Total",9040,17300
-"LEP","Leeds City Region","Education and training: Total",33620,42320
-"LEP","Leeds City Region","Further education and skills: Total",49190,70780
-"LEP","Leicester and Leicestershire","Apprenticeships: Total",2840,5270
-"LEP","Leicester and Leicestershire","Community learning: Total",3220,7250
-"LEP","Leicester and Leicestershire","Education and training: Total",13150,17140
-"LEP","Leicester and Leicestershire","Further education and skills: Total",18960,28000
-"LEP","Liverpool City Region","Apprenticeships: Total",4680,10070
-"LEP","Liverpool City Region","Community learning: Total",9840,19410
-"LEP","Liverpool City Region","Education and training: Total",23060,33690
-"LEP","Liverpool City Region","Further education and skills: Total",36280,60190
-"LEP","London","Apprenticeships: Total",12850,23980
-"LEP","London","Community learning: Total",54410,98080
-"LEP","London","Education and training: Total",134590,172420
-"LEP","London","Further education and skills: Total",204320,285360
-"LEP","New Anglia","Apprenticeships: Total",4260,7700
-"LEP","New Anglia","Community learning: Total",4700,8820
-"LEP","New Anglia","Education and training: Total",12590,17490
-"LEP","New Anglia","Further education and skills: Total",23560,32360
-"LEP","North East","Apprenticeships: Total",6510,15750
-"LEP","North East","Community learning: Total",7860,17750
-"LEP","North East","Education and training: Total",34630,51640
-"LEP","North East","Further education and skills: Total",47120,81750
-"LEP","Oxfordshire","Apprenticeships: Total",1320,2500
-"LEP","Oxfordshire","Community learning: Total",2620,5900
-"LEP","Oxfordshire","Education and training: Total",4820,5920
-"LEP","Oxfordshire","Further education and skills: Total",9680,13280
-"LEP","Sheffield City Region","Apprenticeships: Total",3900,8920
-"LEP","Sheffield City Region","Community learning: Total",3060,8420
-"LEP","Sheffield City Region","Education and training: Total",19330,28220
-"LEP","Sheffield City Region","Further education and skills: Total",26660,43640
-"LEP","Solent","Apprenticeships: Total",4580,8040
-"LEP","Solent","Community learning: Total",4060,9500
-"LEP","Solent","Education and training: Total",12540,15630
-"LEP","Solent","Further education and skills: Total",22000,33460
-"LEP","South East","Apprenticeships: Total",9720,17500
-"LEP","South East","Community learning: Total",15140,31540
-"LEP","South East","Education and training: Total",34910,50040
-"LEP","South East","Further education and skills: Total",60560,98040
-"LEP","South East Midlands","Apprenticeships: Total",4260,7410
-"LEP","South East Midlands","Community learning: Total",4210,10250
-"LEP","South East Midlands","Education and training: Total",19850,24810
-"LEP","South East Midlands","Further education and skills: Total",28800,41300
-"LEP","Stoke-on-Trent and Staffordshire","Apprenticeships: Total",3480,7440
-"LEP","Stoke-on-Trent and Staffordshire","Community learning: Total",3610,8330
-"LEP","Stoke-on-Trent and Staffordshire","Education and training: Total",11340,15420
-"LEP","Stoke-on-Trent and Staffordshire","Further education and skills: Total",19180,30150
-"LEP","Swindon and Wiltshire","Apprenticeships: Total",2860,4340
-"LEP","Swindon and Wiltshire","Community learning: Total",930,2720
-"LEP","Swindon and Wiltshire","Education and training: Total",6180,7080
-"LEP","Swindon and Wiltshire","Further education and skills: Total",10630,15150
-"LEP","Tees Valley","Apprenticeships: Total",2390,5580
-"LEP","Tees Valley","Community learning: Total",4700,8020
-"LEP","Tees Valley","Education and training: Total",14980,22420
-"LEP","Tees Valley","Further education and skills: Total",21530,34350
-"LEP","Thames Valley Berkshire","Apprenticeships: Total",2010,3210
-"LEP","Thames Valley Berkshire","Community learning: Total",4200,10360
-"LEP","Thames Valley Berkshire","Education and training: Total",7340,9760
-"LEP","Thames Valley Berkshire","Further education and skills: Total",14110,22820
-"LEP","The Marches","Apprenticeships: Total",2380,4390
-"LEP","The Marches","Community learning: Total",1300,3540
-"LEP","The Marches","Education and training: Total",5830,9000
-"LEP","The Marches","Further education and skills: Total",10090,17500
-"LEP","West of England","Apprenticeships: Total",2860,4980
-"LEP","West of England","Community learning: Total",3500,4060
-"LEP","West of England","Education and training: Total",10560,16070
-"LEP","West of England","Further education and skills: Total",17520,24890
-"LEP","Worcestershire","Apprenticeships: Total",1550,3080
-"LEP","Worcestershire","Community learning: Total",940,3530
-"LEP","Worcestershire","Education and training: Total",4360,6350
-"LEP","Worcestershire","Further education and skills: Total",7240,12420
-"LEP","York and North Yorkshire","Apprenticeships: Total",3270,6480
-"LEP","York and North Yorkshire","Community learning: Total",3710,5460
-"LEP","York and North Yorkshire","Education and training: Total",7450,9090
-"LEP","York and North Yorkshire","Further education and skills: Total",15570,19330
-"LSIP","Brighton and Hove, East Sussex, West Sussex","Apprenticeships: Total",3330,6290
-"LSIP","Brighton and Hove, East Sussex, West Sussex","Community learning: Total",3950,8110
-"LSIP","Brighton and Hove, East Sussex, West Sussex","Education and training: Total",14670,18730
-"LSIP","Brighton and Hove, East Sussex, West Sussex","Further education and skills: Total",23380,33790
-"LSIP","Buckinghamshire","Apprenticeships: Total",1000,1590
-"LSIP","Buckinghamshire","Community learning: Total",2140,4610
-"LSIP","Buckinghamshire","Education and training: Total",3430,3940
-"LSIP","Buckinghamshire","Further education and skills: Total",7200,9730
-"LSIP","Cambridgeshire and Peterborough","Apprenticeships: Total",1780,3300
-"LSIP","Cambridgeshire and Peterborough","Community learning: Total",1800,8740
-"LSIP","Cambridgeshire and Peterborough","Education and training: Total",6710,8610
-"LSIP","Cambridgeshire and Peterborough","Further education and skills: Total",11140,19760
-"LSIP","Cheshire and Warrington","Apprenticeships: Total",2490,4950
-"LSIP","Cheshire and Warrington","Community learning: Total",2470,7530
-"LSIP","Cheshire and Warrington","Education and training: Total",8030,12090
-"LSIP","Cheshire and Warrington","Further education and skills: Total",13150,23940
-"LSIP","Cornwall and the Isles of Scilly","Apprenticeships: Total",1720,3480
-"LSIP","Cornwall and the Isles of Scilly","Community learning: Total",1940,4550
-"LSIP","Cornwall and the Isles of Scilly","Education and training: Total",6340,7990
-"LSIP","Cornwall and the Isles of Scilly","Further education and skills: Total",10150,15580
-"LSIP","Cumbria","Apprenticeships: Total",1880,3710
-"LSIP","Cumbria","Community learning: Total",1240,3780
-"LSIP","Cumbria","Education and training: Total",4510,7040
-"LSIP","Cumbria","Further education and skills: Total",7970,13540
-"LSIP","Derbyshire and Nottinghamshire","Apprenticeships: Total",6620,13230
-"LSIP","Derbyshire and Nottinghamshire","Community learning: Total",7380,20090
-"LSIP","Derbyshire and Nottinghamshire","Education and training: Total",26940,34290
-"LSIP","Derbyshire and Nottinghamshire","Further education and skills: Total",41150,65520
-"LSIP","Dorset","Apprenticeships: Total",4720,8240
-"LSIP","Dorset","Community learning: Total",4110,8630
-"LSIP","Dorset","Education and training: Total",11890,14870
-"LSIP","Dorset","Further education and skills: Total",22830,31120
-"LSIP","Enterprise M3 LEP (including all of Surrey)","Apprenticeships: Total",1880,3200
-"LSIP","Enterprise M3 LEP (including all of Surrey)","Community learning: Total",6010,12170
-"LSIP","Enterprise M3 LEP (including all of Surrey)","Education and training: Total",6680,8800
-"LSIP","Enterprise M3 LEP (including all of Surrey)","Further education and skills: Total",15430,23830
-"LSIP","Essex, Southend-on-Sea and Thurrock","Apprenticeships: Total",4330,7900
-"LSIP","Essex, Southend-on-Sea and Thurrock","Community learning: Total",6640,12640
-"LSIP","Essex, Southend-on-Sea and Thurrock","Education and training: Total",14990,19370
-"LSIP","Essex, Southend-on-Sea and Thurrock","Further education and skills: Total",25710,38160
-"LSIP","Gloucestershire","Apprenticeships: Total",1650,3000
-"LSIP","Gloucestershire","Community learning: Total",1750,3150
-"LSIP","Gloucestershire","Education and training: Total",4990,6570
-"LSIP","Gloucestershire","Further education and skills: Total",9560,11710
-"LSIP","Greater Lincolnshire","Apprenticeships: Total",3280,6180
-"LSIP","Greater Lincolnshire","Community learning: Total",6300,10730
-"LSIP","Greater Lincolnshire","Education and training: Total",12990,17340
-"LSIP","Greater Lincolnshire","Further education and skills: Total",21870,32860
-"LSIP","Greater London","Apprenticeships: Total",12850,23980
-"LSIP","Greater London","Community learning: Total",54410,98080
-"LSIP","Greater London","Education and training: Total",134590,172420
-"LSIP","Greater London","Further education and skills: Total",204320,285360
-"LSIP","Greater Manchester","Apprenticeships: Total",8170,16280
-"LSIP","Greater Manchester","Community learning: Total",12960,25060
-"LSIP","Greater Manchester","Education and training: Total",38290,53210
-"LSIP","Greater Manchester","Further education and skills: Total",55830,86980
-"LSIP","Heart of the South-West","Apprenticeships: Total",5810,10860
-"LSIP","Heart of the South-West","Community learning: Total",6940,14630
-"LSIP","Heart of the South-West","Education and training: Total",19700,25400
-"LSIP","Heart of the South-West","Further education and skills: Total",33140,50410
-"LSIP","Hertfordshire","Apprenticeships: Total",2230,3860
-"LSIP","Hertfordshire","Community learning: Total",4710,6590
-"LSIP","Hertfordshire","Education and training: Total",7800,9940
-"LSIP","Hertfordshire","Further education and skills: Total",15240,19620
-"LSIP","Hull and East Yorkshire","Apprenticeships: Total",2840,4880
-"LSIP","Hull and East Yorkshire","Community learning: Total",1420,4350
-"LSIP","Hull and East Yorkshire","Education and training: Total",7910,13280
-"LSIP","Hull and East Yorkshire","Further education and skills: Total",12260,22290
-"LSIP","Kent and Medway","Apprenticeships: Total",4290,7170
-"LSIP","Kent and Medway","Community learning: Total",6770,15700
-"LSIP","Kent and Medway","Education and training: Total",14860,23330
-"LSIP","Kent and Medway","Further education and skills: Total",27020,45470
-"LSIP","Lancashire","Apprenticeships: Total",4850,10020
-"LSIP","Lancashire","Community learning: Total",9590,18780
-"LSIP","Lancashire","Education and training: Total",19570,29800
-"LSIP","Lancashire","Further education and skills: Total",31920,56740
-"LSIP","Leicester and Leicestershire","Apprenticeships: Total",2840,5270
-"LSIP","Leicester and Leicestershire","Community learning: Total",3220,7250
-"LSIP","Leicester and Leicestershire","Education and training: Total",13150,17140
-"LSIP","Leicester and Leicestershire","Further education and skills: Total",18960,28000
-"LSIP","Liverpool City Region","Apprenticeships: Total",4680,10070
-"LSIP","Liverpool City Region","Community learning: Total",9840,19410
-"LSIP","Liverpool City Region","Education and training: Total",23060,33690
-"LSIP","Liverpool City Region","Further education and skills: Total",36280,60190
-"LSIP","Norfolk and Suffolk","Apprenticeships: Total",4260,5750
-"LSIP","Norfolk and Suffolk","Community learning: Total",4700,8650
-"LSIP","Norfolk and Suffolk","Education and training: Total",11530,16170
-"LSIP","Norfolk and Suffolk","Further education and skills: Total",23560,30090
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Apprenticeships: Total",1890,1950
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Community learning: Total",1350,1690
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Education and training: Total",4420,4790
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Further education and skills: Total",7830,8160
-"LSIP","North East","Apprenticeships: Total",4160,10470
-"LSIP","North East","Community learning: Total",5410,12440
-"LSIP","North East","Education and training: Total",23190,32780
-"LSIP","North East","Further education and skills: Total",31850,54900
-"LSIP","North of Tyne","Apprenticeships: Total",2350,5280
-"LSIP","North of Tyne","Community learning: Total",2450,5310
-"LSIP","North of Tyne","Education and training: Total",11440,18860
-"LSIP","North of Tyne","Further education and skills: Total",15270,26850
-"LSIP","Oxfordshire","Apprenticeships: Total",1320,2500
-"LSIP","Oxfordshire","Community learning: Total",2620,5900
-"LSIP","Oxfordshire","Education and training: Total",4820,5920
-"LSIP","Oxfordshire","Further education and skills: Total",9680,13280
-"LSIP","Solent","Apprenticeships: Total",4580,8040
-"LSIP","Solent","Community learning: Total",4060,9500
-"LSIP","Solent","Education and training: Total",12540,15630
-"LSIP","Solent","Further education and skills: Total",22000,33460
-"LSIP","South East Midlands","Apprenticeships: Total",4260,7410
-"LSIP","South East Midlands","Community learning: Total",4210,10250
-"LSIP","South East Midlands","Education and training: Total",19850,24810
-"LSIP","South East Midlands","Further education and skills: Total",28800,41300
-"LSIP","South Yorkshire","Apprenticeships: Total",3900,8920
-"LSIP","South Yorkshire","Community learning: Total",3060,8420
-"LSIP","South Yorkshire","Education and training: Total",19330,28220
-"LSIP","South Yorkshire","Further education and skills: Total",26660,43640
-"LSIP","Stoke-on-Trent and Staffordshire","Apprenticeships: Total",3480,7440
-"LSIP","Stoke-on-Trent and Staffordshire","Community learning: Total",3610,8330
-"LSIP","Stoke-on-Trent and Staffordshire","Education and training: Total",11340,15420
-"LSIP","Stoke-on-Trent and Staffordshire","Further education and skills: Total",19180,30150
-"LSIP","Swindon and Wiltshire","Apprenticeships: Total",2860,4340
-"LSIP","Swindon and Wiltshire","Community learning: Total",930,2720
-"LSIP","Swindon and Wiltshire","Education and training: Total",6180,7080
-"LSIP","Swindon and Wiltshire","Further education and skills: Total",10630,15150
-"LSIP","Tees Valley","Apprenticeships: Total",2390,5580
-"LSIP","Tees Valley","Community learning: Total",4700,8020
-"LSIP","Tees Valley","Education and training: Total",14980,22420
-"LSIP","Tees Valley","Further education and skills: Total",21530,34350
-"LSIP","Thames Valley Berkshire","Apprenticeships: Total",2010,3210
-"LSIP","Thames Valley Berkshire","Community learning: Total",4200,10360
-"LSIP","Thames Valley Berkshire","Education and training: Total",7340,9760
-"LSIP","Thames Valley Berkshire","Further education and skills: Total",14110,22820
-"LSIP","The Marches","Apprenticeships: Total",2380,4390
-"LSIP","The Marches","Community learning: Total",1300,3540
-"LSIP","The Marches","Education and training: Total",5830,9000
-"LSIP","The Marches","Further education and skills: Total",10090,17500
-"LSIP","West Midlands and Warwickshire","Apprenticeships: Total",9440,19330
-"LSIP","West Midlands and Warwickshire","Community learning: Total",10840,24590
-"LSIP","West Midlands and Warwickshire","Education and training: Total",49450,76410
-"LSIP","West Midlands and Warwickshire","Further education and skills: Total",67650,113150
-"LSIP","West of England and North Somerset","Apprenticeships: Total",2860,4980
-"LSIP","West of England and North Somerset","Community learning: Total",3500,4060
-"LSIP","West of England and North Somerset","Education and training: Total",10560,16070
-"LSIP","West of England and North Somerset","Further education and skills: Total",17520,24890
-"LSIP","West Yorkshire","Apprenticeships: Total",6660,13120
-"LSIP","West Yorkshire","Community learning: Total",9040,17300
-"LSIP","West Yorkshire","Education and training: Total",33620,42320
-"LSIP","West Yorkshire","Further education and skills: Total",49190,70780
-"LSIP","Worcestershire","Apprenticeships: Total",1550,3080
-"LSIP","Worcestershire","Community learning: Total",940,3530
-"LSIP","Worcestershire","Education and training: Total",4360,6350
-"LSIP","Worcestershire","Further education and skills: Total",7240,12420
-"LSIP","York and North Yorkshire","Apprenticeships: Total",3270,6480
-"LSIP","York and North Yorkshire","Community learning: Total",3710,5460
-"LSIP","York and North Yorkshire","Education and training: Total",7450,9090
-"LSIP","York and North Yorkshire","Further education and skills: Total",15570,19330
-"MCA","Cambridgeshire and Peterborough","Apprenticeships: Total",1780,3300
-"MCA","Cambridgeshire and Peterborough","Community learning: Total",1800,8740
-"MCA","Cambridgeshire and Peterborough","Education and training: Total",6710,8610
-"MCA","Cambridgeshire and Peterborough","Further education and skills: Total",11140,19760
-"MCA","Greater Manchester","Apprenticeships: Total",8170,16280
-"MCA","Greater Manchester","Community learning: Total",12960,25060
-"MCA","Greater Manchester","Education and training: Total",38290,53210
-"MCA","Greater Manchester","Further education and skills: Total",55830,86980
-"MCA","Liverpool City Region","Apprenticeships: Total",4680,10070
-"MCA","Liverpool City Region","Community learning: Total",9840,19410
-"MCA","Liverpool City Region","Education and training: Total",23060,33690
-"MCA","Liverpool City Region","Further education and skills: Total",36280,60190
-"MCA","North East","Apprenticeships: Total",4160,10470
-"MCA","North East","Community learning: Total",5410,12440
-"MCA","North East","Education and training: Total",23190,32780
-"MCA","North East","Further education and skills: Total",31850,54900
-"MCA","North of Tyne","Apprenticeships: Total",2350,5280
-"MCA","North of Tyne","Community learning: Total",2450,5310
-"MCA","North of Tyne","Education and training: Total",11440,18860
-"MCA","North of Tyne","Further education and skills: Total",15270,26850
-"MCA","South Yorkshire","Apprenticeships: Total",3900,8920
-"MCA","South Yorkshire","Community learning: Total",3060,8420
-"MCA","South Yorkshire","Education and training: Total",19330,28220
-"MCA","South Yorkshire","Further education and skills: Total",26660,43640
-"MCA","Tees Valley","Apprenticeships: Total",2390,5580
-"MCA","Tees Valley","Community learning: Total",4700,8020
-"MCA","Tees Valley","Education and training: Total",14980,22420
-"MCA","Tees Valley","Further education and skills: Total",21530,34350
-"MCA","West Midlands","Apprenticeships: Total",8040,16710
-"MCA","West Midlands","Community learning: Total",9800,22450
-"MCA","West Midlands","Education and training: Total",44550,70910
-"MCA","West Midlands","Further education and skills: Total",59870,103090
-"MCA","West of England","Apprenticeships: Total",2330,4040
-"MCA","West of England","Community learning: Total",2920,3350
-"MCA","West of England","Education and training: Total",7950,12920
-"MCA","West of England","Further education and skills: Total",13710,20040
-"MCA","West Yorkshire","Apprenticeships: Total",6660,13120
-"MCA","West Yorkshire","Community learning: Total",9040,17300
-"MCA","West Yorkshire","Education and training: Total",33620,42320
-"MCA","West Yorkshire","Further education and skills: Total",49190,70780
-=======
 "LEP","Black Country","Apprenticeships: Advanced",380,2840
 "LEP","Black Country","Apprenticeships: Higher",20,660
 "LEP","Black Country","Apprenticeships: Intermediate",470,4490
@@ -1435,33 +1081,33 @@
 "LSIP","Brighton and Hove, East Sussex, West Sussex","Further education and skills: Level 4+",100,850
 "LSIP","Brighton and Hove, East Sussex, West Sussex","Further education and skills: No Level Assigned",410,8230
 "LSIP","Brighton and Hove, East Sussex, West Sussex","Further education and skills: Total",5540,33790
-"LSIP","Buckinghamshire ","Apprenticeships: Advanced",120,700
-"LSIP","Buckinghamshire ","Apprenticeships: Higher",0,280
-"LSIP","Buckinghamshire ","Apprenticeships: Intermediate",80,870
-"LSIP","Buckinghamshire ","Apprenticeships: Total",260,1590
-"LSIP","Buckinghamshire ","Community learning: Family english maths and language",0,400
-"LSIP","Buckinghamshire ","Community learning: Neighbourhood learning in deprived communities",0,410
-"LSIP","Buckinghamshire ","Community learning: Personal and community development learning",0,3510
-"LSIP","Buckinghamshire ","Community learning: Total",0,4610
-"LSIP","Buckinghamshire ","Community learning: Wider family learning",0,570
-"LSIP","Buckinghamshire ","Education and training: Basic Skills",280,1630
-"LSIP","Buckinghamshire ","Education and training: Below Level 2 (excluding Basic Skills)",240,1090
-"LSIP","Buckinghamshire ","Education and training: Full Level 2",40,310
-"LSIP","Buckinghamshire ","Education and training: Full Level 3",40,320
-"LSIP","Buckinghamshire ","Education and training: Level 2",350,2280
-"LSIP","Buckinghamshire ","Education and training: Level 3",120,380
-"LSIP","Buckinghamshire ","Education and training: Level 4+",0,60
-"LSIP","Buckinghamshire ","Education and training: No Level Assigned",0,150
-"LSIP","Buckinghamshire ","Education and training: Total",770,3940
-"LSIP","Buckinghamshire ","Further education and skills: Basic Skills",350,2270
-"LSIP","Buckinghamshire ","Further education and skills: Below Level 2 (excluding Basic Skills)",240,1100
-"LSIP","Buckinghamshire ","Further education and skills: Full Level 2",170,940
-"LSIP","Buckinghamshire ","Further education and skills: Full Level 3",270,930
-"LSIP","Buckinghamshire ","Further education and skills: Level 2",480,2490
-"LSIP","Buckinghamshire ","Further education and skills: Level 3",310,970
-"LSIP","Buckinghamshire ","Further education and skills: Level 4+",30,260
-"LSIP","Buckinghamshire ","Further education and skills: No Level Assigned",90,4730
-"LSIP","Buckinghamshire ","Further education and skills: Total",1400,9730
+"LSIP","Buckinghamshire","Apprenticeships: Advanced",120,700
+"LSIP","Buckinghamshire","Apprenticeships: Higher",0,280
+"LSIP","Buckinghamshire","Apprenticeships: Intermediate",80,870
+"LSIP","Buckinghamshire","Apprenticeships: Total",260,1590
+"LSIP","Buckinghamshire","Community learning: Family english maths and language",0,400
+"LSIP","Buckinghamshire","Community learning: Neighbourhood learning in deprived communities",0,410
+"LSIP","Buckinghamshire","Community learning: Personal and community development learning",0,3510
+"LSIP","Buckinghamshire","Community learning: Total",0,4610
+"LSIP","Buckinghamshire","Community learning: Wider family learning",0,570
+"LSIP","Buckinghamshire","Education and training: Basic Skills",280,1630
+"LSIP","Buckinghamshire","Education and training: Below Level 2 (excluding Basic Skills)",240,1090
+"LSIP","Buckinghamshire","Education and training: Full Level 2",40,310
+"LSIP","Buckinghamshire","Education and training: Full Level 3",40,320
+"LSIP","Buckinghamshire","Education and training: Level 2",350,2280
+"LSIP","Buckinghamshire","Education and training: Level 3",120,380
+"LSIP","Buckinghamshire","Education and training: Level 4+",0,60
+"LSIP","Buckinghamshire","Education and training: No Level Assigned",0,150
+"LSIP","Buckinghamshire","Education and training: Total",770,3940
+"LSIP","Buckinghamshire","Further education and skills: Basic Skills",350,2270
+"LSIP","Buckinghamshire","Further education and skills: Below Level 2 (excluding Basic Skills)",240,1100
+"LSIP","Buckinghamshire","Further education and skills: Full Level 2",170,940
+"LSIP","Buckinghamshire","Further education and skills: Full Level 3",270,930
+"LSIP","Buckinghamshire","Further education and skills: Level 2",480,2490
+"LSIP","Buckinghamshire","Further education and skills: Level 3",310,970
+"LSIP","Buckinghamshire","Further education and skills: Level 4+",30,260
+"LSIP","Buckinghamshire","Further education and skills: No Level Assigned",90,4730
+"LSIP","Buckinghamshire","Further education and skills: Total",1400,9730
 "LSIP","Cambridgeshire and Peterborough","Apprenticeships: Advanced",170,1320
 "LSIP","Cambridgeshire and Peterborough","Apprenticeships: Higher",0,590
 "LSIP","Cambridgeshire and Peterborough","Apprenticeships: Intermediate",170,1960
@@ -1977,33 +1623,33 @@
 "LSIP","Liverpool City Region","Further education and skills: Level 4+",130,1030
 "LSIP","Liverpool City Region","Further education and skills: No Level Assigned",1430,17110
 "LSIP","Liverpool City Region","Further education and skills: Total",8630,60190
-"LSIP","Norfolk and Suffolk ","Apprenticeships: Advanced",460,2490
-"LSIP","Norfolk and Suffolk ","Apprenticeships: Higher",0,1070
-"LSIP","Norfolk and Suffolk ","Apprenticeships: Intermediate",440,3230
-"LSIP","Norfolk and Suffolk ","Apprenticeships: Total",1180,5750
-"LSIP","Norfolk and Suffolk ","Community learning: Family english maths and language",0,1200
-"LSIP","Norfolk and Suffolk ","Community learning: Neighbourhood learning in deprived communities",0,760
-"LSIP","Norfolk and Suffolk ","Community learning: Personal and community development learning",0,5630
-"LSIP","Norfolk and Suffolk ","Community learning: Total",0,8650
-"LSIP","Norfolk and Suffolk ","Community learning: Wider family learning",0,1470
-"LSIP","Norfolk and Suffolk ","Education and training: Basic Skills",790,4410
-"LSIP","Norfolk and Suffolk ","Education and training: Below Level 2 (excluding Basic Skills)",880,5260
-"LSIP","Norfolk and Suffolk ","Education and training: Full Level 2",90,760
-"LSIP","Norfolk and Suffolk ","Education and training: Full Level 3",380,1340
-"LSIP","Norfolk and Suffolk ","Education and training: Level 2",1140,8960
-"LSIP","Norfolk and Suffolk ","Education and training: Level 3",580,1910
-"LSIP","Norfolk and Suffolk ","Education and training: Level 4+",10,140
-"LSIP","Norfolk and Suffolk ","Education and training: No Level Assigned",0,250
-"LSIP","Norfolk and Suffolk ","Education and training: Total",2890,16170
-"LSIP","Norfolk and Suffolk ","Further education and skills: Basic Skills",1020,6580
-"LSIP","Norfolk and Suffolk ","Further education and skills: Below Level 2 (excluding Basic Skills)",900,5760
-"LSIP","Norfolk and Suffolk ","Further education and skills: Full Level 2",660,3180
-"LSIP","Norfolk and Suffolk ","Further education and skills: Full Level 3",1130,3420
-"LSIP","Norfolk and Suffolk ","Further education and skills: Level 2",2110,10460
-"LSIP","Norfolk and Suffolk ","Further education and skills: Level 3",1490,3950
-"LSIP","Norfolk and Suffolk ","Further education and skills: Level 4+",80,1080
-"LSIP","Norfolk and Suffolk ","Further education and skills: No Level Assigned",530,8350
-"LSIP","Norfolk and Suffolk ","Further education and skills: Total",6090,30090
+"LSIP","Norfolk and Suffolk","Apprenticeships: Advanced",460,2490
+"LSIP","Norfolk and Suffolk","Apprenticeships: Higher",0,1070
+"LSIP","Norfolk and Suffolk","Apprenticeships: Intermediate",440,3230
+"LSIP","Norfolk and Suffolk","Apprenticeships: Total",1180,5750
+"LSIP","Norfolk and Suffolk","Community learning: Family english maths and language",0,1200
+"LSIP","Norfolk and Suffolk","Community learning: Neighbourhood learning in deprived communities",0,760
+"LSIP","Norfolk and Suffolk","Community learning: Personal and community development learning",0,5630
+"LSIP","Norfolk and Suffolk","Community learning: Total",0,8650
+"LSIP","Norfolk and Suffolk","Community learning: Wider family learning",0,1470
+"LSIP","Norfolk and Suffolk","Education and training: Basic Skills",790,4410
+"LSIP","Norfolk and Suffolk","Education and training: Below Level 2 (excluding Basic Skills)",880,5260
+"LSIP","Norfolk and Suffolk","Education and training: Full Level 2",90,760
+"LSIP","Norfolk and Suffolk","Education and training: Full Level 3",380,1340
+"LSIP","Norfolk and Suffolk","Education and training: Level 2",1140,8960
+"LSIP","Norfolk and Suffolk","Education and training: Level 3",580,1910
+"LSIP","Norfolk and Suffolk","Education and training: Level 4+",10,140
+"LSIP","Norfolk and Suffolk","Education and training: No Level Assigned",0,250
+"LSIP","Norfolk and Suffolk","Education and training: Total",2890,16170
+"LSIP","Norfolk and Suffolk","Further education and skills: Basic Skills",1020,6580
+"LSIP","Norfolk and Suffolk","Further education and skills: Below Level 2 (excluding Basic Skills)",900,5760
+"LSIP","Norfolk and Suffolk","Further education and skills: Full Level 2",660,3180
+"LSIP","Norfolk and Suffolk","Further education and skills: Full Level 3",1130,3420
+"LSIP","Norfolk and Suffolk","Further education and skills: Level 2",2110,10460
+"LSIP","Norfolk and Suffolk","Further education and skills: Level 3",1490,3950
+"LSIP","Norfolk and Suffolk","Further education and skills: Level 4+",80,1080
+"LSIP","Norfolk and Suffolk","Further education and skills: No Level Assigned",530,8350
+"LSIP","Norfolk and Suffolk","Further education and skills: Total",6090,30090
 "LSIP","Norfolk and Suffolk (Greater Anglia)","Apprenticeships: Advanced",170,800
 "LSIP","Norfolk and Suffolk (Greater Anglia)","Apprenticeships: Higher",0,110
 "LSIP","Norfolk and Suffolk (Greater Anglia)","Apprenticeships: Intermediate",310,1080
@@ -2463,6 +2109,276 @@
 "LSIP","York and North Yorkshire","Further education and skills: Level 4+",40,450
 "LSIP","York and North Yorkshire","Further education and skills: No Level Assigned",310,5500
 "LSIP","York and North Yorkshire","Further education and skills: Total",4830,19330
+"MCA","Cambridgeshire and Peterborough","Apprenticeships: Advanced",170,1320
+"MCA","Cambridgeshire and Peterborough","Apprenticeships: Higher",0,590
+"MCA","Cambridgeshire and Peterborough","Apprenticeships: Intermediate",170,1960
+"MCA","Cambridgeshire and Peterborough","Apprenticeships: Total",420,3300
+"MCA","Cambridgeshire and Peterborough","Community learning: Family english maths and language",0,440
+"MCA","Cambridgeshire and Peterborough","Community learning: Neighbourhood learning in deprived communities",0,1170
+"MCA","Cambridgeshire and Peterborough","Community learning: Personal and community development learning",0,7630
+"MCA","Cambridgeshire and Peterborough","Community learning: Total",0,8740
+"MCA","Cambridgeshire and Peterborough","Community learning: Wider family learning",0,740
+"MCA","Cambridgeshire and Peterborough","Education and training: Basic Skills",490,2630
+"MCA","Cambridgeshire and Peterborough","Education and training: Below Level 2 (excluding Basic Skills)",600,3140
+"MCA","Cambridgeshire and Peterborough","Education and training: Full Level 2",50,500
+"MCA","Cambridgeshire and Peterborough","Education and training: Full Level 3",100,740
+"MCA","Cambridgeshire and Peterborough","Education and training: Level 2",630,4450
+"MCA","Cambridgeshire and Peterborough","Education and training: Level 3",280,830
+"MCA","Cambridgeshire and Peterborough","Education and training: Level 4+",10,90
+"MCA","Cambridgeshire and Peterborough","Education and training: No Level Assigned",0,330
+"MCA","Cambridgeshire and Peterborough","Education and training: Total",1570,8610
+"MCA","Cambridgeshire and Peterborough","Further education and skills: Basic Skills",600,4580
+"MCA","Cambridgeshire and Peterborough","Further education and skills: Below Level 2 (excluding Basic Skills)",650,3330
+"MCA","Cambridgeshire and Peterborough","Further education and skills: Full Level 2",260,2100
+"MCA","Cambridgeshire and Peterborough","Further education and skills: Full Level 3",480,1830
+"MCA","Cambridgeshire and Peterborough","Further education and skills: Level 2",900,5570
+"MCA","Cambridgeshire and Peterborough","Further education and skills: Level 3",630,1930
+"MCA","Cambridgeshire and Peterborough","Further education and skills: Level 4+",50,540
+"MCA","Cambridgeshire and Peterborough","Further education and skills: No Level Assigned",260,8790
+"MCA","Cambridgeshire and Peterborough","Further education and skills: Total",2700,19760
+"MCA","Greater Manchester","Apprenticeships: Advanced",930,6170
+"MCA","Greater Manchester","Apprenticeships: Higher",20,1780
+"MCA","Greater Manchester","Apprenticeships: Intermediate",780,9470
+"MCA","Greater Manchester","Apprenticeships: Total",2030,16280
+"MCA","Greater Manchester","Community learning: Family english maths and language",0,2990
+"MCA","Greater Manchester","Community learning: Neighbourhood learning in deprived communities",0,4400
+"MCA","Greater Manchester","Community learning: Personal and community development learning",0,17510
+"MCA","Greater Manchester","Community learning: Total",0,25060
+"MCA","Greater Manchester","Community learning: Wider family learning",0,1890
+"MCA","Greater Manchester","Education and training: Basic Skills",2850,19310
+"MCA","Greater Manchester","Education and training: Below Level 2 (excluding Basic Skills)",3650,22670
+"MCA","Greater Manchester","Education and training: Full Level 2",370,3210
+"MCA","Greater Manchester","Education and training: Full Level 3",1030,5760
+"MCA","Greater Manchester","Education and training: Level 2",3230,22880
+"MCA","Greater Manchester","Education and training: Level 3",2210,6250
+"MCA","Greater Manchester","Education and training: Level 4+",50,320
+"MCA","Greater Manchester","Education and training: No Level Assigned",50,1220
+"MCA","Greater Manchester","Education and training: Total",9090,53210
+"MCA","Greater Manchester","Further education and skills: Basic Skills",3360,26970
+"MCA","Greater Manchester","Further education and skills: Below Level 2 (excluding Basic Skills)",4200,25720
+"MCA","Greater Manchester","Further education and skills: Full Level 2",1490,10820
+"MCA","Greater Manchester","Further education and skills: Full Level 3",2760,11380
+"MCA","Greater Manchester","Further education and skills: Level 2",4610,28280
+"MCA","Greater Manchester","Further education and skills: Level 3",3990,11870
+"MCA","Greater Manchester","Further education and skills: Level 4+",220,1730
+"MCA","Greater Manchester","Further education and skills: No Level Assigned",1690,23590
+"MCA","Greater Manchester","Further education and skills: Total",14300,86980
+"MCA","Liverpool City Region","Apprenticeships: Advanced",460,4100
+"MCA","Liverpool City Region","Apprenticeships: Higher",0,880
+"MCA","Liverpool City Region","Apprenticeships: Intermediate",490,5360
+"MCA","Liverpool City Region","Apprenticeships: Total",1140,10070
+"MCA","Liverpool City Region","Community learning: Family english maths and language",0,1130
+"MCA","Liverpool City Region","Community learning: Neighbourhood learning in deprived communities",0,1640
+"MCA","Liverpool City Region","Community learning: Personal and community development learning",10,16660
+"MCA","Liverpool City Region","Community learning: Total",20,19410
+"MCA","Liverpool City Region","Community learning: Wider family learning",0,1110
+"MCA","Liverpool City Region","Education and training: Basic Skills",1230,6780
+"MCA","Liverpool City Region","Education and training: Below Level 2 (excluding Basic Skills)",2320,16790
+"MCA","Liverpool City Region","Education and training: Full Level 2",290,1910
+"MCA","Liverpool City Region","Education and training: Full Level 3",720,3060
+"MCA","Liverpool City Region","Education and training: Level 2",2010,16090
+"MCA","Liverpool City Region","Education and training: Level 3",1220,3370
+"MCA","Liverpool City Region","Education and training: Level 4+",50,300
+"MCA","Liverpool City Region","Education and training: No Level Assigned",0,1230
+"MCA","Liverpool City Region","Education and training: Total",5330,33690
+"MCA","Liverpool City Region","Further education and skills: Basic Skills",1530,11420
+"MCA","Liverpool City Region","Further education and skills: Below Level 2 (excluding Basic Skills)",2730,20100
+"MCA","Liverpool City Region","Further education and skills: Full Level 2",1030,6250
+"MCA","Liverpool City Region","Further education and skills: Full Level 3",1660,6600
+"MCA","Liverpool City Region","Further education and skills: Level 2",2870,19810
+"MCA","Liverpool City Region","Further education and skills: Level 3",2170,6900
+"MCA","Liverpool City Region","Further education and skills: Level 4+",130,1030
+"MCA","Liverpool City Region","Further education and skills: No Level Assigned",1430,17110
+"MCA","Liverpool City Region","Further education and skills: Total",8630,60190
+"MCA","North East","Apprenticeships: Advanced",560,3650
+"MCA","North East","Apprenticeships: Higher",0,660
+"MCA","North East","Apprenticeships: Intermediate",400,6640
+"MCA","North East","Apprenticeships: Total",1240,10470
+"MCA","North East","Community learning: Family english maths and language",0,890
+"MCA","North East","Community learning: Neighbourhood learning in deprived communities",0,2640
+"MCA","North East","Community learning: Personal and community development learning",0,8780
+"MCA","North East","Community learning: Total",10,12440
+"MCA","North East","Community learning: Wider family learning",0,1190
+"MCA","North East","Education and training: Basic Skills",700,5250
+"MCA","North East","Education and training: Below Level 2 (excluding Basic Skills)",2270,16070
+"MCA","North East","Education and training: Full Level 2",160,1510
+"MCA","North East","Education and training: Full Level 3",570,2250
+"MCA","North East","Education and training: Level 2",2970,19190
+"MCA","North East","Education and training: Level 3",910,2510
+"MCA","North East","Education and training: Level 4+",40,230
+"MCA","North East","Education and training: No Level Assigned",50,1640
+"MCA","North East","Education and training: Total",5610,32780
+"MCA","North East","Further education and skills: Basic Skills",860,11110
+"MCA","North East","Further education and skills: Below Level 2 (excluding Basic Skills)",2400,16510
+"MCA","North East","Further education and skills: Full Level 2",710,6990
+"MCA","North East","Further education and skills: Full Level 3",1360,5320
+"MCA","North East","Further education and skills: Level 2",3640,21640
+"MCA","North East","Further education and skills: Level 3",1860,5580
+"MCA","North East","Further education and skills: Level 4+",130,780
+"MCA","North East","Further education and skills: No Level Assigned",990,13610
+"MCA","North East","Further education and skills: Total",8350,54900
+"MCA","North of Tyne","Apprenticeships: Advanced",250,1860
+"MCA","North of Tyne","Apprenticeships: Higher",0,410
+"MCA","North of Tyne","Apprenticeships: Intermediate",210,3250
+"MCA","North of Tyne","Apprenticeships: Total",660,5280
+"MCA","North of Tyne","Community learning: Family english maths and language",0,520
+"MCA","North of Tyne","Community learning: Neighbourhood learning in deprived communities",0,260
+"MCA","North of Tyne","Community learning: Personal and community development learning",0,4320
+"MCA","North of Tyne","Community learning: Total",0,5310
+"MCA","North of Tyne","Community learning: Wider family learning",0,690
+"MCA","North of Tyne","Education and training: Basic Skills",480,3670
+"MCA","North of Tyne","Education and training: Below Level 2 (excluding Basic Skills)",890,8980
+"MCA","North of Tyne","Education and training: Full Level 2",70,1000
+"MCA","North of Tyne","Education and training: Full Level 3",250,1430
+"MCA","North of Tyne","Education and training: Level 2",1340,9360
+"MCA","North of Tyne","Education and training: Level 3",510,1600
+"MCA","North of Tyne","Education and training: Level 4+",20,100
+"MCA","North of Tyne","Education and training: No Level Assigned",70,880
+"MCA","North of Tyne","Education and training: Total",2600,18860
+"MCA","North of Tyne","Further education and skills: Basic Skills",590,5930
+"MCA","North of Tyne","Further education and skills: Below Level 2 (excluding Basic Skills)",990,9300
+"MCA","North of Tyne","Further education and skills: Full Level 2",360,3590
+"MCA","North of Tyne","Further education and skills: Full Level 3",710,3130
+"MCA","North of Tyne","Further education and skills: Level 2",1670,10470
+"MCA","North of Tyne","Further education and skills: Level 3",1050,3290
+"MCA","North of Tyne","Further education and skills: Level 4+",60,440
+"MCA","North of Tyne","Further education and skills: No Level Assigned",460,5580
+"MCA","North of Tyne","Further education and skills: Total",4040,26850
+"MCA","South Yorkshire","Apprenticeships: Advanced",530,3170
+"MCA","South Yorkshire","Apprenticeships: Higher",10,810
+"MCA","South Yorkshire","Apprenticeships: Intermediate",410,5520
+"MCA","South Yorkshire","Apprenticeships: Total",1090,8920
+"MCA","South Yorkshire","Community learning: Family english maths and language",0,1130
+"MCA","South Yorkshire","Community learning: Neighbourhood learning in deprived communities",0,870
+"MCA","South Yorkshire","Community learning: Personal and community development learning",0,5690
+"MCA","South Yorkshire","Community learning: Total",0,8420
+"MCA","South Yorkshire","Community learning: Wider family learning",0,1420
+"MCA","South Yorkshire","Education and training: Basic Skills",1160,8160
+"MCA","South Yorkshire","Education and training: Below Level 2 (excluding Basic Skills)",1300,11950
+"MCA","South Yorkshire","Education and training: Full Level 2",140,1620
+"MCA","South Yorkshire","Education and training: Full Level 3",450,2190
+"MCA","South Yorkshire","Education and training: Level 2",1960,13250
+"MCA","South Yorkshire","Education and training: Level 3",1010,2630
+"MCA","South Yorkshire","Education and training: Level 4+",40,1000
+"MCA","South Yorkshire","Education and training: No Level Assigned",10,430
+"MCA","South Yorkshire","Education and training: Total",4230,28220
+"MCA","South Yorkshire","Further education and skills: Basic Skills",1350,12150
+"MCA","South Yorkshire","Further education and skills: Below Level 2 (excluding Basic Skills)",1440,14170
+"MCA","South Yorkshire","Further education and skills: Full Level 2",740,5870
+"MCA","South Yorkshire","Further education and skills: Full Level 3",1110,5010
+"MCA","South Yorkshire","Further education and skills: Level 2",2630,16520
+"MCA","South Yorkshire","Further education and skills: Level 3",1860,5360
+"MCA","South Yorkshire","Further education and skills: Level 4+",110,1710
+"MCA","South Yorkshire","Further education and skills: No Level Assigned",350,6730
+"MCA","South Yorkshire","Further education and skills: Total",6750,43640
+"MCA","Tees Valley","Apprenticeships: Advanced",260,2140
+"MCA","Tees Valley","Apprenticeships: Higher",0,360
+"MCA","Tees Valley","Apprenticeships: Intermediate",270,3270
+"MCA","Tees Valley","Apprenticeships: Total",640,5580
+"MCA","Tees Valley","Community learning: Family english maths and language",0,290
+"MCA","Tees Valley","Community learning: Neighbourhood learning in deprived communities",0,2300
+"MCA","Tees Valley","Community learning: Personal and community development learning",0,4790
+"MCA","Tees Valley","Community learning: Total",0,8020
+"MCA","Tees Valley","Community learning: Wider family learning",0,1150
+"MCA","Tees Valley","Education and training: Basic Skills",660,5010
+"MCA","Tees Valley","Education and training: Below Level 2 (excluding Basic Skills)",1130,10860
+"MCA","Tees Valley","Education and training: Full Level 2",80,1400
+"MCA","Tees Valley","Education and training: Full Level 3",450,1750
+"MCA","Tees Valley","Education and training: Level 2",1640,10510
+"MCA","Tees Valley","Education and training: Level 3",640,1950
+"MCA","Tees Valley","Education and training: Level 4+",10,90
+"MCA","Tees Valley","Education and training: No Level Assigned",100,1320
+"MCA","Tees Valley","Education and training: Total",3240,22420
+"MCA","Tees Valley","Further education and skills: Basic Skills",750,7920
+"MCA","Tees Valley","Further education and skills: Below Level 2 (excluding Basic Skills)",1190,11020
+"MCA","Tees Valley","Further education and skills: Full Level 2",450,4070
+"MCA","Tees Valley","Further education and skills: Full Level 3",880,3620
+"MCA","Tees Valley","Further education and skills: Level 2",2130,13040
+"MCA","Tees Valley","Further education and skills: Level 3",1160,3870
+"MCA","Tees Valley","Further education and skills: Level 4+",60,390
+"MCA","Tees Valley","Further education and skills: No Level Assigned",710,8740
+"MCA","Tees Valley","Further education and skills: Total",5190,34350
+"MCA","West Midlands","Apprenticeships: Advanced",820,6100
+"MCA","West Midlands","Apprenticeships: Higher",30,1530
+"MCA","West Midlands","Apprenticeships: Intermediate",860,9370
+"MCA","West Midlands","Apprenticeships: Total",1970,16710
+"MCA","West Midlands","Community learning: Family english maths and language",0,840
+"MCA","West Midlands","Community learning: Neighbourhood learning in deprived communities",0,1980
+"MCA","West Midlands","Community learning: Personal and community development learning",0,17690
+"MCA","West Midlands","Community learning: Total",10,22450
+"MCA","West Midlands","Community learning: Wider family learning",0,2910
+"MCA","West Midlands","Education and training: Basic Skills",3490,26120
+"MCA","West Midlands","Education and training: Below Level 2 (excluding Basic Skills)",3420,29250
+"MCA","West Midlands","Education and training: Full Level 2",450,3750
+"MCA","West Midlands","Education and training: Full Level 3",1210,6150
+"MCA","West Midlands","Education and training: Level 2",4230,28890
+"MCA","West Midlands","Education and training: Level 3",2640,7030
+"MCA","West Midlands","Education and training: Level 4+",80,440
+"MCA","West Midlands","Education and training: No Level Assigned",20,4030
+"MCA","West Midlands","Education and training: Total",10950,70910
+"MCA","West Midlands","Further education and skills: Basic Skills",4080,34380
+"MCA","West Midlands","Further education and skills: Below Level 2 (excluding Basic Skills)",4100,33450
+"MCA","West Midlands","Further education and skills: Full Level 2",1560,11250
+"MCA","West Midlands","Further education and skills: Full Level 3",2680,11250
+"MCA","West Midlands","Further education and skills: Level 2",5840,36870
+"MCA","West Midlands","Further education and skills: Level 3",4370,11640
+"MCA","West Midlands","Further education and skills: Level 4+",280,1760
+"MCA","West Midlands","Further education and skills: No Level Assigned",1610,19160
+"MCA","West Midlands","Further education and skills: Total",16490,103090
+"MCA","West of England","Apprenticeships: Advanced",370,1740
+"MCA","West of England","Apprenticeships: Higher",10,510
+"MCA","West of England","Apprenticeships: Intermediate",220,2230
+"MCA","West of England","Apprenticeships: Total",720,4040
+"MCA","West of England","Community learning: Family english maths and language",0,250
+"MCA","West of England","Community learning: Neighbourhood learning in deprived communities",0,440
+"MCA","West of England","Community learning: Personal and community development learning",0,3010
+"MCA","West of England","Community learning: Total",0,3350
+"MCA","West of England","Community learning: Wider family learning",0,350
+"MCA","West of England","Education and training: Basic Skills",520,3850
+"MCA","West of England","Education and training: Below Level 2 (excluding Basic Skills)",430,6000
+"MCA","West of England","Education and training: Full Level 2",80,870
+"MCA","West of England","Education and training: Full Level 3",160,1090
+"MCA","West of England","Education and training: Level 2",720,5090
+"MCA","West of England","Education and training: Level 3",370,1200
+"MCA","West of England","Education and training: Level 4+",30,100
+"MCA","West of England","Education and training: No Level Assigned",20,360
+"MCA","West of England","Education and training: Total",1730,12920
+"MCA","West of England","Further education and skills: Basic Skills",670,5760
+"MCA","West of England","Further education and skills: Below Level 2 (excluding Basic Skills)",430,6060
+"MCA","West of England","Further education and skills: Full Level 2",390,2540
+"MCA","West of England","Further education and skills: Full Level 3",600,2440
+"MCA","West of England","Further education and skills: Level 2",1080,6590
+"MCA","West of England","Further education and skills: Level 3",800,2520
+"MCA","West of England","Further education and skills: Level 4+",90,510
+"MCA","West of England","Further education and skills: No Level Assigned",410,3530
+"MCA","West of England","Further education and skills: Total",3470,20040
+"MCA","West Yorkshire","Apprenticeships: Advanced",890,5270
+"MCA","West Yorkshire","Apprenticeships: Higher",20,1350
+"MCA","West Yorkshire","Apprenticeships: Intermediate",750,7770
+"MCA","West Yorkshire","Apprenticeships: Total",1930,13120
+"MCA","West Yorkshire","Community learning: Family english maths and language",0,1560
+"MCA","West Yorkshire","Community learning: Neighbourhood learning in deprived communities",0,3520
+"MCA","West Yorkshire","Community learning: Personal and community development learning",10,11100
+"MCA","West Yorkshire","Community learning: Total",10,17300
+"MCA","West Yorkshire","Community learning: Wider family learning",0,3190
+"MCA","West Yorkshire","Education and training: Basic Skills",2500,13960
+"MCA","West Yorkshire","Education and training: Below Level 2 (excluding Basic Skills)",2810,17140
+"MCA","West Yorkshire","Education and training: Full Level 2",200,2330
+"MCA","West Yorkshire","Education and training: Full Level 3",610,3900
+"MCA","West Yorkshire","Education and training: Level 2",3770,20200
+"MCA","West Yorkshire","Education and training: Level 3",1630,4390
+"MCA","West Yorkshire","Education and training: Level 4+",70,350
+"MCA","West Yorkshire","Education and training: No Level Assigned",280,1090
+"MCA","West Yorkshire","Education and training: Total",7930,42320
+"MCA","West Yorkshire","Further education and skills: Basic Skills",2870,20930
+"MCA","West Yorkshire","Further education and skills: Below Level 2 (excluding Basic Skills)",3140,20490
+"MCA","West Yorkshire","Further education and skills: Full Level 2",1190,8320
+"MCA","West Yorkshire","Further education and skills: Full Level 3",1940,8360
+"MCA","West Yorkshire","Further education and skills: Level 2",4880,24680
+"MCA","West Yorkshire","Further education and skills: Level 3",2960,8810
+"MCA","West Yorkshire","Further education and skills: Level 4+",220,1470
+"MCA","West Yorkshire","Further education and skills: No Level Assigned",1060,15670
+"MCA","West Yorkshire","Further education and skills: Total",12840,70780
 "National","England","Apprenticeships: Advanced",16430,111360
 "National","England","Apprenticeships: Higher",730,30540
 "National","England","Apprenticeships: Intermediate",15920,161680
@@ -2491,4 +2407,3 @@
 "National","England","Further education and skills: Level 4+",4610,32740
 "National","England","Further education and skills: No Level Assigned",28600,446250
 "National","England","Further education and skills: Total",250170,1578910
->>>>>>> d8228bac84ec7fbcc341fa390c0fde839c90b9f0
