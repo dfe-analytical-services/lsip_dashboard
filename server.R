@@ -150,10 +150,15 @@ server <- function(input, output, session) {
         choices = C_LEP2020 %>% filter(geographic_level == "LEP") %>% select(Area),
         selected = input$lep1
       )
-    } else {
+    } else if (input$GeoType == "LSIP") {
       selectInput("lep1", "Choose primary LSIP area",
         choices = C_LEP2020 %>% filter(geographic_level == "LSIP") %>% select(Area),
         selected = input$lep1
+      )
+    } else {
+      selectInput("lep1", "Choose primary MCA area",
+                  choices = C_LEP2020 %>% filter(geographic_level == "MCA") %>% select(Area),
+                  selected = input$lep1
       )
     }
   })
@@ -168,10 +173,15 @@ server <- function(input, output, session) {
           choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LEP", Area != input$lep1) %>% select(Area)),
           selected = input$lep2
         )
-      } else {
+      } else if (input$GeoType == "LSIP") {
         selectInput("lep2", "Choose comparison LSIP area",
           choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LSIP", Area != input$lep1) %>% select(Area)),
           selected = input$lep2
+        )
+      } else  {
+        selectInput("lep2", "Choose comparison MCA area",
+                    choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "MCA", Area != input$lep1) %>% select(Area)),
+                    selected = input$lep2
         )
       }
     }
@@ -975,7 +985,7 @@ server <- function(input, output, session) {
         geographic_level == input$GeoType | geographic_level == "COUNTRY",
         (area == "England" |
           area == input$lep1 |
-          area == if (("lep2" %in% names(input)) & (input$GeoType == "LEP")) {
+          area == if (("lep2" %in% names(input))) {
             input$lep2
           } else {
             "\nNone"
@@ -990,8 +1000,9 @@ server <- function(input, output, session) {
       mutate_at(c(2), ~ replace(., is.na(.), 0)) %>%
       mutate(across(where(is.numeric), ~ round(prop.table(.), 4))) %>%
       filter(.[[2]] > 0) %>%
-      rownames_to_column("Occupation") %>%
-      filter(Occupation != "Alloccsremain")
+      rownames_to_column("Occupation")
+    #%>%
+     # filter(Occupation != "Alloccsremain")
   })
 
   output$EmpOcc <- renderDataTable({

@@ -20,6 +20,12 @@ folder <- "2_LEPmissing"
 sheetNum <- 2
 I_missingLAD <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
+#Load MCA lookup
+folder <- "12_MCA_lookup"
+sheetNum <- 1
+I_mcalookup <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+
+
 ## APS ----
 ### Employment by occupation ----
 # Download from https://www.nomisweb.co.uk/datasets/apsnew
@@ -63,12 +69,12 @@ I_Vacancy_ONS1722 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.fi
 # Enterprise by employment size
 # Download from https://www.nomisweb.co.uk/query/construct/summary.asp?mode=construct&version=0&dataset=142
 # Query data
-# Geography: England, LEPs, regions, LADs (as of April 2021)
-# Date: 12 months to Dec 2017-2021
+# Geography: England, LEPs, regions, LADs (as of April 2022)
+# Date: 12 months to Dec 2018-2022
 # Cell: UK Business Counts - enterprises by industry and employment size band
 folder <- "9_UBCempent"
 sheetNum <- 1
-I_EmpEnt_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+I_EmpEnt_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 
 # National pupil database

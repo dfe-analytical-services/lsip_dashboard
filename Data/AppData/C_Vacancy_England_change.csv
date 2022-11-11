@@ -2,8 +2,9 @@
 "LEP","Black Country",0.932377049180328
 "LSIP","Brighton and Hove, East Sussex, West Sussex",0.939967105263158
 "LEP","Buckinghamshire",0.83739837398374
-"LSIP","Buckinghamshire ",0.83739837398374
+"LSIP","Buckinghamshire",0.83739837398374
 "LSIP","Cambridgeshire and Peterborough",1.00463499420626
+"MCA","Cambridgeshire and Peterborough",1.00463499420626
 "LEP","Cheshire and Warrington",0.839694656488549
 "LSIP","Cheshire and Warrington",0.839694656488549
 "LEP","Coast to Capital",0.932274247491639
@@ -28,6 +29,7 @@
 "LSIP","Greater London",1.94405182567727
 "LEP","Greater Manchester",0.730091613812544
 "LSIP","Greater Manchester",0.730091613812544
+"MCA","Greater Manchester",0.730091613812544
 "LSIP","Heart of the South-West",0.745112781954887
 "LEP","Heart of the South West",0.745112781954887
 "LEP","Hertfordshire",0.955317247542449
@@ -42,12 +44,15 @@
 "LSIP","Leicester and Leicestershire",0.860248447204969
 "LEP","Liverpool City Region",0.802107728337236
 "LSIP","Liverpool City Region",0.802107728337236
+"MCA","Liverpool City Region",0.802107728337236
 "LEP","London",1.94405182567727
 "LEP","New Anglia",0.619175627240143
-"LSIP","Norfolk and Suffolk ",0.619175627240143
+"LSIP","Norfolk and Suffolk",0.619175627240143
 "LEP","North East",0.968807339449541
 "LSIP","North East",0.935368043087971
+"MCA","North East",0.935368043087971
 "LSIP","North of Tyne",1.00375234521576
+"MCA","North of Tyne",1.00375234521576
 "LEP","Oxfordshire",0.838150289017341
 "LSIP","Oxfordshire",0.838150289017341
 "LEP","Sheffield City Region",0.6
@@ -57,20 +62,25 @@
 "LEP","South East Midlands",0.894273127753304
 "LSIP","South East Midlands",0.894273127753304
 "LSIP","South Yorkshire",0.6
+"MCA","South Yorkshire",0.6
 "LEP","Stoke-on-Trent and Staffordshire",0.536585365853658
 "LSIP","Stoke-on-Trent and Staffordshire",0.536585365853658
 "LEP","Swindon and Wiltshire",0.453333333333333
 "LSIP","Swindon and Wiltshire",0.453333333333333
 "LEP","Tees Valley",0.504672897196262
 "LSIP","Tees Valley",0.504672897196262
+"MCA","Tees Valley",0.504672897196262
 "LEP","Thames Valley Berkshire",0.967914438502674
 "LSIP","Thames Valley Berkshire",0.967914438502674
 "LEP","The Marches",0.662650602409638
 "LSIP","The Marches",0.662650602409638
+"MCA","West Midlands",0.913087934560327
 "LSIP","West Midlands and Warwickshire",0.933922558922559
 "LEP","West of England",0.78067169294037
+"MCA","West of England",0.837354085603113
 "LSIP","West of England and North Somerset",0.78067169294037
 "LSIP","West Yorkshire",0.607332624867163
+"MCA","West Yorkshire",0.607332624867163
 "LEP","Worcestershire",1.01866666666667
 "LSIP","Worcestershire",1.01866666666667
 "LEP","York and North Yorkshire",0.703463203463203
