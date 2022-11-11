@@ -278,7 +278,7 @@ format.Achieve.ILR <- function(x) {
 
   # create lsip file
   addMCA <- x %>%
-    filter(geographic_level == "localAuthorityDistrict") %>%
+    filter(geographic_level == "Local authority district") %>%
     # add population
     mutate(popGroup = case_when(
       apprenticeships_or_further_education == "Apprenticeships" & (age_group == "Total" | age_group == "Under 19") ~ paste(apprenticeships_or_further_education, age_group),
@@ -286,10 +286,11 @@ format.Achieve.ILR <- function(x) {
     )) %>%
     left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup")) %>%
     # addMCA
-    left_join(select(C_mcalookup, -LAD21CD,-CAUTH21CD), by = c("area" = "LAD21NM")) %>%
+    left_join(select(C_mcalookup,-CAUTH21CD, -LAD21NM), by = c("lad_code" = "LAD21CD")) %>%
     select(
       -time_identifier, -country_code, -country_name, -region_code, -region_name, -old_la_code,
-      -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name, -lad_name, -starts_rate_per_100000_population, -participation_rate_per_100000_population, -achievements_rate_per_100000_population, -popGroup
+      -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name, -lad_name, -starts_rate_per_100000_population,
+      -participation_rate_per_100000_population, -achievements_rate_per_100000_population, -popGroup
     ) %>% # get rid of ladu area
     mutate(geographic_level = "MCA") %>% # rename as MCA
     rename(area = CAUTH21NM) %>%
@@ -323,7 +324,7 @@ write.csv(D_Achieve_ILR1621, file = "Data\\AppData\\D_Achieve_ILR1621.csv", row.
 
 # create version to use in dashboard
 C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
-  filter(geographic_level == "LEP" | geographic_level == "LSIP" | geographic_level == "National") %>%
+  filter(geographic_level == "LEP" | geographic_level == "LSIP" | geographic_level == "National" | geographic_level == "MCA") %>%
   mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
   mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.numeric) %>% # Convert to numeric
   mutate(Year = as.numeric(substr(time_period, 3, 4))) %>% # add year name for charts
@@ -385,7 +386,7 @@ format.AchieveSSA.ILR <- function(x) {
   # create MCA file
   addMCA <- x %>%
     filter(geographic_level == "localAuthorityDistrict") %>%
-    left_join(select(C_mcalookup, -LAD21CD,-CAUTH21CD), by = c("area" = "LAD21NM")) %>%
+    left_join(select(C_mcalookup, -LAD21CD,-CAUTH21CD), by = c("location" = "LAD21NM")) %>%
     select(-location, -location_code, -ethnicity_group) %>% # get rid of ladu area
     mutate(geographic_level = "MCA") %>% # rename as MCA
     rename(area = CAUTH21NM) %>%
