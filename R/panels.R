@@ -168,7 +168,7 @@ panel_employment <- function() {
           inputId = "empRateSource",
           tags$ol(
             tags$li("Figures are for 16-64 year olds."),
-            tags$li("Years represent Jul-Jun period. So 2017 is the Jul 2016 – June 2017 period.")
+            tags$li("Years represent Jul-Jun period. So 2017 is the Jul 2017 – June 2018 period.")
           )
         )
       ),
