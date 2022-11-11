@@ -188,6 +188,7 @@ padding-top:15px
     id = "navbar",
     widths = c(2, 10),
     well = FALSE,
+    selected="Local skills",
 
     # HOMEPAGE ============================================================
 
