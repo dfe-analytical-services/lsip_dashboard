@@ -475,7 +475,7 @@ panel_skills <- function() {
       ),
       column(
         width = 9,
-        "Download skills data for all geographies (LEPs, LSIP, MCAs areas, LAs, regions and England)"
+        "Download skills data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)"
       )
     ), # end of row
     fluidRow(
