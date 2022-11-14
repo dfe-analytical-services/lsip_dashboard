@@ -119,7 +119,7 @@ panel_overview <- function() {
       ),
       column(
         width = 9,
-        "Download all data for all geographies (LEPs, LSIP areas, LAs, regions and England)",
+        "Download all data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
       )
     ),
     fluidRow(
@@ -132,7 +132,7 @@ panel_overview <- function() {
           class = "downloadButton"
         )
       ),
-      column(width = 9, "Download all data for the selected LEP/LSIP area")
+      column(width = 9, "Download all data for the selected geographic area")
     ),
     column(width = 12, br(""))
   )
@@ -183,9 +183,6 @@ panel_employment <- function() {
           inputId = "empOccSource",
           tags$ol(
             tags$li("Figures are for all age groups."),
-            tags$li("LSIP area totals are calculated by adding up the relevant local authorities, which may lead to rounding errors and differences compared to equivalent LEPs."),
-            tags$li("Only the top 5 occupations are shown for LSIP areas."),
-            tags$li("Percentages are based on proportion of total employment in LEP/LSIP."),
             tags$li(
               "ONS have announced that there is an issue with the collection of their occupational data surveys including the data used in this chart.
             As such please see this data with caution.
@@ -215,7 +212,7 @@ panel_employment <- function() {
       ),
       column(
         width = 9,
-        "Download employment data for all geographies (LEPs, LSIP areas, LAs, regions and England)",
+        "Download employment data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
       )
     ), # end of row
     fluidRow(
@@ -228,7 +225,7 @@ panel_employment <- function() {
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Download employment data for the selected LEP/LSIP area"))
+      column(width = 9, p("Download employment data for the selected geographic area"))
     ), # end of row
     column(width = 12, br(""))
   ) # end of Local Landscape tab
@@ -276,7 +273,7 @@ panel_vacancies <- function() {
           inputId = "SubsLev",
           label = "Job vacancy data information",
           help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
-              The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between LEPs/LSIPs and over time, but do not represent true job vacancy volumes."
+              The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between areas and over time, but do not represent true job vacancy volumes."
         )
       )
     ),
@@ -294,7 +291,7 @@ panel_vacancies <- function() {
       ),
       column(
         width = 9,
-        "Download vacancies data for all geographies (LEPs, LSIP areas, LAs, regions and England)",
+        "Download vacancies data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
       )
     ), # end of row
     fluidRow(
@@ -307,7 +304,7 @@ panel_vacancies <- function() {
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Download vacancies data for the selected LEP/LSIP area")),
+      column(width = 9, p("Download vacancies data for the selected geographic area")),
     ), # end of row
     column(width = 12, br(""))
   ) # end of Skills Supply tab
@@ -443,7 +440,7 @@ panel_skills <- function() {
       label = "Source: Individualised Learner Record",
       inputId = "FEKPISource",
       tags$ol(
-        tags$li("Not Applicable/Not Known' levels includes aims where a qualification either has no level or may be taken at several levels."),
+        tags$li("'Not Applicable/Not Known' levels includes aims where a qualification either has no level or may be taken at several levels."),
         tags$li("Aim enrolments are a count of enrolments at aim level (including component aims) for each stated academic period. Learners will be counted for each aim they are studying and so can be counted more than once."),
         tags$li("Aim achievements are a count of aims achieved (including component aims) for each stated academic period. Learners will be counted for each aim they achieve and so can be counted more than once."),
       )
@@ -478,7 +475,7 @@ panel_skills <- function() {
       ),
       column(
         width = 9,
-        "Download skills data for all geographies (LEPs, LSIP areas, LAs, regions and England)"
+        "Download skills data for all geographies (LEPs, LSIP.MCAs areas, LAs, regions and England)"
       )
     ), # end of row
     fluidRow(
@@ -491,7 +488,7 @@ panel_skills <- function() {
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Download skills data for the selected LEP/LSIP area"))
+      column(width = 9, p("Download skills data for the selected geographic area"))
     ), # end of row
     column(width = 12, br(""))
   ) # skills panel
