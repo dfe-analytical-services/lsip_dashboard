@@ -157,8 +157,8 @@ server <- function(input, output, session) {
       )
     } else {
       selectInput("lep1", "Choose primary MCA area",
-                  choices = C_LEP2020 %>% filter(geographic_level == "MCA") %>% select(Area),
-                  selected = input$lep1
+        choices = C_LEP2020 %>% filter(geographic_level == "MCA") %>% select(Area),
+        selected = input$lep1
       )
     }
   })
@@ -178,10 +178,10 @@ server <- function(input, output, session) {
           choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LSIP", Area != input$lep1) %>% select(Area)),
           selected = input$lep2
         )
-      } else  {
+      } else {
         selectInput("lep2", "Choose comparison MCA area",
-                    choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "MCA", Area != input$lep1) %>% select(Area)),
-                    selected = input$lep2
+          choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "MCA", Area != input$lep1) %>% select(Area)),
+          selected = input$lep2
         )
       }
     }
@@ -334,7 +334,7 @@ server <- function(input, output, session) {
     empCntMinMax <- C_EmpRate_APS1822_max_min %>%
       filter(area == input$lep1)
 
-    ggplot(empLine, aes(x = Year-1, y = Employment, group = area, text = paste0(
+    ggplot(empLine, aes(x = Year - 1, y = Employment, group = area, text = paste0(
       "Year: Jul-Jun ", year, "<br>",
       "Employment: ", format(Employment, big.mark = ","), "<br>"
     ))) +
@@ -418,7 +418,7 @@ server <- function(input, output, session) {
       filter((geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"))
 
     ggplot(empRateLine, aes(
-      x = Year-1, y = empRate,
+      x = Year - 1, y = empRate,
       group = area,
       text = paste0(
         "Year: Jul-Jun ", year, "<br>",
@@ -952,7 +952,7 @@ server <- function(input, output, session) {
     ggplot(
       EmpRateTime,
       aes(
-        x = year-1, y = empRate,
+        x = year - 1, y = empRate,
         color = Areas, group = Areas,
         text = paste0(
           "Year: Jul-Jun ", year, "<br>",
@@ -1000,9 +1000,10 @@ server <- function(input, output, session) {
       mutate_at(c(2), ~ replace(., is.na(.), 0)) %>%
       mutate(across(where(is.numeric), ~ round(prop.table(.), 4))) %>%
       filter(.[[2]] > 0) %>%
-      rownames_to_column("Occupation")
-    #%>%
-     # filter(Occupation != "Alloccsremain")
+      rownames_to_column("Occupation") %>%
+      relocate(input$lep1, .after = England)
+    # %>%
+    # filter(Occupation != "Alloccsremain")
   })
 
   output$EmpOcc <- renderDataTable({
@@ -1426,7 +1427,7 @@ server <- function(input, output, session) {
     paste0(str_to_sentence(input$metricGroup), ": 2016/17 to 2020/21")
   })
 
-  Ach_time <- eventReactive(c(input$lep1, input$lep2, input$levelGroup, input$ageGroup, input$metricGroup), {#, input$splitLine), {
+  Ach_time <- eventReactive(c(input$lep1, input$lep2, input$levelGroup, input$ageGroup, input$metricGroup), { # , input$splitLine), {
     FETime <- C_Achieve_ILR1621 %>%
       filter(
         geographic_level == input$GeoType,
