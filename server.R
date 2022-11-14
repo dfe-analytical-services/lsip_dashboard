@@ -1428,6 +1428,9 @@ server <- function(input, output, session) {
   })
 
   Ach_time <- eventReactive(c(input$lep1, input$lep2, input$levelGroup, input$ageGroup, input$metricGroup), { # , input$splitLine), {
+    validate(
+      need(input$ageGroup != "", "") # if area not yet loaded don't try to load ch
+    )
     FETime <- C_Achieve_ILR1621 %>%
       filter(
         geographic_level == input$GeoType,
