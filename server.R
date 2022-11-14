@@ -1000,7 +1000,8 @@ server <- function(input, output, session) {
       mutate_at(c(2), ~ replace(., is.na(.), 0)) %>%
       mutate(across(where(is.numeric), ~ round(prop.table(.), 4))) %>%
       filter(.[[2]] > 0) %>%
-      rownames_to_column("Occupation")
+      rownames_to_column("Occupation") %>%
+      relocate(input$lep1, .after = England)
     # %>%
     # filter(Occupation != "Alloccsremain")
   })
@@ -1427,6 +1428,9 @@ server <- function(input, output, session) {
   })
 
   Ach_time <- eventReactive(c(input$lep1, input$lep2, input$levelGroup, input$ageGroup, input$metricGroup), { # , input$splitLine), {
+    validate(
+      need(input$ageGroup != "", "") # if area not yet loaded don't try to load ch
+    )
     FETime <- C_Achieve_ILR1621 %>%
       filter(
         geographic_level == input$GeoType,
