@@ -2140,33 +2140,35 @@ server <- function(input, output, session) {
   # 
   output$map <- renderLeaflet({
     
-    pal <- colorNumeric(c("#6BACE6", "#12436D"), C_mapLEP$BNG_E)
+    pal <- colorNumeric(c("#FFFFFF", "#12436D"), C_mapLEP$empRate)##6BACE6
     
     leaflet(options=leafletOptions(zoomSnap = 0.1)) %>% 
       addProviderTiles("Stamen.TonerLite") %>% 
       addPolygons(data = C_mapLEP, 
-                  color = ~pal(C_mapLEP$BNG_E), 
+                  color = ~pal(C_mapLEP$empRate), 
                   # color = "grey",
                   layerId = ~LEP21CD
                   ,weight = 0.5)%>%
       setView(lng = -1.6, lat = 52.8, zoom = 5.7)
   })
   
-  # update region on click
-  observe({ 
-    event <- input$map_shape_click
-    output$cnty <- renderText(C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id])
-    
-  })
+  # # update region on click
+  # mapGeog<-eventReactive(input$map_shape_click, { 
+  #   event <- input$map_shape_click
+  #   #output$mapGeog <- renderUI(C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id])
+  #   #updateSelectInput(session, "C_mapLEP", selected=event$id)
+  #   
+  # })
   
   #time chart
-  Splash_time <- eventReactive(c(input$lep1, input$lep2), {
+  Splash_time <- eventReactive(c(input$map_shape_click, input$lep2), {
+    event <- input$map_shape_click
     SplashTime <- C_EmpRate_APS1822 %>%
       select(year, area, geographic_level, empRate) %>%
       filter(
         geographic_level == input$GeoType | geographic_level == "COUNTRY",
         (area == "England" |
-           area == input$lep1 |
+           area == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]|#input$mapGeog|#eval(parse(text = )) 
            area == if ("lep2" %in% names(input)) {
              input$lep2
            } else {
@@ -2175,7 +2177,7 @@ server <- function(input, output, session) {
       )
     # add an extra column so the colours work in ggplot when sorting alphabetically
     SplashTime$Areas <- factor(SplashTime$area,
-                                levels = c("England", input$lep1, input$lep2)
+                                levels = c("England", C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id], input$lep2)
     )
     
     ggplot(
@@ -2208,11 +2210,12 @@ server <- function(input, output, session) {
   })
   
   #variab;e chart
-  Splash_pc <- eventReactive(c(input$lep1, input$lep2, input$levelBar, input$sexBar, input$metricBar), {
+  Splash_pc <- eventReactive(c(input$map_shape_click, input$lep2, input$levelBar, input$sexBar, input$metricBar), {
+    event <- input$map_shape_click
     Splash_21 <- C_Achieve_ILR21 %>%
       filter(
         geographic_level == input$GeoType,
-        (area == input$lep1 |
+        (area == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id] |
            area == if ("lep2" %in% names(input)) {
              input$lep2
            } else {
@@ -2226,7 +2229,7 @@ server <- function(input, output, session) {
     
     # add an extra column so the colours work in ggplot when sorting alphabetically
     Splash_21$Area <- factor(Splash_21$area,
-                             levels = c(input$lep1, input$lep2)
+                             levels = c(C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id], input$lep2)
     )
     ggplot(Splash_21, aes(x = reorder(SSA, desc(SSA)), y = pc, fill = Area, text = paste0(
       "SSA: ", SSA, "<br>",

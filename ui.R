@@ -557,7 +557,8 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
     column(6,
            fluidRow(
              column(12,
-           plotlyOutput("Splash_time")
+           plotlyOutput("Splash_time"),
+           textOutput("mapGeog")
            )),
            fluidRow(
              column(12,
