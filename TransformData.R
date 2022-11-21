@@ -788,5 +788,7 @@ names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
 write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
 
 #fortify geojson so can plot with ggplot
-C_mapLEP <- I_mapLEP#tidy(I_mapLEP, region = "LEP21CD")
+C_mapLEP <- I_mapLEP%>%
+  left_join(C_EmpRate_APS1822%>%filter(year==2021,geographic_level=="LEP"),by=c("LEP21NM"="area"))
+#tidy(I_mapLEP, region = "LEP21CD")
 

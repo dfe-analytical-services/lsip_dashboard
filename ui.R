@@ -511,7 +511,8 @@ padding-top:15px
     column(6,
            fluidRow(
              column(12,
-           plotlyOutput("Splash_time")
+           plotlyOutput("Splash_time"),
+           textOutput("mapGeog")
            )),
            fluidRow(
              column(12,
