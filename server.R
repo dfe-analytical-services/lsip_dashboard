@@ -59,7 +59,18 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
+  
   output$downloadData3 <- downloadHandler(
+    filename = function() {
+      "EmploymentbyindustryIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "1c.Employment by industry" = D_EmpInd_APS1822
+      ), path = file)
+    }
+  )
+  output$downloadData4 <- downloadHandler(
     filename = function() {
       "VacancyIndicators.xlsx"
     },
@@ -69,7 +80,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  output$downloadData4 <- downloadHandler(
+  output$downloadData5 <- downloadHandler(
     filename = function() {
       "AchievementIndicators.xlsx"
     },
@@ -79,7 +90,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  output$downloadData5 <- downloadHandler(
+  output$downloadData6 <- downloadHandler(
     filename = function() {
       "AchievementBySSAIndicators.xlsx"
     },
@@ -90,7 +101,7 @@ server <- function(input, output, session) {
     }
   )
 
-  output$downloadData6 <- downloadHandler(
+  output$downloadData7 <- downloadHandler(
     filename = function() {
       "EnterprisebyemploymentsizeIndicators.xlsx"
     },
@@ -102,7 +113,7 @@ server <- function(input, output, session) {
   )
 
 
-  output$downloadData7 <- downloadHandler(
+  output$downloadData8 <- downloadHandler(
     filename = function() {
       "Keystage4destinationsIndicators.xlsx"
     },
@@ -113,7 +124,7 @@ server <- function(input, output, session) {
     }
   )
 
-  output$downloadData8 <- downloadHandler(
+  output$downloadData9 <- downloadHandler(
     filename = function() {
       "Keystage5destinationsIndicators.xlsx"
     },
@@ -124,16 +135,6 @@ server <- function(input, output, session) {
     }
   )
   
-  output$downloadData9 <- downloadHandler(
-    filename = function() {
-      "EmploymentbyindustryIndicators.xlsx"
-    },
-    content = function(file) {
-      write_xlsx(list(
-        "7a.Employment by industry" = D_EmpInd_APS1822
-      ), path = file)
-    }
-  )
 
   # create download links
   output$hidden_downloads <- renderUI(
@@ -262,13 +263,13 @@ server <- function(input, output, session) {
   list_of_datasets0 <- list(
     "1a.Emp by occupation" = D_EmpOcc_APS1721,
     "1b.Emp rate" = D_EmpRate_APS1822,
+    "1c.Employment by industry" = D_EmpInd_APS1822,
     "2.Vacancies" = C_Vacancy_ONS1722,
     "3a.FE achievements SSA" = D_Achieve_ILR21,
     "3b.FE achievements" = D_Achieve_ILR1621,
     "4a.Enterprise by emp size" = D_empent_UBC1822,
     "5a.Key Stage 4 destinations" = D_KS4destin_1521,
-    "6a.Key Stage 5 destinations" = D_KS5destin_1721,
-    "7a.Employment by industry" = D_EmpInd_APS1822
+    "6a.Key Stage 5 destinations" = D_KS5destin_1721
   )
   output$download_btn0a <- downloadHandler(
     filename = function() {
