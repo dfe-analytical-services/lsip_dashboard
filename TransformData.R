@@ -777,6 +777,62 @@ D_KS5destin_1721 <- F_KS5destin_1721 %>%
 # write data to folder - todo
 write.csv(D_KS5destin_1721, file = "Data\\AppData\\D_KS5destin_1721.csv", row.names = FALSE)
 
+#employment by industry
+format.EmpInd.APS <- function(x) {
+  reformat <- x %>%
+    mutate(year = ifelse(annual.population.survey == "date", substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
+    fill(year) %>% # fill time periods for all rows
+    row_to_names(row_number = 4) %>% # set col names
+    clean_names() %>%
+    select(-starts_with("na")) %>% # remove na columns (flags and confidence)
+    mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
+    filter(check == 1) %>%
+    filter(!grepl("nomisweb", area)) %>%
+    select(year = x2018, area, everything(), -check) %>%
+    mutate(area2 = gsub(".*-", "", area)) %>%
+    mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
+    mutate(area = gsub(".*:", "", area)) %>%
+    mutate(area = gsub("-.*", "", area)) %>%
+    mutate(area = case_when(
+      area == "Hull and East Riding" ~ "Hull and East Yorkshire",
+      area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+      area == "Heart of the South" ~ "Heart of the South-West",
+      area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
+      area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
+      TRUE ~ area
+    )) %>%
+    mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
+    select(area, everything(), -area2) %>%
+    relocate(geographic_level, year, .after = area) %>%
+    # mutate(year = as.numeric(substr(year, 5, 8))) %>%
+    rename_with(
+      .fn = ~ str_replace_all(.x, c("t13a_" = "", "_" = " ", "sic 2007 all people" = "")),
+      .cols = starts_with("t13a_")) %>%
+    rename_with(~ gsub("[[:digit:]]+", "", .)) %>%
+    rename("Agriculture and Fishing" = " a agricuture fishing ",
+           "Energy and Water" = " b d e energy water ",
+           "Manufacturing" = " c manufacturing ",
+           "Construction" = " f construction ",
+           "Distribution, Hotels and Restaurants" = " g i distribution hotels restaurants ",
+           "Transport and Communication" = " h j transport communication ",
+           "Banking, Finance and Insurance" = " k n banking finance insurance etc ",
+           "Public Administration, Education and Health" = " o q public admin education health ",
+           "Other Services" = " r u other services ") %>%
+    mutate(geographic_level = toupper(geographic_level)) %>%
+    filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
+}  
+
+# format data
+F_EmpInd_APS1822 <- format.EmpInd.APS(I_empind_APS1822) %>%
+  mutate_at(vars(c(4:12)), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "")))
+
+# downloadable version
+D_EmpInd_APS1822 <- format.EmpInd.APS(I_empind_APS1822) %>%
+  mutate_at(vars(c(4:12)), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+# write the data to folder
+write.csv(D_EmpInd_APS1822, file = "Data\\AppData\\D_EmpInd_APS1822.csv", row.names = FALSE)
+
+
 
 # Tidy up data table
 names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
