@@ -17,6 +17,9 @@ library(odbc)
 library(janitor)
 library(openxlsx)
 library(reshape2)
+library(broom)
+library(mapproj)
+library(leaflet)
 
 # list leps and LSIPs for dropdowns
 C_LEP2020 <- I_LEP2020 %>%
@@ -783,3 +786,7 @@ write.csv(D_KS5destin_1721, file = "Data\\AppData\\D_KS5destin_1721.csv", row.na
 # Tidy up data table
 names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
 write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
+
+#fortify geojson so can plot with ggplot
+C_mapLEP <- I_mapLEP#tidy(I_mapLEP, region = "LEP21CD")
+

@@ -498,7 +498,29 @@ padding-top:15px
     tabPanel(
       "Support and feedback",
       support_links() # defined in R/supporting_links.R
+    ),
+    
+    #mapsplash
+    tabPanel("mapSplash",
+    fluidRow(
+      column(6,
+             leafletOutput("map")#,
+             # leafletOutput("mymap"),
+             # plotlyOutput("mapSplashGG")
+    ),
+    column(6,
+           fluidRow(
+             column(12,
+           plotlyOutput("Splash_time")
+           )),
+           fluidRow(
+             column(12,
+                    plotlyOutput("Splash_pc")
+                    ))
     )
+    )
+    )
+    
   ), # End of navBarPage
   # Footer ====================================================================
 

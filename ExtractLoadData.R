@@ -9,6 +9,7 @@
 
 # Load libraries ----
 library(openxlsx)
+library(geojsonio)
 
 ## Load list of LEPs 2020 and LA-LSIP lookup ----
 folder <- "1_GeogLkup"
@@ -93,3 +94,10 @@ I_KS5destin_1721 <- read.csv(file = paste0("./Data/", folder, "/", list.files(pa
 folder <- "8_DataTable"
 sheetNum <- 1
 I_DataTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+
+## Load data table ----
+folder <- "13_mapfiles"
+I_mapLEP <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder)))
+                        ,stringsAsFactors = F) 
+  #geojson_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),  what = "sp")
+
