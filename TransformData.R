@@ -17,6 +17,9 @@ library(odbc)
 library(janitor)
 library(openxlsx)
 library(reshape2)
+library(broom)
+library(mapproj)
+library(leaflet)
 
 library(shinyalert)
 
@@ -1542,3 +1545,7 @@ write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.name
 # 4. Tidy up data table ----
 names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
 write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
+
+#fortify geojson so can plot with ggplot
+C_mapLEP <- I_mapLEP#tidy(I_mapLEP, region = "LEP21CD")
+

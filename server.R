@@ -5,7 +5,7 @@ server <- function(input, output, session) {
   hide(id = "loading-content", anim = TRUE, animType = "fade")
   show("app-content")
 
-  # Load chart colours:
+  # Load chart colours:https://analysisfunction.civilservice.gov.uk/policy-store/data-visualisation-colours-in-charts/
   # England, geo1, geo2
   chartColors3 <- c("#BFBFBF", "#12436D", "#28A197")
   # geo1, geo2
@@ -2099,6 +2099,159 @@ server <- function(input, output, session) {
   output$Ach_SSA_pc <- renderPlotly({
     ggplotly(Ach_SSA_pc(),
       tooltip = c("text"), height = 474
+    ) %>%
+      layout(
+        legend = list(orientation = "h", x = 0, y = -0.1),
+        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+  
+  mapSplashGG <- eventReactive(c(input$lep1, input$lep2, input$levelBar, input$sexBar, input$metricBar), {
+  ggplot() +
+    geom_polygon(data = C_mapLEP, aes( x = long, y = lat, group = group), fill="white", color="grey") +
+    theme_void() +
+    coord_map()
+  })
+  
+  #Maps---
+  
+  
+  # output$mapSplashGG <- renderPlotly({
+  #   ggplotly(mapSplashGG()) %>%
+  #     layout(
+  #       legend = list(orientation = "h", x = 0, y = -0.1),
+  #       xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+  #     ) %>% # disable zooming because it's awful on mobile
+  #     config(displayModeBar = FALSE)
+  # })
+  # 
+  # points <- eventReactive( {
+  #   cbind(rnorm(40) * 2 + 13, rnorm(40) + 48)
+  # }, ignoreNULL = FALSE)
+  # 
+  # output$mymap <- renderLeaflet({
+  #   leaflet() %>%
+  #     addProviderTiles(providers$Stamen.TonerLite,
+  #                      options = providerTileOptions(noWrap = TRUE)
+  #     ) %>%
+  #     addMarkers(data = points())
+  # })
+  # 
+  output$map <- renderLeaflet({
+    
+    pal <- colorNumeric(c("#6BACE6", "#12436D"), C_mapLEP$BNG_E)
+    
+    leaflet(options=leafletOptions(zoomSnap = 0.1)) %>% 
+      addProviderTiles("Stamen.TonerLite") %>% 
+      addPolygons(data = C_mapLEP, 
+                  color = ~pal(C_mapLEP$BNG_E), 
+                  # color = "grey",
+                  layerId = ~LEP21CD
+                  ,weight = 0.5)%>%
+      setView(lng = -1.6, lat = 52.8, zoom = 5.7)
+  })
+  
+  # update region on click
+  observe({ 
+    event <- input$map_shape_click
+    output$cnty <- renderText(C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id])
+    
+  })
+  
+  #time chart
+  Splash_time <- eventReactive(c(input$lep1, input$lep2), {
+    SplashTime <- C_EmpRate_APS1822 %>%
+      select(year, area, geographic_level, empRate) %>%
+      filter(
+        geographic_level == input$GeoType | geographic_level == "COUNTRY",
+        (area == "England" |
+           area == input$lep1 |
+           area == if ("lep2" %in% names(input)) {
+             input$lep2
+           } else {
+             "\nNone"
+           })
+      )
+    # add an extra column so the colours work in ggplot when sorting alphabetically
+    SplashTime$Areas <- factor(SplashTime$area,
+                                levels = c("England", input$lep1, input$lep2)
+    )
+    
+    ggplot(
+      SplashTime,
+      aes(
+        x = year - 1, y = empRate,
+        color = Areas, group = Areas,
+        text = paste0(
+          "Year: Jul-Jun ", year, "<br>",
+          "Area: ", Areas, "<br>",
+          "Employment rate: ", scales::percent(round(empRate, 2)), "<br>"
+        )
+      )
+    ) +
+      geom_line() +
+      theme_minimal() +
+      theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
+      scale_y_continuous(labels = scales::percent_format(accuracy = 1), limits = c(.65, .85)) +
+      labs(colour = "") +
+      scale_color_manual(values = chartColors3)
+  })
+  
+  output$Splash_time <- renderPlotly({
+    ggplotly(Splash_time(), tooltip = "text") %>%
+      layout(
+        legend = list(orientation = "h", x = 0, y = -0.1),
+        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+  
+  #variab;e chart
+  Splash_pc <- eventReactive(c(input$lep1, input$lep2, input$levelBar, input$sexBar, input$metricBar), {
+    Splash_21 <- C_Achieve_ILR21 %>%
+      filter(
+        geographic_level == input$GeoType,
+        (area == input$lep1 |
+           area == if ("lep2" %in% names(input)) {
+             input$lep2
+           } else {
+             "\nNone"
+           }),
+        Level == input$levelBar,
+        sex == input$sexBar
+      ) %>%
+      mutate(pc = case_when(input$metricBar == "Achievements" ~ pcAch, TRUE ~ pcEnr)) %>%
+      select(area, SSA, metric = input$metricBar, pc)
+    
+    # add an extra column so the colours work in ggplot when sorting alphabetically
+    Splash_21$Area <- factor(Splash_21$area,
+                             levels = c(input$lep1, input$lep2)
+    )
+    ggplot(Splash_21, aes(x = reorder(SSA, desc(SSA)), y = pc, fill = Area, text = paste0(
+      "SSA: ", SSA, "<br>",
+      "Area: ", Area, "<br>",
+      "Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(pc, 2)), "<br>",
+      input$metricBar, ": ", metric, "<br>"
+    ))) +
+      geom_col(
+        position = "dodge"
+      ) +
+      scale_y_continuous(labels = scales::percent) +
+      scale_x_discrete(labels = function(SSA) str_wrap(SSA, width = 26)) +
+      coord_flip() +
+      theme_minimal() +
+      labs(fill = "") +
+      theme(
+        legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank()
+      ) +
+      scale_fill_manual(values = chartColors2)
+  })
+  
+  output$Splash_pc <- renderPlotly({
+    ggplotly(Splash_pc(),
+             tooltip = c("text")#, height = 474
     ) %>%
       layout(
         legend = list(orientation = "h", x = 0, y = -0.1),
