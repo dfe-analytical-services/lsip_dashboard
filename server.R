@@ -10,6 +10,7 @@ server <- function(input, output, session) {
   chartColors3 <- c("#BFBFBF", "#12436D", "#28A197")
   # geo1, geo2
   chartColors2 <- c("#12436D", "#28A197")
+  chartColors6 <- c("#BFBFBF", "#12436D", "#28A197","#801650","#F46A25","#A285D1")
 
   # 1. HOMEPAGE ----
   ## Create link to overview tab ----
@@ -256,6 +257,26 @@ server <- function(input, output, session) {
         )
       }
     }
+  })
+  
+  output$geoComp<- renderUI({
+      if (input$splashGeoType == "LEP") {
+        selectizeInput("geoComps",multiple=TRUE,label=NULL,
+                    choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LEP", Area != input$lep1) %>% select(Area)),
+                    options = list(maxItems = 4,placeholder = 'Choose comparison LEPs')
+        )
+      } else if (input$splashGeoType == "LSIP") {
+        selectizeInput("geoComps",multiple=TRUE,label=NULL,
+                    choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LSIP", Area != input$lep1) %>% select(Area)),
+                    options = list(maxItems = 4,placeholder = 'Choose comparison LEPs')
+                    )
+      } else {
+        selectizeInput("geoComps",multiple=TRUE,label=NULL,
+                    choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "MCA", Area != input$lep1) %>% select(Area)),
+                    options = list(maxItems = 4,placeholder = 'Choose comparison LEPs')
+        )
+      }
+    
   })
 
   # turn on extra filters where used
@@ -2109,7 +2130,7 @@ server <- function(input, output, session) {
   
 
   #---
-  ##Maps ----
+  #Maps ----
   # mapSplashGG <- eventReactive(c(input$lep1, input$lep2, input$levelBar, input$sexBar, input$metricBar), {
   #   ggplot() +
   #     geom_polygon(data = C_mapLEP, aes( x = long, y = lat, group = group), fill="white", color="grey") +
@@ -2217,7 +2238,7 @@ server <- function(input, output, session) {
   })
   
   #time chart
-  Splash_time <- eventReactive(c(input$map_shape_click, input$lep2), {
+  Splash_time <- eventReactive(c(input$map_shape_click, input$geoComps), {
     event <- input$map_shape_click
     SplashTime <- C_EmpRate_APS1822 %>%
       select(year, area, geographic_level, empRate) %>%
@@ -2225,15 +2246,15 @@ server <- function(input, output, session) {
         geographic_level == input$GeoType | geographic_level == "COUNTRY",
         (area == "England" |
            area == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]|#input$mapGeog|#eval(parse(text = )) 
-           area == if ("lep2" %in% names(input)) {
-             input$lep2
+           area %in% if ("geoComps" %in% names(input)) {
+             input$geoComps
            } else {
              "\nNone"
            })
       )
     # add an extra column so the colours work in ggplot when sorting alphabetically
     SplashTime$Areas <- factor(SplashTime$area,
-                                levels = c("England", C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id], input$lep2)
+                                levels = c("England", C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id], input$geoComps)
     )
     
     ggplot(
@@ -2253,7 +2274,7 @@ server <- function(input, output, session) {
       theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
       scale_y_continuous(labels = scales::percent_format(accuracy = 1), limits = c(.65, .85)) +
       labs(colour = "") +
-      scale_color_manual(values = chartColors3)
+      scale_color_manual(values = chartColors6)
   })
   
   output$Splash_time <- renderPlotly({
@@ -2266,14 +2287,15 @@ server <- function(input, output, session) {
   })
   
   #variab;e chart
-  Splash_pc <- eventReactive(c(input$map_shape_click, input$lep2, input$levelBar, input$sexBar, input$metricBar), {
+  Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$levelBar, input$sexBar, input$metricBar), {
     event <- input$map_shape_click
     Splash_21 <- C_Achieve_ILR21 %>%
-      filter(
+      filter(geographic_level == "country"|
         geographic_level == input$GeoType,
-        (area == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id] |
-           area == if ("lep2" %in% names(input)) {
-             input$lep2
+        (area == "England" |
+           area == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id] |
+           area %in% if ("geoComps" %in% names(input)) {
+             input$geoComps
            } else {
              "\nNone"
            }),
@@ -2285,7 +2307,7 @@ server <- function(input, output, session) {
     
     # add an extra column so the colours work in ggplot when sorting alphabetically
     Splash_21$Area <- factor(Splash_21$area,
-                             levels = c(C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id], input$lep2)
+                             levels = c("England", C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id], input$geoComps)
     )
     ggplot(Splash_21, aes(x = reorder(SSA, desc(SSA)), y = pc, fill = Area, text = paste0(
       "SSA: ", SSA, "<br>",
@@ -2302,10 +2324,10 @@ server <- function(input, output, session) {
       theme_minimal() +
       labs(fill = "") +
       theme(
-        legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
+        legend.position = "none", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank()
       ) +
-      scale_fill_manual(values = chartColors2)
+      scale_fill_manual(values = chartColors6)
   })
   
   output$Splash_pc <- renderPlotly({

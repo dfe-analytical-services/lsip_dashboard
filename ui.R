@@ -546,7 +546,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       support_links() # defined in R/supporting_links.R
     ),
     
-    #mapsplash
+    #mapsplash ======
     tabPanel("mapSplash",
              br(),
              fluidRow(column(12,
@@ -566,6 +566,10 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
 
              #),
              h3("Where does Black Country fit in the national picture?"),
+             radioGroupButtons(
+               inputId = "splashGeoType",
+               choices = c("LEP", "LSIP", "MCA")
+             ),
              p("Black Country has a higher employment rate than the national average. It has the 6th highest employment rate of the 38 LEPs"),
              leafletOutput("map")#,
              # leafletOutput("mymap"),
@@ -575,7 +579,9 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
     column(6,
 
            h3("How is employment rate changing over time?"),
+           
                     p("Black Country's emloyment rate has increased faster than the national average in the last year and the last five years. It has the 6th fasest growing employment rate of the 38 LEPs"),
+           uiOutput("geoComp"),
            plotlyOutput("Splash_time")
            )
     ),

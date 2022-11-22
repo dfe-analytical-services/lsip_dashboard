@@ -706,7 +706,7 @@ write.csv(D_Achieve_ILR21, file = "Data\\AppData\\D_Achieve_ILR21.csv", row.name
 # create version to use in dashboard
 # group by ssa and lep
 SSA_LEP_Achieve_ILR21 <- F_Achieve_ILR21 %>%
-  filter(geographic_level != "localAuthorityDistrict", geographic_level != "region", geographic_level != "country") %>%
+  filter(geographic_level != "localAuthorityDistrict", geographic_level != "region") %>%
   mutate_at(vars(achievements, enrolments), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "low" = ""))) %>% # convert to blank to avoid error msg
   mutate(Achievements = as.numeric(achievements), Enrolments = as.numeric(enrolments)) %>%
   filter(time_period == "202122") %>%
