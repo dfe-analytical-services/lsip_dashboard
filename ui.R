@@ -502,8 +502,16 @@ padding-top:15px
     
     #mapsplash
     tabPanel("mapSplash",
+             br(),
     fluidRow(
       column(6,
+             div(
+               class = "filterRow",
+               selectizeInput("splashMetric", "Focus on",
+                              choices = c("Employment rate", "1", "2", "3", "4+", "E", "Not Assigned")
+               )
+             ),
+             p("Black Country has a higher employment rate than the national average. It has the 6th highest employment rate of the 38 LEPs"),
              leafletOutput("map")#,
              # leafletOutput("mymap"),
              # plotlyOutput("mapSplashGG")
@@ -511,11 +519,19 @@ padding-top:15px
     column(6,
            fluidRow(
              column(12,
-           plotlyOutput("Splash_time"),
-           textOutput("mapGeog")
+                    p("Black Country's emloyment rate has increased faster than the national average in the last year and the last five years. It has the 6th fasest growing employment rate of the 38 LEPs"),
+           plotlyOutput("Splash_time")
            )),
            fluidRow(
              column(12,
+                    div(
+                      class = "filterRow",
+                      selectizeInput("splashBreakdown", "Choose breakdown",
+                                   choices = c("SSA", "1", "2", "3", "4+", "E", "Not Assigned")
+                                   )
+                    ),
+                    p("Black Country has a high proportion of health achievements compared to the national picture. It has a low proportion of Retail achievemenst"),
+                    
                     plotlyOutput("Splash_pc")
                     ))
     )

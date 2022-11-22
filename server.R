@@ -1599,15 +1599,15 @@ server <- function(input, output, session) {
   # 
   output$map <- renderLeaflet({
     
-    pal <- colorNumeric(c("#FFFFFF", "#12436D"), C_mapLEP$empRate)##6BACE6
+    pal <- colorNumeric("Blues", C_mapLEP$empRate)##6BACE6 c("#FFFFFF", "#12436D")
     
     leaflet(options=leafletOptions(zoomSnap = 0.1)) %>% 
-      addProviderTiles("Stamen.TonerLite") %>% 
+      addProviderTiles(providers$CartoDB.Positron) %>% #"Stamen.TonerLite"
       addPolygons(data = C_mapLEP, 
-                  color = ~pal(C_mapLEP$empRate), 
-                  # color = "grey",
+                  fillColor = ~pal(C_mapLEP$empRate), 
+                   color = "black",
                   layerId = ~LEP21CD
-                  ,weight = 0.5)%>%
+                  ,weight = 1)%>%
       setView(lng = -1.6, lat = 52.8, zoom = 5.7)
   })
   
