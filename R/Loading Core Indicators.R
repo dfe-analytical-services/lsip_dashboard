@@ -109,3 +109,8 @@ C_KS5_eduempapp_max_min <- read.csv(file = "./Data/AppData/C_KS5_eduempapp_max_m
 
 ## 7. Data table ----
 I_DataTable <- read.csv(file = "./Data/AppData/I_DataTable.csv", check.names = FALSE)
+
+#map tables
+C_mapLA <- read.csv(file = "./Data/AppData/C_mapLA.csv", check.names = FALSE)
+C_mapLEP <- read.csv(file = "./Data/AppData/C_mapLEP.csv", check.names = FALSE)
+

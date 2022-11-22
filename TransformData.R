@@ -1553,10 +1553,13 @@ write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALS
 C_mapLEP <- I_mapLEP%>%
   left_join(C_EmpRate_APS1822%>%filter(year==2021,geographic_level=="LEP"),by=c("LEP21NM"="area"))
 #tidy(I_mapLEP, region = "LEP21CD")
+write.csv(C_mapLEP, file = "Data\\AppData\\C_mapLEP.csv", row.names = FALSE)
+
 
 #add on employment data
 C_mapLA <- I_mapLA%>%
   left_join(C_EmpRate_APS1822%>%filter(year==2021,geographic_level=="LADU"),by=c("LAD22NM"="area"))%>%
   left_join(I_LEP2020%>%select(LAD21CD,LSIP,LEP21NM1,LEP21NM2),by=c("LAD22CD"="LAD21CD"))%>%
   filter(is.na(geographic_level)==FALSE)
+write.csv(C_mapLA, file = "Data\\AppData\\C_mapLA.csv", row.names = FALSE)
 
