@@ -9,7 +9,7 @@
 
 # Load libraries ----
 library(openxlsx)
-library(geojsonio)
+#library(geojsonio)
 
 ## Load list of LEPs 2020 and LA-LSIP lookup ----
 folder <- "1_GeogLkup"

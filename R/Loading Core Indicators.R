@@ -53,3 +53,8 @@ D_KS5destin_1721 <- read.csv(file = "./Data/AppData/D_KS5destin_1721.csv", check
 
 ## Data table ----
 I_DataTable <- read.csv(file = "./Data/AppData/I_DataTable.csv", check.names = FALSE)
+
+#map tables
+C_mapLA <- read.csv(file = "./Data/AppData/C_mapLA.csv", check.names = FALSE)
+C_mapLEP <- read.csv(file = "./Data/AppData/C_mapLEP.csv", check.names = FALSE)
+
