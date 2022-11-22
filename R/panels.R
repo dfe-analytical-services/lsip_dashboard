@@ -200,6 +200,25 @@ panel_employment <- function() {
         )
       )
     ),
+    
+    
+    fluidRow(
+      column(
+        12,
+        ### employment by industry bar chart ----
+        h2("Employment share by industry: Jul-Jun 2018 to Jul-Jun 2022"),
+        plotlyOutput("empind"),
+        br(),
+        details(
+          label = "Source: Annual Population Survey",
+          inputId = "empindSource",
+          tags$ol(
+            tags$li("Figures are for all age groups."),
+            tags$li("Percentages are based on proportion of total employment")
+          )
+        )
+      )
+    ),
 
     ### Downloads-------------
     br(),

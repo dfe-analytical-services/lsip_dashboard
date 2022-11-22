@@ -826,6 +826,23 @@ format.EmpInd.APS <- function(x) {
 F_EmpInd_APS1822 <- format.EmpInd.APS(I_empind_APS1822) %>%
   mutate_at(vars(c(4:12)), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "")))
 
+#dashboard data
+C_EmpInd_APS1822 <- F_EmpInd_APS1822 %>%
+  mutate_at(c(4:12), as.numeric) %>% 
+  melt(id.vars = c("year", "geographic_level", "area")) %>%
+  mutate_at(c('value'), ~replace_na(.,0)) %>%
+  group_by(area, year, geographic_level) %>% 
+  summarise(Total = sum(`value`))
+
+C_EmpInd2_APS1822 <-  F_EmpInd_APS1822 %>%
+  mutate_at(c(4:12), as.numeric) %>% 
+  melt(id.vars = c("year", "geographic_level", "area")) %>%
+  mutate_at(c('value'), ~replace_na(.,0)) %>%
+  left_join(C_EmpInd_APS1822, by = c('area' = 'area', 'year' = 'year',
+                                     'geographic_level' = 'geographic_level')) %>%
+  mutate(rate = value/Total)
+
+
 # downloadable version
 D_EmpInd_APS1822 <- format.EmpInd.APS(I_empind_APS1822) %>%
   mutate_at(vars(c(4:12)), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
