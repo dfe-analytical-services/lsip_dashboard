@@ -537,12 +537,12 @@ padding-top:15px
            fluidRow(
              column(6,
                     h3("How does employmnet rate vary by SSA?"),
-                    div(
-                      class = "filterRow",
-                      selectizeInput("splashBreakdown", "Choose breakdown",
-                                   choices = c("SSA", "1", "2", "3", "4+", "E", "Not Assigned")
-                                   )
-                    ),
+
+                    radioGroupButtons(
+                      inputId = "splashBreakdown",
+                      choices = c("SSA", "Age", "Gender")
+                    )
+                    ,
                     p("Black Country has a high proportion of health achievements compared to the national picture. It has a low proportion of Retail achievemenst"),
                     
                     plotlyOutput("Splash_pc")
