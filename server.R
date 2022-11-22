@@ -197,12 +197,12 @@ server <- function(input, output, session) {
       } else if (input$splashGeoType == "LSIP") {
         selectizeInput("geoComps",multiple=TRUE,label=NULL,
                     choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LSIP", Area != input$lep1) %>% select(Area)),
-                    options = list(maxItems = 4,placeholder = 'Choose comparison LEPs')
+                    options = list(maxItems = 4,placeholder = 'Choose comparison LSIPs')
                     )
       } else {
         selectizeInput("geoComps",multiple=TRUE,label=NULL,
                     choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "MCA", Area != input$lep1) %>% select(Area)),
-                    options = list(maxItems = 4,placeholder = 'Choose comparison LEPs')
+                    options = list(maxItems = 4,placeholder = 'Choose comparison MCAs')
         )
       }
     
