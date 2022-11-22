@@ -561,15 +561,18 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
              leafletOutput("map")#,
              # leafletOutput("mymap"),
              # plotlyOutput("mapSplashGG")
-    ),
+    )
+    ,
     column(6,
-           fluidRow(
-             column(12,
+
+
                     p("Black Country's emloyment rate has increased faster than the national average in the last year and the last five years. It has the 6th fasest growing employment rate of the 38 LEPs"),
            plotlyOutput("Splash_time")
-           )),
+           )
+    ),
+    br(),
            fluidRow(
-             column(12,
+             column(6,
                     div(
                       class = "filterRow",
                       selectizeInput("splashBreakdown", "Choose breakdown",
@@ -579,10 +582,15 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
                     p("Black Country has a high proportion of health achievements compared to the national picture. It has a low proportion of Retail achievemenst"),
                     
                     plotlyOutput("Splash_pc")
-                    ))
+                    ),
+             column(6,
+                    p("Employment rate is highest in Sandwell and lowest in Dudley"),
+                    leafletOutput("mapLA")
+                    )
+             )
     )
-    )
-    )
+    
+    
     
   ), # End of navBarPage
   # Footer ====================================================================

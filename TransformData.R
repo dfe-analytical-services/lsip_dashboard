@@ -438,15 +438,18 @@ C_EmpInd_APS1822 <- F_EmpInd_APS1822 %>%
   group_by(area, year, geographic_level) %>%
   summarise(Total = sum(`value`))
 
-C_EmpInd2_APS1822 <- F_EmpInd_APS1822 %>%
-  mutate_at(c(4:12), as.numeric) %>%
-  melt(id.vars = c("year", "geographic_level", "area")) %>%
-  mutate_at(c("value"), ~ replace_na(., 0)) %>%
-  left_join(C_EmpInd_APS1822, by = c(
-    "area" = "area", "year" = "year",
-    "geographic_level" = "geographic_level"
-  )) %>%
-  mutate(rate = value / Total)
+# create version to use in dashboard
+C_EmpRate_APS1822 <- F_EmpRate_APS1822 %>%
+  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+  mutate_at(c(4:10), as.numeric) %>% # Convert to numeric
+  mutate(empRate = .[[6]] / .[[4]]) %>%
+  filter(
+    #geographic_level != "LADU" # not needed for the dashboard currently
+    geographic_level != "GOR"
+  ) %>%
+  mutate(Year = as.numeric(substr(year, 3, 4))) %>% # for use in charts
+  rename(Employment = `  In Employment `) # for use in charts
+write.csv(C_EmpRate_APS1822, file = "Data\\AppData\\C_EmpRate_APS1822.csv", row.names = FALSE)
 
 # write to data folder
 write.csv(C_EmpInd2_APS1822, file = "Data\\AppData\\C_EmpInd2_APS1822.csv", row.names = FALSE)
@@ -1546,8 +1549,14 @@ write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.name
 names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
 write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
 
-#fortify geojson so can plot with ggplot
+#add on employment data
 C_mapLEP <- I_mapLEP%>%
   left_join(C_EmpRate_APS1822%>%filter(year==2021,geographic_level=="LEP"),by=c("LEP21NM"="area"))
 #tidy(I_mapLEP, region = "LEP21CD")
+
+#add on employment data
+C_mapLA <- I_mapLA%>%
+  left_join(C_EmpRate_APS1822%>%filter(year==2021,geographic_level=="LADU"),by=c("LAD22NM"="area"))%>%
+  left_join(I_LEP2020%>%select(LAD21CD,LSIP,LEP21NM1,LEP21NM2),by=c("LAD22CD"="LAD21CD"))%>%
+  filter(is.na(geographic_level)==FALSE)
 
