@@ -95,9 +95,12 @@ folder <- "8_DataTable"
 sheetNum <- 1
 I_DataTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
-## Load data table ----
+## Load lep boundary----
 folder <- "13_mapfiles"
 I_mapLEP <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder)))
                         ,stringsAsFactors = F) 
-  #geojson_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),  what = "sp")
 
+## Load la boundary----
+folder <- "14_LABoundary"
+I_mapLA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder)))
+                        ,stringsAsFactors = F) 

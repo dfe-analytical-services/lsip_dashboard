@@ -1566,14 +1566,15 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
   
-  mapSplashGG <- eventReactive(c(input$lep1, input$lep2, input$levelBar, input$sexBar, input$metricBar), {
-  ggplot() +
-    geom_polygon(data = C_mapLEP, aes( x = long, y = lat, group = group), fill="white", color="grey") +
-    theme_void() +
-    coord_map()
-  })
-  
-  #Maps---
+
+  #---
+  ##Maps ----
+  # mapSplashGG <- eventReactive(c(input$lep1, input$lep2, input$levelBar, input$sexBar, input$metricBar), {
+  #   ggplot() +
+  #     geom_polygon(data = C_mapLEP, aes( x = long, y = lat, group = group), fill="white", color="grey") +
+  #     theme_void() +
+  #     coord_map()
+  # })
   
   
   # output$mapSplashGG <- renderPlotly({
@@ -1601,15 +1602,38 @@ server <- function(input, output, session) {
     
     pal <- colorNumeric("Blues", C_mapLEP$empRate)##6BACE6 c("#FFFFFF", "#12436D")
     
+    labels <- sprintf(
+      "<strong>%s</strong>",
+      C_mapLEP$LEP21NM
+    ) %>% lapply(htmltools::HTML)
+    
     leaflet(options=leafletOptions(zoomSnap = 0.1)) %>% 
       addProviderTiles(providers$CartoDB.Positron) %>% #"Stamen.TonerLite"
       addPolygons(data = C_mapLEP, 
                   fillColor = ~pal(C_mapLEP$empRate), 
                    color = "black",
-                  layerId = ~LEP21CD
-                  ,weight = 1)%>%
+                  layerId = ~LEP21CD,
+                  weight = 1,
+                  highlightOptions = highlightOptions(#color = "yellow",
+                                                      weight = 2, 
+                                                      #fillColor = 'yellow', 
+                                                      bringToFront = TRUE),
+                  label = labels,
+                  labelOptions = labelOptions(
+                    style = list("font-weight" = "normal", padding = "3px 8px"),
+                    textsize = "15px",
+                    direction = "auto")
+                  )%>%
       setView(lng = -1.6, lat = 52.8, zoom = 5.7)
   })
+  
+  # observeEvent(input$map_marker_click, {
+  #   leafletProxy("map", session) %>%
+  #     addPolygons(data=C_mapLEP%>%filter(LEP21CD==input$map_shape_click$id),weight = 2)
+  # })
+  
+  
+  
   
   # # update region on click
   # mapGeog<-eventReactive(input$map_shape_click, { 
@@ -1618,6 +1642,38 @@ server <- function(input, output, session) {
   #   #updateSelectInput(session, "C_mapLEP", selected=event$id)
   #   
   # })
+  
+  output$mapLA <- renderLeaflet({
+    
+    pal <- colorNumeric("Blues", C_mapLA$empRate)##6BACE6 c("#FFFFFF", "#12436D")
+    event <- input$map_shape_click
+    
+    labels <- sprintf(
+      "<strong>%s</strong>",
+      (C_mapLA%>%filter(LEP21NM1==C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]))$LAD22NM
+    ) %>% lapply(htmltools::HTML)
+    
+    
+    
+    leaflet(options=leafletOptions(zoomSnap = 0.1)) %>% 
+      addProviderTiles(providers$CartoDB.Positron) %>% #"Stamen.TonerLite"
+      addPolygons(data = C_mapLA%>%filter(LEP21NM1==C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]), 
+                  fillColor = ~pal(C_mapLA$empRate), 
+                  color = "black",
+                  layerId = ~LAD22CD,
+                  weight = 1,
+                  highlightOptions = highlightOptions(#color = "yellow",
+                    weight = 2, 
+                    #fillColor = 'yellow', 
+                    bringToFront = TRUE),
+                  label = labels,
+                  labelOptions = labelOptions(
+                    style = list("font-weight" = "normal", padding = "3px 8px"),
+                    textsize = "15px",
+                    direction = "auto")
+      )#%>%
+      #setView(lng = -1.6, lat = 52.8, zoom = 5.7)
+  })
   
   #time chart
   Splash_time <- eventReactive(c(input$map_shape_click, input$lep2), {
