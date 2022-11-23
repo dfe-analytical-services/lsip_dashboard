@@ -2211,8 +2211,8 @@ server <- function(input, output, session) {
 
   output$mapLA <- renderLeaflet({
     pal <- colorNumeric("Blues", C_mapLA$empRate) ## 6BACE6 c("#FFFFFF", "#12436D")
-    event <- input$map_shape_click
-
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
+    
     labels <- sprintf(
       "<strong>%s</strong><br/>Employment rate: %s%%",
       (C_mapLA %>% filter(LEP21NM1 == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]))$LAD22NM,round((C_mapLA %>% filter(LEP21NM1 == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]))$empRate*100)
@@ -2242,8 +2242,9 @@ server <- function(input, output, session) {
   })
 
   # time chart
-  Splash_time <- eventReactive(c(input$map_shape_click, input$mapLA_shape_click,input$geoComps), {
-    event <- input$map_shape_click
+  Splash_time <- eventReactive(c(input$map_shape_click, input$mapLA_shape_click,input$geoComps,input$levelBar), {
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
+    print(event)
     eventLA <- input$mapLA_shape_click
     SplashTime <- C_EmpRate_APS1822 %>%
       select(year, area, geographic_level, empRate) %>%
@@ -2293,7 +2294,7 @@ server <- function(input, output, session) {
 
   # variab;e chart
   Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$levelBar, input$sexBar, input$metricBar), {
-    event <- input$map_shape_click
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
     Splash_21 <- C_Achieve_ILR21 %>%
       filter(
         geographic_level == "country" |
