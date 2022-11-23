@@ -435,7 +435,7 @@ padding-top:15px
           p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities, 
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
           h3("UK Business Count (UBC)"),
-          p("A record of the number of enterprises from the Inter Departmental Business Register (IDBR), which is broken down by employment size band, detailed
+          p("A record of the number of enterprises from the Inter Departmental Business Register (IDBR) broken down by employment size band, detailed
             industry (5 digit SIC2007) and legal status."),
           p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities, 
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
