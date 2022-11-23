@@ -173,7 +173,7 @@ C_EmpRate_APS1822 <- F_EmpRate_APS1822 %>%
   mutate_at(c(4:10), as.numeric) %>% # Convert to numeric
   mutate(empRate = .[[6]] / .[[4]]) %>%
   filter(
-    #geographic_level != "LADU" # not needed for the dashboard currently
+    # geographic_level != "LADU" # not needed for the dashboard currently
     geographic_level != "GOR"
   ) %>%
   mutate(Year = as.numeric(substr(year, 3, 4))) %>% # for use in charts
@@ -787,17 +787,17 @@ write.csv(D_KS5destin_1721, file = "Data\\AppData\\D_KS5destin_1721.csv", row.na
 names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
 write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
 
-#add on employment data
-C_mapLEP <- I_mapLEP%>%
-  left_join(C_EmpRate_APS1822%>%filter(year==2021,geographic_level=="LEP"),by=c("LEP21NM"="area"))
-#tidy(I_mapLEP, region = "LEP21CD")
-write.csv(C_mapLEP, file = "Data\\AppData\\C_mapLEP.csv", row.names = FALSE)
+# add on employment data
+C_mapLEP <- I_mapLEP %>%
+  left_join(C_EmpRate_APS1822 %>% filter(year == 2021, geographic_level == "LEP"), by = c("LEP21NM" = "area"))
+# tidy(I_mapLEP, region = "LEP21CD")
+# write.csv(C_mapLEP, file = "Data\\AppData\\C_mapLEP.csv", row.names = FALSE)
+save(C_mapLEP, file = "Data\\AppData\\C_mapLEP.RData")
 
-
-#add on employment data
-C_mapLA <- I_mapLA%>%
-  left_join(C_EmpRate_APS1822%>%filter(year==2021,geographic_level=="LADU"),by=c("LAD22NM"="area"))%>%
-  left_join(I_LEP2020%>%select(LAD21CD,LSIP,LEP21NM1,LEP21NM2),by=c("LAD22CD"="LAD21CD"))%>%
-  filter(is.na(geographic_level)==FALSE)
-write.csv(C_mapLA, file = "Data\\AppData\\C_mapLA.csv", row.names = FALSE)
-
+# add on employment data
+C_mapLA <- I_mapLA %>%
+  left_join(C_EmpRate_APS1822 %>% filter(year == 2021, geographic_level == "LADU"), by = c("LAD22NM" = "area")) %>%
+  left_join(I_LEP2020 %>% select(LAD21CD, LSIP, LEP21NM1, LEP21NM2), by = c("LAD22CD" = "LAD21CD")) %>%
+  filter(is.na(geographic_level) == FALSE)
+# write.csv(C_mapLA, file = "Data\\AppData\\C_mapLA.csv", row.names = FALSE)
+save(C_mapLA, file = "Data\\AppData\\C_mapLA.RData")

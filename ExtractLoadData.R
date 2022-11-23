@@ -9,7 +9,7 @@
 
 # Load libraries ----
 library(openxlsx)
-#library(geojsonio)
+# library(geojsonio)
 
 ## Load list of LEPs 2020 and LA-LSIP lookup ----
 folder <- "1_GeogLkup"
@@ -97,10 +97,12 @@ I_DataTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(pa
 
 ## Load lep boundary----
 folder <- "13_mapfiles"
-I_mapLEP <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder)))
-                        ,stringsAsFactors = F) 
+I_mapLEP <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
+  stringsAsFactors = F
+)
 
 ## Load la boundary----
 folder <- "14_LABoundary"
-I_mapLA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder)))
-                        ,stringsAsFactors = F) 
+I_mapLA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
+  stringsAsFactors = F
+)
