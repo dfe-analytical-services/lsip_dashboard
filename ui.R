@@ -545,70 +545,67 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       "Support and feedback",
       support_links() # defined in R/supporting_links.R
     ),
-    
-    #mapsplash ======
-    tabPanel("mapSplash",
-             br(),
-             fluidRow(column(12,
-                             radioGroupButtons(
-                               inputId = "splashMetric",
-                               #label = "Focus on",
-                               choices = c("Employment rate", "Vacancies", "FE achievements", "Supply vs demand")
-                             )
-                             )),
-    fluidRow(
-      column(6,
-             # div(
-             #   class = "filterRow",
-             #   selectizeInput("splashMetric", "Focus on",
-             #                  choices = c("Employment rate", "1", "2", "3", "4+", "E", "Not Assigned")
-             #   ),
 
-             #),
-             h3("Where does Black Country fit in the national picture?"),
-             radioGroupButtons(
-               inputId = "splashGeoType",
-               choices = c("LEP", "LSIP", "MCA")
-             ),
-             p("Black Country has a higher employment rate than the national average. It has the 6th highest employment rate of the 38 LEPs"),
-             leafletOutput("map")#,
-             # leafletOutput("mymap"),
-             # plotlyOutput("mapSplashGG")
+    # mapsplash ======
+    tabPanel(
+      "mapSplash",
+      br(),
+      fluidRow(column(
+        12,
+        radioGroupButtons(
+          inputId = "splashMetric",
+          # label = "Focus on",
+          choices = c("Employment rate", "Vacancies", "FE achievements", "Supply vs demand")
+        )
+      )),
+      fluidRow(
+        column(
+          6,
+          # div(
+          #   class = "filterRow",
+          #   selectizeInput("splashMetric", "Focus on",
+          #                  choices = c("Employment rate", "1", "2", "3", "4+", "E", "Not Assigned")
+          #   ),
+
+          # ),
+          h3("Where does Black Country fit in the national picture?"),
+          radioGroupButtons(
+            inputId = "splashGeoType",
+            choices = c("LEP", "LSIP", "MCA")
+          ),
+          p("Black Country has a higher employment rate than the national average. It has the 6th highest employment rate of the 38 LEPs"),
+          leafletOutput("map") # ,
+          # leafletOutput("mymap"),
+          # plotlyOutput("mapSplashGG")
+        ),
+        column(
+          6,
+          h3("How is employment rate changing over time?"),
+          p("Black Country's emloyment rate has increased faster than the national average in the last year and the last five years. It has the 6th fasest growing employment rate of the 38 LEPs"),
+          uiOutput("geoComp"),
+          plotlyOutput("Splash_time")
+        )
+      ),
+      br(),
+      fluidRow(
+        column(
+          6,
+          h3("How does employmnet rate vary by SSA?"),
+          radioGroupButtons(
+            inputId = "splashBreakdown",
+            choices = c("SSA", "Age", "Gender")
+          ),
+          p("Black Country has a high proportion of health achievements compared to the national picture. It has a low proportion of Retail achievemenst"),
+          plotlyOutput("Splash_pc")
+        ),
+        column(
+          6,
+          h3("What is the variation with the LEP?"),
+          p("Employment rate is highest in Sandwell and lowest in Dudley"),
+          leafletOutput("mapLA")
+        )
+      )
     )
-    ,
-    column(6,
-
-           h3("How is employment rate changing over time?"),
-           
-                    p("Black Country's emloyment rate has increased faster than the national average in the last year and the last five years. It has the 6th fasest growing employment rate of the 38 LEPs"),
-           uiOutput("geoComp"),
-           plotlyOutput("Splash_time")
-           )
-    ),
-    br(),
-           fluidRow(
-             column(6,
-                    h3("How does employmnet rate vary by SSA?"),
-
-                    radioGroupButtons(
-                      inputId = "splashBreakdown",
-                      choices = c("SSA", "Age", "Gender")
-                    )
-                    ,
-                    p("Black Country has a high proportion of health achievements compared to the national picture. It has a low proportion of Retail achievemenst"),
-                    
-                    plotlyOutput("Splash_pc")
-                    ),
-             column(6,
-                    h3("What is the variation with the LEP?"),
-                    p("Employment rate is highest in Sandwell and lowest in Dudley"),
-                    leafletOutput("mapLA")
-                    )
-             )
-    )
-    
-    
-    
   ), # End of navBarPage
   # Footer ====================================================================
 
