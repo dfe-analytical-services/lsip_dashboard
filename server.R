@@ -263,19 +263,19 @@ server <- function(input, output, session) {
     if (input$splashGeoType == "LEP") {
       selectizeInput("geoComps",
         multiple = TRUE, label = NULL,
-        choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LEP", Area != input$lep1) %>% select(Area)),
+        choices = c(C_LEP2020 %>% filter(geographic_level == "LEP", Area != input$lep1) %>% select(Area)),
         options = list(maxItems = 4, placeholder = "Choose comparison LEPs")
       )
     } else if (input$splashGeoType == "LSIP") {
       selectizeInput("geoComps",
         multiple = TRUE, label = NULL,
-        choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LSIP", Area != input$lep1) %>% select(Area)),
+        choices = c(C_LEP2020 %>% filter(geographic_level == "LSIP", Area != input$lep1) %>% select(Area)),
         options = list(maxItems = 4, placeholder = "Choose comparison LSIPs")
       )
     } else {
       selectizeInput("geoComps",
         multiple = TRUE, label = NULL,
-        choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "MCA", Area != input$lep1) %>% select(Area)),
+        choices = c(C_LEP2020 %>% filter(geographic_level == "MCA", Area != input$lep1) %>% select(Area)),
         options = list(maxItems = 4, placeholder = "Choose comparison MCAs")
       )
     }
@@ -2166,8 +2166,8 @@ server <- function(input, output, session) {
     pal <- colorNumeric("Blues", C_mapLEP$empRate) ## 6BACE6 c("#FFFFFF", "#12436D")
 
     labels <- sprintf(
-      "<strong>%s</strong>",
-      C_mapLEP$LEP21NM
+      "<strong>%s</strong><br/>Employment rate: %s%%",
+      C_mapLEP$LEP21NM, round(C_mapLEP$empRate*100)
     ) %>% lapply(htmltools::HTML)
 
     leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
@@ -2214,11 +2214,9 @@ server <- function(input, output, session) {
     event <- input$map_shape_click
 
     labels <- sprintf(
-      "<strong>%s</strong>",
-      (C_mapLA %>% filter(LEP21NM1 == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]))$LAD22NM
+      "<strong>%s</strong><br/>Employment rate: %s%%",
+      (C_mapLA %>% filter(LEP21NM1 == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]))$LAD22NM,round((C_mapLA %>% filter(LEP21NM1 == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]))$empRate*100)
     ) %>% lapply(htmltools::HTML)
-
-
 
     leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
       addProviderTiles(providers$CartoDB.Positron) %>% # "Stamen.TonerLite"
