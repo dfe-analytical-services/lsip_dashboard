@@ -10,7 +10,7 @@ server <- function(input, output, session) {
   chartColors3 <- c("#BFBFBF", "#12436D", "#28A197")
   # geo1, geo2
   chartColors2 <- c("#12436D", "#28A197")
-  chartColors6 <- c("#BFBFBF", "#12436D", "#28A197", "#801650", "#F46A25", "#A285D1")
+  chartColors6 <- c("#BFBFBF", "#12436D", "#2073BC","#28A197", "#801650", "#F46A25", "#A285D1")
 
   # 1. HOMEPAGE ----
   ## Create link to overview tab ----
@@ -2242,23 +2242,24 @@ server <- function(input, output, session) {
   })
 
   # time chart
-  Splash_time <- eventReactive(c(input$map_shape_click, input$geoComps), {
+  Splash_time <- eventReactive(c(input$map_shape_click, input$mapLA_shape_click,input$geoComps), {
     event <- input$map_shape_click
+    eventLA <- input$mapLA_shape_click
     SplashTime <- C_EmpRate_APS1822 %>%
       select(year, area, geographic_level, empRate) %>%
       filter(
-        geographic_level == input$GeoType | geographic_level == "COUNTRY",
-        (area == "England" |
-          area == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id] | # input$mapGeog|#eval(parse(text = ))
-          area %in% if ("geoComps" %in% names(input)) {
-            input$geoComps
-          } else {
-            "\nNone"
-          })
+        (geographic_level == input$GeoType&(          area == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id] | # input$mapGeog|#eval(parse(text = ))
+                                                            area %in% if ("geoComps" %in% names(input)) {
+                                                              input$geoComps
+                                                            } else {
+                                                              "\nNone"
+                                                            }) )| 
+               (geographic_level == "COUNTRY"&area == "England") |
+         if(is.null(eventLA)==TRUE) {area=="\nNone"}else { (geographic_level == "LADU"&area == C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id])}
       )
     # add an extra column so the colours work in ggplot when sorting alphabetically
     SplashTime$Areas <- factor(SplashTime$area,
-      levels = c("England", C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id], input$geoComps)
+      levels = c("England", C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id], C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id],input$geoComps)
     )
 
     ggplot(
