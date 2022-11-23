@@ -1197,7 +1197,7 @@ server <- function(input, output, session) {
   })
 
 
-  # FE ----
+  # Skills ----
   # define page title
   output$page2title <- renderUI({
     paste0(
