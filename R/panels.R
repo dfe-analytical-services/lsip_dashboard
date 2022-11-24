@@ -2,7 +2,7 @@ panel_overview <- function() {
   tabPanel(
     "Overview",
     h1(uiOutput("page0title")),
-    p("Change metrics are measured since the same period the year before."),
+    p("Change metrics are measured against the same period in the previous year."),
     fluidRow(
       style = "padding-left: 15px;padding-right: 15px;", # indent slightly so box aligns
       # left column
@@ -167,6 +167,7 @@ panel_employment <- function() {
           label = "Source: Annual Population Survey",
           inputId = "empRateSource",
           tags$ol(
+            #Is this correct (16-64 year olds)? Should be the same as for occupation table
             tags$li("Figures are for 16-64 year olds."),
             tags$li("Years represent Jul-Jun period. So 2017 is the Jul 2017 – June 2018 period.")
           )
@@ -182,11 +183,11 @@ panel_employment <- function() {
           label = "Source: Annual Population Survey",
           inputId = "empOccSource",
           tags$ol(
+            #IS this correct (all age groups)? Should be same as employment rate overtime
             tags$li("Figures are for all age groups."),
-            tags$li(
-              "ONS have announced that there is an issue with the collection of their occupational data surveys including the data used in this chart.
-            As such please see this data with caution.
-                    For more information see this ONS  ",
+            tags$li("Standard Occupational Classification 2010 (SOC2010). 
+                    The ONS have announced that, due to a coding error, their occupational data should be used with caution. 
+                    For more information see this ONS ",
               a(
                 href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
                 "article",
@@ -357,7 +358,7 @@ panel_skills <- function() {
       label = "Source: Individualised Learner Record",
       inputId = "FEKPISource",
       tags$ol(
-        tags$li("Total achievements are the count of learners that achieved at any point during the stated academic period."),
+        tags$li("Total achievements is the count of learners that completed their qualification at any point during the stated academic period."),
         tags$li("Learners achieving more than one course will appear only once in the grand total."),
         tags$li("Years shown represent academic years.")
       )
@@ -388,7 +389,7 @@ panel_skills <- function() {
           label = "Source: Individualised Learner Record",
           inputId = "FEKPISource",
           tags$ol(
-            tags$li("Total achievements are the count of learners that achieved at any point during the stated academic period."),
+            tags$li("Total achievements is the count of learners that completed their qualification at any point during the stated academic period."),
             tags$li("Learners achieving more than one course will appear only once in the grand total."),
             tags$li("Years shown represent academic years.")
           )
@@ -441,8 +442,10 @@ panel_skills <- function() {
       inputId = "FEKPISource",
       tags$ol(
         tags$li("'Not Applicable/Not Known' levels includes aims where a qualification either has no level or may be taken at several levels."),
-        tags$li("Aim enrolments are a count of enrolments at aim level (including component aims) for each stated academic period. Learners will be counted for each aim they are studying and so can be counted more than once."),
-        tags$li("Aim achievements are a count of aims achieved (including component aims) for each stated academic period. Learners will be counted for each aim they achieve and so can be counted more than once."),
+        tags$li("‘Aim enrolments’ are a count of learners starting a course (including component courses) for each academic period. 
+                Learners are counted for each aim they are studying and so can be counted more than once."),
+        tags$li("‘Aim achievements’ are a count of learners completing (passing or certification) a course (including a component course) for each academic year. 
+                Learners will be counted for each aim they achieve and so can be counted more than once."),
       )
     ),
     ### FE definitions----
@@ -453,11 +456,10 @@ panel_skills <- function() {
           inputId = "FEdefs",
           label = "Further education and skills definitions",
           tags$ul(
-            tags$li("FE and skills include all age apprenticeships and wider adult (19+) FE learning, such as community learning and education and training."),
-            tags$li("Further Education covers publicly-funded learning delivered by an FE institution, a training provider or within a local community. It also includes apprenticeships delivered in the workplace. It does not include higher education, unless delivered as part of an apprenticeship programme."),
+            tags$li("Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community."),
+            tags$li("FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme."),
             tags$li("Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications."),
             tags$li("Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups."),
-            tags$li("Education and training is mainly classroom-based adult FE that is not an apprenticeship or community learning."),
             tags$li("Achievements are the number of learners who successfully complete an individual aim in an academic year. ")
           )
         )
