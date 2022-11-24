@@ -631,7 +631,7 @@ server <- function(input, output, session) {
       "Academic year: ", time_period, "<br>",
       "Achievements: ", format(achievements, big.mark = ","), "<br>"
     ))) +
-      geom_line(data = etLine %>% filter(Year <= 20&Year>=17)) +
+      geom_line(data = etLine %>% filter(Year <= 20 & Year >= 17)) +
       geom_ribbon(
         data = etLine %>% filter(Year >= 20),
         aes(ymin = min(achievements), ymax = achievements),
@@ -733,7 +733,7 @@ server <- function(input, output, session) {
       "Academic year: ", time_period, "<br>",
       "Achievements: ", format(achievements, big.mark = ","), "<br>"
     ))) +
-      geom_line(data = AppLine %>% filter(Year <= 20&Year>=17)) +
+      geom_line(data = AppLine %>% filter(Year <= 20 & Year >= 17)) +
       geom_ribbon(
         data = AppLine %>% filter(Year >= 20),
         aes(ymin = min(achievements), ymax = achievements),
