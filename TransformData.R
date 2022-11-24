@@ -331,7 +331,7 @@ C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
   mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
   mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.numeric) %>% # Convert to numeric
   mutate(Year = as.numeric(substr(time_period, 3, 4))) %>% # add year name for charts
-  filter(time_period != "202122") %>% # ignore temporary data in the latest year
+  #filter(time_period != "202122") %>% # ignore temporary data in the latest year
   mutate(typeNeat = case_when(
     apprenticeships_or_further_education == "Further education and skills" ~ "Total FE and skills provision",
     apprenticeships_or_further_education == "Education and training" ~ "Education and training (adults only)",

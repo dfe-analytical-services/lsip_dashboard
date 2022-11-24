@@ -438,7 +438,8 @@ padding-top:15px
           p("The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
           The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training.
           Totals for LEP/LSIP/MCA areas are calculated by adding up the relevant local authorities (LAs).
-            Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP/MCA totals."),
+            Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP/MCA totals.
+            Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset. "),
           h3("KS4 and KS5 destinations"),
           p("Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education and,
             employment or apprenticeship in the year following completion of their qualification:"),
