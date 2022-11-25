@@ -45,6 +45,15 @@ folder <- "4_APSempRate"
 sheetNum <- 1
 I_EmpRate_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
+
+### employment by industry------------
+# Geog and date as above
+# Cell: T13a	Employment by industry (SIC 2007) and flexibility
+folder <- "12_APSempind"
+sheetNum <- 1
+I_empind_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+
+
 ## ILR
 ### AY21/22 achievements by SSAt1, LAD, gender, level------------
 ## Permalink: https://explore-education-statistics.service.gov.uk/data-tables/permalink/2be7f950-b9ff-4f22-d77a-08dabcdedabe
