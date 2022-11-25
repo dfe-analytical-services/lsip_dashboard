@@ -20,6 +20,9 @@ C_EmpRate_APS1822_max_min <- read.csv(file = "./Data/AppData/C_EmpRate_APS1822_m
 ## employment by industry ----
 D_EmpInd_APS1822 <- read.csv(file = "./Data/AppData/D_EmpInd_APS1822.csv", check.names = FALSE)
 
+# data for dashboard
+C_EmpInd2_APS1822 <- read.csv(file = "./Data/AppData/C_EmpInd2_APS1822.csv", check.names = FALSE)
+
 ## FE achievements ----
 # data for download
 D_Achieve_ILR1621 <- read.csv(file = "./Data/AppData/D_Achieve_ILR1621.csv", check.names = FALSE)
