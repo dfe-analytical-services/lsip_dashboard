@@ -1027,7 +1027,7 @@ server <- function(input, output, session) {
       formatPercentage(2:ncol(df), 0)
   })
   
-  ## employment by industry bar chart ----
+  ## employment by industry (SIC 2007) bar chart ----
   empind <- eventReactive(c(input$lep1, input$lep2), {
     empind_22 <- C_EmpInd2_APS1822 %>%
       filter(year == '2022',

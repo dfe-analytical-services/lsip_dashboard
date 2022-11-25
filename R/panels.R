@@ -206,19 +206,20 @@ panel_employment <- function() {
       column(
         12,
         ### employment by industry bar chart ----
-        h2("Employment share by industry: Jul-Jun 2018 to Jul-Jun 2022"),
-        plotlyOutput("empind"),
-        br(),
+        h2("Employment share by industry: Jul-Jun 2022"),
+        plotlyOutput("empind"))),
+        column(width = 12, br("")), # put in to push below the fixed height chart
+        column(width = 12, br("")),
         details(
           label = "Source: Annual Population Survey",
           inputId = "empindSource",
           tags$ol(
             tags$li("Figures are for all age groups."),
-            tags$li("Percentages are based on proportion of total employment")
+            tags$li("Percentages are based on proportion of total employment."),
+            tags$li("Employment split by broad industry group Standard Industrial Classification: SIC 2007.")
           )
-        )
-      )
-    ),
+        ),
+
 
     ### Downloads-------------
     br(),

@@ -601,7 +601,8 @@ F_empent_UBC1822 <- format.empent.UBC(I_EmpEnt_APS1822)
 
 # Downloadable version
 D_empent_UBC1822 <- F_empent_UBC1822 %>%
-  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x"))) %>%
+  rename("enterprise size" = variable, count = value)
 # write the data to folder
 write.csv(D_empent_UBC1822, file = "Data\\AppData\\D_empent_UBC1822.csv", row.names = FALSE)
 
