@@ -842,6 +842,7 @@ C_EmpInd2_APS1822 <-  F_EmpInd_APS1822 %>%
                                      'geographic_level' = 'geographic_level')) %>%
   mutate(rate = value/Total)
 
+# write to data folder
 write.csv(C_EmpInd2_APS1822, file = "Data\\AppData\\C_EmpInd2_APS1822.csv", row.names = FALSE)
 
 # downloadable version
