@@ -167,7 +167,7 @@ panel_employment <- function() {
           label = "Source: Annual Population Survey",
           inputId = "empRateSource",
           tags$ol(
-            #Is this correct (16-64 year olds)? Should be the same as for occupation table
+            # Is this correct (16-64 year olds)? Should be the same as for occupation table
             tags$li("Figures are for 16-64 year olds."),
             tags$li("Years represent Jul-Jun period. So 2017 is the Jul 2017 – June 2018 period.")
           )
@@ -183,10 +183,11 @@ panel_employment <- function() {
           label = "Source: Annual Population Survey",
           inputId = "empOccSource",
           tags$ol(
-            #IS this correct (all age groups)? Should be same as employment rate overtime
+            # IS this correct (all age groups)? Should be same as employment rate overtime
             tags$li("Figures are for all age groups."),
-            tags$li("Standard Occupational Classification 2010 (SOC2010). 
-                    The ONS have announced that, due to a coding error, their occupational data should be used with caution. 
+            tags$li(
+              "Standard Occupational Classification 2010 (SOC2010).
+                    The ONS have announced that, due to a coding error, their occupational data should be used with caution.
                     For more information see this ONS ",
               a(
                 href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
@@ -198,25 +199,25 @@ panel_employment <- function() {
         )
       )
     ),
-    
-    
     fluidRow(
       column(
         12,
         ### employment by industry bar chart ----
         h2("Employment share by industry: Jul 2021 to Jun 2022"),
-        plotlyOutput("empind"))),
-        column(width = 12, br("")), # put in to push below the fixed height chart
-        column(width = 12, br("")),
-        details(
-          label = "Source: Annual Population Survey",
-          inputId = "empindSource",
-          tags$ol(
-            tags$li("Figures are for all age groups."),
-            tags$li("Percentages are based on proportion of total employment."),
-            tags$li("Employment split by broad industry group Standard Industrial Classification: SIC 2007.")
-          )
-        ),
+        plotlyOutput("empind")
+      )
+    ),
+    column(width = 12, br("")), # put in to push below the fixed height chart
+    column(width = 12, br("")),
+    details(
+      label = "Source: Annual Population Survey",
+      inputId = "empindSource",
+      tags$ol(
+        tags$li("Figures are for all age groups."),
+        tags$li("Percentages are based on proportion of total employment."),
+        tags$li("Employment split by broad industry group Standard Industrial Classification: SIC 2007.")
+      )
+    ),
 
 
     ### Downloads-------------
@@ -420,12 +421,6 @@ panel_skills <- function() {
     fluidRow(
       column(
         12,
-        h2("Further education and skills training by sector subject area: Aug 2021 to Jul 2022"),
-      )
-    ),
-    fluidRow(
-      column(
-        12,
         div(
           class = "filterRow",
           fluidRow(
@@ -451,6 +446,12 @@ panel_skills <- function() {
         )
       )
     ),
+    fluidRow(
+      column(
+        12,
+        h2("Further education and skills training by sector subject area: Aug 2021 to Jul 2022"),
+      )
+    ),
     fluidRow(column(
       12,
       plotlyOutput("Ach_SSA_pc")
@@ -462,9 +463,9 @@ panel_skills <- function() {
       inputId = "FEKPISource",
       tags$ol(
         tags$li("'Not Applicable/Not Known' levels includes aims where a qualification either has no level or may be taken at several levels."),
-        tags$li("‘Aim enrolments’ are a count of learners starting a course (including component courses) for each academic period. 
+        tags$li("‘Aim enrolments’ are a count of learners starting a course (including component courses) for each academic period.
                 Learners are counted for each aim they are studying and so can be counted more than once."),
-        tags$li("‘Aim achievements’ are a count of learners completing (passing or certification) a course (including a component course) for each academic year. 
+        tags$li("‘Aim achievements’ are a count of learners completing (passing or certification) a course (including a component course) for each academic year.
                 Learners will be counted for each aim they achieve and so can be counted more than once."),
       )
     ),

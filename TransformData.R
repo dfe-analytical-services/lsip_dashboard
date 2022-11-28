@@ -780,7 +780,7 @@ D_KS5destin_1721 <- F_KS5destin_1721 %>%
 # write data to folder - todo
 write.csv(D_KS5destin_1721, file = "Data\\AppData\\D_KS5destin_1721.csv", row.names = FALSE)
 
-#employment by industry
+# employment by industry
 format.EmpInd.APS <- function(x) {
   reformat <- x %>%
     mutate(year = ifelse(annual.population.survey == "date", substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
@@ -810,40 +810,45 @@ format.EmpInd.APS <- function(x) {
     # mutate(year = as.numeric(substr(year, 5, 8))) %>%
     rename_with(
       .fn = ~ str_replace_all(.x, c("t13a_" = "", "_" = " ", "sic 2007 all people" = "")),
-      .cols = starts_with("t13a_")) %>%
+      .cols = starts_with("t13a_")
+    ) %>%
     rename_with(~ gsub("[[:digit:]]+", "", .)) %>%
-    rename("Agriculture and Fishing" = " a agricuture fishing ",
-           "Energy and Water" = " b d e energy water ",
-           "Manufacturing" = " c manufacturing ",
-           "Construction" = " f construction ",
-           "Distribution, Hotels and Restaurants" = " g i distribution hotels restaurants ",
-           "Transport and Communication" = " h j transport communication ",
-           "Banking, Finance and Insurance" = " k n banking finance insurance etc ",
-           "Public Administration, Education and Health" = " o q public admin education health ",
-           "Other Services" = " r u other services ") %>%
+    rename(
+      "Agriculture and Fishing" = " a agricuture fishing ",
+      "Energy and Water" = " b d e energy water ",
+      "Manufacturing" = " c manufacturing ",
+      "Construction" = " f construction ",
+      "Distribution, Hotels and Restaurants" = " g i distribution hotels restaurants ",
+      "Transport and Communication" = " h j transport communication ",
+      "Banking, Finance and Insurance" = " k n banking finance insurance etc ",
+      "Public Administration, Education and Health" = " o q public admin education health ",
+      "Other Services" = " r u other services "
+    ) %>%
     mutate(geographic_level = toupper(geographic_level)) %>%
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
-}  
+}
 
 # format data
 F_EmpInd_APS1822 <- format.EmpInd.APS(I_empind_APS1822) %>%
   mutate_at(vars(c(4:12)), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "")))
 
-#dashboard data
+# dashboard data
 C_EmpInd_APS1822 <- F_EmpInd_APS1822 %>%
-  mutate_at(c(4:12), as.numeric) %>% 
+  mutate_at(c(4:12), as.numeric) %>%
   melt(id.vars = c("year", "geographic_level", "area")) %>%
-  mutate_at(c('value'), ~replace_na(.,0)) %>%
-  group_by(area, year, geographic_level) %>% 
+  mutate_at(c("value"), ~ replace_na(., 0)) %>%
+  group_by(area, year, geographic_level) %>%
   summarise(Total = sum(`value`))
 
-C_EmpInd2_APS1822 <-  F_EmpInd_APS1822 %>%
-  mutate_at(c(4:12), as.numeric) %>% 
+C_EmpInd2_APS1822 <- F_EmpInd_APS1822 %>%
+  mutate_at(c(4:12), as.numeric) %>%
   melt(id.vars = c("year", "geographic_level", "area")) %>%
-  mutate_at(c('value'), ~replace_na(.,0)) %>%
-  left_join(C_EmpInd_APS1822, by = c('area' = 'area', 'year' = 'year',
-                                     'geographic_level' = 'geographic_level')) %>%
-  mutate(rate = value/Total)
+  mutate_at(c("value"), ~ replace_na(., 0)) %>%
+  left_join(C_EmpInd_APS1822, by = c(
+    "area" = "area", "year" = "year",
+    "geographic_level" = "geographic_level"
+  )) %>%
+  mutate(rate = value / Total)
 
 # write to data folder
 write.csv(C_EmpInd2_APS1822, file = "Data\\AppData\\C_EmpInd2_APS1822.csv", row.names = FALSE)
