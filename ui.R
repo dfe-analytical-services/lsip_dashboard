@@ -522,12 +522,12 @@ padding-top:15px
           #   ),
 
           # ),
-          h3("Where does Black Country fit in the national picture?"),
+          h3(uiOutput("titleMap")),
           radioGroupButtons(
             inputId = "splashGeoType",
             choices = c("LEP", "LSIP", "MCA")
           ),
-          p("Black Country has a higher employment rate than the national average. It has the 6th highest employment rate of the 38 LEPs"),
+          p(uiOutput("commentMap")),
           leafletOutput("map") # ,
           # leafletOutput("mymap"),
           # plotlyOutput("mapSplashGG")

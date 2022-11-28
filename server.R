@@ -1621,6 +1621,38 @@ server <- function(input, output, session) {
   #     addMarkers(data = points())
   # })
   #
+  #cretae map header
+  output$titleMap <- renderUI({
+    #get current area
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
+    areaClicked <- C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]
+    paste0("Where does ",areaClicked," fit in the national picture?")
+  })
+  #create map comment
+  output$commentMap <- renderUI({
+    #get current area
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
+    areaClicked <- C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]
+    compareNational<-
+    if((C_EmpRate_APS1822 %>%
+        filter(year==2022,(geographic_level == "LEP"&area == areaClicked)))$empRate
+    >
+    (C_EmpRate_APS1822 %>%
+      filter(year==2022,(geographic_level == "COUNTRY"&area == "England")))$empRate
+    ){"higher"}else{"lower"}
+    areaRank<-(C_EmpRate_APS1822 %>%
+                 filter(year==2022,(geographic_level == "LEP"))%>%
+      mutate(ranking = rank(desc(empRate)))%>%
+               filter(area==areaClicked))$ranking
+    suff <- case_when(areaRank %in% c(11,12,13) ~ "th",
+                      areaRank %% 10 == 1 ~ 'st',
+                      areaRank %% 10 == 2 ~ 'nd',
+                      areaRank %% 10 == 3 ~'rd',
+                      TRUE ~ "th")
+    
+    paste0(areaClicked, " has a ",compareNational," employment rate than the national average. It has the ",areaRank,suff," highest employment rate of the 38 LEPs.")
+  })
+  #draw map
   output$map <- renderLeaflet({
     pal <- colorNumeric("Blues", C_mapLEP$empRate) ## 6BACE6 c("#FFFFFF", "#12436D")
 
@@ -1656,10 +1688,6 @@ server <- function(input, output, session) {
   #   leafletProxy("map", session) %>%
   #     addPolygons(data=C_mapLEP%>%filter(LEP21CD==input$map_shape_click$id),weight = 2)
   # })
-
-
-
-
   # # update region on click
   # mapGeog<-eventReactive(input$map_shape_click, {
   #   event <- input$map_shape_click
@@ -1668,6 +1696,7 @@ server <- function(input, output, session) {
   #
   # })
 
+  #make LA map
   output$mapLA <- renderLeaflet({
     pal <- colorNumeric("Blues", C_mapLA$empRate) ## 6BACE6 c("#FFFFFF", "#12436D")
     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
