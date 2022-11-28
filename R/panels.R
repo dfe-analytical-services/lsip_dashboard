@@ -127,7 +127,7 @@ panel_overview <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn0b",
-          label = "Current LEP/LSIP",
+          label = "Current LEP/LSIP/MCA",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
@@ -204,7 +204,7 @@ panel_employment <- function() {
       column(
         12,
         ### employment by industry bar chart ----
-        h2("Employment share by industry: Jul-Jun 2022"),
+        h2("Employment share by industry: Jul 2021 to Jun 2022"),
         plotlyOutput("empind"))),
         column(width = 12, br("")), # put in to push below the fixed height chart
         column(width = 12, br("")),
@@ -241,7 +241,7 @@ panel_employment <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn1b",
-          label = "Current LEP/LSIP",
+          label = "Current LEP/LSIP/MCA",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
@@ -320,7 +320,7 @@ panel_vacancies <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn3b",
-          label = "Current LEP/LSIP",
+          label = "Current LEP/LSIP/MCA",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
@@ -505,7 +505,7 @@ panel_skills <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn2b",
-          label = "Current LEP/LSIP",
+          label = "Current LEP/LSIP/MCA",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
