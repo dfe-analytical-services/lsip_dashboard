@@ -59,7 +59,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
+
   output$downloadData3 <- downloadHandler(
     filename = function() {
       "EmpbyindustryIndicators.xlsx"
@@ -134,7 +134,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
+
 
   # create download links
   output$hidden_downloads <- renderUI(
@@ -834,7 +834,6 @@ server <- function(input, output, session) {
       "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
       "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, area == input$lep1),
       "1c.Emp industry" = filter(D_EmpInd_APS1822, geographic_level == input$GeoType, area == input$lep1)
-      
     )
   })
   output$download_btn1b <- downloadHandler(
@@ -1027,54 +1026,55 @@ server <- function(input, output, session) {
     datatable(df, options = list(order = list(2, "desc")), rownames = FALSE) %>%
       formatPercentage(2:ncol(df), 0)
   })
-  
+
   ## employment by industry (SIC 2007) bar chart ----
   empind <- eventReactive(c(input$lep1, input$lep2), {
     empind_22 <- C_EmpInd2_APS1822 %>%
-      filter(year == '2022',
-             geographic_level == input$GeoType,
-             (area == input$lep1 |
-                area == if ("lep2" %in% names(input)) {
-                  input$lep2
-                } else {
-                  "\nNone"
-                })
+      filter(
+        year == "2022",
+        geographic_level == input$GeoType,
+        (area == input$lep1 |
+          area == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          })
       )
-    
-  # add an extra column so the colours work in ggplot when sorting alphabetically
-  empind_22$Area <- factor(empind_22$area,
-                           levels = c(input$lep1, input$lep2)
-  )
-  ggplot(empind_22, aes(x = reorder(variable, desc(variable)), y = rate, fill = Area, text = paste0(
-    "Industry: ", variable, "<br>",
-    "Area: ", Area, "<br>",
-    "Percentage: ", scales::percent(round(rate, 2)), "<br>"
-  ))) +
-    geom_col(
-      position = "dodge"
-    ) +
-    scale_y_continuous(labels = scales::percent) +
-    scale_x_discrete(labels = function(rate) str_wrap(rate, width = 26)) +
-    coord_flip() +
-    theme_minimal() +
-    labs(fill = "") +
-    theme(
-      legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
-      panel.grid.major = element_blank(), panel.grid.minor = element_blank()
-    ) +
-    scale_fill_manual(values = chartColors2)
-})
 
-output$empind <- renderPlotly({
-  ggplotly(empind(),
-           tooltip = c("text"), height = 474
-  ) %>%
-    layout(
-      legend = list(orientation = "h", x = 0, y = -0.1),
-      xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
-    ) %>% # disable zooming because it's awful on mobile
-    config(displayModeBar = FALSE)
-})
+    # add an extra column so the colours work in ggplot when sorting alphabetically
+    empind_22$Area <- factor(empind_22$area,
+      levels = c(input$lep1, input$lep2)
+    )
+    ggplot(empind_22, aes(x = reorder(variable, desc(variable)), y = rate, fill = Area, text = paste0(
+      "Industry: ", variable, "<br>",
+      "Area: ", Area, "<br>",
+      "Percentage: ", scales::percent(round(rate, 2)), "<br>"
+    ))) +
+      geom_col(
+        position = "dodge"
+      ) +
+      scale_y_continuous(labels = scales::percent) +
+      scale_x_discrete(labels = function(rate) str_wrap(rate, width = 26)) +
+      coord_flip() +
+      theme_minimal() +
+      labs(fill = "") +
+      theme(
+        legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank()
+      ) +
+      scale_fill_manual(values = chartColors2)
+  })
+
+  output$empind <- renderPlotly({
+    ggplotly(empind(),
+      tooltip = c("text"), height = 474
+    ) %>%
+      layout(
+        legend = list(orientation = "h", x = 0, y = -0.1),
+        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
 
 
   # VACANCIES ----
@@ -1266,7 +1266,7 @@ output$empind <- renderPlotly({
   # define page title
   output$page2title <- renderUI({
     paste0(
-      "Skills training in ", input$lep1,
+      "Further Education and skills training in ", input$lep1,
       if ("lep2" %in% names(input)) {
         if (input$lep2 == "\nNone") {
         } else {

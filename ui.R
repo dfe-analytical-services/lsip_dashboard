@@ -201,7 +201,8 @@ padding-top:15px
           p("This dashboard brings together published statistics on local employment and skills in England, to support local skills planning and delivery."),
           p("It includes a subset of employment and skills statistics that can be viewed for three geographic areas: Local Enterprise Partnership (LEP), Local Skills Improvement Plan (LSIP) and Mayoral Combined Authority (MCA) areas. The underlying data can be downloaded using the links on each page or directly from the downloads page and contains breakdowns by Local Authority (LA) and region."),
           p("The dashboard currently uses data published by the Office for National Statistics (ONS) and the Department for Education (DfE). The sources currently included in the dashboard will be added to alongside additional functionality in response to user feedback and new sources being published."),
-          p("To access the additional dashboards developed to help users further understand the labour market outcomes of training use the links below, or from the ",
+          p(
+            "To access the additional dashboards developed to help users further understand the labour market outcomes of training use the links below, or from the ",
             a(
               href = "https://www.gov.uk/government/groups/unit-for-future-skills",
               "Unit for Future Skills",
@@ -259,7 +260,8 @@ padding-top:15px
               h2("Dashboard pages"),
               p("The four tabs in the Local Skills page on different parts of the jobs and skills market. Each page includes options to download all of the indicators shown, either just for the selected geographic area or for all available geographies."),
               p("Where published figures are not available, area totals for LEP, LSIP or MCA are calculated by adding up the relevant local authorities, rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
-              p("The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS ",
+              p(
+                "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS ",
                 a(
                   href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
                   "article",
@@ -403,8 +405,8 @@ padding-top:15px
           12,
           h2("Data information"),
           h3("Annual Population Survey"),
-          p("The Annual Population Survey (APS) is a continuous household survey covering the UK. 
-          Topics included cover employment and unemployment, and education as well as housing, ethnicity and religion. 
+          p("The Annual Population Survey (APS) is a continuous household survey covering the UK.
+          Topics included cover employment and unemployment, and education as well as housing, ethnicity and religion.
             This dashboard currently shows employment volumes and rates for each geographic area and by occupation (SOC2010) and industry (SIC 2007)."),
           p(
             "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS  ",
@@ -415,16 +417,16 @@ padding-top:15px
             ), "."
           ),
           h3("ONS online job adverts"),
-          p("These data tables are based on experimental data by Adzuna on the share of online job adverts. 
-          The dashboard shows ‘units’ of job adverts, this is the number of job adverts divided by a set constant for all regions. 
-          This can be used to compare across areas and overtime but does not provide an indication of the real volume of job adverts. 
+          p("These data tables are based on experimental data by Adzuna on the share of online job adverts.
+          The dashboard shows ‘units’ of job adverts, this is the number of job adverts divided by a set constant for all regions.
+          This can be used to compare across areas and overtime but does not provide an indication of the real volume of job adverts.
             Each point in the series covers a monthly average of the volume of job adverts in January of the selected year (2017 to 2022)."),
-          p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities, 
+          p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
           h3("Individualised Learner Record"),
           p("The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
           The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training."),
-          p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities, 
+          p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
 Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset."),
           h3("KS4 and KS5 destinations"),
@@ -435,10 +437,10 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
             tags$li("Key Stage 5 (students 16-18 years) includes A Levels, T levels and other 2-year vocational education programmes.")
           ),
           p("This dashboard currently shows links to download data on the number of young people going into education and, employment or apprenticeship in the year following completion of their qualification by level, KS4 and KS5."),
-          p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities, 
+          p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
           h3("UK Business Count (UBC)"),
-          p("The UK Business Count (UBC) is a record of the number of enterprises from the Inter Departmental Business Register (IDBR). Topics included cover employment size band, detailed industry (5 digit SIC 2007) and legal status. 
+          p("The UK Business Count (UBC) is a record of the number of enterprises from the Inter Departmental Business Register (IDBR). Topics included cover employment size band, detailed industry (5 digit SIC 2007) and legal status.
             This dashboard currently shows a link to download data on the count of enterprises by employment size."),
           br()
         )
