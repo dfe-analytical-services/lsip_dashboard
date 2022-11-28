@@ -405,7 +405,7 @@ padding-top:15px
           h3("Annual Population Survey"),
           p("The Annual Population Survey (APS) is a continuous household survey covering the UK. 
           Topics included cover employment and unemployment, and education as well as housing, ethnicity and religion. 
-            This dashboard currently shows employment volumes and rates for each geographic area and by occupation (SOC2010) and industry (SIC 2007). ."),
+            This dashboard currently shows employment volumes and rates for each geographic area and by occupation (SOC2010) and industry (SIC 2007)."),
           p(
             "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS  ",
             a(
