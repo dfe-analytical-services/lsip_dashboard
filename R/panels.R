@@ -74,7 +74,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: ILR AY20/21",
+              title = "Source: ILR AY21/22",
               uiOutput("skisup.ETach"),
             )
           ),
@@ -88,7 +88,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: ILR AY20/21",
+              title = "Source: ILR AY21/22",
               uiOutput("skisup.APPach"),
             )
           ),
@@ -420,7 +420,7 @@ panel_skills <- function() {
     fluidRow(
       column(
         12,
-        h2("Further education and skills training by sector subject area: Aug 2021 to Apr 2022 (provisional)"),
+        h2("Further education and skills training by sector subject area: Aug 2021 to Jul 2022"),
       )
     ),
     fluidRow(

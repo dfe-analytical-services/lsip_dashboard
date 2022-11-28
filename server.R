@@ -600,25 +600,25 @@ server <- function(input, output, session) {
         age_group == "Total"
       )
   })
+  # get 21/22 values
+  EtLatest <- reactive({
+    EtLEP() %>%
+      filter(time_period == "202122")
+  })
   # get 20/21 values
-  Et2021 <- reactive({
+  EtLast <- reactive({
     EtLEP() %>%
       filter(time_period == "202021")
   })
-  # get 19/20 values
-  Et1920 <- reactive({
-    EtLEP() %>%
-      filter(time_period == "201920")
-  })
 
   output$skisup.ETach <- renderUI({
-    ETach <- Et2021()$achievements
+    ETach <- EtLatest()$achievements
 
     # E&T achievements change
-    ETachChange <- Et2021()$achievements - Et1920()$achievements
+    ETachChange <- EtLatest()$achievements - EtLast()$achievements
 
     # print with formatting
-    h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("2021/22", style = "font-size: 16px;font-weight:normal;"), br(),
       format(ETach, big.mark = ","), br(),
       span(
         format_pm(ETachChange) # plus-minus and comma sep formatting
@@ -633,7 +633,7 @@ server <- function(input, output, session) {
   # e and t chart
   etLineChart <- eventReactive(input$lep1, {
     etLine <- EtLEP()
-    etCntChange <- Et2021()$achievements - Et1920()$achievements
+    etCntChange <- EtLatest()$achievements - EtLast()$achievements
     EtMinMax <- C_Achieve_ILR1621_max_min %>% filter(
       geographic_level == input$GeoType,
       area == input$lep1,
@@ -644,15 +644,15 @@ server <- function(input, output, session) {
       "Academic year: ", time_period, "<br>",
       "Achievements: ", format(achievements, big.mark = ","), "<br>"
     ))) +
-      geom_line(data = etLine %>% filter(Year <= 19)) +
+      geom_line(data = etLine %>% filter(Year <= 20 & Year >= 17)) +
       geom_ribbon(
-        data = etLine %>% filter(Year >= 19),
+        data = etLine %>% filter(Year >= 20),
         aes(ymin = min(achievements), ymax = achievements),
         fill = ifelse(etCntChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = etLine %>% filter(Year >= 19),
+        data = etLine %>% filter(Year >= 20),
         color = ifelse(etCntChange > 0, "#00703c", "#d4351c")
       ) +
       # add a blank line for the formatted tooltip
@@ -702,24 +702,24 @@ server <- function(input, output, session) {
         age_group == "Total"
       )
   })
+  # get 21/22 values
+  AppLatest <- reactive({
+    AppLEP() %>%
+      filter(time_period == "202122")
+  })
   # get 20/21 values
-  App2021 <- reactive({
+  AppLast <- reactive({
     AppLEP() %>%
       filter(time_period == "202021")
   })
-  # get 19/20 values
-  App1920 <- reactive({
-    AppLEP() %>%
-      filter(time_period == "201920")
-  })
   output$skisup.APPach <- renderUI({
-    Appach <- App2021()$achievements
+    Appach <- AppLatest()$achievements
 
     # E&T achievements change
-    AppachChange <- App2021()$achievements - App1920()$achievements
+    AppachChange <- AppLatest()$achievements - AppLast()$achievements
 
     # print with formatting
-    h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("2021/22", style = "font-size: 16px;font-weight:normal;"), br(),
       format(Appach, big.mark = ","), br(),
       span(
         format_pm(AppachChange) # plus-minus and comma sep formatting
@@ -734,7 +734,7 @@ server <- function(input, output, session) {
   # app chart
   AppLineChart <- eventReactive(input$lep1, {
     AppLine <- AppLEP()
-    AppCntChange <- App2021()$achievements - App1920()$achievements
+    AppCntChange <- AppLatest()$achievements - AppLast()$achievements
     AppMinMax <- C_Achieve_ILR1621_max_min %>% filter(
       geographic_level == input$GeoType,
       area == input$lep1,
@@ -746,15 +746,15 @@ server <- function(input, output, session) {
       "Academic year: ", time_period, "<br>",
       "Achievements: ", format(achievements, big.mark = ","), "<br>"
     ))) +
-      geom_line(data = AppLine %>% filter(Year <= 19)) +
+      geom_line(data = AppLine %>% filter(Year <= 20 & Year >= 17)) +
       geom_ribbon(
-        data = AppLine %>% filter(Year >= 19),
+        data = AppLine %>% filter(Year >= 20),
         aes(ymin = min(achievements), ymax = achievements),
         fill = ifelse(AppCntChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = AppLine %>% filter(Year >= 19),
+        data = AppLine %>% filter(Year >= 20),
         color = ifelse(AppCntChange > 0, "#00703c", "#d4351c")
       ) +
       # add a blank line for the formatted tooltip
@@ -1319,7 +1319,7 @@ output$empind <- renderPlotly({
           h3(format((C_Achieve_ILR1621 %>%
             filter(
               geographic_level == input$GeoType,
-              area == input$lep1, time_period == "202021",
+              area == input$lep1, time_period == "202122",
               level_or_type %in% if ("levelGroup" %in% names(input) & !"Further education and skills: Total" %in% input$levelGroup) {
                 input$levelGroup
               } else {
@@ -1333,7 +1333,7 @@ output$empind <- renderPlotly({
             ) %>%
             select(input$metricGroup)
           )[1, 1], scientific = FALSE, big.mark = ",")),
-          p(paste0(input$metricGroup, " in 2020/21 in ", input$lep1)),
+          p(paste0(input$metricGroup, " in 2021/22 in ", input$lep1)),
         )
       )
     )
@@ -1349,7 +1349,7 @@ output$empind <- renderPlotly({
           h3(format((C_Achieve_ILR1621 %>%
             filter(
               geographic_level == input$GeoType,
-              area == input$lep2, time_period == "202021",
+              area == input$lep2, time_period == "202122",
               level_or_type %in% if ("levelGroup" %in% names(input) & !"Further education and skills: Total" %in% input$levelGroup) {
                 input$levelGroup
               } else {
@@ -1363,7 +1363,7 @@ output$empind <- renderPlotly({
             ) %>%
             select(input$metricGroup)
           )[1, 1], scientific = FALSE, big.mark = ",")),
-          p(paste0(input$metricGroup, " in 2020/21 in ", input$lep2)),
+          p(paste0(input$metricGroup, " in 2021/22 in ", input$lep2)),
         )
       )
     )
@@ -1380,7 +1380,7 @@ output$empind <- renderPlotly({
           h3(format(round((C_Achieve_ILR1621 %>%
             filter(
               geographic_level == input$GeoType,
-              area == input$lep1, time_period == "202021",
+              area == input$lep1, time_period == "202122",
               level_or_type %in% if ("levelGroup" %in% names(input) & !"Further education and skills: Total" %in% input$levelGroup) {
                 input$levelGroup
               } else {
@@ -1398,7 +1398,7 @@ output$empind <- renderPlotly({
               "achievements_rate_per_100000_population"
             })
           )[1, 1], 0), scientific = FALSE, big.mark = ",", nsmall = 0)),
-          p(paste0(input$metricGroup, " rate per 100,000 in 2020/21 in ", input$lep1)),
+          p(paste0(input$metricGroup, " rate per 100,000 in 2021/22 in ", input$lep1)),
         )
       )
     )
@@ -1414,7 +1414,7 @@ output$empind <- renderPlotly({
           h3(format(round((C_Achieve_ILR1621 %>%
             filter(
               geographic_level == input$GeoType,
-              area == input$lep2, time_period == "202021",
+              area == input$lep2, time_period == "202122",
               level_or_type == if ("levelGroup" %in% names(input)) {
                 input$levelGroup
               } else {
@@ -1432,7 +1432,7 @@ output$empind <- renderPlotly({
               "achievements_rate_per_100000_population"
             })
           )[1, 1], 0), scientific = FALSE, big.mark = ",", nsmall = 0)),
-          p(paste0(input$metricGroup, " rate per 100,000 in 2020/21 in ", input$lep2)),
+          p(paste0(input$metricGroup, " rate per 100,000 in 2021/22 in ", input$lep2)),
         )
       )
     )
@@ -1448,7 +1448,7 @@ output$empind <- renderPlotly({
           h3(format((C_Achieve_ILR1621 %>%
             filter(
               geographic_level == "National",
-              time_period == "202021",
+              time_period == "202122",
               level_or_type == if ("levelGroup" %in% names(input)) {
                 input$levelGroup
               } else {
@@ -1466,7 +1466,7 @@ output$empind <- renderPlotly({
               "achievements_rate_per_100000_population"
             })
           )[1, 1], scientific = FALSE, big.mark = ",")),
-          p(input$metricGroup, " rate per 100,000 in 2020/21 in England"),
+          p(input$metricGroup, " rate per 100,000 in 2021/22 in England"),
         )
       )
     )
@@ -1489,7 +1489,7 @@ output$empind <- renderPlotly({
   ## Achievements over time line chart ----
   # title
   output$feLineTitle <- renderUI({
-    paste0(str_to_sentence(input$metricGroup), ": 2016/17 to 2020/21")
+    paste0(str_to_sentence(input$metricGroup), ": 2016/17 to 2021/22")
   })
 
   Ach_time <- eventReactive(c(input$lep1, input$lep2, input$levelGroup, input$ageGroup, input$metricGroup), { # , input$splitLine), {

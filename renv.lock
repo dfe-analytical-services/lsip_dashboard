@@ -172,10 +172,10 @@
     },
     "broom": {
       "Package": "broom",
-      "Version": "0.8.0",
+      "Version": "1.0.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "fe13cb670e14da57fd7a466578db8ce5"
+      "Hash": "c90ff735b7812b60f067a3f7a3b4de63"
     },
     "bslib": {
       "Package": "bslib",
