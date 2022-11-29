@@ -188,7 +188,7 @@ sheetNum <- 1
 I_DataTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 ## Load lep boundary----
-folder <- "13_mapfiles"
+folder <- "13_LEPBoundary"
 I_mapLEP <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
   stringsAsFactors = F
 )
@@ -197,4 +197,10 @@ I_mapLEP <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0(
 folder <- "14_LABoundary"
 I_mapLA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
   stringsAsFactors = F
+)
+
+## Load MCA boundary----
+folder <- "15_MCABoundary"
+I_mapMCA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
+                       stringsAsFactors = F
 )
