@@ -1635,13 +1635,13 @@ server <- function(input, output, session) {
     areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
     compareNational<-
     if((C_EmpRate_APS1822 %>%
-        filter(year==2022,(geographic_level == "LEP"&area == areaClicked)))$empRate
+        filter(year==2022,(geographic_level == input$splashGeoType&area == areaClicked)))$empRate
     >
     (C_EmpRate_APS1822 %>%
       filter(year==2022,(geographic_level == "COUNTRY"&area == "England")))$empRate
     ){"higher"}else{"lower"}
     areaRank<-(C_EmpRate_APS1822 %>%
-                 filter(year==2022,(geographic_level == "LEP"))%>%
+                 filter(year==2022,(geographic_level == input$splashGeoType))%>%
       mutate(ranking = rank(desc(empRate)))%>%
                filter(area==areaClicked))$ranking
     suff <- case_when(areaRank %in% c(11,12,13) ~ "th",
@@ -1649,8 +1649,8 @@ server <- function(input, output, session) {
                       areaRank %% 10 == 2 ~ 'nd',
                       areaRank %% 10 == 3 ~'rd',
                       TRUE ~ "th")
-    
-    paste0(areaClicked, " has a ",compareNational," employment rate than the national average. It has the ",areaRank,suff," highest employment rate of the 38 LEPs.")
+    groupCount<-if(input$splashGeoType=="LEP"){"38 LEPs."}else{"10 MCAs."}
+    paste0(areaClicked, " has a ",compareNational," employment rate than the national average. It has the ",areaRank,suff," highest employment rate of the ",groupCount)
   })
   
   #draw map
@@ -1774,7 +1774,7 @@ server <- function(input, output, session) {
     SplashTime <- C_EmpRate_APS1822 %>%
       select(year, area, geographic_level, empRate) %>%
       filter(
-        (geographic_level == input$GeoType&(          area == C_Geog$areaName[C_Geog$areaCode == event$id]| # input$mapGeog|#eval(parse(text = ))
+        (geographic_level == input$splashGeoType&(          area == C_Geog$areaName[C_Geog$areaCode == event$id]| # input$mapGeog|#eval(parse(text = ))
                                                             area %in% if ("geoComps" %in% names(input)) {
                                                               input$geoComps
                                                             } else {
@@ -1823,7 +1823,7 @@ server <- function(input, output, session) {
     Splash_21 <- C_Achieve_ILR21 %>%
       filter(
         geographic_level == "country" |
-          geographic_level == input$GeoType,
+          geographic_level == input$splashGeoType,
         (area == "England" |
           area == C_Geog$areaName[C_Geog$areaCode == event$id] |
           area %in% if ("geoComps" %in% names(input)) {
