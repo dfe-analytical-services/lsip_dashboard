@@ -1625,14 +1625,14 @@ server <- function(input, output, session) {
   output$titleMap <- renderUI({
     #get current area
     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
-    areaClicked <- C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]
+    areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
     paste0("Where does ",areaClicked," fit in the national picture?")
   })
   #create map comment
   output$commentMap <- renderUI({
     #get current area
     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
-    areaClicked <- C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]
+    areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
     compareNational<-
     if((C_EmpRate_APS1822 %>%
         filter(year==2022,(geographic_level == "LEP"&area == areaClicked)))$empRate
@@ -1654,24 +1654,24 @@ server <- function(input, output, session) {
   })
   #draw map
   output$map <- renderLeaflet({
-    pal <- colorNumeric("Blues", C_mapLEP$empRate) ## 6BACE6 c("#FFFFFF", "#12436D")
+    mapData<-C_Geog%>%filter(geog==input$splashGeoType)
+    pal <- colorNumeric("Blues", mapData$empRate) ## 6BACE6 c("#FFFFFF", "#12436D")
 
     labels <- sprintf(
       "<strong>%s</strong><br/>Employment rate: %s%%",
-      C_mapLEP$LEP21NM, round(C_mapLEP$empRate*100)
+      mapData$areaName, round(mapData$empRate*100)
     ) %>% lapply(htmltools::HTML)
 
     leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
-      addProviderTiles(providers$CartoDB.Positron) %>% # "Stamen.TonerLite"
+      addProviderTiles(providers$CartoDB.Positron) %>% 
       addPolygons(
-        data = C_mapLEP,
-        fillColor = ~ pal(C_mapLEP$empRate),
+        data = mapData,
+        fillColor = ~ pal(mapData$empRate),
         color = "black",
-        layerId = ~LEP21CD,
+        layerId = ~areaCode,
         weight = 1,
-        highlightOptions = highlightOptions( # color = "yellow",
+        highlightOptions = highlightOptions(
           weight = 2,
-          # fillColor = 'yellow',
           bringToFront = TRUE
         ),
         label = labels,
@@ -1703,20 +1703,19 @@ server <- function(input, output, session) {
     
     labels <- sprintf(
       "<strong>%s</strong><br/>Employment rate: %s%%",
-      (C_mapLA %>% filter(LEP21NM1 == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]))$LAD22NM,round((C_mapLA %>% filter(LEP21NM1 == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]))$empRate*100)
+      (C_mapLA %>% filter(LEP21NM1 == C_Geog$areaName[C_Geog$areaCode == event$id]))$LAD22NM,round((C_mapLA %>% filter(LEP21NM1 == C_Geog$areaName[C_Geog$areaCode == event$id]))$empRate*100)
     ) %>% lapply(htmltools::HTML)
 
     leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
       addProviderTiles(providers$CartoDB.Positron) %>% # "Stamen.TonerLite"
       addPolygons(
-        data = C_mapLA %>% filter(LEP21NM1 == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id]),
+        data = C_mapLA %>% filter(LEP21NM1 == C_Geog$areaName[C_Geog$areaCode == event$id]),
         fillColor = ~ pal(C_mapLA$empRate),
         color = "black",
         layerId = ~LAD22CD,
         weight = 1,
-        highlightOptions = highlightOptions( # color = "yellow",
+        highlightOptions = highlightOptions(
           weight = 2,
-          # fillColor = 'yellow',
           bringToFront = TRUE
         ),
         label = labels,
@@ -1725,8 +1724,7 @@ server <- function(input, output, session) {
           textsize = "15px",
           direction = "auto"
         )
-      ) # %>%
-    # setView(lng = -1.6, lat = 52.8, zoom = 5.7)
+      ) 
   })
 
   # time chart
@@ -1736,7 +1734,7 @@ server <- function(input, output, session) {
     SplashTime <- C_EmpRate_APS1822 %>%
       select(year, area, geographic_level, empRate) %>%
       filter(
-        (geographic_level == input$GeoType&(          area == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id] | # input$mapGeog|#eval(parse(text = ))
+        (geographic_level == input$GeoType&(          area == C_Geog$areaName[C_Geog$areaCode == event$id]| # input$mapGeog|#eval(parse(text = ))
                                                             area %in% if ("geoComps" %in% names(input)) {
                                                               input$geoComps
                                                             } else {
@@ -1747,7 +1745,7 @@ server <- function(input, output, session) {
       )
     # add an extra column so the colours work in ggplot when sorting alphabetically
     SplashTime$Areas <- factor(SplashTime$area,
-      levels = c("England", C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id], C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id],input$geoComps)
+      levels = c("England", C_Geog$areaName[C_Geog$areaCode == event$id], C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id],input$geoComps)
     )
 
     ggplot(
@@ -1787,7 +1785,7 @@ server <- function(input, output, session) {
         geographic_level == "country" |
           geographic_level == input$GeoType,
         (area == "England" |
-          area == C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id] |
+          area == C_Geog$areaName[C_Geog$areaCode == event$id] |
           area %in% if ("geoComps" %in% names(input)) {
             input$geoComps
           } else {
@@ -1801,7 +1799,7 @@ server <- function(input, output, session) {
 
     # add an extra column so the colours work in ggplot when sorting alphabetically
     Splash_21$Area <- factor(Splash_21$area,
-      levels = c("England", C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id], input$geoComps)
+      levels = c("England", C_Geog$areaName[C_Geog$areaCode == event$id], input$geoComps)
     )
     ggplot(Splash_21, aes(x = reorder(SSA, desc(SSA)), y = pc, fill = Area, text = paste0(
       "SSA: ", SSA, "<br>",

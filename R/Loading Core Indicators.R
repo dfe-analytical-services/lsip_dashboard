@@ -56,4 +56,4 @@ I_DataTable <- read.csv(file = "./Data/AppData/I_DataTable.csv", check.names = F
 
 # map tables
 load(file = "./Data/AppData/C_mapLA.Rdata")
-load(file = "./Data/AppData/C_mapLEP.Rdata")
+load(file = "./Data/AppData/C_Geog.Rdata")
