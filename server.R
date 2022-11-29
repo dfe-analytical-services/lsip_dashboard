@@ -2193,6 +2193,7 @@ server <- function(input, output, session) {
     
     paste0(areaClicked, " has a ",compareNational," employment rate than the national average. It has the ",areaRank,suff," highest employment rate of the 38 LEPs.")
   })
+  
   #draw map
   output$map <- renderLeaflet({
     mapData<-C_Geog%>%filter(geog==input$splashGeoType)
@@ -2224,18 +2225,57 @@ server <- function(input, output, session) {
       ) %>%
       setView(lng = -1.6, lat = 52.8, zoom = 5.7)
   })
-
-  # observeEvent(input$map_marker_click, {
-  #   leafletProxy("map", session) %>%
-  #     addPolygons(data=C_mapLEP%>%filter(LEP21CD==input$map_shape_click$id),weight = 2)
-  # })
-  # # update region on click
-  # mapGeog<-eventReactive(input$map_shape_click, {
-  #   event <- input$map_shape_click
-  #   #output$mapGeog <- renderUI(C_mapLEP$LEP21NM[C_mapLEP$LEP21CD == event$id])
-  #   #updateSelectInput(session, "C_mapLEP", selected=event$id)
-  #
-  # })
+  
+  observeEvent(input$map_shape_click$id,{
+    mapData<-C_Geog%>%filter(geog==input$splashGeoType)
+    pal <- colorNumeric("Blues", mapData$empRate) ## 6BACE6 c("#FFFFFF", "#12436D")
+    
+    labels <- sprintf(
+      "<strong>%s</strong><br/>Employment rate: %s%%",
+      mapData$areaName, round(mapData$empRate*100)
+    ) %>% lapply(htmltools::HTML)
+    labelsChosen <- sprintf(
+      "<strong>%s</strong><br/>Employment rate: %s%%",
+      (mapData%>%filter(areaCode==input$map_shape_click$id))$areaName, round((mapData%>%filter(areaCode==input$map_shape_click$id))$empRate*100)
+    ) %>% lapply(htmltools::HTML)
+    
+    leafletProxy("map") %>%
+      #removeShape(layerId =input$map_shape_click$id)%>%
+      addPolygons(
+        data = mapData,
+        fillColor = ~ pal(mapData$empRate),
+        color = "black",
+        layerId = ~areaCode,
+        weight = 1,
+        highlightOptions = highlightOptions(
+          weight = 2,
+          bringToFront = TRUE
+        ),
+        label = labels,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto"
+        )
+      ) %>%
+      addPolygons(
+        data = mapData%>%filter(areaCode==input$map_shape_click$id),
+        fillColor = ~ pal(mapData$empRate),
+        color = "black",
+        layerId = ~areaCode,
+        weight = 3,
+        highlightOptions = highlightOptions(
+          weight = 2,
+          bringToFront = TRUE
+        ),
+        label = labelsChosen,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "15px",
+          direction = "auto"
+        )
+      )
+  })
 
   #make LA map
   output$mapLA <- renderLeaflet({
