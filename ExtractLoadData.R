@@ -20,6 +20,12 @@ folder <- "2_LEPmissing"
 sheetNum <- 2
 I_missingLAD <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
+# Load MCA lookup
+folder <- "12_MCA_lookup"
+sheetNum <- 1
+I_mcalookup <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+
+
 ## APS ----
 ### Employment by occupation ----
 # Download from https://www.nomisweb.co.uk/datasets/apsnew
@@ -39,14 +45,23 @@ folder <- "4_APSempRate"
 sheetNum <- 1
 I_EmpRate_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
+
+### employment by industry------------
+# Geog and date as above
+# Cell: T13a	Employment by industry (SIC 2007) and flexibility
+folder <- "12_APSempind"
+sheetNum <- 1
+I_empind_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+
+
 ## ILR
-### AY21/22 achievements by SSAt1 and LAD ------------
-## Permalink: https://explore-education-statistics.service.gov.uk/data-tables/permalink/c390bb3f-8577-40f1-869c-fc8a8195516e
+### AY21/22 achievements by SSAt1, LAD, gender, level------------
+## Permalink: https://explore-education-statistics.service.gov.uk/data-tables/permalink/2be7f950-b9ff-4f22-d77a-08dabcdedabe
 folder <- "5_ILRachSSA"
 I_Achieve_ILR21 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
-### AY16/17-20/21 achievements by LAD and provision------------
-## Permalink: https://explore-education-statistics.service.gov.uk/data-tables/permalink/3960ad0f-fd8a-49bb-91d7-f3ca1181b93f
+### AY16/17-20/21 achievements/starts/part by LAD and provision, level and age------------
+## Download "Further education and skills geography - detailed summary " from https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22
 folder <- "6_ILRach"
 I_Achieve_ILR1621 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
@@ -63,12 +78,12 @@ I_Vacancy_ONS1722 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.fi
 # Enterprise by employment size
 # Download from https://www.nomisweb.co.uk/query/construct/summary.asp?mode=construct&version=0&dataset=142
 # Query data
-# Geography: England, LEPs, regions, LADs (as of April 2021)
-# Date: 12 months to Dec 2017-2021
+# Geography: England, LEPs, regions, LADs (as of April 2022)
+# Date: 12 months to Dec 2018-2022
 # Cell: UK Business Counts - enterprises by industry and employment size band
 folder <- "9_UBCempent"
 sheetNum <- 1
-I_EmpEnt_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+I_EmpEnt_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 
 # National pupil database

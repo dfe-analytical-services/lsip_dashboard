@@ -59,7 +59,18 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
+
   output$downloadData3 <- downloadHandler(
+    filename = function() {
+      "EmpbyindustryIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "1c.Emp by industry" = D_EmpInd_APS1822
+      ), path = file)
+    }
+  )
+  output$downloadData4 <- downloadHandler(
     filename = function() {
       "VacancyIndicators.xlsx"
     },
@@ -69,7 +80,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  output$downloadData4 <- downloadHandler(
+  output$downloadData5 <- downloadHandler(
     filename = function() {
       "AchievementIndicators.xlsx"
     },
@@ -79,7 +90,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  output$downloadData5 <- downloadHandler(
+  output$downloadData6 <- downloadHandler(
     filename = function() {
       "AchievementBySSAIndicators.xlsx"
     },
@@ -90,7 +101,7 @@ server <- function(input, output, session) {
     }
   )
 
-  output$downloadData6 <- downloadHandler(
+  output$downloadData7 <- downloadHandler(
     filename = function() {
       "EnterprisebyemploymentsizeIndicators.xlsx"
     },
@@ -102,7 +113,7 @@ server <- function(input, output, session) {
   )
 
 
-  output$downloadData7 <- downloadHandler(
+  output$downloadData8 <- downloadHandler(
     filename = function() {
       "Keystage4destinationsIndicators.xlsx"
     },
@@ -113,7 +124,7 @@ server <- function(input, output, session) {
     }
   )
 
-  output$downloadData8 <- downloadHandler(
+  output$downloadData9 <- downloadHandler(
     filename = function() {
       "Keystage5destinationsIndicators.xlsx"
     },
@@ -124,9 +135,10 @@ server <- function(input, output, session) {
     }
   )
 
+
   # create download links
   output$hidden_downloads <- renderUI(
-    lapply(1:8, function(i) {
+    lapply(1:9, function(i) {
       downloadLink(paste0("downloadData", i), "download", class = "hiddenLink")
     })
   )
@@ -136,7 +148,7 @@ server <- function(input, output, session) {
       mutate("Dashboard data" = lapply(
         1:n(),
         function(i) {
-          paste0('<a href="#" onClick=document.getElementById("downloadData', i, '").click() >Download</a>')
+          paste0('<a onClick=document.getElementById("downloadData', i, '").click() >Download</a>')
         }
       )), escape = FALSE, options = list(dom = "t"), rownames = FALSE)
   })
@@ -150,9 +162,14 @@ server <- function(input, output, session) {
         choices = C_LEP2020 %>% filter(geographic_level == "LEP") %>% select(Area),
         selected = input$lep1
       )
-    } else {
+    } else if (input$GeoType == "LSIP") {
       selectInput("lep1", "Choose primary LSIP area",
         choices = C_LEP2020 %>% filter(geographic_level == "LSIP") %>% select(Area),
+        selected = input$lep1
+      )
+    } else {
+      selectInput("lep1", "Choose primary MCA area",
+        choices = C_LEP2020 %>% filter(geographic_level == "MCA") %>% select(Area),
         selected = input$lep1
       )
     }
@@ -168,13 +185,72 @@ server <- function(input, output, session) {
           choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LEP", Area != input$lep1) %>% select(Area)),
           selected = input$lep2
         )
-      } else {
+      } else if (input$GeoType == "LSIP") {
         selectInput("lep2", "Choose comparison LSIP area",
           choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LSIP", Area != input$lep1) %>% select(Area)),
           selected = input$lep2
         )
+      } else {
+        selectInput("lep2", "Choose comparison MCA area",
+          choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "MCA", Area != input$lep1) %>% select(Area)),
+          selected = input$lep2
+        )
       }
     }
+  })
+
+  # turn on extra filters where used
+  output$age_on <- renderUI({
+    selectInput("ageGroup", "Choose age group",
+      choices = C_Achieve_ILR1621 %>%
+        filter(
+          typeNeat %in% if ("typeGroup" %in% names(input)) {
+            input$typeGroup
+          } else {
+            "Total FE and skills provision"
+          },
+          level_or_type %in% if ("levelGroup" %in% names(input)) {
+            input$levelGroup
+          } else {
+            "Further education and skills: Total"
+          }
+        ) %>%
+        distinct(Age = age_group),
+      multiple = FALSE, selected = "Total"
+    )
+  })
+
+  output$type_on <- renderUI({
+    selectizeInput("typeGroup", "Choose type of training",
+      choices = C_Achieve_ILR1621 %>% distinct(Type = typeNeat),
+      multiple = FALSE, selected = "Total FE and skills provision"
+    )
+  })
+
+  output$level_on <- renderUI({
+    selectizeInput("levelGroup", "Choose level of training",
+      choices = C_Achieve_ILR1621 %>%
+        filter(typeNeat %in% if ("typeGroup" %in% names(input)) {
+          input$typeGroup
+        } else {
+          "Total FE and skills provision"
+        }) %>% distinct(Level = level_or_type),
+      multiple = FALSE, selected = "Further education and skills: Total"
+    )
+  })
+
+  output$metric_on <- renderUI({
+    selectizeInput("metricGroup", "Choose metric",
+      choices = if ("typeGroup" %in% names(input)) {
+        if ("Apprenticeships (all ages)" %in% input$typeGroup) {
+          c("Achievements" = "achievements", "Starts (apprenticeships only)" = "starts", "Participation" = "participation")
+        } else {
+          c("Achievements" = "achievements", "Participation" = "participation")
+        }
+      } else {
+        c("Achievements" = "achievements", "Participation" = "participation")
+      }
+    )
   })
 
   # define page title
@@ -187,6 +263,7 @@ server <- function(input, output, session) {
   list_of_datasets0 <- list(
     "1a.Emp by occupation" = D_EmpOcc_APS1721,
     "1b.Emp rate" = D_EmpRate_APS1822,
+    "1c.Emp by industry" = D_EmpInd_APS1822,
     "2.Vacancies" = C_Vacancy_ONS1722,
     "3a.FE achievements SSA" = D_Achieve_ILR21,
     "3b.FE achievements" = D_Achieve_ILR1621,
@@ -270,8 +347,8 @@ server <- function(input, output, session) {
     empCntMinMax <- C_EmpRate_APS1822_max_min %>%
       filter(area == input$lep1)
 
-    ggplot(empLine, aes(x = Year, y = Employment, group = area, text = paste0(
-      "Year: ", year, "<br>",
+    ggplot(empLine, aes(x = Year - 1, y = Employment, group = area, text = paste0(
+      "Year: Jul-Jun ", year, "<br>",
       "Employment: ", format(Employment, big.mark = ","), "<br>"
     ))) +
       geom_line(data = empLine %>% filter(Year <= 21)) +
@@ -354,10 +431,10 @@ server <- function(input, output, session) {
       filter((geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"))
 
     ggplot(empRateLine, aes(
-      x = Year, y = empRate,
+      x = Year - 1, y = empRate,
       group = area,
       text = paste0(
-        "Year: ", year, "<br>",
+        "Year: Jul-Jun ", year, "<br>",
         "Area: ", area, "<br>",
         "Employment rate: ", format(100 * empRate, digit = 2), "%<br>"
       )
@@ -457,7 +534,7 @@ server <- function(input, output, session) {
     VacMinMax <- C_Vacancy_England_max_min %>% filter(area == input$lep1, geographic_level == input$GeoType)
 
     ggplot(VacLine, aes(x = Year, y = jobpc, group = area, text = paste0(
-      "Year: ", year, "<br>",
+      "Period: Jan ", year, "<br>",
       "England vacancy share: ", format(100 * jobpc, digit = 2), "%<br>"
     ))) +
       geom_line(data = VacLine %>% filter(Year <= 21)) +
@@ -519,28 +596,29 @@ server <- function(input, output, session) {
       filter(
         geographic_level == input$GeoType,
         area == input$lep1,
-        level_or_type == "Education and training: Total"
+        level_or_type == "Education and training: Total",
+        age_group == "Total"
       )
   })
+  # get 21/22 values
+  EtLatest <- reactive({
+    EtLEP() %>%
+      filter(time_period == "202122")
+  })
   # get 20/21 values
-  Et2021 <- reactive({
+  EtLast <- reactive({
     EtLEP() %>%
       filter(time_period == "202021")
   })
-  # get 19/20 values
-  Et1920 <- reactive({
-    EtLEP() %>%
-      filter(time_period == "201920")
-  })
 
   output$skisup.ETach <- renderUI({
-    ETach <- Et2021()$achievements
+    ETach <- EtLatest()$achievements
 
     # E&T achievements change
-    ETachChange <- Et2021()$achievements - Et1920()$achievements
+    ETachChange <- EtLatest()$achievements - EtLast()$achievements
 
     # print with formatting
-    h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("2021/22", style = "font-size: 16px;font-weight:normal;"), br(),
       format(ETach, big.mark = ","), br(),
       span(
         format_pm(ETachChange) # plus-minus and comma sep formatting
@@ -555,7 +633,7 @@ server <- function(input, output, session) {
   # e and t chart
   etLineChart <- eventReactive(input$lep1, {
     etLine <- EtLEP()
-    etCntChange <- Et2021()$achievements - Et1920()$achievements
+    etCntChange <- EtLatest()$achievements - EtLast()$achievements
     EtMinMax <- C_Achieve_ILR1621_max_min %>% filter(
       geographic_level == input$GeoType,
       area == input$lep1,
@@ -566,15 +644,15 @@ server <- function(input, output, session) {
       "Academic year: ", time_period, "<br>",
       "Achievements: ", format(achievements, big.mark = ","), "<br>"
     ))) +
-      geom_line(data = etLine %>% filter(Year <= 19)) +
+      geom_line(data = etLine %>% filter(Year <= 20 & Year >= 17)) +
       geom_ribbon(
-        data = etLine %>% filter(Year >= 19),
+        data = etLine %>% filter(Year >= 20),
         aes(ymin = min(achievements), ymax = achievements),
         fill = ifelse(etCntChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = etLine %>% filter(Year >= 19),
+        data = etLine %>% filter(Year >= 20),
         color = ifelse(etCntChange > 0, "#00703c", "#d4351c")
       ) +
       # add a blank line for the formatted tooltip
@@ -620,27 +698,28 @@ server <- function(input, output, session) {
       filter(
         geographic_level == input$GeoType,
         area == input$lep1,
-        level_or_type == "Apprenticeships: Total"
+        level_or_type == "Apprenticeships: Total",
+        age_group == "Total"
       )
   })
+  # get 21/22 values
+  AppLatest <- reactive({
+    AppLEP() %>%
+      filter(time_period == "202122")
+  })
   # get 20/21 values
-  App2021 <- reactive({
+  AppLast <- reactive({
     AppLEP() %>%
       filter(time_period == "202021")
   })
-  # get 19/20 values
-  App1920 <- reactive({
-    AppLEP() %>%
-      filter(time_period == "201920")
-  })
   output$skisup.APPach <- renderUI({
-    Appach <- App2021()$achievements
+    Appach <- AppLatest()$achievements
 
     # E&T achievements change
-    AppachChange <- App2021()$achievements - App1920()$achievements
+    AppachChange <- AppLatest()$achievements - AppLast()$achievements
 
     # print with formatting
-    h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("2021/22", style = "font-size: 16px;font-weight:normal;"), br(),
       format(Appach, big.mark = ","), br(),
       span(
         format_pm(AppachChange) # plus-minus and comma sep formatting
@@ -655,7 +734,7 @@ server <- function(input, output, session) {
   # app chart
   AppLineChart <- eventReactive(input$lep1, {
     AppLine <- AppLEP()
-    AppCntChange <- App2021()$achievements - App1920()$achievements
+    AppCntChange <- AppLatest()$achievements - AppLast()$achievements
     AppMinMax <- C_Achieve_ILR1621_max_min %>% filter(
       geographic_level == input$GeoType,
       area == input$lep1,
@@ -667,15 +746,15 @@ server <- function(input, output, session) {
       "Academic year: ", time_period, "<br>",
       "Achievements: ", format(achievements, big.mark = ","), "<br>"
     ))) +
-      geom_line(data = AppLine %>% filter(Year <= 19)) +
+      geom_line(data = AppLine %>% filter(Year <= 20 & Year >= 17)) +
       geom_ribbon(
-        data = AppLine %>% filter(Year >= 19),
+        data = AppLine %>% filter(Year >= 20),
         aes(ymin = min(achievements), ymax = achievements),
         fill = ifelse(AppCntChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = AppLine %>% filter(Year >= 19),
+        data = AppLine %>% filter(Year >= 20),
         color = ifelse(AppCntChange > 0, "#00703c", "#d4351c")
       ) +
       # add a blank line for the formatted tooltip
@@ -737,7 +816,8 @@ server <- function(input, output, session) {
   ### Downloads----
   list_of_datasets1 <- list(
     "1a.Emp by occupation" = D_EmpOcc_APS1721,
-    "1b.Emp rate" = D_EmpRate_APS1822
+    "1b.Emp rate" = D_EmpRate_APS1822,
+    "1c.Emp by industry" = D_EmpInd_APS1822
   )
   output$download_btn1a <- downloadHandler(
     filename = function() {
@@ -752,7 +832,8 @@ server <- function(input, output, session) {
   filtered_data1 <- reactive({
     list(
       "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
-      "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, area == input$lep1)
+      "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, area == input$lep1),
+      "1c.Emp industry" = filter(D_EmpInd_APS1822, geographic_level == input$GeoType, area == input$lep1)
     )
   })
   output$download_btn1b <- downloadHandler(
@@ -886,10 +967,10 @@ server <- function(input, output, session) {
     ggplot(
       EmpRateTime,
       aes(
-        x = year, y = empRate,
+        x = year - 1, y = empRate,
         color = Areas, group = Areas,
         text = paste0(
-          "Academic year: ", year, "<br>",
+          "Year: Jul-Jun ", year, "<br>",
           "Area: ", Areas, "<br>",
           "Employment rate: ", scales::percent(round(empRate, 2)), "<br>"
         )
@@ -919,7 +1000,7 @@ server <- function(input, output, session) {
         geographic_level == input$GeoType | geographic_level == "COUNTRY",
         (area == "England" |
           area == input$lep1 |
-          area == if (("lep2" %in% names(input)) & (input$GeoType == "LEP")) {
+          area == if (("lep2" %in% names(input))) {
             input$lep2
           } else {
             "\nNone"
@@ -935,7 +1016,9 @@ server <- function(input, output, session) {
       mutate(across(where(is.numeric), ~ round(prop.table(.), 4))) %>%
       filter(.[[2]] > 0) %>%
       rownames_to_column("Occupation") %>%
-      filter(Occupation != "Alloccsremain")
+      relocate(input$lep1, .after = England)
+    # %>%
+    # filter(Occupation != "Alloccsremain")
   })
 
   output$EmpOcc <- renderDataTable({
@@ -943,6 +1026,56 @@ server <- function(input, output, session) {
     datatable(df, options = list(order = list(2, "desc")), rownames = FALSE) %>%
       formatPercentage(2:ncol(df), 0)
   })
+
+  ## employment by industry (SIC 2007) bar chart ----
+  empind <- eventReactive(c(input$lep1, input$lep2), {
+    empind_22 <- C_EmpInd2_APS1822 %>%
+      filter(
+        year == "2022",
+        geographic_level == input$GeoType,
+        (area == input$lep1 |
+          area == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          })
+      )
+
+    # add an extra column so the colours work in ggplot when sorting alphabetically
+    empind_22$Area <- factor(empind_22$area,
+      levels = c(input$lep1, input$lep2)
+    )
+    ggplot(empind_22, aes(x = reorder(variable, desc(variable)), y = rate, fill = Area, text = paste0(
+      "Industry: ", variable, "<br>",
+      "Area: ", Area, "<br>",
+      "Percentage: ", scales::percent(round(rate, 2)), "<br>"
+    ))) +
+      geom_col(
+        position = "dodge"
+      ) +
+      scale_y_continuous(labels = scales::percent) +
+      scale_x_discrete(labels = function(rate) str_wrap(rate, width = 26)) +
+      coord_flip() +
+      theme_minimal() +
+      labs(fill = "") +
+      theme(
+        legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank()
+      ) +
+      scale_fill_manual(values = chartColors2)
+  })
+
+  output$empind <- renderPlotly({
+    ggplotly(empind(),
+      tooltip = c("text"), height = 474
+    ) %>%
+      layout(
+        legend = list(orientation = "h", x = 0, y = -0.1),
+        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+
 
   # VACANCIES ----
   # define page title
@@ -1129,11 +1262,11 @@ server <- function(input, output, session) {
   })
 
 
-  # FE ----
+  # Skills ----
   # define page title
   output$page2title <- renderUI({
     paste0(
-      "Skills training in ", input$lep1,
+      "Further Education and skills training in ", input$lep1,
       if ("lep2" %in% names(input)) {
         if (input$lep2 == "\nNone") {
         } else {
@@ -1183,8 +1316,24 @@ server <- function(input, output, session) {
         class = "small-box bg-geo1",
         div(
           class = "inner",
-          h3(format(Et2021()$achievements, scientific = FALSE, big.mark = ",")),
-          p(paste0("adult education and training achievements in 2020/21 in ", input$lep1)),
+          h3(format((C_Achieve_ILR1621 %>%
+            filter(
+              geographic_level == input$GeoType,
+              area == input$lep1, time_period == "202122",
+              level_or_type %in% if ("levelGroup" %in% names(input) & !"Further education and skills: Total" %in% input$levelGroup) {
+                input$levelGroup
+              } else {
+                "Further education and skills: Total"
+              },
+              age_group %in% if ("ageGroup" %in% names(input) & !"Total" %in% input$ageGroup) {
+                input$ageGroup
+              } else {
+                "Total"
+              }
+            ) %>%
+            select(input$metricGroup)
+          )[1, 1], scientific = FALSE, big.mark = ",")),
+          p(paste0(input$metricGroup, " in 2021/22 in ", input$lep1)),
         )
       )
     )
@@ -1200,10 +1349,21 @@ server <- function(input, output, session) {
           h3(format((C_Achieve_ILR1621 %>%
             filter(
               geographic_level == input$GeoType,
-              area == input$lep2, time_period == "202021",
-              level_or_type == "Education and training: Total"
-            ))$achievements, scientific = FALSE, big.mark = ",")),
-          p(paste0("adult education and training achievements in 2020/21 in ", input$lep2)),
+              area == input$lep2, time_period == "202122",
+              level_or_type %in% if ("levelGroup" %in% names(input) & !"Further education and skills: Total" %in% input$levelGroup) {
+                input$levelGroup
+              } else {
+                "Further education and skills: Total"
+              },
+              age_group %in% if ("ageGroup" %in% names(input) & !"Total" %in% input$ageGroup) {
+                input$ageGroup
+              } else {
+                "Total"
+              }
+            ) %>%
+            select(input$metricGroup)
+          )[1, 1], scientific = FALSE, big.mark = ",")),
+          p(paste0(input$metricGroup, " in 2021/22 in ", input$lep2)),
         )
       )
     )
@@ -1217,8 +1377,28 @@ server <- function(input, output, session) {
         class = "small-box bg-geo1",
         div(
           class = "inner",
-          h3(format(App2021()$achievements, scientific = FALSE, big.mark = ",")),
-          p(paste0("apprenticeship achievements in 2020/21 in ", input$lep1)),
+          h3(format(round((C_Achieve_ILR1621 %>%
+            filter(
+              geographic_level == input$GeoType,
+              area == input$lep1, time_period == "202122",
+              level_or_type %in% if ("levelGroup" %in% names(input) & !"Further education and skills: Total" %in% input$levelGroup) {
+                input$levelGroup
+              } else {
+                "Further education and skills: Total"
+              },
+              age_group %in% if ("ageGroup" %in% names(input) & !"Total" %in% input$ageGroup) {
+                input$ageGroup
+              } else {
+                "Total"
+              }
+            ) %>%
+            select(if ("metricGroup" %in% names(input)) {
+              paste0(input$metricGroup, "_rate_per_100000_population")
+            } else {
+              "achievements_rate_per_100000_population"
+            })
+          )[1, 1], 0), scientific = FALSE, big.mark = ",", nsmall = 0)),
+          p(paste0(input$metricGroup, " rate per 100,000 in 2021/22 in ", input$lep1)),
         )
       )
     )
@@ -1231,13 +1411,62 @@ server <- function(input, output, session) {
         class = "small-box bg-geo2",
         div(
           class = "inner",
-          h3(format((C_Achieve_ILR1621 %>%
+          h3(format(round((C_Achieve_ILR1621 %>%
             filter(
               geographic_level == input$GeoType,
-              area == input$lep2, time_period == "202021",
-              level_or_type == "Apprenticeships: Total"
-            ))$achievements, scientific = FALSE, big.mark = ",")),
-          p(paste0("apprenticeship achievements in 2020/21 in ", input$lep2)),
+              area == input$lep2, time_period == "202122",
+              level_or_type == if ("levelGroup" %in% names(input)) {
+                input$levelGroup
+              } else {
+                "Further education and skills: Total"
+              },
+              age_group %in% if ("ageGroup" %in% names(input) & !"Total" %in% input$ageGroup) {
+                input$ageGroup
+              } else {
+                "Total"
+              }
+            ) %>%
+            select(if ("metricGroup" %in% names(input)) {
+              paste0(input$metricGroup, "_rate_per_100000_population")
+            } else {
+              "achievements_rate_per_100000_population"
+            })
+          )[1, 1], 0), scientific = FALSE, big.mark = ",", nsmall = 0)),
+          p(paste0(input$metricGroup, " rate per 100,000 in 2021/22 in ", input$lep2)),
+        )
+      )
+    )
+  })
+
+  output$skisup.APach.national <- renderValueBox({
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo3",
+        div(
+          class = "inner",
+          h3(format((C_Achieve_ILR1621 %>%
+            filter(
+              geographic_level == "National",
+              time_period == "202122",
+              level_or_type == if ("levelGroup" %in% names(input)) {
+                input$levelGroup
+              } else {
+                "Further education and skills: Total"
+              },
+              age_group == if ("ageGroup" %in% names(input)) {
+                input$ageGroup
+              } else {
+                "Total"
+              }
+            ) %>%
+            select(if ("metricGroup" %in% names(input)) {
+              paste0(input$metricGroup, "_rate_per_100000_population")
+            } else {
+              "achievements_rate_per_100000_population"
+            })
+          )[1, 1], scientific = FALSE, big.mark = ",")),
+          p(input$metricGroup, " rate per 100,000 in 2021/22 in England"),
         )
       )
     )
@@ -1247,10 +1476,6 @@ server <- function(input, output, session) {
   output$skill_comp <- renderUI({
     if ("lep2" %in% names(input)) {
       if (input$lep2 == "\nNone") {
-        tagList(
-          br(),
-          p("")
-        )
       } else {
         tagList(
           valueBoxOutput("skisup.FEach.2"),
@@ -1262,32 +1487,77 @@ server <- function(input, output, session) {
   })
 
   ## Achievements over time line chart ----
-  Ach_time <- eventReactive(c(input$lep1, input$lep2, input$skill_line), {
+  # title
+  output$feLineTitle <- renderUI({
+    paste0(str_to_sentence(input$metricGroup), ": 2016/17 to 2021/22")
+  })
+
+  Ach_time <- eventReactive(c(input$lep1, input$lep2, input$levelGroup, input$ageGroup, input$metricGroup), { # , input$splitLine), {
+    validate(
+      need(input$ageGroup != "", "") # if area not yet loaded don't try to load ch
+    )
     FETime <- C_Achieve_ILR1621 %>%
       filter(
-        geographic_level == input$GeoType &
-          (area == input$lep1 |
-            (area == if ("lep2" %in% names(input)) {
-              input$lep2
-            } else {
-              "\nNone"
-            })
-          ),
-        level_or_typeNeat == input$skill_line
+        geographic_level == input$GeoType,
+        (area == input$lep1 |
+          (area == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          })
+        ),
+        #      if(input$splitLine=="typeNeat")
+        #        {typeNeat!="Total FE and skills provision"}
+        #      else{
+        typeNeat == if ("typeGroup" %in% names(input)) {
+          input$typeGroup
+        } else {
+          "Total FE and skills provision"
+          # }
+        },
+        #   if(input$splitLine=="level_or_type"){level_or_type!="Total"}else{
+        level_or_type == if ("levelGroup" %in% names(input)) {
+          input$levelGroup
+        } else {
+          "Further education and skills: Total"
+          #   }
+        },
+        #   if(input$splitLine=="age_group"){age_group!="Total"}else{
+        age_group == if ("ageGroup" %in% names(input)) {
+          input$ageGroup
+        } else {
+          "Total"
+          #      }
+        }
+      ) %>%
+      select(area, AY, level_or_type, age_group,
+        # typeNeat,
+        metric = if ("metricGroup" %in% names(input)) {
+          input$metricGroup
+        } else {
+          "achievements"
+        }
       )
 
     # add an extra column so the colours work in ggplot when sorting alphabetically
     FETime$Area <- factor(FETime$area,
       levels = c(input$lep1, input$lep2)
     )
+
     ggplot(FETime, aes(
-      x = AY, y = achievements, colour = Area,
-      group = interaction(level_or_typeNeat, area),
+      x = AY, y = metric, colour = area,
+      # linetype=if(input$splitLine=="None"){}else{eval(parse(text = input$splitLine))},
+      group =
+      # interaction(
+        area
+      # ,if(input$splitLine=="None"){}else{eval(parse(text = input$splitLine))})
+      ,
       text = paste0(
         "Academic year: ", AY, "<br>",
         "Area: ", Area, "<br>",
-        "Achievements: ", format(achievements, big.mark = ","), "<br>",
-        "Provision: ", level_or_typeNeat, "<br>"
+        str_to_sentence(input$metricGroup), ": ", format(metric, big.mark = ","), "<br>",
+        "Provision and level: ", level_or_type, "<br>",
+        "Age: ", age_group, "<br>"
       )
     )) +
       geom_line() +
@@ -1309,7 +1579,7 @@ server <- function(input, output, session) {
   })
 
   ## Achievements pc bar chart ----
-  Ach_SSA_pc <- eventReactive(c(input$lep1, input$lep2), {
+  Ach_SSA_pc <- eventReactive(c(input$lep1, input$lep2, input$levelBar, input$sexBar, input$metricBar), {
     AchSSA_21 <- C_Achieve_ILR21 %>%
       filter(
         geographic_level == input$GeoType,
@@ -1318,8 +1588,12 @@ server <- function(input, output, session) {
             input$lep2
           } else {
             "\nNone"
-          })
-      )
+          }),
+        Level == input$levelBar,
+        sex == input$sexBar
+      ) %>%
+      mutate(pc = case_when(input$metricBar == "Achievements" ~ pcAch, TRUE ~ pcEnr)) %>%
+      select(area, SSA, metric = input$metricBar, pc)
 
     # add an extra column so the colours work in ggplot when sorting alphabetically
     AchSSA_21$Area <- factor(AchSSA_21$area,
@@ -1328,8 +1602,8 @@ server <- function(input, output, session) {
     ggplot(AchSSA_21, aes(x = reorder(SSA, desc(SSA)), y = pc, fill = Area, text = paste0(
       "SSA: ", SSA, "<br>",
       "Area: ", Area, "<br>",
-      "Percentage of achievements: ", scales::percent(round(pc, 2)), "<br>",
-      "Achievements: ", Achievements, "<br>"
+      "Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(pc, 2)), "<br>",
+      input$metricBar, ": ", metric, "<br>"
     ))) +
       geom_col(
         position = "dodge"

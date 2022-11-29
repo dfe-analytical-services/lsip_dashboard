@@ -2,7 +2,7 @@ panel_overview <- function() {
   tabPanel(
     "Overview",
     h1(uiOutput("page0title")),
-    p("Change metrics are measured since the same period the year before."),
+    p("Change metrics are measured against the same period in the previous year."),
     fluidRow(
       style = "padding-left: 15px;padding-right: 15px;", # indent slightly so box aligns
       # left column
@@ -74,7 +74,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: ILR AY20/21",
+              title = "Source: ILR AY21/22",
               uiOutput("skisup.ETach"),
             )
           ),
@@ -88,7 +88,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: ILR AY20/21",
+              title = "Source: ILR AY21/22",
               uiOutput("skisup.APPach"),
             )
           ),
@@ -119,7 +119,7 @@ panel_overview <- function() {
       ),
       column(
         width = 9,
-        "Download all data for all geographies (LEPs, LSIP areas, LAs, regions and England)",
+        "Download all data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
       )
     ),
     fluidRow(
@@ -127,12 +127,12 @@ panel_overview <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn0b",
-          label = "Current LEP/LSIP",
+          label = "Current LEP/LSIP/MCA",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
       ),
-      column(width = 9, "Download all data for the selected LEP/LSIP area")
+      column(width = 9, "Download all data for the selected geographic area")
     ),
     column(width = 12, br(""))
   )
@@ -161,14 +161,15 @@ panel_employment <- function() {
     fluidRow(
       column(
         width = 6,
-        h2("Employment rates: 2018 to 2022"),
+        h2("Employment rates: Jul-Jun 2018 to Jul-Jun 2022"),
         plotlyOutput("EmpRate_time"),
         details(
           label = "Source: Annual Population Survey",
           inputId = "empRateSource",
           tags$ol(
+            # Is this correct (16-64 year olds)? Should be the same as for occupation table
             tags$li("Figures are for 16-64 year olds."),
-            tags$li("Years represent Jul-Jun period. So 2017 is the Jul 2016 – June 2017 period.")
+            tags$li("Years represent Jul-Jun period. So 2017 is the Jul 2017 – June 2018 period.")
           )
         )
       ),
@@ -182,14 +183,12 @@ panel_employment <- function() {
           label = "Source: Annual Population Survey",
           inputId = "empOccSource",
           tags$ol(
+            # IS this correct (all age groups)? Should be same as employment rate overtime
             tags$li("Figures are for all age groups."),
-            tags$li("LSIP area totals are calculated by adding up the relevant local authorities, which may lead to rounding errors and differences compared to equivalent LEPs."),
-            tags$li("Only the top 5 occupations are shown for LSIP areas."),
-            tags$li("Percentages are based on proportion of total employment in LEP/LSIP."),
             tags$li(
-              "ONS have announced that there is an issue with the collection of their occupational data surveys including the data used in this chart.
-            As such please see this data with caution.
-                    For more information see this ONS  ",
+              "Standard Occupational Classification 2010 (SOC2010).
+                    The ONS have announced that, due to a coding error, their occupational data should be used with caution.
+                    For more information see this ONS ",
               a(
                 href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
                 "article",
@@ -200,6 +199,26 @@ panel_employment <- function() {
         )
       )
     ),
+    fluidRow(
+      column(
+        12,
+        ### employment by industry bar chart ----
+        h2("Employment share by industry: Jul 2021 to Jun 2022"),
+        plotlyOutput("empind")
+      )
+    ),
+    column(width = 12, br("")), # put in to push below the fixed height chart
+    column(width = 12, br("")),
+    details(
+      label = "Source: Annual Population Survey",
+      inputId = "empindSource",
+      tags$ol(
+        tags$li("Figures are for all age groups."),
+        tags$li("Percentages are based on proportion of total employment."),
+        tags$li("Employment split by broad industry group Standard Industrial Classification: SIC 2007.")
+      )
+    ),
+
 
     ### Downloads-------------
     br(),
@@ -215,7 +234,7 @@ panel_employment <- function() {
       ),
       column(
         width = 9,
-        "Download employment data for all geographies (LEPs, LSIP areas, LAs, regions and England)",
+        "Download employment data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
       )
     ), # end of row
     fluidRow(
@@ -223,12 +242,12 @@ panel_employment <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn1b",
-          label = "Current LEP/LSIP",
+          label = "Current LEP/LSIP/MCA",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Download employment data for the selected LEP/LSIP area"))
+      column(width = 9, p("Download employment data for the selected geographic area"))
     ), # end of row
     column(width = 12, br(""))
   ) # end of Local Landscape tab
@@ -276,7 +295,7 @@ panel_vacancies <- function() {
           inputId = "SubsLev",
           label = "Job vacancy data information",
           help_text = "Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
-              The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between LEPs/LSIPs and over time, but do not represent true job vacancy volumes."
+              The monthly average is derived from weekly snapshots in January. The volume of online job adverts is presented as a standardised unit measure. The unit measure is derived by dividing the actual monthly average count of job adverts by a single set value. The job vacancy units can therefore be used to compare between areas and over time, but do not represent true job vacancy volumes."
         )
       )
     ),
@@ -294,7 +313,7 @@ panel_vacancies <- function() {
       ),
       column(
         width = 9,
-        "Download vacancies data for all geographies (LEPs, LSIP areas, LAs, regions and England)",
+        "Download vacancies data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
       )
     ), # end of row
     fluidRow(
@@ -302,12 +321,12 @@ panel_vacancies <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn3b",
-          label = "Current LEP/LSIP",
+          label = "Current LEP/LSIP/MCA",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Download vacancies data for the selected LEP/LSIP area")),
+      column(width = 9, p("Download vacancies data for the selected geographic area")),
     ), # end of row
     column(width = 12, br(""))
   ) # end of Skills Supply tab
@@ -318,10 +337,40 @@ panel_skills <- function() {
   tabPanel(
     "Skills",
     h1(uiOutput("page2title")),
+    fluidRow(
+      column(
+        12,
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              width = 4,
+              uiOutput("type_on")
+            ),
+            column(
+              width = 4,
+              uiOutput("level_on")
+            ),
+            column(
+              width = 4,
+              uiOutput("age_on")
+            )
+          ),
+          fluidRow(
+            column(
+              width = 4,
+              uiOutput("metric_on")
+            )
+          )
+        )
+      )
+    ),
+    br(),
     ### KPI boxes ----
     fluidRow(
       valueBoxOutput("skisup.FEach"),
-      valueBoxOutput("skisup.APach")
+      valueBoxOutput("skisup.APach"),
+      valueBoxOutput("skisup.APach.national")
     ),
     fluidRow(
       uiOutput("skill_comp")
@@ -330,29 +379,38 @@ panel_skills <- function() {
       label = "Source: Individualised Learner Record",
       inputId = "FEKPISource",
       tags$ol(
-        tags$li("Total achievements are the count of learners that achieved at any point during the stated academic period."),
+        tags$li("Total achievements is the count of learners that completed their qualification at any point during the stated academic period."),
         tags$li("Learners achieving more than one course will appear only once in the grand total."),
         tags$li("Years shown represent academic years.")
       )
     ),
     ### Achievements over time line chart ----
+    # fluidRow(
+    #   column(
+    #     12,
+    #     div(
+    #       class = "filterRow",
+    #       fluidRow(
+    #         column(
+    #           4,
+    #           selectizeInput("splitLine", "Choose split",
+    #                          choices = c("None", "Provision"="typeNeat", "Level"="level_or_type", "Age"="age_group")
+    #           )
+    #         )
+    #       )
+    #     )
+    #   )
+    # ),
     fluidRow(
       column(
         12,
-        h2("Further education and skills achievements: 2016/17 to 2020/21"),
-        div(
-          class = "filterRow",
-          selectizeInput("skill_line", "Choose type of training",
-            choices = c("Apprenticeships (all ages)", "Education and training (adults only)", "Community learning (adults only)", "Total FE and skills provision")
-          ),
-          br()
-        ),
+        h2(uiOutput("feLineTitle")),
         plotlyOutput("Ach_time"),
         details(
           label = "Source: Individualised Learner Record",
           inputId = "FEKPISource",
           tags$ol(
-            tags$li("Total achievements are the count of learners that achieved at any point during the stated academic period."),
+            tags$li("Total achievements is the count of learners that completed their qualification at any point during the stated academic period."),
             tags$li("Learners achieving more than one course will appear only once in the grand total."),
             tags$li("Years shown represent academic years.")
           )
@@ -363,19 +421,52 @@ panel_skills <- function() {
     fluidRow(
       column(
         12,
-        h2("Further education and skills achievements by sector subject area: Aug 2021 to Apr 2022 (provisional)"),
-        plotlyOutput("Ach_SSA_pc")
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              4,
+              selectizeInput("levelBar", "Choose level of training",
+                choices = c("Total", "1", "2", "3", "4+", "E", "Not Assigned")
+              )
+            ),
+            column(
+              4,
+              selectizeInput("sexBar", "Choose gender",
+                choices = c("Total", "Female", "Male")
+              )
+            ),
+            column(
+              4,
+              selectizeInput("metricBar", "Choose metric",
+                choices = c("Achievements", "Enrolments")
+              )
+            )
+          )
+        )
       )
     ),
+    fluidRow(
+      column(
+        12,
+        h2("Further education and skills training by sector subject area: Aug 2021 to Jul 2022"),
+      )
+    ),
+    fluidRow(column(
+      12,
+      plotlyOutput("Ach_SSA_pc")
+    )),
     column(width = 12, br("")), # put in to push below the fixed height chart
     column(width = 12, br("")),
     details(
       label = "Source: Individualised Learner Record",
       inputId = "FEKPISource",
       tags$ol(
-        tags$li("Total achievements are the count of learners that achieved at any point during the stated academic period."),
-        tags$li("Learners achieving more than one course will appear only once in the grand total."),
-        tags$li("Years shown represent academic years.")
+        tags$li("'Not Applicable/Not Known' levels includes aims where a qualification either has no level or may be taken at several levels."),
+        tags$li("‘Aim enrolments’ are a count of learners starting a course (including component courses) for each academic period.
+                Learners are counted for each aim they are studying and so can be counted more than once."),
+        tags$li("‘Aim achievements’ are a count of learners completing (passing or certification) a course (including a component course) for each academic year.
+                Learners will be counted for each aim they achieve and so can be counted more than once."),
       )
     ),
     ### FE definitions----
@@ -386,11 +477,10 @@ panel_skills <- function() {
           inputId = "FEdefs",
           label = "Further education and skills definitions",
           tags$ul(
-            tags$li("FE and skills include all age apprenticeships and wider adult (19+) FE learning, such as community learning and education and training."),
-            tags$li("Further Education covers publicly-funded learning delivered by an FE institution, a training provider or within a local community. It also includes apprenticeships delivered in the workplace. It does not include higher education, unless delivered as part of an apprenticeship programme."),
+            tags$li("Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community."),
+            tags$li("FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme."),
             tags$li("Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications."),
             tags$li("Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups."),
-            tags$li("Education and training is mainly classroom-based adult FE that is not an apprenticeship or community learning."),
             tags$li("Achievements are the number of learners who successfully complete an individual aim in an academic year. ")
           )
         )
@@ -408,7 +498,7 @@ panel_skills <- function() {
       ),
       column(
         width = 9,
-        "Download skills data for all geographies (LEPs, LSIP areas, LAs, regions and England)"
+        "Download skills data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)"
       )
     ), # end of row
     fluidRow(
@@ -416,12 +506,12 @@ panel_skills <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn2b",
-          label = "Current LEP/LSIP",
+          label = "Current LEP/LSIP/MCA",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Download skills data for the selected LEP/LSIP area"))
+      column(width = 9, p("Download skills data for the selected geographic area"))
     ), # end of row
     column(width = 12, br(""))
   ) # skills panel
