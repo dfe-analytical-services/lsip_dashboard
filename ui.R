@@ -368,6 +368,10 @@ padding-top:15px
               column(
                 width = 4,
                 uiOutput("lep2_off")
+              ),
+              column(
+                width = 4,
+                uiOutput("gen_off"),
               )
             )
           ),

@@ -1637,7 +1637,6 @@ server <- function(input, output, session) {
   })
   
   # Qualification level ----
-  
   # turn off comparison boxes if none is selected  
   output$qual_comp <- renderUI({
     if ("lep2" %in% names(input)) {
@@ -1672,22 +1671,12 @@ server <- function(input, output, session) {
   })
   
   
+  
+  
   #age filter
-  output$age_on <- renderUI({
+  output$age_on2 <- renderUI({
     selectInput("ageGroup", "Choose age group",
                 choices = C_qual2_APS1721 %>%
-                  filter(
-                    Level == if ("qualGroup" %in% names(input)) {
-                      input$qualGroup
-                    } else {
-                      "None"
-                    },
-                    group == if ("genGroup" %in% names(input)) {
-                      input$genGroup
-                    } else {
-                      "Total"
-                    }
-                  ) %>%
                   distinct(Age = age_band), 
                 multiple = FALSE, selected = "16-64"
     )
@@ -1703,27 +1692,26 @@ server <- function(input, output, session) {
     
   })
   
+
   
-  #gender filter
+  
   output$gen_on <- renderUI({
     selectizeInput("genGroup", "Choose gender group",
                    choices = if ("ageGroup" %in% names(input)) {
                      if ("16-64" %in% input$ageGroup) {
-                       c("Total", "Male", "Female") 
-                       
-                     } else  {
+                       c("Total", "Female", "Male")
+                     } else {
                        c("Total")
                      }
-                     
-                   } else { 
+                   } else {
                      c("Total")
                    }
-                   
     )
   })
   
   
-  # KPI 1 
+  
+  #KPI 1
   output$qualup.nvq3 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -1735,27 +1723,20 @@ server <- function(input, output, session) {
                        filter(
                          geographic_level == input$GeoType,
                          area == input$lep1, year == "2021",
-                         Level == if ("qualGroup" %in% names(input)) {
-                           input$qualGroup
-                         } else {
-                           "None"
-                         },
-                         age_band == if ("ageGroup" %in% names(input)) {
-                           input$ageGroup
-                         } else {
-                           "16-64"
-                         }
+                         Level == "NVQ3",
+                         age_band ==  "16-64",
+                         group == "Total"
                        ) %>%
                        select(value)
           )[1, 1], scientific = FALSE, big.mark = ",")),
-          p(paste0(input$qualGroup, " qualifications for the age group ", input$ageGroup, " in 2021 in ", input$lep1)),
+          p(paste0("NVQ3 and above qualifications for the 16-64 age group in 2021 in ", input$lep1)),
         )
       )
     )
   })
   
   
-  # KPI 2
+  #KPI 2 
   output$qualup.nvq3.2 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -1767,27 +1748,20 @@ server <- function(input, output, session) {
                        filter(
                          geographic_level == input$GeoType,
                          area == input$lep2, year == "2021",
-                         Level == if ("qualGroup" %in% names(input)) {
-                           input$qualGroup
-                         } else {
-                           "None"
-                         },
-                         age_band == if ("ageGroup" %in% names(input)) {
-                           input$ageGroup
-                         } else {
-                           "16-64"
-                         }
+                         Level == "NVQ3",
+                         age_band == "16-64",
+                         group == "Total"
                        ) %>%
                        select(value)
           )[1, 1], scientific = FALSE, big.mark = ",")),
-          p(paste0(input$qualGroup, " qualifications for the age group ", input$ageGroup, " in 2021 in ", input$lep2)),
+          p(paste0("NVQ3 and above qualifications for the 16-64 age group in 2021 in ", input$lep2)),
         )
       )
     )
   })
   
   
-  # KPI 3
+#KPI3
   output$qualup.nvq4 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -1799,29 +1773,22 @@ server <- function(input, output, session) {
                                     filter(
                                       geographic_level == input$GeoType,
                                       area == input$lep1, year == "2021",
-                                      Level == if ("qualGroup" %in% names(input)) {
-                                        input$qualGroup
-                                      } else {
-                                        "None"
-                                      },
-                                      age_band == if ("ageGroup" %in% names(input)) {
-                                        input$ageGroup
-                                      } else {
-                                        "16-64"
-                                      }
+                                      Level == "NVQ4",
+                                      age_band == "16-64",
+                                      group == "Total"
                                     ) %>%
                                     select(rate)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0(input$qualGroup, " qualifications for the age group ", input$ageGroup, " in 2021 in ", input$lep1)),
+          p(paste0("NVQ4 and above qualifications for the 16-64 age group in 2021 in ", input$lep1)),
         )
       )
     )
   })
   
   
-  # KPI 4
+  #KPI 4
   output$qualup.nvq4.2 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -1833,27 +1800,20 @@ server <- function(input, output, session) {
                                     filter(
                                       geographic_level == input$GeoType,
                                       area == input$lep2, year == "2021",
-                                      Level == if ("qualGroup" %in% names(input)) {
-                                        input$qualGroup
-                                      } else {
-                                        "None"
-                                      },
-                                      age_band == if ("ageGroup" %in% names(input)) {
-                                        input$ageGroup
-                                      } else {
-                                        "16-64"
-                                      }
+                                      Level == "NVQ4",
+                                      age_band == "16-64",
+                                      group == "Total"
                                     ) %>%
                                     select(rate)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%")),
-          p(paste0(input$qualGroup, " qualifications for the age group ", input$ageGroup, " in 2021 in ", input$lep2)),
+          p(paste0("NVQ4 and above qualifications for the 16-64 age group in 2021 in ", input$lep2)),
         )
       )
     )
   })
   
-  # qualfication level line chart 
+  
   qual_time <- eventReactive(c(input$lep1, input$lep2, input$qualGroup, input$ageGroup, input$genGroup), {
     qtime <- C_qual2_APS1721 %>%
       filter(
@@ -1881,7 +1841,7 @@ server <- function(input, output, session) {
           "Total"
         }
       ) %>%
-      select(area, year, Level, age_band, group, value)
+      select(area, year, Level, age_band, group, value )
     
     # add an extra column so the colours work in ggplot when sorting alphabetically
     qtime$area <- factor(qtime$area,
@@ -1895,8 +1855,7 @@ server <- function(input, output, session) {
         "Area: ", area, "<br>",
         "Number: ", format(value, big.mark = ","), "<br>",
         "Qualification: ", format(Level, big.mark = ","), "<br>",
-        "Age band: ", format(age_band, big.mark = ","), "<br>",
-        "Group: ", format(group, big.mark = ","), "<br>"
+        "Age band: ", format(age_band, big.mark = ","), "<br>"
       )
     )) +
       geom_line() +
@@ -1919,7 +1878,75 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
   
+  
+  ### Downloads----
+  # download qualifications indicators
+  list_of_datasets7 <- list(
+    "7a. Qualification level" = D_qual_APS1721
+  )
+  output$download_btn7a <- downloadHandler(
+    filename = function() {
+      "QualificationIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list_of_datasets7, path = file)
+    }
+  )
+  
+  # Download current LEP indicators
+  filtered_data7 <- reactive({
+    list(
+      "7b. Qualificationlevelbyagegen" = filter(C_qual2_APS1721, geographic_level == input$GeoType, area == input$lep1,
+                                                age_band == input$ageGroup, Level == input$qualGroup)
+    )
+  })
+  output$download_btn7b <- downloadHandler(
+    filename = function() {
+      "QualificationIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(filtered_data7(), path = file)
+    }
+  )
+  
 
+  # turn off gender for qualification tab
+  output$gen_off <- renderUI({
+    if (input$datatabset == "Overview") {
+      p("")
+    } else {
+      if (input$GeoType == "LEP") {
+        selectInput("lep2", "Choose comparison LEP area",
+                    choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LEP", Area != input$lep1) %>% select(Area)),
+                    selected = input$lep2
+        )
+      } else if (input$GeoType == "LSIP") {
+        selectInput("lep2", "Choose comparison LSIP area",
+                    choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LSIP", Area != input$lep1) %>% select(Area)),
+                    selected = input$lep2
+        )
+      } else {
+        selectInput("lep2", "Choose comparison MCA area",
+                    choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "MCA", Area != input$lep1) %>% select(Area)),
+                    selected = input$lep2
+        )
+      }
+    }
+  })
+
+  
+  
+  output$gen_off <- renderUI({
+    if (input$datatabset == "Qualification level") {
+      p("")
+    } else {
+      if (input$ageGroup %in% c("16-19", "20-24", "25-29", "30-39", "40-49", "50-64"))
+    selectizeInput("genGroup", "Choose gender group",
+                   choices = c("\nNone")
+    )}
+  })
+  
+  
   # Stop app ---------------------------------------------------------------------------------
 
   session$onSessionEnded(function() {

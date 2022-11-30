@@ -531,11 +531,11 @@ panel_qualification_level <- function() {
           fluidRow(
             column(
               width = 4,
-              uiOutput("qual_on")
+              uiOutput("age_on2")
             ),
             column(
               width = 4,
-              uiOutput("age_on")
+              uiOutput("qual_on")
             ),
             column(
               width = 4,
@@ -552,10 +552,8 @@ panel_qualification_level <- function() {
       valueBoxOutput("qualup.nvq3"),
       valueBoxOutput("qualup.nvq4")
     ),
-    
     fluidRow(
       uiOutput("qual_comp")), 
-    
       details(
         label = "Source: Annual Population Survey",
         inputId = "QualSource",
@@ -603,7 +601,7 @@ panel_qualification_level <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn7b",
-          label = "Current LEP/LSIP/MCA",
+          label = "Current LEP/LSIP",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
@@ -612,7 +610,7 @@ panel_qualification_level <- function() {
     ), # end of row
     column(width = 12, br(""))
     
-  ) # end of qualification level tab
+  ) # end of qualification Supply tab
   
 }
 
