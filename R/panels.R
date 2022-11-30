@@ -522,6 +522,7 @@ panel_qualification_level <- function() {
   tabPanel(
     "Qualification level",
     h1(uiOutput("page4title")),
+    p("Add text"),
     
     fluidRow(
       column(
@@ -539,13 +540,14 @@ panel_qualification_level <- function() {
             ),
             column(
               width = 4,
-              uiOutput("gen_on")
+              uiOutput("gen_off")
             )
           )
         )
       )
     ),
     
+    br(),
     
     ### KPI boxes ----
     fluidRow(
@@ -581,11 +583,31 @@ panel_qualification_level <- function() {
       )
     ),
     
+    ### FE definitions----
+    fluidRow(
+      column(
+        12,
+        details(
+          inputId = "NVQdefs",
+          label = "NVQ qualification definitions",
+          tags$ul(
+            tags$li("NVQ1"),
+            tags$li("NVQ2"),
+            tags$li("Trade Apprenticeships"),
+            tags$li("NVQ3"),
+            tags$li("NVQ4"),
+            tags$li("Other qualifications"),
+            tags$li("None")
+          )
+        )
+      )
+    ),
+    
     fluidRow(
       column(
         width = 3,
         downloadButton(
-          outputId = "download_btn7a",
+          outputId = "download_btn4a",
           label = "All data   ",
           icon = shiny::icon("download"),
           class = "downloadButton"
@@ -600,7 +622,7 @@ panel_qualification_level <- function() {
       column(
         width = 3,
         downloadButton(
-          outputId = "download_btn7b",
+          outputId = "download_btn4b",
           label = "Current LEP/LSIP",
           icon = shiny::icon("download"),
           class = "downloadButton"

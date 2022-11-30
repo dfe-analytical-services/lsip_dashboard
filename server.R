@@ -272,9 +272,10 @@ server <- function(input, output, session) {
     "2.Vacancies" = C_Vacancy_ONS1722,
     "3a.FE achievements SSA" = D_Achieve_ILR21,
     "3b.FE achievements" = D_Achieve_ILR1621,
-    "4a.Enterprise by emp size" = D_empent_UBC1822,
-    "5a.Key Stage 4 destinations" = D_KS4destin_1521,
-    "6a.Key Stage 5 destinations" = D_KS5destin_1721
+    "4a.FE achievements" = D_qual_APS1721,
+    "5a.Enterprise by emp size" = D_empent_UBC1822,
+    "6a.Key Stage 4 destinations" = D_KS4destin_1521,
+    "7a.Key Stage 5 destinations" = D_KS5destin_1721
   )
   output$download_btn0a <- downloadHandler(
     filename = function() {
@@ -1694,20 +1695,28 @@ server <- function(input, output, session) {
   
 
   
-  
-  output$gen_on <- renderUI({
-    selectizeInput("genGroup", "Choose gender group",
-                   choices = if ("ageGroup" %in% names(input)) {
-                     if ("16-64" %in% input$ageGroup) {
-                       c("Total", "Female", "Male")
+
+  #turn off gender filter
+  output$gen_off <- renderUI({
+    if (input$datatabset == "Qualification level" & input$ageGroup == "16-64") {
+      selectizeInput("genGroup", "Choose gender group",
+                     choices = if ("ageGroup" %in% names(input)) {
+                       if ("16-64" %in% input$ageGroup) {
+                         c("Total", "Female", "Male")
+                       } else {
+                         c("Total")
+                       }
                      } else {
                        c("Total")
                      }
-                   } else {
-                     c("Total")
-                   }
-    )
+      )
+    } else {
+      
+    }
   })
+  
+  
+  
   
   
   
@@ -1835,7 +1844,7 @@ server <- function(input, output, session) {
         } else {
           "16-64"
         },
-        group == if ("genGroup" %in% names(input)) {
+        group == if ("genGroup" %in% names(input) & if ("ageGroup" %in% names(input)){ input$ageGroup == "16-64"}) {
           input$genGroup
         } else {
           "Total"
@@ -1848,14 +1857,13 @@ server <- function(input, output, session) {
                          levels = c(input$lep1, input$lep2)
     )
     ggplot(qtime, aes(
-      x = year, y = value, colour = area,
-      group = area,
+      x = year, y = value, group = area, colour = area, group = area,
       text = paste0(
         "Year: ", year, "<br>",
         "Area: ", area, "<br>",
-        "Number: ", format(value, big.mark = ","), "<br>",
-        "Qualification: ", format(Level, big.mark = ","), "<br>",
-        "Age band: ", format(age_band, big.mark = ","), "<br>"
+        "Number: ", value, "<br>",
+        "Qualification: ", Level, "<br>",
+        "Age band: ", age_band, "<br>"
       )
     )) +
       geom_line() +
@@ -1882,9 +1890,9 @@ server <- function(input, output, session) {
   ### Downloads----
   # download qualifications indicators
   list_of_datasets7 <- list(
-    "7a. Qualification level" = D_qual_APS1721
+    "4a. Qualification level" = D_qual_APS1721
   )
-  output$download_btn7a <- downloadHandler(
+  output$download_btn4a <- downloadHandler(
     filename = function() {
       "QualificationIndicators.xlsx"
     },
@@ -1896,11 +1904,11 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data7 <- reactive({
     list(
-      "7b. Qualificationlevelbyagegen" = filter(C_qual2_APS1721, geographic_level == input$GeoType, area == input$lep1,
+      "4b. Qualificationlevelbyagegen" = filter(D_qual_APS1721, geographic_level == input$GeoType, area == input$lep1,
                                                 age_band == input$ageGroup, Level == input$qualGroup)
     )
   })
-  output$download_btn7b <- downloadHandler(
+  output$download_btn4b <- downloadHandler(
     filename = function() {
       "QualificationIndicators.xlsx"
     },
@@ -1910,41 +1918,7 @@ server <- function(input, output, session) {
   )
   
 
-  # turn off gender for qualification tab
-  output$gen_off <- renderUI({
-    if (input$datatabset == "Overview") {
-      p("")
-    } else {
-      if (input$GeoType == "LEP") {
-        selectInput("lep2", "Choose comparison LEP area",
-                    choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LEP", Area != input$lep1) %>% select(Area)),
-                    selected = input$lep2
-        )
-      } else if (input$GeoType == "LSIP") {
-        selectInput("lep2", "Choose comparison LSIP area",
-                    choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "LSIP", Area != input$lep1) %>% select(Area)),
-                    selected = input$lep2
-        )
-      } else {
-        selectInput("lep2", "Choose comparison MCA area",
-                    choices = c("\nNone", C_LEP2020 %>% filter(geographic_level == "MCA", Area != input$lep1) %>% select(Area)),
-                    selected = input$lep2
-        )
-      }
-    }
-  })
 
-  
-  #turn off gender filter
-  output$gen_off <- renderUI({
-    if (input$datatabset == "Qualification level") {
-      p("")
-    } else {
-      if (input$ageGroup %in% c("16-19", "20-24", "25-29", "30-39", "40-49", "50-64"))
-    selectizeInput("genGroup", "Choose gender group",
-                   choices = c("\nNone")
-    )}
-  })
   
   
   # Stop app ---------------------------------------------------------------------------------
