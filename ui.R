@@ -278,6 +278,9 @@ padding-top:15px
               h3(actionLink("link_to_tabpanel_FE", "Skills")),
               p("This tab provides information on training activity for the selected geographic area including data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period. There is an option to compare against another area in England at the same geographic level."),
               p("LEP, LSIP and MCA area totals are calculated by aggregating the relevant local authorities."),
+              h3(actionLink("link_to_tabpanel_qualification_level", "Qualification level")),
+              p("This page includes information on the qualification level for working age individuals (16-64) for the selected geographic area, and the option to compare against another area.
+                It includes data on qualification level, with breakdowns by age band and gender."),
               h2("Data download page"),
               p("The", actionLink("link_to_tabpanel_data", "data download page"), " includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
             )
@@ -381,7 +384,8 @@ padding-top:15px
             panel_overview(),
             panel_employment(),
             panel_vacancies(),
-            panel_skills()
+            panel_skills(),
+            panel_qualification_level()
           ) # end of dashboard tabset panel
         ) # end of dashboard navbar
       )

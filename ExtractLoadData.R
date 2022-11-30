@@ -49,9 +49,16 @@ I_EmpRate_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.fi
 ### employment by industry------------
 # Geog and date as above
 # Cell: T13a	Employment by industry (SIC 2007) and flexibility
-folder <- "12_APSempind"
+folder <- "13_APSempind"
 sheetNum <- 1
 I_empind_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+
+### Skill by age gender ------------
+# Geog and date as above
+# Cell: T19	Qualification by age and gender - NVQ
+folder <- "14_APSqualagegen"
+sheetNum <- 1
+I_qual_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 
 ## ILR

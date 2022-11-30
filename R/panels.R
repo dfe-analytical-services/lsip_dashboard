@@ -516,3 +516,103 @@ panel_skills <- function() {
     column(width = 12, br(""))
   ) # skills panel
 }
+
+# Qualification level
+panel_qualification_level <- function() {
+  tabPanel(
+    "Qualification level",
+    h1(uiOutput("page4title")),
+    
+    fluidRow(
+      column(
+        12,
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              width = 4,
+              uiOutput("qual_on")
+            ),
+            column(
+              width = 4,
+              uiOutput("age_on")
+            ),
+            column(
+              width = 4,
+              uiOutput("gen_on")
+            )
+          )
+        )
+      )
+    ),
+    
+    
+    ### KPI boxes ----
+    fluidRow(
+      valueBoxOutput("qualup.nvq3"),
+      valueBoxOutput("qualup.nvq4")
+    ),
+    
+    fluidRow(
+      uiOutput("qual_comp")), 
+    
+      details(
+        label = "Source: Annual Population Survey",
+        inputId = "QualSource",
+        tags$ol(
+          tags$li("Figures are for 16-64 year olds."),
+          tags$li("Years represent Jul-Jun period. So 2018 is the Jul 2017 – June 2018 period.")
+        )
+      ),
+    
+    
+    
+    fluidRow(
+      column(
+        12,
+        h2("Qualification Level: 2017 to 2021"),
+        plotlyOutput("qual_time"),
+        details(
+          label = "Source: Annual Population Survey",
+          inputId = "QualSource",
+          tags$ol(
+            tags$li("Figures are for 16-64 year olds."),
+            tags$li("Years represent Jul-Jun period. So 2018 is the Jul 2017 – June 2018 period.")
+          )
+        )
+      )
+    ),
+    
+    fluidRow(
+      column(
+        width = 3,
+        downloadButton(
+          outputId = "download_btn7a",
+          label = "All data   ",
+          icon = shiny::icon("download"),
+          class = "downloadButton"
+        )
+      ),
+      column(
+        width = 9,
+        "Download skills data for all geographies (LEPs, LISP areas, LAs, regions and England)"
+      )
+    ), # end of row
+    fluidRow(
+      column(
+        width = 3,
+        downloadButton(
+          outputId = "download_btn7b",
+          label = "Current LEP/LSIP/MCA",
+          icon = shiny::icon("download"),
+          class = "downloadButton"
+        )
+      ),
+      column(width = 9, p("Download skills data for the selected LEP/LSIP area"))
+    ), # end of row
+    column(width = 12, br(""))
+    
+  ) # end of qualification level tab
+  
+}
+

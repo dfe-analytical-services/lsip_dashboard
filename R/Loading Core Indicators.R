@@ -23,6 +23,13 @@ D_EmpInd_APS1822 <- read.csv(file = "./Data/AppData/D_EmpInd_APS1822.csv", check
 # data for dashboard
 C_EmpInd2_APS1822 <- read.csv(file = "./Data/AppData/C_EmpInd2_APS1822.csv", check.names = FALSE)
 
+## qualification level by age and gender ----
+# data for download
+D_qual_APS1721 <- read.csv(file = "./Data/AppData/D_qual_APS1721.csv", check.names = FALSE)
+
+# data for dashboard
+C_qual2_APS1721 <- read.csv(file = "./Data/AppData/C_qual2_APS1721.csv", check.names = FALSE)
+
 ## FE achievements ----
 # data for download
 D_Achieve_ILR1621 <- read.csv(file = "./Data/AppData/D_Achieve_ILR1621.csv", check.names = FALSE)
