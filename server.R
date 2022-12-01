@@ -1910,7 +1910,7 @@ server <- function(input, output, session) {
   filtered_data7 <- reactive({
     list(
       "4b. Qualificationlevelbyagegen" = filter(D_qual_APS1721, geographic_level == input$GeoType, area == input$lep1,
-                                                age_band == input$ageGroup, Level == input$qualGroup)
+                                                age_band == input$ageGroup, Level == input$qualGroup, group == input$genGroup)
     )
   })
   output$download_btn4b <- downloadHandler(
