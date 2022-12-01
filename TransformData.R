@@ -330,7 +330,7 @@ write.csv(D_Achieve_ILR1621, file = "Data\\AppData\\D_Achieve_ILR1621.csv", row.
 
 # create version to use in dashboard
 C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
-  filter(geographic_level == "LEP" | geographic_level == "LSIP" | geographic_level == "National" | geographic_level == "MCA") %>%
+  filter(geographic_level == "LEP" | geographic_level == "LSIP" | geographic_level == "National" | geographic_level == "MCA" |geographic_level == "Local authority district" ) %>%
   mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
   mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.numeric) %>% # Convert to numeric
   mutate(Year = as.numeric(substr(time_period, 3, 4))) %>% # add year name for charts
@@ -787,23 +787,33 @@ write.csv(D_KS5destin_1721, file = "Data\\AppData\\D_KS5destin_1721.csv", row.na
 names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
 write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
 
-# add on employment data to LA map
-C_mapLA <- I_mapLA %>%
-  left_join(C_EmpRate_APS1822 %>% filter(year == 2021, geographic_level == "LADU"), by = c("LAD22NM" = "area")) %>%
-  left_join(I_LEP2020 %>% select(LAD21CD, LSIP, LEP21NM1, LEP21NM2), by = c("LAD22CD" = "LAD21CD")) %>%
-  filter(is.na(geographic_level) == FALSE)
-# write.csv(C_mapLA, file = "Data\\AppData\\C_mapLA.csv", row.names = FALSE)
-save(C_mapLA, file = "Data\\AppData\\C_mapLA.RData")
-
 # Neaten geog files
+neatLA<-I_mapLA %>%
+  mutate(geog="LADU")%>%#add geog type
+  rename(areaCode=LAD22CD,areaName=LAD22NM)%>%#consistent naming
+  #add on lsip, lep and mca groupings
+  left_join(I_LEP2020 %>% select(LAD21CD, LSIP, LEP=LEP21NM1, LEP2=LEP21NM2), by = c("areaCode" = "LAD21CD")) %>%
+  left_join(C_mcalookup %>% select(LAD21CD, MCA=CAUTH21NM), by = c("areaCode" = "LAD21CD")) %>%
+  filter(is.na(LSIP) == FALSE)#remove non England
+
 neatMCA <- I_mapMCA %>%
   mutate(geog="MCA")%>%#add geog type
   rename(areaCode=CAUTH21CD,areaName=CAUTH21NM)#consistent naming
+
 neatLEP <- I_mapLEP %>%
   mutate(geog="LEP")%>%#add geog type
   rename(areaCode=LEP21CD,areaName=LEP21NM)#consistent naming
-neatGeog<-bind_rows(neatMCA,neatLEP)
-# add on employment data
+
+addEngland<- data.frame (areaName  = "England",areaCode="x",
+                           geog = "COUNTRY")
+
+neatGeog<-bind_rows(neatMCA,neatLEP,addEngland,neatLA)
+# add on data
 C_Geog<-neatGeog%>%
-  left_join(C_EmpRate_APS1822 %>% filter(year == 2021), by = c("areaName" = "area", "geog"="geographic_level"))
+  left_join(C_EmpRate_APS1822 %>% filter(year == 2021), by = c("areaName" = "area", "geog"="geographic_level"))%>%
+left_join(C_Achieve_ILR1621 %>% filter(time_period == 202021, level_or_type=="Further education and skills: Total",age_group=="Total")%>%
+            mutate(geographic_level=case_when(geographic_level=="National" ~"COUNTRY",TRUE~geographic_level))%>%
+            mutate(geographic_level=case_when(geographic_level=="Local authority district" ~"LADU",TRUE~geographic_level)),
+          by = c("areaName" = "area", "geog"="geographic_level"))
+
 save(C_Geog, file = "Data\\AppData\\C_Geog.RData")

@@ -502,14 +502,14 @@ padding-top:15px
 
     # mapsplash ======
     tabPanel(
-      "mapSplash",
+      "Local skills v2",
       br(),
       fluidRow(column(
         12,
         radioGroupButtons(
           inputId = "splashMetric",
           # label = "Focus on",
-          choices = c("Employment rate", "Vacancies", "FE achievements", "Supply vs demand")
+          choices = c("Employment rate"="empRate", "Vacancies"="vacancies", "FE achievements"="achievements_rate_per_100000_population", "Supply vs demand"="mismatch")
         )
       )),
       fluidRow(
@@ -534,8 +534,8 @@ padding-top:15px
         ),
         column(
           6,
-          h3("How is employment rate changing over time?"),
-          p("Black Country's emloyment rate has increased faster than the national average in the last year and the last five years. It has the 6th fasest growing employment rate of the 38 LEPs"),
+          h3(uiOutput("titleTime")),
+          p(uiOutput("commentTime")),
           uiOutput("geoComp"),
           plotlyOutput("Splash_time")
         )
