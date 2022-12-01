@@ -38,6 +38,11 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Qualification level")
   })
+  # Create link to destinations data tab
+  observeEvent(input$link_to_tabpanel_destinations_level, {
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "datatabset", "Destinations")
+  })
   # Create link to data tab
   observeEvent(input$link_to_tabpanel_data, {
     updateTabsetPanel(session, "navbar", "Data & downloads")
@@ -1857,7 +1862,7 @@ server <- function(input, output, session) {
                          levels = c(input$lep1, input$lep2)
     )
     ggplot(qtime, aes(
-      x = year, y = value, group = area, colour = area, group = area,
+      x = year, y = value, group = area, colour = area,
       text = paste0(
         "Year: ", year, "<br>",
         "Area: ", area, "<br>",
@@ -1918,8 +1923,308 @@ server <- function(input, output, session) {
   )
   
 
-
+  # Destinations ----
   
+  # turn off comparison boxes if none is selected  
+  output$dest_comp <- renderUI({
+    if ("lep2" %in% names(input)) {
+      if (input$lep2 == "\nNone") {
+        tagList(
+          br(),
+          p("")
+        )
+      } else {
+        tagList(
+          valueBoxOutput("destup.ks4edu.2"),
+          valueBoxOutput("destup.ks5edu.2"),
+          valueBoxOutput("destup.ks5emp.2")
+          
+        )
+      }
+    } else {
+    }
+  })
+  
+  # define page title
+  output$page5title <- renderUI({
+    paste0(
+      "Destinations in ", input$lep1,
+      if ("lep2" %in% names(input)) {
+        if (input$lep2 == "\nNone") {
+        } else {
+          paste0(" compared to ", input$lep2)
+        }
+      }
+    )
+  })
+  
+  
+  # Key stage filter
+  output$key_stage_on <- renderUI({
+    selectizeInput("keystageGroup", "Choose key stage level",
+                   choices = C_KS4_KS5_2021 %>% distinct(Level = `Key Stage`),
+                   multiple = FALSE, selected = "KS4"
+    )
+    
+  })
+  
+  
+  #cohort group filter
+  output$cohort_group_on <- renderUI({
+      selectizeInput("cohortGroup", "Choose cohort group",
+                     choices = if ("keystageGroup" %in% names(input)) {
+                       if ("KS5" %in% input$keystageGroup) {
+                         c("Level 2", "Level 3", "All other qualifications", "Total")
+                       } else {
+                         c("Total")
+                       }
+                     } else {
+                       c("Total")
+                     }
+      )
+  })
+  
+
+  # KPI 1
+  output$destup.ks4edu <- renderValueBox({
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
+          h3(paste0(format(100. *(C_KS4destin_1521 %>%
+                                    filter(
+                                      geographic_level == input$GeoType,
+                                      area == input$lep1, time_period == "202021",
+                                      variable == "Sustained Education"
+                                      
+                                    ) %>%
+                                    select(value)
+          )[1, 1], scientific = FALSE, digits = 2)
+          ,"%"))
+          ,
+          p(paste0("of KS4 cohort group had a Sustained Education destinations in 202021 in ", input$lep1)),
+        )
+      )
+    )
+  })
+  
+  
+  output$destup.ks4edu.2 <- renderValueBox({
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(paste0(format(100. *(C_KS4destin_1521 %>%
+                                    filter(
+                                      geographic_level == input$GeoType,
+                                      area == input$lep2, time_period == "202021",
+                                      variable == "Sustained Education"
+                                      
+                                    ) %>%
+                                    select(value)
+          )[1, 1], scientific = FALSE, digits = 2)
+          ,"%"))
+          ,
+          p(paste0("of KS4 cohort group had a Sustained Education destinations in 202021 in ", input$lep2)),
+        )
+      )
+    )
+  })
+  
+  
+  output$destup.ks5edu <- renderValueBox({
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
+          h3(paste0(format(100. *(C_KS5destin_1721 %>%
+                                    filter(
+                                      geographic_level == input$GeoType,
+                                      area == input$lep1, time_period == "202021",
+                                      variable == "Sustained Education"
+                                      
+                                    ) %>%
+                                    select(value)
+          )[1, 1], scientific = FALSE, digits = 2)
+          ,"%"))
+          ,
+          p(paste0("of KS5 cohort group had a Sustained Education destinations in 202021 in ", input$lep1)),
+        )
+      )
+    )
+  })
+  
+  
+  output$destup.ks5edu.2 <- renderValueBox({
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(paste0(format(100. *(C_KS5destin_1721 %>%
+                                    filter(
+                                      geographic_level == input$GeoType,
+                                      area == input$lep2, time_period == "202021",
+                                      variable == "Sustained Education"
+                                      
+                                    ) %>%
+                                    select(value)
+          )[1, 1], scientific = FALSE, digits = 2)
+          ,"%"))
+          ,
+          p(paste0("of KS5 cohort group had a Sustained Education destinations in 202021 in ", input$lep2)),
+        )
+      )
+    )
+  })
+  
+  
+  output$destup.ks5emp <- renderValueBox({
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
+          h3(paste0(format(100. *(C_KS5destin_1721 %>%
+                                    filter(
+                                      geographic_level == input$GeoType,
+                                      area == input$lep1, time_period == "202021",
+                                      variable == "Sustained Employment"
+                                      
+                                    ) %>%
+                                    select(value)
+          )[1, 1], scientific = FALSE, digits = 2)
+          ,"%"))
+          ,
+          p(paste0("of KS5 cohort group had a Sustained Employment destination in 202021 in ", input$lep1)),
+        )
+      )
+    )
+  })
+  
+  
+  output$destup.ks5emp.2 <- renderValueBox({
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(paste0(format(100. *(C_KS5destin_1721 %>%
+                                    filter(
+                                      geographic_level == input$GeoType,
+                                      area == input$lep2, time_period == "202021",
+                                      variable == "Sustained Employment"
+                                      
+                                    ) %>%
+                                    select(value)
+          )[1, 1], scientific = FALSE, digits = 2)
+          ,"%"))
+          ,
+          p(paste0("of KS5 cohort group had a Sustained Employment destination in 202021 in ", input$lep2)),
+        )
+      )
+    )
+  })
+  
+  # key stage title
+  output$keystagetitle <- renderUI({
+    paste0(input$keystageGroup, " " , input$cohortGroup, ": 2021/22")
+  })
+  
+  #key stage bar chart 
+  key_stage_2021 <- eventReactive(c(input$lep1, input$lep2, input$cohortGroup, input$keystageGroup), {
+  ks_21 <- C_KS4_KS5_2021 %>%
+    filter(
+      geographic_level == input$GeoType,
+      `Cohort Group` == input$cohortGroup,
+      `Key Stage` == input$keystageGroup,
+      (area == input$lep1 |
+         area == if ("lep2" %in% names(input)) {
+           input$lep2
+         } else {
+           "\nNone"
+         }),
+    ) %>%
+    select(area, value, variable, time_period, `Cohort Group`, `Key Stage`)
+  
+  # add an extra column so the colours work in ggplot when sorting alphabetically
+  ks_21$Area <- factor(ks_21$area,
+                        levels = c(input$lep1, input$lep2)
+  )
+  ggplot(ks_21, aes(x = reorder(variable, desc(variable)), y = value, fill = Area, text = paste0(
+    "Area: ", Area, "<br>",
+    "Key stage group: ", `Key Stage`, "<br>",
+    "Cohort group: " ,`Cohort Group`, "<br>",
+    "Percentage:", scales::percent(round(value, 2)), "<br>"
+  ))) +
+    geom_col(
+      position = "dodge"
+    ) +
+    scale_y_continuous(labels = scales::percent) +
+    coord_flip() +
+    theme_minimal() +
+    labs(fill = "") +
+    theme(
+      legend.position = "bottom", axis.title.x = element_blank(),
+      axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
+      panel.grid.major = element_blank(), panel.grid.minor = element_blank()
+    ) +
+    scale_fill_manual(values = chartColors2)
+})
+
+output$key_stage_2021 <- renderPlotly({
+  ggplotly(key_stage_2021(),
+           tooltip = c("text"), height = 474
+  ) %>%
+    layout(
+      legend = list(orientation = "h", x = 0, y = -0.1),
+      xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+    ) %>% # disable zooming because it's awful on mobile
+    config(displayModeBar = FALSE)
+})
+  
+### Downloads----
+# download destinations indicators
+list_of_datasets8 <- list(
+  "5a. KS4 destinations" = D_KS4destin_1521,
+  "5b. KS5 destinations" = D_KS5destin_1721
+  
+)
+output$download_btn8a <- downloadHandler(
+  filename = function() {
+    "Destinations.xlsx"
+  },
+  content = function(file) {
+    write_xlsx(list_of_datasets8, path = file)
+  }
+)
+
+# Download current LEP indicators
+filtered_data7 <- reactive({
+  list(
+    "5a. KS4 destinations" = filter(D_KS4destin_1521, geographic_level == input$GeoType, area == input$lep1),
+    "5b. KS5 destinations" = filter(D_KS5destin_1721, geographic_level == input$GeoType, area == input$lep1,
+                                    `Cohort group` = input$cohortGroup)
+  )
+})
+output$download_btn8b <- downloadHandler(
+  filename = function() {
+    "Destinations.xlsx"
+  },
+  content = function(file) {
+    write_xlsx(filtered_data8(), path = file)
+  }
+)
+
   
   # Stop app ---------------------------------------------------------------------------------
 

@@ -686,6 +686,28 @@ format.ks4 <- function(x) {
 ## format KS4
 F_KS4destin_1521 <- format.ks4(I_KS4destin_1521)
 
+#Dashboard version
+C_KS4destin_1521 <- F_KS4destin_1521 %>%
+  mutate_at(c(4:9), as.numeric) %>% 
+  mutate(edrate = .[[4]] / .[[9]],
+         apprate = .[[5]] / .[[9]],
+         emprate = .[[6]] / .[[9]],
+         notrecrate = .[[7]] / .[[9]],
+         unkrate = .[[8]] / .[[9]]
+  ) %>%
+  select(-c(4:9)) %>%
+  rename(
+    "Unknown" = "unkrate",
+    "Not Recorded" = "notrecrate",
+    "Sustained Education" = "edrate",
+    "Sustained Employment" = "emprate",
+    "Sustained Apprenticeships" = "apprate"
+  ) %>%
+  melt(id.vars = c("time_period", "geographic_level", "area"))
+
+#write data to folder
+write.csv(C_KS4destin_1521, file = "Data\\AppData\\C_KS4destin_1521.csv", row.names = FALSE)
+
 # Downloadable data
 D_KS4destin_1521 <- F_KS4destin_1521 %>%
   mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
@@ -774,11 +796,48 @@ format.ks5 <- function(x) {
 ## format KS5
 F_KS5destin_1721 <- format.ks5(I_KS5destin_1721)
 
+#Dashboard version
+C_KS5destin_1721 <- F_KS5destin_1721 %>%
+  mutate_at(c(5:10), as.numeric) %>% 
+  mutate(edrate = .[[5]] / .[[10]],
+         apprate = .[[6]] / .[[10]],
+         emprate = .[[7]] / .[[10]],
+         notrecrate = .[[8]] / .[[10]],
+         unkrate = .[[9]] / .[[10]]
+  ) %>%
+  select(-c(5:10)) %>%
+  rename(
+    "Unknown" = "unkrate",
+    "Not Recorded" = "notrecrate",
+    "Sustained Education" = "edrate",
+    "Sustained Employment" = "emprate",
+    "Sustained Apprenticeships" = "apprate"
+  ) %>%
+  melt(id.vars = c("time_period", "geographic_level", "area", "Cohort Group"))
+
+#write data to folder
+write.csv(C_KS5destin_1721, file = "Data\\AppData\\C_KS5destin_1721.csv", row.names = FALSE)
+
 # downloadable version
 D_KS5destin_1721 <- F_KS5destin_1721 %>%
   mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
-# write data to folder - todo
+# write data to folder
 write.csv(D_KS5destin_1721, file = "Data\\AppData\\D_KS5destin_1721.csv", row.names = FALSE)
+
+#merge KS4 and KS5 into one dataframe for destinations tab graph
+#dashboard data
+C_KS4_KS5_2021 <- C_KS4destin_1521 %>%
+  mutate(`Cohort Group` = "Total") %>%
+  mutate(`Key Stage` = "KS4") %>%
+  filter(time_period == "202021") %>%
+  bind_rows(
+    C_KS5destin_1721 %>%
+      filter(time_period == "202021") %>% 
+      mutate(`Key Stage` = "KS5"))
+
+# write data to folder
+write.csv(C_KS4_KS5_2021, file = "Data\\AppData\\C_KS4_KS5_2021.csv", row.names = FALSE)
+
 
 # employment by industry
 format.EmpInd.APS <- function(x) {

@@ -281,6 +281,7 @@ padding-top:15px
               h3(actionLink("link_to_tabpanel_qualification_level", "Qualification level")),
               p("This page includes information on the qualification level for working age individuals (16-64) for the selected geographic area, and the option to compare against another area.
                 It includes data on qualification level, with breakdowns by age band and gender."),
+              h3(actionLink("link_to_tabpanel_destinations_level", "Destinations")),
               h2("Data download page"),
               p("The", actionLink("link_to_tabpanel_data", "data download page"), " includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
             )
@@ -385,7 +386,8 @@ padding-top:15px
             panel_employment(),
             panel_vacancies(),
             panel_skills(),
-            panel_qualification_level()
+            panel_qualification_level(),
+            panel_destinations()
           ) # end of dashboard tabset panel
         ) # end of dashboard navbar
       )

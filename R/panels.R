@@ -522,7 +522,7 @@ panel_qualification_level <- function() {
   tabPanel(
     "Qualification level",
     h1(uiOutput("page4title")),
-    p("Add text"),
+    p("Highest level of qualification by working age population and gender."),
     
     fluidRow(
       column(
@@ -583,7 +583,7 @@ panel_qualification_level <- function() {
       )
     ),
     
-    ### FE definitions----
+    ### NVQ qualifications definitions----
     fluidRow(
       column(
         12,
@@ -591,13 +591,13 @@ panel_qualification_level <- function() {
           inputId = "NVQdefs",
           label = "NVQ qualification definitions",
           tags$ul(
-            tags$li("NVQ1"),
-            tags$li("NVQ2"),
-            tags$li("Trade Apprenticeships"),
-            tags$li("NVQ3"),
-            tags$li("NVQ4"),
-            tags$li("Other qualifications"),
-            tags$li("None")
+            tags$li("NVQ1: 1-4 O Levels/CSE/GCSEs (any grades), Entry Level, Foundation Diploma, NVQ level 1, Foundation GNVQ, Basic/Essential Skills"),
+            tags$li("NVQ2: 5+ O Level (Passes)/CSEs (Grade 1)/GCSEs (Grades A*-C), School Certificate, 1 A Level/ 2-3 AS Levels/VCEs, Intermediate/Higher Diploma, Welsh Baccalaureate Intermediate Diploma, NVQ level 2, Intermediate GNVQ, City and Guilds Craft, BTEC First/General Diploma, RSA Diploma"),
+            tags$li("Trade Apprenticeships: Apprenticeships"),
+            tags$li("NVQ3: 2+ A Levels/VCEs, 4+ AS Levels, Higher School Certificate, Progression/Advanced Diploma, Welsh Baccalaureate Advanced Diploma, NVQ Level 3; Advanced GNVQ, City and Guilds Advanced Craft, ONC, OND, BTEC National, RSA Advanced Diploma"),
+            tags$li("NVQ4 or above: Degree (for example BA, BSc), Higher Degree (for example MA, PhD, PGCE), NVQ Level 4-5, HNC, HND, RSA Higher Diploma, BTEC Higher level, Foundation degree (NI), Professional qualifications (for example teaching, nursing, accountancy)"),
+            tags$li("Other qualifications: Other vocational/work-related Qualifications, Foreign Qualifications (Not Stated / level unknown)"),
+            tags$li("None: No qualifications")
           )
         )
       )
@@ -632,7 +632,116 @@ panel_qualification_level <- function() {
     ), # end of row
     column(width = 12, br(""))
     
-  ) # end of qualification Supply tab
+  ) # end of qualification tab
+}  
   
+  # destinations
+  panel_destinations <- function() {
+    tabPanel(
+      "Destinations",
+      h1(uiOutput("page5title")),
+      p("Destination measures show the percentage of students going to or remaining in an education, apprenticeship or employment destination in the academic year after completing 14 to 16 studies (finishing year 11, usually aged 16) and 16 to 18 studies (finishing year 13, usually aged 18). "),
+      
+      fluidRow(
+        column(
+          12,
+          div(
+            class = "filterRow",
+            fluidRow(
+              column(
+                width = 4,
+                uiOutput("key_stage_on")
+              ),
+              column(
+                width = 4,
+                uiOutput("cohort_group_on")
+              )
+              )
+            )
+          )
+      ),
+      
+      br(),
+      
+      ### KPI boxes ----
+      fluidRow(
+        valueBoxOutput("destup.ks4edu"),
+        valueBoxOutput("destup.ks5edu"),
+        valueBoxOutput("destup.ks5emp")),
+      
+      fluidRow(
+        uiOutput("dest_comp")),
+      
+      details(
+        label = "Source: National Pupil Database",
+        inputId = "destSource",
+        tags$ol(
+          tags$li("Add in")
+        )
+      ),
+      
+      br(),
+      
+      #Key stage bar chart
+      fluidRow(
+        column(
+          12,
+          h2(uiOutput("keystagetitle")),
+          plotlyOutput("key_stage_2021"))),
+      column(width = 12, br("")), # put in to push below the fixed height chart
+      column(width = 12, br("")),
+      details(
+        label = "Source: Nationl Pupil Database",
+        inputId = "Key stage source",
+        tags$ol(
+          tags$li("Add in")
+        )
+      ),
+      
+      ### sustained destination definitions----
+      fluidRow(
+        column(
+          12,
+          details(
+            inputId = "sustdef",
+            label = "sustained destination definitions",
+            tags$ul(
+              tags$li("A sustained destination is a count of young people recorded as having sustained participation (education and employment) for a 6 month period in the destination year."),
+              tags$li("This means attending for all of the first two terms of the academic year (October 2020 to March 2021) at one or more education providers; spending 5 of the 6 months in employment or a combination of the two."),
+              tags$li("A sustained apprenticeship is recorded when 6 months continuous participation is recorded at any point in the destination year (between August 2020 and July 2021).")
+            )
+          )
+        )
+      ),
+      
+      fluidRow(
+        column(
+          width = 3,
+          downloadButton(
+            outputId = "download_btn5a",
+            label = "All data   ",
+            icon = shiny::icon("download"),
+            class = "downloadButton"
+          )
+        ),
+        column(
+          width = 9,
+          "Download skills data for all geographies (LEPs, LSIP areas, MCA areas LAs, regions and England)"
+        )
+      ), # end of row
+      fluidRow(
+        column(
+          width = 3,
+          downloadButton(
+            outputId = "download_btn5b",
+            label = "Current LEP/LSIP/MCA",
+            icon = shiny::icon("download"),
+            class = "downloadButton"
+          )
+        ),
+        column(width = 9, p("Download skills data for the selected LEP/LSIP area"))
+      ), # end of row
+      column(width = 12, br(""))
+    ) #end of destinations tab
 }
 

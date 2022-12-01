@@ -59,9 +59,18 @@ D_empent_UBC1822 <- read.csv(file = "./Data/AppData/D_empent_UBC1822.csv", check
 # data for download
 D_KS4destin_1521 <- read.csv(file = "./Data/AppData/D_KS4destin_1521.csv", check.names = FALSE)
 
+# data for dashboard
+C_KS4destin_1521 <- read.csv(file = "./Data/AppData/C_KS4destin_1521.csv", check.names = FALSE)
+
 ## KS5 destinations ----
 # data for download
 D_KS5destin_1721 <- read.csv(file = "./Data/AppData/D_KS5destin_1721.csv", check.names = FALSE)
+
+#data for dashboard
+C_KS5destin_1721 <- read.csv(file = "./Data/AppData/C_KS5destin_1721.csv", check.names = FALSE)
+
+#data for dashboard
+C_KS4_KS5_2021 <- read.csv(file = "./Data/AppData/C_KS4_KS5_2021.csv", check.names = FALSE)
 
 
 ## Data table ----
