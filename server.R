@@ -1802,30 +1802,52 @@ server <- function(input, output, session) {
     paste0("How is ",metricUsed," changing over time?")
   })
   
-  #create map comment
+  #create time comment
   output$commentTime <- renderUI({
     #get current area
     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
     areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
+    dataTimeCompare<-if(input$splashMetric=="empRate"){
+      EmpRateData<-C_EmpRate_APS1822%>%
+        filter(geographic_level!="LADU")%>%
+        select(year, area, geographic_level, metric=empRate)%>%
+        mutate(year=as.numeric(year)-2017)
+    } else {
+      FeData<-C_Achieve_ILR1621%>%
+        filter(geographic_level!="Local authority district",level_or_type=="Further education and skills: Total",age_group=="Total")%>%
+        select(year=time_period,area,geographic_level,metric=achievements_rate_per_100000_population)%>%
+        mutate(geographic_level=case_when(geographic_level=="National" ~ "COUNTRY",
+                                          TRUE~geographic_level))%>%
+        mutate(year=round(year/100,0)-2015)
+    }
+    
     compareNational<-
-      if((C_Geog %>%
-          filter(geog == input$splashGeoType & areaName == areaClicked))[[input$splashMetric]]
-         >
-         (C_Geog %>%
-          filter(geog == "COUNTRY" & areaName == "England"))[[input$splashMetric]]
-      ){"faster"}else{"slower"}
+      if(((dataTimeCompare %>%
+          filter(year==5,geographic_level == input$splashGeoType & area == areaClicked))$metric-
+         (dataTimeCompare %>%
+          filter(year==1,geographic_level == input$splashGeoType & area == areaClicked))$metric
+         )>
+         ((dataTimeCompare %>%
+          filter(year==5,geographic_level == "COUNTRY" & area == "England"))$metric-
+         (dataTimeCompare %>%
+          filter(year==1,geographic_level == "COUNTRY" & area == "England"))$metric
+      )){"faster"}else{"slower"}
     metricUsed<-if(input$splashMetric=="empRate"){" employment rate "}else{" FE achievements per 100,000 "}
-    areaRank<-(C_Geog %>%
-                 filter(geog == input$splashGeoType)%>%
-                 mutate(ranking = rank(desc(eval(parse(text = input$splashMetric)))))%>%
-                 filter(areaName==areaClicked))$ranking
+    areaRank<-(dataTimeCompare %>%
+                 filter(geographic_level == input$splashGeoType,(year==5|year==1))%>%
+                 group_by(geographic_level,area)%>%
+                 mutate(change = metric - lag(metric, default = 0))%>%
+                 filter(year==5)%>%
+                 ungroup()%>%
+                 mutate(ranking = rank(desc(change)))%>%
+                 filter(area==areaClicked))$ranking
     suff <- case_when(areaRank %in% c(11,12,13) ~ "th",
                       areaRank %% 10 == 1 ~ 'st',
                       areaRank %% 10 == 2 ~ 'nd',
                       areaRank %% 10 == 3 ~'rd',
                       TRUE ~ "th")
     groupCount<-if(input$splashGeoType=="LEP"){"38 LEPs."}else{"10 MCAs."}
-    paste0(areaClicked, "'s",metricUsed,"has increased ",compareNational," than the national average in the last year and the last five years. It has the ",areaRank,suff," fastest growing",metricUsed,"of the ",groupCount)
+    paste0(areaClicked, "'s",metricUsed,"has increased ",compareNational," than the national average in the last five years. It has the ",areaRank,suff," fastest growing",metricUsed,"of the ",groupCount)
   })
   
   Splash_time <- eventReactive(c(input$map_shape_click, input$mapLA_shape_click,input$geoComps,input$levelBar,input$splashMetric), {
@@ -1893,11 +1915,14 @@ server <- function(input, output, session) {
   })
 
   # variab;e chart
-  Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$levelBar, input$sexBar, input$metricBar), {
+  Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$levelBar, input$sexBar, input$metricBar,input$splashBreakdown), {
     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
-    Splash_21 <- C_Achieve_ILR21 %>%
-      filter(
-        geographic_level == "country" |
+    
+      if(input$splashMetric=="empRate"){}
+    else{Splash_21 <- C_Achieve_ILR1621 %>%
+      mutate(levelTotal=case_when(substring(level_or_type,nchar(level_or_type)-5+1)=="Total"~"Total",TRUE~"Not"))%>%
+      filter(time_period==202021,
+        geographic_level == "National" |
           geographic_level == input$splashGeoType,
         (area == "England" |
           area == C_Geog$areaName[C_Geog$areaCode == event$id] |
@@ -1906,27 +1931,30 @@ server <- function(input, output, session) {
           } else {
             "\nNone"
           }),
-        Level == input$levelBar,
-        sex == input$sexBar
+        if(input$splashBreakdown=="typeNeat"){levelTotal=="Total"&age_group=="Total"}
+        else {
+          if (input$splashBreakdown=="level_or_type"){levelTotal=="Not"&age_group=="Total"&apprenticeships_or_further_education=="Further education and skills"}
+          else{
+            level_or_type=="Further education and skills: Total"
+          }}
       ) %>%
-      mutate(pc = case_when(input$metricBar == "Achievements" ~ pcAch, TRUE ~ pcEnr)) %>%
-      select(area, SSA, metric = input$metricBar, pc)
-
+            select(area, input$splashBreakdown, metric = achievements_rate_per_100000_population)
+}
     # add an extra column so the colours work in ggplot when sorting alphabetically
     Splash_21$Area <- factor(Splash_21$area,
       levels = c("England", C_Geog$areaName[C_Geog$areaCode == event$id], input$geoComps)
     )
-    ggplot(Splash_21, aes(x = reorder(SSA, desc(SSA)), y = pc, fill = Area, text = paste0(
-      "SSA: ", SSA, "<br>",
+    ggplot(Splash_21, aes(x = eval(parse(text = input$splashBreakdown)), y = metric, fill = Area, text = paste0(#reorder(input$splashBreakdown, desc(input$splashBreakdown))
+      #"Breakdown: ", input$splashBreakdown, "<br>",
       "Area: ", Area, "<br>",
-      "Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(pc, 2)), "<br>",
-      input$metricBar, ": ", metric, "<br>"
+      #"Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(metric, 2)), "<br>",
+      input$metricBar, ": ", round(metric,0), "<br>"
     ))) +
       geom_col(
         position = "dodge"
       ) +
-      scale_y_continuous(labels = scales::percent) +
-      scale_x_discrete(labels = function(SSA) str_wrap(SSA, width = 26)) +
+      #scale_y_continuous(labels = scales::percent) +
+      scale_x_discrete(labels = function(x) str_wrap(x, width = 26)) +
       coord_flip() +
       theme_minimal() +
       labs(fill = "") +
