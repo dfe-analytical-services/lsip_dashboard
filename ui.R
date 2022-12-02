@@ -282,6 +282,8 @@ padding-top:15px
               p("This page includes information on the qualification level for working age individuals (16-64) for the selected geographic area, and the option to compare against another area.
                 It includes data on qualification level, with breakdowns by age band and gender."),
               h3(actionLink("link_to_tabpanel_destinations_level", "Destinations")),
+              p("This page includes information on the destinations of young people after KS4 and KS5 education for the selected geographic area, and the option to compare against another area.
+                It includes data on destinations, with breakdowns by level and key stage group."),
               h2("Data download page"),
               p("The", actionLink("link_to_tabpanel_data", "data download page"), " includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
             )
@@ -442,12 +444,10 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
             tags$li("Key Stage 4 (year 10 and 11 students) includes GCSEs and equivalent qualifications"),
             tags$li("Key Stage 5 (students 16-18 years) includes A Levels, T levels and other 2-year vocational education programmes.")
           ),
-          p("This dashboard currently shows links to download data on the number of young people going into education and, employment or apprenticeship in the year following completion of their qualification by level, KS4 and KS5."),
-          p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
-            rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
+          p("This dashboard currently shows the number of young people going into education and, employment or apprenticeship in the year following completion of their qualification by level, KS4 and KS5."),
           h3("UK Business Count (UBC)"),
           p("The UK Business Count (UBC) is a record of the number of enterprises from the Inter Departmental Business Register (IDBR). Topics included cover employment size band, detailed industry (5 digit SIC 2007) and legal status.
-            This dashboard currently shows a link to download data on the count of enterprises by employment size."),
+            This dashboard currently shows the count of enterprises by employment size and industry."),
           br()
         )
       ) # end of data information row

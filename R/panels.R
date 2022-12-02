@@ -570,7 +570,7 @@ panel_qualification_level <- function() {
     fluidRow(
       column(
         12,
-        h2("Qualification Level: 2017 to 2021"),
+        h2(uiOutput("qualtitle")),
         plotlyOutput("qual_time"),
         details(
           label = "Source: Annual Population Survey",
@@ -665,9 +665,9 @@ panel_qualification_level <- function() {
       
       ### KPI boxes ----
       fluidRow(
-        valueBoxOutput("destup.ks4edu"),
-        valueBoxOutput("destup.ks5edu"),
-        valueBoxOutput("destup.ks5emp")),
+        valueBoxOutput("destup.edu"),
+        valueBoxOutput("destup.emp"),
+        valueBoxOutput("destup.app")),
       
       fluidRow(
         uiOutput("dest_comp")),

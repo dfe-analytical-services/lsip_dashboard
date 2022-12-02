@@ -1575,6 +1575,7 @@ server <- function(input, output, session) {
       theme_minimal() +
       theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
       labs(shape = "", colour = "") +
+      scale_y_continuous(labels = scales::percent) +
       scale_y_continuous(label = comma) +
       xlab("Year") +
       scale_color_manual(values = chartColors2)
@@ -1733,46 +1734,48 @@ server <- function(input, output, session) {
         class = "small-box bg-geo1",
         div(
           class = "inner",
-          h3(format((C_qual2_APS1721 %>%
-                       filter(
-                         geographic_level == input$GeoType,
-                         area == input$lep1, year == "2021",
-                         Level == "NVQ3",
-                         age_band ==  "16-64",
-                         group == "Total"
-                       ) %>%
-                       select(value)
-          )[1, 1], scientific = FALSE, big.mark = ",")),
+          h3(paste0(format(100. *(C_qual2_APS1721 %>%
+                                    filter(
+                                      geographic_level == input$GeoType,
+                                      area == input$lep1, year == "2021",
+                                      Level == "NVQ3",
+                                      age_band == "16-64",
+                                      group == "Total"
+                                    ) %>%
+                                    select(rate)
+          )[1, 1], scientific = FALSE, digits = 2)
+          ,"%"))
+          ,
           p(paste0("NVQ3 and above qualifications for the 16-64 age group in 2021 in ", input$lep1)),
         )
       )
     )
-  })
-  
+  }) 
   
   #KPI 2 
-  output$qualup.nvq3.2 <- renderValueBox({
-    div(
-      class = "col-sm-4",
+    output$qualup.nvq3.2 <- renderValueBox({
       div(
-        class = "small-box bg-geo2",
+        class = "col-sm-4",
         div(
-          class = "inner",
-          h3(format((C_qual2_APS1721 %>%
-                       filter(
-                         geographic_level == input$GeoType,
-                         area == input$lep2, year == "2021",
-                         Level == "NVQ3",
-                         age_band == "16-64",
-                         group == "Total"
-                       ) %>%
-                       select(value)
-          )[1, 1], scientific = FALSE, big.mark = ",")),
-          p(paste0("NVQ3 and above qualifications for the 16-64 age group in 2021 in ", input$lep2)),
+          class = "small-box bg-geo2",
+          div(
+            class = "inner",
+            h3(paste0(format(100. *(C_qual2_APS1721 %>%
+                                      filter(
+                                        geographic_level == input$GeoType,
+                                        area == input$lep2, year == "2021",
+                                        Level == "NVQ3",
+                                        age_band == "16-64",
+                                        group == "Total"
+                                      ) %>%
+                                      select(rate)
+            )[1, 1], scientific = FALSE, digits = 2)
+            ,"%")),
+            p(paste0("NVQ3 and above qualifications for the 16-64 age group in 2021 in ", input$lep2)),
+          )
         )
       )
-    )
-  })
+    })
   
   
 #KPI3
@@ -1828,6 +1831,13 @@ server <- function(input, output, session) {
   })
   
   
+  # qualifications title
+  output$qualtitle <- renderUI({
+    paste0("Qualification level", " ", input$qualGroup, ":", " Jan-Dec 2017 to Jan-Dec 2021")
+  })
+  
+  
+  # qualification line chart
   qual_time <- eventReactive(c(input$lep1, input$lep2, input$qualGroup, input$ageGroup, input$genGroup), {
     qtime <- C_qual2_APS1721 %>%
       filter(
@@ -1839,43 +1849,33 @@ server <- function(input, output, session) {
              "\nNone"
            })
         ),
-        Level == if ("qualGroup" %in% names(input)) {
-          input$qualGroup
-        } else {
-          "None"
-        },
-        age_band == if ("ageGroup" %in% names(input)) {
-          input$ageGroup
-        } else {
-          "16-64"
-        },
-        group == if ("genGroup" %in% names(input) & if ("ageGroup" %in% names(input)){ input$ageGroup == "16-64"}) {
-          input$genGroup
-        } else {
-          "Total"
-        }
+        Level %in% input$qualGroup ,
+        age_band %in% input$ageGroup,
+        group %in% input$genGroup
       ) %>%
-      select(area, year, Level, age_band, group, value )
+      select(area, year, rate)
     
     # add an extra column so the colours work in ggplot when sorting alphabetically
     qtime$area <- factor(qtime$area,
                          levels = c(input$lep1, input$lep2)
     )
+    
     ggplot(qtime, aes(
-      x = year, y = value, group = area, colour = area,
+      x = year, y = rate, group = area, colour = area,
       text = paste0(
         "Year: ", year, "<br>",
         "Area: ", area, "<br>",
-        "Number: ", value, "<br>",
-        "Qualification: ", Level, "<br>",
-        "Age band: ", age_band, "<br>"
+        "Percentage: ", scales::percent(round(rate, 2)), "<br>",
+        "Qualification: ", input$qualGroup, "<br>",
+        "Age band: ", input$ageGroup, "<br>"
       )
     )) +
       geom_line() +
       theme_minimal() +
       theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
       labs(shape = "", colour = "") +
-      scale_y_continuous(label = comma) +
+      scale_y_continuous(labels = scales::percent) +
+      #scale_y_continuous(label = comma) +
       xlab("Year") +
       scale_color_manual(values = chartColors2)
   })
@@ -1935,9 +1935,9 @@ server <- function(input, output, session) {
         )
       } else {
         tagList(
-          valueBoxOutput("destup.ks4edu.2"),
-          valueBoxOutput("destup.ks5edu.2"),
-          valueBoxOutput("destup.ks5emp.2")
+          valueBoxOutput("destup.edu.2"),
+          valueBoxOutput("destup.emp.2"),
+          valueBoxOutput("destup.app.2")
           
         )
       }
@@ -1986,150 +1986,156 @@ server <- function(input, output, session) {
   
 
   # KPI 1
-  output$destup.ks4edu <- renderValueBox({
+  output$destup.edu <- renderValueBox({
     div(
       class = "col-sm-4",
       div(
         class = "small-box bg-geo1",
         div(
           class = "inner",
-          h3(paste0(format(100. *(C_KS4destin_1521 %>%
+          h3(paste0(format(100. *(C_KS4_KS5_2021 %>%
                                     filter(
                                       geographic_level == input$GeoType,
                                       area == input$lep1, time_period == "202021",
-                                      variable == "Sustained Education"
-                                      
+                                      variable == "Sustained Education",
+                                      `Cohort Group` %in% input$cohortGroup,
+                                      `Key Stage` %in% input$keystageGroup
                                     ) %>%
                                     select(value)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0("of KS4 cohort group had a Sustained Education destinations in 202021 in ", input$lep1)),
+          p(paste0(input$cohortGroup, " ", input$keystageGroup, " cohort group had a Sustained Education destinations in 202021 in ", input$lep1)),
         )
       )
     )
   })
   
-  
-  output$destup.ks4edu.2 <- renderValueBox({
+  # KPI 2
+  output$destup.edu.2 <- renderValueBox({
     div(
       class = "col-sm-4",
       div(
         class = "small-box bg-geo2",
         div(
           class = "inner",
-          h3(paste0(format(100. *(C_KS4destin_1521 %>%
+          h3(paste0(format(100. *(C_KS4_KS5_2021 %>%
                                     filter(
                                       geographic_level == input$GeoType,
                                       area == input$lep2, time_period == "202021",
-                                      variable == "Sustained Education"
-                                      
+                                      variable == "Sustained Education",
+                                      `Cohort Group` %in% input$cohortGroup,
+                                      `Key Stage` %in% input$keystageGroup
                                     ) %>%
                                     select(value)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0("of KS4 cohort group had a Sustained Education destinations in 202021 in ", input$lep2)),
+          p(paste0(input$cohortGroup, " ", input$keystageGroup, " cohort group had a Sustained Education destinations in 202021 in ", input$lep2)),
         )
       )
     )
   })
   
-  
-  output$destup.ks5edu <- renderValueBox({
+  # KPI 3
+  output$destup.emp <- renderValueBox({
     div(
       class = "col-sm-4",
       div(
         class = "small-box bg-geo1",
         div(
           class = "inner",
-          h3(paste0(format(100. *(C_KS5destin_1721 %>%
+          h3(paste0(format(100. *(C_KS4_KS5_2021 %>%
                                     filter(
                                       geographic_level == input$GeoType,
                                       area == input$lep1, time_period == "202021",
-                                      variable == "Sustained Education"
-                                      
+                                      variable == "Sustained Employment",
+                                      `Cohort Group` %in% input$cohortGroup,
+                                      `Key Stage` %in% input$keystageGroup
                                     ) %>%
                                     select(value)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0("of KS5 cohort group had a Sustained Education destinations in 202021 in ", input$lep1)),
+          p(paste0(input$cohortGroup, " ", input$keystageGroup, " cohort group had a Sustained Employment destinations in 202021 in ", input$lep1)),
         )
       )
     )
   })
   
-  
-  output$destup.ks5edu.2 <- renderValueBox({
+  # KPI 4
+  output$destup.emp.2 <- renderValueBox({
     div(
       class = "col-sm-4",
       div(
         class = "small-box bg-geo2",
         div(
           class = "inner",
-          h3(paste0(format(100. *(C_KS5destin_1721 %>%
+          h3(paste0(format(100. *(C_KS4_KS5_2021 %>%
                                     filter(
                                       geographic_level == input$GeoType,
                                       area == input$lep2, time_period == "202021",
-                                      variable == "Sustained Education"
-                                      
+                                      variable == "Sustained Employment",
+                                      `Cohort Group` %in% input$cohortGroup,
+                                      `Key Stage` %in% input$keystageGroup
                                     ) %>%
                                     select(value)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0("of KS5 cohort group had a Sustained Education destinations in 202021 in ", input$lep2)),
+          p(paste0(input$cohortGroup, " ", input$keystageGroup, " cohort group had a Sustained Employment destinations in 202021 in ", input$lep2)),
         )
       )
     )
   })
   
-  
-  output$destup.ks5emp <- renderValueBox({
+  # KPI 5
+  output$destup.app <- renderValueBox({
     div(
       class = "col-sm-4",
       div(
         class = "small-box bg-geo1",
         div(
           class = "inner",
-          h3(paste0(format(100. *(C_KS5destin_1721 %>%
+          h3(paste0(format(100. *(C_KS4_KS5_2021 %>%
                                     filter(
                                       geographic_level == input$GeoType,
                                       area == input$lep1, time_period == "202021",
-                                      variable == "Sustained Employment"
-                                      
+                                      variable == "Sustained Apprenticeships",
+                                      `Cohort Group` %in% input$cohortGroup,
+                                      `Key Stage` %in% input$keystageGroup
                                     ) %>%
                                     select(value)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0("of KS5 cohort group had a Sustained Employment destination in 202021 in ", input$lep1)),
+          p(paste0(input$cohortGroup, " ", input$keystageGroup, " cohort group had a Sustained Apprenticeships destination in 202021 in ", input$lep1)),
         )
       )
     )
   })
   
-  
-  output$destup.ks5emp.2 <- renderValueBox({
+  # KPI 6
+  output$destup.app.2 <- renderValueBox({
     div(
       class = "col-sm-4",
       div(
         class = "small-box bg-geo2",
         div(
           class = "inner",
-          h3(paste0(format(100. *(C_KS5destin_1721 %>%
+          h3(paste0(format(100. *(C_KS4_KS5_2021 %>%
                                     filter(
                                       geographic_level == input$GeoType,
                                       area == input$lep2, time_period == "202021",
-                                      variable == "Sustained Employment"
-                                      
+                                      variable == "Sustained Apprenticeships",
+                                      `Cohort Group` %in% input$cohortGroup,
+                                      `Key Stage` %in% input$keystageGroup
                                     ) %>%
                                     select(value)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0("of KS5 cohort group had a Sustained Employment destination in 202021 in ", input$lep2)),
+          p(paste0(input$cohortGroup, " ", input$keystageGroup, " cohort group Sustained Apprenticeships destinations in 202021 in ", input$lep2)),
         )
       )
     )
@@ -2145,8 +2151,8 @@ server <- function(input, output, session) {
   ks_21 <- C_KS4_KS5_2021 %>%
     filter(
       geographic_level == input$GeoType,
-      `Cohort Group` == input$cohortGroup,
-      `Key Stage` == input$keystageGroup,
+      `Cohort Group` %in% input$cohortGroup,
+      `Key Stage` %in% input$keystageGroup,
       (area == input$lep1 |
          area == if ("lep2" %in% names(input)) {
            input$lep2
@@ -2164,7 +2170,7 @@ server <- function(input, output, session) {
     "Area: ", Area, "<br>",
     "Key stage group: ", `Key Stage`, "<br>",
     "Cohort group: " ,`Cohort Group`, "<br>",
-    "Percentage:", scales::percent(round(value, 2)), "<br>"
+    "Percentage: ", scales::percent(round(value, 2)), "<br>"
   ))) +
     geom_col(
       position = "dodge"
