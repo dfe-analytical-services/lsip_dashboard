@@ -593,7 +593,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           h3("How does employmnet rate vary by SSA?"),
           radioGroupButtons(
             inputId = "splashBreakdown",
-            choices = c("SSA", "Age", "Gender")
+            choices = c("Provision"="typeNeat", "Level"="level_or_type", "Age"="age_group")
           ),
           p("Black Country has a high proportion of health achievements compared to the national picture. It has a low proportion of Retail achievemenst"),
           plotlyOutput("Splash_pc")
