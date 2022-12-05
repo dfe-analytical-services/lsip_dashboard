@@ -1833,7 +1833,7 @@ server <- function(input, output, session) {
   
   # qualifications title
   output$qualtitle <- renderUI({
-    paste0("Qualification level", " ", input$qualGroup, ":", " Jan-Dec 2017 to Jan-Dec 2021")
+    paste0(input$qualGroup, " ", "qualification level",   ":", " Jan-Dec 2017 to Jan-Dec 2021")
   })
   
   
