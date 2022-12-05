@@ -284,6 +284,7 @@ padding-top:15px
               h3(actionLink("link_to_tabpanel_destinations_level", "Destinations")),
               p("This page includes information on the destinations of young people after KS4 and KS5 education for the selected geographic area, and the option to compare against another area.
                 It includes data on destinations, with breakdowns by level and key stage group."),
+              h3(actionLink("link_to_tabpanel_enterprise_level", "Enterprise")),
               h2("Data download page"),
               p("The", actionLink("link_to_tabpanel_data", "data download page"), " includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
             )
@@ -389,7 +390,8 @@ padding-top:15px
             panel_vacancies(),
             panel_skills(),
             panel_qualification_level(),
-            panel_destinations()
+            panel_destinations(),
+            panel_enterprise()
           ) # end of dashboard tabset panel
         ) # end of dashboard navbar
       )

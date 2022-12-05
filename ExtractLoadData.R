@@ -93,7 +93,7 @@ sheetNum <- 1
 I_EmpEnt_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 # Enterprise by employment size and industry
-folder <- "12_UBCempentind"
+folder <- "15_UBCempentind"
 sheetNum <- 1
 I_EmpEntind_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
@@ -113,7 +113,7 @@ I_KS5destin_1721 <- read.csv(file = paste0("./Data/", folder, "/", list.files(pa
 # Number of enterprise births, deaths and active
 # Download from https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable
 # Georgraphy: England and LADS (as of April 2021)
-folder <- "19_bussdemo"
+folder <- "16_bussdemo"
 sheet <- "Table 1.1a"
 firstRow <- 4
 

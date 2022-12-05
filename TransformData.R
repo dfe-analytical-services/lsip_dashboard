@@ -605,8 +605,227 @@ F_empent_UBC1822 <- format.empent.UBC(I_EmpEnt_APS1822)
 D_empent_UBC1822 <- F_empent_UBC1822 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x"))) %>%
   rename("enterprise size" = variable, count = value)
+
 # write the data to folder
 write.csv(D_empent_UBC1822, file = "Data\\AppData\\D_empent_UBC1822.csv", row.names = FALSE)
+
+
+## UK Business Count - Enterprise by employment size and industry
+# Reshape data to long, rename and reorder and reformat some columns
+
+format.empentind.UBC <- function(x) {
+  reformat <- x %>%
+    rename(business_counts = "UK.Business.Counts.-.enterprises.by.industry.and.employment.size.band") %>%
+    mutate(year = ifelse(business_counts == "date", substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
+    fill(year) %>%
+    mutate(industry = ifelse(business_counts == "industry", X2, NA)) %>% # tag time periods
+    fill(industry) %>%
+    row_to_names(row_number = 5) %>% # set col names
+    clean_names() %>%
+    rename("industry" = !!names(.[8]),
+           "year" = !!names(.[7])) %>%
+    mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
+    filter(check == 1) %>%
+    filter(!grepl("nomisweb", area)) %>%
+    select(area, everything(), -check) %>% # reorder and remove
+    mutate(area2 = gsub(".*-", "", area)) %>%
+    mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
+    mutate(area = gsub(".*:", "", area)) %>%
+    mutate(area = gsub("-.*", "", area)) %>%
+    mutate(industry = gsub(".*:", "", industry)) %>%
+    mutate(area = case_when(
+      area == "Hull and East Riding" ~ "Hull and East Yorkshire",
+      area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+      area == "Heart of the South" ~ "Heart of the South-West",
+      area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
+      area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
+      TRUE ~ area
+    )) %>%
+    mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
+    select(area, everything(), -area2) %>%
+    relocate(geographic_level, year, industry, .after = area) %>%
+    mutate(geographic_level = toupper(geographic_level)) %>%
+    melt(id.vars = c("year", "geographic_level", "industry", "area")) %>%
+    mutate(variable = sub("(.)", "\\U\\1", variable, perl=TRUE)) %>% # capitalise first letter
+    filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
+}  
+
+
+# format data
+F_empentind_UBC1822 <-  format.empentind.UBC(I_EmpEntind_APS1822) %>%
+  mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "")))
+
+
+# dashboard data
+# get total by enterprise size
+C_empentind_UBC1822 <- F_empentind_UBC1822 %>%
+  mutate_at(c(6), as.numeric) %>% 
+  mutate_at(c(6), ~replace_na(.,0)) %>%
+  filter(variable != "Total") %>%
+  group_by(area, year, geographic_level, variable) %>% 
+  summarise(Total = sum(`value`))
+
+#get overall total and merge onto C_empentind_UBC1822 to calculate proportions by enterprise size
+C_empentind2_UBC1822 <- F_empentind_UBC1822 %>%
+  mutate_at(c(6), as.numeric) %>% 
+  mutate_at(c(6), ~replace_na(.,0)) %>%
+  filter(variable == "Total")%>%
+  group_by(area, year, geographic_level, variable) %>% 
+  summarise(Total2 = sum(`value`)) %>%
+  select(-variable) %>%
+  left_join(C_empentind_UBC1822, by = c('area' = 'area', 'year' = 'year',
+                                        'geographic_level' = 'geographic_level')) %>%
+  mutate(rate = Total/Total2, industry = "Total") %>%
+  select(-Total, -Total2)
+
+#combine total aggregrates to industry figures
+C_empentind3_UBC1822 <-  F_empentind_UBC1822 %>%
+  mutate_at(c(6), as.numeric) %>% 
+  mutate_at(c(6), ~replace_na(.,0)) %>%
+  mutate_at(c('value'), ~replace_na(.,0)) %>%
+  filter(variable != "Total") %>%
+  left_join(C_empentind_UBC1822, by = c('area' = 'area', 'year' = 'year',
+                                        'geographic_level' = 'geographic_level', "variable" = "variable")) %>%
+  mutate(rate = value/Total) %>%
+  select(-Total, -value) %>%
+  rbind(C_empentind2_UBC1822) %>%
+  mutate(industry = trimws(industry, which = c("left")))
+
+
+# write data to folder
+write.csv(C_empentind2_UBC1822, file = "Data\\AppData\\C_empentind3_UBC1822.csv", row.names = FALSE)
+
+
+# Downloadable version
+D_empentind_UBC1822 <-  format.empent.UBC(I_EmpEntind_APS1822) %>%
+  mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+
+# write the data to folder
+write.csv(D_empentind_UBC1822, file = "Data\\AppData\\D_empentind_UBC1822.csv", row.names = FALSE)
+
+
+# enterprise births, deaths and active
+format.bussdemo.ONS  <- function(w, x, y, z) {
+  w <- w %>%
+    rename(X1 = 1) %>%
+    mutate(X1 = trimws(X1, which = c("both"))) %>% 
+    select(-X2)
+  
+  x <- x %>% mutate(X1 = trimws(X1, which = c("both"))) %>% 
+    select(-X2)
+  
+  y <- y %>% mutate(X1 = trimws(X1, which = c("both"))) %>% 
+    select(-X2)
+  
+  z <- z %>% mutate(X1 = trimws(X1, which = c("both"))) %>% 
+    mutate(X2 = trimws(X2, which = c("both")))
+  
+  df_list <- list(z, y, x, w) 
+  df <- df_list %>%
+    reduce(full_join, by='X1')
+  
+  England <- df %>%
+    filter(X2 == "ENGLAND") %>%
+    select(-c(1:2)) %>%
+    mutate(area = "England") %>%
+    mutate(geographic_level = "COUNTRY") %>%
+    relocate(area, geographic_level, .before = `2021`) %>%
+    mutate_at(c(3:8), as.character)
+  
+  LADU <- C_LADLEP2020 %>%
+    select('LAD21CD', 'LAD21NM') %>%
+    distinct()
+  
+  addLADU <- LADU %>%
+    left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
+    rename(area = LAD21NM) %>%
+    select(-c(LAD21CD)) %>%
+    mutate(geographic_level = "LADU") %>% # rename as LADU
+    relocate(geographic_level, .after = area) %>%
+    mutate_at(c(3:8), as.character)
+  
+  addLEP <- C_LADLEP2020 %>%
+    left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
+    filter(is.na(LEP) == FALSE) %>% # remove non-english
+    select(-c(1:2)) %>%
+    rename(area = LEP) %>%
+    mutate(geographic_level = "LEP") %>% # rename as lep
+    mutate_at(vars(-area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+    relocate(geographic_level, .after = area) %>%
+    mutate_at(c(3:8), as.numeric) %>% # Convert to numeric
+    group_by(area, geographic_level) %>% # sum for each LSIP
+    summarise(across(everything(), list(sum), na.rm = T)) %>%
+    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+    mutate_at(c(3:8), as.character) # Convert to sring to bind
+  
+  addLSIP <- C_LADLSIP2020 %>%
+    left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
+    filter(is.na(LSIP) == FALSE) %>% # remove non-english
+    select(-c(1:2)) %>%
+    rename(area = LSIP) %>%
+    mutate(geographic_level = "LSIP") %>% # rename as lep
+    mutate_at(vars(-area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+    relocate(geographic_level, .after = area) %>%
+    mutate_at(c(3:8), as.numeric) %>% # Convert to numeric
+    group_by(area, geographic_level) %>% # sum for each LSIP
+    summarise(across(everything(), list(sum), na.rm = T)) %>%
+    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+    mutate_at(c(3:8), as.character) # Convert to sring to bind
+  
+  addMCA <- C_mcalookup %>%
+    left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
+    select(-c(1:3)) %>%
+    rename(area = CAUTH21NM) %>%
+    mutate(geographic_level = "MCA") %>% # rename as lep
+    mutate_at(vars(-area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+    relocate(geographic_level, .after = area) %>%
+    mutate_at(c(3:8), as.numeric) %>% # Convert to numeric
+    group_by(area, geographic_level) %>% # sum for each MCA
+    summarise(across(everything(), list(sum), na.rm = T)) %>%
+    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+    mutate_at(c(3:8), as.character) # Convert to sring to bind
+  
+  combined <- bind_rows(addLADU, addLEP, addLSIP, addMCA, England) %>%
+    melt(id.vars = c("geographic_level", "area")) %>%
+    rename(year = variable) %>%
+    filter(!is.na(area)) %>%
+    relocate(geographic_level, .after = area) %>%
+    mutate_at(c(3), as.character) # Convert to sring to bind
+  
+}
+
+# format data
+F_births_ONS1621 <- format.bussdemo.ONS(I_births_ONS1618, I_births_ONS19, I_births_ONS20, I_births_ONS21) %>%
+  rename(births = value)
+F_deaths_ONS1621 <- format.bussdemo.ONS(I_deaths_ONS1618, I_deaths_ONS19, I_deaths_ONS20, I_deaths_ONS21) %>%
+  rename(deaths = value)
+F_active_ONS1621 <- format.bussdemo.ONS(I_active_ONS1618, I_active_ONS19, I_active_ONS20, I_active_ONS21) %>%
+  rename(active = value)
+
+#combine dataframes
+df_list <- list(F_births_ONS1621, F_deaths_ONS1621, F_active_ONS1621)
+
+D_enterprise_demo1621 <- df_list %>%
+  reduce(full_join, by=c('year', 'area', 'geographic_level'))
+
+#write data to download
+write.csv(D_enterprise_demo1621, file = "Data\\AppData\\D_enterprise_demo1621.csv", row.names = FALSE)
+
+# dashboard data
+C_enterprise_demo1621 <- df_list %>%
+  reduce(full_join, by=c('year', 'area', 'geographic_level')) %>%
+  mutate_at(c(4:6), as.numeric) %>%
+  replace(is.na(.), 0) %>%
+  mutate(total = rowSums(.[4:6]), births_prop = births/total, active_prop = active/total, deaths_prop = deaths/total) %>%
+  select(-c(4:7)) %>%
+  rename(births = births_prop, deaths = deaths_prop) %>%
+  select(-active_prop) %>%
+  melt(id.vars = c("geographic_level", "area", "year")) %>%
+  rename(rate = value)
+
+#write data to folder
+write.csv(C_enterprise_demo1621, file = "Data\\AppData\\C_enterprise_demo1621.csv", row.names = FALSE)
+
 
 
 ## National Pupil Database - Key Stage 4 Destinations

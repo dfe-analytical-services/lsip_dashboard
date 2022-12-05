@@ -43,6 +43,11 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Destinations")
   })
+  # Create link to enterprise data tab
+  observeEvent(input$link_to_tabpanel_enterprise_level, {
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "datatabset", "Enterprise")
+  })
   # Create link to data tab
   observeEvent(input$link_to_tabpanel_data, {
     updateTabsetPanel(session, "navbar", "Data & downloads")
@@ -2230,6 +2235,111 @@ output$download_btn8b <- downloadHandler(
     write_xlsx(filtered_data8(), path = file)
   }
 )
+
+
+# Enterprise ----
+
+# turn off comparison boxes if none is selected  
+output$ent_comp <- renderUI({
+  if ("lep2" %in% names(input)) {
+    if (input$lep2 == "\nNone") {
+      tagList(
+        br(),
+        p("")
+      )
+    } else {
+      tagList(
+        valueBoxOutput("enta.app.2"),
+        valueBoxOutput("entb.app.2")
+      )
+    }
+  } else {
+  }
+})
+
+# define page title
+output$page6title <- renderUI({
+  paste0(
+    "Enterprises in ", input$lep1,
+    if ("lep2" %in% names(input)) {
+      if (input$lep2 == "\nNone") {
+      } else {
+        paste0(" compared to ", input$lep2)
+      }
+    }
+  )
+})
+
+
+# industry filter
+output$industry_on <- renderUI({
+  selectInput("industryGroup", "Choose industry",
+                 choices = C_empentind3_UBC1822 %>% 
+                   distinct(Industry = industry),
+                 selected = "Total"
+  )
+  
+})
+
+# year filter
+output$year_on <- renderUI({
+  selectizeInput("yearGroup", "Choose year",
+                 choices = C_empentind3_UBC1822 %>% distinct(Year = year),
+                 multiple = FALSE, selected = "2022"
+  )
+  
+})
+
+
+# KPI 1
+output$enta.app <- renderValueBox({
+  div(
+    class = "col-sm-4",
+    div(
+      class = "small-box bg-geo1",
+      div(
+        class = "inner",
+        h3(paste0(format(100. *(C_empentind3_UBC1822 %>%
+                                  filter(
+                                    geographic_level == input$GeoType,
+                                    area == input$lep1, year == "2022",
+                                    variable == "Small_10_to_49",
+                                    industry == "Total"
+                                  ) %>%
+                                  select(rate)
+        )[1, 1], scientific = FALSE, digits = 2)
+        ,"%"))
+        ,
+        p(paste0("small enterprises with 10 to 49 employees in 2022 in ", input$lep1)),
+      )
+    )
+  )
+})
+
+# KPI 2
+output$enta.app.2 <- renderValueBox({
+  div(
+    class = "col-sm-4",
+    div(
+      class = "small-box bg-geo2",
+      div(
+        class = "inner",
+        h3(paste0(format(100. *(C_empentind3_UBC1822 %>%
+                                  filter(
+                                    geographic_level == input$GeoType,
+                                    area == input$lep2, year == "2022",
+                                    variable == "Small_10_to_49",
+                                    industry == "Total"
+                                  ) %>%
+                                  select(rate)
+        )[1, 1], scientific = FALSE, digits = 2)
+        ,"%"))
+        ,
+        p(paste0("small enterprises with 10 to 49 employees in 2022 in ", input$lep2)),
+      )
+    )
+  )
+})
 
   
   # Stop app ---------------------------------------------------------------------------------

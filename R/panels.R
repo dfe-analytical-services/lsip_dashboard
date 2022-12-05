@@ -745,3 +745,69 @@ panel_qualification_level <- function() {
     ) #end of destinations tab
 }
 
+  
+  
+  panel_enterprise <- function() {
+    tabPanel(
+      "Enterprise",
+      h1(uiOutput("page6title")),
+      
+      ### KPI boxes ----
+      fluidRow(
+        valueBoxOutput("enta.app"),
+        valueBoxOutput("entb.app")),
+      
+      fluidRow(
+        uiOutput("ent_comp")),
+      details(
+        label = "Source: ONS Business Demography",
+        inputId = "busdemosource",
+        tags$ol(
+          tags$li("Add in")
+        )
+      ),
+      
+      
+       fluidRow(
+        column(
+          12,
+          h2("Add in"),
+          plotlyOutput("birth_death_time"),
+          details(
+            label = "Source: ONS Business Demography",
+                  inputId = "busdemosource",
+                  tags$ol(
+                    tags$li("Add in")
+                  )
+          )
+        )
+      ),
+      
+      
+      
+      fluidRow(
+        column(
+          12,
+          div(
+            class = "filterRow",
+            fluidRow(
+              column(
+                width = 4,
+                uiOutput("industry_on")
+              ),
+              column(
+                width = 4,
+                uiOutput("year_on")
+              )
+            )
+          )
+        )
+      ),
+      
+      
+     
+      
+      
+    ) 
+    
+  }  
