@@ -2273,10 +2273,10 @@ output$page6title <- renderUI({
 
 # industry filter
 output$industry_on <- renderUI({
-  selectInput("industryGroup", "Choose industry",
+  selectizeInput("industryGroup", "Choose industry",
                  choices = C_empentind3_UBC1822 %>% 
                    distinct(Industry = industry),
-                 selected = "Total"
+                 multiple = FALSE, selected = "Total"
   )
   
 })
