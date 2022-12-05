@@ -1914,23 +1914,49 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
 
-  # variab;e chart
-  Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$levelBar, input$sexBar, input$metricBar,input$splashBreakdown), {
+  # Breakdown chart
+  #create breakdown header
+  output$titleBreakdown <- renderUI({
+    paste0("How does ",if(input$splashMetric=="empRate"){"employment rate"}else{"FE achievements per 100,000"}," vary by ",
+           if(input$splashBreakdown=="typeNeat"){"provision"}
+           else{if(input$splashBreakdown=="level_or_type"){"level"}else{"age"}},"?")
+  })
+  
+  #create breakdown comment
+  output$commentBreakdown <- renderUI({
+    #get current area
     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
-    
+    areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
+    compareNational<-
+      if((C_Geog %>%
+          filter(geog == input$splashGeoType & areaName == areaClicked))[[input$splashMetric]]
+         >
+         (C_Geog %>%
+          filter(geog == "COUNTRY" & areaName == "England"))[[input$splashMetric]]
+      ){"higher"}else{"lower"}
+    metricUsed<-if(input$splashMetric=="empRate"){" employment rate "}else{" FE achievements per 100,000 "}
+    subgroup<-"19-25 yr olds"
+paste0(areaClicked, " has a ",compareNational,metricUsed,"in the ",subgroup,"subgroup than the national average.")
+  })
+  
+  Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$levelBar, input$sexBar, input$metricBar,input$splashBreakdown,input$mapLA_shape_click), {
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
+    eventLA <- input$mapLA_shape_click
       if(input$splashMetric=="empRate"){}
     else{Splash_21 <- C_Achieve_ILR1621 %>%
       mutate(levelTotal=case_when(substring(level_or_type,nchar(level_or_type)-5+1)=="Total"~"Total",TRUE~"Not"))%>%
       filter(time_period==202021,
-        geographic_level == "National" |
-          geographic_level == input$splashGeoType,
-        (area == "England" |
-          area == C_Geog$areaName[C_Geog$areaCode == event$id] |
+        (geographic_level == "National"&area == "England") |
+          ((geographic_level == input$splashGeoType&
+
+          (area == C_Geog$areaName[C_Geog$areaCode == event$id] |
           area %in% if ("geoComps" %in% names(input)) {
             input$geoComps
           } else {
             "\nNone"
-          }),
+          }))|
+          if(is.null(eventLA)==TRUE) {area=="\nNone"}else { (geographic_level == "Local authority district"&area == C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id])}
+        ),
         if(input$splashBreakdown=="typeNeat"){levelTotal=="Total"&age_group=="Total"}
         else {
           if (input$splashBreakdown=="level_or_type"){levelTotal=="Not"&age_group=="Total"&apprenticeships_or_further_education=="Further education and skills"}
@@ -1942,13 +1968,13 @@ server <- function(input, output, session) {
 }
     # add an extra column so the colours work in ggplot when sorting alphabetically
     Splash_21$Area <- factor(Splash_21$area,
-      levels = c("England", C_Geog$areaName[C_Geog$areaCode == event$id], input$geoComps)
+      levels = c("England", C_Geog$areaName[C_Geog$areaCode == event$id], C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id], input$geoComps)
     )
     ggplot(Splash_21, aes(x = eval(parse(text = input$splashBreakdown)), y = metric, fill = Area, text = paste0(#reorder(input$splashBreakdown, desc(input$splashBreakdown))
       #"Breakdown: ", input$splashBreakdown, "<br>",
       "Area: ", Area, "<br>",
       #"Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(metric, 2)), "<br>",
-      input$metricBar, ": ", round(metric,0), "<br>"
+      input$splashBreakdown, ": ", round(metric,0), "<br>"
     ))) +
       geom_col(
         position = "dodge"
