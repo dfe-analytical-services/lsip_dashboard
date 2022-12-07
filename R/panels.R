@@ -305,7 +305,7 @@ panel_vacancies <- function() {
       column(
         width = 3,
         downloadButton(
-          outputId = "download_btn3a",
+          outputId = "download_btn2a",
           label = "All data   ",
           icon = shiny::icon("download"),
           class = "downloadButton"
@@ -320,7 +320,7 @@ panel_vacancies <- function() {
       column(
         width = 3,
         downloadButton(
-          outputId = "download_btn3b",
+          outputId = "download_btn2b",
           label = "Current LEP/LSIP/MCA",
           icon = shiny::icon("download"),
           class = "downloadButton"
@@ -490,7 +490,7 @@ panel_skills <- function() {
       column(
         width = 3,
         downloadButton(
-          outputId = "download_btn2a",
+          outputId = "download_btn3a",
           label = "All data   ",
           icon = shiny::icon("download"),
           class = "downloadButton"
@@ -505,7 +505,7 @@ panel_skills <- function() {
       column(
         width = 3,
         downloadButton(
-          outputId = "download_btn2b",
+          outputId = "download_btn3b",
           label = "Current LEP/LSIP/MCA",
           icon = shiny::icon("download"),
           class = "downloadButton"
@@ -532,7 +532,10 @@ panel_qualification_level <- function() {
           fluidRow(
             column(
               width = 4,
-              uiOutput("age_on2")
+              selectInput("ageGroup", "Choose age group",
+                                                  choices = C_qual2_APS1721 %>%
+                                                    distinct(Age = age_band), 
+                                                  multiple = FALSE, selected = "16-64")
             ),
             column(
               width = 4,
@@ -747,10 +750,12 @@ panel_qualification_level <- function() {
 
   
   
+# enterprise  
   panel_enterprise <- function() {
     tabPanel(
       "Enterprise",
       h1(uiOutput("page6title")),
+      p("An enterprise can be thought of as the overall business, made up of all the individual sites or workplaces."),
       
       ### KPI boxes ----
       fluidRow(
@@ -760,10 +765,10 @@ panel_qualification_level <- function() {
       fluidRow(
         uiOutput("ent_comp")),
       details(
-        label = "Source: ONS Business Demography",
+        label = "Source: ONS Business Demography 2021",
         inputId = "busdemosource",
         tags$ol(
-          tags$li("Add in")
+          tags$li("The main administrative sources for the IDBR are VAT trader and PAYE employer information passed to the ONS by HM Revenue & Customs under the Value Added Tax Act 1994 for VAT traders and the Finance Act 1969 for PAYE employers; details of incorporated businesses are also passed to ONS by Companies House.")
         )
       ),
       
@@ -771,13 +776,13 @@ panel_qualification_level <- function() {
        fluidRow(
         column(
           12,
-          h2("Add in"),
+          h2("Enterprise briths and deaths: 2016-2021"),
           plotlyOutput("birth_death_time"),
           details(
-            label = "Source: ONS Business Demography",
+            label = "Source: ONS Business Demography 2021",
                   inputId = "busdemosource",
                   tags$ol(
-                    tags$li("Add in")
+                    tags$li("The main administrative sources for the IDBR are VAT trader and PAYE employer information passed to the ONS by HM Revenue & Customs under the Value Added Tax Act 1994 for VAT traders and the Finance Act 1969 for PAYE employers; details of incorporated businesses are also passed to ONS by Companies House.")
                   )
           )
         )
@@ -805,7 +810,52 @@ panel_qualification_level <- function() {
       ),
       
       
-     
+      #enterprise
+      fluidRow(
+        column(
+          12,
+          h2(uiOutput("enterprisetitle")),
+          plotlyOutput("enterprise"))),
+      column(width = 12, br("")), # put in to push below the fixed height chart
+      column(width = 12, br("")),
+      details(
+        label = "Source: UK Business Counts",
+        inputId = "UK Business Counts",
+        tags$ol(
+          tags$li("An extract compiled from the Inter Departmental Business Register (IDBR) recording the number of Enterprises that were live at a reference date in March, broken down by employment size band, detailed industry (5 digit SIC2007) and legal status. ")
+        )
+      ),
+      
+      
+      
+      fluidRow(
+        column(
+          width = 3,
+          downloadButton(
+            outputId = "download_btn6a",
+            label = "All data   ",
+            icon = shiny::icon("download"),
+            class = "downloadButton"
+          )
+        ),
+        column(
+          width = 9,
+          "Download skills data for all geographies (LEPs, LSIP areas, MCA areas LAs, regions and England)"
+        )
+      ), # end of row
+      fluidRow(
+        column(
+          width = 3,
+          downloadButton(
+            outputId = "download_btn6b",
+            label = "Current LEP/LSIP/MCA",
+            icon = shiny::icon("download"),
+            class = "downloadButton"
+          )
+        ),
+        column(width = 9, p("Download skills data for the selected LEP/LSIP area"))
+      ), # end of row
+      column(width = 12, br(""))
       
       
     ) 

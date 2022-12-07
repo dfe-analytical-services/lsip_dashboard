@@ -118,34 +118,56 @@ server <- function(input, output, session) {
 
   output$downloadData7 <- downloadHandler(
     filename = function() {
+      "Qaulificationbyageandgendernvq.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "4a.Qualification by age and gender" = D_qual_APS1721
+      ), path = file)
+    }
+  )
+  
+  output$downloadData8 <- downloadHandler(
+    filename = function() {
       "EnterprisebyemploymentsizeIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
-        "4a.Enterprise by emp size" = D_empent_UBC1822
+        "5a.Enterprise by emp size" = D_empent_UBC1822
+      ), path = file)
+    }
+  )
+  
+  output$downloadData9 <- downloadHandler(
+    filename = function() {
+      "EntbyempsizeandindustryIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "6a.Enterprise by emp size and industry" = D_empentind_UBC1822
       ), path = file)
     }
   )
 
 
-  output$downloadData8 <- downloadHandler(
+  output$downloadData10 <- downloadHandler(
     filename = function() {
       "Keystage4destinationsIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
-        "5a.Key Stage 4 destinations" = D_KS4destin_1521
+        "7a.Key Stage 4 destinations" = D_KS4destin_1521
       ), path = file)
     }
   )
 
-  output$downloadData9 <- downloadHandler(
+  output$downloadData11 <- downloadHandler(
     filename = function() {
       "Keystage5destinationsIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
-        "6a.Key Stage 5 destinations" = D_KS5destin_1721
+        "8a.Key Stage 5 destinations" = D_KS5destin_1721
       ), path = file)
     }
   )
@@ -153,7 +175,7 @@ server <- function(input, output, session) {
 
   # create download links
   output$hidden_downloads <- renderUI(
-    lapply(1:9, function(i) {
+    lapply(1:12, function(i) {
       downloadLink(paste0("downloadData", i), "download", class = "hiddenLink")
     })
   )
@@ -165,7 +187,7 @@ server <- function(input, output, session) {
         function(i) {
           paste0('<a onClick=document.getElementById("downloadData', i, '").click() >Download</a>')
         }
-      )), escape = FALSE, options = list(dom = "t"), rownames = FALSE)
+      )), escape = FALSE, options = list(dom = "t", "pageLength" = 15), rownames = FALSE)
   })
 
   # OVERVIEW ----
@@ -283,9 +305,11 @@ server <- function(input, output, session) {
     "3a.FE achievements SSA" = D_Achieve_ILR21,
     "3b.FE achievements" = D_Achieve_ILR1621,
     "4a.FE achievements" = D_qual_APS1721,
-    "5a.Enterprise by emp size" = D_empent_UBC1822,
-    "6a.Key Stage 4 destinations" = D_KS4destin_1521,
-    "7a.Key Stage 5 destinations" = D_KS5destin_1721
+    "5a.Qualification by age and gender" = D_qual_APS1721,
+    "6a.Enterprise by emp size" = D_empent_UBC1822,
+    "7a.Enterprise by emp size and industry" = D_empentind_UBC1822,
+    "8a.Key Stage 4 destinations" = D_KS4destin_1521,
+    "9a.Key Stage 5 destinations" = D_KS5destin_1721
   )
   output$download_btn0a <- downloadHandler(
     filename = function() {
@@ -1109,26 +1133,26 @@ server <- function(input, output, session) {
 
   ### Downloads----
   # download skills indicators
-  list_of_datasets3 <- list("2.Vacancies" = C_Vacancy_ONS1722)
-  output$download_btn3a <- downloadHandler(
+  list_of_datasets2 <- list("2.Vacancies" = C_Vacancy_ONS1722)
+  output$download_btn2a <- downloadHandler(
     filename = function() {
       "VacancyIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(list_of_datasets3, path = file)
+      write_xlsx(list_of_datasets2, path = file)
     }
   )
 
   # Download current LEP indicators
-  filtered_data3 <- reactive({
+  filtered_data2 <- reactive({
     list("2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1))
   })
-  output$download_btn3b <- downloadHandler(
+  output$download_btn2b <- downloadHandler(
     filename = function() {
       "CurrentVacancyIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(filtered_data3(), path = file)
+      write_xlsx(filtered_data2(), path = file)
     }
   )
 
@@ -1294,32 +1318,32 @@ server <- function(input, output, session) {
 
   ### Downloads----
   # download skills indicators
-  list_of_datasets2 <- list(
+  list_of_datasets3 <- list(
     "3a.FE achievements SSA" = D_Achieve_ILR21,
     "3b.FE achievements" = D_Achieve_ILR1621
   )
-  output$download_btn2a <- downloadHandler(
+  output$download_btn3a <- downloadHandler(
     filename = function() {
       "SkillIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(list_of_datasets2, path = file)
+      write_xlsx(list_of_datasets3, path = file)
     }
   )
 
   # Download current LEP indicators
-  filtered_data2 <- reactive({
+  filtered_data3 <- reactive({
     list(
       "3a.FE achievements SSA" = filter(D_Achieve_ILR21, geographic_level == input$GeoType, area == input$lep1),
       "3b.FE achievements" = filter(D_Achieve_ILR1621, geographic_level == input$GeoType, area == input$lep1)
     )
   })
-  output$download_btn2b <- downloadHandler(
+  output$download_btn3b <- downloadHandler(
     filename = function() {
       "CurrentSkillIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(filtered_data2(), path = file)
+      write_xlsx(filtered_data3(), path = file)
     }
   )
 
@@ -1685,15 +1709,6 @@ server <- function(input, output, session) {
   
   
   
-  #age filter
-  output$age_on2 <- renderUI({
-    selectInput("ageGroup", "Choose age group",
-                choices = C_qual2_APS1721 %>%
-                  distinct(Age = age_band), 
-                multiple = FALSE, selected = "16-64"
-    )
-  })
-  
   
   # qualification level filter
   output$qual_on <- renderUI({
@@ -1899,7 +1914,7 @@ server <- function(input, output, session) {
   
   ### Downloads----
   # download qualifications indicators
-  list_of_datasets7 <- list(
+  list_of_datasets4 <- list(
     "4a. Qualification level" = D_qual_APS1721
   )
   output$download_btn4a <- downloadHandler(
@@ -1907,12 +1922,12 @@ server <- function(input, output, session) {
       "QualificationIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(list_of_datasets7, path = file)
+      write_xlsx(list_of_datasets4, path = file)
     }
   )
   
   # Download current LEP indicators
-  filtered_data7 <- reactive({
+  filtered_data4 <- reactive({
     list(
       "4b. Qualificationlevelbyagegen" = filter(D_qual_APS1721, geographic_level == input$GeoType, area == input$lep1,
                                                 age_band == input$ageGroup, Level == input$qualGroup, group == input$genGroup)
@@ -1923,7 +1938,7 @@ server <- function(input, output, session) {
       "QualificationIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(filtered_data7(), path = file)
+      write_xlsx(filtered_data4(), path = file)
     }
   )
   
@@ -2205,34 +2220,34 @@ output$key_stage_2021 <- renderPlotly({
   
 ### Downloads----
 # download destinations indicators
-list_of_datasets8 <- list(
+list_of_datasets5 <- list(
   "5a. KS4 destinations" = D_KS4destin_1521,
   "5b. KS5 destinations" = D_KS5destin_1721
   
 )
-output$download_btn8a <- downloadHandler(
+output$download_btn5a <- downloadHandler(
   filename = function() {
     "Destinations.xlsx"
   },
   content = function(file) {
-    write_xlsx(list_of_datasets8, path = file)
+    write_xlsx(list_of_datasets5, path = file)
   }
 )
 
 # Download current LEP indicators
-filtered_data7 <- reactive({
+filtered_data5 <- reactive({
   list(
     "5a. KS4 destinations" = filter(D_KS4destin_1521, geographic_level == input$GeoType, area == input$lep1),
     "5b. KS5 destinations" = filter(D_KS5destin_1721, geographic_level == input$GeoType, area == input$lep1,
-                                    `Cohort group` = input$cohortGroup)
+                                    `Cohort group` == input$cohortGroup)
   )
 })
-output$download_btn8b <- downloadHandler(
+output$download_btn5b <- downloadHandler(
   filename = function() {
     "Destinations.xlsx"
   },
   content = function(file) {
-    write_xlsx(filtered_data8(), path = file)
+    write_xlsx(filtered_data5(), path = file)
   }
 )
 
@@ -2303,7 +2318,7 @@ output$enta.app <- renderValueBox({
                                   filter(
                                     geographic_level == input$GeoType,
                                     area == input$lep1, year == "2022",
-                                    variable == "Small_10_to_49",
+                                    variable == "Small 10 to 49",
                                     industry == "Total"
                                   ) %>%
                                   select(rate)
@@ -2328,7 +2343,7 @@ output$enta.app.2 <- renderValueBox({
                                   filter(
                                     geographic_level == input$GeoType,
                                     area == input$lep2, year == "2022",
-                                    variable == "Small_10_to_49",
+                                    variable == "Small 10 to 49",
                                     industry == "Total"
                                   ) %>%
                                   select(rate)
@@ -2341,7 +2356,201 @@ output$enta.app.2 <- renderValueBox({
   )
 })
 
+
+# KPI 3
+output$entb.app <- renderValueBox({
+  div(
+    class = "col-sm-4",
+    div(
+      class = "small-box bg-geo1",
+      div(
+        class = "inner",
+        h3(paste0(format(100. *(C_empentind3_UBC1822 %>%
+                                  filter(
+                                    geographic_level == input$GeoType,
+                                    area == input$lep1, year == "2022",
+                                    variable == "Medium 50 to 249",
+                                    industry == "Total"
+                                  ) %>%
+                                  select(rate)
+        )[1, 1], scientific = FALSE, digits = 2)
+        ,"%"))
+        ,
+        p(paste0("medium enterprises with 50 to 249 employees in 2022 in ", input$lep1)),
+      )
+    )
+  )
+})
+
+# KPI 4
+output$entb.app.2 <- renderValueBox({
+  div(
+    class = "col-sm-4",
+    div(
+      class = "small-box bg-geo2",
+      div(
+        class = "inner",
+        h3(paste0(format(100. *(C_empentind3_UBC1822 %>%
+                                  filter(
+                                    geographic_level == input$GeoType,
+                                    area == input$lep2, year == "2022",
+                                    variable == "Medium 50 to 249",
+                                    industry == "Total"
+                                  ) %>%
+                                  select(rate)
+        )[1, 1], scientific = FALSE, digits = 2)
+        ,"%"))
+        ,
+        p(paste0("medium enterprises with 50 to 249 employees in 2022 in ", input$lep2)),
+      )
+    )
+  )
+})
+
+#births and deaths line chart
+birth_death_time <- eventReactive(c(input$lep1, input$lep2), {
+  bir_dea_demo <- C_enterprise_demo1621 %>%
+    filter(
+      geographic_level == input$GeoType,
+      (area == input$lep1 |
+         (area == if ("lep2" %in% names(input)) {
+           input$lep2
+         } else {
+           "\nNone"
+         })
+      )
+    ) %>%
+    select(area, year, variable, rate)
   
+  # add an extra column so the colours work in ggplot when sorting alphabetically
+  bir_dea_demo$area <- factor(bir_dea_demo$area,
+                       levels = c(input$lep1, input$lep2)
+  )
+  
+  ggplot(bir_dea_demo, aes(
+    x = year, y = rate, colour = area, linetype = variable, group = interaction(area, variable),
+    text = paste0(
+      "Year: ", year, "<br>",
+      "Area: ", area, "<br>",
+      "Percentage: ", scales::percent(round(rate, 2)), "<br>"
+    )
+  )) +
+    geom_line() +
+    theme_minimal() +
+    theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
+    labs(shape = "", colour = "") +
+    scale_y_continuous(labels = scales::percent) +
+    #scale_y_continuous(label = comma) +
+    xlab("Year") +
+    scale_color_manual(values = chartColors2) + scale_linetype(guide = "none")
+})
+
+
+
+output$birth_death_time <- renderPlotly({
+  ggplotly(birth_death_time(), tooltip = c("text")) %>%
+    layout(
+      legend = list(orientation = "h", x = 0, y = -0.1),
+      xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+    ) %>% # disable zooming because it's awful on mobile
+    config(displayModeBar = FALSE)
+})
+
+
+
+# enterprise title
+output$enterprisetitle <- renderUI({
+  paste0(input$industryGroup, " " , "enterprises", ": ", input$yearGroup)
+})
+
+# enterprise bar chart 
+enterprise <- eventReactive(c(input$lep1, input$lep2, input$industryGroup, input$yearGroup), {
+  ent <- C_empentind3_UBC1822 %>%
+    filter(
+      geographic_level == input$GeoType,
+      `industry` %in% input$industryGroup,
+      `year` %in% input$yearGroup,
+      (area == input$lep1 |
+         area == if ("lep2" %in% names(input)) {
+           input$lep2
+         } else {
+           "\nNone"
+         }),
+    ) %>%
+    mutate(variable = factor(variable, levels=c("Micro 0 to 9", "Small 10 to 49", "Medium 50 to 249", "Large 250+"))) %>%
+    select(area, rate, variable, industry, year)
+  
+  # add an extra column so the colours work in ggplot when sorting alphabetically
+  ent$Area <- factor(ent$area,
+                       levels = c(input$lep1, input$lep2)
+  )
+  ggplot(ent, aes(x = reorder(variable, desc(variable)), y = rate, fill = Area, text = paste0(
+    "Area: ", Area, "<br>",
+    "Industry: ", industry, "<br>",
+    "Year: " ,`year`, "<br>",
+    "Percentage: ", scales::percent(round(rate, 2)), "<br>"
+  ))) +
+    geom_col(
+      position = "dodge"
+    ) +
+    scale_y_continuous(labels = scales::percent) +
+    coord_flip() +
+    theme_minimal() +
+    labs(fill = "") +
+    theme(
+      legend.position = "bottom", axis.title.x = element_blank(),
+      axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
+      panel.grid.major = element_blank(), panel.grid.minor = element_blank()
+    ) +
+    scale_fill_manual(values = chartColors2)
+})
+
+output$enterprise <- renderPlotly({
+  ggplotly(enterprise(),
+           tooltip = c("text"), height = 474
+  ) %>%
+    layout(
+      legend = list(orientation = "h", x = 0, y = -0.1),
+      xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+    ) %>% # disable zooming because it's awful on mobile
+    config(displayModeBar = FALSE)
+})
+
+### Downloads----
+# download destinations indicators
+list_of_datasets6 <- list(
+  "6a. Enterprise demography" = D_enterprise_demo1621,
+  "6b. Enterprise by emp size and industry" = D_empentind_UBC1822 
+  
+)
+output$download_btn6a <- downloadHandler(
+  filename = function() {
+    "Enterprise.xlsx"
+  },
+  content = function(file) {
+    write_xlsx(list_of_datasets6, path = file)
+  }
+)
+
+# Download current LEP indicators
+filtered_data6 <- reactive({
+  list(
+    "6a. Enterprise demography" = filter(D_enterprise_demo1621, geographic_level == input$GeoType, area == input$lep1),
+    "6b. Enterprise by emp size and industry" = filter(D_EmpInd_APS1822, geographic_level == input$GeoType, area == input$lep1,
+                                                       year == input$yearGroup, industry == input$industryGroup)
+    
+  )
+})
+output$download_btn6b <- downloadHandler(
+  filename = function() {
+    "Enterprise.xlsx"
+  },
+  content = function(file) {
+    write_xlsx(filtered_data6(), path = file)
+  }
+)  
+
+
   # Stop app ---------------------------------------------------------------------------------
 
   session$onSessionEnded(function() {

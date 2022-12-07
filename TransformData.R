@@ -689,11 +689,18 @@ C_empentind3_UBC1822 <-  F_empentind_UBC1822 %>%
   mutate(rate = value/Total) %>%
   select(-Total, -value) %>%
   rbind(C_empentind2_UBC1822) %>%
-  mutate(industry = trimws(industry, which = c("left")))
+  mutate(industry = trimws(industry, which = c("left"))) %>%
+  mutate(variable = case_when(
+    variable == "Micro_0_to_9" ~ "Micro 0 to 9",
+    variable == "Small_10_to_49" ~ "Small 10 to 49",
+    variable == "Medium_sized_50_to_249" ~ "Medium 50 to 249",
+    variable == "Large_250" ~ "Large 250+",
+    TRUE ~ variable
+  ))
 
 
 # write data to folder
-write.csv(C_empentind2_UBC1822, file = "Data\\AppData\\C_empentind3_UBC1822.csv", row.names = FALSE)
+write.csv(C_empentind3_UBC1822, file = "Data\\AppData\\C_empentind3_UBC1822.csv", row.names = FALSE)
 
 
 # Downloadable version
