@@ -2456,6 +2456,20 @@ server <- function(input, output, session) {
   })
 
   # Breakdown chart
+  #breakdown filter
+  output$breakdownFilter <- renderUI({
+    if (input$splashMetric == "empRate") {
+  radioGroupButtons(
+    inputId = "splashBreakdown",
+    choices = c("Provision"="typeNeat", "Level"="level_or_type", "Age"="age_group")
+  )}
+    else
+    {  radioGroupButtons(
+      inputId = "splashBreakdown",
+      choices = c("Occupation","Industry")
+    )}
+  })
+  
   #create breakdown header
   output$titleBreakdown <- renderUI({
     paste0("How does ",if(input$splashMetric=="empRate"){"employment rate"}else{"FE achievements per 100,000"}," vary by ",
@@ -2477,13 +2491,39 @@ server <- function(input, output, session) {
       ){"higher"}else{"lower"}
     metricUsed<-if(input$splashMetric=="empRate"){" employment rate "}else{" FE achievements per 100,000 "}
     subgroup<-"19-25 yr olds"
-paste0(areaClicked, " has a ",compareNational,metricUsed,"in the ",subgroup,"subgroup than the national average.")
+paste0(areaClicked, " has a ",compareNational,metricUsed,"in Elementary trades than the national average.")
   })
   
   Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$levelBar, input$sexBar, input$metricBar,input$splashBreakdown,input$mapLA_shape_click), {
     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
     eventLA <- input$mapLA_shape_click
-      if(input$splashMetric=="empRate"){}
+      if(input$splashMetric=="empRate"){
+        Splash_21 <- C_EmpOcc_APS1721 %>%
+          filter(
+                 (geographic_level == "COUNTRY"&area == "England") |
+                   ((geographic_level == input$splashGeoType&
+                       
+                       (area == C_Geog$areaName[C_Geog$areaCode == event$id] |
+                          area %in% if ("geoComps" %in% names(input)) {
+                            input$geoComps
+                          } else {
+                            "\nNone"
+                          }))|
+                      if(is.null(eventLA)==TRUE) {area=="\nNone"}else { (geographic_level == "Local authority district"&area == C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id])}
+                   ))%>%
+          select(-year, -geographic_level) %>%
+          rename_with(str_to_sentence) %>%
+          rename(area=Area)%>%
+          pivot_longer(
+            !c(area),
+            names_to = "Occupation", 
+            values_to = "count", 
+            values_drop_na = TRUE
+          )%>%
+          group_by(area,Occupation)%>%
+          summarise(sum = sum(count)) %>%
+          mutate(metric = round(sum / sum(sum), 3))     
+      }
     else{Splash_21 <- C_Achieve_ILR1621 %>%
       mutate(levelTotal=case_when(substring(level_or_type,nchar(level_or_type)-5+1)=="Total"~"Total",TRUE~"Not"))%>%
       filter(time_period==202021,
