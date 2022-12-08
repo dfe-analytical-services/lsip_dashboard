@@ -545,9 +545,11 @@ padding-top:15px
         column(
           6,
           h3(uiOutput("titleBreakdown")),
+          #uiOutput("breakdownFilter"),
           radioGroupButtons(
             inputId = "splashBreakdown",
-            choices = c("Provision"="typeNeat", "Level"="level_or_type", "Age"="age_group")
+            choices = c("Industry", "Occupation")
+            #Provision"="typeNeat", "Level"="level_or_type", "Age"="age_group")
           ),
           p(uiOutput("commentBreakdown")),
           plotlyOutput("Splash_pc")
@@ -555,7 +557,7 @@ padding-top:15px
         column(
           6,
           h3("What is the variation with the LEP?"),
-          p("Employment rate is highest in Sandwell and lowest in Dudley"),
+          p("Employment rate is highest in Leeds and lowest in Kirklees"),
           leafletOutput("mapLA")
         )
       )
