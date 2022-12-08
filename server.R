@@ -1766,7 +1766,7 @@ server <- function(input, output, session) {
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0("NVQ3 and above qualifications for the 16-64 age group in 2021 in ", input$lep1)),
+          p(paste0("NVQ3 qualifications for the 16-64 age group in 2021 in ", input$lep1)),
         )
       )
     )
@@ -1791,7 +1791,7 @@ server <- function(input, output, session) {
                                       select(rate)
             )[1, 1], scientific = FALSE, digits = 2)
             ,"%")),
-            p(paste0("NVQ3 and above qualifications for the 16-64 age group in 2021 in ", input$lep2)),
+            p(paste0("NVQ3 qualifications for the 16-64 age group in 2021 in ", input$lep2)),
           )
         )
       )
