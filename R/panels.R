@@ -524,32 +524,6 @@ panel_qualification_level <- function() {
     h1(uiOutput("page4title")),
     p("Highest level of qualification by working age population and gender."),
     
-    fluidRow(
-      column(
-        12,
-        div(
-          class = "filterRow",
-          fluidRow(
-            column(
-              width = 4,
-              selectInput("ageGroup", "Choose age group",
-                                                  choices = C_qual2_APS1721 %>%
-                                                    distinct(Age = age_band), 
-                                                  multiple = FALSE, selected = "16-64")
-            ),
-            column(
-              width = 4,
-              uiOutput("qual_on")
-            ),
-            column(
-              width = 4,
-              uiOutput("gen_off")
-            )
-          )
-        )
-      )
-    ),
-    
     br(),
     
     ### KPI boxes ----
@@ -564,11 +538,38 @@ panel_qualification_level <- function() {
         inputId = "QualSource",
         tags$ol(
           tags$li("Figures are for 16-64 year olds."),
-          tags$li("Years represent Jul-Jun period. So 2018 is the Jul 2017 – June 2018 period.")
+          tags$li("Years represent Jul-Jun period. So 2018 is the Jul 2017 – June 2018 period."),
+          tags$li("NVQ3 and below qualifications and NVQ4 or above qualifications will not add up to 100% due to other qualifications."),
+          tags$li("what is nvq3 and below")
         )
       ),
     
     
+    fluidRow(
+      column(
+        12,
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              width = 4,
+              selectInput("ageGroupQual", "Choose age group",
+                          choices = C_qual2_APS1721 %>%
+                            distinct(Age = age_band), 
+                          multiple = FALSE, selected = "16-64")
+            ),
+            column(
+              width = 4,
+              uiOutput("qual_on")
+            ),
+            column(
+              width = 4,
+              uiOutput("gen_off")
+            )
+          )
+        )
+      )
+    ),
     
     fluidRow(
       column(
@@ -580,7 +581,9 @@ panel_qualification_level <- function() {
           inputId = "QualSource",
           tags$ol(
             tags$li("Figures are for 16-64 year olds."),
-            tags$li("Years represent Jul-Jun period. So 2018 is the Jul 2017 – June 2018 period.")
+            tags$li("Years represent Jul-Jun period. So 2018 is the Jul 2017 – June 2018 period."),
+            tags$li("NVQ3 and below qualifications and NVQ4 or above qualifications will not add up to 100% due to other qualifications."),
+            tags$li("what is nvq3 and below")
           )
         )
       )
@@ -626,7 +629,7 @@ panel_qualification_level <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn4b",
-          label = "Current LEP/LSIP",
+          label = "Current LEP/LSIP/MCA",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
@@ -643,7 +646,26 @@ panel_qualification_level <- function() {
     tabPanel(
       "Destinations",
       h1(uiOutput("page5title")),
-      p("Destination measures show the percentage of students going to or remaining in an education, apprenticeship or employment destination in the academic year after completing 14 to 16 studies (finishing year 11, usually aged 16) and 16 to 18 studies (finishing year 13, usually aged 18). "),
+      p("Destination measures show the percentage of students going to or remaining in an education, apprenticeship or employment destination in the academic year after completing KS4 studies (usually aged between 14 to 16) and KS5 studies (usually aged 18)."),
+      
+      br(),
+      
+      ### KPI boxes ----
+      fluidRow(
+        valueBoxOutput("destup.eduempks4"),
+        valueBoxOutput("destup.eduempks5"),
+        valueBoxOutput("destup.eduempks5eng")),
+      
+      fluidRow(
+        uiOutput("dest_comp")),
+      
+      details(
+        label = "Source: National Pupil Database",
+        inputId = "destSource",
+        tags$ol(
+          tags$li("Data from the national pupil database (NPD) were used to calculate education destinations. The NPD is a longitudinal database linking pupil/student characteristics (for example age, gender and ethnicity) to school and college learning aims and attainment information for children in schools in England.")
+        )
+      ),
       
       fluidRow(
         column(
@@ -659,27 +681,8 @@ panel_qualification_level <- function() {
                 width = 4,
                 uiOutput("cohort_group_on")
               )
-              )
             )
           )
-      ),
-      
-      br(),
-      
-      ### KPI boxes ----
-      fluidRow(
-        valueBoxOutput("destup.edu"),
-        valueBoxOutput("destup.emp"),
-        valueBoxOutput("destup.app")),
-      
-      fluidRow(
-        uiOutput("dest_comp")),
-      
-      details(
-        label = "Source: National Pupil Database",
-        inputId = "destSource",
-        tags$ol(
-          tags$li("Add in")
         )
       ),
       
@@ -694,10 +697,10 @@ panel_qualification_level <- function() {
       column(width = 12, br("")), # put in to push below the fixed height chart
       column(width = 12, br("")),
       details(
-        label = "Source: Nationl Pupil Database",
+        label = "Source: National Pupil Database",
         inputId = "Key stage source",
         tags$ol(
-          tags$li("Add in")
+          tags$li("Data from the national pupil database (NPD) were used to calculate education destinations. The NPD is a longitudinal database linking pupil/student characteristics (for example age, gender and ethnicity) to school and college learning aims and attainment information for children in schools in England.")
         )
       ),
       
@@ -759,8 +762,9 @@ panel_qualification_level <- function() {
       
       ### KPI boxes ----
       fluidRow(
-        valueBoxOutput("enta.app"),
-        valueBoxOutput("entb.app")),
+        valueBoxOutput("ent.sma"),
+        valueBoxOutput("ent.med"),
+        valueBoxOutput("ent.smalleng")),
       
       fluidRow(
         uiOutput("ent_comp")),
@@ -776,7 +780,7 @@ panel_qualification_level <- function() {
        fluidRow(
         column(
           12,
-          h2("Enterprise briths and deaths: 2016-2021"),
+          h2("Enterprise births and deaths: 2016-2021"),
           plotlyOutput("birth_death_time"),
           details(
             label = "Source: ONS Business Demography 2021",
@@ -802,7 +806,7 @@ panel_qualification_level <- function() {
               ),
               column(
                 width = 4,
-                uiOutput("year_on")
+                uiOutput("ent_on")
               )
             )
           )
@@ -822,7 +826,8 @@ panel_qualification_level <- function() {
         label = "Source: UK Business Counts",
         inputId = "UK Business Counts",
         tags$ol(
-          tags$li("An extract compiled from the Inter Departmental Business Register (IDBR) recording the number of Enterprises that were live at a reference date in March, broken down by employment size band, detailed industry (5 digit SIC2007) and legal status. ")
+          tags$li("An extract compiled from the Inter Departmental Business Register (IDBR) recording the number of Enterprises that were live at a reference date in March, broken down by employment size band, detailed industry (5 digit SIC2007) and legal status. "),
+          tags$li("Overall total may not equal the sum of all industries due to rounding and suppression.")
         )
       ),
       

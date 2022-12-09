@@ -144,30 +144,41 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list(
-        "6a.Enterprise by emp size and industry" = D_empentind_UBC1822
+        "6a.Ent by emp size and ind" = D_empentind_UBC1822
+      ), path = file)
+    }
+  )
+  
+  output$downloadData10 <- downloadHandler(
+    filename = function() {
+      "Enterprisedemography.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "7a.Enterprise demography" = D_enterprise_demo1621
       ), path = file)
     }
   )
 
 
-  output$downloadData10 <- downloadHandler(
+  output$downloadData11 <- downloadHandler(
     filename = function() {
       "Keystage4destinationsIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
-        "7a.Key Stage 4 destinations" = D_KS4destin_1521
+        "8a.Key Stage 4 destinations" = D_KS4destin_1521
       ), path = file)
     }
   )
 
-  output$downloadData11 <- downloadHandler(
+  output$downloadData12 <- downloadHandler(
     filename = function() {
       "Keystage5destinationsIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
-        "8a.Key Stage 5 destinations" = D_KS5destin_1721
+        "9a.Key Stage 5 destinations" = D_KS5destin_1721
       ), path = file)
     }
   )
@@ -308,8 +319,9 @@ server <- function(input, output, session) {
     "5a.Qualification by age and gender" = D_qual_APS1721,
     "6a.Enterprise by emp size" = D_empent_UBC1822,
     "7a.Enterprise by emp size and industry" = D_empentind_UBC1822,
-    "8a.Key Stage 4 destinations" = D_KS4destin_1521,
-    "9a.Key Stage 5 destinations" = D_KS5destin_1721
+    "8a.Enterprise demography" = D_enterprise_demo1621,
+    "9a.Key Stage 4 destinations" = D_KS4destin_1521,
+    "10a.Key Stage 5 destinations" = D_KS5destin_1721
   )
   output$download_btn0a <- downloadHandler(
     filename = function() {
@@ -871,9 +883,24 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data1 <- reactive({
     list(
-      "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
-      "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, area == input$lep1),
-      "1c.Emp industry" = filter(D_EmpInd_APS1822, geographic_level == input$GeoType, area == input$lep1)
+      "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, (area == input$lep1 |
+                                                                                              area == if ("lep2" %in% names(input)) {
+                                                                                                input$lep2
+                                                                                              } else {
+                                                                                                "\nNone"
+                                                                                              })),
+      "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, (area == input$lep1 |
+                                                                                      area == if ("lep2" %in% names(input)) {
+                                                                                        input$lep2
+                                                                                      } else {
+                                                                                        "\nNone"
+                                                                                      })),
+      "1c.Emp industry" = filter(D_EmpInd_APS1822, geographic_level == input$GeoType, (area == input$lep1 |
+                                                                                         area == if ("lep2" %in% names(input)) {
+                                                                                           input$lep2
+                                                                                         } else {
+                                                                                           "\nNone"
+                                                                                         }))
     )
   })
   output$download_btn1b <- downloadHandler(
@@ -1145,7 +1172,12 @@ server <- function(input, output, session) {
 
   # Download current LEP indicators
   filtered_data2 <- reactive({
-    list("2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1))
+    list("2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, (area == input$lep1 |
+                                                                                         area == if ("lep2" %in% names(input)) {
+                                                                                           input$lep2
+                                                                                         } else {
+                                                                                           "\nNone"
+                                                                                         })))
   })
   output$download_btn2b <- downloadHandler(
     filename = function() {
@@ -1334,8 +1366,18 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data3 <- reactive({
     list(
-      "3a.FE achievements SSA" = filter(D_Achieve_ILR21, geographic_level == input$GeoType, area == input$lep1),
-      "3b.FE achievements" = filter(D_Achieve_ILR1621, geographic_level == input$GeoType, area == input$lep1)
+      "3a.FE achievements SSA" = filter(D_Achieve_ILR21, geographic_level == input$GeoType, (area == input$lep1 |
+                                                                                               area == if ("lep2" %in% names(input)) {
+                                                                                                 input$lep2
+                                                                                               } else {
+                                                                                                 "\nNone"
+                                                                                               })),
+      "3b.FE achievements" = filter(D_Achieve_ILR1621, geographic_level == input$GeoType, (area == input$lep1 |
+                                                                                             area == if ("lep2" %in% names(input)) {
+                                                                                               input$lep2
+                                                                                             } else {
+                                                                                               "\nNone"
+                                                                                             }))
     )
   })
   output$download_btn3b <- downloadHandler(
@@ -1724,10 +1766,10 @@ server <- function(input, output, session) {
 
   #turn off gender filter
   output$gen_off <- renderUI({
-    if (input$datatabset == "Qualification level" & input$ageGroup == "16-64") {
+    if (input$datatabset == "Qualification level" & input$ageGroupQual == "16-64") {
       selectizeInput("genGroup", "Choose gender group",
-                     choices = if ("ageGroup" %in% names(input)) {
-                       if ("16-64" %in% input$ageGroup) {
+                     choices = if ("ageGroupQual" %in% names(input)) {
+                       if ("16-64" %in% input$ageGroupQual) {
                          c("Total", "Female", "Male")
                        } else {
                          c("Total")
@@ -1754,11 +1796,11 @@ server <- function(input, output, session) {
         class = "small-box bg-geo1",
         div(
           class = "inner",
-          h3(paste0(format(100. *(C_qual2_APS1721 %>%
+          h3(paste0(format(100. *(C_qualevel3_APS1721 %>%
                                     filter(
                                       geographic_level == input$GeoType,
                                       area == input$lep1, year == "2021",
-                                      Level == "NVQ3",
+                                      Level == "Level 3 and below",
                                       age_band == "16-64",
                                       group == "Total"
                                     ) %>%
@@ -1766,7 +1808,7 @@ server <- function(input, output, session) {
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0("NVQ3 qualifications for the 16-64 age group in 2021 in ", input$lep1)),
+          p(paste0("NVQ3 and below qualifications for the 16-64 age group in 2021 in ", input$lep1)),
         )
       )
     )
@@ -1780,18 +1822,18 @@ server <- function(input, output, session) {
           class = "small-box bg-geo2",
           div(
             class = "inner",
-            h3(paste0(format(100. *(C_qual2_APS1721 %>%
+            h3(paste0(format(100. *(C_qualevel3_APS1721 %>%
                                       filter(
                                         geographic_level == input$GeoType,
                                         area == input$lep2, year == "2021",
-                                        Level == "NVQ3",
+                                        Level == "Level 3 and below",
                                         age_band == "16-64",
                                         group == "Total"
                                       ) %>%
                                       select(rate)
             )[1, 1], scientific = FALSE, digits = 2)
             ,"%")),
-            p(paste0("NVQ3 qualifications for the 16-64 age group in 2021 in ", input$lep2)),
+            p(paste0("NVQ3 and below qualifications for the 16-64 age group in 2021 in ", input$lep2)),
           )
         )
       )
@@ -1818,7 +1860,7 @@ server <- function(input, output, session) {
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0("NVQ4 and above qualifications for the 16-64 age group in 2021 in ", input$lep1)),
+          p(paste0("NVQ4 or above qualifications for the 16-64 age group in 2021 in ", input$lep1)),
         )
       )
     )
@@ -1844,7 +1886,7 @@ server <- function(input, output, session) {
                                     select(rate)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%")),
-          p(paste0("NVQ4 and above qualifications for the 16-64 age group in 2021 in ", input$lep2)),
+          p(paste0("NVQ4 or above qualifications for the 16-64 age group in 2021 in ", input$lep2)),
         )
       )
     )
@@ -1858,7 +1900,8 @@ server <- function(input, output, session) {
   
   
   # qualification line chart
-  qual_time <- eventReactive(c(input$lep1, input$lep2, input$qualGroup, input$ageGroup, input$genGroup), {
+  qual_time <- eventReactive(c(input$lep1, input$lep2, input$qualGroup, input$ageGroupQual, input$genGroup), {
+    
     qtime <- C_qual2_APS1721 %>%
       filter(
         geographic_level == input$GeoType,
@@ -1870,7 +1913,7 @@ server <- function(input, output, session) {
            })
         ),
         Level %in% input$qualGroup ,
-        age_band %in% input$ageGroup,
+        age_band %in% input$ageGroupQual,
         group %in% input$genGroup
       ) %>%
       select(area, year, rate)
@@ -1887,14 +1930,15 @@ server <- function(input, output, session) {
         "Area: ", area, "<br>",
         "Percentage: ", scales::percent(round(rate, 2)), "<br>",
         "Qualification: ", input$qualGroup, "<br>",
-        "Age band: ", input$ageGroup, "<br>"
+        "Age band: ", input$ageGroupQual, "<br>"
       )
     )) +
       geom_line() +
       theme_minimal() +
       theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
       labs(shape = "", colour = "") +
-      scale_y_continuous(labels = scales::percent) +
+      scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                         limits = c(0, 0.85)) +
       #scale_y_continuous(label = comma) +
       xlab("Year") +
       scale_color_manual(values = chartColors2)
@@ -1929,13 +1973,18 @@ server <- function(input, output, session) {
   # Download current LEP indicators
   filtered_data4 <- reactive({
     list(
-      "4b. Qualificationlevelbyagegen" = filter(D_qual_APS1721, geographic_level == input$GeoType, area == input$lep1,
-                                                age_band == input$ageGroup, Level == input$qualGroup, group == input$genGroup)
+      "4b. Qualificationlevelbyagegen" = filter(D_qual_APS1721, geographic_level == input$GeoType, (area == input$lep1 |
+                                                                                                     area == if ("lep2" %in% names(input)) {
+                                                                                                       input$lep2
+                                                                                                     } else {
+                                                                                                       "\nNone"
+                                                                                                     }),
+                                                age_band == input$ageGroupQual, Level == input$qualGroup, group == input$genGroup)
     )
   })
   output$download_btn4b <- downloadHandler(
     filename = function() {
-      "QualificationIndicators.xlsx"
+      "currentQualificationIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(filtered_data4(), path = file)
@@ -1955,9 +2004,8 @@ server <- function(input, output, session) {
         )
       } else {
         tagList(
-          valueBoxOutput("destup.edu.2"),
-          valueBoxOutput("destup.emp.2"),
-          valueBoxOutput("destup.app.2")
+          valueBoxOutput("destup.eduempks4.2"),
+          valueBoxOutput("destup.eduempks5.2")
           
         )
       }
@@ -1991,10 +2039,10 @@ server <- function(input, output, session) {
   
   #cohort group filter
   output$cohort_group_on <- renderUI({
-      selectizeInput("cohortGroup", "Choose cohort group",
+      selectizeInput("cohortGroup", "Choose qualification level",
                      choices = if ("keystageGroup" %in% names(input)) {
                        if ("KS5" %in% input$keystageGroup) {
-                         c("Level 2", "Level 3", "All other qualifications", "Total")
+                         c("Total", "Level 2", "Level 3", "All other qualifications")
                        } else {
                          c("Total")
                        }
@@ -2006,164 +2054,141 @@ server <- function(input, output, session) {
   
 
   # KPI 1
-  output$destup.edu <- renderValueBox({
+  output$destup.eduempks4 <- renderValueBox({
     div(
       class = "col-sm-4",
       div(
         class = "small-box bg-geo1",
         div(
           class = "inner",
-          h3(paste0(format(100. *(C_KS4_KS5_2021 %>%
+          h3(paste0(format(100. *(C_KS4_KS5eduemp_2021 %>%
                                     filter(
                                       geographic_level == input$GeoType,
                                       area == input$lep1, time_period == "202021",
-                                      variable == "Sustained Education",
-                                      `Cohort Group` %in% input$cohortGroup,
-                                      `Key Stage` %in% input$keystageGroup
+                                      variable == "Sustained Education and Employment",
+                                      `Cohort Group` == "Total",
+                                      `Key Stage` == "KS4"
                                     ) %>%
-                                    select(value)
+                                    select(rate)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0(input$cohortGroup, " ", input$keystageGroup, " cohort group had a Sustained Education destinations in 202021 in ", input$lep1)),
+          p(paste0("of the total KS4 cohort group had a Sustained Education destinations in 202021 in ", input$lep1)),
         )
       )
     )
   })
   
   # KPI 2
-  output$destup.edu.2 <- renderValueBox({
+  output$destup.eduempks4.2 <- renderValueBox({
     div(
       class = "col-sm-4",
       div(
         class = "small-box bg-geo2",
         div(
           class = "inner",
-          h3(paste0(format(100. *(C_KS4_KS5_2021 %>%
+          h3(paste0(format(100. *(C_KS4_KS5eduemp_2021 %>%
                                     filter(
                                       geographic_level == input$GeoType,
                                       area == input$lep2, time_period == "202021",
-                                      variable == "Sustained Education",
-                                      `Cohort Group` %in% input$cohortGroup,
-                                      `Key Stage` %in% input$keystageGroup
+                                      variable == "Sustained Education and Employment",
+                                      `Cohort Group` == "Total",
+                                      `Key Stage` == "KS4"
                                     ) %>%
-                                    select(value)
+                                    select(rate)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0(input$cohortGroup, " ", input$keystageGroup, " cohort group had a Sustained Education destinations in 202021 in ", input$lep2)),
+          p(paste0("of the total KS4 cohort group had a Sustained Education destinations in 202021 in ", input$lep2)),
         )
       )
     )
   })
   
   # KPI 3
-  output$destup.emp <- renderValueBox({
+  output$destup.eduempks5 <- renderValueBox({
     div(
       class = "col-sm-4",
       div(
         class = "small-box bg-geo1",
         div(
           class = "inner",
-          h3(paste0(format(100. *(C_KS4_KS5_2021 %>%
+          h3(paste0(format(100. *(C_KS4_KS5eduemp_2021 %>%
                                     filter(
                                       geographic_level == input$GeoType,
                                       area == input$lep1, time_period == "202021",
-                                      variable == "Sustained Employment",
-                                      `Cohort Group` %in% input$cohortGroup,
-                                      `Key Stage` %in% input$keystageGroup
+                                      variable == "Sustained Education and Employment",
+                                      `Cohort Group` == "Total",
+                                      `Key Stage` == "KS5"
+                                     
                                     ) %>%
-                                    select(value)
+                                    select(rate)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0(input$cohortGroup, " ", input$keystageGroup, " cohort group had a Sustained Employment destinations in 202021 in ", input$lep1)),
+          p(paste0("of the total KS5 cohort group had a Sustained Employment destinations in 202021 in ", input$lep1)),
         )
       )
     )
   })
   
   # KPI 4
-  output$destup.emp.2 <- renderValueBox({
+  output$destup.eduempks5.2 <- renderValueBox({
     div(
       class = "col-sm-4",
       div(
         class = "small-box bg-geo2",
         div(
           class = "inner",
-          h3(paste0(format(100. *(C_KS4_KS5_2021 %>%
+          h3(paste0(format(100. *(C_KS4_KS5eduemp_2021 %>%
                                     filter(
                                       geographic_level == input$GeoType,
                                       area == input$lep2, time_period == "202021",
-                                      variable == "Sustained Employment",
-                                      `Cohort Group` %in% input$cohortGroup,
-                                      `Key Stage` %in% input$keystageGroup
+                                      variable == "Sustained Education and Employment",
+                                      `Cohort Group` == "Total",
+                                      `Key Stage` == "KS5"
                                     ) %>%
-                                    select(value)
+                                    select(rate)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0(input$cohortGroup, " ", input$keystageGroup, " cohort group had a Sustained Employment destinations in 202021 in ", input$lep2)),
+          p(paste0("of the total KS5 cohort group had a Sustained Employment destinations in 202021 in ", input$lep2)),
         )
       )
     )
   })
   
   # KPI 5
-  output$destup.app <- renderValueBox({
+  output$destup.eduempks5eng <- renderValueBox({
     div(
       class = "col-sm-4",
       div(
-        class = "small-box bg-geo1",
+        class = "small-box bg-geo3",
         div(
           class = "inner",
-          h3(paste0(format(100. *(C_KS4_KS5_2021 %>%
+          h3(paste0(format(100. *(C_KS4_KS5eduemp_2021 %>%
                                     filter(
-                                      geographic_level == input$GeoType,
-                                      area == input$lep1, time_period == "202021",
-                                      variable == "Sustained Apprenticeships",
-                                      `Cohort Group` %in% input$cohortGroup,
-                                      `Key Stage` %in% input$keystageGroup
+                                      geographic_level == "COUNTRY",
+                                      area == "England", time_period == "202021",
+                                      variable == "Sustained Education and Employment",
+                                      `Cohort Group` == "Total",
+                                      `Key Stage` == "KS5"
                                     ) %>%
-                                    select(value)
+                                    select(rate)
           )[1, 1], scientific = FALSE, digits = 2)
           ,"%"))
           ,
-          p(paste0(input$cohortGroup, " ", input$keystageGroup, " cohort group had a Sustained Apprenticeships destination in 202021 in ", input$lep1)),
+          p(paste0("of the total KS5 cohort group had a Sustained Apprenticeships destination in 202021 in England")),
         )
       )
     )
   })
   
-  # KPI 6
-  output$destup.app.2 <- renderValueBox({
-    div(
-      class = "col-sm-4",
-      div(
-        class = "small-box bg-geo2",
-        div(
-          class = "inner",
-          h3(paste0(format(100. *(C_KS4_KS5_2021 %>%
-                                    filter(
-                                      geographic_level == input$GeoType,
-                                      area == input$lep2, time_period == "202021",
-                                      variable == "Sustained Apprenticeships",
-                                      `Cohort Group` %in% input$cohortGroup,
-                                      `Key Stage` %in% input$keystageGroup
-                                    ) %>%
-                                    select(value)
-          )[1, 1], scientific = FALSE, digits = 2)
-          ,"%"))
-          ,
-          p(paste0(input$cohortGroup, " ", input$keystageGroup, " cohort group Sustained Apprenticeships destinations in 202021 in ", input$lep2)),
-        )
-      )
-    )
-  })
+
   
   # key stage title
   output$keystagetitle <- renderUI({
-    paste0(input$keystageGroup, " " , input$cohortGroup, ": 2021/22")
+    paste0(input$keystageGroup, " " , input$cohortGroup, ": 2020/21")
   })
   
   #key stage bar chart 
@@ -2180,17 +2205,17 @@ server <- function(input, output, session) {
            "\nNone"
          }),
     ) %>%
-    select(area, value, variable, time_period, `Cohort Group`, `Key Stage`)
+    select(area, rate, variable, time_period, `Cohort Group`, `Key Stage`)
   
   # add an extra column so the colours work in ggplot when sorting alphabetically
   ks_21$Area <- factor(ks_21$area,
                         levels = c(input$lep1, input$lep2)
   )
-  ggplot(ks_21, aes(x = reorder(variable, desc(variable)), y = value, fill = Area, text = paste0(
+  ggplot(ks_21, aes(x = reorder(variable, desc(variable)), y = rate, fill = Area, text = paste0(
     "Area: ", Area, "<br>",
     "Key stage group: ", `Key Stage`, "<br>",
     "Cohort group: " ,`Cohort Group`, "<br>",
-    "Percentage: ", scales::percent(round(value, 2)), "<br>"
+    "Percentage: ", scales::percent(round(rate, 2)), "<br>"
   ))) +
     geom_col(
       position = "dodge"
@@ -2237,14 +2262,24 @@ output$download_btn5a <- downloadHandler(
 # Download current LEP indicators
 filtered_data5 <- reactive({
   list(
-    "5a. KS4 destinations" = filter(D_KS4destin_1521, geographic_level == input$GeoType, area == input$lep1),
-    "5b. KS5 destinations" = filter(D_KS5destin_1721, geographic_level == input$GeoType, area == input$lep1,
-                                    `Cohort group` == input$cohortGroup)
+    "5a. KS4 destinations" = filter(D_KS4destin_1521, geographic_level == input$GeoType, (area == input$lep1 |
+                                                                                            area == if ("lep2" %in% names(input)) {
+                                                                                              input$lep2
+                                                                                            } else {
+                                                                                              "\nNone"
+                                                                                            })),
+    "5b. KS5 destinations" = filter(D_KS5destin_1721, geographic_level == input$GeoType, (area == input$lep1 |
+                                                                                            area == if ("lep2" %in% names(input)) {
+                                                                                              input$lep2
+                                                                                            } else {
+                                                                                              "\nNone"
+                                                                                            }),
+                                    `Cohort Group` == input$cohortGroup)
   )
 })
 output$download_btn5b <- downloadHandler(
   filename = function() {
-    "Destinations.xlsx"
+    "currentDestinations.xlsx"
   },
   content = function(file) {
     write_xlsx(filtered_data5(), path = file)
@@ -2264,8 +2299,8 @@ output$ent_comp <- renderUI({
       )
     } else {
       tagList(
-        valueBoxOutput("enta.app.2"),
-        valueBoxOutput("entb.app.2")
+        valueBoxOutput("ent.sma.2"),
+        valueBoxOutput("ent.med.2")
       )
     }
   } else {
@@ -2297,9 +2332,9 @@ output$industry_on <- renderUI({
 })
 
 # year filter
-output$year_on <- renderUI({
-  selectizeInput("yearGroup", "Choose year",
-                 choices = C_empentind3_UBC1822 %>% distinct(Year = year),
+output$ent_on <- renderUI({
+  selectizeInput("entGroup", "Choose enterprise size",
+                 choices = C_empentind3_UBC1822 %>% distinct(Enterprise_size = variable),
                  multiple = FALSE, selected = "2022"
   )
   
@@ -2307,7 +2342,7 @@ output$year_on <- renderUI({
 
 
 # KPI 1
-output$enta.app <- renderValueBox({
+output$ent.sma <- renderValueBox({
   div(
     class = "col-sm-4",
     div(
@@ -2325,14 +2360,14 @@ output$enta.app <- renderValueBox({
         )[1, 1], scientific = FALSE, digits = 2)
         ,"%"))
         ,
-        p(paste0("small enterprises with 10 to 49 employees in 2022 in ", input$lep1)),
+        p(paste0("of enterprises in ", input$lep1, " in 2022 are small (with 10 to 49 employees)")),
       )
     )
   )
 })
 
 # KPI 2
-output$enta.app.2 <- renderValueBox({
+output$ent.sma.2 <- renderValueBox({
   div(
     class = "col-sm-4",
     div(
@@ -2350,7 +2385,7 @@ output$enta.app.2 <- renderValueBox({
         )[1, 1], scientific = FALSE, digits = 2)
         ,"%"))
         ,
-        p(paste0("small enterprises with 10 to 49 employees in 2022 in ", input$lep2)),
+        p(paste0("of enterprises in ", input$lep2, " in 2022 are small (with 10 to 49 employees)")),
       )
     )
   )
@@ -2358,7 +2393,7 @@ output$enta.app.2 <- renderValueBox({
 
 
 # KPI 3
-output$entb.app <- renderValueBox({
+output$ent.med <- renderValueBox({
   div(
     class = "col-sm-4",
     div(
@@ -2376,14 +2411,14 @@ output$entb.app <- renderValueBox({
         )[1, 1], scientific = FALSE, digits = 2)
         ,"%"))
         ,
-        p(paste0("medium enterprises with 50 to 249 employees in 2022 in ", input$lep1)),
+        p(paste0("of enterprises in ", input$lep1, " in 2022 are medium (with 50 to 249 employees)")),
       )
     )
   )
 })
 
 # KPI 4
-output$entb.app.2 <- renderValueBox({
+output$ent.med.2 <- renderValueBox({
   div(
     class = "col-sm-4",
     div(
@@ -2401,7 +2436,33 @@ output$entb.app.2 <- renderValueBox({
         )[1, 1], scientific = FALSE, digits = 2)
         ,"%"))
         ,
-        p(paste0("medium enterprises with 50 to 249 employees in 2022 in ", input$lep2)),
+        p(paste0("of enterprises in ", input$lep2, " in 2022 are medium (with 50 to 249 employees)")),
+      )
+    )
+  )
+})
+
+
+# KPI 5
+output$ent.smalleng <- renderValueBox({
+  div(
+    class = "col-sm-4",
+    div(
+      class = "small-box bg-geo3",
+      div(
+        class = "inner",
+        h3(paste0(format(100. *(C_empentind3_UBC1822 %>%
+                                  filter(
+                                    geographic_level == "COUNTRY",
+                                    area == "England", year == "2022",
+                                    variable == "Small 10 to 49",
+                                    industry == "Total"
+                                  ) %>%
+                                  select(rate)
+        )[1, 1], scientific = FALSE, digits = 2)
+        ,"%"))
+        ,
+        p(paste0("of enterprises in England in 2022 are small (with 10 to 49 employees)")),
       )
     )
   )
@@ -2460,16 +2521,16 @@ output$birth_death_time <- renderPlotly({
 
 # enterprise title
 output$enterprisetitle <- renderUI({
-  paste0(input$industryGroup, " " , "enterprises", ": ", input$yearGroup)
+  paste0(input$industryGroup, " enterprises: " , input$entGroup)
 })
 
 # enterprise bar chart 
-enterprise <- eventReactive(c(input$lep1, input$lep2, input$industryGroup, input$yearGroup), {
+enterprise <- eventReactive(c(input$lep1, input$lep2, input$industryGroup, input$entGroup), {
   ent <- C_empentind3_UBC1822 %>%
     filter(
       geographic_level == input$GeoType,
       `industry` %in% input$industryGroup,
-      `year` %in% input$yearGroup,
+      `variable` %in% input$entGroup,
       (area == input$lep1 |
          area == if ("lep2" %in% names(input)) {
            input$lep2
@@ -2477,32 +2538,32 @@ enterprise <- eventReactive(c(input$lep1, input$lep2, input$industryGroup, input
            "\nNone"
          }),
     ) %>%
-    mutate(variable = factor(variable, levels=c("Micro 0 to 9", "Small 10 to 49", "Medium 50 to 249", "Large 250+"))) %>%
     select(area, rate, variable, industry, year)
   
   # add an extra column so the colours work in ggplot when sorting alphabetically
   ent$Area <- factor(ent$area,
                        levels = c(input$lep1, input$lep2)
   )
-  ggplot(ent, aes(x = reorder(variable, desc(variable)), y = rate, fill = Area, text = paste0(
-    "Area: ", Area, "<br>",
-    "Industry: ", industry, "<br>",
-    "Year: " ,`year`, "<br>",
-    "Percentage: ", scales::percent(round(rate, 2)), "<br>"
-  ))) +
-    geom_col(
-      position = "dodge"
-    ) +
-    scale_y_continuous(labels = scales::percent) +
-    coord_flip() +
+
+  ggplot(ent, aes(
+    x = year - 1, y = rate, colour = area,  group = area,
+    text = paste0(
+      "Area: ", Area, "<br>",
+      "Industry: ", industry, "<br>",
+      "Enterprise size: " , variable, "<br>",
+      "Percentage: ", scales::percent(round(rate, 2)), "<br>"
+    )
+  )) +
+    geom_line() +
     theme_minimal() +
-    labs(fill = "") +
-    theme(
-      legend.position = "bottom", axis.title.x = element_blank(),
-      axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
-      panel.grid.major = element_blank(), panel.grid.minor = element_blank()
-    ) +
-    scale_fill_manual(values = chartColors2)
+    theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
+    labs(shape = "", colour = "") +
+    scale_y_continuous(labels = scales::percent) +
+    #scale_y_continuous(label = comma) +
+    xlab("Year") +
+    scale_color_manual(values = chartColors2)
+  
+  
 })
 
 output$enterprise <- renderPlotly({
@@ -2520,7 +2581,7 @@ output$enterprise <- renderPlotly({
 # download destinations indicators
 list_of_datasets6 <- list(
   "6a. Enterprise demography" = D_enterprise_demo1621,
-  "6b. Enterprise by emp size and industry" = D_empentind_UBC1822 
+  "6b. Enterprise by emp size and industry" = D_empentind_UBC1822
   
 )
 output$download_btn6a <- downloadHandler(
@@ -2535,15 +2596,24 @@ output$download_btn6a <- downloadHandler(
 # Download current LEP indicators
 filtered_data6 <- reactive({
   list(
-    "6a. Enterprise demography" = filter(D_enterprise_demo1621, geographic_level == input$GeoType, area == input$lep1),
-    "6b. Enterprise by emp size and industry" = filter(D_EmpInd_APS1822, geographic_level == input$GeoType, area == input$lep1,
-                                                       year == input$yearGroup, industry == input$industryGroup)
-    
+    "6a. Ent demo" = filter(D_enterprise_demo1621, geographic_level == input$GeoType, (area == input$lep1 |
+                                                                                         area == if ("lep2" %in% names(input)) {
+                                                                                           input$lep2
+                                                                                         } else {
+                                                                                           "\nNone"
+                                                                                         })),
+    "6b. Ent by emp size and ind" = filter(D_empentind_UBC1822, geographic_level == input$GeoType, (area == input$lep1 |
+                                                                                                    area == if ("lep2" %in% names(input)) {
+                                                                                                      input$lep2
+                                                                                                    } else {
+                                                                                                      "\nNone"
+                                                                                                    }),
+                                                       industry == input$industryGroup, year == input$entGroup)
   )
 })
 output$download_btn6b <- downloadHandler(
   filename = function() {
-    "Enterprise.xlsx"
+    "currentEnterprise.xlsx"
   },
   content = function(file) {
     write_xlsx(filtered_data6(), path = file)

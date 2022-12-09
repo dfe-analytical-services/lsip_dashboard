@@ -30,6 +30,9 @@ D_qual_APS1721 <- read.csv(file = "./Data/AppData/D_qual_APS1721.csv", check.nam
 # data for dashboard
 C_qual2_APS1721 <- read.csv(file = "./Data/AppData/C_qual2_APS1721.csv", check.names = FALSE)
 
+# data for dashbaord level 3 and below
+C_qualevel3_APS1721 <- read.csv(file = "./Data/AppData/C_qualevel3_APS1721.csv", check.names = FALSE)
+
 ## FE achievements ----
 # data for download
 D_Achieve_ILR1621 <- read.csv(file = "./Data/AppData/D_Achieve_ILR1621.csv", check.names = FALSE)
@@ -69,22 +72,17 @@ D_enterprise_demo1621 <- read.csv(file = "./Data/AppData/D_enterprise_demo1621.c
 # data for dashboard
 C_enterprise_demo1621 <- read.csv(file = "./Data/AppData/C_enterprise_demo1621.csv", check.names = FALSE)
 
-## KS4 destinations ----
+
+## KS4 and KS5 destinations ----
 # data for download
 D_KS4destin_1521 <- read.csv(file = "./Data/AppData/D_KS4destin_1521.csv", check.names = FALSE)
-
-# data for dashboard
-C_KS4destin_1521 <- read.csv(file = "./Data/AppData/C_KS4destin_1521.csv", check.names = FALSE)
-
-## KS5 destinations ----
-# data for download
 D_KS5destin_1721 <- read.csv(file = "./Data/AppData/D_KS5destin_1721.csv", check.names = FALSE)
 
 #data for dashboard
-C_KS5destin_1721 <- read.csv(file = "./Data/AppData/C_KS5destin_1721.csv", check.names = FALSE)
+C_KS4_KS5_2021 <- read.csv(file = "./Data/AppData/C_KS4_KS5_2021.csv", check.names = FALSE)
 
 #data for dashboard
-C_KS4_KS5_2021 <- read.csv(file = "./Data/AppData/C_KS4_KS5_2021.csv", check.names = FALSE)
+C_KS4_KS5eduemp_2021 <- read.csv(file = "./Data/AppData/C_KS4_KS5eduemp_2021.csv", check.names = FALSE)
 
 
 ## Data table ----

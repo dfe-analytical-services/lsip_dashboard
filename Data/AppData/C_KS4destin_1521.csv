@@ -1,4 +1,10 @@
 "time_period","geographic_level","area","variable","value"
+201516,"COUNTRY","England","Sustained Education",0.865972497123556
+201617,"COUNTRY","England","Sustained Education",0.863822948607642
+201718,"COUNTRY","England","Sustained Education",0.86723229151893
+201819,"COUNTRY","England","Sustained Education",0.869076511159998
+201920,"COUNTRY","England","Sustained Education",0.872431505231918
+202021,"COUNTRY","England","Sustained Education",0.889710769767214
 201516,"LADU","County Durham","Sustained Education",0.839003645200486
 201617,"LADU","County Durham","Sustained Education",0.845354396175431
 201718,"LADU","County Durham","Sustained Education",0.827470311449698
@@ -2455,6 +2461,12 @@
 201819,"MCA","West Yorkshire","Sustained Education",0.845483157536577
 201920,"MCA","West Yorkshire","Sustained Education",0.855888107230571
 202021,"MCA","West Yorkshire","Sustained Education",0.868429311156441
+201516,"COUNTRY","England","Sustained Apprenticeships",0.0480338440023825
+201617,"COUNTRY","England","Sustained Apprenticeships",0.0481971550185155
+201718,"COUNTRY","England","Sustained Apprenticeships",0.0436847085063269
+201819,"COUNTRY","England","Sustained Apprenticeships",0.0415730469025232
+201920,"COUNTRY","England","Sustained Apprenticeships",0.0373252327868109
+202021,"COUNTRY","England","Sustained Apprenticeships",0.0243591932209054
 201516,"LADU","County Durham","Sustained Apprenticeships",0.0603483191575537
 201617,"LADU","County Durham","Sustained Apprenticeships",0.0625649553107462
 201718,"LADU","County Durham","Sustained Apprenticeships",0.0636343266860856
@@ -4911,6 +4923,12 @@
 201819,"MCA","West Yorkshire","Sustained Apprenticeships",0.050187138482477
 201920,"MCA","West Yorkshire","Sustained Apprenticeships",0.0435832327352953
 202021,"MCA","West Yorkshire","Sustained Apprenticeships",0.0303624666562059
+201516,"COUNTRY","England","Sustained Employment",0.0277193034380445
+201617,"COUNTRY","England","Sustained Employment",0.0300038281791891
+201718,"COUNTRY","England","Sustained Employment",0.0316721422312715
+201819,"COUNTRY","England","Sustained Employment",0.031640218267793
+201920,"COUNTRY","England","Sustained Employment",0.0310590217758861
+202021,"COUNTRY","England","Sustained Employment",0.0236799761729207
 201516,"LADU","County Durham","Sustained Employment",0.0259214256784123
 201617,"LADU","County Durham","Sustained Employment",0.0251506963209312
 201718,"LADU","County Durham","Sustained Employment",0.0291283889760251
@@ -7367,6 +7385,12 @@
 201819,"MCA","West Yorkshire","Sustained Employment",0.0305801292956788
 201920,"MCA","West Yorkshire","Sustained Employment",0.0312617075302835
 202021,"MCA","West Yorkshire","Sustained Employment",0.0252235995606465
+201516,"COUNTRY","England","Not Recorded",0.051126715230171
+201617,"COUNTRY","England","Not Recorded",0.0500259633935103
+201718,"COUNTRY","England","Not Recorded",0.0491265972555473
+201819,"COUNTRY","England","Not Recorded",0.0488753885057111
+201920,"COUNTRY","England","Not Recorded",0.049829318008792
+202021,"COUNTRY","England","Not Recorded",0.0487547082090826
 201516,"LADU","County Durham","Not Recorded",0.0704738760631835
 201617,"LADU","County Durham","Not Recorded",0.059862814383704
 201718,"LADU","County Durham","Not Recorded",0.0743894241541564
@@ -9823,6 +9847,12 @@
 201819,"MCA","West Yorkshire","Not Recorded",0.0622235454236135
 201920,"MCA","West Yorkshire","Not Recorded",0.0585688714981476
 202021,"MCA","West Yorkshire","Not Recorded",0.0593127255609603
+201516,"COUNTRY","England","Unknown",0.00714764020584612
+201617,"COUNTRY","England","Unknown",0.00795010480114315
+201718,"COUNTRY","England","Unknown",0.00828426048792429
+201819,"COUNTRY","England","Unknown",0.00883483516397485
+201920,"COUNTRY","England","Unknown",0.00935492219659316
+202021,"COUNTRY","England","Unknown",0.0134953526298776
 201516,"LADU","County Durham","Unknown",0.00425273390036452
 201617,"LADU","County Durham","Unknown",0.00706713780918728
 201718,"LADU","County Durham","Unknown",0.0053775487340354

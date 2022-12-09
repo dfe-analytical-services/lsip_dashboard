@@ -1,4 +1,20 @@
 "time_period","geographic_level","area","Cohort Group","variable","value"
+201718,"COUNTRY","England","All other qualifications","Sustained Education",0.167116223720746
+201718,"COUNTRY","England","Level 2","Sustained Education",0.247864541933205
+201718,"COUNTRY","England","Level 3","Sustained Education",0.57291383904217
+201718,"COUNTRY","England","Total","Sustained Education",0.467261681963139
+201819,"COUNTRY","England","All other qualifications","Sustained Education",0.17288990274943
+201819,"COUNTRY","England","Level 2","Sustained Education",0.281708187838063
+201819,"COUNTRY","England","Level 3","Sustained Education",0.581459775630041
+201819,"COUNTRY","England","Total","Sustained Education",0.465266794858666
+201920,"COUNTRY","England","All other qualifications","Sustained Education",0.18491694775027
+201920,"COUNTRY","England","Level 2","Sustained Education",0.254155787078928
+201920,"COUNTRY","England","Level 3","Sustained Education",0.58306274537719
+201920,"COUNTRY","England","Total","Sustained Education",0.474222966685278
+202021,"COUNTRY","England","All other qualifications","Sustained Education",0.239083725681277
+202021,"COUNTRY","England","Level 2","Sustained Education",0.374349930921385
+202021,"COUNTRY","England","Level 3","Sustained Education",0.618331194395531
+202021,"COUNTRY","England","Total","Sustained Education",0.518799181226428
 201718,"LADU","County Durham","Total","Sustained Education",0.408818967427432
 201718,"LADU","County Durham","All other qualifications","Sustained Education",0.151105651105651
 201718,"LADU","County Durham","Level 2","Sustained Education",0.223990208078335
@@ -6452,6 +6468,22 @@
 202021,"MCA","West Yorkshire","Level 2","Sustained Education",0.401820250284414
 202021,"MCA","West Yorkshire","Level 3","Sustained Education",0.654401582591494
 202021,"MCA","West Yorkshire","Total","Sustained Education",0.539305145011352
+201718,"COUNTRY","England","All other qualifications","Sustained Apprenticeships",0.145035039005686
+201718,"COUNTRY","England","Level 2","Sustained Apprenticeships",0.162130789709426
+201718,"COUNTRY","England","Level 3","Sustained Apprenticeships",0.0713839569261097
+201718,"COUNTRY","England","Total","Sustained Apprenticeships",0.095269197945831
+201819,"COUNTRY","England","All other qualifications","Sustained Apprenticeships",0.136484305172023
+201819,"COUNTRY","England","Level 2","Sustained Apprenticeships",0.140819859737668
+201819,"COUNTRY","England","Level 3","Sustained Apprenticeships",0.0681563735234309
+201819,"COUNTRY","England","Total","Sustained Apprenticeships",0.09195690018091
+201920,"COUNTRY","England","All other qualifications","Sustained Apprenticeships",0.130363393368548
+201920,"COUNTRY","England","Level 2","Sustained Apprenticeships",0.147746955869807
+201920,"COUNTRY","England","Level 3","Sustained Apprenticeships",0.060519528875796
+201920,"COUNTRY","England","Total","Sustained Apprenticeships",0.0839957711428467
+202021,"COUNTRY","England","All other qualifications","Sustained Apprenticeships",0.116952953470078
+202021,"COUNTRY","England","Level 2","Sustained Apprenticeships",0.107684013074391
+202021,"COUNTRY","England","Level 3","Sustained Apprenticeships",0.0413470695647691
+202021,"COUNTRY","England","Total","Sustained Apprenticeships",0.0640924307662829
 201718,"LADU","County Durham","Total","Sustained Apprenticeships",0.151562153777975
 201718,"LADU","County Durham","All other qualifications","Sustained Apprenticeships",0.164619164619165
 201718,"LADU","County Durham","Level 2","Sustained Apprenticeships",0.225214198286414
@@ -12905,6 +12937,22 @@
 202021,"MCA","West Yorkshire","Level 2","Sustained Apprenticeships",0.102389078498294
 202021,"MCA","West Yorkshire","Level 3","Sustained Apprenticeships",0.0520936366633696
 202021,"MCA","West Yorkshire","Total","Sustained Apprenticeships",0.0741121535363921
+201718,"COUNTRY","England","All other qualifications","Sustained Employment",0.252399841332804
+201718,"COUNTRY","England","Level 2","Sustained Employment",0.328349546412304
+201718,"COUNTRY","England","Level 3","Sustained Employment",0.235172266571087
+201718,"COUNTRY","England","Total","Sustained Employment",0.251431704870417
+201819,"COUNTRY","England","All other qualifications","Sustained Employment",0.256319953042249
+201819,"COUNTRY","England","Level 2","Sustained Employment",0.323737981357043
+201819,"COUNTRY","England","Level 3","Sustained Employment",0.232546781821921
+201819,"COUNTRY","England","Total","Sustained Employment",0.253605874076013
+201920,"COUNTRY","England","All other qualifications","Sustained Employment",0.256755552727041
+201920,"COUNTRY","England","Level 2","Sustained Employment",0.317235852227192
+201920,"COUNTRY","England","Level 3","Sustained Employment",0.232684652324136
+201920,"COUNTRY","England","Total","Sustained Employment",0.248863638543999
+202021,"COUNTRY","England","All other qualifications","Sustained Employment",0.223714644656045
+202021,"COUNTRY","England","Level 2","Sustained Employment",0.24343753159083
+202021,"COUNTRY","England","Level 3","Sustained Employment",0.19573315823889
+202021,"COUNTRY","England","Total","Sustained Employment",0.207948957463939
 201718,"LADU","County Durham","Total","Sustained Employment",0.206292931531132
 201718,"LADU","County Durham","All other qualifications","Sustained Employment",0.185503685503686
 201718,"LADU","County Durham","Level 2","Sustained Employment",0.268053855569155
@@ -19358,6 +19406,22 @@
 202021,"MCA","West Yorkshire","Level 2","Sustained Employment",0.183390216154721
 202021,"MCA","West Yorkshire","Level 3","Sustained Employment",0.153049785690735
 202021,"MCA","West Yorkshire","Total","Sustained Employment",0.164117722657756
+201718,"COUNTRY","England","All other qualifications","Not Recorded",0.29111463704879
+201718,"COUNTRY","England","Level 2","Not Recorded",0.186216990297387
+201718,"COUNTRY","England","Level 3","Not Recorded",0.0810929762466365
+201718,"COUNTRY","England","Total","Not Recorded",0.126412989774071
+201819,"COUNTRY","England","All other qualifications","Not Recorded",0.302477288189859
+201819,"COUNTRY","England","Level 2","Not Recorded",0.190410516740515
+201819,"COUNTRY","England","Level 3","Not Recorded",0.080505860579889
+201819,"COUNTRY","England","Total","Not Recorded",0.133367088031494
+201920,"COUNTRY","England","All other qualifications","Not Recorded",0.305021319926176
+201920,"COUNTRY","England","Level 2","Not Recorded",0.216863576432874
+201920,"COUNTRY","England","Level 3","Not Recorded",0.0862851604636773
+201920,"COUNTRY","England","Total","Not Recorded",0.13864089443015
+202021,"COUNTRY","England","All other qualifications","Not Recorded",0.314085780371253
+202021,"COUNTRY","England","Level 2","Not Recorded",0.217266284019814
+202021,"COUNTRY","England","Level 3","Not Recorded",0.104614407848862
+202021,"COUNTRY","England","Total","Not Recorded",0.155963099916538
 201718,"LADU","County Durham","Total","Not Recorded",0.167737646798139
 201718,"LADU","County Durham","All other qualifications","Not Recorded",0.366093366093366
 201718,"LADU","County Durham","Level 2","Not Recorded",0.22766217870257
@@ -25811,6 +25875,22 @@
 202021,"MCA","West Yorkshire","Level 2","Not Recorded",0.251877133105802
 202021,"MCA","West Yorkshire","Level 3","Not Recorded",0.10702274975272
 202021,"MCA","West Yorkshire","Total","Not Recorded",0.171914492567365
+201718,"COUNTRY","England","All other qualifications","Unknown",0.144334258891974
+201718,"COUNTRY","England","Level 2","Unknown",0.0754381316476778
+201718,"COUNTRY","England","Level 3","Unknown",0.0394369612139964
+201718,"COUNTRY","England","Total","Unknown",0.0596244254465422
+201819,"COUNTRY","England","All other qualifications","Unknown",0.13182855084644
+201819,"COUNTRY","England","Level 2","Unknown",0.0633234543267115
+201819,"COUNTRY","England","Level 3","Unknown",0.0373312084447186
+201819,"COUNTRY","England","Total","Unknown",0.0558033428529167
+201920,"COUNTRY","England","All other qualifications","Unknown",0.122942786227964
+201920,"COUNTRY","England","Level 2","Unknown",0.0639978283911998
+201920,"COUNTRY","England","Level 3","Unknown",0.037447912959201
+201920,"COUNTRY","England","Total","Unknown",0.0542767291977259
+202021,"COUNTRY","England","All other qualifications","Unknown",0.106162895821348
+202021,"COUNTRY","England","Level 2","Unknown",0.0572622403935796
+202021,"COUNTRY","England","Level 3","Unknown",0.0399741699519485
+202021,"COUNTRY","England","Total","Unknown",0.0531963306268113
 201718,"LADU","County Durham","Total","Unknown",0.0655883004653224
 201718,"LADU","County Durham","All other qualifications","Unknown",0.132678132678133
 201718,"LADU","County Durham","Level 2","Unknown",0.0550795593635251
