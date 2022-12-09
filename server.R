@@ -1360,12 +1360,15 @@ server <- function(input, output, session) {
             filter(
               geographic_level == input$GeoType,
               area == input$lep1, time_period == "202122",
-              level_or_type %in% if ("levelGroup" %in% names(input) & !"Further education and skills: Total" %in% input$levelGroup) {
+              level_or_type %in% 
+                if ("levelGroup" %in% names(input) & !"Further education and skills: Total" %in% input$levelGroup) {
                 input$levelGroup
               } else {
                 "Further education and skills: Total"
-              },
-              age_group %in% if ("ageGroup" %in% names(input) & !"Total" %in% input$ageGroup) {
+              }
+              ,
+              age_group %in% 
+                if ("ageGroup" %in% names(input) & !"Total" %in% input$ageGroup) {
                 input$ageGroup
               } else {
                 "Total"
@@ -1724,10 +1727,10 @@ server <- function(input, output, session) {
 
   #turn off gender filter
   output$gen_off <- renderUI({
-    if (input$datatabset == "Qualification level" & input$ageGroup == "16-64") {
+    if (input$datatabset == "Qualification level" & input$ageGroupQual == "16-64") {
       selectizeInput("genGroup", "Choose gender group",
-                     choices = if ("ageGroup" %in% names(input)) {
-                       if ("16-64" %in% input$ageGroup) {
+                     choices = if ("ageGroupQual" %in% names(input)) {
+                       if ("16-64" %in% input$ageGroupQual) {
                          c("Total", "Female", "Male")
                        } else {
                          c("Total")
@@ -1858,7 +1861,7 @@ server <- function(input, output, session) {
   
   
   # qualification line chart
-  qual_time <- eventReactive(c(input$lep1, input$lep2, input$qualGroup, input$ageGroup, input$genGroup), {
+  qual_time <- eventReactive(c(input$lep1, input$lep2, input$qualGroup, input$ageGroupQual, input$genGroup), {
     qtime <- C_qual2_APS1721 %>%
       filter(
         geographic_level == input$GeoType,
@@ -1870,7 +1873,7 @@ server <- function(input, output, session) {
            })
         ),
         Level %in% input$qualGroup ,
-        age_band %in% input$ageGroup,
+        age_band %in% input$ageGroupQual,
         group %in% input$genGroup
       ) %>%
       select(area, year, rate)
@@ -1887,7 +1890,7 @@ server <- function(input, output, session) {
         "Area: ", area, "<br>",
         "Percentage: ", scales::percent(round(rate, 2)), "<br>",
         "Qualification: ", input$qualGroup, "<br>",
-        "Age band: ", input$ageGroup, "<br>"
+        "Age band: ", input$ageGroupQual, "<br>"
       )
     )) +
       geom_line() +
@@ -1930,7 +1933,7 @@ server <- function(input, output, session) {
   filtered_data4 <- reactive({
     list(
       "4b. Qualificationlevelbyagegen" = filter(D_qual_APS1721, geographic_level == input$GeoType, area == input$lep1,
-                                                age_band == input$ageGroup, Level == input$qualGroup, group == input$genGroup)
+                                                age_band == input$ageGroupQual, Level == input$qualGroup, group == input$genGroup)
     )
   })
   output$download_btn4b <- downloadHandler(

@@ -532,7 +532,7 @@ panel_qualification_level <- function() {
           fluidRow(
             column(
               width = 4,
-              selectInput("ageGroup", "Choose age group",
+              selectInput("ageGroupQual", "Choose age group",
                                                   choices = C_qual2_APS1721 %>%
                                                     distinct(Age = age_band), 
                                                   multiple = FALSE, selected = "16-64")
