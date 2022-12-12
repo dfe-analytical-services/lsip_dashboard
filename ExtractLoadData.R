@@ -117,7 +117,7 @@ folder <- "16_bussdemo"
 sheet <- "Table 1.1a"
 firstRow <- 4
 
-#births
+# births
 I_births_ONS1618 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 
 sheet <- "Table 1.1b"
@@ -129,7 +129,7 @@ I_births_ONS20 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files
 sheet <- "Table 1.1d"
 I_births_ONS21 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 
-#deaths
+# deaths
 sheet <- "Table 2.1a"
 I_deaths_ONS1618 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 
@@ -142,7 +142,7 @@ I_deaths_ONS20 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files
 sheet <- "Table 2.1d"
 I_deaths_ONS21 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 
-#active
+# active
 sheet <- "Table 3.1a"
 I_active_ONS1618 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 
