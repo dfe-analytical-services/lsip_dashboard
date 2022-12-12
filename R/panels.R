@@ -538,9 +538,9 @@ panel_qualification_level <- function() {
         inputId = "QualSource",
         tags$ol(
           tags$li("Figures are for 16-64 year olds."),
-          tags$li("Years represent Jul-Jun period. So 2018 is the Jul 2017 – June 2018 period."),
+          tags$li("Years represent Jan-Dec period. So 2017 is the Jan 2017 – Dec 2017 period."),
           tags$li("NVQ3 and below qualifications and NVQ4 or above qualifications will not add up to 100% due to other qualifications."),
-          tags$li("what is nvq3 and below")
+          tags$li("NVQ3 and below consists of NVQ1, NVQ2, Trade Apprenticeships, NVQ3 and None qualifications.")
         )
       ),
     
@@ -581,9 +581,9 @@ panel_qualification_level <- function() {
           inputId = "QualSource",
           tags$ol(
             tags$li("Figures are for 16-64 year olds."),
-            tags$li("Years represent Jul-Jun period. So 2018 is the Jul 2017 – June 2018 period."),
+            tags$li("Years represent Jan-Dec period. So 2017 is the Jan 2017 – Dec 2017 period."),
             tags$li("NVQ3 and below qualifications and NVQ4 or above qualifications will not add up to 100% due to other qualifications."),
-            tags$li("what is nvq3 and below")
+            tags$li("NVQ3 and below consists of NVQ1, NVQ2, Trade Apprenticeships, NVQ3 and None qualifications.")
           )
         )
       )
