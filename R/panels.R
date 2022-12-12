@@ -62,6 +62,46 @@ panel_overview <- function() {
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies")
         ),
+        # fifth row - destinations
+        h3("KS5 destinations"),
+        fluidRow(
+          column(
+            width = 4,
+            div(
+              title = "Source: NPD. 2021 academic year",
+              uiOutput("dest.ks5over"),
+            )
+          ),
+          column(
+            width = 8,
+            plotlyOutput("Ks5LineChart", height = 81)
+          )
+        ),
+        ,
+        fluidRow(
+          class = "rightAlignLinks",
+          actionLink("link_to_tabpanel_destinations2", "Find out more about destinations")
+        ),
+        # sixth row - enterprise
+        h3("Enterpise count: Micro (0-9 employees)"),
+        fluidRow(
+          column(
+            width = 4,
+            div(
+              title = "Source: UBC. 2022 calendar year",
+              uiOutput("UBC.micro"),
+            )
+          ),
+          column(
+            width = 8,
+            plotlyOutput("UBCLineChart", height = 81)
+          )
+        ),
+        ,
+        fluidRow(
+          class = "rightAlignLinks",
+          actionLink("link_to_tabpanel_enterprise2", "Find out more about enterprises")
+        ),
         br()
       ),
       # right column
@@ -101,6 +141,25 @@ panel_overview <- function() {
         fluidRow(
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_FE2", "Find out more about skills")
+        ),
+        h3("Qualification level: NVQ4 or above"),
+        fluidRow(
+          column(
+            width = 4,
+            div(
+              title = "Source: APS. 2021 calendar year",
+              uiOutput("APS.nvq4plus"),
+            )
+          ),
+          column(
+            width = 8,
+            plotlyOutput("Nvq4plusLineChart", height = 81)
+          )
+        ),
+        # third row - link to emp tab
+        fluidRow(
+          class = "rightAlignLinks",
+          actionLink("link_to_tabpanel_qualification2", "Find out more about qualfication level")
         ),
         br()
       ) # end of right column

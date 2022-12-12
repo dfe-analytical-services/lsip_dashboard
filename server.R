@@ -851,6 +851,27 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "datatabset", "Skills")
   })
 
+  
+  
+  #add link to destinations
+  observeEvent(input$link_to_tabpanel_destinations2, {
+    updateTabsetPanel(session, "navbar", "Dashboard")
+    updateTabsetPanel(session, "datatabset", "Destinations")
+  })
+  
+  #add link to destinations
+  observeEvent(input$link_to_tabpanel_enterprise2, {
+    updateTabsetPanel(session, "navbar", "Dashboard")
+    updateTabsetPanel(session, "datatabset", "Enterprise")
+  })
+  
+  #add link to qualification level
+  observeEvent(input$link_to_tabpanel_qualification2, {
+    updateTabsetPanel(session, "navbar", "Dashboard")
+    updateTabsetPanel(session, "datatabset", "Qualification level")
+  })
+  
+  
   # EMPLOYMENT ----
   # define page title
   output$page1title <- renderUI({
