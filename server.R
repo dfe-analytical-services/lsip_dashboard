@@ -260,22 +260,24 @@ server <- function(input, output, session) {
   })
 
   output$geoComp <- renderUI({
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
+    areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
     if (input$splashGeoType == "LEP") {
       selectizeInput("geoComps",
         multiple = TRUE, label = NULL,
-        choices = c(C_LEP2020 %>% filter(geographic_level == "LEP", Area != input$lep1) %>% select(Area)),
+        choices = c(C_LEP2020 %>% filter(geographic_level == "LEP", Area != areaClicked) %>% select(Area)),
         options = list(maxItems = 4, placeholder = "Choose comparison LEPs")
       )
     } else if (input$splashGeoType == "LSIP") {
       selectizeInput("geoComps",
         multiple = TRUE, label = NULL,
-        choices = c(C_LEP2020 %>% filter(geographic_level == "LSIP", Area != input$lep1) %>% select(Area)),
+        choices = c(C_LEP2020 %>% filter(geographic_level == "LSIP", Area != areaClicked) %>% select(Area)),
         options = list(maxItems = 4, placeholder = "Choose comparison LSIPs")
       )
     } else {
       selectizeInput("geoComps",
         multiple = TRUE, label = NULL,
-        choices = c(C_LEP2020 %>% filter(geographic_level == "MCA", Area != input$lep1) %>% select(Area)),
+        choices = c(C_LEP2020 %>% filter(geographic_level == "MCA", Area != areaClicked) %>% select(Area)),
         options = list(maxItems = 4, placeholder = "Choose comparison MCAs")
       )
     }
@@ -2461,12 +2463,14 @@ server <- function(input, output, session) {
     if (input$splashMetric == "empRate") {
   radioGroupButtons(
     inputId = "splashBreakdown",
-    choices = c("Provision"="typeNeat", "Level"="level_or_type", "Age"="age_group")
-  )}
+    choices = c("Occupation","Industry")
+  )
+    }
     else
     {  radioGroupButtons(
       inputId = "splashBreakdown",
-      choices = c("Occupation","Industry")
+      choices = c("Provision"="typeNeat", "Level"="level_or_type", "Age"="age_group")
+      
     )}
   })
   
@@ -2490,15 +2494,15 @@ server <- function(input, output, session) {
           filter(geog == "COUNTRY" & areaName == "England"))[[input$splashMetric]]
       ){"higher"}else{"lower"}
     metricUsed<-if(input$splashMetric=="empRate"){" employment rate "}else{" FE achievements per 100,000 "}
-    subgroup<-"19-25 yr olds"
-paste0(areaClicked, " has a ",compareNational,metricUsed,"in Elementary trades than the national average.")
+    subgroup<-if(input$splashBreakdown=="Occupation"){"Administration"}else{"19-25 year olds"}
+paste0(areaClicked, " has a ",compareNational,metricUsed,"in ",subgroup," than the national average.")
   })
   
   Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$levelBar, input$sexBar, input$metricBar,input$splashBreakdown,input$mapLA_shape_click), {
     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
     eventLA <- input$mapLA_shape_click
       if(input$splashMetric=="empRate"){
-        Splash_21 <- C_EmpOcc_APS1721 %>%
+        allAreas <- C_EmpOcc_APS1721 %>%
           filter(
                  (geographic_level == "COUNTRY"&area == "England") |
                    ((geographic_level == input$splashGeoType&
@@ -2509,7 +2513,7 @@ paste0(areaClicked, " has a ",compareNational,metricUsed,"in Elementary trades t
                           } else {
                             "\nNone"
                           }))|
-                      if(is.null(eventLA)==TRUE) {area=="\nNone"}else { (geographic_level == "Local authority district"&area == C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id])}
+                      if(is.null(eventLA)==TRUE) {area=="\nNone"}else { (geographic_level == "LADU"&area == C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id])}
                    ))%>%
           select(-year, -geographic_level) %>%
           rename_with(str_to_sentence) %>%
@@ -2522,7 +2526,15 @@ paste0(areaClicked, " has a ",compareNational,metricUsed,"in Elementary trades t
           )%>%
           group_by(area,Occupation)%>%
           summarise(sum = sum(count)) %>%
-          mutate(metric = round(sum / sum(sum), 3))     
+          mutate(metric = round(sum / sum(sum), 3))   
+        #find top 10 of chosen area
+        occupations<-allAreas%>%filter(area== C_Geog$areaName[C_Geog$areaCode == event$id])%>%
+          slice_max(order_by = metric, n = 10)%>%ungroup()%>%
+          select(Occupation)
+        #filter other areas by the top 10
+        Splash_21<-allAreas%>%
+          filter(Occupation %in% occupations$Occupation)%>%
+          arrange(area,metric)
       }
     else{Splash_21 <- C_Achieve_ILR1621 %>%
       mutate(levelTotal=case_when(substring(level_or_type,nchar(level_or_type)-5+1)=="Total"~"Total",TRUE~"Not"))%>%
@@ -2551,16 +2563,16 @@ paste0(areaClicked, " has a ",compareNational,metricUsed,"in Elementary trades t
     Splash_21$Area <- factor(Splash_21$area,
       levels = c("England", C_Geog$areaName[C_Geog$areaCode == event$id], C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id], input$geoComps)
     )
-    ggplot(Splash_21, aes(x = eval(parse(text = input$splashBreakdown)), y = metric, fill = Area, text = paste0(#reorder(input$splashBreakdown, desc(input$splashBreakdown))
+    ggplot(Splash_21, aes(x = reorder(eval(parse(text = input$splashBreakdown)),metric,max), y = metric, fill = Area, text = paste0(#reorder(input$splashBreakdown, desc(input$splashBreakdown))
       #"Breakdown: ", input$splashBreakdown, "<br>",
       "Area: ", Area, "<br>",
       #"Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(metric, 2)), "<br>",
-      input$splashBreakdown, ": ", round(metric,0), "<br>"
+      input$splashBreakdown, ": ", metric, "<br>"
     ))) +
       geom_col(
         position = "dodge"
       ) +
-      #scale_y_continuous(labels = scales::percent) +
+      scale_y_continuous(labels = if(input$splashMetric=="empRate"){scales::percent}else{label_number_si(accuracy = 1)}) +
       scale_x_discrete(labels = function(x) str_wrap(x, width = 26)) +
       coord_flip() +
       theme_minimal() +

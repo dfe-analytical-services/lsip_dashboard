@@ -118,7 +118,7 @@ write.csv(D_EmpOcc_APS1721, file = "Data\\AppData\\D_EmpOcc_APS1721.csv", row.na
 C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
   filter(
     year == "2021",
-    geographic_level != "LADU" &
+    #geographic_level != "LADU" &
       geographic_level != "GOR" # cleans up for London and South East which is included as lep and gor
   ) %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "9999999" = ""))) %>% # convert to blank to avoid error msg

@@ -206,7 +206,7 @@ padding-top:15px
     id = "navbar",
     widths = c(2, 10),
     well = FALSE,
-    selected = "Local skills",
+    selected = "Local skills v2",
 
     # HOMEPAGE ============================================================
 
@@ -378,62 +378,58 @@ padding-top:15px
       ) # end of version control row
     ), # end of Tab Panel
 
-    # APP ----
-
-    tabPanel(
-      "Local skills",
-      fluidRow(
-        column(
-          12,
-          br(),
-          div(
-            class = "filterRow",
-            fluidRow(
-              column(
-                width = 4,
-                selectInput("GeoType", "Choose geography",
-                  choices = c(
-                    "Local Enterprise Partnership (LEP)" = "LEP",
-                    "Local Skills Improvement Plan (LSIP)" = "LSIP",
-                    "Mayoral Combined Authority (MCA)" = "MCA"
-                  ),
-                  selected = "LEP"
-                )
-              ),
-              column(
-                width = 4,
-                uiOutput("lep1_geo"),
-              ),
-              column(
-                width = 4,
-                uiOutput("lep2_off")
-              )
-            )
-          ),
-          br(),
-        )
-      ), # end of filters row
-
-      # next row is the data tabs
-      fluidRow(
-        column(
-          12,
-          tabsetPanel(
-            id = "datatabset",
-            panel_overview(),
-            panel_employment(),
-            panel_onsProf(),
-            panel_enterprise(),
-            # panel_vacancies(),
-            panel_skills(),
-            panel_qualification_level(),
-            panel_destinations(),
-          ) # end of dashboard tabset panel
-        ) # end of dashboard navbar
-      )
-
-      #  ) # end of app data row
-    ), # end of app tab panel
+    # # APP ----
+    # 
+    # tabPanel(
+    #   "Local skills",
+    #   fluidRow(
+    #     column(
+    #       12,
+    #       br(),
+    #       div(
+    #         class = "filterRow",
+    #         fluidRow(
+    #           column(
+    #             width = 4,
+    #             selectInput("GeoType", "Choose geography",
+    #               choices = c(
+    #                 "Local Enterprise Partnership (LEP)" = "LEP",
+    #                 "Local Skills Improvement Plan (LSIP)" = "LSIP",
+    #                 "Mayoral Combined Authority (MCA)" = "MCA"
+    #               ),
+    #               selected = "LEP"
+    #             )
+    #           ),
+    #           column(
+    #             width = 4,
+    #             uiOutput("lep1_geo"),
+    #           ),
+    #           column(
+    #             width = 4,
+    #             uiOutput("lep2_off")
+    #           )
+    #         )
+    #       ),
+    #       br(),
+    #     )
+    #   ), # end of filters row
+    # 
+    #   # next row is the data tabs
+    #   fluidRow(
+    #     column(
+    #       12,
+    #       tabsetPanel(
+    #         id = "datatabset",
+    #         panel_overview(),
+    #         panel_employment(),
+    #         panel_vacancies(),
+    #         panel_skills()
+    #       ) # end of dashboard tabset panel
+    #     ) # end of dashboard navbar
+    #   )
+    # 
+    #   #  ) # end of app data row
+    # ), # end of app tab panel
 
     tabPanel(
       "Data & downloads",
@@ -561,13 +557,6 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       fluidRow(
         column(
           6,
-          # div(
-          #   class = "filterRow",
-          #   selectizeInput("splashMetric", "Focus on",
-          #                  choices = c("Employment rate", "1", "2", "3", "4+", "E", "Not Assigned")
-          #   ),
-
-          # ),
           h3(uiOutput("titleMap")),
           radioGroupButtons(
             inputId = "splashGeoType",
@@ -591,12 +580,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
         column(
           6,
           h3(uiOutput("titleBreakdown")),
-          #uiOutput("breakdownFilter"),
-          radioGroupButtons(
-            inputId = "splashBreakdown",
-            choices = c("Industry", "Occupation")
-            #Provision"="typeNeat", "Level"="level_or_type", "Age"="age_group")
-          ),
+          uiOutput("breakdownFilter"),
           p(uiOutput("commentBreakdown")),
           plotlyOutput("Splash_pc")
         ),
