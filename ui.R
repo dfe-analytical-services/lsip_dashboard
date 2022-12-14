@@ -587,7 +587,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
         column(
           6,
           h3("What is the variation with the LEP?"),
-          p("Employment rate is highest in Leeds and lowest in Kirklees"),
+          p("FE achievement rate is highest in Sunderland and lowest in Northumberland"),
           leafletOutput("mapLA")
         )
       )
