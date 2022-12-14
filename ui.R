@@ -279,12 +279,13 @@ padding-top:15px
               p("This tab provides information on training activity for the selected geographic area including data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period. There is an option to compare against another area in England at the same geographic level."),
               p("LEP, LSIP and MCA area totals are calculated by aggregating the relevant local authorities."),
               h3(actionLink("link_to_tabpanel_qualification_level", "Qualification level")),
-              p("This page includes information on the qualification level for working age individuals (16-64) for the selected geographic area, and the option to compare against another area.
+              p("This page includes information on the highest qualification level for working age individuals (16-64) for the selected geographic area, and the option to compare against another area.
                 It includes data on qualification level, with breakdowns by age band and gender."),
               h3(actionLink("link_to_tabpanel_destinations_level", "Destinations")),
               p("This page includes information on the destinations of young people after KS4 and KS5 education for the selected geographic area, and the option to compare against another area.
                 It includes data on destinations, with breakdowns by level and key stage group."),
-              h3(actionLink("link_to_tabpanel_enterprise_level", "Enterprise")),
+              h3(actionLink("link_to_tabpanel_enterprise_level", "Enterprises")),
+              p("This tab provides data on the count of new and no longer trading enterprises and count of enterprises by employment size and industry for the selected geographic area, and the option to compare against another area in England at the same geographic level."),
               h2("Data download page"),
               p("The", actionLink("link_to_tabpanel_data", "data download page"), " includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
             )
@@ -440,12 +441,14 @@ padding-top:15px
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
 Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset."),
           h3("KS4 and KS5 destinations"),
-          p("Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education and,
-            employment or apprenticeship in the year following completion of their qualification:"),
+          p("Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education, employment or an apprenticeship 
+            in the academic year following completion of their qualification:"),
           tags$ul(
             tags$li("Key Stage 4 (year 10 and 11 students) includes GCSEs and equivalent qualifications"),
             tags$li("Key Stage 5 (students 16-18 years) includes A Levels, T levels and other 2-year vocational education programmes.")
           ),
+          p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
+            rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
           p("This dashboard currently shows the number of young people going into education and, employment or apprenticeship in the year following completion of their qualification by level, KS4 and KS5."),
           h3("UK Business Counts (UBC)"),
           p("The UK Business Counts (UBC) is a record of the number of enterprises from the Inter Departmental Business Register (IDBR). Topics included cover employment size band, detailed industry (5 digit SIC 2007) and legal status.

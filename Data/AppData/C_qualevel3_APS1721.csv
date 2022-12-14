@@ -1,4 +1,4 @@
-"area","year","geographic_level","group","age_band","value2","Level","rate"
+"area","year","geographic_level","gender","age_band","value2","Level","rate"
 "Adur","2017","LADU","Female","16-64",12300,"Level 3 and below",0.650793650793651
 "Adur","2017","LADU","Male","16-64",11300,"Level 3 and below",0.656976744186046
 "Adur","2017","LADU","Total","16-19",1900,"Level 3 and below",1

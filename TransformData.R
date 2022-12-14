@@ -604,23 +604,31 @@ F_empent_UBC1822 <- format.empent.UBC(I_EmpEnt_APS1822)
 # dashboard version to combine witn industry total
 # get total by enterprise size
 C_empent_UBC1822 <- F_empent_UBC1822 %>%
-  mutate_at(c(5), as.numeric) %>%
-  mutate_at(c(5), ~ replace_na(., 0)) %>%
+  mutate_at(c(5), as.numeric) %>% 
+  mutate_at(c(5), ~replace_na(.,0)) %>%
   filter(variable != "Total") %>%
-  group_by(area, year, geographic_level) %>%
+  group_by(area, year, geographic_level) %>% 
   summarise(Total = sum(`value`))
 
-# get overall total and merge onto C_empentind_UBC1822 to calculate proportions by enterprise size
+#get overall total and merge onto C_empentind_UBC1822 to calculate proportions by enterprise size
 C_empent2_UBC1822 <- F_empent_UBC1822 %>%
-  mutate_at(c(5), as.numeric) %>%
-  mutate_at(c(5), ~ replace_na(., 0)) %>%
-  filter(variable != "Total") %>%
-  left_join(C_empent_UBC1822, by = c(
-    "area" = "area", "year" = "year",
-    "geographic_level" = "geographic_level"
-  )) %>%
-  mutate(rate = value / Total, industry = "Total") %>%
-  select(-Total)
+  mutate_at(c(5), as.numeric) %>% 
+  mutate_at(c(5), ~replace_na(.,0)) %>%
+  filter(variable != "Total")%>%
+  left_join(C_empent_UBC1822, by = c('area' = 'area', 'year' = 'year',
+                                        'geographic_level' = 'geographic_level')) %>%
+  mutate(rate = value/Total, industry = "Total") %>%
+  select(-Total) %>%
+  mutate(variable = case_when(
+    variable == "Micro_0_to_9" ~ "Micro 0 to 9",
+    variable == "Small_10_to_49" ~ "Small 10 to 49",
+    variable == "Medium_sized_50_to_249" ~ "Medium 50 to 249",
+    variable == "Large_250" ~ "Large 250+",
+    TRUE ~ variable
+  ))
+
+# write the data to folder
+write.csv(C_empent2_UBC1822, file = "Data\\AppData\\C_empent2_UBC1822.csv", row.names = FALSE)
 
 # Downloadable version
 D_empent_UBC1822 <- F_empent_UBC1822 %>%
@@ -643,10 +651,8 @@ format.empentind.UBC <- function(x) {
     fill(industry) %>%
     row_to_names(row_number = 5) %>% # set col names
     clean_names() %>%
-    rename(
-      "industry" = !!names(.[8]),
-      "year" = !!names(.[7])
-    ) %>%
+    rename("industry" = !!names(.[8]),
+           "year" = !!names(.[7])) %>%
     mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
     filter(check == 1) %>%
     filter(!grepl("nomisweb", area)) %>%
@@ -669,36 +675,34 @@ format.empentind.UBC <- function(x) {
     relocate(geographic_level, year, industry, .after = area) %>%
     mutate(geographic_level = toupper(geographic_level)) %>%
     melt(id.vars = c("year", "geographic_level", "industry", "area")) %>%
-    mutate(variable = sub("(.)", "\\U\\1", variable, perl = TRUE)) %>% # capitalise first letter
+    mutate(variable = sub("(.)", "\\U\\1", variable, perl=TRUE)) %>% # capitalise first letter
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
-}
+}  
 
 
 # format data
-F_empentind_UBC1822 <- format.empentind.UBC(I_EmpEntind_APS1822) %>%
+F_empentind_UBC1822 <-  format.empentind.UBC(I_EmpEntind_APS1822) %>%
   mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "")))
 
 # dashboard data
 # merge totals from enterprise by emp size - C_empent_UCC1822
 C_empentind_UBC1822 <- F_empentind_UBC1822 %>%
-  mutate_at(c(6), as.numeric) %>%
-  mutate_at(c(6), ~ replace_na(., 0)) %>%
+  mutate_at(c(6), as.numeric) %>% 
+  mutate_at(c(6), ~replace_na(.,0)) %>%
   filter(variable != "Total") %>%
-  group_by(area, year, geographic_level, variable) %>%
+  group_by(area, year, geographic_level, variable) %>% 
   summarise(Total = sum(`value`))
 
-C_empentind2_UBC1822 <- F_empentind_UBC1822 %>%
-  mutate_at(c(6), as.numeric) %>%
-  mutate_at(c(6), ~ replace_na(., 0)) %>%
+C_empentind2_UBC1822 <-  F_empentind_UBC1822 %>%
+  mutate_at(c(6), as.numeric) %>% 
+  mutate_at(c(6), ~replace_na(.,0)) %>%
   filter(variable != "Total") %>%
-  left_join(C_empentind_UBC1822, by = c(
-    "area" = "area", "year" = "year",
-    "geographic_level" = "geographic_level", "variable" = "variable"
-  )) %>%
-  mutate(rate = value / Total) %>%
+  left_join(C_empentind_UBC1822, by = c('area' = 'area', 'year' = 'year',
+                                        'geographic_level' = 'geographic_level', "variable" = "variable")) %>%
+  mutate(rate = value/Total) %>%
   select(-Total) %>%
   rbind(C_empent2_UBC1822)
-
+  
 
 C_empentind3_UBC1822 <- C_empentind2_UBC1822 %>%
   select(-value) %>%
@@ -709,43 +713,48 @@ C_empentind3_UBC1822 <- C_empentind2_UBC1822 %>%
     variable == "Medium_sized_50_to_249" ~ "Medium 50 to 249",
     variable == "Large_250" ~ "Large 250+",
     TRUE ~ variable
-  ))
+  )) %>%
+  mutate(Year = as.numeric(substr(year, 3, 4))) # add year name for charts
+
 # write data to folder
 write.csv(C_empentind3_UBC1822, file = "Data\\AppData\\C_empentind3_UBC1822.csv", row.names = FALSE)
 
+# create max and min for use in setting axis
+C_empentind_max_min <- C_empentind3_UBC1822 %>%
+  filter(geographic_level != "LADU", variable == "Micro 0 to 9", industry == "Total") %>%
+  summarise(minmic = min(rate), maxmic = max(rate))
+write.csv(C_empentind_max_min, file = "Data\\AppData\\C_empentind_max_min.csv", row.names = FALSE)
 
 # Downloadable version
 D_empentind_UBC1822 <- C_empentind2_UBC1822 %>%
   select(-rate) %>%
-  mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+  mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x"))) %>%
+  rename("enterprise size" = variable, count = value)
 
 # write the data to folder
 write.csv(D_empentind_UBC1822, file = "Data\\AppData\\D_empentind_UBC1822.csv", row.names = FALSE)
 
 
 # enterprise births, deaths and active
-format.bussdemo.ONS <- function(w, x, y, z) {
+format.bussdemo.ONS  <- function(w, x, y, z) {
   w <- w %>%
     rename(X1 = 1) %>%
-    mutate(X1 = trimws(X1, which = c("both"))) %>%
+    mutate(X1 = trimws(X1, which = c("both"))) %>% 
     select(-X2)
-
-  x <- x %>%
-    mutate(X1 = trimws(X1, which = c("both"))) %>%
+  
+  x <- x %>% mutate(X1 = trimws(X1, which = c("both"))) %>% 
     select(-X2)
-
-  y <- y %>%
-    mutate(X1 = trimws(X1, which = c("both"))) %>%
+  
+  y <- y %>% mutate(X1 = trimws(X1, which = c("both"))) %>% 
     select(-X2)
-
-  z <- z %>%
-    mutate(X1 = trimws(X1, which = c("both"))) %>%
+  
+  z <- z %>% mutate(X1 = trimws(X1, which = c("both"))) %>% 
     mutate(X2 = trimws(X2, which = c("both")))
-
-  df_list <- list(z, y, x, w)
+  
+  df_list <- list(z, y, x, w) 
   df <- df_list %>%
-    reduce(full_join, by = "X1")
-
+    reduce(full_join, by='X1')
+  
   England <- df %>%
     filter(X2 == "ENGLAND") %>%
     select(-c(1:2)) %>%
@@ -753,11 +762,11 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     mutate(geographic_level = "COUNTRY") %>%
     relocate(area, geographic_level, .before = `2021`) %>%
     mutate_at(c(3:8), as.character)
-
+  
   LADU <- C_LADLEP2020 %>%
-    select("LAD21CD", "LAD21NM") %>%
+    select('LAD21CD', 'LAD21NM') %>%
     distinct()
-
+  
   addLADU <- LADU %>%
     left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
     rename(area = LAD21NM) %>%
@@ -765,7 +774,7 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     mutate(geographic_level = "LADU") %>% # rename as LADU
     relocate(geographic_level, .after = area) %>%
     mutate_at(c(3:8), as.character)
-
+  
   addLEP <- C_LADLEP2020 %>%
     left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
     filter(is.na(LEP) == FALSE) %>% # remove non-english
@@ -779,7 +788,7 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(3:8), as.character) # Convert to sring to bind
-
+  
   addLSIP <- C_LADLSIP2020 %>%
     left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
     filter(is.na(LSIP) == FALSE) %>% # remove non-english
@@ -793,7 +802,7 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(3:8), as.character) # Convert to sring to bind
-
+  
   addMCA <- C_mcalookup %>%
     left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
     select(-c(1:3)) %>%
@@ -806,13 +815,14 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(3:8), as.character) # Convert to sring to bind
-
+  
   combined <- bind_rows(addLADU, addLEP, addLSIP, addMCA, England) %>%
     melt(id.vars = c("geographic_level", "area")) %>%
     rename(year = variable) %>%
     filter(!is.na(area)) %>%
     relocate(geographic_level, .after = area) %>%
     mutate_at(c(3), as.character) # Convert to sring to bind
+  
 }
 
 # format data
@@ -823,28 +833,28 @@ F_deaths_ONS1621 <- format.bussdemo.ONS(I_deaths_ONS1618, I_deaths_ONS19, I_deat
 F_active_ONS1621 <- format.bussdemo.ONS(I_active_ONS1618, I_active_ONS19, I_active_ONS20, I_active_ONS21) %>%
   rename(active = value)
 
-# combine dataframes
+#combine dataframes
 df_list <- list(F_births_ONS1621, F_deaths_ONS1621, F_active_ONS1621)
 
 D_enterprise_demo1621 <- df_list %>%
-  reduce(full_join, by = c("year", "area", "geographic_level"))
+  reduce(full_join, by=c('year', 'area', 'geographic_level'))
 
-# write data to download
+#write data to download
 write.csv(D_enterprise_demo1621, file = "Data\\AppData\\D_enterprise_demo1621.csv", row.names = FALSE)
 
 # dashboard data
 C_enterprise_demo1621 <- df_list %>%
-  reduce(full_join, by = c("year", "area", "geographic_level")) %>%
+  reduce(full_join, by=c('year', 'area', 'geographic_level')) %>%
   mutate_at(c(4:6), as.numeric) %>%
   replace(is.na(.), 0) %>%
-  mutate(total = rowSums(.[4:6]), births_prop = births / total, active_prop = active / total, deaths_prop = deaths / total) %>%
+  mutate(total = rowSums(.[4:6]), births_prop = births/total, active_prop = active/total, deaths_prop = deaths/total) %>%
   select(-c(4:7)) %>%
   rename(births = births_prop, deaths = deaths_prop) %>%
   select(-active_prop) %>%
   melt(id.vars = c("geographic_level", "area", "year")) %>%
   rename(rate = value)
 
-# write data to folder
+#write data to folder
 write.csv(C_enterprise_demo1621, file = "Data\\AppData\\C_enterprise_demo1621.csv", row.names = FALSE)
 
 
@@ -854,7 +864,7 @@ write.csv(C_enterprise_demo1621, file = "Data\\AppData\\C_enterprise_demo1621.cs
 
 format.ks4 <- function(x) {
   colnames(x)[1] <- "area"
-
+  
   addcountry <- x %>%
     select(-location_code, -characteristic, -data_type, -institution_group, -level_methodology) %>%
     select(-c(1:2)) %>%
@@ -963,7 +973,7 @@ format.ks5 <- function(x) {
     mutate(area = "England") %>%
     mutate(geographic_level = "COUNTRY") %>%
     relocate(area, geographic_level, .before = time_period)
-
+  
 
   addladu <- x %>%
     select(-location_code, -characteristic, -data_type, -institution_group, -level_methodology) %>%
@@ -1044,25 +1054,23 @@ D_KS5destin_1721 <- F_KS5destin_1721 %>%
 # write data to folder
 write.csv(D_KS5destin_1721, file = "Data\\AppData\\D_KS5destin_1721.csv", row.names = FALSE)
 
-# merge KS4 and KS5 into one dataframe for destinations tab graph
-# dashboard data
+#merge KS4 and KS5 into one dataframe for destinations tab graph
+#dashboard data
 C_KS4_KS5_2021 <- F_KS4destin_1521 %>%
   mutate(`Cohort Group` = "Total") %>%
   mutate(`Key Stage` = "KS4") %>%
   filter(time_period == "202021") %>%
   bind_rows(
     F_KS5destin_1721 %>%
-      filter(time_period == "202021") %>%
-      mutate(`Key Stage` = "KS5")
-  ) %>%
+      filter(time_period == "202021") %>% 
+      mutate(`Key Stage` = "KS5")) %>%
   relocate(`Key Stage`, .after = geographic_level) %>%
-  mutate_at(c(5:10), as.numeric) %>%
-  mutate(
-    edrate = .[[5]] / .[[10]],
-    apprate = .[[6]] / .[[10]],
-    emprate = .[[7]] / .[[10]],
-    notrecrate = .[[8]] / .[[10]],
-    unkrate = .[[9]] / .[[10]]
+  mutate_at(c(5:10), as.numeric) %>% 
+  mutate(edrate = .[[5]] / .[[10]],
+         apprate = .[[6]] / .[[10]],
+         emprate = .[[7]] / .[[10]],
+         notrecrate = .[[8]] / .[[10]],
+         unkrate = .[[9]] / .[[10]]
   ) %>%
   select(-c(5:10)) %>%
   rename(
@@ -1074,28 +1082,40 @@ C_KS4_KS5_2021 <- F_KS4destin_1521 %>%
   ) %>%
   melt(id.vars = c("time_period", "geographic_level", "area", "Cohort Group", "Key Stage")) %>%
   rename(rate = value)
-
+  
 
 # write data to folder
 write.csv(C_KS4_KS5_2021, file = "Data\\AppData\\C_KS4_KS5_2021.csv", row.names = FALSE)
 
 # employment and education
-C_KS4_KS5eduemp_2021 <- F_KS4destin_1521 %>%
+C_KS4_KS5eduempapp <- F_KS4destin_1521 %>%
   mutate(`Cohort Group` = "Total") %>%
   mutate(`Key Stage` = "KS4") %>%
-  filter(time_period == "202021") %>%
+ # filter(time_period == "202021") %>%
   bind_rows(
     F_KS5destin_1721 %>%
-      filter(time_period == "202021") %>%
-      mutate(`Key Stage` = "KS5")
-  ) %>%
-  select(-"Unknown", -"Not Recorded", -"Sustained Apprenticeships") %>%
-  mutate_at(c(4:6), as.numeric) %>%
-  mutate(rate = (`Sustained Employment` + `Sustained Education`) / Total) %>%
-  mutate(variable = "Sustained Education and Employment")
+    #  filter(time_period == "202021") %>% 
+      mutate(`Key Stage` = "KS5")) %>%
+  select(-"Unknown", -"Not Recorded") %>%
+  mutate_at(c(4:7), as.numeric) %>% 
+  mutate(positive_sust_count = `Sustained Employment` + `Sustained Education` + `Sustained Apprenticeships`) %>%
+  mutate(rate = positive_sust_count/ Total) %>%
+  mutate(positive_sust = "Sust edu, emp and app") %>%
+  mutate(AY = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
+  mutate(Year = as.numeric(substr(time_period, 3, 4))) # add year name for charts
 
-# write data to folder
-write.csv(C_KS4_KS5eduemp_2021, file = "Data\\AppData\\C_KS4_KS5eduemp_2021.csv", row.names = FALSE)
+# write data to folder          
+write.csv(C_KS4_KS5eduempapp, file = "Data\\AppData\\C_KS4_KS5eduempapp.csv", row.names = FALSE)
+
+# create max and KS5 positive sustained destination  rate by area for use in setting axis
+C_KS4_KS5eduempapp_max_min <- C_KS4_KS5eduempapp %>%
+  filter(`Cohort Group` == "Total",
+         `Key Stage` == "KS5") %>%
+  filter(geographic_level != "LADU") %>%
+ # group_by(area) %>%
+  summarise(minks5 = min(rate), maxks5 = max(rate))
+write.csv(C_KS4_KS5eduempapp_max_min, file = "Data\\AppData\\C_KS4_KS5eduempapp_max_min.csv", row.names = FALSE)
+
 
 
 # employment by industry
@@ -1177,18 +1197,18 @@ D_EmpInd_APS1822 <- format.EmpInd.APS(I_empind_APS1822) %>%
 # write the data to folder
 write.csv(D_EmpInd_APS1822, file = "Data\\AppData\\D_EmpInd_APS1822.csv", row.names = FALSE)
 
-# transform
+#transform
 # qualification level by age and gender
 format.qual.APS <- function(x) {
   reformat <- x %>%
     mutate(year = ifelse(annual.population.survey == "date", substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
-    fill(year) %>% # fill time periods for all rows
+    fill(year)%>% # fill time periods for all rows
     row_to_names(row_number = 4) %>% # set col names
     clean_names() %>%
-    select(-starts_with("na")) %>% # remove na columns (flags and confidence)
+    select(-starts_with("na"))%>% # remove na columns (flags and confidence)
     mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
     filter(check == 1) %>%
-    filter(!grepl("nomisweb", area)) %>%
+    filter(!grepl("nomisweb", area))%>%
     select(year = x2017, area, everything(), -check) %>% # reorder and remove
     mutate(area2 = gsub(".*-", "", area)) %>%
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
@@ -1208,85 +1228,87 @@ format.qual.APS <- function(x) {
     # mutate(year = as.numeric(substr(year, 5, 8))) %>%
     rename_with(
       .fn = ~ str_replace_all(.x, c("t19_" = "", "_" = " ")),
-      .cols = starts_with("t19_")
-    ) %>%
-    rename_with(~ gsub("^[0-9]", "", .)) %>% # get rid of numbers at begining of column names
-    rename_with(~ gsub("^[0-9]", "", .)) %>%
+      .cols = starts_with("t19_")) %>%
+    rename_with(~gsub("^[0-9]", "", .)) %>% # get rid of numbers at begining of column names
+    rename_with(~gsub("^[0-9]", "", .)) %>%
     mutate(geographic_level = toupper(geographic_level)) %>%
     melt(id.vars = c("year", "geographic_level", "area")) %>%
-    mutate(group = case_when(
-      grepl("all people", variable) ~ "Total",
-      grepl("females", variable) ~ "Female",
-      grepl("males", variable) ~ "Male"
-    )) %>%
+    mutate(group = case_when(grepl("all people", variable) ~ "Total",
+                             grepl("females", variable) ~ "Female",
+                             grepl("males", variable) ~ "Male")) %>%
     mutate(variable = trimws(variable)) %>% # get rid white space at begining
-    mutate(variable = sub("(.)", "\\U\\1", variable, perl = TRUE)) %>%
-    mutate(Level = case_when(
-      grepl("none", variable) ~ "None",
-      grepl("nvq1", variable) ~ "NVQ1",
-      grepl("nvq2", variable) ~ "NVQ2",
-      grepl("trade apprenticeships", variable) ~ "Trade Apprenticeships",
-      grepl("nvq3", variable) ~ "NVQ3",
-      grepl("nvq4", variable) ~ "NVQ4",
-      grepl("other qualifications", variable) ~ "Other Qualifications"
-    )) %>%
-    mutate(age_band = case_when(
-      grepl("aged 16 64", variable) ~ "16-64",
-      grepl("aged 16 19", variable) ~ "16-19",
-      grepl("aged 20 24", variable) ~ "20-24",
-      grepl("aged 25 29", variable) ~ "25-29",
-      grepl("aged 30 39", variable) ~ "30-39",
-      grepl("aged 40 49", variable) ~ "40-49",
-      grepl("aged 50 64", variable) ~ "50-64"
-    )) %>%
+    mutate(variable = sub("(.)", "\\U\\1", variable, perl=TRUE)) %>%
+    mutate(Level = case_when(grepl("none", variable) ~ "None",
+                             grepl("nvq1", variable) ~ "NVQ1",
+                             grepl("nvq2", variable) ~ "NVQ2",
+                             grepl("trade apprenticeships", variable) ~ "Trade Apprenticeships",
+                             grepl("nvq3", variable) ~ "NVQ3",
+                             grepl("nvq4", variable) ~ "NVQ4",
+                             grepl("other qualifications", variable) ~ "Other Qualifications")) %>%
+    mutate(age_band = case_when(grepl("aged 16 64", variable) ~ "16-64",
+                                grepl("aged 16 19", variable) ~ "16-19",
+                                grepl("aged 20 24", variable) ~ "20-24",
+                                grepl("aged 25 29", variable) ~ "25-29",
+                                grepl("aged 30 39", variable) ~ "30-39",
+                                grepl("aged 40 49", variable) ~ "40-49",
+                                grepl("aged 50 64", variable) ~ "50-64")) %>%
     select(area, everything(), -variable) %>%
-    filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
-}
+    filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA")) %>%
+    rename(gender = group)
+}  
 
 
 # format data
 F_qual_APS1721 <- format.qual.APS(I_qual_APS1721) %>%
   mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>%
-  mutate_at(c(4:4), as.numeric) %>%
+  mutate_at(c(4:4), as.numeric) %>% 
   mutate(value = ifelse(is.na(value), 0, value))
 
-# dashboard data formatting
+#dashboard data formatting
 C_qual_APS1721 <- F_qual_APS1721 %>%
-  group_by(area, year, geographic_level, group, age_band) %>%
+  group_by(area, year, geographic_level, gender, age_band) %>% 
   summarise(Total = sum(`value`))
 
-C_qual2_APS1721 <- F_qual_APS1721 %>%
-  left_join(C_qual_APS1721, by = c(
-    "area" = "area", "year" = "year",
-    "geographic_level" = "geographic_level",
-    "group" = "group", "age_band" = "age_band"
-  )) %>%
-  mutate(rate = value / Total) %>%
-  select(-Total)
+C_qual2_APS1721 <-  F_qual_APS1721 %>%
+  left_join(C_qual_APS1721, by = c('area' = 'area', 'year' = 'year',
+                                   'geographic_level' = 'geographic_level',
+                                   'gender' = 'gender', 'age_band' = 'age_band')) %>%
+  mutate(rate = value/Total) %>%
+  select(-Total) %>%
+  mutate(Year = as.numeric(substr(year, 3, 4))) # add year name for charts
 
-# Dashboard data
+#Dashboard data 
 write.csv(C_qual2_APS1721, file = "Data\\AppData\\C_qual2_APS1721.csv", row.names = FALSE)
 
-# dashboard data - level 3 and below
+# create max and min for use in setting axis
+C_qual2_max_min <- C_qual2_APS1721 %>%
+  filter(geographic_level != "LADU", Level == "NVQ4",
+         age_band == "16-64",
+         gender == "Total") %>%
+  summarise(minnvq4 = min(rate), maxnvq4 = max(rate))
+write.csv(C_qual2_max_min, file = "Data\\AppData\\C_qual2_max_min.csv", row.names = FALSE)
+
+
+# dashboard data - level 3 and below 
 C_qualevel3_APS1721 <- F_qual_APS1721 %>%
   filter(Level %in% c("NVQ1", "NVQ2", "Trade Apprenticeships", "NVQ3", "None")) %>%
-  group_by(area, year, geographic_level, group, age_band) %>%
+  group_by(area, year, geographic_level, gender, age_band) %>% 
   summarise(value2 = sum(`value`)) %>%
   mutate(Level = "Level 3 and below") %>%
-  left_join(C_qual_APS1721, by = c(
-    "area" = "area", "year" = "year",
-    "geographic_level" = "geographic_level",
-    "group" = "group", "age_band" = "age_band"
-  )) %>%
-  mutate(rate = value2 / Total) %>%
+  left_join(C_qual_APS1721, by = c('area' = 'area', 'year' = 'year',
+                                   'geographic_level' = 'geographic_level',
+                                   'gender' = 'gender', 'age_band' = 'age_band')) %>%
+  mutate(rate = value2/Total) %>%
   select(-Total)
-
-# Dashboard data
+  
+#Dashboard data 
 write.csv(C_qualevel3_APS1721, file = "Data\\AppData\\C_qualevel3_APS1721.csv", row.names = FALSE)
 
 # Downloadable version
 D_qual_APS1721 <- format.qual.APS(I_qual_APS1721) %>%
-  mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+  mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x"))) %>%
+  rename(count = value)
+
 # write the data to folder
 write.csv(D_qual_APS1721, file = "Data\\AppData\\D_qual_APS1721.csv", row.names = FALSE)
 

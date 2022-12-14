@@ -30,6 +30,9 @@ D_qual_APS1721 <- read.csv(file = "./Data/AppData/D_qual_APS1721.csv", check.nam
 # data for dashboard
 C_qual2_APS1721 <- read.csv(file = "./Data/AppData/C_qual2_APS1721.csv", check.names = FALSE)
 
+# data for dashboard
+C_qual2_max_min <- read.csv(file = "./Data/AppData/C_qual2_max_min.csv", check.names = FALSE)
+
 # data for dashbaord level 3 and below
 C_qualevel3_APS1721 <- read.csv(file = "./Data/AppData/C_qualevel3_APS1721.csv", check.names = FALSE)
 
@@ -58,12 +61,18 @@ C_Vacancy_England_change <- read.csv(file = "./Data/AppData/C_Vacancy_England_ch
 # data for download
 D_empent_UBC1822 <- read.csv(file = "./Data/AppData/D_empent_UBC1822.csv", check.names = FALSE)
 
+# data for dashboard
+C_empent2_UBC1822 <- read.csv(file = "./Data/AppData/C_empent2_UBC1822.csv", check.names = FALSE)
+
 ## Enterprise by employment size and industry----
 # data for download
 D_empentind_UBC1822 <- read.csv(file = "./Data/AppData/D_empentind_UBC1822.csv", check.names = FALSE)
 
 # data for dashboard
 C_empentind3_UBC1822 <- read.csv(file = "./Data/AppData/C_empentind3_UBC1822.csv", check.names = FALSE)
+
+#data for dashboard
+C_empentind_max_min <- read.csv(file = "./Data/AppData/C_empentind_max_min.csv", check.names = FALSE)
 
 # Enterprise births, deaths and active
 # data for download
@@ -82,7 +91,10 @@ D_KS5destin_1721 <- read.csv(file = "./Data/AppData/D_KS5destin_1721.csv", check
 C_KS4_KS5_2021 <- read.csv(file = "./Data/AppData/C_KS4_KS5_2021.csv", check.names = FALSE)
 
 # data for dashboard
-C_KS4_KS5eduemp_2021 <- read.csv(file = "./Data/AppData/C_KS4_KS5eduemp_2021.csv", check.names = FALSE)
+C_KS4_KS5eduempapp <- read.csv(file = "./Data/AppData/C_KS4_KS5eduempapp.csv", check.names = FALSE)
+
+# data for dashboard
+C_KS4_KS5eduempapp_max_min <- read.csv(file = "./Data/AppData/C_KS4_KS5eduempapp_max_min.csv", check.names = FALSE)
 
 
 ## Data table ----
