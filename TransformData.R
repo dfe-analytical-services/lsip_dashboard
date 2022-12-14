@@ -810,7 +810,7 @@ addEngland<- data.frame (areaName  = "England",areaCode="x",
 neatGeog<-bind_rows(neatMCA,neatLEP,addEngland,neatLA)
 # add on data
 C_Geog<-neatGeog%>%
-  left_join(C_EmpRate_APS1822 %>% filter(year == 2021), by = c("areaName" = "area", "geog"="geographic_level"))%>%
+  left_join(C_EmpRate_APS1822 %>% filter(year == 2022), by = c("areaName" = "area", "geog"="geographic_level"))%>%
 left_join(C_Achieve_ILR1621 %>% filter(time_period == 202021, level_or_type=="Further education and skills: Total",age_group=="Total")%>%
             mutate(geographic_level=case_when(geographic_level=="National" ~"COUNTRY",TRUE~geographic_level))%>%
             mutate(geographic_level=case_when(geographic_level=="Local authority district" ~"LADU",TRUE~geographic_level)),

@@ -189,7 +189,7 @@ server <- function(input, output, session) {
   })
 
   output$geoComp <- renderUI({
-    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
     areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
     if (input$splashGeoType == "LEP") {
       selectizeInput("geoComps",
@@ -1598,7 +1598,7 @@ server <- function(input, output, session) {
   #create map header
   output$titleMap <- renderUI({
     #get current area
-    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
     areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
     paste0("Where does ",areaClicked," fit in the national picture?")
   })
@@ -1606,7 +1606,7 @@ server <- function(input, output, session) {
   #create map comment
   output$commentMap <- renderUI({
     #get current area
-    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
     areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
     compareNational<-
     if((C_Geog %>%
@@ -1631,7 +1631,17 @@ server <- function(input, output, session) {
   
   #draw map
   output$map <- renderLeaflet({
-    if(input$splashGeoType=="LEP"){baseArea<-"E37000001"}else{baseArea<-"E47000001"}
+    if(input$splashGeoType=="LEP"){
+    #if("map_shape_click" %in% names(input)){
+    #  baseAreaLEP<-input$map_shape_click$id}
+    #else {
+      baseAreaLEP<-"E37000025"}#}
+    #if("map_shape_click" %in% names(input)){
+    #  baseAreaMCA<-input$map_shape_click$id}
+    else{baseAreaMCA<-"E47000010"}
+    
+    if(input$splashGeoType=="LEP"){baseArea<-baseAreaLEP}else{baseArea<-baseAreaMCA}
+    
     mapData<-C_Geog%>%filter(geog==input$splashGeoType)
     pal <- colorNumeric("Blues", mapData[[input$splashMetric]]) ## 6BACE6 c("#FFFFFF", "#12436D")
 
@@ -1675,30 +1685,104 @@ server <- function(input, output, session) {
           style = list("font-weight" = "normal", padding = "3px 8px"),
           textsize = "12px",
           direction = "auto"
-        )
-      ) %>%
-      #highlight first polygon chose (Black Country)
-      addPolygons(
-        data = mapData%>%filter(areaCode==baseArea),
-        fillColor = ~ pal(mapData[[input$splashMetric]]),
-        color = "black",
-        layerId = ~areaCode,
-        weight = 3,
-        highlightOptions = highlightOptions(
-          weight = 2,
-          bringToFront = TRUE
         ),
-        label = labelsChosen,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "12px",
-          direction = "auto"
-        ))%>%
+        popup=labels,
+        popupOptions = popupOptions(style = list("font-weight" = "normal", padding = "0px 0px"),
+                                    textsize = "12px",
+                                    direction = "auto",
+                                    closeOnClick = TRUE,
+                                    closeButton =FALSE)
+      ) %>%
+    #   #highlight first polygon chose (Black Country)
+    #   addPolygons(
+    #     data = mapData%>%filter(areaCode==baseArea),
+    #     fillColor = ~ pal(mapData[[input$splashMetric]]),
+    #     color = "black",
+    #     layerId = ~areaCode,
+    #     weight = 3,
+    #     highlightOptions = highlightOptions(
+    #       weight = 2,
+    #       bringToFront = TRUE
+    #     ),
+    #     label = labelsChosen,
+    #     labelOptions = labelOptions(
+    #       style = list("font-weight" = "normal", padding = "3px 8px"),
+    #       textsize = "12px",
+    #       direction = "auto"
+    #     ))%>%
       setView(lng = -1.6, lat = 52.8, zoom = 5.7)
   })
   
-  observeEvent(input$map_shape_click$id,{
-    mapData<-C_Geog%>%filter(geog==input$splashGeoType)
+  # observeEvent(input$map_shape_click$id,{
+  #   mapData<-C_Geog%>%filter(geog==input$splashGeoType)
+  #   pal <- colorNumeric("Blues", mapData[[input$splashMetric]]) ## 6BACE6 c("#FFFFFF", "#12436D")
+  #   
+  #   labels <-       if(input$splashMetric=="empRate"){
+  #     sprintf(
+  #       "<strong>%s</strong><br/>Employment rate: %s%%",
+  #       mapData$areaName, round(mapData[[input$splashMetric]]*100)
+  #     )%>% lapply(htmltools::HTML) }else{
+  #       sprintf(
+  #         "<strong>%s</strong><br/>FE achievements per 100,000: %s",
+  #         mapData$areaName, round(mapData[[input$splashMetric]])
+  #       )%>% lapply(htmltools::HTML)
+  #     }
+  #   labelsChosen <- if(input$splashMetric=="empRate"){
+  #     sprintf(
+  #     "<strong>%s</strong><br/>Employment rate: %s%%",
+  #     (mapData%>%filter(areaCode==input$map_shape_click$id))$areaName, round((mapData%>%filter(areaCode==input$map_shape_click$id))[[input$splashMetric]]*100)
+  #     ) %>% lapply(htmltools::HTML)}
+  #   else{
+  #     sprintf(
+  #       "<strong>%s</strong><br/>FE achievements per <br/>100,000: %s",
+  #       (mapData%>%filter(areaCode==input$map_shape_click$id))$areaName, round((mapData%>%filter(areaCode==input$map_shape_click$id))[[input$splashMetric]])
+  #     ) %>% lapply(htmltools::HTML)
+  #   }
+  #   
+  #   leafletProxy("map") %>%
+  #     #removeShape(layerId =input$map_shape_click$id)%>%
+  #     addPolygons(
+  #       data = mapData,
+  #       fillColor = ~ pal(mapData[[input$splashMetric]]),
+  #       color = "black",
+  #       layerId = ~areaCode,
+  #       weight = 1,
+  #       highlightOptions = highlightOptions(
+  #         weight = 2,
+  #         bringToFront = TRUE
+  #       ),
+  #       label = labels,
+  #       labelOptions = labelOptions(
+  #         style = list("font-weight" = "normal", padding = "3px 8px"),
+  #         textsize = "12px",
+  #         direction = "auto"
+  #       )
+  #     ) %>%
+  #     addPolygons(
+  #       data = mapData%>%filter(areaCode==input$map_shape_click$id),
+  #       fillColor = ~ pal(mapData[[input$splashMetric]]),
+  #       color = "black",
+  #       layerId = ~areaCode,
+  #       weight = 3,
+  #       highlightOptions = highlightOptions(
+  #         weight = 2,
+  #         bringToFront = TRUE
+  #       ),
+  #       label = labelsChosen,
+  #       labelOptions = labelOptions(
+  #         style = list("font-weight" = "normal", padding = "3px 8px"),
+  #         textsize = "12px",
+  #         direction = "auto"
+  #       )
+  #     )
+  # })
+
+  #make LA map
+  output$mapLA <- renderLeaflet({
+    #get current region
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
+    #Filter to those LAs in that region
+    mapData<-C_Geog%>%filter(geog=="LADU",eval(parse(text = input$splashGeoType))==C_Geog$areaName[C_Geog$areaCode == event$id])
     pal <- colorNumeric("Blues", mapData[[input$splashMetric]]) ## 6BACE6 c("#FFFFFF", "#12436D")
     
     labels <-       if(input$splashMetric=="empRate"){
@@ -1711,69 +1795,7 @@ server <- function(input, output, session) {
           mapData$areaName, round(mapData[[input$splashMetric]])
         )%>% lapply(htmltools::HTML)
       }
-    labelsChosen <- if(input$splashMetric=="empRate"){
-      sprintf(
-      "<strong>%s</strong><br/>Employment rate: %s%%",
-      (mapData%>%filter(areaCode==input$map_shape_click$id))$areaName, round((mapData%>%filter(areaCode==input$map_shape_click$id))[[input$splashMetric]]*100)
-      ) %>% lapply(htmltools::HTML)}
-    else{
-      sprintf(
-        "<strong>%s</strong><br/>FE achievements per <br/>100,000: %s",
-        (mapData%>%filter(areaCode==input$map_shape_click$id))$areaName, round((mapData%>%filter(areaCode==input$map_shape_click$id))[[input$splashMetric]])
-      ) %>% lapply(htmltools::HTML)
-    }
     
-    leafletProxy("map") %>%
-      #removeShape(layerId =input$map_shape_click$id)%>%
-      addPolygons(
-        data = mapData,
-        fillColor = ~ pal(mapData[[input$splashMetric]]),
-        color = "black",
-        layerId = ~areaCode,
-        weight = 1,
-        highlightOptions = highlightOptions(
-          weight = 2,
-          bringToFront = TRUE
-        ),
-        label = labels,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "12px",
-          direction = "auto"
-        )
-      ) %>%
-      addPolygons(
-        data = mapData%>%filter(areaCode==input$map_shape_click$id),
-        fillColor = ~ pal(mapData[[input$splashMetric]]),
-        color = "black",
-        layerId = ~areaCode,
-        weight = 3,
-        highlightOptions = highlightOptions(
-          weight = 2,
-          bringToFront = TRUE
-        ),
-        label = labelsChosen,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "12px",
-          direction = "auto"
-        )
-      )
-  })
-
-  #make LA map
-  output$mapLA <- renderLeaflet({
-    #get current region
-    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
-    #Filter to those LAs in that region
-    mapData<-C_Geog%>%filter(geog=="LADU",eval(parse(text = input$splashGeoType))==C_Geog$areaName[C_Geog$areaCode == event$id])
-    pal <- colorNumeric("Blues", mapData[[input$splashMetric]]) ## 6BACE6 c("#FFFFFF", "#12436D")
-    
-    labels <- sprintf(
-      "<strong>%s</strong><br/>Employment rate: %s%%",
-      mapData$areaName,round(mapData[[input$splashMetric]]*100)
-    ) %>% lapply(htmltools::HTML)
-
     leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
       addProviderTiles(providers$CartoDB.Positron) %>% # "Stamen.TonerLite"
       addPolygons(
@@ -1807,7 +1829,7 @@ server <- function(input, output, session) {
   #create time comment
   output$commentTime <- renderUI({
     #get current area
-    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
     areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
     dataTimeCompare<-if(input$splashMetric=="empRate"){
       EmpRateData<-C_EmpRate_APS1822%>%
@@ -1853,7 +1875,7 @@ server <- function(input, output, session) {
   })
   
   Splash_time <- eventReactive(c(input$map_shape_click, input$mapLA_shape_click,input$geoComps,input$levelBar,input$splashMetric), {
-    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
     eventLA <- input$mapLA_shape_click
     #clean up FE data - move to transform data
     FeData<-C_Achieve_ILR1621%>%
@@ -1935,15 +1957,17 @@ server <- function(input, output, session) {
   
   #create breakdown header
   output$titleBreakdown <- renderUI({
-    paste0("How does ",if(input$splashMetric=="empRate"){"employment rate"}else{"FE achievements per 100,000"}," vary by ",
+    paste0("How does ",if(input$splashMetric=="empRate"){"employment"}else{"FE achievements per 100,000"}," vary by ",
            if(input$splashBreakdown=="typeNeat"){"provision"}
-           else{if(input$splashBreakdown=="level_or_type"){"level"}else{"age"}},"?")
+           else if(input$splashBreakdown=="level_or_type"){"level"}
+           else if(input$splashBreakdown=="Occupation"){"occupation"}
+           else{"age"},"?")
   })
   
   #create breakdown comment
   output$commentBreakdown <- renderUI({
     #get current area
-    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
     areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
     compareNational<-
       if((C_Geog %>%
@@ -1953,12 +1977,15 @@ server <- function(input, output, session) {
           filter(geog == "COUNTRY" & areaName == "England"))[[input$splashMetric]]
       ){"higher"}else{"lower"}
     metricUsed<-if(input$splashMetric=="empRate"){" employment rate "}else{" FE achievements per 100,000 "}
-    subgroup<-if(input$splashBreakdown=="Occupation"){"Administration"}else{"19-25 year olds"}
+    subgroup<-if(input$splashBreakdown=="Occupation"){"Science research"}
+    else if(input$splashBreakdown=="typeNeat"){"Education and training learners"}
+    else if(input$splashBreakdown=="level_or_type"){"level 3"}
+    else{"19-24 year olds"}
 paste0(areaClicked, " has a ",compareNational,metricUsed,"in ",subgroup," than the national average.")
   })
   
   Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$levelBar, input$sexBar, input$metricBar,input$splashBreakdown,input$mapLA_shape_click), {
-    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000001"))}
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
     eventLA <- input$mapLA_shape_click
       if(input$splashMetric=="empRate"){
         allAreas <- C_EmpOcc_APS1721 %>%
@@ -2026,7 +2053,7 @@ paste0(areaClicked, " has a ",compareNational,metricUsed,"in ",subgroup," than t
       #"Breakdown: ", input$splashBreakdown, "<br>",
       "Area: ", Area, "<br>",
       #"Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(metric, 2)), "<br>",
-      input$splashBreakdown, ": ", metric, "<br>"
+      input$splashBreakdown, ": ", if(input$splashMetric=="empRate"){scales::percent(round(metric, 2))}else{round(metric,0)}, "<br>"
     ))) +
       geom_col(
         position = "dodge"
