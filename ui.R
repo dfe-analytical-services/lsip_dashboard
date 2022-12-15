@@ -307,18 +307,22 @@ padding-top:15px
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("29 Nov 2022 (0.2.3)"),
+              p("20 Dec 2022 (0.2.4)"),
               tags$ul(
-                tags$li("Included MCA areas."),
-                tags$li("Employment data for LEPs, LSIPs and MCAs taken directly from the APS data (previously aggregated from LAs)."),
-                tags$li("Industry (SIC 2007) breakdown added to the Employment page."),
-                tags$li("Characteristic and course breakdowns added to the Skills page."),
-                tags$li("Updated ILR data to the final AY21/22 data.")
+                tags$li("Included three new tabs; 1) highest qualification by gender and age, 2) KS4 adn KS5 destinations and 3) enterprise count by employment size band and industry.")
+
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("29 Nov 2022 (0.2.3)"),
+                  tags$ul(
+                    tags$li("Included MCA areas."),
+                    tags$li("Employment data for LEPs, LSIPs and MCAs taken directly from the APS data (previously aggregated from LAs)."),
+                    tags$li("Industry (SIC 2007) breakdown added to the Employment page."),
+                    tags$li("Characteristic and course breakdowns added to the Skills page."),
+                    tags$li("Updated ILR data to the final AY21/22 data.")),
                   p("25 Oct 2022 (0.2.2)"),
                   p("Applied fixes and included new datasets to the data sources page."),
                   br(),

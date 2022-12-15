@@ -2288,7 +2288,7 @@ server <- function(input, output, session) {
         "Year: ", year, "<br>",
         "Area: ", area, "<br>",
         "Percentage: ", scales::percent(round(rate, 2)), "<br>",
-        "Group: ", gender, "<br>",
+        "Gender: ", gender, "<br>",
         "Qualification: ", input$qualGroup, "<br>",
         "Age band: ", input$ageGroupQual, "<br>"
       )
@@ -3056,8 +3056,10 @@ server <- function(input, output, session) {
   ### Downloads----
   # download destinations indicators
   list_of_datasets6 <- list(
-    "6a. Enterprise demography" = D_enterprise_demo1621,
-    "6b. Enterprise by emp size and industry" = D_empentind_UBC1822
+    "6a. Ent by emp sizey" = D_empent_UBC1822,
+    "6b. Ent by emp size and industry" = D_empentind_UBC1822,
+    "6c. Enterprise demography" = D_enterprise_demo1621
+   
   )
   output$download_btn6a <- downloadHandler(
     filename = function() {
