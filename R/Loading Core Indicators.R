@@ -71,7 +71,7 @@ D_empentind_UBC1822 <- read.csv(file = "./Data/AppData/D_empentind_UBC1822.csv",
 # data for dashboard
 C_empentind3_UBC1822 <- read.csv(file = "./Data/AppData/C_empentind3_UBC1822.csv", check.names = FALSE)
 
-#data for dashboard
+# data for dashboard
 C_empentind_max_min <- read.csv(file = "./Data/AppData/C_empentind_max_min.csv", check.names = FALSE)
 
 # Enterprise births, deaths and active

@@ -310,7 +310,6 @@ padding-top:15px
               p("20 Dec 2022 (0.2.4)"),
               tags$ul(
                 tags$li("Included three new tabs; 1) highest qualification by gender and age, 2) KS4 adn KS5 destinations and 3) enterprise count by employment size band and industry.")
-
               ),
               details(
                 label = "Previous updates",
@@ -322,7 +321,8 @@ padding-top:15px
                     tags$li("Employment data for LEPs, LSIPs and MCAs taken directly from the APS data (previously aggregated from LAs)."),
                     tags$li("Industry (SIC 2007) breakdown added to the Employment page."),
                     tags$li("Characteristic and course breakdowns added to the Skills page."),
-                    tags$li("Updated ILR data to the final AY21/22 data.")),
+                    tags$li("Updated ILR data to the final AY21/22 data.")
+                  ),
                   p("25 Oct 2022 (0.2.2)"),
                   p("Applied fixes and included new datasets to the data sources page."),
                   br(),
@@ -445,7 +445,7 @@ padding-top:15px
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
 Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset."),
           h3("KS4 and KS5 destinations"),
-          p("Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education, employment or an apprenticeship 
+          p("Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education, employment or an apprenticeship
             in the academic year following completion of their qualification:"),
           tags$ul(
             tags$li("Key Stage 4 (year 10 and 11 students) includes GCSEs and equivalent qualifications"),

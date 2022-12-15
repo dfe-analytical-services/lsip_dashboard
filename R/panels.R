@@ -704,15 +704,15 @@ panel_destinations <- function() {
     ### KPI boxes ----
     fluidRow(
       valueBoxOutput("destup.eduempks4"),
-      valueBoxOutput("destup.eduempks5")),
-   
+      valueBoxOutput("destup.eduempks5")
+    ),
     fluidRow(
       uiOutput("dest_comp")
     ),
-   
-    fluidRow(valueBoxOutput("destup.eduempks4eng"),
-             valueBoxOutput("destup.eduempks5eng")),
-  
+    fluidRow(
+      valueBoxOutput("destup.eduempks4eng"),
+      valueBoxOutput("destup.eduempks5eng")
+    ),
     details(
       label = "Source: National Pupil Database",
       inputId = "destSource",
@@ -730,8 +730,8 @@ panel_destinations <- function() {
             column(
               width = 4,
               selectInput("keystageGroup", "Choose key stage level",
-                          choices = C_KS4_KS5_2021 %>% distinct(Level = `Key Stage`),
-                          multiple = FALSE, selected = "KS4"
+                choices = C_KS4_KS5_2021 %>% distinct(Level = `Key Stage`),
+                multiple = FALSE, selected = "KS4"
               )
             ),
             column(
@@ -776,7 +776,6 @@ panel_destinations <- function() {
             tags$li("A sustained apprenticeship is recorded when 6 months continuous participation is recorded at any point in the destination year (between August 2020 and July 2021)."),
             tags$li("Not recorded as a sustained destination: This includes pupils who were captured in the destination source data but who failed to meet the sustained participation criteria."),
             tags$li("Unknown (activity not captured): The student was not found to have any participation in education, apprenticeship or employment nor recorded as receiving out-of-work benefits at any point in the year. This also includes not being recorded by their Local Authority as NEET (not engaged in education, employment or training).")
-            
           )
         )
       )
@@ -838,7 +837,6 @@ panel_enterprise <- function() {
         tags$li("Overall total may not equal the sum of all industries due to rounding and suppression.")
       )
     ),
-    
     fluidRow(
       column(
         12,
@@ -856,7 +854,6 @@ panel_enterprise <- function() {
         tags$li("Overall total may not equal the sum of all industries due to rounding and suppression.")
       )
     ),
-    
     fluidRow(
       column(
         12,
@@ -895,7 +892,6 @@ panel_enterprise <- function() {
         tags$li("Overall total may not equal the sum of all industries due to rounding and suppression.")
       )
     ),
-    
     fluidRow(
       column(
         12,
@@ -910,7 +906,6 @@ panel_enterprise <- function() {
         )
       )
     ),
-    
     fluidRow(
       column(
         width = 3,
