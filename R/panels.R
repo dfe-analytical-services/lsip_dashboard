@@ -62,6 +62,44 @@ panel_overview <- function() {
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies")
         ),
+        # fifth row - destinations
+        h3("KS5 positive destination rate"),
+        fluidRow(
+          column(
+            width = 4,
+            div(
+              title = "Source: NPD. 2021 academic year",
+              uiOutput("dest.ks5over"),
+            )
+          ),
+          column(
+            width = 8,
+            plotlyOutput("KS5LineChart", height = 81)
+          )
+        ),
+        fluidRow(
+          class = "rightAlignLinks",
+          actionLink("link_to_tabpanel_destinations2", "Find out more about destinations")
+        ),
+        # sixth row - enterprise
+        h3("Enterprise count: Micro (0-9 employees)"),
+        fluidRow(
+          column(
+            width = 4,
+            div(
+              title = "Source: UBC. 2022 calendar year",
+              uiOutput("UBC.micro"),
+            )
+          ),
+          column(
+            width = 8,
+            plotlyOutput("UBCLineChart", height = 81)
+          )
+        ),
+        fluidRow(
+          class = "rightAlignLinks",
+          actionLink("link_to_tabpanel_enterprise2", "Find out more about enterprises")
+        ),
         br()
       ),
       # right column
@@ -102,6 +140,25 @@ panel_overview <- function() {
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_FE2", "Find out more about skills")
         ),
+        h3("Qualification level: NVQ4 or above"),
+        fluidRow(
+          column(
+            width = 4,
+            div(
+              title = "Source: APS. 2021 calendar year",
+              uiOutput("APS.nvq4plus"),
+            )
+          ),
+          column(
+            width = 8,
+            plotlyOutput("Nvq4plusLineChart", height = 81)
+          )
+        ),
+        # third row - link to emp tab
+        fluidRow(
+          class = "rightAlignLinks",
+          actionLink("link_to_tabpanel_qualification2", "Find out more about qualification level")
+        ),
         br()
       ) # end of right column
     ), # end of data row
@@ -127,7 +184,7 @@ panel_overview <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn0b",
-          label = "Current LEP/LSIP/MCA",
+          label = "Current geographic area",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
@@ -242,7 +299,7 @@ panel_employment <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn1b",
-          label = "Current LEP/LSIP/MCA",
+          label = "Current geographic area",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
@@ -305,7 +362,7 @@ panel_vacancies <- function() {
       column(
         width = 3,
         downloadButton(
-          outputId = "download_btn3a",
+          outputId = "download_btn2a",
           label = "All data   ",
           icon = shiny::icon("download"),
           class = "downloadButton"
@@ -320,8 +377,8 @@ panel_vacancies <- function() {
       column(
         width = 3,
         downloadButton(
-          outputId = "download_btn3b",
-          label = "Current LEP/LSIP/MCA",
+          outputId = "download_btn2b",
+          label = "Current geographic area",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
@@ -490,7 +547,7 @@ panel_skills <- function() {
       column(
         width = 3,
         downloadButton(
-          outputId = "download_btn2a",
+          outputId = "download_btn3a",
           label = "All data   ",
           icon = shiny::icon("download"),
           class = "downloadButton"
@@ -505,8 +562,8 @@ panel_skills <- function() {
       column(
         width = 3,
         downloadButton(
-          outputId = "download_btn2b",
-          label = "Current LEP/LSIP/MCA",
+          outputId = "download_btn3b",
+          label = "Current geographic area",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
@@ -515,4 +572,367 @@ panel_skills <- function() {
     ), # end of row
     column(width = 12, br(""))
   ) # skills panel
+}
+
+# Qualification level
+panel_qualification_level <- function() {
+  tabPanel(
+    "Qualification level",
+    h1(uiOutput("page4title")),
+    p("Highest level of qualification by working age population and gender."),
+
+    ### KPI boxes ----
+    fluidRow(
+      valueBoxOutput("qualup.nvq3"),
+      valueBoxOutput("qualup.nvq4")
+    ),
+    fluidRow(
+      uiOutput("qual_comp")
+    ),
+    details(
+      label = "Source: Annual Population Survey",
+      inputId = "QualSource",
+      tags$ol(
+        tags$li("Figures are for 16-64 year olds."),
+        tags$li("Years represent Jan-Dec period. So 2017 is the Jan 2017 – Dec 2017 period."),
+        tags$li("NVQ3 and below qualifications and NVQ4 or above qualifications will not add up to 100% due to other qualifications."),
+        tags$li("NVQ3 and below consists of NVQ1, NVQ2, Trade Apprenticeships, NVQ3 and None qualifications.")
+      )
+    ),
+    fluidRow(
+      column(
+        12,
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              width = 4,
+              selectInput("ageGroupQual", "Choose age group",
+                choices = C_qual2_APS1721 %>%
+                  distinct(Age = age_band),
+                multiple = FALSE, selected = "16-64"
+              )
+            ),
+            column(
+              width = 4,
+              uiOutput("qual_on")
+            ),
+            column(
+              width = 4,
+              uiOutput("gen_off")
+            )
+          )
+        )
+      )
+    ),
+    fluidRow(
+      column(
+        12,
+        h2(uiOutput("qualtitle")),
+        plotlyOutput("qual_time"),
+        details(
+          label = "Source: Annual Population Survey",
+          inputId = "QualSource",
+          tags$ol(
+            tags$li("Figures are for 16-64 year olds."),
+            tags$li("Years represent Jan-Dec period. So 2017 is the Jan 2017 – Dec 2017 period."),
+            tags$li("NVQ3 and below qualifications and NVQ4 or above qualifications will not add up to 100% due to other qualifications."),
+            tags$li("NVQ3 and below consists of NVQ1, NVQ2, Trade Apprenticeships, NVQ3 and None qualifications.")
+          )
+        )
+      )
+    ),
+
+    ### NVQ qualifications definitions----
+    fluidRow(
+      column(
+        12,
+        details(
+          inputId = "NVQdefs",
+          label = "NVQ qualification definitions",
+          tags$ul(
+            tags$li("NVQ1: 1-4 O Levels/CSE/GCSEs (any grades), Entry Level, Foundation Diploma, NVQ level 1, Foundation GNVQ, Basic/Essential Skills"),
+            tags$li("NVQ2: 5+ O Level (Passes)/CSEs (Grade 1)/GCSEs (Grades A*-C), School Certificate, 1 A Level/ 2-3 AS Levels/VCEs, Intermediate/Higher Diploma, Welsh Baccalaureate Intermediate Diploma, NVQ level 2, Intermediate GNVQ, City and Guilds Craft, BTEC First/General Diploma, RSA Diploma"),
+            tags$li("Trade Apprenticeships: Apprenticeships"),
+            tags$li("NVQ3: 2+ A Levels/VCEs, 4+ AS Levels, Higher School Certificate, Progression/Advanced Diploma, Welsh Baccalaureate Advanced Diploma, NVQ Level 3; Advanced GNVQ, City and Guilds Advanced Craft, ONC, OND, BTEC National, RSA Advanced Diploma"),
+            tags$li("NVQ4 or above: Degree (for example BA, BSc), Higher Degree (for example MA, PhD, PGCE), NVQ Level 4-5, HNC, HND, RSA Higher Diploma, BTEC Higher level, Foundation degree (NI), Professional qualifications (for example teaching, nursing, accountancy)"),
+            tags$li("Other qualifications: Other vocational/work-related Qualifications, Foreign Qualifications (Not Stated / level unknown)"),
+            tags$li("None: No qualifications")
+          )
+        )
+      )
+    ),
+    fluidRow(
+      column(
+        width = 3,
+        downloadButton(
+          outputId = "download_btn4a",
+          label = "All data   ",
+          icon = shiny::icon("download"),
+          class = "downloadButton"
+        )
+      ),
+      column(
+        width = 9,
+        "Download skills data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)"
+      )
+    ), # end of row
+    fluidRow(
+      column(
+        width = 3,
+        downloadButton(
+          outputId = "download_btn4b",
+          label = "Current geographic area",
+          icon = shiny::icon("download"),
+          class = "downloadButton"
+        )
+      ),
+      column(width = 9, p("Download skills data for the selected geographic area"))
+    ), # end of row
+    column(width = 12, br(""))
+  ) # end of qualification tab
+}
+
+# destinations
+panel_destinations <- function() {
+  tabPanel(
+    "Destinations",
+    h1(uiOutput("page5title")),
+    p("Destination measures show the percentage of students going to or remaining in an education, apprenticeship or employment destination in the academic year after completing KS4 studies (usually aged between 14 to 16) and KS5 studies (usually aged 18)."),
+    br(),
+
+    ### KPI boxes ----
+    fluidRow(
+      valueBoxOutput("destup.eduempks4"),
+      valueBoxOutput("destup.eduempks5")
+    ),
+    fluidRow(
+      uiOutput("dest_comp")
+    ),
+    fluidRow(
+      valueBoxOutput("destup.eduempks4eng"),
+      valueBoxOutput("destup.eduempks5eng")
+    ),
+    details(
+      label = "Source: National Pupil Database",
+      inputId = "destSource",
+      tags$ol(
+        tags$li("Data from the national pupil database (NPD) were used to calculate education destinations. The NPD is a longitudinal database linking pupil/student characteristics (for example age, gender and ethnicity) to school and college learning aims and attainment information for children in schools in England."),
+        tags$li("Data based on destinations of state-funded mainstream schools.")
+      )
+    ),
+    fluidRow(
+      column(
+        12,
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              width = 4,
+              selectInput("keystageGroup", "Choose key stage level",
+                choices = C_KS4_KS5_2021 %>% distinct(Level = `Key Stage`),
+                multiple = FALSE, selected = "KS4"
+              )
+            ),
+            column(
+              width = 4,
+              uiOutput("cohort_group_off")
+            )
+          )
+        )
+      )
+    ),
+    br(),
+
+    # Key stage bar chart
+    fluidRow(
+      column(
+        12,
+        h2(uiOutput("keystagetitle")),
+        plotlyOutput("key_stage_2021")
+      )
+    ),
+    column(width = 12, br("")), # put in to push below the fixed height chart
+    column(width = 12, br("")),
+    details(
+      label = "Source: National Pupil Database",
+      inputId = "Key stage source",
+      tags$ol(
+        tags$li("Data from the national pupil database (NPD) were used to calculate education destinations. The NPD is a longitudinal database linking pupil/student characteristics (for example age, gender and ethnicity) to school and college learning aims and attainment information for children in schools in England."),
+        tags$li("Data based on destinations of state-funded mainstream schools.")
+      )
+    ),
+
+    ### sustained destination definitions----
+    fluidRow(
+      column(
+        12,
+        details(
+          inputId = "sustdef",
+          label = "Sustained destination definitions",
+          tags$ul(
+            tags$li("A sustained destination is a count of young people recorded as having sustained participation (education and employment) for a 6 month period in the destination year."),
+            tags$li("This means attending for all of the first two terms of the academic year (e.g. October 2020 to March 2021) at one or more education providers; spending 5 of the 6 months in employment or a combination of the two."),
+            tags$li("A sustained apprenticeship is recorded when 6 months continuous participation is recorded at any point in the destination year (between August 2020 and July 2021)."),
+            tags$li("Not recorded as a sustained destination: This includes pupils who were captured in the destination source data but who failed to meet the sustained participation criteria."),
+            tags$li("Unknown (activity not captured): The student was not found to have any participation in education, apprenticeship or employment nor recorded as receiving out-of-work benefits at any point in the year. This also includes not being recorded by their Local Authority as NEET (not engaged in education, employment or training).")
+          )
+        )
+      )
+    ),
+    fluidRow(
+      column(
+        width = 3,
+        downloadButton(
+          outputId = "download_btn5a",
+          label = "All data   ",
+          icon = shiny::icon("download"),
+          class = "downloadButton"
+        )
+      ),
+      column(
+        width = 9,
+        "Download skills data for all geographies (LEPs, LSIP, MCA areas LAs, regions and England)"
+      )
+    ), # end of row
+    fluidRow(
+      column(
+        width = 3,
+        downloadButton(
+          outputId = "download_btn5b",
+          label = "Current geographic area",
+          icon = shiny::icon("download"),
+          class = "downloadButton"
+        )
+      ),
+      column(width = 9, p("Download skills data for the selected geographic area"))
+    ), # end of row
+    column(width = 12, br(""))
+  ) # end of destinations tab
+}
+
+
+
+# enterprise
+panel_enterprise <- function() {
+  tabPanel(
+    "Enterprises",
+    h1(uiOutput("page6title")),
+    p("An enterprise can be thought of as the overall business, made up of all the individual sites or workplaces."),
+
+    ### KPI boxes ----
+    fluidRow(
+      valueBoxOutput("ent.mic"),
+      valueBoxOutput("ent.sma"),
+      valueBoxOutput("ent.microeng")
+    ),
+    fluidRow(
+      uiOutput("ent_comp")
+    ),
+    details(
+      label = "Source: UK Business Counts",
+      inputId = "UK Business Counts",
+      tags$ol(
+        tags$li("An extract compiled from the Inter Departmental Business Register (IDBR) recording the number of Enterprises that were live at a reference date in March, broken down by employment size band, detailed industry (5 digit SIC2007) and legal status. "),
+        tags$li("Overall total may not equal the sum of all industries due to rounding and suppression.")
+      )
+    ),
+    fluidRow(
+      column(
+        12,
+        h2("Enterprise count by employment size in Mar 2022"),
+        plotlyOutput("enterprisesize")
+      )
+    ),
+    column(width = 12, br("")), # put in to push below the fixed height chart
+    column(width = 12, br("")),
+    details(
+      label = "Source: UK Business Counts",
+      inputId = "UK Business Counts",
+      tags$ol(
+        tags$li("An extract compiled from the Inter Departmental Business Register (IDBR) recording the number of Enterprises that were live at a reference date in March, broken down by employment size band, detailed industry (5 digit SIC2007) and legal status. "),
+        tags$li("Overall total may not equal the sum of all industries due to rounding and suppression.")
+      )
+    ),
+    fluidRow(
+      column(
+        12,
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              width = 4,
+              uiOutput("industry_on")
+            ),
+            column(
+              width = 4,
+              uiOutput("ent_on")
+            )
+          )
+        )
+      )
+    ),
+
+
+    # enterprise
+    fluidRow(
+      column(
+        12,
+        h2(uiOutput("enterprisetitle")),
+        plotlyOutput("enterprise")
+      )
+    ),
+    column(width = 12, br("")), # put in to push below the fixed height chart
+    column(width = 12, br("")),
+    details(
+      label = "Source: UK Business Counts",
+      inputId = "UK Business Counts",
+      tags$ol(
+        tags$li("An extract compiled from the Inter Departmental Business Register (IDBR) recording the number of Enterprises that were live at a reference date in March, broken down by employment size band, detailed industry (5 digit SIC2007) and legal status. "),
+        tags$li("Overall total may not equal the sum of all industries due to rounding and suppression.")
+      )
+    ),
+    fluidRow(
+      column(
+        12,
+        h2("Enterprise births and deaths: 2016-2021"),
+        plotlyOutput("birth_death_time"),
+        details(
+          label = "Source: ONS Business Demography 2021",
+          inputId = "busdemosource",
+          tags$ol(
+            tags$li("The main administrative sources for the IDBR are VAT trader and PAYE employer information passed to the ONS by HM Revenue & Customs under the Value Added Tax Act 1994 for VAT traders and the Finance Act 1969 for PAYE employers; details of incorporated businesses are also passed to ONS by Companies House.")
+          )
+        )
+      )
+    ),
+    fluidRow(
+      column(
+        width = 3,
+        downloadButton(
+          outputId = "download_btn6a",
+          label = "All data   ",
+          icon = shiny::icon("download"),
+          class = "downloadButton"
+        )
+      ),
+      column(
+        width = 9,
+        "Download skills data for all geographies (LEPs, LSIP, MCA areas LAs, regions and England)"
+      )
+    ), # end of row
+    fluidRow(
+      column(
+        width = 3,
+        downloadButton(
+          outputId = "download_btn6b",
+          label = "Current geographic area",
+          icon = shiny::icon("download"),
+          class = "downloadButton"
+        )
+      ),
+      column(width = 9, p("Download skills data for the selected geographic area"))
+    ), # end of row
+    column(width = 12, br(""))
+  )
 }
