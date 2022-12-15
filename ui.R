@@ -307,15 +307,19 @@ padding-top:15px
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("20 Dec 2022 (0.2.4)"),
+              p("20 Dec 2022 (0.3.1)"),
+              p("Addition of three new data sources:"),
               tags$ul(
-                tags$li("Included three new tabs; 1) highest qualification by gender and age, 2) KS4 adn KS5 destinations and 3) enterprise count by employment size band and industry.")
+                tags$li("Highest qualificaiton by age and gender"),
+                tags$li("KS4 and KS5 destinations"),
+                tags$li("Enterprise count by employment size and industry")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
                   p("29 Nov 2022 (0.2.3)"),
+                  p("Applied various improvements and updates, including:"),
                   tags$ul(
                     tags$li("Included MCA areas."),
                     tags$li("Employment data for LEPs, LSIPs and MCAs taken directly from the APS data (previously aggregated from LAs)."),
