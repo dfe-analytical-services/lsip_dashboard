@@ -138,6 +138,11 @@ padding-top:15px
     padding: 2px 2px 4px 12px;
 }
 
+div.myspecial-popup div.leaflet-popup-content-wrapper {
+          padding: 0px 0px 1px 0px;
+          
+        }
+
 ")),
     tags$script(HTML(
       '
