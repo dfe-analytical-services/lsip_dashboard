@@ -140,18 +140,18 @@ panel_overview <- function() {
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_FE2", "Find out more about skills")
         ),
-        h3("Qualification level: NVQ4 or above"),
+        h3("Qualification level: NVQ3 or above"),
         fluidRow(
           column(
             width = 4,
             div(
               title = "Source: APS. 2021 calendar year",
-              uiOutput("APS.nvq4plus"),
+              uiOutput("APS.nvq3plus"),
             )
           ),
           column(
             width = 8,
-            plotlyOutput("Nvq4plusLineChart", height = 81)
+            plotlyOutput("Nvq3plusLineChart", height = 81)
           )
         ),
         # third row - link to emp tab
@@ -583,8 +583,8 @@ panel_qualification_level <- function() {
 
     ### KPI boxes ----
     fluidRow(
-      valueBoxOutput("qualup.nvq3"),
-      valueBoxOutput("qualup.nvq4")
+      valueBoxOutput("qualup.nvq2"),
+      valueBoxOutput("qualup.nvq3")
     ),
     fluidRow(
       uiOutput("qual_comp")
@@ -594,7 +594,6 @@ panel_qualification_level <- function() {
       inputId = "QualSource",
       tags$ol(
         tags$li("Figures are for 16-64 year olds."),
-        tags$li("Years represent Jan-Dec period. So 2017 is the Jan 2017 – Dec 2017 period."),
         tags$li("NVQ3 and below qualifications and NVQ4 or above qualifications will not add up to 100% due to other qualifications."),
         tags$li("NVQ3 and below consists of NVQ1, NVQ2, Trade Apprenticeships, NVQ3 and None qualifications.")
       )
@@ -628,7 +627,7 @@ panel_qualification_level <- function() {
     fluidRow(
       column(
         12,
-        h2(uiOutput("qualtitle")),
+        # h2(uiOutput("qualtitle")),
         plotlyOutput("qual_time"),
         details(
           label = "Source: Annual Population Survey",
@@ -717,8 +716,8 @@ panel_destinations <- function() {
       label = "Source: National Pupil Database",
       inputId = "destSource",
       tags$ol(
-        tags$li("Data from the national pupil database (NPD) were used to calculate education destinations. The NPD is a longitudinal database linking pupil/student characteristics (for example age, gender and ethnicity) to school and college learning aims and attainment information for children in schools in England."),
-        tags$li("Data based on destinations of state-funded mainstream schools.")
+        tags$li("Data based on destinations of state-funded mainstream schools."),
+        tags$li("There is no double counting across destinations, a young person is reported in one destination category only.")
       )
     ),
     fluidRow(
@@ -758,8 +757,8 @@ panel_destinations <- function() {
       label = "Source: National Pupil Database",
       inputId = "Key stage source",
       tags$ol(
-        tags$li("Data from the national pupil database (NPD) were used to calculate education destinations. The NPD is a longitudinal database linking pupil/student characteristics (for example age, gender and ethnicity) to school and college learning aims and attainment information for children in schools in England."),
-        tags$li("Data based on destinations of state-funded mainstream schools.")
+        tags$li("Data based on destinations of state-funded mainstream schools."),
+        tags$li("There is no double counting across destinations, a young person is reported in one destination category only.")
       )
     ),
 
@@ -774,7 +773,7 @@ panel_destinations <- function() {
             tags$li("A sustained destination is a count of young people recorded as having sustained participation (education and employment) for a 6 month period in the destination year."),
             tags$li("This means attending for all of the first two terms of the academic year (e.g. October 2020 to March 2021) at one or more education providers; spending 5 of the 6 months in employment or a combination of the two."),
             tags$li("A sustained apprenticeship is recorded when 6 months continuous participation is recorded at any point in the destination year (between August 2020 and July 2021)."),
-            tags$li("Not recorded as a sustained destination: This includes pupils who were captured in the destination source data but who failed to meet the sustained participation criteria."),
+            tags$li("Not recorded includes pupils who were captured in the destination source data but who failed to meet the sustained participation criteria."),
             tags$li("Unknown (activity not captured): The student was not found to have any participation in education, apprenticeship or employment nor recorded as receiving out-of-work benefits at any point in the year. This also includes not being recorded by their Local Authority as NEET (not engaged in education, employment or training).")
           )
         )
@@ -823,18 +822,19 @@ panel_enterprise <- function() {
     ### KPI boxes ----
     fluidRow(
       valueBoxOutput("ent.mic"),
-      valueBoxOutput("ent.sma"),
-      valueBoxOutput("ent.microeng")
+      valueBoxOutput("ent.sma")
     ),
     fluidRow(
       uiOutput("ent_comp")
     ),
+    fluidRow(valueBoxOutput("ent.microeng")),
     details(
       label = "Source: UK Business Counts",
       inputId = "UK Business Counts",
       tags$ol(
         tags$li("An extract compiled from the Inter Departmental Business Register (IDBR) recording the number of Enterprises that were live at a reference date in March, broken down by employment size band, detailed industry (5 digit SIC2007) and legal status. "),
-        tags$li("Overall total may not equal the sum of all industries due to rounding and suppression.")
+        tags$li("Overall total may not equal the sum of all industries due to rounding and suppression."),
+        tags$li("Unregistered businesses that are not large enough to be registered for VAT or PAYE are not included.")
       )
     ),
     fluidRow(
@@ -851,7 +851,8 @@ panel_enterprise <- function() {
       inputId = "UK Business Counts",
       tags$ol(
         tags$li("An extract compiled from the Inter Departmental Business Register (IDBR) recording the number of Enterprises that were live at a reference date in March, broken down by employment size band, detailed industry (5 digit SIC2007) and legal status. "),
-        tags$li("Overall total may not equal the sum of all industries due to rounding and suppression.")
+        tags$li("Overall total may not equal the sum of all industries due to rounding, suppression and enterprises not being allocated an industry."),
+        tags$li("Unregistered businesses that are not large enough to be registered for VAT or PAYE are not included.")
       )
     ),
     fluidRow(
@@ -889,7 +890,8 @@ panel_enterprise <- function() {
       inputId = "UK Business Counts",
       tags$ol(
         tags$li("An extract compiled from the Inter Departmental Business Register (IDBR) recording the number of Enterprises that were live at a reference date in March, broken down by employment size band, detailed industry (5 digit SIC2007) and legal status. "),
-        tags$li("Overall total may not equal the sum of all industries due to rounding and suppression.")
+        tags$li("Overall total may not equal the sum of all industries due to rounding, suppression and enterprises not being allocated an industry."),
+        tags$li("Unregistered businesses that are not large enough to be registered for VAT or PAYE are not included.")
       )
     ),
     fluidRow(

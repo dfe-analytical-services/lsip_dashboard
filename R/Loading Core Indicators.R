@@ -31,10 +31,13 @@ D_qual_APS1721 <- read.csv(file = "./Data/AppData/D_qual_APS1721.csv", check.nam
 C_qual2_APS1721 <- read.csv(file = "./Data/AppData/C_qual2_APS1721.csv", check.names = FALSE)
 
 # data for dashboard
-C_qual2_max_min <- read.csv(file = "./Data/AppData/C_qual2_max_min.csv", check.names = FALSE)
+# C_qual_max_min <- read.csv(file = "./Data/AppData/C_qual_max_min.csv", check.names = FALSE)
 
 # data for dashbaord level 3 and below
-C_qualevel3_APS1721 <- read.csv(file = "./Data/AppData/C_qualevel3_APS1721.csv", check.names = FALSE)
+C_qualevel2_APS1721 <- read.csv(file = "./Data/AppData/C_qualevel2_APS1721.csv", check.names = FALSE)
+
+# data for dashbaord level 3 and below
+C_qualevel3plus_APS1721 <- read.csv(file = "./Data/AppData/C_qualevel3plus_APS1721.csv", check.names = FALSE)
 
 ## FE achievements ----
 # data for download

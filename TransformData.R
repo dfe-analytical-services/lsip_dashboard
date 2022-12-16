@@ -635,7 +635,7 @@ write.csv(C_empent2_UBC1822, file = "Data\\AppData\\C_empent2_UBC1822.csv", row.
 # Downloadable version
 D_empent_UBC1822 <- F_empent_UBC1822 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x"))) %>%
-  rename("enterprise size" = variable, count = value)
+  rename("enterprise size" = variable, "enterprise count" = value)
 
 # write the data to folder
 write.csv(D_empent_UBC1822, file = "Data\\AppData\\D_empent_UBC1822.csv", row.names = FALSE)
@@ -735,7 +735,7 @@ write.csv(C_empentind_max_min, file = "Data\\AppData\\C_empentind_max_min.csv", 
 D_empentind_UBC1822 <- C_empentind2_UBC1822 %>%
   select(-rate) %>%
   mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x"))) %>%
-  rename("enterprise size" = variable, count = value)
+  rename("enterprise size" = variable, "enterprise count" = value)
 
 # write the data to folder
 write.csv(D_empentind_UBC1822, file = "Data\\AppData\\D_empentind_UBC1822.csv", row.names = FALSE)
@@ -943,7 +943,7 @@ format.ks4 <- function(x) {
     rename(
       "Total" = "cohort",
       "Unknown" = "all_unknown",
-      "Not Recorded" = "all_notsust",
+      "Not Recorded as a sustained destination" = "all_notsust",
       "Sustained Education" = "education",
       "Sustained Employment" = "all_work",
       "Sustained Apprenticeships" = "appren"
@@ -1042,7 +1042,7 @@ format.ks5 <- function(x) {
     rename(
       "Total" = "cohort",
       "Unknown" = "all_unknown",
-      "Not Recorded" = "all_notsust",
+      "Not Recorded as a sustained destination" = "all_notsust",
       "Sustained Education" = "education",
       "Sustained Employment" = "all_work",
       "Sustained Apprenticeships" = "appren",
@@ -1085,7 +1085,7 @@ C_KS4_KS5_2021 <- F_KS4destin_1521 %>%
   select(-c(5:10)) %>%
   rename(
     "Unknown" = "unkrate",
-    "Not Recorded" = "notrecrate",
+    "Not Recorded as a sustained destination" = "notrecrate",
     "Sustained Education" = "edrate",
     "Sustained Employment" = "emprate",
     "Sustained Apprenticeships" = "apprate"
@@ -1107,7 +1107,7 @@ C_KS4_KS5eduempapp <- F_KS4destin_1521 %>%
       #  filter(time_period == "202021") %>%
       mutate(`Key Stage` = "KS5")
   ) %>%
-  select(-"Unknown", -"Not Recorded") %>%
+  select(-"Unknown", -"Not Recorded as a sustained destination") %>%
   mutate_at(c(4:7), as.numeric) %>%
   mutate(positive_sust_count = `Sustained Employment` + `Sustained Education` + `Sustained Apprenticeships`) %>%
   mutate(rate = positive_sust_count / Total) %>%
@@ -1302,38 +1302,61 @@ C_qual2_APS1721 <- F_qual_APS1721 %>%
 # Dashboard data
 write.csv(C_qual2_APS1721, file = "Data\\AppData\\C_qual2_APS1721.csv", row.names = FALSE)
 
-# create max and min for use in setting axis
-C_qual2_max_min <- C_qual2_APS1721 %>%
-  filter(
-    geographic_level != "LADU", Level == "NVQ4",
-    age_band == "16-64",
-    gender == "Total"
-  ) %>%
-  summarise(minnvq4 = min(rate), maxnvq4 = max(rate))
-write.csv(C_qual2_max_min, file = "Data\\AppData\\C_qual2_max_min.csv", row.names = FALSE)
-
-
-# dashboard data - level 3 and below
-C_qualevel3_APS1721 <- F_qual_APS1721 %>%
-  filter(Level %in% c("NVQ1", "NVQ2", "Trade Apprenticeships", "NVQ3", "None")) %>%
+# dashboard data - below level 3
+C_qualevel2_APS1721 <- F_qual_APS1721 %>%
+  filter(Level %in% c("NVQ1", "NVQ2", "Trade Apprenticeships", "None")) %>%
   group_by(area, year, geographic_level, gender, age_band) %>%
   summarise(value2 = sum(`value`)) %>%
-  mutate(Level = "Level 3 and below") %>%
+  mutate(Level = "below Level 3") %>%
   left_join(C_qual_APS1721, by = c(
     "area" = "area", "year" = "year",
     "geographic_level" = "geographic_level",
     "gender" = "gender", "age_band" = "age_band"
   )) %>%
   mutate(rate = value2 / Total) %>%
-  select(-Total)
+  select(-Total) %>%
+  mutate(Year = as.numeric(substr(year, 3, 4))) # add year name for charts
 
 # Dashboard data
-write.csv(C_qualevel3_APS1721, file = "Data\\AppData\\C_qualevel3_APS1721.csv", row.names = FALSE)
+write.csv(C_qualevel2_APS1721, file = "Data\\AppData\\C_qualevel2_APS1721.csv", row.names = FALSE)
+
+# dashboard data - level 3 plus
+C_qualevel3plus_APS1721 <- F_qual_APS1721 %>%
+  filter(Level %in% c("NVQ3", "NVQ4")) %>%
+  group_by(area, year, geographic_level, gender, age_band) %>%
+  summarise(value2 = sum(`value`)) %>%
+  mutate(Level = "Level 3 and above") %>%
+  left_join(C_qual_APS1721, by = c(
+    "area" = "area", "year" = "year",
+    "geographic_level" = "geographic_level",
+    "gender" = "gender", "age_band" = "age_band"
+  )) %>%
+  mutate(rate = value2 / Total) %>%
+  select(-Total) %>%
+  mutate(Year = as.numeric(substr(year, 3, 4))) # add year name for charts
+
+# Dashboard data
+write.csv(C_qualevel3plus_APS1721, file = "Data\\AppData\\C_qualevel3plus_APS1721.csv", row.names = FALSE)
+
+
+# create max and min for use in setting axis
+# C_qual_max_min <- C_qual2_APS1721 %>%
+# filter(
+#  geographic_level != "LADU", Level %in% c("NVQ3", "NVQ4"),
+#  age_band == "16-64",
+#  gender == "Total"
+# ) %>%
+# summarise(minnvq4 = min(rate), maxnvq4 = max(rate))
+
+# write data to folder
+# write.csv(C_qual_max_min, file = "Data\\AppData\\C_qual_max_min.csv", row.names = FALSE)
+
+
 
 # Downloadable version
 D_qual_APS1721 <- format.qual.APS(I_qual_APS1721) %>%
   mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x"))) %>%
-  rename(count = value)
+  rename("qualification count" = value)
 
 # write the data to folder
 write.csv(D_qual_APS1721, file = "Data\\AppData\\D_qual_APS1721.csv", row.names = FALSE)

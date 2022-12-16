@@ -933,7 +933,7 @@ server <- function(input, output, session) {
         plot.background = element_rect(fill = "#f3f2f1")
       ) +
       scale_y_continuous(
-        labels = scales::percent_format(accuracy = 0.1),
+        labels = scales::percent_format(accuracy = 1),
         breaks = c(KS5MinMax$minks5, KS5MinMax$maxks5),
         limits = c(KS5MinMax$minks5, KS5MinMax$maxks5)
       )
@@ -1045,7 +1045,7 @@ server <- function(input, output, session) {
         plot.background = element_rect(fill = "#f3f2f1")
       ) +
       scale_y_continuous(
-        labels = scales::percent_format(accuracy = 0.1),
+        labels = scales::percent_format(accuracy = 1),
         breaks = c(EntMinMax$minmic, EntMinMax$maxmic),
         limits = c(EntMinMax$minmic, EntMinMax$maxmic)
       )
@@ -1081,10 +1081,10 @@ server <- function(input, output, session) {
   # get entprise data for current lep
 
   QualLEP <- eventReactive(input$lep1, {
-    C_qual2_APS1721 %>%
+    C_qualevel3plus_APS1721 %>%
       filter(
         geographic_level == input$GeoType & area == input$lep1,
-        Level == "NVQ4",
+        Level == "Level 3 and above",
         age_band == "16-64",
         gender == "Total"
       )
@@ -1101,8 +1101,8 @@ server <- function(input, output, session) {
   })
 
 
-  # NVQ4 or above overview KPI
-  output$APS.nvq4plus <- renderUI({
+  # NVQ3 or above overview KPI
+  output$APS.nvq3plus <- renderUI({
     # change in NVQ4 or above
     QualChange <- QualLatest()$rate - QualLast()$rate
 
@@ -1119,16 +1119,16 @@ server <- function(input, output, session) {
   })
 
 
-  # micro enterprise chart
-  Nvq4plusLineChart <- eventReactive(input$lep1, {
-    QualLine <- C_qual2_APS1721 %>% filter(
+  # qualification chart
+  Nvq3plusLineChart <- eventReactive(input$lep1, {
+    QualLine <- C_qualevel3plus_APS1721 %>% filter(
       (geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"),
-      Level == "NVQ4",
+      Level == "Level 3 and above",
       age_band == "16-64",
       gender == "Total"
     )
     QualChange <- QualLatest()$rate - QualLast()$rate
-    QualMinMax <- C_qual2_max_min
+    # QualMinMax <- C_qual_max_min
 
     ggplot(QualLine, aes(x = Year, y = rate, group = area, text = paste0(
       "Jan-Dec: ", year, "<br>",
@@ -1158,9 +1158,9 @@ server <- function(input, output, session) {
         plot.background = element_rect(fill = "#f3f2f1")
       ) +
       scale_y_continuous(
-        labels = scales::percent_format(accuracy = 0.1),
-        breaks = c(QualMinMax$minnvq4, QualMinMax$maxnvq4),
-        limits = c(QualMinMax$minnvq4, QualMinMax$maxnvq4)
+        labels = scales::percent_format(accuracy = 1),
+        breaks = c(.39, .72),
+        limits = c(.39, .72)
       )
   })
   # set margins
@@ -1172,8 +1172,8 @@ server <- function(input, output, session) {
     pad = 0
   )
 
-  output$Nvq4plusLineChart <- renderPlotly({
-    ggplotly(Nvq4plusLineChart(),
+  output$Nvq3plusLineChart <- renderPlotly({
+    ggplotly(Nvq3plusLineChart(),
       tooltip = "text",
       height = 81
     ) %>%
@@ -2065,8 +2065,8 @@ server <- function(input, output, session) {
         )
       } else {
         tagList(
-          valueBoxOutput("qualup.nvq3.2"),
-          valueBoxOutput("qualup.nvq4.2")
+          valueBoxOutput("qualup.nvq2.2"),
+          valueBoxOutput("qualup.nvq3.2")
         )
       }
     } else {
@@ -2128,6 +2128,61 @@ server <- function(input, output, session) {
 
 
   # KPI 1
+  output$qualup.nvq2 <- renderValueBox({
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
+          h3(paste0(
+            format(100. * (C_qualevel2_APS1721 %>%
+              filter(
+                geographic_level == input$GeoType,
+                area == input$lep1, year == "2021",
+                Level == "below Level 3",
+                age_band == "16-64",
+                gender == "Total"
+              ) %>%
+              select(rate)
+            )[1, 1], scientific = FALSE, digits = 2),
+            "%"
+          )),
+          p(paste0("of the 16-64 population in ", input$lep1, " have a highest qualification of level 2 or below in 2021")),
+        )
+      )
+    )
+  })
+
+  # KPI 2
+  output$qualup.nvq2.2 <- renderValueBox({
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(paste0(
+            format(100. * (C_qualevel2_APS1721 %>%
+              filter(
+                geographic_level == input$GeoType,
+                area == input$lep2, year == "2021",
+                Level == "below Level 3",
+                age_band == "16-64",
+                gender == "Total"
+              ) %>%
+              select(rate)
+            )[1, 1], scientific = FALSE, digits = 2),
+            "%"
+          )),
+          p(paste0("of the 16-64 population in ", input$lep2, " have a highest qualification of level 2 below in 2021")),
+        )
+      )
+    )
+  })
+
+
+  # KPI3
   output$qualup.nvq3 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2136,11 +2191,11 @@ server <- function(input, output, session) {
         div(
           class = "inner",
           h3(paste0(
-            format(100. * (C_qualevel3_APS1721 %>%
+            format(100. * (C_qualevel3plus_APS1721 %>%
               filter(
                 geographic_level == input$GeoType,
                 area == input$lep1, year == "2021",
-                Level == "Level 3 and below",
+                Level == "Level 3 and above",
                 age_band == "16-64",
                 gender == "Total"
               ) %>%
@@ -2148,13 +2203,14 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the 16-64 population in ", input$lep1, " have a highest qualification of NVQ3 and below in 2021")),
+          p(paste0("of the 16-64 population in ", input$lep1, " have a highest qualification of level 3 or above in 2021")),
         )
       )
     )
   })
 
-  # KPI 2
+
+  # KPI 4
   output$qualup.nvq3.2 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2163,11 +2219,11 @@ server <- function(input, output, session) {
         div(
           class = "inner",
           h3(paste0(
-            format(100. * (C_qualevel3_APS1721 %>%
+            format(100. * (C_qualevel3plus_APS1721 %>%
               filter(
                 geographic_level == input$GeoType,
                 area == input$lep2, year == "2021",
-                Level == "Level 3 and below",
+                Level == "Level 3 and above",
                 age_band == "16-64",
                 gender == "Total"
               ) %>%
@@ -2175,63 +2231,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the 16-64 population in ", input$lep2, " have a highest qualification of NVQ3 and below in 2021")),
-        )
-      )
-    )
-  })
-
-
-  # KPI3
-  output$qualup.nvq4 <- renderValueBox({
-    div(
-      class = "col-sm-4",
-      div(
-        class = "small-box bg-geo1",
-        div(
-          class = "inner",
-          h3(paste0(
-            format(100. * (C_qual2_APS1721 %>%
-              filter(
-                geographic_level == input$GeoType,
-                area == input$lep1, year == "2021",
-                Level == "NVQ4",
-                age_band == "16-64",
-                gender == "Total"
-              ) %>%
-              select(rate)
-            )[1, 1], scientific = FALSE, digits = 2),
-            "%"
-          )),
-          p(paste0("of the 16-64 population in ", input$lep1, " have a highest qualification of NVQ4 or above in 2021")),
-        )
-      )
-    )
-  })
-
-
-  # KPI 4
-  output$qualup.nvq4.2 <- renderValueBox({
-    div(
-      class = "col-sm-4",
-      div(
-        class = "small-box bg-geo2",
-        div(
-          class = "inner",
-          h3(paste0(
-            format(100. * (C_qual2_APS1721 %>%
-              filter(
-                geographic_level == input$GeoType,
-                area == input$lep2, year == "2021",
-                Level == "NVQ4",
-                age_band == "16-64",
-                gender == "Total"
-              ) %>%
-              select(rate)
-            )[1, 1], scientific = FALSE, digits = 2),
-            "%"
-          )),
-          p(paste0("of the 16-64 population in ", input$lep2, " have a highest qualification of NVQ4 or above in 2021")),
+          p(paste0("of the 16-64 population in ", input$lep2, " have a highest qualification of level 3 or above in 2021")),
         )
       )
     )
@@ -2239,9 +2239,9 @@ server <- function(input, output, session) {
 
 
   # qualifications title
-  output$qualtitle <- renderUI({
-    paste0(input$qualGroup, " ", "qualification level", ":", " Jan-Dec 2017 to Jan-Dec 2021")
-  })
+  # output$qualtitle <- renderUI({
+  #  paste0(input$qualGroup, " ", "qualification level", ":", " Jan-Dec 2017 to Jan-Dec 2021")
+  # })
 
 
   # qualification line chart
@@ -2564,7 +2564,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the total KS5 cohort group had a sustained positive destination in 202021 in England")),
+          p(paste0("of the KS5 201920 cohort group had a sustained positive destination in 202021 in England")),
         )
       )
     )
@@ -2965,7 +2965,7 @@ server <- function(input, output, session) {
       geom_col(
         position = "dodge"
       ) +
-      scale_y_continuous(labels = scales::percent) +
+      scale_y_continuous(labels = scales::percent_format()) +
       # coord_flip() +
       theme_minimal() +
       labs(fill = "") +
@@ -3035,7 +3035,7 @@ server <- function(input, output, session) {
       theme_minimal() +
       theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
       labs(shape = "", colour = "") +
-      scale_y_continuous(labels = scales::percent_format()) +
+      scale_y_continuous(labels = scales::percent_format(accuracy = 0.1)) +
       scale_color_manual(values = chartColors2)
   })
 
