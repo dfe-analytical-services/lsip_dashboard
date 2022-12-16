@@ -462,7 +462,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           p("The UK Business Counts (UBC) is a record of the number of enterprises from the Inter Departmental Business Register (IDBR). Topics included cover employment size band, detailed industry (5 digit SIC 2007) and legal status.
             This dashboard currently shows the count of enterprises by employment size and industry."),
           h3("ONS Business Demography 2021"),
-          p("This dashboard currently shows the number of new and no longer trading enterprises from 2016 to 2021."),
+          p("This dashboard currently shows the number of new and no longer trading enterprises from 2016 to 2021. Business demography measures businesses that were active throughout the reference year. The reference period is December, and therefore the 2021 publication measures businesses that were active between December 2020 and December 2021."),
           p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
           br()
