@@ -594,8 +594,9 @@ panel_qualification_level <- function() {
       inputId = "QualSource",
       tags$ol(
         tags$li("Figures are for 16-64 year olds."),
-        tags$li("NVQ3 and below qualifications and NVQ4 or above qualifications will not add up to 100% due to other qualifications."),
-        tags$li("NVQ3 and below consists of NVQ1, NVQ2, Trade Apprenticeships, NVQ3 and None qualifications.")
+        tags$li("NVQ2 and below qualifications and NVQ3 or above qualifications will not add up to 100% due to other qualifications."),
+        tags$li("NVQ2 or below consists of NVQ1, NVQ2, Trade Apprenticeships and None qualifications."),
+        tags$li("NVQ3 or above consists of NVQ3 and NVQ4.")
       )
     ),
     fluidRow(
@@ -634,9 +635,7 @@ panel_qualification_level <- function() {
           inputId = "QualSource",
           tags$ol(
             tags$li("Figures are for 16-64 year olds."),
-            tags$li("Years represent Jan-Dec period. So 2017 is the Jan 2017 – Dec 2017 period."),
-            tags$li("NVQ3 and below qualifications and NVQ4 or above qualifications will not add up to 100% due to other qualifications."),
-            tags$li("NVQ3 and below consists of NVQ1, NVQ2, Trade Apprenticeships, NVQ3 and None qualifications.")
+            tags$li("Years represent Jan-Dec period. So 2017 is the Jan 2017 – Dec 2017 period.")
           )
         )
       )
@@ -652,7 +651,7 @@ panel_qualification_level <- function() {
           tags$ul(
             tags$li("NVQ1: 1-4 O Levels/CSE/GCSEs (any grades), Entry Level, Foundation Diploma, NVQ level 1, Foundation GNVQ, Basic/Essential Skills"),
             tags$li("NVQ2: 5+ O Level (Passes)/CSEs (Grade 1)/GCSEs (Grades A*-C), School Certificate, 1 A Level/ 2-3 AS Levels/VCEs, Intermediate/Higher Diploma, Welsh Baccalaureate Intermediate Diploma, NVQ level 2, Intermediate GNVQ, City and Guilds Craft, BTEC First/General Diploma, RSA Diploma"),
-            tags$li("Trade Apprenticeships: Apprenticeships"),
+            tags$li("Trade Apprenticeships: Level 2 and 3 Apprenticeships"),
             tags$li("NVQ3: 2+ A Levels/VCEs, 4+ AS Levels, Higher School Certificate, Progression/Advanced Diploma, Welsh Baccalaureate Advanced Diploma, NVQ Level 3; Advanced GNVQ, City and Guilds Advanced Craft, ONC, OND, BTEC National, RSA Advanced Diploma"),
             tags$li("NVQ4 or above: Degree (for example BA, BSc), Higher Degree (for example MA, PhD, PGCE), NVQ Level 4-5, HNC, HND, RSA Higher Diploma, BTEC Higher level, Foundation degree (NI), Professional qualifications (for example teaching, nursing, accountancy)"),
             tags$li("Other qualifications: Other vocational/work-related Qualifications, Foreign Qualifications (Not Stated / level unknown)"),
@@ -717,7 +716,8 @@ panel_destinations <- function() {
       inputId = "destSource",
       tags$ol(
         tags$li("Data based on destinations of state-funded mainstream schools."),
-        tags$li("There is no double counting across destinations, a young person is reported in one destination category only.")
+        tags$li("There is no double counting across destinations, a young person is reported in one destination category only."),
+        tags$li("If a student is registered as being in education and an apprenticeship, it is recorded as a sustained education and if a student is registered in employment along with an apprenticeship or in education, it is recorded as sustained employment.")
       )
     ),
     fluidRow(
@@ -758,7 +758,8 @@ panel_destinations <- function() {
       inputId = "Key stage source",
       tags$ol(
         tags$li("Data based on destinations of state-funded mainstream schools."),
-        tags$li("There is no double counting across destinations, a young person is reported in one destination category only.")
+        tags$li("There is no double counting across destinations, a young person is reported in one destination category only."),
+        tags$li("If a student is registered as being in education and an apprenticeship, it is recorded as a sustained education and if a student is registered in employment along with an apprenticeship or in education, it is recorded as sustained employment.")
       )
     ),
 
