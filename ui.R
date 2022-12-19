@@ -435,7 +435,15 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     # 
     #   #  ) # end of app data row
     # ), # end of app tab panel
-
+tabPanel(
+    "Datahub",
+    fluidRow(
+      column(
+        12,
+        h1("Datahub"),
+      )
+    )
+),
     tabPanel(
       "Data & downloads",
       fluidRow(
