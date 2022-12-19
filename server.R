@@ -1689,7 +1689,6 @@ server <- function(input, output, session) {
     metricUsed<-if(input$splashMetric=="empRate"){" employment rate "}else{" FE achievements per 100,000 "}
     areaRank<-(C_Geog %>%
                  filter(geog == input$splashGeoType)%>%
-      mutate(ranking = rank(desc(eval(parse(text = input$splashMetric)))))%>%
                filter(areaName==areaClicked))$ranking
     suff <- case_when(areaRank %in% c(11,12,13) ~ "th",
                       areaRank %% 10 == 1 ~ 'st',
