@@ -323,7 +323,6 @@
 "LEP","Greater Cambridge and Greater Peterborough","2021","births",0.0949843260188088
 "LEP","Greater Lincolnshire","2021","births",0.0921346036894385
 "LEP","Greater Manchester","2021","births",0.115898861530315
-"LEP","Heart of South West","2021","births",NA
 "LEP","Heart of the South West","2021","births",0.0909584414017733
 "LEP","Hertfordshire","2021","births",0.0858745180511742
 "LEP","Hull and East Yorkshire","2021","births",0.100602409638554
@@ -369,7 +368,6 @@
 "LSIP","Leicester and Leicestershire","2021","births",0.09486000835771
 "LSIP","Liverpool City Region","2021","births",0.116351710135874
 "LSIP","Norfolk and Suffolk","2021","births",0.0914888079125455
-"LSIP","Norfolk and Suffolk (Greater Anglia)","2021","births",NA
 "LSIP","North East","2021","births",0.107553776888444
 "LSIP","North of Tyne","2021","births",0.0994336060415356
 "LSIP","Oxfordshire","2021","births",0.0831980012492192
@@ -721,7 +719,6 @@
 "LEP","Greater Cambridge and Greater Peterborough","2020","births",0.0896084337349398
 "LEP","Greater Lincolnshire","2020","births",0.0906015435035416
 "LEP","Greater Manchester","2020","births",0.109313146746302
-"LEP","Heart of South West","2020","births",NA
 "LEP","Heart of the South West","2020","births",0.085446247464503
 "LEP","Hertfordshire","2020","births",0.0820917496024969
 "LEP","Hull and East Yorkshire","2020","births",0.0888888888888889
@@ -767,7 +764,6 @@
 "LSIP","Leicester and Leicestershire","2020","births",0.124268385783357
 "LSIP","Liverpool City Region","2020","births",0.111301369863014
 "LSIP","Norfolk and Suffolk","2020","births",0.0831975006791633
-"LSIP","Norfolk and Suffolk (Greater Anglia)","2020","births",NA
 "LSIP","North East","2020","births",0.106399789307348
 "LSIP","North of Tyne","2020","births",0.092075349139331
 "LSIP","Oxfordshire","2020","births",0.0777721390510023
@@ -1119,7 +1115,6 @@
 "LEP","Greater Cambridge and Greater Peterborough","2019","births",0.10394765071873
 "LEP","Greater Lincolnshire","2019","births",0.0903130287648054
 "LEP","Greater Manchester","2019","births",0.110771093250832
-"LEP","Heart of South West","2019","births",NA
 "LEP","Heart of the South West","2019","births",0.0828458799593082
 "LEP","Hertfordshire","2019","births",0.099184395140592
 "LEP","Hull and East Yorkshire","2019","births",0.0936850851682592
@@ -1165,7 +1160,6 @@
 "LSIP","Leicester and Leicestershire","2019","births",0.105901820187534
 "LSIP","Liverpool City Region","2019","births",0.119887051230335
 "LSIP","Norfolk and Suffolk","2019","births",0.0825712930976089
-"LSIP","Norfolk and Suffolk (Greater Anglia)","2019","births",NA
 "LSIP","North East","2019","births",0.102096985583224
 "LSIP","North of Tyne","2019","births",0.0975492551657857
 "LSIP","Oxfordshire","2019","births",0.08568149942624
@@ -1517,8 +1511,7 @@
 "LEP","Greater Cambridge and Greater Peterborough","2016","births",0.10427135678392
 "LEP","Greater Lincolnshire","2016","births",0.0962387056104224
 "LEP","Greater Manchester","2016","births",0.139803622700365
-"LEP","Heart of South West","2016","births",0.0872093023255814
-"LEP","Heart of the South West","2016","births",0.0883334516793297
+"LEP","Heart of the South West","2016","births",0.0882333915518468
 "LEP","Hertfordshire","2016","births",0.132071128503194
 "LEP","Hull and East Yorkshire","2016","births",0.112257531985142
 "LEP","Lancashire","2016","births",0.0989724175229854
@@ -1562,8 +1555,7 @@
 "LSIP","Lancashire","2016","births",0.0989724175229854
 "LSIP","Leicester and Leicestershire","2016","births",0.122080580627152
 "LSIP","Liverpool City Region","2016","births",0.119658871109548
-"LSIP","Norfolk and Suffolk","2016","births",0.095767342780402
-"LSIP","Norfolk and Suffolk (Greater Anglia)","2016","births",0.0915474642392718
+"LSIP","Norfolk and Suffolk","2016","births",0.0946591995629012
 "LSIP","North East","2016","births",0.110926464478604
 "LSIP","North of Tyne","2016","births",0.104121834133422
 "LSIP","Oxfordshire","2016","births",0.0902493732682412
@@ -1915,8 +1907,7 @@
 "LEP","Greater Cambridge and Greater Peterborough","2017","births",0.0916769906521005
 "LEP","Greater Lincolnshire","2017","births",0.0833685992382565
 "LEP","Greater Manchester","2017","births",0.132746548000785
-"LEP","Heart of South West","2017","births",0.0825035561877667
-"LEP","Heart of the South West","2017","births",0.0816988852829124
+"LEP","Heart of the South West","2017","births",0.0817715019255456
 "LEP","Hertfordshire","2017","births",0.110127069695803
 "LEP","Hull and East Yorkshire","2017","births",0.0897169025811824
 "LEP","Lancashire","2017","births",0.102228144200163
@@ -1960,8 +1951,7 @@
 "LSIP","Lancashire","2017","births",0.102228144200163
 "LSIP","Leicester and Leicestershire","2017","births",0.0981739287651419
 "LSIP","Liverpool City Region","2017","births",0.116871191251357
-"LSIP","Norfolk and Suffolk","2017","births",0.09277238403452
-"LSIP","Norfolk and Suffolk (Greater Anglia)","2017","births",0.0831408775981524
+"LSIP","Norfolk and Suffolk","2017","births",0.0902736169362892
 "LSIP","North East","2017","births",0.105263157894737
 "LSIP","North of Tyne","2017","births",0.093719171325222
 "LSIP","Oxfordshire","2017","births",0.0848982785602504
@@ -2313,8 +2303,7 @@
 "LEP","Greater Cambridge and Greater Peterborough","2018","births",0.0992001777382804
 "LEP","Greater Lincolnshire","2018","births",0.0879108996539792
 "LEP","Greater Manchester","2018","births",0.117304847986853
-"LEP","Heart of South West","2018","births",0.0912280701754386
-"LEP","Heart of the South West","2018","births",0.0790096878363832
+"LEP","Heart of the South West","2018","births",0.0801432291666667
 "LEP","Hertfordshire","2018","births",0.103000397027962
 "LEP","Hull and East Yorkshire","2018","births",0.087055417700579
 "LEP","Lancashire","2018","births",0.0935491189593889
@@ -2358,8 +2347,7 @@
 "LSIP","Lancashire","2018","births",0.0935491189593889
 "LSIP","Leicester and Leicestershire","2018","births",0.0944026733500418
 "LSIP","Liverpool City Region","2018","births",0.111610550419812
-"LSIP","Norfolk and Suffolk","2018","births",0.0819762627656638
-"LSIP","Norfolk and Suffolk (Greater Anglia)","2018","births",0.0844421699078813
+"LSIP","Norfolk and Suffolk","2018","births",0.0826284090140083
 "LSIP","North East","2018","births",0.0969521445317887
 "LSIP","North of Tyne","2018","births",0.097106424717999
 "LSIP","Oxfordshire","2018","births",0.0836501901140684
@@ -2711,7 +2699,6 @@
 "LEP","Greater Cambridge and Greater Peterborough","2021","deaths",0.0893416927899686
 "LEP","Greater Lincolnshire","2021","deaths",0.0829110075005068
 "LEP","Greater Manchester","2021","deaths",0.0953799311622981
-"LEP","Heart of South West","2021","deaths",NA
 "LEP","Heart of the South West","2021","deaths",0.0791965739791302
 "LEP","Hertfordshire","2021","deaths",0.0997780114499357
 "LEP","Hull and East Yorkshire","2021","deaths",0.0755020080321285
@@ -2757,7 +2744,6 @@
 "LSIP","Leicester and Leicestershire","2021","deaths",0.10045967404931
 "LSIP","Liverpool City Region","2021","deaths",0.103310947993128
 "LSIP","Norfolk and Suffolk","2021","deaths",0.0737896928682978
-"LSIP","Norfolk and Suffolk (Greater Anglia)","2021","deaths",NA
 "LSIP","North East","2021","deaths",0.092296148074037
 "LSIP","North of Tyne","2021","deaths",0.0816551290119572
 "LSIP","Oxfordshire","2021","deaths",0.0782011242973142
@@ -3109,7 +3095,6 @@
 "LEP","Greater Cambridge and Greater Peterborough","2020","deaths",0.0825086058519793
 "LEP","Greater Lincolnshire","2020","deaths",0.0722063643091236
 "LEP","Greater Manchester","2020","deaths",0.0888950621570942
-"LEP","Heart of South West","2020","deaths",NA
 "LEP","Heart of the South West","2020","deaths",0.0699163286004057
 "LEP","Hertfordshire","2020","deaths",0.0902184794770626
 "LEP","Hull and East Yorkshire","2020","deaths",0.0758909853249476
@@ -3155,7 +3140,6 @@
 "LSIP","Leicester and Leicestershire","2020","deaths",0.0758334040206973
 "LSIP","Liverpool City Region","2020","deaths",0.0949934768427919
 "LSIP","Norfolk and Suffolk","2020","deaths",0.0713800597663678
-"LSIP","Norfolk and Suffolk (Greater Anglia)","2020","deaths",NA
 "LSIP","North East","2020","deaths",0.0803265736107453
 "LSIP","North of Tyne","2020","deaths",0.0795712893796687
 "LSIP","Oxfordshire","2020","deaths",0.0721897995432631
@@ -3507,7 +3491,6 @@
 "LEP","Greater Cambridge and Greater Peterborough","2019","deaths",0.0776657369663162
 "LEP","Greater Lincolnshire","2019","deaths",0.0806895093062606
 "LEP","Greater Manchester","2019","deaths",0.10095167636278
-"LEP","Heart of South West","2019","deaths",NA
 "LEP","Heart of the South West","2019","deaths",0.0772507629704985
 "LEP","Hertfordshire","2019","deaths",0.0888039696572178
 "LEP","Hull and East Yorkshire","2019","deaths",0.0793518903199003
@@ -3553,7 +3536,6 @@
 "LSIP","Leicester and Leicestershire","2019","deaths",0.0788747931605075
 "LSIP","Liverpool City Region","2019","deaths",0.0925373134328358
 "LSIP","Norfolk and Suffolk","2019","deaths",0.0778297094086568
-"LSIP","Norfolk and Suffolk (Greater Anglia)","2019","deaths",NA
 "LSIP","North East","2019","deaths",0.0931847968545216
 "LSIP","North of Tyne","2019","deaths",0.0855358000961076
 "LSIP","Oxfordshire","2019","deaths",0.0729312762973352
@@ -3905,8 +3887,7 @@
 "LEP","Greater Cambridge and Greater Peterborough","2016","deaths",0.0741206030150754
 "LEP","Greater Lincolnshire","2016","deaths",0.0812145408699307
 "LEP","Greater Manchester","2016","deaths",0.083655311757825
-"LEP","Heart of South West","2016","deaths",0.0726744186046512
-"LEP","Heart of the South West","2016","deaths",0.0737058865298587
+"LEP","Heart of the South West","2016","deaths",0.0736140759428165
 "LEP","Hertfordshire","2016","deaths",0.073775680497209
 "LEP","Hull and East Yorkshire","2016","deaths",0.0722245150639703
 "LEP","Lancashire","2016","deaths",0.0803523139921193
@@ -3950,8 +3931,7 @@
 "LSIP","Lancashire","2016","deaths",0.0803523139921193
 "LSIP","Leicester and Leicestershire","2016","deaths",0.0745324276542291
 "LSIP","Liverpool City Region","2016","deaths",0.0858976613328644
-"LSIP","Norfolk and Suffolk","2016","deaths",0.0726127628044827
-"LSIP","Norfolk and Suffolk (Greater Anglia)","2016","deaths",0.071001300390117
+"LSIP","Norfolk and Suffolk","2016","deaths",0.0721895915858489
 "LSIP","North East","2016","deaths",0.0808752250380834
 "LSIP","North of Tyne","2016","deaths",0.0811123986095017
 "LSIP","Oxfordshire","2016","deaths",0.0691384087610503
@@ -4303,8 +4283,7 @@
 "LEP","Greater Cambridge and Greater Peterborough","2017","deaths",0.086496227052596
 "LEP","Greater Lincolnshire","2017","deaths",0.0904570461278036
 "LEP","Greater Manchester","2017","deaths",0.0943982723643741
-"LEP","Heart of South West","2017","deaths",0.0803698435277383
-"LEP","Heart of the South West","2017","deaths",0.0803584027091858
+"LEP","Heart of the South West","2017","deaths",0.0803594351732991
 "LEP","Hertfordshire","2017","deaths",0.10132570548435
 "LEP","Hull and East Yorkshire","2017","deaths",0.0857618651124063
 "LEP","Lancashire","2017","deaths",0.0861647790361981
@@ -4348,8 +4327,7 @@
 "LSIP","Lancashire","2017","deaths",0.0861647790361981
 "LSIP","Leicester and Leicestershire","2017","deaths",0.0980835291990598
 "LSIP","Liverpool City Region","2017","deaths",0.100175306786877
-"LSIP","Norfolk and Suffolk","2017","deaths",0.0789284430061129
-"LSIP","Norfolk and Suffolk (Greater Anglia)","2017","deaths",0.0792917628945343
+"LSIP","Norfolk and Suffolk","2017","deaths",0.0790227015511617
 "LSIP","North East","2017","deaths",0.0935078813785733
 "LSIP","North of Tyne","2017","deaths",0.0871423873725748
 "LSIP","Oxfordshire","2017","deaths",0.0756390193009911
@@ -4701,8 +4679,7 @@
 "LEP","Greater Cambridge and Greater Peterborough","2018","deaths",0.0780937569429016
 "LEP","Greater Lincolnshire","2018","deaths",0.0780709342560554
 "LEP","Greater Manchester","2018","deaths",0.103500410846343
-"LEP","Heart of South West","2018","deaths",0.0750877192982456
-"LEP","Heart of the South West","2018","deaths",0.0719770362396843
+"LEP","Heart of the South West","2018","deaths",0.072265625
 "LEP","Hertfordshire","2018","deaths",0.0816743236345074
 "LEP","Hull and East Yorkshire","2018","deaths",0.0856079404466501
 "LEP","Lancashire","2018","deaths",0.0806171065567572
@@ -4746,8 +4723,7 @@
 "LSIP","Lancashire","2018","deaths",0.0806171065567572
 "LSIP","Leicester and Leicestershire","2018","deaths",0.0907825118351434
 "LSIP","Liverpool City Region","2018","deaths",0.0922737681282334
-"LSIP","Norfolk and Suffolk","2018","deaths",0.0806881957861809
-"LSIP","Norfolk and Suffolk (Greater Anglia)","2018","deaths",0.0724155578300921
+"LSIP","Norfolk and Suffolk","2018","deaths",0.0785003722000406
 "LSIP","North East","2018","deaths",0.0872983036822507
 "LSIP","North of Tyne","2018","deaths",0.0809220205983325
 "LSIP","Oxfordshire","2018","deaths",0.0697521961452734

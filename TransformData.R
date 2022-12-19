@@ -1,6 +1,6 @@
 ####
 # Title: LSIP dashboard data transform
-# Author: Hannah Cox/Paul James
+# Author: Hannah Cox/Paul James/Ali Othman
 # Date: 18th May 2022
 # Last updated: 30th Aug 2022
 # Transforms the raw data into the dataframes used in the dashboard.
@@ -18,7 +18,7 @@ library(janitor)
 library(openxlsx)
 library(reshape2)
 
-# list leps and LSIPs for dropdowns
+# list leps, LSIPs and MCA's for dropdowns
 C_LEP2020 <- I_LEP2020 %>%
   distinct(Area = LEP21NM1) %>%
   arrange(Area) %>%
@@ -38,6 +38,7 @@ C_LEP2020 <- I_LEP2020 %>%
   mutate(Area = trimws(Area, which = c("right")))
 
 
+# write to data folder
 write.csv(C_LEP2020, file = "Data\\AppData\\C_LEP2020.csv", row.names = FALSE)
 
 # Create LAD-LEP lookup table
@@ -95,6 +96,7 @@ format.EmpOcc.APS <- function(x) {
     mutate(geographic_level = toupper(geographic_level)) %>%
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
 }
+
 # format data
 F_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
 # create downloadable version with new suppression rules
@@ -116,6 +118,7 @@ C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
 # mutate(allOccsRemain = case_when(allOccsRemain <= 0 ~ 0, TRUE ~ allOccsRemain)) %>%
 # select(-allOccs)
 
+# write data to folder
 write.csv(C_EmpOcc_APS1721, file = "Data\\AppData\\C_EmpOcc_APS1721.csv", row.names = FALSE)
 
 ## Employment level and rate ----
@@ -162,6 +165,7 @@ F_EmpRate_APS1822 <- format.EmpRate.APS(I_EmpRate_APS1822)
 D_EmpRate_APS1822 <- F_EmpRate_APS1822 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
 
+# write data to folder
 write.csv(D_EmpRate_APS1822, file = "Data\\AppData\\D_EmpRate_APS1822.csv", row.names = FALSE)
 
 # create version to use in dashboard
@@ -175,12 +179,16 @@ C_EmpRate_APS1822 <- F_EmpRate_APS1822 %>%
   ) %>%
   mutate(Year = as.numeric(substr(year, 3, 4))) %>% # for use in charts
   rename(Employment = `  In Employment `) # for use in charts
+
+# write data to folder
 write.csv(C_EmpRate_APS1822, file = "Data\\AppData\\C_EmpRate_APS1822.csv", row.names = FALSE)
 
 # create max and min emp count and rate by LEP for use in setting axis
 C_EmpRate_APS1822_max_min <- C_EmpRate_APS1822 %>%
   group_by(area) %>%
   summarise(minEmp = min(Employment), maxEmp = max(Employment))
+
+# write data to folder
 write.csv(C_EmpRate_APS1822_max_min, file = "Data\\AppData\\C_EmpRate_APS1822_max_min.csv", row.names = FALSE)
 
 # FE data cleaning
@@ -323,6 +331,8 @@ F_Achieve_ILR1621 <- format.Achieve.ILR(I_Achieve_ILR1621)
 # create downloadable version with new suppression rules
 D_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
   mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+
+# write data to folder
 write.csv(D_Achieve_ILR1621, file = "Data\\AppData\\D_Achieve_ILR1621.csv", row.names = FALSE)
 
 # create version to use in dashboard
@@ -344,12 +354,15 @@ C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
   arrange(fct_relevel(age_group, "Total", "Under 19", "19-24", "25+")) %>%
   arrange(fct_relevel(typeNeat, "Total FE and skills provision"))
 
+# write data to folder
 write.csv(C_Achieve_ILR1621, file = "Data\\AppData\\C_Achieve_ILR1621.csv", row.names = FALSE)
 
 # create max and min vacancy pc by LEP for use in setting axis
 C_Achieve_ILR1621_max_min <- C_Achieve_ILR1621 %>%
   group_by(geographic_level, area, level_or_type) %>%
   summarise(minAch = min(achievements), maxAch = max(achievements), .groups = "drop")
+
+# write data to folder
 write.csv(C_Achieve_ILR1621_max_min, file = "Data\\AppData\\C_Achieve_ILR1621_max_min.csv", row.names = FALSE)
 
 ## format achievements by SSA
@@ -413,6 +426,8 @@ F_Achieve_ILR21 <- format.AchieveSSA.ILR(I_Achieve_ILR21)
 # create downloadable version with new suppression rules
 D_Achieve_ILR21 <- F_Achieve_ILR21 %>%
   mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+
+# write data to folder
 write.csv(D_Achieve_ILR21, file = "Data\\AppData\\D_Achieve_ILR21.csv", row.names = FALSE)
 
 # create version to use in dashboard
@@ -433,6 +448,8 @@ C_Achieve_ILR21 <- SSA_LEP_Achieve_ILR21 %>%
   group_by(geographic_level, area, Level, sex) %>%
   mutate(pcAch = Achievements / Total_ach, pcEnr = Enrolments / Total_enr) %>%
   filter(SSA != "Total")
+
+# write data to folder
 write.csv(C_Achieve_ILR21, file = "Data\\AppData\\C_Achieve_ILR21.csv", row.names = FALSE)
 
 ## Vacancy data
@@ -520,6 +537,8 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
 
 # vacancy (for use in downloads)
 C_Vacancy_ONS1722 <- format.Vacancy.ONS(I_Vacancy_ONS1722)
+
+# write data to folder
 write.csv(C_Vacancy_ONS1722, file = "Data\\AppData\\C_Vacancy_ONS1722.csv", row.names = FALSE)
 
 # vacancy data to use in dashboard
@@ -543,6 +562,8 @@ C_Vacancy_England <-
   mutate(Year = as.numeric(substr(year, 3, 4))) %>%
   group_by(area, geographic_level, year, Year) %>%
   summarise(jobpc = sum(pc_total), jobcnt = sum(vacancy_unit), .groups = "drop")
+
+# write data to folder
 write.csv(C_Vacancy_England, file = "Data\\AppData\\C_Vacancy_England.csv", row.names = FALSE)
 
 # create max and min vacancy pc by LEP for use in setting axis
@@ -550,6 +571,8 @@ C_Vacancy_England_max_min <- C_Vacancy_England %>%
   filter(year >= 2018) %>% # only showing past 5 years in chart
   group_by(geographic_level, area) %>%
   summarise(minVac = min(jobpc), maxVac = max(jobpc))
+
+# write data to folder
 write.csv(C_Vacancy_England_max_min, file = "Data\\AppData\\C_Vacancy_England_max_min.csv", row.names = FALSE)
 
 # create change vacancy pc by LEP
@@ -559,6 +582,8 @@ C_Vacancy_England_change <- C_Vacancy_England %>%
   mutate(Percentage_Change = (jobcnt / lag(jobcnt)) - 1) %>%
   filter(year == "2022") %>%
   select(geographic_level, area, Percentage_Change)
+
+# write data to folder
 write.csv(C_Vacancy_England_change, file = "Data\\AppData\\C_Vacancy_England_change.csv", row.names = FALSE)
 
 
@@ -729,6 +754,8 @@ write.csv(C_empentind3_UBC1822, file = "Data\\AppData\\C_empentind3_UBC1822.csv"
 C_empentind_max_min <- C_empentind3_UBC1822 %>%
   filter(geographic_level != "LADU", variable == "Micro 0 to 9", industry == "Total") %>%
   summarise(minmic = min(rate), maxmic = max(rate))
+
+# write data to folder
 write.csv(C_empentind_max_min, file = "Data\\AppData\\C_empentind_max_min.csv", row.names = FALSE)
 
 # Downloadable version
@@ -779,51 +806,63 @@ format.bussdemo.ONS <- function(w, x, y, z) {
   addLADU <- LADU %>%
     left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
     rename(area = LAD21NM) %>%
-    select(-c(LAD21CD)) %>%
+    # select(-c(LAD21CD)) %>%
     mutate(geographic_level = "LADU") %>% # rename as LADU
     relocate(geographic_level, .after = area) %>%
-    mutate_at(c(3:8), as.character)
+    mutate_at(c(4:9), as.character)
 
-  addLEP <- C_LADLEP2020 %>%
-    left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
+
+  addLEP <- addLADU %>%
+    left_join(select(C_LADLEP2020, -LAD21NM), by = c("LAD21CD" = "LAD21CD")) %>%
+    mutate(LEP = case_when(
+      LEP == "Heart of South West" ~ "Heart of the South West",
+      TRUE ~ LEP
+    )) %>%
     filter(is.na(LEP) == FALSE) %>% # remove non-english
-    select(-c(1:2)) %>%
+    select(-c(1:3)) %>%
     rename(area = LEP) %>%
     mutate(geographic_level = "LEP") %>% # rename as lep
     mutate_at(vars(-area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-    relocate(geographic_level, .after = area) %>%
+    relocate(area, geographic_level, .before = "2021") %>%
     mutate_at(c(3:8), as.numeric) %>% # Convert to numeric
     group_by(area, geographic_level) %>% # sum for each LSIP
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(3:8), as.character) # Convert to sring to bind
 
-  addLSIP <- C_LADLSIP2020 %>%
-    left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
+  addLSIP <- addLADU %>%
+    left_join(select(C_LADLSIP2020, -LAD21NM), by = c("LAD21CD" = "LAD21CD")) %>%
+    mutate(LSIP = case_when(
+      LSIP == "Norfolk and Suffolk (Greater Anglia)" ~ "Norfolk and Suffolk",
+      TRUE ~ LSIP
+    )) %>%
     filter(is.na(LSIP) == FALSE) %>% # remove non-english
-    select(-c(1:2)) %>%
+    select(-c(1:3)) %>%
     rename(area = LSIP) %>%
-    mutate(geographic_level = "LSIP") %>% # rename as lep
+    mutate(geographic_level = "LSIP") %>% # rename as lsip
     mutate_at(vars(-area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-    relocate(geographic_level, .after = area) %>%
+    relocate(area, geographic_level, .before = "2021") %>%
     mutate_at(c(3:8), as.numeric) %>% # Convert to numeric
     group_by(area, geographic_level) %>% # sum for each LSIP
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(3:8), as.character) # Convert to sring to bind
 
-  addMCA <- C_mcalookup %>%
-    left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
+  addMCA <- addLADU %>%
+    left_join(select(C_mcalookup, -LAD21NM, -CAUTH21CD), by = c("LAD21CD" = "LAD21CD")) %>%
     select(-c(1:3)) %>%
     rename(area = CAUTH21NM) %>%
-    mutate(geographic_level = "MCA") %>% # rename as lep
+    mutate(geographic_level = "MCA") %>% # rename as mca
     mutate_at(vars(-area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-    relocate(geographic_level, .after = area) %>%
+    relocate(area, geographic_level, .before = "2021") %>%
     mutate_at(c(3:8), as.numeric) %>% # Convert to numeric
     group_by(area, geographic_level) %>% # sum for each MCA
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(3:8), as.character) # Convert to sring to bind
+
+  addLADU <- addLADU %>%
+    select(-LAD21CD)
 
   combined <- bind_rows(addLADU, addLEP, addLSIP, addMCA, England) %>%
     melt(id.vars = c("geographic_level", "area")) %>%
@@ -1059,6 +1098,7 @@ F_KS5destin_1721 <- format.ks5(I_KS5destin_1721)
 # downloadable version
 D_KS5destin_1721 <- F_KS5destin_1721 %>%
   mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+
 # write data to folder
 write.csv(D_KS5destin_1721, file = "Data\\AppData\\D_KS5destin_1721.csv", row.names = FALSE)
 
@@ -1127,6 +1167,8 @@ C_KS4_KS5eduempapp_max_min <- C_KS4_KS5eduempapp %>%
   filter(geographic_level != "LADU") %>%
   # group_by(area) %>%
   summarise(minks5 = min(rate), maxks5 = max(rate))
+
+# write data to folder
 write.csv(C_KS4_KS5eduempapp_max_min, file = "Data\\AppData\\C_KS4_KS5eduempapp_max_min.csv", row.names = FALSE)
 
 
@@ -1207,6 +1249,7 @@ write.csv(C_EmpInd2_APS1822, file = "Data\\AppData\\C_EmpInd2_APS1822.csv", row.
 # downloadable version
 D_EmpInd_APS1822 <- format.EmpInd.APS(I_empind_APS1822) %>%
   mutate_at(vars(c(4:12)), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+
 # write the data to folder
 write.csv(D_EmpInd_APS1822, file = "Data\\AppData\\D_EmpInd_APS1822.csv", row.names = FALSE)
 
@@ -1299,7 +1342,7 @@ C_qual2_APS1721 <- F_qual_APS1721 %>%
   select(-Total) %>%
   mutate(Year = as.numeric(substr(year, 3, 4))) # add year name for charts
 
-# Dashboard data
+# write data to folder
 write.csv(C_qual2_APS1721, file = "Data\\AppData\\C_qual2_APS1721.csv", row.names = FALSE)
 
 # dashboard data - below level 3
@@ -1317,7 +1360,7 @@ C_qualevel2_APS1721 <- F_qual_APS1721 %>%
   select(-Total) %>%
   mutate(Year = as.numeric(substr(year, 3, 4))) # add year name for charts
 
-# Dashboard data
+# write data to folder
 write.csv(C_qualevel2_APS1721, file = "Data\\AppData\\C_qualevel2_APS1721.csv", row.names = FALSE)
 
 # dashboard data - level 3 plus
@@ -1335,7 +1378,7 @@ C_qualevel3plus_APS1721 <- F_qual_APS1721 %>%
   select(-Total) %>%
   mutate(Year = as.numeric(substr(year, 3, 4))) # add year name for charts
 
-# Dashboard data
+# write data to folder
 write.csv(C_qualevel3plus_APS1721, file = "Data\\AppData\\C_qualevel3plus_APS1721.csv", row.names = FALSE)
 
 
@@ -1353,7 +1396,7 @@ write.csv(C_qualevel3plus_APS1721, file = "Data\\AppData\\C_qualevel3plus_APS172
 
 
 
-# Downloadable version
+# write data to folder
 D_qual_APS1721 <- format.qual.APS(I_qual_APS1721) %>%
   mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x"))) %>%
   rename("qualification count" = value)
