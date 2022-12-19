@@ -1391,7 +1391,9 @@ write.csv(C_qualevel3plus_APS1721, file = "Data\\AppData\\C_qualevel3plus_APS172
 # write data to folder
 D_qual_APS1721 <- format.qual.APS(I_qual_APS1721) %>%
   mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x"))) %>%
-  rename("qualification count" = value)
+  rename("qualification count" = value) %>%
+  relocate("qualification count", .after = age_band)
+
 
 # write the data to folder
 write.csv(D_qual_APS1721, file = "Data\\AppData\\D_qual_APS1721.csv", row.names = FALSE)
