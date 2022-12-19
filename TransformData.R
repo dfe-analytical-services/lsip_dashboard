@@ -814,10 +814,6 @@ format.bussdemo.ONS <- function(w, x, y, z) {
 
   addLEP <- addLADU %>%
     left_join(select(C_LADLEP2020, -LAD21NM), by = c("LAD21CD" = "LAD21CD")) %>%
-    mutate(LEP = case_when(
-      LEP == "Heart of South West" ~ "Heart of the South West",
-      TRUE ~ LEP
-    )) %>%
     filter(is.na(LEP) == FALSE) %>% # remove non-english
     select(-c(1:3)) %>%
     rename(area = LEP) %>%
@@ -832,10 +828,6 @@ format.bussdemo.ONS <- function(w, x, y, z) {
 
   addLSIP <- addLADU %>%
     left_join(select(C_LADLSIP2020, -LAD21NM), by = c("LAD21CD" = "LAD21CD")) %>%
-    mutate(LSIP = case_when(
-      LSIP == "Norfolk and Suffolk (Greater Anglia)" ~ "Norfolk and Suffolk",
-      TRUE ~ LSIP
-    )) %>%
     filter(is.na(LSIP) == FALSE) %>% # remove non-english
     select(-c(1:3)) %>%
     rename(area = LSIP) %>%
