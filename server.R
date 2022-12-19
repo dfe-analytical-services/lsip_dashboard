@@ -865,7 +865,7 @@ server <- function(input, output, session) {
       filter(
         geographic_level == input$GeoType & area == input$lep1,
         `Cohort Group` == "Total",
-        `Key Stage` == "KS5"
+        `Key Stage` == "Key Stage 5"
       )
   })
   # get 21/22 values
@@ -901,10 +901,10 @@ server <- function(input, output, session) {
   KS5LineChart <- eventReactive(input$lep1, {
     KS5Line <- C_KS4_KS5eduempapp %>% filter(
       (geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"), `Cohort Group` == "Total",
-      `Key Stage` == "KS5"
+      `Key Stage` == "Key Stage 5"
     )
     KS5sustChange <- KS5Latest()$rate - KS5Last()$rate
-    KS5MinMax <- C_KS4_KS5eduempapp_max_min
+    KS5MinMax <- C_KS5_eduempapp_max_min
 
     ggplot(KS5Line, aes(x = Year, y = rate, group = area, text = paste0(
       "Academic year: ", time_period, "<br>",
@@ -2379,12 +2379,12 @@ server <- function(input, output, session) {
 
   # turn off cohort filter
   output$cohort_group_off <- renderUI({
-    if (input$datatabset == "Destinations" & input$keystageGroup == "KS5") {
+    if (input$datatabset == "Destinations" & input$keystageGroup == "Key Stage 5") {
       selectizeInput("cohortGroup", "Choose qualification level",
         choices = if ("keystageGroup" %in% names(input)) {
-          if ("KS5" %in% input$keystageGroup) {
+          if ("Key Stage 5" %in% input$keystageGroup) {
             c("Total", "Level 2", "Level 3", "All other qualifications")
-          } else if ("KS4" %in% input$keystageGroup) {
+          } else if ("Key Stage 4" %in% input$keystageGroup) {
             c("Total")
           }
         } else {
@@ -2411,13 +2411,13 @@ server <- function(input, output, session) {
                 area == input$lep1, time_period == "202021",
                 positive_sust == "Sust edu, emp and app",
                 `Cohort Group` == "Total",
-                `Key Stage` == "KS4"
+                `Key Stage` == "Key Stage 4"
               ) %>%
               select(rate)
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the KS4 201920 cohort group had a sustained positive destination in 202021 in ", input$lep1)),
+          p(paste0("of the Key Stage 4 201920 cohort group had a sustained positive destination in 202021 in ", input$lep1)),
         )
       )
     )
@@ -2438,13 +2438,13 @@ server <- function(input, output, session) {
                 area == input$lep2, time_period == "202021",
                 positive_sust == "Sust edu, emp and app",
                 `Cohort Group` == "Total",
-                `Key Stage` == "KS4"
+                `Key Stage` == "Key Stage 4"
               ) %>%
               select(rate)
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the KS4 201920 cohort group had a sustained positive destination in 202021 in ", input$lep2)),
+          p(paste0("of the Key Stage 4 201920 cohort group had a sustained positive destination in 202021 in ", input$lep2)),
         )
       )
     )
@@ -2465,13 +2465,13 @@ server <- function(input, output, session) {
                 area == input$lep1, time_period == "202021",
                 positive_sust == "Sust edu, emp and app",
                 `Cohort Group` == "Total",
-                `Key Stage` == "KS5"
+                `Key Stage` == "Key Stage 5"
               ) %>%
               select(rate)
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the KS5 201920 cohort group had a sustained positive destination in 202021 in ", input$lep1)),
+          p(paste0("of the Key Stage 5 201920 cohort group had a sustained positive destination in 202021 in ", input$lep1)),
         )
       )
     )
@@ -2492,13 +2492,13 @@ server <- function(input, output, session) {
                 area == input$lep2, time_period == "202021",
                 positive_sust == "Sust edu, emp and app",
                 `Cohort Group` == "Total",
-                `Key Stage` == "KS5"
+                `Key Stage` == "Key Stage 5"
               ) %>%
               select(rate)
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the KS5 201920 cohort group had a sustained positive destination in 202021 in ", input$lep2)),
+          p(paste0("of the Key Stage 5 201920 cohort group had a sustained positive destination in 202021 in ", input$lep2)),
         )
       )
     )
@@ -2519,13 +2519,13 @@ server <- function(input, output, session) {
                 area == "England", time_period == "202021",
                 positive_sust == "Sust edu, emp and app",
                 `Cohort Group` == "Total",
-                `Key Stage` == "KS4"
+                `Key Stage` == "Key Stage 4"
               ) %>%
               select(rate)
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the KS4 201920 cohort group had a sustained positive destination in 202021 in England")),
+          p(paste0("of the Key Stage 4 201920 cohort group had a sustained positive destination in 202021 in England")),
         )
       )
     )
@@ -2546,13 +2546,13 @@ server <- function(input, output, session) {
                 area == "England", time_period == "202021",
                 positive_sust == "Sust edu, emp and app",
                 `Cohort Group` == "Total",
-                `Key Stage` == "KS5"
+                `Key Stage` == "Key Stage 5"
               ) %>%
               select(rate)
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the KS5 201920 cohort group had a sustained positive destination in 202021 in England")),
+          p(paste0("of the Key Stage 5 201920 cohort group had a sustained positive destination in 202021 in England")),
         )
       )
     )
@@ -2564,7 +2564,7 @@ server <- function(input, output, session) {
     paste0("20/21 destinations of the ", input$keystageGroup, " ", paste0(C_KS4_KS5_2021 %>%
       filter(
         geographic_level == input$GeoType,
-        `Cohort Group` == if ("cohortGroup" %in% names(input) & input$keystageGroup == "KS5") {
+        `Cohort Group` == if ("cohortGroup" %in% names(input) & input$keystageGroup == "Key Stage 5") {
           input$cohortGroup
         } else {
           "Total"
@@ -2572,7 +2572,7 @@ server <- function(input, output, session) {
         `Key Stage` == if ("keystageGroup" %in% names(input)) {
           input$keystageGroup
         } else {
-          "KS4"
+          "Key Stage 4"
         }
       ) %>%
       select(`Cohort Group`) %>% distinct()), " 19/20 cohort")
@@ -2589,7 +2589,7 @@ server <- function(input, output, session) {
           } else {
             "\nNone"
           }),
-        `Cohort Group` == if ("cohortGroup" %in% names(input) & input$keystageGroup == "KS5") {
+        `Cohort Group` == if ("cohortGroup" %in% names(input) & input$keystageGroup == "Key Stage 5") {
           input$cohortGroup
         } else {
           "Total"
@@ -2597,7 +2597,7 @@ server <- function(input, output, session) {
         `Key Stage` == if ("keystageGroup" %in% names(input)) {
           input$keystageGroup
         } else {
-          "KS4"
+          "Key Stage 4"
         }
       ) %>%
       select(area, rate, variable, time_period, `Cohort Group`, `Key Stage`)

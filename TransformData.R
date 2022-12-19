@@ -1106,12 +1106,12 @@ write.csv(D_KS5destin_1721, file = "Data\\AppData\\D_KS5destin_1721.csv", row.na
 # dashboard data
 C_KS4_KS5_2021 <- F_KS4destin_1521 %>%
   mutate(`Cohort Group` = "Total") %>%
-  mutate(`Key Stage` = "KS4") %>%
+  mutate(`Key Stage` = "Key Stage 4") %>%
   filter(time_period == "202021") %>%
   bind_rows(
     F_KS5destin_1721 %>%
       filter(time_period == "202021") %>%
-      mutate(`Key Stage` = "KS5")
+      mutate(`Key Stage` = "Key Stage 5")
   ) %>%
   relocate(`Key Stage`, .after = geographic_level) %>%
   mutate_at(c(5:10), as.numeric) %>%
@@ -1140,12 +1140,12 @@ write.csv(C_KS4_KS5_2021, file = "Data\\AppData\\C_KS4_KS5_2021.csv", row.names 
 # employment and education
 C_KS4_KS5eduempapp <- F_KS4destin_1521 %>%
   mutate(`Cohort Group` = "Total") %>%
-  mutate(`Key Stage` = "KS4") %>%
+  mutate(`Key Stage` = "Key Stage 4") %>%
   # filter(time_period == "202021") %>%
   bind_rows(
     F_KS5destin_1721 %>%
       #  filter(time_period == "202021") %>%
-      mutate(`Key Stage` = "KS5")
+      mutate(`Key Stage` = "Key Stage 5")
   ) %>%
   select(-"Unknown", -"Not Recorded as a sustained destination") %>%
   mutate_at(c(4:7), as.numeric) %>%
@@ -1159,17 +1159,17 @@ C_KS4_KS5eduempapp <- F_KS4destin_1521 %>%
 write.csv(C_KS4_KS5eduempapp, file = "Data\\AppData\\C_KS4_KS5eduempapp.csv", row.names = FALSE)
 
 # create max and KS5 positive sustained destination  rate by area for use in setting axis
-C_KS4_KS5eduempapp_max_min <- C_KS4_KS5eduempapp %>%
+C_KS5_eduempapp_max_min <- C_KS4_KS5eduempapp %>%
   filter(
     `Cohort Group` == "Total",
-    `Key Stage` == "KS5"
+    `Key Stage` == "Key Stage 5"
   ) %>%
   filter(geographic_level != "LADU") %>%
   # group_by(area) %>%
   summarise(minks5 = min(rate), maxks5 = max(rate))
 
 # write data to folder
-write.csv(C_KS4_KS5eduempapp_max_min, file = "Data\\AppData\\C_KS4_KS5eduempapp_max_min.csv", row.names = FALSE)
+write.csv(C_KS5_eduempapp_max_min, file = "Data\\AppData\\C_KS5_eduempapp_max_min.csv", row.names = FALSE)
 
 
 
