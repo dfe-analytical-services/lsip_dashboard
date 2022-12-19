@@ -406,60 +406,33 @@
 "LEP","Greater Manchester","Further education and skills: Level 4+",220,2180
 "LEP","Greater Manchester","Further education and skills: No Level Assigned",1690,23590
 "LEP","Greater Manchester","Further education and skills: Total",13520,86980
-"LEP","Heart of South West","Apprenticeships: Advanced",60,300
-"LEP","Heart of South West","Apprenticeships: Higher",0,50
-"LEP","Heart of South West","Apprenticeships: Intermediate",110,460
-"LEP","Heart of South West","Apprenticeships: Total",190,770
-"LEP","Heart of South West","Community learning: Family english maths and language",0,30
-"LEP","Heart of South West","Community learning: Neighbourhood learning in deprived communities",20,490
-"LEP","Heart of South West","Community learning: Personal and community development learning",0,1100
-"LEP","Heart of South West","Community learning: Total",0,1770
-"LEP","Heart of South West","Community learning: Wider family learning",10,240
-"LEP","Heart of South West","Education and training: Basic Skills",70,420
-"LEP","Heart of South West","Education and training: Below Level 2 (excluding Basic Skills)",120,860
-"LEP","Heart of South West","Education and training: Full Level 2",20,140
-"LEP","Heart of South West","Education and training: Full Level 3",70,190
-"LEP","Heart of South West","Education and training: Level 2",190,1120
-"LEP","Heart of South West","Education and training: Level 3",90,220
-"LEP","Heart of South West","Education and training: Level 4+",10,20
-"LEP","Heart of South West","Education and training: No Level Assigned",0,100
-"LEP","Heart of South West","Education and training: Total",410,2200
-"LEP","Heart of South West","Further education and skills: Basic Skills",160,820
-"LEP","Heart of South West","Further education and skills: Below Level 2 (excluding Basic Skills)",130,860
-"LEP","Heart of South West","Further education and skills: Full Level 2",160,510
-"LEP","Heart of South West","Further education and skills: Full Level 3",210,450
-"LEP","Heart of South West","Further education and skills: Level 2",320,1500
-"LEP","Heart of South West","Further education and skills: Level 3",220,470
-"LEP","Heart of South West","Further education and skills: Level 4+",10,70
-"LEP","Heart of South West","Further education and skills: No Level Assigned",60,1840
-"LEP","Heart of South West","Further education and skills: Total",800,4810
-"LEP","Heart of the South West","Apprenticeships: Advanced",580,3960
+"LEP","Heart of the South West","Apprenticeships: Advanced",580,4260
 "LEP","Heart of the South West","Apprenticeships: Higher",0,1130
-"LEP","Heart of the South West","Apprenticeships: Intermediate",510,5710
-"LEP","Heart of the South West","Apprenticeships: Total",1580,10090
+"LEP","Heart of the South West","Apprenticeships: Intermediate",510,6170
+"LEP","Heart of the South West","Apprenticeships: Total",1580,10860
 "LEP","Heart of the South West","Community learning: Family english maths and language",0,470
 "LEP","Heart of the South West","Community learning: Neighbourhood learning in deprived communities",0,4430
-"LEP","Heart of the South West","Community learning: Personal and community development learning",0,9930
-"LEP","Heart of the South West","Community learning: Total",0,12860
+"LEP","Heart of the South West","Community learning: Personal and community development learning",0,11030
+"LEP","Heart of the South West","Community learning: Total",0,14630
 "LEP","Heart of the South West","Community learning: Wider family learning",0,1670
-"LEP","Heart of the South West","Education and training: Basic Skills",670,5490
-"LEP","Heart of the South West","Education and training: Below Level 2 (excluding Basic Skills)",1220,8960
-"LEP","Heart of the South West","Education and training: Full Level 2",130,1540
-"LEP","Heart of the South West","Education and training: Full Level 3",520,2460
+"LEP","Heart of the South West","Education and training: Basic Skills",670,5910
+"LEP","Heart of the South West","Education and training: Below Level 2 (excluding Basic Skills)",1220,9820
+"LEP","Heart of the South West","Education and training: Full Level 2",130,1680
+"LEP","Heart of the South West","Education and training: Full Level 3",520,2650
 "LEP","Heart of the South West","Education and training: Level 2",1650,12650
-"LEP","Heart of the South West","Education and training: Level 3",870,2910
+"LEP","Heart of the South West","Education and training: Level 3",870,3050
 "LEP","Heart of the South West","Education and training: Level 4+",20,400
-"LEP","Heart of the South West","Education and training: No Level Assigned",0,590
-"LEP","Heart of the South West","Education and training: Total",3650,24280
-"LEP","Heart of the South West","Further education and skills: Basic Skills",970,10120
-"LEP","Heart of the South West","Further education and skills: Below Level 2 (excluding Basic Skills)",1270,9250
-"LEP","Heart of the South West","Further education and skills: Full Level 2",880,5990
-"LEP","Heart of the South West","Further education and skills: Full Level 3",1610,5800
-"LEP","Heart of the South West","Further education and skills: Level 2",2570,15420
-"LEP","Heart of the South West","Further education and skills: Level 3",2020,6320
-"LEP","Heart of the South West","Further education and skills: Level 4+",120,1370
-"LEP","Heart of the South West","Further education and skills: No Level Assigned",690,12970
-"LEP","Heart of the South West","Further education and skills: Total",7370,45600
+"LEP","Heart of the South West","Education and training: No Level Assigned",0,690
+"LEP","Heart of the South West","Education and training: Total",3650,25400
+"LEP","Heart of the South West","Further education and skills: Basic Skills",970,10940
+"LEP","Heart of the South West","Further education and skills: Below Level 2 (excluding Basic Skills)",1270,10110
+"LEP","Heart of the South West","Further education and skills: Full Level 2",880,6500
+"LEP","Heart of the South West","Further education and skills: Full Level 3",1610,6240
+"LEP","Heart of the South West","Further education and skills: Level 2",2570,16890
+"LEP","Heart of the South West","Further education and skills: Level 3",2020,6780
+"LEP","Heart of the South West","Further education and skills: Level 4+",130,1370
+"LEP","Heart of the South West","Further education and skills: No Level Assigned",690,14810
+"LEP","Heart of the South West","Further education and skills: Total",7370,50410
 "LEP","Hertfordshire","Apprenticeships: Advanced",240,1540
 "LEP","Hertfordshire","Apprenticeships: Higher",0,780
 "LEP","Hertfordshire","Apprenticeships: Intermediate",170,2140
@@ -1623,60 +1596,33 @@
 "LSIP","Liverpool City Region","Further education and skills: Level 4+",130,1140
 "LSIP","Liverpool City Region","Further education and skills: No Level Assigned",1430,17110
 "LSIP","Liverpool City Region","Further education and skills: Total",8510,60190
-"LSIP","Norfolk and Suffolk","Apprenticeships: Advanced",450,2490
+"LSIP","Norfolk and Suffolk","Apprenticeships: Advanced",450,3020
 "LSIP","Norfolk and Suffolk","Apprenticeships: Higher",0,1070
-"LSIP","Norfolk and Suffolk","Apprenticeships: Intermediate",310,3230
-"LSIP","Norfolk and Suffolk","Apprenticeships: Total",1010,5750
+"LSIP","Norfolk and Suffolk","Apprenticeships: Intermediate",310,4310
+"LSIP","Norfolk and Suffolk","Apprenticeships: Total",1010,7700
 "LSIP","Norfolk and Suffolk","Community learning: Family english maths and language",0,1200
-"LSIP","Norfolk and Suffolk","Community learning: Neighbourhood learning in deprived communities",0,760
-"LSIP","Norfolk and Suffolk","Community learning: Personal and community development learning",0,5630
-"LSIP","Norfolk and Suffolk","Community learning: Total",0,8650
-"LSIP","Norfolk and Suffolk","Community learning: Wider family learning",0,1470
-"LSIP","Norfolk and Suffolk","Education and training: Basic Skills",790,4410
-"LSIP","Norfolk and Suffolk","Education and training: Below Level 2 (excluding Basic Skills)",880,5260
-"LSIP","Norfolk and Suffolk","Education and training: Full Level 2",90,760
-"LSIP","Norfolk and Suffolk","Education and training: Full Level 3",310,1340
-"LSIP","Norfolk and Suffolk","Education and training: Level 2",1140,8960
-"LSIP","Norfolk and Suffolk","Education and training: Level 3",580,1910
+"LSIP","Norfolk and Suffolk","Community learning: Neighbourhood learning in deprived communities",0,1050
+"LSIP","Norfolk and Suffolk","Community learning: Personal and community development learning",0,5980
+"LSIP","Norfolk and Suffolk","Community learning: Total",0,8820
+"LSIP","Norfolk and Suffolk","Community learning: Wider family learning",0,1780
+"LSIP","Norfolk and Suffolk","Education and training: Basic Skills",790,5010
+"LSIP","Norfolk and Suffolk","Education and training: Below Level 2 (excluding Basic Skills)",880,6810
+"LSIP","Norfolk and Suffolk","Education and training: Full Level 2",90,1070
+"LSIP","Norfolk and Suffolk","Education and training: Full Level 3",310,1760
+"LSIP","Norfolk and Suffolk","Education and training: Level 2",1280,8960
+"LSIP","Norfolk and Suffolk","Education and training: Level 3",720,1910
 "LSIP","Norfolk and Suffolk","Education and training: Level 4+",10,140
-"LSIP","Norfolk and Suffolk","Education and training: No Level Assigned",0,250
-"LSIP","Norfolk and Suffolk","Education and training: Total",2890,16170
-"LSIP","Norfolk and Suffolk","Further education and skills: Basic Skills",1010,6580
-"LSIP","Norfolk and Suffolk","Further education and skills: Below Level 2 (excluding Basic Skills)",900,5760
-"LSIP","Norfolk and Suffolk","Further education and skills: Full Level 2",590,3180
-"LSIP","Norfolk and Suffolk","Further education and skills: Full Level 3",1130,3420
-"LSIP","Norfolk and Suffolk","Further education and skills: Level 2",1850,10460
-"LSIP","Norfolk and Suffolk","Further education and skills: Level 3",1490,3950
-"LSIP","Norfolk and Suffolk","Further education and skills: Level 4+",80,1140
-"LSIP","Norfolk and Suffolk","Further education and skills: No Level Assigned",530,8350
-"LSIP","Norfolk and Suffolk","Further education and skills: Total",5760,30090
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Apprenticeships: Advanced",170,800
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Apprenticeships: Higher",0,110
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Apprenticeships: Intermediate",310,1080
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Apprenticeships: Total",580,1950
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Community learning: Family english maths and language",0,280
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Community learning: Neighbourhood learning in deprived communities",0,310
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Community learning: Personal and community development learning",0,970
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Community learning: Total",0,1690
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Community learning: Wider family learning",0,360
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Education and training: Basic Skills",310,1240
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Education and training: Below Level 2 (excluding Basic Skills)",440,2020
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Education and training: Full Level 2",80,310
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Education and training: Full Level 3",180,420
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Education and training: Level 2",500,2500
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Education and training: Level 3",200,460
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Education and training: Level 4+",0,20
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Education and training: No Level Assigned",10,120
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Education and training: Total",1150,4790
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Further education and skills: Basic Skills",490,2100
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Further education and skills: Below Level 2 (excluding Basic Skills)",440,2040
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Further education and skills: Full Level 2",460,1120
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Further education and skills: Full Level 3",520,1170
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Further education and skills: Level 2",900,3220
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Further education and skills: Level 3",540,1200
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Further education and skills: Level 4+",30,120
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Further education and skills: No Level Assigned",240,1760
-"LSIP","Norfolk and Suffolk (Greater Anglia)","Further education and skills: Total",2320,8160
+"LSIP","Norfolk and Suffolk","Education and training: No Level Assigned",0,370
+"LSIP","Norfolk and Suffolk","Education and training: Total",2980,17490
+"LSIP","Norfolk and Suffolk","Further education and skills: Basic Skills",1010,8410
+"LSIP","Norfolk and Suffolk","Further education and skills: Below Level 2 (excluding Basic Skills)",900,7310
+"LSIP","Norfolk and Suffolk","Further education and skills: Full Level 2",590,4300
+"LSIP","Norfolk and Suffolk","Further education and skills: Full Level 3",1130,4500
+"LSIP","Norfolk and Suffolk","Further education and skills: Level 2",1850,11230
+"LSIP","Norfolk and Suffolk","Further education and skills: Level 3",1490,4600
+"LSIP","Norfolk and Suffolk","Further education and skills: Level 4+",110,1140
+"LSIP","Norfolk and Suffolk","Further education and skills: No Level Assigned",530,8630
+"LSIP","Norfolk and Suffolk","Further education and skills: Total",5760,32360
 "LSIP","North East","Apprenticeships: Advanced",530,3650
 "LSIP","North East","Apprenticeships: Higher",0,710
 "LSIP","North East","Apprenticeships: Intermediate",220,6640
