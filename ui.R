@@ -275,6 +275,8 @@ padding-top:15px
               h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
               p("This tab provides experimental data on the share of online job adverts for the selected geographic area, and the option to compare against another area in England at the same geographic level. Data from this source has been included temporarily, and will be replaced with more detailed, experimental data on online job adverts (currently planned for early 2023) from the ONS."),
               p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities."),
+              h3(actionLink("link_to_tabpanel_enterprise_level", "Enterprises")),
+              p("This tab provides data on the count of new and no longer trading enterprises and count of enterprises by employment size and industry for the selected geographic area, and the option to compare against another area in England at the same geographic level."),
               h3(actionLink("link_to_tabpanel_FE", "Skills")),
               p("This tab provides information on training activity for the selected geographic area including data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period. There is an option to compare against another area in England at the same geographic level."),
               p("LEP, LSIP and MCA area totals are calculated by aggregating the relevant local authorities."),
@@ -284,8 +286,6 @@ padding-top:15px
               h3(actionLink("link_to_tabpanel_destinations_level", "Destinations")),
               p("This page includes information on the destinations of young people after KS4 and KS5 education for the selected geographic area, and the option to compare against another area.
                 It includes data on destinations, with breakdowns by level and key stage group."),
-              h3(actionLink("link_to_tabpanel_enterprise_level", "Enterprises")),
-              p("This tab provides data on the count of new and no longer trading enterprises and count of enterprises by employment size and industry for the selected geographic area, and the option to compare against another area in England at the same geographic level."),
               h2("Data download page"),
               p("The", actionLink("link_to_tabpanel_data", "data download page"), " includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
             )
@@ -396,11 +396,11 @@ padding-top:15px
             id = "datatabset",
             panel_overview(),
             panel_employment(),
+            panel_enterprise(),
             panel_vacancies(),
             panel_skills(),
             panel_qualification_level(),
-            panel_destinations(),
-            panel_enterprise()
+            panel_destinations()
           ) # end of dashboard tabset panel
         ) # end of dashboard navbar
       )

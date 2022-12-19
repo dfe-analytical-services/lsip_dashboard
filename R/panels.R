@@ -63,7 +63,7 @@ panel_overview <- function() {
           actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies")
         ),
         # fifth row - destinations
-        h3("KS5 positive destination rate"),
+        h3("Key Stage 5 positive destination rate"),
         fluidRow(
           column(
             width = 4,
@@ -696,7 +696,7 @@ panel_destinations <- function() {
   tabPanel(
     "Destinations",
     h1(uiOutput("page5title")),
-    p("Destination measures show the percentage of students going to or remaining in an education, apprenticeship or employment destination in the academic year after completing KS4 studies (usually aged between 14 to 16) and KS5 studies (usually aged 18)."),
+    p("Destination measures show the percentage of students going to or remaining in an education, apprenticeship or employment destination in the academic year after completing Key Stage 4 studies (usually aged between 14 to 16) and Key Stage 5 studies (usually aged 18)."),
     br(),
 
     ### KPI boxes ----
@@ -730,7 +730,7 @@ panel_destinations <- function() {
               width = 4,
               selectInput("keystageGroup", "Choose key stage level",
                 choices = C_KS4_KS5_2021 %>% distinct(Level = `Key Stage`),
-                multiple = FALSE, selected = "KS4"
+                multiple = FALSE, selected = "Key Stage 4"
               )
             ),
             column(

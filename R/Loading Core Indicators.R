@@ -97,7 +97,7 @@ C_KS4_KS5_2021 <- read.csv(file = "./Data/AppData/C_KS4_KS5_2021.csv", check.nam
 C_KS4_KS5eduempapp <- read.csv(file = "./Data/AppData/C_KS4_KS5eduempapp.csv", check.names = FALSE)
 
 # data for dashboard
-C_KS4_KS5eduempapp_max_min <- read.csv(file = "./Data/AppData/C_KS4_KS5eduempapp_max_min.csv", check.names = FALSE)
+C_KS5_eduempapp_max_min <- read.csv(file = "./Data/AppData/C_KS5_eduempapp_max_min.csv", check.names = FALSE)
 
 
 ## Data table ----
