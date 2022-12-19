@@ -160,7 +160,6 @@ server <- function(input, output, session) {
     }
   )
 
-
   output$downloadData11 <- downloadHandler(
     filename = function() {
       "Keystage4destinationsIndicators.xlsx"
@@ -275,6 +274,8 @@ server <- function(input, output, session) {
     )
   })
 
+
+  # FE filters
   output$level_on <- renderUI({
     selectizeInput("levelGroup", "Choose level of training",
       choices = C_Achieve_ILR1621 %>%
@@ -332,7 +333,7 @@ server <- function(input, output, session) {
     }
   )
 
-  # Download current LEP indicators
+  # Download current area indicators
   filtered_data0 <- reactive({
     list(
       "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
@@ -356,7 +357,7 @@ server <- function(input, output, session) {
 
   ## KPIs and charts----
 
-  # get emp data for current lep
+  # get emp data for current area
   empLEP <- eventReactive(input$lep1, {
     C_EmpRate_APS1822 %>%
       filter(area == input$lep1, geographic_level == input$GeoType)
@@ -374,7 +375,7 @@ server <- function(input, output, session) {
 
   #### Employment count ----
   output$locland.emplcnt0 <- renderUI({
-    # call 2022 and 2021 values for chosen LEP
+    # call 2022 and 2021 values for chosen area
     empCnt2022 <- emp2022()$Employment
     empCntChange <- emp2022()$Employment - emp2021()$Employment
 
@@ -394,11 +395,11 @@ server <- function(input, output, session) {
 
   # Emp chart
   empLineChart <- eventReactive(input$lep1, {
-    # call 2022 to 2021 change  for chosen LEP
+    # call 2022 to 2021 change  for chosen area
     empCntChange <- emp2022()$Employment - emp2021()$Employment
     empLine <- empLEP()
 
-    # find min and max for lep
+    # find min and max for area
     empCntMinMax <- C_EmpRate_APS1822_max_min %>%
       filter(area == input$lep1)
 
@@ -456,7 +457,7 @@ server <- function(input, output, session) {
 
   #### Employment rate -----
   output$locland.emplrate0 <- renderUI({
-    # call 2021 values and 21-22 change for chosen LEP
+    # call 2021 values and 21-22 change for chosen area
     empRate2022 <- emp2022()$empRate
     empRateChange <- emp2022()$empRate - emp2021()$empRate
 
@@ -645,7 +646,7 @@ server <- function(input, output, session) {
 
   #### E&T achievements ----
 
-  # get EandT data for current lep
+  # get EandT data for current area
   EtLEP <- eventReactive(input$lep1, {
     C_Achieve_ILR1621 %>%
       filter(
@@ -747,7 +748,7 @@ server <- function(input, output, session) {
   })
 
   #### App achievements ----
-  # get App data for current lep
+  # get App data for current area
   AppLEP <- eventReactive(input$lep1, {
     C_Achieve_ILR1621 %>%
       filter(
@@ -830,7 +831,7 @@ server <- function(input, output, session) {
   # set margins
   m <- list(
     l = 0,
-    r = 4, # increase this margin a bit to prevent the last lable dissapearing
+    r = 4, # increase this margin a bit to prevent the last label dissapearing
     b = 0,
     t = 0,
     pad = 0
@@ -857,9 +858,9 @@ server <- function(input, output, session) {
 
 
   #### KS5 sustained positive destination rate ----
-  # get dest data for current lep
+  # get dest data for current area
 
-  KS5LEP <- eventReactive(input$lep1, {
+  KS5geo <- eventReactive(input$lep1, {
     C_KS4_KS5eduempapp %>%
       filter(
         geographic_level == input$GeoType & area == input$lep1,
@@ -869,12 +870,12 @@ server <- function(input, output, session) {
   })
   # get 21/22 values
   KS5Latest <- reactive({
-    KS5LEP() %>%
+    KS5geo() %>%
       filter(time_period == "202021")
   })
   # get 20/21 values
   KS5Last <- reactive({
-    KS5LEP() %>%
+    KS5geo() %>%
       filter(time_period == "201920")
   })
 
@@ -941,7 +942,7 @@ server <- function(input, output, session) {
   # set margins
   m <- list(
     l = 0,
-    r = 4, # increase this margin a bit to prevent the last lable dissapearing
+    r = 4, # increase this margin a bit to prevent the last label dissapearing
     b = 0,
     t = 0,
     pad = 0
@@ -967,10 +968,10 @@ server <- function(input, output, session) {
 
 
 
-  #### Mirco enterprise  ----
-  # get entprise data for current lep
+  #### Micro enterprise  ----
+  # get Enterprise data for current area
 
-  EntLEP <- eventReactive(input$lep1, {
+  Entgeo <- eventReactive(input$lep1, {
     C_empentind3_UBC1822 %>%
       filter(
         geographic_level == input$GeoType & area == input$lep1,
@@ -980,19 +981,19 @@ server <- function(input, output, session) {
   })
   # get 21/22 values
   EntLatest <- reactive({
-    EntLEP() %>%
+    Entgeo() %>%
       filter(year == "2022")
   })
   # get 20/21 values
   EntLast <- reactive({
-    EntLEP() %>%
+    Entgeo() %>%
       filter(year == "2021")
   })
 
 
-  # ent overview KPI
+  # enterprise overview KPI
   output$UBC.micro <- renderUI({
-    # change in mirco enterprises
+    # change in micro enterprises
     EntChange <- EntLatest()$rate - EntLast()$rate
 
     # print with formatting
@@ -1053,7 +1054,7 @@ server <- function(input, output, session) {
   # set margins
   m <- list(
     l = 0,
-    r = 4, # increase this margin a bit to prevent the last lable dissapearing
+    r = 4, # increase this margin a bit to prevent the last label dissapearing
     b = 0,
     t = 0,
     pad = 0
@@ -1078,9 +1079,9 @@ server <- function(input, output, session) {
   })
 
   #### qualifications NVQ  ----
-  # get entprise data for current lep
+  # get entprise data for current area
 
-  QualLEP <- eventReactive(input$lep1, {
+  Qualgeo <- eventReactive(input$lep1, {
     C_qualevel3plus_APS1721 %>%
       filter(
         geographic_level == input$GeoType & area == input$lep1,
@@ -1091,19 +1092,19 @@ server <- function(input, output, session) {
   })
   # get 21/22 values
   QualLatest <- reactive({
-    QualLEP() %>%
+    Qualgeo() %>%
       filter(year == "2021")
   })
   # get 20/21 values
   QualLast <- reactive({
-    QualLEP() %>%
+    Qualgeo() %>%
       filter(year == "2020")
   })
 
 
   # NVQ3 or above overview KPI
   output$APS.nvq3plus <- renderUI({
-    # change in NVQ4 or above
+    # change in NVQ3 or above
     QualChange <- QualLatest()$rate - QualLast()$rate
 
     # print with formatting
@@ -1220,7 +1221,7 @@ server <- function(input, output, session) {
     }
   )
 
-  # Download current LEP indicators
+  # Download current area indicators
   filtered_data1 <- reactive({
     list(
       "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, (area == input$lep1 |
@@ -2089,9 +2090,6 @@ server <- function(input, output, session) {
   })
 
 
-
-
-
   # qualification level filter
   output$qual_on <- renderUI({
     selectizeInput("qualGroup", "Choose qualification level",
@@ -2099,8 +2097,6 @@ server <- function(input, output, session) {
       multiple = FALSE, selected = "NVQ3"
     )
   })
-
-
 
 
   # turn off gender filter
@@ -2121,11 +2117,6 @@ server <- function(input, output, session) {
 
     }
   })
-
-
-
-
-
 
   # KPI 1
   output$qualup.nvq2 <- renderValueBox({
@@ -2386,7 +2377,6 @@ server <- function(input, output, session) {
     )
   })
 
-
   # turn off cohort filter
   output$cohort_group_off <- renderUI({
     if (input$datatabset == "Destinations" & input$keystageGroup == "KS5") {
@@ -2405,8 +2395,6 @@ server <- function(input, output, session) {
 
     }
   })
-
-
 
   # KPI 1
   output$destup.eduempks4 <- renderValueBox({
@@ -2747,7 +2735,6 @@ server <- function(input, output, session) {
   })
 
 
-
   # KPI 1
   output$ent.mic <- renderValueBox({
     div(
@@ -2800,8 +2787,6 @@ server <- function(input, output, session) {
     )
   })
 
-
-
   # KPI 3
   output$ent.sma <- renderValueBox({
     div(
@@ -2853,7 +2838,6 @@ server <- function(input, output, session) {
       )
     )
   })
-
 
 
   # KPI 5
