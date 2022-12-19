@@ -716,6 +716,7 @@ panel_destinations <- function() {
       inputId = "destSource",
       tags$ol(
         tags$li("Data based on destinations of state-funded mainstream schools."),
+        tags$li("New local authorities due to boundary changes may not be included due to these changes not being updated in data publications."),
         tags$li("There is no double counting across destinations, a young person is reported in one destination category only."),
         tags$li("If a student is registered as being in education and an apprenticeship, it is recorded as a sustained education and if a student is registered in employment along with an apprenticeship or in education, it is recorded as sustained employment.")
       )
@@ -758,6 +759,7 @@ panel_destinations <- function() {
       inputId = "Key stage source",
       tags$ol(
         tags$li("Data based on destinations of state-funded mainstream schools."),
+        tags$li("New local authorities due to boundary changes may not be included due to these changes not being updated in data publications."),
         tags$li("There is no double counting across destinations, a young person is reported in one destination category only."),
         tags$li("If a student is registered as being in education and an apprenticeship, it is recorded as a sustained education and if a student is registered in employment along with an apprenticeship or in education, it is recorded as sustained employment.")
       )
@@ -833,7 +835,6 @@ panel_enterprise <- function() {
       label = "Source: UK Business Counts",
       inputId = "UK Business Counts",
       tags$ol(
-        tags$li("An extract compiled from the Inter Departmental Business Register (IDBR) recording the number of Enterprises that were live at a reference date in March, broken down by employment size band, detailed industry (5 digit SIC2007) and legal status. "),
         tags$li("Overall total may not equal the sum of all industries due to rounding and suppression."),
         tags$li("Unregistered businesses that are not large enough to be registered for VAT or PAYE are not included.")
       )
@@ -851,7 +852,6 @@ panel_enterprise <- function() {
       label = "Source: UK Business Counts",
       inputId = "UK Business Counts",
       tags$ol(
-        tags$li("An extract compiled from the Inter Departmental Business Register (IDBR) recording the number of Enterprises that were live at a reference date in March, broken down by employment size band, detailed industry (5 digit SIC2007) and legal status. "),
         tags$li("Overall total may not equal the sum of all industries due to rounding, suppression and enterprises not being allocated an industry."),
         tags$li("Unregistered businesses that are not large enough to be registered for VAT or PAYE are not included.")
       )
@@ -890,7 +890,6 @@ panel_enterprise <- function() {
       label = "Source: UK Business Counts",
       inputId = "UK Business Counts",
       tags$ol(
-        tags$li("An extract compiled from the Inter Departmental Business Register (IDBR) recording the number of Enterprises that were live at a reference date in March, broken down by employment size band, detailed industry (5 digit SIC2007) and legal status. "),
         tags$li("Overall total may not equal the sum of all industries due to rounding, suppression and enterprises not being allocated an industry."),
         tags$li("Unregistered businesses that are not large enough to be registered for VAT or PAYE are not included.")
       )
@@ -904,7 +903,6 @@ panel_enterprise <- function() {
           label = "Source: ONS Business Demography 2021",
           inputId = "busdemosource",
           tags$ol(
-            tags$li("The main administrative sources for the IDBR are VAT trader and PAYE employer information passed to the ONS by HM Revenue & Customs under the Value Added Tax Act 1994 for VAT traders and the Finance Act 1969 for PAYE employers; details of incorporated businesses are also passed to ONS by Companies House."),
             tags$li("A birth is identified as a business that was present in year t, but did not exist in year t-1 or t-2.
             Births are identified by making comparison of annual active population files and identifying those present in the latest file, but not the two previous ones."),
             tags$li("A death is defined as a business that was on the active file in year t, but was no longer present in the active file in t+1 and t+2.
