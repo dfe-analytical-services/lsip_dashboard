@@ -672,7 +672,7 @@ panel_qualification_level <- function() {
       ),
       column(
         width = 9,
-        "Download skills data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)"
+        "Download qualification level data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)"
       )
     ), # end of row
     fluidRow(
@@ -685,7 +685,7 @@ panel_qualification_level <- function() {
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Download skills data for the selected geographic area"))
+      column(width = 9, p("Download qualification level data for the selected geographic area"))
     ), # end of row
     column(width = 12, br(""))
   ) # end of qualification tab
@@ -794,7 +794,7 @@ panel_destinations <- function() {
       ),
       column(
         width = 9,
-        "Download skills data for all geographies (LEPs, LSIP, MCA areas LAs, regions and England)"
+        "Download destinations data for all geographies (LEPs, LSIP, MCA areas LAs, regions and England)"
       )
     ), # end of row
     fluidRow(
@@ -807,7 +807,7 @@ panel_destinations <- function() {
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Download skills data for the selected geographic area"))
+      column(width = 9, p("Download destinations data for the selected geographic area"))
     ), # end of row
     column(width = 12, br(""))
   ) # end of destinations tab
@@ -924,7 +924,7 @@ panel_enterprise <- function() {
       ),
       column(
         width = 9,
-        "Download skills data for all geographies (LEPs, LSIP, MCA areas LAs, regions and England)"
+        "Download enterprise data for all geographies (LEPs, LSIP, MCA areas LAs, regions and England)"
       )
     ), # end of row
     fluidRow(
@@ -937,7 +937,7 @@ panel_enterprise <- function() {
           class = "downloadButton"
         )
       ),
-      column(width = 9, p("Download skills data for the selected geographic area"))
+      column(width = 9, p("Download enterprise data for the selected geographic area"))
     ), # end of row
     column(width = 12, br(""))
   )
