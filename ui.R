@@ -457,14 +457,14 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           ),
           p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
-          p("This dashboard currently shows the number of young people going into education and, employment or apprenticeship in the year following completion of their qualification by level, KS4 and KS5."),
+          p("The dashboard currently shows the number of young people going into education and, employment or apprenticeship in the year following completion of their qualification by level, KS4 and KS5."),
           h3("UK Business Counts (UBC)"),
           p("The UK Business Counts (UBC) is a record of the number of enterprises from the Inter Departmental Business Register (IDBR). Topics included cover employment size band, detailed industry (5 digit SIC 2007) and legal status.
-            This dashboard currently shows the count of enterprises by employment size and industry."),
+            The dashboard currently shows the count of enterprises by employment size and industry."),
           h3("ONS Business Demography 2021"),
-          p("This dashboard currently shows the number of new and no longer trading enterprises from 2016 to 2021. Business demography measures businesses that were active throughout the reference year.
-            The reference period is December, and therefore the 2021 publication measures businesses that were active between December 2020 and December 2021."),
           p("The business demography data comes from the IDBR and the main administrative sources for the IDBR are VAT trader and PAYE employer information passed to the ONS by HM Revenue & Customs under the Value Added Tax Act 1994 for VAT traders and the Finance Act 1969 for PAYE employers; details of incorporated businesses are also passed to ONS by Companies House."),
+          p("The dashboard currently shows the number of new and no longer trading enterprises from 2016 to 2021. Business demography measures businesses that were active throughout the reference year.
+            The reference period is December, and therefore the 2021 publication measures businesses that were active between December 2020 and December 2021."),
           p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
           br()
