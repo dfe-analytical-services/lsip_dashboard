@@ -2080,6 +2080,18 @@ paste0(areaClicked, " has a ",compareNational,metricUsed,"in ",subgroup," than t
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
+  
+  
+  # create datahub table to show
+  
+  
+  output$hubTable <- renderDataTable({
+    DT::datatable(I_Achieve_ILR1621 %>%
+                    filter(geo %in% input$hubGeog,
+                           area %in% inout$hubArea,
+                           year %in% input$hubYears)
+                    , escape = FALSE, options = list(dom = "t"), rownames = FALSE)
+  })
 
   # Stop app ---------------------------------------------------------------------------------
 
