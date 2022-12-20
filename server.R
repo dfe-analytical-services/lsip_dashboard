@@ -2093,7 +2093,7 @@ server <- function(input, output, session) {
   # qualification level filter
   output$qual_on <- renderUI({
     selectizeInput("qualGroup", "Choose qualification level",
-      choices = C_qual2_APS1721 %>% distinct(Qualificaton_level = Level),
+      choices = C_qual2_APS1721 %>% distinct(Qualification_level = Level),
       multiple = FALSE, selected = "NVQ3"
     )
   })
