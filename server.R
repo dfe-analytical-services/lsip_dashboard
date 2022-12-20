@@ -2330,7 +2330,7 @@ server <- function(input, output, session) {
           } else {
             "\nNone"
           }),
-        age_band == input$ageGroupQual, Level == input$qualGroup, gender == input$genGroup
+        gender == input$genGroup
       )
     )
   })
