@@ -794,7 +794,7 @@ panel_destinations <- function() {
       ),
       column(
         width = 9,
-        "Download destinations data for all geographies (LEPs, LSIP, MCA areas LAs, regions and England)"
+        "Download destinations data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)"
       )
     ), # end of row
     fluidRow(
@@ -924,7 +924,7 @@ panel_enterprise <- function() {
       ),
       column(
         width = 9,
-        "Download enterprise data for all geographies (LEPs, LSIP, MCA areas LAs, regions and England)"
+        "Download enterprise data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)"
       )
     ), # end of row
     fluidRow(
