@@ -906,7 +906,8 @@ panel_enterprise <- function() {
             tags$li("A birth is identified as a business that was present in year t, but did not exist in year t-1 or t-2.
             Births are identified by making comparison of annual active population files and identifying those present in the latest file, but not the two previous ones."),
             tags$li("A death is defined as a business that was on the active file in year t, but was no longer present in the active file in t+1 and t+2.
-                    In order to provide an early estimate of deaths, an adjustment has been made to the latest two years deaths to allow for reactivations. These figures are provisional and subject to revision.")
+                    In order to provide an early estimate of deaths, an adjustment has been made to the latest two years deaths to allow for reactivations. These figures are provisional and subject to revision."),
+            tags$li("An IDBR birth does not always represent the start of trading, as some businesses register for VAT or PAYE many years into their existence. And businesses that die on IDBR can continue trading if the death has been triggered by a VAT deregistration.")
           )
         )
       )
