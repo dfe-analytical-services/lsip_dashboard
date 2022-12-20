@@ -716,7 +716,6 @@ panel_destinations <- function() {
       inputId = "destSource",
       tags$ol(
         tags$li("Data based on destinations of state-funded mainstream schools."),
-        tags$li("New local authorities due to boundary changes may not be included due to these changes not being updated in data publications."),
         tags$li("There is no double counting across destinations, a young person is reported in one destination category only."),
         tags$li("If a student is registered as being in education and an apprenticeship, it is recorded as a sustained education and if a student is registered in employment along with an apprenticeship or in education, it is recorded as sustained employment.")
       )
@@ -759,7 +758,6 @@ panel_destinations <- function() {
       inputId = "Key stage source",
       tags$ol(
         tags$li("Data based on destinations of state-funded mainstream schools."),
-        tags$li("New local authorities due to boundary changes may not be included due to these changes not being updated in data publications."),
         tags$li("There is no double counting across destinations, a young person is reported in one destination category only."),
         tags$li("If a student is registered as being in education and an apprenticeship, it is recorded as a sustained education and if a student is registered in employment along with an apprenticeship or in education, it is recorded as sustained employment.")
       )

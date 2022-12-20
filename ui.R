@@ -456,7 +456,8 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
             tags$li("Key Stage 5 (students 16-18 years) includes A Levels, T levels and other 2-year vocational education programmes.")
           ),
           p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
-            rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
+            rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
+            Some new local authorities due to boundary changes are not included due to these changes not being updated in data publications."),
           p("The dashboard currently shows the number of young people going into education and, employment or apprenticeship in the year following completion of their qualification by level, KS4 and KS5."),
           h3("UK Business Counts (UBC)"),
           p("The UK Business Counts (UBC) is a record of the number of enterprises from the Inter Departmental Business Register (IDBR). Topics included cover employment size band, detailed industry (5 digit SIC 2007) and legal status.
