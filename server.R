@@ -1929,18 +1929,14 @@ server <- function(input, output, session) {
   # Breakdown chart
   #breakdown filter
   output$breakdownFilter <- renderUI({
-    if (input$splashMetric == "empRate") {
-  radioGroupButtons(
-    inputId = "splashBreakdown",
-    choices = c("Occupation","Industry")
-  )
-    }
-    else
-    {  radioGroupButtons(
-      inputId = "splashBreakdown",
-      choices = c("Provision"="typeNeat", "Level"="level_or_type", "Age"="age_group")
-      
-    )}
+    selectizeInput(
+         inputId = "splashBreakdown",
+         label=NULL,
+         choices = 
+    C_breakdown%>%
+      filter(metric=="achievements_rate_per_100000_population")%>%
+      distinct(breakdown)
+    )
   })
   
   #create breakdown header
