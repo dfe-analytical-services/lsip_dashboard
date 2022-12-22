@@ -1606,6 +1606,55 @@ C_Achieve_ILR1621%>%
 )
 write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
 
+#create neat breakdown file
+#geographic_level,area,time_period,breakdown,subgroups,metric,value,
+C_breakdown<-bind_rows(
+  #employment data
+  C_EmpRate_APS1822%>%
+    rename(time_period=year)%>%
+    filter(time_period==2022)%>%
+    mutate_at(c('time_period'), as.integer)%>%
+    mutate(breakdown=NA,subgroups=NA)%>%
+    pivot_longer(!c("geographic_level","area","time_period","breakdown","subgroups"), 
+                 names_to = "metric", 
+                 values_to = "value"),
+  #ILR data
+ C_Achieve_ILR1621%>%
+    filter(time_period==202021)%>%
+    select(-Year,-typeNeat,-AY)%>%
+    mutate(geographic_level=case_when(geographic_level=="National" ~ "COUNTRY",
+                                      geographic_level=="Local authority district" ~ "LADU",
+                                      TRUE~geographic_level))%>%
+    pivot_longer(!c("geographic_level","area","time_period","apprenticeships_or_further_education","level_or_type","age_group"), 
+                 names_to = "metric", 
+                 values_to = "value")%>%
+    #get subgroups when the other fields are total
+  mutate(subgroups=case_when(
+    apprenticeships_or_further_education=="Further education and skills"&
+                     level_or_type == "Further education and skills: Total" ~  age_group,
+    apprenticeships_or_further_education=="Further education and skills"&
+      age_group=="Total" ~level_or_type,
+    level_or_type == "Further education and skills: Total" & 
+      age_group=="Total" ~apprenticeships_or_further_education,
+    TRUE~"NA"
+    )
+         )%>%
+    #get breakdown when other fields are total
+    mutate(breakdown=case_when(
+      apprenticeships_or_further_education=="Further education and skills"&
+        level_or_type == "Further education and skills: Total" ~  "Age",
+      apprenticeships_or_further_education=="Further education and skills"&
+        age_group=="Total" ~"Level",
+      str_sub(level_or_type,-5,-1) == "Total" & 
+        age_group=="Total" ~ "Provision",
+      TRUE~"NA"
+    )
+    )%>%
+    filter(breakdown!="NA")%>%
+    select(-apprenticeships_or_further_education,-level_or_type,-age_group)
+    
+)
+write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
   
 
   
