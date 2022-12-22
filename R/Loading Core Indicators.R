@@ -113,3 +113,6 @@ I_DataTable <- read.csv(file = "./Data/AppData/I_DataTable.csv", check.names = F
 # map tables
 load(file = "./Data/AppData/C_mapLA.Rdata")
 load(file = "./Data/AppData/C_Geog.Rdata")
+
+C_time <- read.csv(file = "./Data/AppData/C_time.csv", check.names = FALSE)
+

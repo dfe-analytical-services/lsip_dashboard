@@ -1947,30 +1947,18 @@ server <- function(input, output, session) {
   Splash_time <- eventReactive(c(input$map_shape_click, input$mapLA_shape_click,input$geoComps,input$levelBar,input$splashMetric), {
     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
     eventLA <- input$mapLA_shape_click
-    #clean up FE data - move to transform data
-    FeData<-C_Achieve_ILR1621%>%
-      filter(level_or_type=="Further education and skills: Total",age_group=="Total")%>%
-      select(year=time_period,area,geographic_level,metric=achievements_rate_per_100000_population)%>%
-      mutate(geographic_level=case_when(geographic_level=="National" ~ "COUNTRY",
-                                        geographic_level=="Local authority district" ~ "LADU",
-                                        TRUE~geographic_level))%>%
-      mutate(year=year/100)
-    EmpRateData<-C_EmpRate_APS1822%>%
-      select(year, area, geographic_level, metric=empRate)%>%
-      mutate(year=year-1)
-    
-    dataTime<-if(input$splashMetric=="empRate"){EmpRateData} else {FeData}
-    SplashTime <- dataTime%>%
+    SplashTime <- C_time%>%
       filter(
         (
-          geographic_level == input$splashGeoType&(          area == C_Geog$areaName[C_Geog$areaCode == event$id]| 
-                                                            area %in% if ("geoComps" %in% names(input)) {
-                                                              input$geoComps
-                                                            } else {
+          geographic_level == input$splashGeoType&
+            (          area == C_Geog$areaName[C_Geog$areaCode == event$id]| 
+                       area %in% if ("geoComps" %in% names(input)) {} else {
                                                               "\nNone"
                                                             }) )|
                (geographic_level == "COUNTRY"&area == "England")  |
-         if(is.null(eventLA)==TRUE) {area=="\nNone"}else { (geographic_level == "LADU"&area == C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id])}
+         if(is.null(eventLA)==TRUE) {area=="\nNone"}else { 
+           (geographic_level == "LADU"&area == C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id])}
+        ,metric==input$splashMetric
       )
     # add an extra column so the colours work in ggplot when sorting alphabetically
     SplashTime$Areas <- factor(SplashTime$area,
@@ -1980,12 +1968,12 @@ server <- function(input, output, session) {
     ggplot(
       SplashTime,
       aes(
-        x = year , y = metric,
+        x = chart_year , y = value,
         color = Areas, group = Areas,
         text = paste0(
-          "Year: ", year, "<br>",
+          "Year: ", chart_year, "<br>",
           "Area: ", Areas, "<br>",
-          "Metric: ", scales::percent(round(metric, 2)), "<br>"
+          "Metric: ", scales::percent(round(value, 2)), "<br>"
         )
       )
     ) +
