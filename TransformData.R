@@ -810,10 +810,41 @@ addEngland<- data.frame (areaName  = "England",areaCode="x",
 neatGeog<-bind_rows(neatMCA,neatLEP,addEngland,neatLA)
 # add on data
 C_Geog<-neatGeog%>%
+  #add employment rate
   left_join(C_EmpRate_APS1822 %>% filter(year == 2022), by = c("areaName" = "area", "geog"="geographic_level"))%>%
-left_join(C_Achieve_ILR1621 %>% filter(time_period == 202021, level_or_type=="Further education and skills: Total",age_group=="Total")%>%
+#add achievment rate
+  left_join(C_Achieve_ILR1621 %>% filter(time_period == 202021, level_or_type=="Further education and skills: Total",age_group=="Total")%>%
             mutate(geographic_level=case_when(geographic_level=="National" ~"COUNTRY",TRUE~geographic_level))%>%
             mutate(geographic_level=case_when(geographic_level=="Local authority district" ~"LADU",TRUE~geographic_level)),
           by = c("areaName" = "area", "geog"="geographic_level"))
 
 save(C_Geog, file = "Data\\AppData\\C_Geog.RData")
+
+#create neat over time chart
+#geographic_level,area,time_period,metric
+C_time<-bind_rows(
+  #employment data
+  C_EmpRate_APS1822%>%
+  rename(time_period=year,chart_year=Year)%>%
+    mutate_at(c('time_period'), as.integer)%>%
+  pivot_longer(!c("geographic_level","area","time_period","chart_year"), 
+               names_to = "metric", 
+               values_to = "value"),
+  #ILR data
+C_Achieve_ILR1621%>%
+  rename(chart_year=Year)%>%
+  filter(level_or_type=="Further education and skills: Total",age_group=="Total")%>%
+  select(-apprenticeships_or_further_education,-level_or_type,-age_group,-typeNeat,-AY)%>%
+  mutate(geographic_level=case_when(geographic_level=="National" ~ "COUNTRY",
+                                    geographic_level=="Local authority district" ~ "LADU",
+                                    TRUE~geographic_level))%>%
+  pivot_longer(!c("geographic_level","area","time_period","chart_year"), 
+               names_to = "metric", 
+               values_to = "value")
+)
+write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
+
+  
+
+  
+
