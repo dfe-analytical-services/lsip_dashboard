@@ -1619,7 +1619,6 @@ server <- function(input, output, session) {
     metricUsed<-if(input$splashMetric=="empRate"){" employment rate "}else{" FE achievements per 100,000 "}
     areaRank<-(C_Geog %>%
                  filter(geog == input$splashGeoType)%>%
-      mutate(ranking = rank(desc(eval(parse(text = input$splashMetric)))))%>%
                filter(areaName==areaClicked))$ranking
     suff <- case_when(areaRank %in% c(11,12,13) ~ "th",
                       areaRank %% 10 == 1 ~ 'st',
@@ -2081,6 +2080,26 @@ paste0(areaClicked, " has a ",compareNational,metricUsed,"in ",subgroup," than t
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
+  
+  
+  # create datahub table to show
+  
+  
+  output$hubTable <- renderDataTable({
+    DT::datatable(C_Achieve_ILR1621 %>%
+                    filter(geographic_level %in% input$hubGeog,
+                           area %in% input$hubArea,
+                           time_period %in% input$hubYears)%>%
+                    select(Year=time_period, Geography=geographic_level,Area=area,
+                           input$hubMetric)
+    )
+                  #  , escape = FALSE, options = list(dom = "t"), rownames = FALSE)
+  })
+  
+  #create hub code
+  output$hubCode <- renderUI({
+    round(runif(1, 0, 10)*1000000,0)
+     })
 
   # Stop app ---------------------------------------------------------------------------------
 

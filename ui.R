@@ -402,7 +402,106 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     # 
     #   #  ) # end of app data row
     # ), # end of app tab panel
-
+tabPanel(
+    "Datahub",
+    fluidRow(
+      column(
+        12,
+        h1("Datahub"),
+        p("Use the filters to create a bespoke dataset. * fields are mandatory. Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want.")
+      )),
+    fluidRow(
+      column(
+        12,
+        p("If you have a query code, enter it here:"),
+        textInput("hubCode", label=NULL)
+      )),
+    fluidRow(column(12,h2("Geography"))),
+    fluidRow(
+      column(4,
+        selectizeInput("hubGeog",
+                       choices = c("LEP", "LSIP", "MCA", "LA"),
+                       multiple = TRUE, label = NULL,
+                       options = list(placeholder = "Choose geographies*")
+                       
+        )
+      ),
+      column(4,
+             selectizeInput("hubArea", 
+                            choices = c("Black Country", "London", "etc", "etc"),
+                            multiple = TRUE, label = NULL,
+                            options = list(placeholder = "Choose areas*")
+             )
+      )
+      ),
+    fluidRow(
+      column(4,
+             selectizeInput("hubLA", 
+                            choices = c("Yes","No"),
+                            label = NULL,multiple = TRUE,
+                            options = list(maxItems = 1,placeholder = "Include LA level data?")
+                            )
+      ),
+      column(4,
+             selectizeInput("hubComparators",label = NULL,
+                               choices = c("National","Regional"),
+                            multiple = TRUE,
+                            options = list(placeholder = "Include national/regional data?")
+             )
+      )
+      
+    ),
+    fluidRow(column(12,h2("Data"))),
+    fluidRow(
+      column(4,
+             selectizeInput("hubMetric", 
+                            choices = c("participation","achievements","FE achievements", "Job vacancies", "etc", "etc"),
+                            multiple = TRUE, label = NULL,
+                            options = list(placeholder = "Choose metrics*")
+             )
+      ),
+      column(4,
+             selectizeInput("hubBreakdowns", 
+                            choices = c("Age (available for FE achievments, employment rate)", "Gender (available for FE achievments, employment rate)", "etc", "etc"),
+                            multiple = TRUE, label = NULL,
+                            options = list(placeholder = "Choose breakdowns")
+             )
+      ),
+      column(4,
+             selectizeInput("hubYears", 
+                            choices = c("201617","201718","201819"),
+                            multiple = TRUE, label = NULL,
+                            options = list(placeholder = "Choose years*")
+             )
+      )
+    ),
+    fluidRow(column(12,h2("Output"))),
+    fluidRow(
+      column(12,
+             p("If you want to reuse this query, use this code:"),
+             p(uiOutput("hubCode")),
+    )
+    ),
+    fluidRow(
+      column(3,
+             downloadButton(
+               outputId = "hubDownload",
+               label = "Download this data",
+               icon = shiny::icon("download"),
+               class = "downloadButton"
+             )
+      )
+      ),
+    br(),
+    fluidRow(
+      column(12,
+             dataTableOutput("hubTable")
+             )
+    ),
+    br()
+      
+    
+),
     tabPanel(
       "Data & downloads",
       fluidRow(
