@@ -2156,12 +2156,20 @@ paste0(areaClicked, " has a ",compareNational,metricUsed,"in ",subgroup," than t
   
   
   output$hubTable <- renderDataTable({
-    DT::datatable(I_Achieve_ILR1621 %>%
-                    filter(geo %in% input$hubGeog,
-                           area %in% inout$hubArea,
-                           year %in% input$hubYears)
-                    , escape = FALSE, options = list(dom = "t"), rownames = FALSE)
+    DT::datatable(C_Achieve_ILR1621 %>%
+                    filter(geographic_level %in% input$hubGeog,
+                           area %in% input$hubArea,
+                           time_period %in% input$hubYears)%>%
+                    select(Year=time_period, Geography=geographic_level,Area=area,
+                           input$hubMetric)
+    )
+                  #  , escape = FALSE, options = list(dom = "t"), rownames = FALSE)
   })
+  
+  #create hub code
+  output$hubCode <- renderUI({
+    round(runif(1, 0, 10)*1000000,0)
+     })
 
   # 6. QUALIFICATION LEVEL ----
   # turn off comparison boxes if none is selected
