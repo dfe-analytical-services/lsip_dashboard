@@ -408,7 +408,7 @@ tabPanel(
       column(
         12,
         h1("Datahub"),
-        p("Use the filters to create a bespoke dataset. Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want.")
+        p("Use the filters to create a bespoke dataset. * fields are mandatory. Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want.")
       )),
     fluidRow(
       column(
@@ -422,7 +422,7 @@ tabPanel(
         selectizeInput("hubGeog",
                        choices = c("LEP", "LSIP", "MCA", "LA"),
                        multiple = TRUE, label = NULL,
-                       options = list(placeholder = "Choose geographies")
+                       options = list(placeholder = "Choose geographies*")
                        
         )
       ),
@@ -430,23 +430,34 @@ tabPanel(
              selectizeInput("hubArea", 
                             choices = c("Black Country", "London", "etc", "etc"),
                             multiple = TRUE, label = NULL,
-                            options = list(placeholder = "Choose areas")
+                            options = list(placeholder = "Choose areas*")
              )
+      )
+      ),
+    fluidRow(
+      column(4,
+             selectizeInput("hubLA", 
+                            choices = c("Yes","No"),
+                            label = NULL,multiple = TRUE,
+                            options = list(maxItems = 1,placeholder = "Include LA level data?")
+                            )
       ),
       column(4,
-             selectizeInput("hubComparators", "Would you like to include the LAs in your chosen area? Would you like national and/or regional comparisons for your chosen areas?",
-                            choices = c("LA", "National","Regional"),
-                            multiple = TRUE
-                            )
+             selectizeInput("hubComparators",label = NULL,
+                               choices = c("National","Regional"),
+                            multiple = TRUE,
+                            options = list(placeholder = "Include national/regional data?")
+             )
       )
+      
     ),
     fluidRow(column(12,h2("Data"))),
     fluidRow(
       column(4,
              selectizeInput("hubMetric", 
-                            choices = c("FE achievements", "Job vacancies", "etc", "etc"),
+                            choices = c("participation","achievements","FE achievements", "Job vacancies", "etc", "etc"),
                             multiple = TRUE, label = NULL,
-                            options = list(placeholder = "Choose metrics")
+                            options = list(placeholder = "Choose metrics*")
              )
       ),
       column(4,
@@ -458,9 +469,9 @@ tabPanel(
       ),
       column(4,
              selectizeInput("hubYears", 
-                            choices = c("2015","2016","2017"),
+                            choices = c("201617","201718","201819"),
                             multiple = TRUE, label = NULL,
-                            options = list(placeholder = "Choose years")
+                            options = list(placeholder = "Choose years*")
              )
       )
     ),
@@ -468,7 +479,7 @@ tabPanel(
     fluidRow(
       column(12,
              p("If you want to reuse this query, use this code:"),
-             p("01268542")
+             p(uiOutput("hubCode")),
     )
     ),
     fluidRow(
@@ -481,11 +492,13 @@ tabPanel(
              )
       )
       ),
+    br(),
     fluidRow(
       column(12,
              dataTableOutput("hubTable")
              )
-    )
+    ),
+    br()
       
     
 ),
