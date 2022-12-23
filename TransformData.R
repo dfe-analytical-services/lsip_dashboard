@@ -1614,7 +1614,7 @@ C_breakdown<-bind_rows(
     rename(time_period=year)%>%
     filter(time_period==2022)%>%
     mutate_at(c('time_period'), as.integer)%>%
-    mutate(breakdown=NA,subgroups=NA)%>%
+    mutate(breakdown="No breakdowns available",subgroups="Total")%>%
     pivot_longer(!c("geographic_level","area","time_period","breakdown","subgroups"), 
                  names_to = "metric", 
                  values_to = "value"),
@@ -1634,7 +1634,7 @@ C_breakdown<-bind_rows(
                      level_or_type == "Further education and skills: Total" ~  age_group,
     apprenticeships_or_further_education=="Further education and skills"&
       age_group=="Total" ~level_or_type,
-    level_or_type == "Further education and skills: Total" & 
+    str_sub(level_or_type,-5,-1) == "Total" & 
       age_group=="Total" ~apprenticeships_or_further_education,
     TRUE~"NA"
     )
