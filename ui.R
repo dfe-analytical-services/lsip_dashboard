@@ -610,10 +610,22 @@ tabPanel(
       br(),
       fluidRow(column(
         12,
-        radioGroupButtons(
+        h3("What are you interested in?"),
+        pickerInput(
           inputId = "splashMetric",
-          # label = "Focus on",
-          choices = c("Employment rate"="empRate", "Vacancies"="vacancies", "FE achievements"="achievements_rate_per_100000_population", "Supply vs demand"="mismatch")
+          choices = list("Employment"=list("Employment rate"="empRate",
+                                           "Employment volume"="Employment",
+                                           "Unemployed volume"="Unemployed",
+                                           "Vacancies - TO COME"="vacancies"),
+                         "Skills"=list("FE achievement rate"="achievements_rate_per_100000_population",
+                                       "FE participation rate"="participation_rate_per_100000_population",
+                                       "FE start rate"="starts_rate_per_100000_population",
+                                       "FE achievements"="achievements",
+                                       "FE participation"="participation",
+                                       "FE starts"="starts"),
+                         "Mismatch"=list("Supply vs demand TO COME"="mismatch")
+        ),
+        multiple = FALSE
         )
       )),
       fluidRow(
@@ -643,6 +655,7 @@ tabPanel(
           6,
           h3(uiOutput("titleBreakdown")),
           uiOutput("breakdownFilter"),
+          uiOutput("subgroupFilter"),
           p(uiOutput("commentBreakdown")),
           plotlyOutput("Splash_pc")
         ),
