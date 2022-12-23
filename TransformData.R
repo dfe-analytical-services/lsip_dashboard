@@ -171,7 +171,10 @@ write.csv(D_EmpRate_APS1822, file = "Data\\AppData\\D_EmpRate_APS1822.csv", row.
 C_EmpRate_APS1822 <- F_EmpRate_APS1822 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
   mutate_at(c(4:10), as.numeric) %>% # Convert to numeric
-  mutate(empRate = .[[6]] / .[[4]]) %>%
+  mutate(empRate = `  In Employment ` / `  All `,
+         selfempRate = `  Self Employed ` / `  All `,
+         unempRate = `  Unemployed ` / `  All `,
+         inactiveRate = `  Inactive ` / `  All `) %>%
   filter(
     # geographic_level != "LADU" # not needed for the dashboard currently
     geographic_level != "GOR"

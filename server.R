@@ -1910,9 +1910,9 @@ server <- function(input, output, session) {
       geom_line() +
       theme_minimal() +
       theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
-      scale_y_continuous(labels = if(input$splashMetric=="empRate"){scales::percent_format(accuracy = 1)}else{label_number_si(accuracy = 1)}
-                         , limits = if(input$splashMetric=="empRate"){c(.65, .85)}else{c(0, 10000)}
-                         ) +
+      # scale_y_continuous(labels = if(input$splashMetric=="empRate"){scales::percent_format(accuracy = 1)}else{label_number_si(accuracy = 1)}
+      #                    , limits = if(input$splashMetric=="empRate"){c(.65, .85)}else{c(0, 10000)}
+      #                    ) +
       labs(colour = "") +
       scale_color_manual(values = chartColors6)
   })
