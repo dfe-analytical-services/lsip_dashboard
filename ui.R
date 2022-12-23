@@ -707,7 +707,15 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           p("FE achievement rate is highest in Sunderland and lowest in Northumberland"),
           leafletOutput("mapLA")
         )
-      )
+      ),
+      fluidRow(
+        column(12,
+               h2("Data notes"),
+               p("Data source: .........."),
+               p("Caveats: ..............")
+               )
+      ),
+      br()
     )
   ), # End of navBarPage
   # Footer ====================================================================
