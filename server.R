@@ -1641,7 +1641,7 @@ server <- function(input, output, session) {
 
   #---
   # Maps ----
-  
+  #add comparison area option
   output$geoComp <- renderUI({
     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
     areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
@@ -1716,27 +1716,29 @@ server <- function(input, output, session) {
     pal <- colorNumeric("Blues", mapData[[input$splashMetric]]) ## 6BACE6 c("#FFFFFF", "#12436D")
 
     labels <- 
-      if(input$splashMetric=="empRate"){
+        if(str_sub(input$splashMetric,start=-4)=="Rate"){
       sprintf(
-      "<strong>%s</strong><br/>Employment rate: %s%%",
-      mapData$areaName, round(mapData[[input$splashMetric]]*100)
+      "<strong>%s</strong><br/>%s: %s%%",
+      mapData$areaName,input$splashMetric, 
+      round(mapData[[input$splashMetric]]*100)
     )%>% lapply(htmltools::HTML) }else{
       sprintf(
-        "<strong>%s</strong><br/>FE achievements per 100,000: %s",
-        mapData$areaName, round(mapData[[input$splashMetric]])
+        "<strong>%s</strong><br/>%s: %s",
+        mapData$areaName,input$splashMetric, 
+        format(round(mapData[[input$splashMetric]]), big.mark = ",")
       )%>% lapply(htmltools::HTML)
     }
-    labelsChosen <- if(input$splashMetric=="empRate"){
-      sprintf(
-        "<strong>%s</strong><br/>Employment rate: %s%%",
-        (mapData%>%filter(areaCode==baseArea))$areaName, round((mapData%>%filter(areaCode==baseArea))[[input$splashMetric]]*100)
-      ) %>% lapply(htmltools::HTML)}
-    else{
-      sprintf(
-        "<strong>%s</strong><br/>FE achievements per <br/>100,000: %s",
-        (mapData%>%filter(areaCode==baseArea))$areaName, round((mapData%>%filter(areaCode==baseArea))[[input$splashMetric]])
-      ) %>% lapply(htmltools::HTML)
-    }
+    # labelsChosen <- if(input$splashMetric=="empRate"){
+    #   sprintf(
+    #     "<strong>%s</strong><br/>Employment rate: %s%%",
+    #     (mapData%>%filter(areaCode==baseArea))$areaName, round((mapData%>%filter(areaCode==baseArea))[[input$splashMetric]]*100)
+    #   ) %>% lapply(htmltools::HTML)}
+    # else{
+    #   sprintf(
+    #     "<strong>%s</strong><br/>FE achievements per <br/>100,000: %s",
+    #     (mapData%>%filter(areaCode==baseArea))$areaName, round((mapData%>%filter(areaCode==baseArea))[[input$splashMetric]])
+    #   ) %>% lapply(htmltools::HTML)
+    # }
 
     leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
       addProviderTiles(providers$CartoDB.Positron) %>% 
@@ -1855,14 +1857,14 @@ server <- function(input, output, session) {
     mapData<-C_Geog%>%filter(geog=="LADU",eval(parse(text = input$splashGeoType))==C_Geog$areaName[C_Geog$areaCode == event$id])
     pal <- colorNumeric("Blues", mapData[[input$splashMetric]]) ## 6BACE6 c("#FFFFFF", "#12436D")
     
-    labels <-       if(input$splashMetric=="empRate"){
+    labels <-       if(str_sub(input$splashMetric,start=-4)=="Rate"){
       sprintf(
-        "<strong>%s</strong><br/>Employment rate: %s%%",
-        mapData$areaName, round(mapData[[input$splashMetric]]*100)
+        "<strong>%s</strong><br/>%s: %s%%",
+        mapData$areaName,input$splashMetric, round(mapData[[input$splashMetric]]*100)
       )%>% lapply(htmltools::HTML) }else{
         sprintf(
-          "<strong>%s</strong><br/>FE achievements per 100,000: %s",
-          mapData$areaName, round(mapData[[input$splashMetric]])
+          "<strong>%s</strong><br/>%s: %s",
+          mapData$areaName, input$splashMetric, format(mapData[[input$splashMetric]], big.mark = ",")
         )%>% lapply(htmltools::HTML)
       }
     
@@ -1949,13 +1951,20 @@ server <- function(input, output, session) {
     eventLA <- input$mapLA_shape_click
     SplashTime <- C_time%>%
       filter(
+        #get lep/lsip/mca areas
         (
           geographic_level == input$splashGeoType&
             (          area == C_Geog$areaName[C_Geog$areaCode == event$id]| 
-                       area %in% if ("geoComps" %in% names(input)) {} else {
+                       area %in% if ("geoComps" %in% names(input)) {input$geoComps} else {
                                                               "\nNone"
-                                                            }) )|
-               (geographic_level == "COUNTRY"&area == "England")  |
+                                                            }
+                       ) 
+          )|
+          #get england for comparison (if a rate)
+               (if(str_sub(input$splashMetric,start=-4)=="Rate")
+                 {(geographic_level == "COUNTRY"&area == "England")}
+        else{area=="\nNone"} ) |
+          #get LA
          if(is.null(eventLA)==TRUE) {area=="\nNone"}else { 
            (geographic_level == "LADU"&area == C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id])}
         ,metric==input$splashMetric
@@ -1973,16 +1982,18 @@ server <- function(input, output, session) {
         text = paste0(
           "Year: ", chart_year, "<br>",
           "Area: ", Areas, "<br>",
-          "Metric: ", scales::percent(round(value, 2)), "<br>"
+          input$splashMetric,": ", if(str_sub(input$splashMetric,start=-4)=="Rate"){
+            scales::percent(round(value, 2))}
+          else{format(round(value), big.mark = ",")}, "<br>"
         )
       )
     ) +
       geom_line() +
       theme_minimal() +
       theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
-      # scale_y_continuous(labels = if(input$splashMetric=="empRate"){scales::percent_format(accuracy = 1)}else{label_number_si(accuracy = 1)}
-      #                    , limits = if(input$splashMetric=="empRate"){c(.65, .85)}else{c(0, 10000)}
-      #                    ) +
+       scale_y_continuous(labels = if(str_sub(input$splashMetric,start=-4)=="Rate"){scales::percent_format(accuracy = 1)}else{label_number_si(accuracy = 1)}
+                          #, limits = if(input$splashMetric=="empRate"){c(.65, .85)}else{c(0, 10000)}
+                          ) +
       labs(colour = "") +
       scale_color_manual(values = chartColors6)
   })
