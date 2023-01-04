@@ -940,3 +940,106 @@ panel_enterprise <- function() {
     column(width = 12, br(""))
   )
 }
+
+panel_onsProf <- function() {
+  tabPanel(
+    "Vacancies by profession",
+    h1(uiOutput("OnsProftitle")),
+    ### KPI boxes ----
+    fluidRow(
+      valueBoxOutput("profKpi1"),
+      valueBoxOutput("profKpi2")
+    ),
+    fluidRow(
+      uiOutput("profComp")
+    ),
+    details(
+      label = "Source: ONS....",
+      inputId = "profKPISource",
+      tags$ol(
+        tags$li("......")
+      )
+    ),
+    ### Vacancies over time line chart ----
+    fluidRow(
+      column(
+        width = 6,
+        h2("Vacancies: xxx 20xx to xxx 20xx"),
+        plotlyOutput("profTime"),
+        details(
+          label = "Source: ONS",
+          inputId = "profTimeSource",
+          tags$ol(
+            tags$li("...."),
+            tags$li("....")
+          )
+        )
+      ),
+      ### Vacancies by profession data table ----
+      column(
+        width = 6,
+        h2("Vacancies by profession: xxx 20xx"),
+        dataTableOutput("profTable"),
+        br(),
+        details(
+          label = "Source: ONS",
+          inputId = "profTableSource",
+          tags$ol(
+            tags$li("...."),
+          )
+        )
+      )
+    ),
+    fluidRow(
+      column(
+        12,
+        ### employment by industry bar chart ----
+        h2("Detailed profession: xxx 20xx to xxx 20xx"),
+        plotlyOutput("profDetail")
+      )
+    ),
+    column(width = 12, br("")), # put in to push below the fixed height chart
+    column(width = 12, br("")),
+    details(
+      label = "Source: ONS...",
+      inputId = "profDetailSource",
+      tags$ol(
+        tags$li("......."),
+        tags$li("......."),
+      )
+    ),
+    
+    
+    ### Downloads-------------
+    br(),
+    fluidRow(
+      column(
+        width = 3,
+        downloadButton(
+          outputId = "download_prof1",
+          label = "All data   ",
+          icon = shiny::icon("download"),
+          class = "downloadButton"
+        )
+      ),
+      column(
+        width = 9,
+        "Download employment data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
+      )
+    ), # end of row
+    fluidRow(
+      column(
+        width = 3,
+        downloadButton(
+          outputId = "download_prof2",
+          label = "Current geographic area",
+          icon = shiny::icon("download"),
+          class = "downloadButton"
+        )
+      ),
+      column(width = 9, p("Download employment data for the selected geographic area"))
+    ), # end of row
+    column(width = 12, br(""))
+    
+  )
+}

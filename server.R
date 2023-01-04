@@ -3079,6 +3079,11 @@ server <- function(input, output, session) {
     }
   )
 
+  
+  # define page title
+  output$OnsProftitle <- renderUI({
+    paste0("Job vacancies in ", input$lep1)
+  })
 
   # Stop app ---------------------------------------------------------------------------------
 
