@@ -3084,6 +3084,33 @@ server <- function(input, output, session) {
   output$OnsProftitle <- renderUI({
     paste0("Job vacancies in ", input$lep1)
   })
+  
+  #### Employment count ----
+  output$profKpi1 <- renderUI({
+    # call 2022 and 2021 values for chosen area
+    vacancyTotalLatest <- C_OnsProf%>%
+      filter(time_period=="Oct 22",
+             geographic_level==input$GeoType,
+             area==input$lep1)
+      
+    #empCntChange <- emp2022()$Employment - emp2021()$Employment
+    output$locland.emplrate <- renderValueBox({
+      div(
+        class = "col-sm-4",
+        div(
+          class = "small-box bg-geo1",
+          div(
+            class = "inner",
+            h3(paste0(
+              format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
+            )),
+            p(paste0("vacancies in Oct 2022 in ", input$lep1)),
+          )
+        )
+      )
+    })
+    
+  })
 
   # Stop app ---------------------------------------------------------------------------------
 
