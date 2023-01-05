@@ -3082,7 +3082,7 @@ server <- function(input, output, session) {
   
   # define page title
   output$OnsProftitle <- renderUI({
-    paste0("Job vacancies in ", input$lep1)
+    paste0("Job adverts in ", input$lep1)
   })
   
   #### Job adverts ----
@@ -3142,11 +3142,11 @@ server <- function(input, output, session) {
     # chnage
     vacancyTotalLatest <- C_OnsProf%>%
       filter(time_period=="Oct 22",
-             geographic_level==input$GeoType)
+             geographic_level=="LEP")
     vacancyTotalLast <-
       C_OnsProf%>%
       filter(time_period=="Oct 21",
-             geographic_level==input$GeoType)
+             geographic_level=="LEP")
     
     vacancyTotalChange <-(sum(vacancyTotalLatest$vacancies)-sum(vacancyTotalLast$vacancies))/sum(vacancyTotalLast$vacancies)
     div(
@@ -3285,6 +3285,80 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
   
+  #adverts by profession
+  ## Employment by occupation data table ----
+  profTable <- eventReactive(c(input$lep1, input$lep2), {
+    #create areas chosen table
+    profTableArea<- C_OnsProf%>%
+      select(-"Detailed Profession Category") %>%
+      filter(time_period=="Oct 22",
+             geographic_level == input$GeoType ,
+             (area == input$lep1 |
+                area == if ("lep2" %in% names(input)) {
+                  input$lep2
+                } else {
+                  "\nNone"
+                })
+      )
+    #create england table
+    profTableEngland<- C_OnsProf%>%
+      select(-"Detailed Profession Category") %>%
+      filter(time_period=="Oct 22",
+             geographic_level == "LEP"
+      )%>%
+      mutate(area="England")
+    #combine and reformat
+    profTable<-bind_rows(profTableArea,profTableEngland)%>%
+      group_by(area,`Summary Profession Category`)%>%
+      summarise(vacancies=sum(vacancies))%>%
+      pivot_wider(names_from = area, values_from = vacancies)%>%
+      relocate(England, .after = `Summary Profession Category`)%>%
+      relocate(input$lep1, .after = England)%>%
+      mutate(across(where(is.numeric), ~ round(prop.table(.), 4)))
+  })
+  
+  output$profTable <- renderDataTable({
+    df <- profTable()
+    datatable(df, options = list(order = list(2, "desc")), rownames = FALSE)%>%
+      formatPercentage(2:ncol(df), 0)
+  })
+  
+  #adverts by detailed profession
+  profDetail <- eventReactive(c(input$lep1, input$lep2,input$profChoice), {
+    #create areas chosen table
+    profDetailArea<- C_OnsProf%>%
+      filter(time_period=="Oct 22",
+             `Summary Profession Category`==input$profChoice,
+             geographic_level == input$GeoType ,
+             (area == input$lep1 |
+                area == if ("lep2" %in% names(input)) {
+                  input$lep2
+                } else {
+                  "\nNone"
+                })
+      )
+    #create england table
+    profDetailEngland<- C_OnsProf%>%
+      filter(time_period=="Oct 22",
+             `Summary Profession Category`==input$profChoice,
+             geographic_level == "LEP"
+      )%>%
+      mutate(area="England")
+    #combine and reformat
+    profDetail<-bind_rows(profDetailArea,profDetailEngland)%>%
+      group_by(area,`Detailed Profession Category`)%>%
+      summarise(vacancies=sum(vacancies))%>%
+      pivot_wider(names_from = area, values_from = vacancies)%>%
+      relocate(England, .after = `Detailed Profession Category`)%>%
+      relocate(input$lep1, .after = England)%>%
+      mutate(across(where(is.numeric), ~ round(prop.table(.), 4)))
+  })
+  
+  output$profDetail <- renderDataTable({
+    df <- profDetail()
+    datatable(df, options = list(order = list(2, "desc")), rownames = FALSE)%>%
+      formatPercentage(2:ncol(df), 0)
+  })
 
 
   # Stop app ---------------------------------------------------------------------------------
