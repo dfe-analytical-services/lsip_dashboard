@@ -3232,6 +3232,59 @@ server <- function(input, output, session) {
       )
     )
   })
+  
+  #adverts over time
+  profTime <- eventReactive(c(input$lep1, input$lep2), {
+    profTimeData <- 
+      C_OnsProf%>%
+      select(time_period, area, geographic_level, vacancies) %>%
+      filter(substr(time_period,1,3)=="Oct",
+        geographic_level == input$GeoType ,
+        (area == input$lep1 |
+           area == if ("lep2" %in% names(input)) {
+             input$lep2
+           } else {
+             "\nNone"
+           })  
+
+      )%>%
+    group_by(time_period, area, geographic_level)%>%
+    summarise(vacancies=sum(vacancies))
+    
+    # add an extra column so the colours work in ggplot when sorting alphabetically
+    profTimeData$Areas <- factor(profTimeData$area,
+                                levels = c(input$lep1, input$lep2)
+    )
+    
+    ggplot(
+      profTimeData,
+      aes(
+        x = time_period, y = vacancies,
+        color = Areas, group = Areas,
+        text = paste0(
+          "Period: ", time_period, "<br>",
+          "Area: ", Areas, "<br>",
+          "Employment rate: ", round(vacancies), "<br>"
+        )
+      )
+    ) +
+      geom_line() +
+      theme_minimal() +
+      theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
+      scale_y_continuous(labels = label_number_si(accuracy = 1)) +
+      labs(colour = "") +
+      scale_color_manual(values = chartColors2)
+  })
+  
+  output$profTime <- renderPlotly({
+    ggplotly(profTime(), tooltip = "text") %>%
+      layout(
+        legend = list(orientation = "h", x = 0, y = -0.1),
+        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+  
 
 
   # Stop app ---------------------------------------------------------------------------------

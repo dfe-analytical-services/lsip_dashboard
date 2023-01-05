@@ -955,7 +955,7 @@ panel_onsProf <- function() {
       uiOutput("profComp")
     ),
     details(
-      label = "Source: ONS TextKernel",
+      label = "Source: ONS, TextKernel",
       inputId = "profKPISource",
       tags$ol(
         tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
@@ -967,14 +967,15 @@ panel_onsProf <- function() {
     fluidRow(
       column(
         width = 6,
-        h2("Vacancies: xxx 20xx to xxx 20xx"),
+        h2("Job adverts: Oct 2017 to Oct 2022"),
         plotlyOutput("profTime"),
         details(
-          label = "Source: ONS",
+          label = "Source: ONS, TextKernel",
           inputId = "profTimeSource",
           tags$ol(
-            tags$li("...."),
-            tags$li("....")
+            tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
+            tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
+            tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
           )
         )
       ),
