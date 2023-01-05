@@ -3085,16 +3085,14 @@ server <- function(input, output, session) {
     paste0("Job vacancies in ", input$lep1)
   })
   
-  #### Employment count ----
-  output$profKpi1 <- renderUI({
-    # call 2022 and 2021 values for chosen area
-    vacancyTotalLatest <- C_OnsProf%>%
-      filter(time_period=="Oct 22",
-             geographic_level==input$GeoType,
-             area==input$lep1)
-      
-    #empCntChange <- emp2022()$Employment - emp2021()$Employment
-    output$locland.emplrate <- renderValueBox({
+  #### Job adverts ----
+  #job advert count
+   output$profKpi1 <-  renderValueBox({
+     # call 2022 and 2021 values for chosen area
+     vacancyTotalLatest <- C_OnsProf%>%
+       filter(time_period=="Oct 22",
+              geographic_level==input$GeoType,
+              area==input$lep1)
       div(
         class = "col-sm-4",
         div(
@@ -3104,13 +3102,137 @@ server <- function(input, output, session) {
             h3(paste0(
               format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
             )),
-            p(paste0("vacancies in Oct 2022 in ", input$lep1)),
+            p(paste0("job adverts in Oct 2022 in ", input$lep1)),
           )
         )
       )
-    })
-    
   })
+  
+  # Job advert change ----
+  output$profKpi2 <-  renderValueBox({
+    # chnage
+    vacancyTotalLatest <- C_OnsProf%>%
+      filter(time_period=="Oct 22",
+             geographic_level==input$GeoType,
+             area==input$lep1)
+      vacancyTotalLast <-
+        C_OnsProf%>%
+          filter(time_period=="Oct 21",
+                 geographic_level==input$GeoType,
+                 area==input$lep1)
+    
+    vacancyTotalChange <-(sum(vacancyTotalLatest$vacancies)-sum(vacancyTotalLast$vacancies))/sum(vacancyTotalLast$vacancies)
+        div(
+          class = "col-sm-4",
+          div(
+            class = "small-box bg-geo1",
+            div(
+              class = "inner",
+              h3(paste0(
+                round(vacancyTotalChange*100),"%"
+              )),
+              p(paste0("change in job adverts since Oct 2021 in ", input$lep1)),
+            )
+          )
+        )
+      })
+  
+  # Job advert change England
+  output$profKpi2Eng <-  renderValueBox({
+    # chnage
+    vacancyTotalLatest <- C_OnsProf%>%
+      filter(time_period=="Oct 22",
+             geographic_level==input$GeoType)
+    vacancyTotalLast <-
+      C_OnsProf%>%
+      filter(time_period=="Oct 21",
+             geographic_level==input$GeoType)
+    
+    vacancyTotalChange <-(sum(vacancyTotalLatest$vacancies)-sum(vacancyTotalLast$vacancies))/sum(vacancyTotalLast$vacancies)
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo3",
+        div(
+          class = "inner",
+          h3(paste0(
+            round(vacancyTotalChange*100),"%"
+          )),
+          p("change in job adverts since Oct 2021 in England"),
+        )
+      )
+    )
+  })
+  
+  #compariosn boxes
+  output$profComp <- renderUI({
+    if ("lep2" %in% names(input)) {
+      if (input$lep2 == "\nNone") {
+        tagList(
+          br(),
+          p("")
+        )
+      } else {
+        tagList(
+          valueBoxOutput("profKpi1comp"),
+          valueBoxOutput("profKpi2comp")
+        )
+      }
+    } else {
+    }
+  })
+  
+  #job advert count
+  output$profKpi1comp <-  renderValueBox({
+    # call 2022 and 2021 values for chosen area
+    vacancyTotalLatest <- C_OnsProf%>%
+      filter(time_period=="Oct 22",
+             geographic_level==input$GeoType,
+             area==input$lep2)
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(paste0(
+            format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
+          )),
+          p(paste0("job adverts in Oct 2022 in ", input$lep2)),
+        )
+      )
+    )
+  })
+  
+  # Job advert change ----
+  output$profKpi2comp <-  renderValueBox({
+    # chnage
+    vacancyTotalLatest <- C_OnsProf%>%
+      filter(time_period=="Oct 22",
+             geographic_level==input$GeoType,
+             area==input$lep2)
+    vacancyTotalLast <-
+      C_OnsProf%>%
+      filter(time_period=="Oct 21",
+             geographic_level==input$GeoType,
+             area==input$lep2)
+    
+    vacancyTotalChange <-(sum(vacancyTotalLatest$vacancies)-sum(vacancyTotalLast$vacancies))/sum(vacancyTotalLast$vacancies)
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(paste0(
+            round(vacancyTotalChange*100),"%"
+          )),
+          p(paste0("change in job adverts since Oct 2021 in ", input$lep2)),
+        )
+      )
+    )
+  })
+
 
   # Stop app ---------------------------------------------------------------------------------
 

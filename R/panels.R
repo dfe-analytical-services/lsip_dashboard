@@ -948,17 +948,20 @@ panel_onsProf <- function() {
     ### KPI boxes ----
     fluidRow(
       valueBoxOutput("profKpi1"),
-      valueBoxOutput("profKpi2")
+      valueBoxOutput("profKpi2"),
+      valueBoxOutput("profKpi2Eng")
     ),
     fluidRow(
       uiOutput("profComp")
     ),
     details(
-      label = "Source: ONS....",
+      label = "Source: ONS TextKernel",
       inputId = "profKPISource",
       tags$ol(
-        tags$li("......")
-      )
+        tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
+        tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
+        tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
+        )
     ),
     ### Vacancies over time line chart ----
     fluidRow(
