@@ -811,7 +811,6 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     relocate(geographic_level, .after = area) %>%
     mutate_at(c(4:9), as.character)
   
-  
   addLEP <- addLADU %>%
     left_join(select(C_LADLEP2020, -LAD21NM), by = c("LAD21CD" = "LAD21CD")) %>%
     filter(is.na(LEP) == FALSE) %>% # remove non-english
@@ -1427,7 +1426,9 @@ format.OnsProf <- function(x) {
 D_OnsProf <- bind_rows(
   format.OnsProf(I_OnsProfLep %>% select(-X2)), # remove code since it doesn't exist in other geogs
   format.OnsProf(I_OnsProfLsip),
-  format.OnsProf(I_OnsProfMca)
+  format.OnsProf(I_OnsProfMca),
+  #format.OnsProf(I_OnsProfEng %>% mutate(`Detailed Profession Category`=NULL)),
+  format.OnsProf(I_OnsProfDetailEng)
 ) %>%
   filter(substr(time_period, 1, 3) == "Oct")%>%
   # change lep naming to match other datafiles
@@ -1440,5 +1441,6 @@ write.csv(D_OnsProf, file = "Data\\AppData\\D_OnsProf.csv", row.names = FALSE)
 # make suppressed data zero to use in dashboard
 C_OnsProf <- D_OnsProf %>%
   mutate(vacancies = gsub("\\[x\\]", "0", vacancies)) %>%
+  mutate(vacancies = gsub("\\[X\\]", "0", vacancies)) %>%
   mutate(vacancies = as.numeric(vacancies))
 write.csv(C_OnsProf, file = "Data\\AppData\\C_OnsProf.csv", row.names = FALSE)
