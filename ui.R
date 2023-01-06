@@ -400,7 +400,8 @@ padding-top:15px
             panel_vacancies(),
             panel_skills(),
             panel_qualification_level(),
-            panel_destinations()
+            panel_destinations(),
+            panel_onsProf()
           ) # end of dashboard tabset panel
         ) # end of dashboard navbar
       )

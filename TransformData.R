@@ -1402,3 +1402,40 @@ write.csv(D_qual_APS1721, file = "Data\\AppData\\D_qual_APS1721.csv", row.names 
 # Tidy up data table
 names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
 write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
+
+## ONS by profession
+## Employment by occupation ----
+format.OnsProf <- function(x) {
+  # Tidy
+  reformat <- x %>%
+    row_to_names(row_number = 4) # set columns
+  geogLevel <- colnames(reformat)[1] # get geog level
+  reformat <- reformat %>%
+    rename(area = geogLevel) %>% # rename to match other datafiles
+    mutate(geographic_level = geogLevel) %>% # set to the current geographic type
+    # mutate(geographic_level=gsub('\\b(\\pL)\\pL{2,}|.','\\U\\1',geographic_level,perl = TRUE))%>%#get first letter of geog level
+    relocate(geographic_level, .before = area)
+
+  # Make long
+  reformat %>%
+    pivot_longer(!c("geographic_level", "area", "Summary Profession Category", "Detailed Profession Category"),
+      names_to = "time_period", values_to = "vacancies"
+    )
+}
+
+# format data
+D_OnsProf <- bind_rows(
+  format.OnsProf(I_OnsProfLep %>% select(-X2)), # remove code since it doesn't exist in other geogs
+  format.OnsProf(I_OnsProfLsip),
+  format.OnsProf(I_OnsProfMca)
+) %>%
+  # change lep naming to match other datafiles
+  mutate(geographic_level = case_when(
+    geographic_level == "Local Enterprise Partnership" ~ "LEP",
+    TRUE ~ geographic_level
+  ))
+
+# make suppressed data zero to use in dashboard
+C_OnsProf <- D_OnsProf %>%
+  mutate(vacancies = gsub("\\[x\\]", "0", vacancies)) %>%
+  mutate(vacancies = as.numeric(vacancies))
