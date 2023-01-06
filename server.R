@@ -3253,9 +3253,12 @@ server <- function(input, output, session) {
   })
   
   # adverts over time
-  profTime <- eventReactive(c(input$lep1, input$lep2), {
+  profTime <- eventReactive(c(input$lep1, input$lep2,input$profChoice), {
     profTimeData <-
-      C_OnsProf %>%
+      C_OnsProf %>% 
+      filter(
+        if(input$profChoice=="All"){TRUE}
+        else{`Summary Profession Category` == input$profChoice})%>%
       select(time_period, area, geographic_level, vacancies) %>%
       filter(
         geographic_level == input$GeoType,
@@ -3349,7 +3352,8 @@ server <- function(input, output, session) {
     profDetailArea <- C_OnsProf %>%
       filter(
         time_period == "Oct 22",
-        `Summary Profession Category` == input$profChoice,
+          if(input$profChoice=="All"){TRUE}
+          else{`Summary Profession Category` == input$profChoice},
         geographic_level == input$GeoType,
         (area == input$lep1 |
            area == if ("lep2" %in% names(input)) {
@@ -3362,17 +3366,19 @@ server <- function(input, output, session) {
     profDetailEngland <- C_OnsProf %>%
       filter(
         time_period == "Oct 22",
-        `Summary Profession Category` == input$profChoice,
+        if(input$profChoice=="All"){TRUE}
+        else{`Summary Profession Category` == input$profChoice},
         geographic_level == "LEP"
       ) %>%
       mutate(area = "England")
     # combine and reformat
     profDetail <- bind_rows(profDetailArea, profDetailEngland) %>%
       group_by(area, `Detailed Profession Category`) %>%
-      summarise(vacancies = sum(vacancies)) %>%
+      summarise(vacancies = sum(vacancies,na.rm = T)) %>%
       pivot_wider(names_from = area, values_from = vacancies) %>%
       relocate(England, .after = `Detailed Profession Category`) %>%
       relocate(input$lep1, .after = England) %>%
+      mutate_at(c(3), ~ replace(., is.na(.), 0)) %>%
       mutate(across(where(is.numeric), ~ round(prop.table(.), 4)))
   })
   
