@@ -950,11 +950,11 @@ panel_onsProf <- function() {
       valueBoxOutput("profKpi1"),
       valueBoxOutput("profKpi2"),
       valueBoxOutput("profKpi2Eng")
-    ),#close first row of kpi
-    #comparison kpis
+    ), # close first row of kpi
+    # comparison kpis
     fluidRow(
       uiOutput("profComp")
-    ),#close second row of kpi
+    ), # close second row of kpi
     details(
       label = "Source: ONS, TextKernel",
       inputId = "profKPISource",
@@ -962,8 +962,8 @@ panel_onsProf <- function() {
         tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
         tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
         tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
-        )
-    ),#close details box
+      )
+    ), # close details box
     ### Vacancies over time line chart ----
     fluidRow(
       column(
@@ -980,8 +980,8 @@ panel_onsProf <- function() {
           )
         )
       )
-      ),#close time chart
-      ### Vacancies by profession data table ----
+    ), # close time chart
+    ### Vacancies by profession data table ----
     fluidRow(
       column(
         width = 12,
@@ -998,7 +998,7 @@ panel_onsProf <- function() {
           )
         )
       )
-      ),#close prof table col
+    ), # close prof table col
     fluidRow(
       column(
         12,
@@ -1006,18 +1006,23 @@ panel_onsProf <- function() {
         div(
           class = "filterRow",
           fluidRow(
-            column(12,
+            column(
+              12,
               selectizeInput("profChoice", "Choose profession",
-                             choices = unique(C_OnsProf$`Summary Profession Category`))
-            ))),
+                choices = unique(C_OnsProf$`Summary Profession Category`)
+              )
+            )
+          )
+        ),
         fluidRow(
-          column(12,
-                 br(),
-        dataTableOutput("profDetail")
+          column(
+            12,
+            br(),
+            dataTableOutput("profDetail")
           )
         )
-      )#close detailed table col
-    ),#close tables row
+      ) # close detailed table col
+    ), # close tables row
     column(width = 12, br("")), # put in to push below the fixed height chart
     column(width = 12, br("")),
     details(
@@ -1029,8 +1034,8 @@ panel_onsProf <- function() {
         tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
       )
     ),
-    
-    
+
+
     ### Downloads-------------
     br(),
     fluidRow(
@@ -1061,6 +1066,5 @@ panel_onsProf <- function() {
       column(width = 9, p("Download employment data for the selected geographic area"))
     ), # end of row
     column(width = 12, br(""))
-    
-  )#close panel
+  ) # close panel
 }
