@@ -964,23 +964,6 @@ panel_onsProf <- function() {
         tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
       )
     ), # close details box
-    ### Vacancies over time line chart ----
-    fluidRow(
-      column(
-        width = 12,
-        h2("Job adverts: Oct 2017 to Oct 2022"),
-        plotlyOutput("profTime"),
-        details(
-          label = "Source: ONS, TextKernel",
-          inputId = "profTimeSource",
-          tags$ol(
-            tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
-            tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
-            tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
-          )
-        )
-      )
-    ), # close time chart
     ### Vacancies by profession data table ----
     fluidRow(
       column(
@@ -999,21 +982,38 @@ panel_onsProf <- function() {
         )
       )
     ), # close prof table col
+    ### Vacancies over time line chart ----
     fluidRow(
       column(
-        12,
-        h2("Adverts by detailed profession: Oct 2022"),
+        width = 12,
         div(
           class = "filterRow",
           fluidRow(
             column(
               12,
               selectizeInput("profChoice", "Choose profession",
-                choices = unique(C_OnsProf$`Summary Profession Category`)
+                             choices = c("All",unique(C_OnsProf$`Summary Profession Category`))
               )
             )
           )
         ),
+        h2("Job adverts: Oct 2017 to Oct 2022"),
+        plotlyOutput("profTime"),
+        details(
+          label = "Source: ONS, TextKernel",
+          inputId = "profTimeSource",
+          tags$ol(
+            tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
+            tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
+            tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
+          )
+        )
+      )
+    ), # close time chart
+    fluidRow(
+      column(
+        12,
+        h2("Adverts by detailed profession: Oct 2022"),
         fluidRow(
           column(
             12,
