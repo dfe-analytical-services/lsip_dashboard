@@ -201,7 +201,7 @@ format.Achieve.ILR <- function(x) {
       -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name
     ) %>% # get rid of ladu area
     rename(area = lad_name)
-
+  
   popLA <- addLA %>%
     filter(time_period == 202021) %>%
     filter(level_or_type == "Further education and skills: Total" | (level_or_type == "Apprenticeships: Total" & (age_group == "Under 19" | age_group == "Total"))) %>%
@@ -213,7 +213,7 @@ format.Achieve.ILR <- function(x) {
       TRUE ~ age_group
     )) %>%
     select(area, popGroup, pop)
-
+  
   addCountry <- x %>%
     filter(geographic_level == "National") %>%
     select(
@@ -221,7 +221,7 @@ format.Achieve.ILR <- function(x) {
       -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name, -lad_name
     ) %>% # get rid of ladu area
     rename(area = country_name)
-
+  
   # create lep file
   addLEP <- x %>%
     filter(geographic_level == "Local authority district") %>%
@@ -254,7 +254,7 @@ format.Achieve.ILR <- function(x) {
     ) %>%
     select(-pop) %>%
     mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.character) # Convert to string to bind
-
+  
   # create lsip file
   addLSIP <- x %>%
     filter(geographic_level == "Local authority district") %>%
@@ -287,7 +287,7 @@ format.Achieve.ILR <- function(x) {
     ) %>%
     select(-pop) %>%
     mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.character) # Convert to string to bind
-
+  
   # create lsip file
   addMCA <- x %>%
     filter(geographic_level == "Local authority district") %>%
@@ -321,7 +321,7 @@ format.Achieve.ILR <- function(x) {
     select(-pop) %>%
     mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.character) %>% # Convert to string to bind
     filter(!is.na(area))
-
+  
   # join together
   bind_rows(addLA, addCountry, addLEP, addLSIP, addMCA)
 }
@@ -382,7 +382,7 @@ format.AchieveSSA.ILR <- function(x) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(vars(e_and_t_aims_ach, e_and_t_aims_enrolments), as.character) # Convert to sring to bind
-
+  
   # create lsip file
   addLSIP <- x %>%
     filter(geographic_level == "localAuthorityDistrict") %>%
@@ -398,7 +398,7 @@ format.AchieveSSA.ILR <- function(x) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(vars(e_and_t_aims_ach, e_and_t_aims_enrolments), as.character) # Convert to sring to bind
-
+  
   # create MCA file
   addMCA <- x %>%
     filter(geographic_level == "localAuthorityDistrict") %>%
@@ -414,7 +414,7 @@ format.AchieveSSA.ILR <- function(x) {
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(vars(e_and_t_aims_ach, e_and_t_aims_enrolments), as.character) %>% # Convert to sring to bind
     filter(!is.na(area))
-
+  
   # join together
   bind_rows(x %>% select(-location_code, -ethnicity_group) %>% rename(area = location), addLEP, addLSIP, addMCA) %>%
     mutate(e_and_t_aims_ach = case_when(e_and_t_aims_ach == "0" ~ "low", TRUE ~ e_and_t_aims_ach)) %>% # recode missing numbers as low
@@ -460,7 +460,7 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
     rename(LA = "Local.authority.[note.1]", region = "Region.[note.2]") %>%
     relocate(year, .before = LA) %>%
     mutate(year = as.numeric(year))
-
+  
   # create LA file
   addLA <- reformat %>%
     select(-region) %>%
@@ -473,7 +473,7 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:4), as.character) # Convert to sring to bind
-
+  
   # create region file
   addRegion <- reformat %>%
     select(-LA) %>% # get rid of ladu
@@ -486,7 +486,7 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:4), as.character) # Convert to sring to bind
-
+  
   # create lep file
   addLEP <- reformat %>%
     left_join(select(C_LADLEP2020, -LAD21CD), by = c("LA" = "LAD21NM")) %>%
@@ -501,8 +501,8 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:4), as.character) # Convert to sring to bind
-
-
+  
+  
   # create lsip file
   addLSIP <- reformat %>%
     left_join(select(C_LADLSIP2020, -LAD21CD), by = c("LA" = "LAD21NM")) %>%
@@ -517,7 +517,7 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:4), as.character) # Convert to sring to bind
-
+  
   addMCA <- reformat %>%
     left_join(select(C_mcalookup, -LAD21CD, -CAUTH21CD), by = c("LA" = "LAD21NM")) %>%
     select(-LA, -region) %>% # get rid of MCA area
@@ -530,7 +530,7 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:4), as.character) %>% # Convert to sring to bind
     filter(!is.na(area))
-
+  
   # join together
   bind_rows(addLA, addRegion, addLSIP, addLEP, addMCA)
 }
@@ -553,11 +553,11 @@ C_Vacancy_England <-
   group_by(year) %>%
   summarise(England = sum(vacancy_unit)) %>%
   right_join(C_Vacancy_ONS1722 %>%
-    filter(
-      geographic_level != "LADU" # not needed for the dashboard currently
-      & geographic_level != "GOR"
-    ) %>%
-    mutate_at(c(4:4), as.numeric), by = "year") %>%
+               filter(
+                 geographic_level != "LADU" # not needed for the dashboard currently
+                 & geographic_level != "GOR"
+               ) %>%
+               mutate_at(c(4:4), as.numeric), by = "year") %>%
   mutate(pc_total = vacancy_unit / England) %>%
   mutate(Year = as.numeric(substr(year, 3, 4))) %>%
   group_by(area, geographic_level, year, Year) %>%
@@ -774,23 +774,23 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     rename(X1 = 1) %>%
     mutate(X1 = trimws(X1, which = c("both"))) %>%
     select(-X2)
-
+  
   x <- x %>%
     mutate(X1 = trimws(X1, which = c("both"))) %>%
     select(-X2)
-
+  
   y <- y %>%
     mutate(X1 = trimws(X1, which = c("both"))) %>%
     select(-X2)
-
+  
   z <- z %>%
     mutate(X1 = trimws(X1, which = c("both"))) %>%
     mutate(X2 = trimws(X2, which = c("both")))
-
+  
   df_list <- list(z, y, x, w)
   df <- df_list %>%
     reduce(full_join, by = "X1")
-
+  
   England <- df %>%
     filter(X2 == "ENGLAND") %>%
     select(-c(1:2)) %>%
@@ -798,11 +798,11 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     mutate(geographic_level = "COUNTRY") %>%
     relocate(area, geographic_level, .before = `2021`) %>%
     mutate_at(c(3:8), as.character)
-
+  
   LADU <- C_LADLEP2020 %>%
     select("LAD21CD", "LAD21NM") %>%
     distinct()
-
+  
   addLADU <- LADU %>%
     left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
     rename(area = LAD21NM) %>%
@@ -810,8 +810,8 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     mutate(geographic_level = "LADU") %>% # rename as LADU
     relocate(geographic_level, .after = area) %>%
     mutate_at(c(4:9), as.character)
-
-
+  
+  
   addLEP <- addLADU %>%
     left_join(select(C_LADLEP2020, -LAD21NM), by = c("LAD21CD" = "LAD21CD")) %>%
     filter(is.na(LEP) == FALSE) %>% # remove non-english
@@ -825,7 +825,7 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(3:8), as.character) # Convert to sring to bind
-
+  
   addLSIP <- addLADU %>%
     left_join(select(C_LADLSIP2020, -LAD21NM), by = c("LAD21CD" = "LAD21CD")) %>%
     filter(is.na(LSIP) == FALSE) %>% # remove non-english
@@ -839,7 +839,7 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(3:8), as.character) # Convert to sring to bind
-
+  
   addMCA <- addLADU %>%
     left_join(select(C_mcalookup, -LAD21NM, -CAUTH21CD), by = c("LAD21CD" = "LAD21CD")) %>%
     select(-c(1:3)) %>%
@@ -852,10 +852,10 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(3:8), as.character) # Convert to sring to bind
-
+  
   addLADU <- addLADU %>%
     select(-LAD21CD)
-
+  
   combined <- bind_rows(addLADU, addLEP, addLSIP, addMCA, England) %>%
     melt(id.vars = c("geographic_level", "area")) %>%
     rename(year = variable) %>%
@@ -903,7 +903,7 @@ write.csv(C_enterprise_demo1621, file = "Data\\AppData\\C_enterprise_demo1621.cs
 
 format.ks4 <- function(x) {
   colnames(x)[1] <- "area"
-
+  
   addcountry <- x %>%
     select(-location_code, -characteristic, -data_type, -institution_group, -level_methodology) %>%
     select(-c(1:2)) %>%
@@ -915,13 +915,13 @@ format.ks4 <- function(x) {
     mutate(area = "England") %>%
     mutate(geographic_level = "COUNTRY") %>%
     relocate(area, geographic_level, .before = time_period)
-
+  
   addladu <- x %>%
     select(-location_code, -characteristic, -data_type, -institution_group, -level_methodology) %>%
     mutate(geographic_level = replace(geographic_level, geographic_level == "localAuthorityDistrict", "LADU")) %>%
     mutate_at(c(4:9), as.character) # Convert to string to bind
-
-
+  
+  
   # create lep file
   addLEP <- x %>%
     left_join(select(C_LADLEP2020, -LAD21NM), by = c("location_code" = "LAD21CD")) %>%
@@ -937,7 +937,7 @@ format.ks4 <- function(x) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:9), as.character) # Convert to sring to bind
-
+  
   # create lsip file
   addLSIP <- x %>%
     left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
@@ -953,7 +953,7 @@ format.ks4 <- function(x) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:9), as.character) # Convert to string to bind
-
+  
   addMCA <- x %>%
     left_join(select(C_mcalookup, -LAD21NM, -CAUTH21CD), by = c("location_code" = "LAD21CD")) %>%
     select(-area, -location_code) %>% # get rid of MCA area
@@ -968,7 +968,7 @@ format.ks4 <- function(x) {
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:9), as.character) %>% # Convert to string to bind
     filter(!is.na(area))
-
+  
   # join together and rename columns
   LEP_LSIP <- bind_rows(addcountry, addladu, addLEP, addLSIP, addMCA) %>%
     rename(
@@ -1000,7 +1000,7 @@ write.csv(D_KS4destin_1521, file = "Data\\AppData\\D_KS4destin_1521.csv", row.na
 
 format.ks5 <- function(x) {
   colnames(x)[1] <- "area"
-
+  
   addcountry <- x %>%
     select(-location_code, -characteristic, -data_type, -institution_group, -level_methodology) %>%
     select(-c(1:2)) %>%
@@ -1012,14 +1012,14 @@ format.ks5 <- function(x) {
     mutate(area = "England") %>%
     mutate(geographic_level = "COUNTRY") %>%
     relocate(area, geographic_level, .before = time_period)
-
-
+  
+  
   addladu <- x %>%
     select(-location_code, -characteristic, -data_type, -institution_group, -level_methodology) %>%
     mutate(geographic_level = replace(geographic_level, geographic_level == "localAuthorityDistrict", "LADU")) %>%
     mutate_at(c(5:10), as.character) # Convert to string to bind
-
-
+  
+  
   # create lep file
   addLEP <- x %>%
     left_join(select(C_LADLEP2020, -LAD21NM), by = c("location_code" = "LAD21CD")) %>%
@@ -1035,7 +1035,7 @@ format.ks5 <- function(x) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(5:10), as.character) # Convert to sring to bind
-
+  
   # create lsip file
   addLSIP <- x %>%
     left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
@@ -1051,7 +1051,7 @@ format.ks5 <- function(x) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(5:10), as.character) # Convert to string to bind
-
+  
   addMCA <- x %>%
     left_join(select(C_mcalookup, -LAD21NM, -CAUTH21CD), by = c("location_code" = "LAD21CD")) %>%
     select(-area, -location_code) %>% # get rid of MCA area
@@ -1066,8 +1066,8 @@ format.ks5 <- function(x) {
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(5:10), as.character) %>% # Convert to string to bind
     filter(!is.na(area))
-
-
+  
+  
   # join together and rename columns
   LEP_LSIP <- bind_rows(addcountry, addladu, addLEP, addLSIP, addMCA) %>%
     rename(
@@ -1415,11 +1415,11 @@ format.OnsProf <- function(x) {
     mutate(geographic_level = geogLevel) %>% # set to the current geographic type
     # mutate(geographic_level=gsub('\\b(\\pL)\\pL{2,}|.','\\U\\1',geographic_level,perl = TRUE))%>%#get first letter of geog level
     relocate(geographic_level, .before = area)
-
+  
   # Make long
   reformat %>%
     pivot_longer(!c("geographic_level", "area", "Summary Profession Category", "Detailed Profession Category"),
-      names_to = "time_period", values_to = "vacancies"
+                 names_to = "time_period", values_to = "vacancies"
     )
 }
 
@@ -1429,13 +1429,16 @@ D_OnsProf <- bind_rows(
   format.OnsProf(I_OnsProfLsip),
   format.OnsProf(I_OnsProfMca)
 ) %>%
+  filter(substr(time_period, 1, 3) == "Oct")%>%
   # change lep naming to match other datafiles
   mutate(geographic_level = case_when(
     geographic_level == "Local Enterprise Partnership" ~ "LEP",
     TRUE ~ geographic_level
   ))
+write.csv(D_OnsProf, file = "Data\\AppData\\D_OnsProf.csv", row.names = FALSE)
 
 # make suppressed data zero to use in dashboard
 C_OnsProf <- D_OnsProf %>%
   mutate(vacancies = gsub("\\[x\\]", "0", vacancies)) %>%
   mutate(vacancies = as.numeric(vacancies))
+write.csv(C_OnsProf, file = "Data\\AppData\\C_OnsProf.csv", row.names = FALSE)

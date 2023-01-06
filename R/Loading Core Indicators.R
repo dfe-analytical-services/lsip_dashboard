@@ -102,3 +102,7 @@ C_KS5_eduempapp_max_min <- read.csv(file = "./Data/AppData/C_KS5_eduempapp_max_m
 
 ## Data table ----
 I_DataTable <- read.csv(file = "./Data/AppData/I_DataTable.csv", check.names = FALSE)
+
+## Ons by profession
+D_OnsProf <- read.csv(file = "./Data/AppData/D_OnsProf.csv", check.names = FALSE)
+C_OnsProf <- read.csv(file = "./Data/AppData/C_OnsProf.csv", check.names = FALSE)
