@@ -3340,10 +3340,27 @@ server <- function(input, output, session) {
       mutate(across(where(is.numeric), ~ round(prop.table(.), 4)))
   })
   
+  vals <- reactiveValues(
+    row_priority = c("All",unique(C_OnsProf$`Summary Profession Category`)),
+    row_color = rep('white', 26)
+  )
+  
+  observeEvent(input$profChoice, {
+    vals$row_priority <- 
+      c(input$profChoice, vals$row_priority[vals$row_priority != input$profChoice])
+    vals$row_color <- c('#F46A25', rep('white', 25))
+  })
+  
   output$profTable <- renderDataTable({
     df <- profTable()
     datatable(df, options = list(order = list(2, "desc")), rownames = FALSE) %>%
-      formatPercentage(2:ncol(df), 0)
+      formatPercentage(2:ncol(df), 0)%>%
+      formatStyle("Summary Profession Category",
+                  target = "row",
+                  backgroundColor = styleEqual(vals$row_priority, 
+                                               vals$row_color, 
+                                               default = 'white')
+      )
   })
   
   # adverts by detailed profession
