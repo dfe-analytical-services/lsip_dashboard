@@ -1419,7 +1419,13 @@ format.OnsProf <- function(x) {
   reformat %>%
     pivot_longer(!c("geographic_level", "area", "Summary Profession Category", "Detailed Profession Category"),
                  names_to = "time_period", values_to = "vacancies"
-    )
+    )%>%
+    mutate(area=case_when(area=="Cambridge and Peterborough"~ "Cambridgeshire and Peterborough",
+                          area=="Buckinghamshire "~ "Buckinghamshire",
+                          area=="North East*"~ "North East",
+                          area=="Buckinghamshire "~ "Norfolk and Suffolk",
+                          area=="Norfolk and Suffolk "~"Norfolk and Suffolk",
+           TRUE ~ area))
 }
 
 # format data
