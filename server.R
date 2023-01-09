@@ -3152,13 +3152,13 @@ server <- function(input, output, session) {
     vacancyTotalLatest <- C_OnsProf %>%
       filter(
         time_period == "Oct 22",
-        geographic_level == "LEP"
+        geographic_level == "Country"
       )
     vacancyTotalLast <-
       C_OnsProf %>%
       filter(
         time_period == "Oct 21",
-        geographic_level == "LEP"
+        geographic_level == "Country"
       )
     
     vacancyTotalChange <- (sum(vacancyTotalLatest$vacancies) - sum(vacancyTotalLast$vacancies)) / sum(vacancyTotalLast$vacancies)
@@ -3327,7 +3327,7 @@ server <- function(input, output, session) {
       select(-"Detailed Profession Category") %>%
       filter(
         time_period == "Oct 22",
-        geographic_level == "LEP"
+        geographic_level == "Country"
       ) %>%
       mutate(area = "England")
     # combine and reformat
@@ -3368,7 +3368,7 @@ server <- function(input, output, session) {
         time_period == "Oct 22",
         if(input$profChoice=="All"){TRUE}
         else{`Summary Profession Category` == input$profChoice},
-        geographic_level == "LEP"
+        geographic_level == "Country"
       ) %>%
       mutate(area = "England")
     # combine and reformat
