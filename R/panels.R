@@ -968,6 +968,28 @@ panel_onsProf <- function() {
     fluidRow(
       column(
         width = 12,
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              12,
+              selectizeInput("profChoice", "Choose profession",
+                             choices = c("All",unique(C_OnsProf$`Summary Profession Category`))
+              )
+            )
+          )
+        ),
+        br(),
+        ### KPI boxes ----
+        fluidRow(
+          valueBoxOutput("profKpiProf1"),
+          valueBoxOutput("profKpiProf2"),
+          valueBoxOutput("profKpi2ProfEng")
+        ), # close first row of kpi
+        # comparison kpis
+        fluidRow(
+          uiOutput("profCompProf")
+        ), # close second row of kpi
         h2("Adverts by profession: Oct 2022"),
         dataTableOutput("profTable"),
         br(),
@@ -986,18 +1008,7 @@ panel_onsProf <- function() {
     fluidRow(
       column(
         width = 12,
-        div(
-          class = "filterRow",
-          fluidRow(
-            column(
-              12,
-              selectizeInput("profChoice", "Choose profession",
-                             choices = c("All",unique(C_OnsProf$`Summary Profession Category`))
-              )
-            )
-          )
-        ),
-        h2("Job adverts: Oct 2017 to Oct 2022"),
+        h2(uiOutput("OnsProfTime")),
         plotlyOutput("profTime"),
         details(
           label = "Source: ONS, TextKernel",
@@ -1013,7 +1024,7 @@ panel_onsProf <- function() {
     fluidRow(
       column(
         12,
-        h2("Adverts by detailed profession: Oct 2022"),
+        h2(uiOutput("OnsProfDetail")),
         fluidRow(
           column(
             12,
