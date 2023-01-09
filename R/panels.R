@@ -943,7 +943,7 @@ panel_enterprise <- function() {
 
 panel_onsProf <- function() {
   tabPanel(
-    "Job adverts by profession",
+    "Vacancies",
     h1(uiOutput("OnsProftitle")),
     ### KPI boxes ----
     fluidRow(

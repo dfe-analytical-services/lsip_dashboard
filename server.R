@@ -84,17 +84,17 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
+  # output$downloadData4 <- downloadHandler(
+  #   filename = function() {
+  #     "VacancyIndicators.xlsx"
+  #   },
+  #   content = function(file) {
+  #     write_xlsx(list(
+  #       "2.Vacancies" = C_Vacancy_ONS1722
+  #     ), path = file)
+  #   }
+  # )
   output$downloadData4 <- downloadHandler(
-    filename = function() {
-      "VacancyIndicators.xlsx"
-    },
-    content = function(file) {
-      write_xlsx(list(
-        "2.Vacancies" = C_Vacancy_ONS1722
-      ), path = file)
-    }
-  )
-  output$downloadData5 <- downloadHandler(
     filename = function() {
       "AchievementIndicators.xlsx"
     },
@@ -104,7 +104,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  output$downloadData6 <- downloadHandler(
+  output$downloadData5 <- downloadHandler(
     filename = function() {
       "AchievementBySSAIndicators.xlsx"
     },
@@ -115,7 +115,7 @@ server <- function(input, output, session) {
     }
   )
   
-  output$downloadData7 <- downloadHandler(
+  output$downloadData6 <- downloadHandler(
     filename = function() {
       "Qualificationbyageandgendernvq.xlsx"
     },
@@ -126,7 +126,7 @@ server <- function(input, output, session) {
     }
   )
   
-  output$downloadData8 <- downloadHandler(
+  output$downloadData7 <- downloadHandler(
     filename = function() {
       "EnterprisebyemploymentsizeIndicators.xlsx"
     },
@@ -137,7 +137,7 @@ server <- function(input, output, session) {
     }
   )
   
-  output$downloadData9 <- downloadHandler(
+  output$downloadData8 <- downloadHandler(
     filename = function() {
       "EntbyempsizeandindustryIndicators.xlsx"
     },
@@ -148,7 +148,7 @@ server <- function(input, output, session) {
     }
   )
   
-  output$downloadData10 <- downloadHandler(
+  output$downloadData9 <- downloadHandler(
     filename = function() {
       "Enterprisedemography.xlsx"
     },
@@ -159,7 +159,7 @@ server <- function(input, output, session) {
     }
   )
   
-  output$downloadData11 <- downloadHandler(
+  output$downloadData10 <- downloadHandler(
     filename = function() {
       "Keystage4destinationsIndicators.xlsx"
     },
@@ -170,13 +170,24 @@ server <- function(input, output, session) {
     }
   )
   
-  output$downloadData12 <- downloadHandler(
+  output$downloadData11 <- downloadHandler(
     filename = function() {
       "Keystage5destinationsIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
         "9a.Key Stage 5 destinations" = D_KS5destin_1721
+      ), path = file)
+    }
+  )
+  
+  output$downloadData12 <- downloadHandler(
+    filename = function() {
+      "JobAdvertIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "10.JobAdvertByProfession" = D_OnsProf
       ), path = file)
     }
   )
@@ -3591,6 +3602,30 @@ server <- function(input, output, session) {
     datatable(df, options = list(order = list(2, "desc")), rownames = FALSE) %>%
       formatPercentage(2:ncol(df), 0)
   })
+  
+  ### Downloads----
+  output$download_prof1 <- downloadHandler(
+    filename = function() {
+      "ONS_adverts_by_profession.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(D_OnsProf, path = file)
+    }
+  )
+  
+  # Download current area indicators
+  filtered_dataProf <- reactive({
+    D_OnsProf%>%filter(geographic_level==input$GeoType,
+                       area==input$lep1)
+  })
+  output$download_prof2 <- downloadHandler(
+    filename = function() {
+      "CurrentONS_adverts_by_profession.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(filtered_dataProf(), path = file)
+    }
+  )
   
   
   # Stop app ---------------------------------------------------------------------------------
