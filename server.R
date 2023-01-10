@@ -561,28 +561,28 @@ server <- function(input, output, session) {
   #### ONS job advert units  ----
   # get vac data for current area chosen
   VacArea <- eventReactive(input$lep1, {
-    C_Vacancy_England %>%
+    C_VacPcArea %>%
       filter(area == input$lep1, geographic_level == input$GeoType)
   })
-  # get 2022 values
-  Vac2022 <- reactive({
+  # get latest values
+  VacLatest <- reactive({
     VacArea() %>%
-      filter(year == "2022")
+      filter(time_period == "Oct 22")
   })
   # get 2021 values
-  Vac2021 <- reactive({
+  VacLast <- reactive({
     VacArea() %>%
-      filter(year == "2021")
+      filter(time_period == "Oct 21")
   })
 
   # Vacancy kpi
   output$jobad.units <- renderUI({
     ### ONS job advert units change
-    VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
+    VacPcChange <- VacLatest()$jobpc - VacLast()$jobpc
 
     # print with formatting
-    h4(span("Jan 2022", style = "font-size: 16px;font-weight:normal;"), br(),
-      paste0(format(100 * Vac2022()$jobpc, digit = 2), "%"), br(),
+    h4(span("Oct 2022", style = "font-size: 16px;font-weight:normal;"), br(),
+      paste0(format(100 * VacLatest()$jobpc, digit = 2), "%"), br(),
       span(
         paste0(sprintf("%+.1f", 100 * VacPcChange), "ppts"),
         style = paste0("font-size: 16px;color:", cond_color(VacPcChange > 0)) # colour formating
@@ -594,13 +594,11 @@ server <- function(input, output, session) {
 
   # Vacancy chart
   VacLineChart <- eventReactive(input$lep1, {
-    VacLine <- VacArea() %>% filter(year >= 2018)
-    VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
-
-    VacMinMax <- C_Vacancy_England_max_min %>% filter(area == input$lep1, geographic_level == input$GeoType)
+    VacLine <- VacArea()
+    VacPcChange <- VacLatest()$jobpc - VacLast()$jobpc
 
     ggplot(VacLine, aes(x = Year, y = jobpc, group = area, text = paste0(
-      "Period: Jan ", year, "<br>",
+      "Period: ", time_period, "<br>",
       "England vacancy share: ", format(100 * jobpc, digit = 2), "%<br>"
     ))) +
       geom_line(data = VacLine %>% filter(Year <= 21)) +
@@ -624,7 +622,7 @@ server <- function(input, output, session) {
       ) +
       scale_y_continuous(
         labels = scales::percent_format(accuracy = 0.1),
-        breaks = c(VacMinMax$minVac, VacMinMax$maxVac)
+        breaks = c(min(VacLine$jobpc), max(VacLine$jobpc))
       )
   })
   # set margins

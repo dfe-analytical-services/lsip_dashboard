@@ -72,14 +72,14 @@ I_Achieve_ILR21 <- read.csv(file = paste0("./Data/", folder, "/", list.files(pat
 folder <- "6_ILRach"
 I_Achieve_ILR1621 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
-## ONS
-### Vacancy by year and LAD ------------
-## Download link: https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/onlinejobadvertsbyitl1regionandlocalauthority
-folder <- "7_ONSvacancy"
-sheetNum <- "1"
-firstRow <- 4
-I_Vacancy_ONS1722 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T, startRow = firstRow)
-
+# ## ONS
+# ### Vacancy by year and LAD ------------
+# ## Download link: https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/onlinejobadvertsbyitl1regionandlocalauthority
+# folder <- "7_ONSvacancy"
+# sheetNum <- "1"
+# firstRow <- 4
+# I_Vacancy_ONS1722 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T, startRow = firstRow)
+#
 
 ### UK Business Count
 # Enterprise by employment size

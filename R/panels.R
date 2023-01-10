@@ -49,7 +49,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: ONS (Adzuna). Jan 2022. Share of job vacancies in England.",
+              title = "Source: ONS (Textkernel). Oct 2022. Share of online job adverts in England.",
               uiOutput("jobad.units"),
             )
           ),
