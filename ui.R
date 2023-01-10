@@ -438,14 +438,14 @@ padding-top:15px
           h3("ONS-Textkernel online job adverts"),
           p("These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.
             The dashboard shows the average number of live adverts in October from 2017 to 2022. Other months are available from the ONS website (link on downloads page)."),
-            p("Advert volumes are shown split by profession. Textkernel have derived these professions from the job advert job title. These professions do not align directly to the Standard Occupation Classification (SOC2020)."),
+          p("Advert volumes are shown split by profession. Textkernel have derived these professions from the job advert job title. These professions do not align directly to the Standard Occupation Classification (SOC2020)."),
           p("Counts have been rounded to the nearest 5 and so totals may not add due to this rounding. The scope of online job adverts does not fully capture the scope of UK economic activity because of differing advertising methods, for example, casual work may be advertised by word-of-mouth or in shop windows as opposed to online."),
           p("As this data is experimental, there are some quality issues with the data. The ONS dataset has a full rundown on its cover sheet (link on downloads page). In brief:"),
-tags$ul(
+          tags$ul(
             tags$li("There are methodological changes throughout the time series (classification of profession and location) that may result in step-changes. "),
             tags$li("When job location information is limited, the centroid of the region is used. This may lead to clustering of job counts."),
           ),
- h3("Individualised Learner Record"),
+          h3("Individualised Learner Record"),
           p("The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
           The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training."),
           p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,

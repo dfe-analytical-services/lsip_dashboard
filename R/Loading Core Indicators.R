@@ -54,11 +54,11 @@ C_Achieve_ILR21 <- read.csv(file = "./Data/AppData/C_Achieve_ILR21.csv", check.n
 
 ## ONS vacancy ----
 # data for download
-C_Vacancy_ONS1722 <- read.csv(file = "./Data/AppData/C_Vacancy_ONS1722.csv", check.names = FALSE)
+# C_Vacancy_ONS1722 <- read.csv(file = "./Data/AppData/C_Vacancy_ONS1722.csv", check.names = FALSE)
 # data for dashboard
-C_Vacancy_England <- read.csv(file = "./Data/AppData/C_Vacancy_England.csv", check.names = FALSE)
-C_Vacancy_England_max_min <- read.csv(file = "./Data/AppData/C_Vacancy_England_max_min.csv", check.names = FALSE)
-C_Vacancy_England_change <- read.csv(file = "./Data/AppData/C_Vacancy_England_change.csv", check.names = FALSE)
+# C_Vacancy_England <- read.csv(file = "./Data/AppData/C_Vacancy_England.csv", check.names = FALSE)
+# C_Vacancy_England_max_min <- read.csv(file = "./Data/AppData/C_Vacancy_England_max_min.csv", check.names = FALSE)
+# C_Vacancy_England_change <- read.csv(file = "./Data/AppData/C_Vacancy_England_change.csv", check.names = FALSE)
 
 ## Enterprise by employment size ----
 # data for download
@@ -106,3 +106,4 @@ I_DataTable <- read.csv(file = "./Data/AppData/I_DataTable.csv", check.names = F
 ## Ons by profession
 D_OnsProf <- read.csv(file = "./Data/AppData/D_OnsProf.csv", check.names = FALSE)
 C_OnsProf <- read.csv(file = "./Data/AppData/C_OnsProf.csv", check.names = FALSE)
+C_VacPcArea <- read.csv(file = "./Data/AppData/C_VacPcArea.csv", check.names = FALSE)

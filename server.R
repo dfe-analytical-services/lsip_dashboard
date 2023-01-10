@@ -323,13 +323,14 @@ server <- function(input, output, session) {
     "1a.Emp by occupation" = D_EmpOcc_APS1721,
     "1b.Emp rate" = D_EmpRate_APS1822,
     "1c.Emp by industry" = D_EmpInd_APS1822,
-    "2.Vacancies" = C_Vacancy_ONS1722,
+    # "2.Vacancies" = C_Vacancy_ONS1722,
+    "2.Job adverts by profession" = D_OnsProf,
     "3a.FE achievements SSA" = D_Achieve_ILR21,
     "3b.FE achievements" = D_Achieve_ILR1621,
     "4a.FE achievements" = D_qual_APS1721,
     "5a.Qual by age and gender" = D_qual_APS1721,
     "6a.Ent by emp size band" = D_empent_UBC1822,
-    "7a.Ent by emp size band and industry" = D_empentind_UBC1822,
+    "7a.Ent by emp size & industry" = D_empentind_UBC1822,
     "8a.Enterprise demography" = D_enterprise_demo1621,
     "9a.Key Stage 4 destinations" = D_KS4destin_1521,
     "10a.Key Stage 5 destinations" = D_KS5destin_1721
@@ -348,12 +349,17 @@ server <- function(input, output, session) {
     list(
       "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
       "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, area == input$lep1),
-      "2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1),
+      # "2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1),
+      "2.Job adverts by profession" = filter(D_OnsProf, geographic_level == input$GeoType, area == input$lep1),
       "3a.FE achievements SSA" = filter(D_Achieve_ILR21, geographic_level == input$GeoType, area == input$lep1),
       "3b.FE achievements" = filter(D_Achieve_ILR1621, geographic_level == input$GeoType, area == input$lep1),
       "4a.Ent by emp size band" = filter(D_empent_UBC1822, geographic_level == input$GeoType, area == input$lep1),
       "5a.Key Stage 5 destinations" = filter(D_KS5destin_1721, geographic_level == input$GeoType, area == input$lep1),
-      "6a.Qual by age and gender" = filter(D_qual_APS1721, geographic_level == input$GeoType, area == input$lep1)
+      "6a.Qual by age and gender" = filter(D_qual_APS1721, geographic_level == input$GeoType, area == input$lep1),
+      "7a.Ent by emp size & industry" = filter(D_empentind_UBC1822, geographic_level == input$GeoType, area == input$lep1),
+      "8a.Enterprise demography" = filter(D_enterprise_demo1621, geographic_level == input$GeoType, area == input$lep1),
+      "9a.Key Stage 4 destinations" = filter(D_KS4destin_1521, geographic_level == input$GeoType, area == input$lep1),
+      "10a.Key Stage 5 destinations" = filter(D_KS5destin_1721, geographic_level == input$GeoType, area == input$lep1)
     )
   })
   output$download_btn0b <- downloadHandler(
@@ -561,28 +567,28 @@ server <- function(input, output, session) {
   #### ONS job advert units  ----
   # get vac data for current area chosen
   VacArea <- eventReactive(input$lep1, {
-    C_Vacancy_England %>%
+    C_VacPcArea %>%
       filter(area == input$lep1, geographic_level == input$GeoType)
   })
-  # get 2022 values
-  Vac2022 <- reactive({
+  # get latest values
+  VacLatest <- reactive({
     VacArea() %>%
-      filter(year == "2022")
+      filter(time_period == "Oct 22")
   })
   # get 2021 values
-  Vac2021 <- reactive({
+  VacLast <- reactive({
     VacArea() %>%
-      filter(year == "2021")
+      filter(time_period == "Oct 21")
   })
 
   # Vacancy kpi
   output$jobad.units <- renderUI({
     ### ONS job advert units change
-    VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
+    VacPcChange <- VacLatest()$jobpc - VacLast()$jobpc
 
     # print with formatting
-    h4(span("Jan 2022", style = "font-size: 16px;font-weight:normal;"), br(),
-      paste0(format(100 * Vac2022()$jobpc, digit = 2), "%"), br(),
+    h4(span("Oct 2022", style = "font-size: 16px;font-weight:normal;"), br(),
+      paste0(format(100 * VacLatest()$jobpc, digit = 2), "%"), br(),
       span(
         paste0(sprintf("%+.1f", 100 * VacPcChange), "ppts"),
         style = paste0("font-size: 16px;color:", cond_color(VacPcChange > 0)) # colour formating
@@ -594,13 +600,11 @@ server <- function(input, output, session) {
 
   # Vacancy chart
   VacLineChart <- eventReactive(input$lep1, {
-    VacLine <- VacArea() %>% filter(year >= 2018)
-    VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
-
-    VacMinMax <- C_Vacancy_England_max_min %>% filter(area == input$lep1, geographic_level == input$GeoType)
+    VacLine <- VacArea()
+    VacPcChange <- VacLatest()$jobpc - VacLast()$jobpc
 
     ggplot(VacLine, aes(x = Year, y = jobpc, group = area, text = paste0(
-      "Period: Jan ", year, "<br>",
+      "Period: ", time_period, "<br>",
       "England vacancy share: ", format(100 * jobpc, digit = 2), "%<br>"
     ))) +
       geom_line(data = VacLine %>% filter(Year <= 21)) +
@@ -624,7 +628,7 @@ server <- function(input, output, session) {
       ) +
       scale_y_continuous(
         labels = scales::percent_format(accuracy = 0.1),
-        breaks = c(VacMinMax$minVac, VacMinMax$maxVac)
+        breaks = c(min(VacLine$jobpc), max(VacLine$jobpc))
       )
   })
   # set margins
@@ -1510,35 +1514,35 @@ server <- function(input, output, session) {
     )
   })
 
-  ### Downloads----
-  # download skills indicators
-  list_of_datasets2 <- list("2.Vacancies" = C_Vacancy_ONS1722)
-  output$download_btn2a <- downloadHandler(
-    filename = function() {
-      "VacancyIndicators.xlsx"
-    },
-    content = function(file) {
-      write_xlsx(list_of_datasets2, path = file)
-    }
-  )
-
-  # Download current LEP indicators
-  filtered_data2 <- reactive({
-    list("2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, (area == input$lep1 |
-      area == if ("lep2" %in% names(input)) {
-        input$lep2
-      } else {
-        "\nNone"
-      })))
-  })
-  output$download_btn2b <- downloadHandler(
-    filename = function() {
-      "CurrentVacancyIndicators.xlsx"
-    },
-    content = function(file) {
-      write_xlsx(filtered_data2(), path = file)
-    }
-  )
+  # ### Downloads----
+  # # download skills indicators
+  # list_of_datasets2 <- list("2.Vacancies" = C_Vacancy_ONS1722)
+  # output$download_btn2a <- downloadHandler(
+  #   filename = function() {
+  #     "VacancyIndicators.xlsx"
+  #   },
+  #   content = function(file) {
+  #     write_xlsx(list_of_datasets2, path = file)
+  #   }
+  # )
+  #
+  # # Download current LEP indicators
+  # filtered_data2 <- reactive({
+  #   list("2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, (area == input$lep1 |
+  #     area == if ("lep2" %in% names(input)) {
+  #       input$lep2
+  #     } else {
+  #       "\nNone"
+  #     })))
+  # })
+  # output$download_btn2b <- downloadHandler(
+  #   filename = function() {
+  #     "CurrentVacancyIndicators.xlsx"
+  #   },
+  #   content = function(file) {
+  #     write_xlsx(filtered_data2(), path = file)
+  #   }
+  # )
 
   ## KPIs ----
   ### ONS job advert unit percent of total area 1
