@@ -3583,7 +3583,23 @@ server <- function(input, output, session) {
 
   output$profTable <- renderDataTable({
     df <- profTable()
-    datatable(df, options = list(order = list(2, "desc")), rownames = FALSE) %>%
+    # check where profession is in the rank and expand table if it's low
+    tableLength <- (C_OnsProf %>% filter(
+      time_period == "Oct 22", geographic_level == input$GeoType,
+      area == input$lep1
+    ) %>%
+      group_by(`Summary Profession Category`) %>%
+      summarise(vacancies = sum(vacancies)) %>%
+      mutate(vacanciesR = rank(desc(vacancies), ties.method = "first")) %>%
+      filter(`Summary Profession Category` == input$profChoice))$vacanciesR
+    datatable(df, options = list(
+      order = list(2, "desc"), pageLength =
+        if (tableLength[1] <= 10 | input$profChoice == "All") {
+          10
+        } else {
+          25
+        }
+    ), rownames = FALSE) %>%
       formatPercentage(2:ncol(df), 0) %>%
       formatStyle("Summary Profession Category",
         target = "row",
