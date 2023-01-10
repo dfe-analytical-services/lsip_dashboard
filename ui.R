@@ -395,12 +395,12 @@ padding-top:15px
             id = "datatabset",
             panel_overview(),
             panel_employment(),
+            panel_onsProf(),
             panel_enterprise(),
             #panel_vacancies(),
             panel_skills(),
             panel_qualification_level(),
             panel_destinations(),
-            panel_onsProf()
           ) # end of dashboard tabset panel
         ) # end of dashboard navbar
       )
