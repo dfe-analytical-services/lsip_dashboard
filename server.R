@@ -3515,7 +3515,7 @@ server <- function(input, output, session) {
         text = paste0(
           "Period: ", time_period, "<br>",
           "Area: ", Areas, "<br>",
-          "Employment rate: ", round(vacancies), "<br>"
+          "Job adverts: ", round(vacancies), "<br>"
         )
       )
     ) +
