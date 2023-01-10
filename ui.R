@@ -397,7 +397,7 @@ padding-top:15px
             panel_employment(),
             panel_onsProf(),
             panel_enterprise(),
-            #panel_vacancies(),
+            # panel_vacancies(),
             panel_skills(),
             panel_qualification_level(),
             panel_destinations(),
