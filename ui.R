@@ -273,7 +273,7 @@ padding-top:15px
               h3(actionLink("link_to_tabpanel_employment", "Employment")),
               p("This tab provides information on employment for the selected geographic area including data on employment rates over time, the share of employment by occupation, and the share of employment by industry. There is an option to compare against another area in England at the same geographic level."),
               h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
-              p("This tab provides experimental data on the share of online job adverts, split by profession, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "),
+              p("This tab provides experimental online job advert data, split by profession, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "),
               h3(actionLink("link_to_tabpanel_enterprise_level", "Enterprises")),
               p("This tab provides data on the count of new and no longer trading enterprises and count of enterprises by employment size and industry for the selected geographic area, and the option to compare against another area in England at the same geographic level."),
               h3(actionLink("link_to_tabpanel_FE", "Skills")),
@@ -435,14 +435,17 @@ padding-top:15px
               .noWS = c("after")
             ), "."
           ),
-          h3("ONS online job adverts"),
-          p("These data tables are based on experimental data by Adzuna on the share of online job adverts.
-          The dashboard shows ‘units’ of job adverts, this is the number of job adverts divided by a set constant for all regions.
-          This can be used to compare across areas and overtime but does not provide an indication of the real volume of job adverts.
-            Each point in the series covers a monthly average of the volume of job adverts in January of the selected year (2017 to 2022)."),
-          p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
-            rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
-          h3("Individualised Learner Record"),
+          h3("ONS-Textkernel online job adverts"),
+          p("These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.
+            The dashboard shows the average number of live adverts in October from 2017 to 2022. Other months are available from the ONS website (link on downloads page)."),
+            p("Advert volumes are shown split by profession. Textkernel have derived these professions from the job advert job title. These professions do not align directly to the Standard Occupation Classification (SOC2020)."),
+          p("Counts have been rounded to the nearest 5 and so totals may not add due to this rounding. The scope of online job adverts does not fully capture the scope of UK economic activity because of differing advertising methods, for example, casual work may be advertised by word-of-mouth or in shop windows as opposed to online."),
+          p("As this data is experimental, there are some quality issues with the data. The ONS dataset has a full rundown on its cover sheet (link on downloads page). In brief:"),
+tags$ul(
+            tags$li("There are methodological changes throughout the time series (classification of profession and location) that may result in step-changes. "),
+            tags$li("When job location information is limited, the centroid of the region is used. This may lead to clustering of job counts."),
+          ),
+ h3("Individualised Learner Record"),
           p("The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
           The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training."),
           p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
