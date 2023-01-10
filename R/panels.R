@@ -945,25 +945,17 @@ panel_onsProf <- function() {
   tabPanel(
     "Vacancies",
     h1(uiOutput("OnsProftitle")),
-    ### KPI boxes ----
-    fluidRow(
-      valueBoxOutput("profKpi1"),
-      valueBoxOutput("profKpi2"),
-      valueBoxOutput("profKpi2Eng")
-    ), # close first row of kpi
+    # ### KPI boxes ----
+    # fluidRow(
+    #   valueBoxOutput("profKpi1"),
+    #   valueBoxOutput("profKpi2"),
+    #   valueBoxOutput("profKpi2Eng")
+    # ), # close first row of kpi
     # comparison kpis
-    fluidRow(
-      uiOutput("profComp")
-    ), # close second row of kpi
-    details(
-      label = "Source: ONS, TextKernel",
-      inputId = "profKPISource",
-      tags$ol(
-        tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
-        tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
-        tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
-      )
-    ), # close details box
+    # fluidRow(
+    #   uiOutput("profComp")
+    # ), # close second row of kpi
+
     ### Vacancies by profession data table ----
     fluidRow(
       column(
@@ -974,36 +966,33 @@ panel_onsProf <- function() {
             column(
               12,
               selectizeInput("profChoice", "Choose profession",
-                             choices = c("All",unique(C_OnsProf$`Summary Profession Category`))
+                choices = c("All", unique(C_OnsProf$`Summary Profession Category`))
               )
             )
           )
-        ),
-        br(),
-        ### KPI boxes ----
-        fluidRow(
-          valueBoxOutput("profKpiProf1"),
-          valueBoxOutput("profKpiProf2"),
-          valueBoxOutput("profKpi2ProfEng")
-        ), # close first row of kpi
-        # comparison kpis
-        fluidRow(
-          uiOutput("profCompProf")
-        ), # close second row of kpi
-        h2("Adverts by profession: Oct 2022"),
-        dataTableOutput("profTable"),
-        br(),
-        details(
-          label = "Source: ONS, TextKernel",
-          inputId = "profTableSource",
-          tags$ol(
-            tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
-            tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
-            tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
-          )
         )
       )
-    ), # close prof table col
+    ),
+    br(),
+    ### KPI boxes ----
+    fluidRow(
+      valueBoxOutput("profKpiProf1"),
+      valueBoxOutput("profKpiProf2"),
+      valueBoxOutput("profKpi2ProfEng")
+    ), # close first row of kpi
+    # comparison kpis
+    fluidRow(
+      uiOutput("profCompProf")
+    ), # close second row of kpi
+    details(
+      label = "Source: ONS, Textkernel",
+      inputId = "profKPISource",
+      tags$ol(
+        tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
+        tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
+        tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
+      )
+    ), # close details box
     ### Vacancies over time line chart ----
     fluidRow(
       column(
@@ -1011,7 +1000,7 @@ panel_onsProf <- function() {
         h2(uiOutput("OnsProfTime")),
         plotlyOutput("profTime"),
         details(
-          label = "Source: ONS, TextKernel",
+          label = "Source: ONS, Textkernel",
           inputId = "profTimeSource",
           tags$ol(
             tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
@@ -1021,6 +1010,19 @@ panel_onsProf <- function() {
         )
       )
     ), # close time chart
+    h2("Adverts by profession: Oct 2022"),
+    dataTableOutput("profTable"),
+    br(),
+    details(
+      label = "Source: ONS, Textkernel",
+      inputId = "profTableSource",
+      tags$ol(
+        tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
+        tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
+        tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
+      )
+    ),
+    # detailed profession chart
     fluidRow(
       column(
         12,
@@ -1028,16 +1030,14 @@ panel_onsProf <- function() {
         fluidRow(
           column(
             12,
-            br(),
-            dataTableOutput("profDetail")
+            dataTableOutput("profDetail"),
+            br()
           )
         )
       ) # close detailed table col
     ), # close tables row
-    column(width = 12, br("")), # put in to push below the fixed height chart
-    column(width = 12, br("")),
     details(
-      label = "Source: ONS, TextKernel",
+      label = "Source: ONS, Textkernel",
       inputId = "profDetailSource",
       tags$ol(
         tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
