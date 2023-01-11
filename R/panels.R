@@ -945,6 +945,7 @@ panel_onsProf <- function() {
   tabPanel(
     "Online job adverts",
     h1(uiOutput("OnsProftitle")),
+    p("This data is experimental. ONS are continuing to develop these statistics and aim to move to SOC profession grouping and publish data regularly. The timescale for the next release has not yet been agreed."),
     # ### KPI boxes ----
     # fluidRow(
     #   valueBoxOutput("profKpi1"),
