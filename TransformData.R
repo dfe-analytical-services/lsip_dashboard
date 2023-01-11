@@ -1438,32 +1438,50 @@ D_OnsProf <- bind_rows(
   # format.OnsProf(I_OnsProfEng %>% mutate(`Detailed Profession Category`=NULL)),
   format.OnsProf(I_OnsProfDetailEng)
 ) %>%
-  filter(substr(time_period, 1, 3) == "Oct") %>%
   # change lep naming to match other datafiles
   mutate(geographic_level = case_when(
     geographic_level == "Local Enterprise Partnership" ~ "LEP",
     TRUE ~ geographic_level
   ))
-write.csv(D_OnsProf, file = "Data\\AppData\\D_OnsProf.csv", row.names = FALSE)
 
 # make suppressed data zero to use in dashboard
 C_OnsProf <- D_OnsProf %>%
   mutate(vacancies = gsub("\\[x\\]", "0", vacancies)) %>%
   mutate(vacancies = gsub("\\[X\\]", "0", vacancies)) %>%
   mutate(vacancies = as.numeric(vacancies))
-write.csv(C_OnsProf, file = "Data\\AppData\\C_OnsProf.csv", row.names = FALSE)
+
+# make summary profession over time data
+C_OnsProfTime <- C_OnsProf %>%
+  group_by(geographic_level, area, `Summary Profession Category`, time_period) %>%
+  summarise(vacancies = sum(vacancies)) %>%
+  mutate(time_period = as.Date(paste("01 ", time_period, sep = ""), "%d %b %y"))
+write.csv(C_OnsProfTime, file = "Data\\AppData\\C_OnsProfTime.csv", row.names = FALSE)
+# make download version
+D_OnsProfTime <- C_OnsProfTime %>%
+  mutate(vacancies = as.character(vacancies))
+D_OnsProfTime["vacancies"][D_OnsProfTime["vacancies"] == 0] <- "[x]"
+write.csv(D_OnsProfTime, file = "Data\\AppData\\D_OnsProfTime.csv", row.names = FALSE)
+
+# make detail in oct 22 file
+C_OnsProfDetail <- C_OnsProf %>%
+  filter(time_period == "Oct 22")
+write.csv(C_OnsProfDetail, file = "Data\\AppData\\C_OnsProfDetail.csv", row.names = FALSE)
+# make download version
+D_OnsProfDetail <- D_OnsProf %>%
+  filter(time_period == "Oct 22")
+write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.names = FALSE)
 
 # get percenatage of job adverts for each area
-VacEng <- C_OnsProf %>%
-  filter(area == "England", geographic_level == "Country") %>%
-  group_by(time_period) %>%
-  summarise(vacanciesEng = sum(vacancies))
-C_VacPcArea <- C_OnsProf %>%
-  group_by(geographic_level, area, time_period) %>%
-  summarise(vacancies = sum(vacancies)) %>%
-  left_join(VacEng, by = c("time_period" = "time_period")) %>%
-  mutate(jobpc = vacancies / vacanciesEng) %>%
-  filter(geographic_level != "Country", time_period != "Oct 17") %>%
-  select(-vacanciesEng) %>%
-  mutate(Year = as.numeric(substr(time_period, 5, 6)))
-write.csv(C_VacPcArea, file = "Data\\AppData\\C_VacPcArea.csv", row.names = FALSE)
+# VacEng <- C_OnsProf %>%
+#   filter(area == "England", geographic_level == "Country") %>%
+#   group_by(time_period) %>%
+#   summarise(vacanciesEng = sum(vacancies))
+# C_VacPcArea <- C_OnsProf %>%
+#   group_by(geographic_level, area, time_period) %>%
+#   summarise(vacancies = sum(vacancies)) %>%
+#   left_join(VacEng, by = c("time_period" = "time_period")) %>%
+#   mutate(jobpc = vacancies / vacanciesEng) %>%
+#   filter(geographic_level != "Country", time_period != "Oct 17") %>%
+#   select(-vacanciesEng) %>%
+#   mutate(Year = as.numeric(substr(time_period, 5, 6)))
+# write.csv(C_VacPcArea, file = "Data\\AppData\\C_VacPcArea.csv", row.names = FALSE)

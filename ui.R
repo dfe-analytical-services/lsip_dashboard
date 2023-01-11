@@ -306,17 +306,19 @@ padding-top:15px
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("20 Dec 2022 (0.3.1)"),
-              p("Addition of three new data sources:"),
-              tags$ul(
-                tags$li("Highest qualificaiton by age and gender"),
-                tags$li("KS4 and KS5 destinations"),
-                tags$li("Enterprise count by employment size and industry")
-              ),
+              p("12 Jan 2023 (0.4.1)"),
+              p("Included ONS-Textkernel job adverts by profession data in dashboard tab Job adverts."),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("20 Dec 2022 (0.3.1)"),
+                  p("Addition of three new data sources:"),
+                  tags$ul(
+                    tags$li("Highest qualificaiton by age and gender"),
+                    tags$li("KS4 and KS5 destinations"),
+                    tags$li("Enterprise count by employment size and industry")
+                  ),
                   p("29 Nov 2022 (0.2.3)"),
                   p("Applied various improvements and updates, including:"),
                   tags$ul(
@@ -437,8 +439,8 @@ padding-top:15px
           ),
           h3("ONS-Textkernel online job adverts"),
           p("These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.
-            The dashboard shows the average number of live adverts in October from 2017 to 2022. Other months are available from the ONS website (link on downloads page)."),
-          p("Advert volumes are shown split by profession. Textkernel have derived these professions from the job advert job title. These professions do not align directly to the Standard Occupation Classification (SOC2020)."),
+            The dashboard shows the monthly average number of live adverts from 2017 to 2022."),
+          p("Advert volumes are shown split by profession. Textkernel have derived these professions from the job advert job title. These professions do not align directly to the Standard Occupation Classification (SOC2020). ONS are working on using SOC coding in future releases of this data."),
           p("Counts have been rounded to the nearest 5 and so totals may not add due to this rounding. The scope of online job adverts does not fully capture the scope of UK economic activity because of differing advertising methods, for example, casual work may be advertised by word-of-mouth or in shop windows as opposed to online."),
           p("As this data is experimental, there are some quality issues with the data. The ONS dataset has a full rundown on its cover sheet (link on downloads page). In brief:"),
           tags$ul(

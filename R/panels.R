@@ -44,12 +44,12 @@ panel_overview <- function() {
           actionLink("link_to_tabpanel_employment2", "Find out more about employment")
         ),
         # fourth row - vacancies
-        h3("Job vacancy share (experimental)"),
+        h3("Job adverts (experimental)"),
         fluidRow(
           column(
             width = 4,
             div(
-              title = "Source: ONS (Textkernel). Oct 2022. Share of online job adverts in England.",
+              title = "Source: ONS (Textkernel). Oct 2022. Online job adverts.",
               uiOutput("jobad.units"),
             )
           ),
@@ -943,7 +943,7 @@ panel_enterprise <- function() {
 
 panel_onsProf <- function() {
   tabPanel(
-    "Vacancies",
+    "Job adverts",
     h1(uiOutput("OnsProftitle")),
     # ### KPI boxes ----
     # fluidRow(
@@ -966,7 +966,7 @@ panel_onsProf <- function() {
             column(
               12,
               selectizeInput("profChoice", "Choose profession",
-                choices = c("All", unique(C_OnsProf$`Summary Profession Category`))
+                choices = c("All", unique(C_OnsProfDetail$`Summary Profession Category`))
               )
             )
           )
@@ -1010,18 +1010,7 @@ panel_onsProf <- function() {
         )
       )
     ), # close time chart
-    h2("Adverts by profession: Oct 2022"),
-    dataTableOutput("profTable"),
-    br(),
-    details(
-      label = "Source: ONS, Textkernel",
-      inputId = "profTableSource",
-      tags$ol(
-        tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
-        tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
-        tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
-      )
-    ),
+
     # detailed profession chart
     fluidRow(
       column(
@@ -1039,6 +1028,18 @@ panel_onsProf <- function() {
     details(
       label = "Source: ONS, Textkernel",
       inputId = "profDetailSource",
+      tags$ol(
+        tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
+        tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
+        tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
+      )
+    ),
+    h2("Adverts by profession: Oct 2022"),
+    dataTableOutput("profTable"),
+    br(),
+    details(
+      label = "Source: ONS, Textkernel",
+      inputId = "profTableSource",
       tags$ol(
         tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
         tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
