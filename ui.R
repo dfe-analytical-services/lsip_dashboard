@@ -272,7 +272,7 @@ padding-top:15px
               p("This tab provides a summary of labour market and skills information for the selected geographic area. It includes a time series of data on employment, online job adverts, and further education and skills achievements."),
               h3(actionLink("link_to_tabpanel_employment", "Employment")),
               p("This tab provides information on employment for the selected geographic area including data on employment rates over time, the share of employment by occupation, and the share of employment by industry. There is an option to compare against another area in England at the same geographic level."),
-              h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
+              h3(actionLink("link_to_tabpanel_vacancies", "Online job adverts")),
               p("This tab provides experimental online job advert data, split by profession, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "),
               h3(actionLink("link_to_tabpanel_enterprise_level", "Enterprises")),
               p("This tab provides data on the count of new and no longer trading enterprises and count of enterprises by employment size and industry for the selected geographic area, and the option to compare against another area in England at the same geographic level."),

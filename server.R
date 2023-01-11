@@ -25,7 +25,7 @@ server <- function(input, output, session) {
   # Create link to vacancy data tab
   observeEvent(input$link_to_tabpanel_vacancies, {
     updateTabsetPanel(session, "navbar", "Local skills")
-    updateTabsetPanel(session, "datatabset", "Job adverts")
+    updateTabsetPanel(session, "datatabset", "Online job adverts")
   })
   # Create link to skills data tab
   observeEvent(input$link_to_tabpanel_FE, {
@@ -610,7 +610,7 @@ server <- function(input, output, session) {
 
     ggplot(VacLine, aes(x = as.Date(time_period), y = vacancies, group = area, text = paste0(
       "Period: ", format(as.Date(time_period), "%b %y"), "<br>",
-      "Job adverts: ", format(vacancies, big.mark = ","), "<br>"
+      "Online job adverts: ", format(vacancies, big.mark = ","), "<br>"
     ))) +
       geom_line(data = VacLine %>% filter(time_period <= as.Date("2021-10-01"))) +
       geom_ribbon(
@@ -664,7 +664,7 @@ server <- function(input, output, session) {
   # Add link to vacancy data
   observeEvent(input$link_to_tabpanel_vacancies2, {
     updateTabsetPanel(session, "navbar", "Dashboard")
-    updateTabsetPanel(session, "datatabset", "Job adverts")
+    updateTabsetPanel(session, "datatabset", "Online job adverts")
   })
 
   #### E&T achievements ----
@@ -3109,15 +3109,15 @@ server <- function(input, output, session) {
 
   # define page title
   output$OnsProftitle <- renderUI({
-    paste0("Job adverts in ", input$lep1)
+    paste0("Online job adverts in ", input$lep1)
   })
   # define time chart title
   output$OnsProfTime <- renderUI({
-    paste0(input$profChoice, " job adverts: Oct 2017 to Oct 2022")
+    paste0(input$profChoice, " online job adverts: Oct 2017 to Oct 2022")
   })
   # define detailed table title
   output$OnsProfDetail <- renderUI({
-    paste0(input$profChoice, " adverts by detailed profession: Oct 2022")
+    paste0(input$profChoice, " online job adverts by detailed profession: Oct 2022")
   })
 
   #### Job adverts ----
@@ -3139,7 +3139,7 @@ server <- function(input, output, session) {
           h3(paste0(
             format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
           )),
-          p(paste0("job adverts in Oct 2022 in ", input$lep1)),
+          p(paste0("online job adverts in Oct 2022 in ", input$lep1)),
         )
       )
     )
@@ -3168,7 +3168,7 @@ server <- function(input, output, session) {
           h3(paste0(
             format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
           )),
-          p(paste0("job adverts in Oct 2022 in ", input$lep1)),
+          p(paste0("online job adverts in Oct 2022 in ", input$lep1)),
         )
       )
     )
@@ -3201,7 +3201,7 @@ server <- function(input, output, session) {
           h3(paste0(
             round(vacancyTotalChange * 100), "%"
           )),
-          p(paste0("change in job adverts since Oct 2021 in ", input$lep1)),
+          p(paste0("change in online job adverts since Oct 2021 in ", input$lep1)),
         )
       )
     )
@@ -3244,7 +3244,7 @@ server <- function(input, output, session) {
           h3(paste0(
             round(vacancyTotalChange * 100), "%"
           )),
-          p(paste0("change in job adverts since Oct 2021 in ", input$lep1)),
+          p(paste0("change in online job adverts since Oct 2021 in ", input$lep1)),
         )
       )
     )
@@ -3275,7 +3275,7 @@ server <- function(input, output, session) {
           h3(paste0(
             round(vacancyTotalChange * 100), "%"
           )),
-          p("change in job adverts since Oct 2021 in England"),
+          p("change in online job adverts since Oct 2021 in England"),
         )
       )
     )
@@ -3316,7 +3316,7 @@ server <- function(input, output, session) {
           h3(paste0(
             round(vacancyTotalChange * 100), "%"
           )),
-          p("change in job adverts since Oct 2021 in England"),
+          p("change in online job adverts since Oct 2021 in England"),
         )
       )
     )
@@ -3375,7 +3375,7 @@ server <- function(input, output, session) {
           h3(paste0(
             format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
           )),
-          p(paste0("job adverts in Oct 2022 in ", input$lep2)),
+          p(paste0("online job adverts in Oct 2022 in ", input$lep2)),
         )
       )
     )
@@ -3405,7 +3405,7 @@ server <- function(input, output, session) {
           h3(paste0(
             format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
           )),
-          p(paste0("job adverts in Oct 2022 in ", input$lep2)),
+          p(paste0("online job adverts in Oct 2022 in ", input$lep2)),
         )
       )
     )
@@ -3438,7 +3438,7 @@ server <- function(input, output, session) {
           h3(paste0(
             round(vacancyTotalChange * 100), "%"
           )),
-          p(paste0("change in job adverts since Oct 2021 in ", input$lep2)),
+          p(paste0("change in online job adverts since Oct 2021 in ", input$lep2)),
         )
       )
     )
@@ -3481,7 +3481,7 @@ server <- function(input, output, session) {
           h3(paste0(
             round(vacancyTotalChange * 100), "%"
           )),
-          p(paste0("change in job adverts since Oct 2021 in ", input$lep2)),
+          p(paste0("change in online job adverts since Oct 2021 in ", input$lep2)),
         )
       )
     )
@@ -3524,7 +3524,7 @@ server <- function(input, output, session) {
         text = paste0(
           "Period: ", format(as.Date(time_period), "%b %y"), "<br>",
           "Area: ", Areas, "<br>",
-          "Job adverts: ", round(vacancies), "<br>"
+          "Online job adverts: ", round(vacancies), "<br>"
         )
       )
     ) +

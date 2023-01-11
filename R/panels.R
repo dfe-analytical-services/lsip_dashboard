@@ -44,7 +44,7 @@ panel_overview <- function() {
           actionLink("link_to_tabpanel_employment2", "Find out more about employment")
         ),
         # fourth row - vacancies
-        h3("Job adverts (experimental)"),
+        h3("Online job adverts (experimental)"),
         fluidRow(
           column(
             width = 4,
@@ -60,7 +60,7 @@ panel_overview <- function() {
         ),
         fluidRow(
           class = "rightAlignLinks",
-          actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies")
+          actionLink("link_to_tabpanel_vacancies2", "Find out more about online job adverts")
         ),
         # fifth row - destinations
         h3("Key Stage 5 positive destination rate"),
@@ -943,7 +943,7 @@ panel_enterprise <- function() {
 
 panel_onsProf <- function() {
   tabPanel(
-    "Job adverts",
+    "Online job adverts",
     h1(uiOutput("OnsProftitle")),
     # ### KPI boxes ----
     # fluidRow(
@@ -1035,7 +1035,6 @@ panel_onsProf <- function() {
       )
     ),
     h2("Adverts by profession: Oct 2022"),
-    dataTableOutput("profTable"),
     br(),
     details(
       label = "Source: ONS, Textkernel",
