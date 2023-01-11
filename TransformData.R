@@ -1450,25 +1450,25 @@ C_OnsProf <- D_OnsProf %>%
   mutate(vacancies = gsub("\\[X\\]", "0", vacancies)) %>%
   mutate(vacancies = as.numeric(vacancies))
 
-#make summary profession over time data
-C_OnsProfTime<-C_OnsProf%>%
-  group_by(geographic_level,area,`Summary Profession Category`,time_period)%>%
-  summarise(vacancies=sum(vacancies))%>%
-  mutate(time_period=as.Date(paste("01 ", time_period, sep = ""),"%d %b %y"))
+# make summary profession over time data
+C_OnsProfTime <- C_OnsProf %>%
+  group_by(geographic_level, area, `Summary Profession Category`, time_period) %>%
+  summarise(vacancies = sum(vacancies)) %>%
+  mutate(time_period = as.Date(paste("01 ", time_period, sep = ""), "%d %b %y"))
 write.csv(C_OnsProfTime, file = "Data\\AppData\\C_OnsProfTime.csv", row.names = FALSE)
-#make download version
-D_OnsProfTime<-C_OnsProfTime%>%
-  mutate(vacancies=as.character(vacancies))
-  D_OnsProfTime["vacancies"][D_OnsProfTime["vacancies"] == 0] <- "[x]"
-  write.csv(D_OnsProfTime, file = "Data\\AppData\\D_OnsProfTime.csv", row.names = FALSE)
+# make download version
+D_OnsProfTime <- C_OnsProfTime %>%
+  mutate(vacancies = as.character(vacancies))
+D_OnsProfTime["vacancies"][D_OnsProfTime["vacancies"] == 0] <- "[x]"
+write.csv(D_OnsProfTime, file = "Data\\AppData\\D_OnsProfTime.csv", row.names = FALSE)
 
-#make detail in oct 22 file
-C_OnsProfDetail<-C_OnsProf%>%
-  filter(time_period=="Oct 22")
+# make detail in oct 22 file
+C_OnsProfDetail <- C_OnsProf %>%
+  filter(time_period == "Oct 22")
 write.csv(C_OnsProfDetail, file = "Data\\AppData\\C_OnsProfDetail.csv", row.names = FALSE)
-#make download version
-D_OnsProfDetail<-D_OnsProf%>%
-  filter(time_period=="Oct 22")
+# make download version
+D_OnsProfDetail <- D_OnsProf %>%
+  filter(time_period == "Oct 22")
 write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.names = FALSE)
 
 # get percenatage of job adverts for each area
