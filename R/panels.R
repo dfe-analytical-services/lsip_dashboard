@@ -1035,6 +1035,7 @@ panel_onsProf <- function() {
       )
     ),
     h2("Adverts by profession: Oct 2022"),
+    dataTableOutput("profTable"),
     br(),
     details(
       label = "Source: ONS, Textkernel",
