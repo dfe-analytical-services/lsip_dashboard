@@ -307,7 +307,7 @@ padding-top:15px
               class = "panel-body",
               h2("Latest update"),
               p("12 Jan 2023 (0.4.1)"),
-              p("Included ONS-Textkernel job adverts by profession data in dashboard tab Job adverts."),
+              p("Included ONS-Textkernel online job adverts by profession data."),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
