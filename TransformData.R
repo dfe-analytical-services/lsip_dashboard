@@ -452,139 +452,139 @@ C_Achieve_ILR21 <- SSA_LEP_Achieve_ILR21 %>%
 # write data to folder
 write.csv(C_Achieve_ILR21, file = "Data\\AppData\\C_Achieve_ILR21.csv", row.names = FALSE)
 
-## Vacancy data
-# Reshape vacancy data to long, rename and reorder and reformat some columns
-format.Vacancy.ONS <- function(x) { # need to clean up colnames
-  reformat <- x %>%
-    gather(year, vacancy_unit, 3:8) %>%
-    rename(LA = "Local.authority.[note.1]", region = "Region.[note.2]") %>%
-    relocate(year, .before = LA) %>%
-    mutate(year = as.numeric(year))
-
-  # create LA file
-  addLA <- reformat %>%
-    select(-region) %>%
-    mutate(geographic_level = "LADU") %>% # rename as lsip
-    rename(area = LA) %>%
-    relocate(vacancy_unit, .after = geographic_level) %>%
-    mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-    mutate_at(c(4:4), as.numeric) %>% # Convert to numeric
-    group_by(year, area, geographic_level) %>% # sum for each LSIP
-    summarise(across(everything(), list(sum), na.rm = T)) %>%
-    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    mutate_at(c(4:4), as.character) # Convert to sring to bind
-
-  # create region file
-  addRegion <- reformat %>%
-    select(-LA) %>% # get rid of ladu
-    mutate(geographic_level = "GOR") %>% # rename as lsip
-    rename(area = region) %>%
-    relocate(vacancy_unit, .after = geographic_level) %>%
-    mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-    mutate_at(c(4:4), as.numeric) %>% # Convert to numeric
-    group_by(year, area, geographic_level) %>% # sum for each LSIP
-    summarise(across(everything(), list(sum), na.rm = T)) %>%
-    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    mutate_at(c(4:4), as.character) # Convert to sring to bind
-
-  # create lep file
-  addLEP <- reformat %>%
-    left_join(select(C_LADLEP2020, -LAD21CD), by = c("LA" = "LAD21NM")) %>%
-    filter(is.na(LEP) == FALSE) %>% # remove non-english
-    select(-LA, -region) %>% # get rid of ladu area and region
-    mutate(geographic_level = "LEP") %>% # rename as lsip
-    rename(area = LEP) %>%
-    relocate(vacancy_unit, .after = geographic_level) %>%
-    mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-    mutate_at(c(4:4), as.numeric) %>% # Convert to numeric
-    group_by(year, area, geographic_level) %>% # sum for each LSIP
-    summarise(across(everything(), list(sum), na.rm = T)) %>%
-    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    mutate_at(c(4:4), as.character) # Convert to sring to bind
-
-
-  # create lsip file
-  addLSIP <- reformat %>%
-    left_join(select(C_LADLSIP2020, -LAD21CD), by = c("LA" = "LAD21NM")) %>%
-    filter(is.na(LSIP) == FALSE) %>% # remove non-english
-    select(-LA, -region) %>% # get rid of ladu area and region
-    mutate(geographic_level = "LSIP") %>% # rename as lsip
-    rename(area = LSIP) %>%
-    relocate(vacancy_unit, .after = geographic_level) %>%
-    mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-    mutate_at(c(4:4), as.numeric) %>% # Convert to numeric
-    group_by(year, area, geographic_level) %>% # sum for each LSIP
-    summarise(across(everything(), list(sum), na.rm = T)) %>%
-    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    mutate_at(c(4:4), as.character) # Convert to sring to bind
-
-  addMCA <- reformat %>%
-    left_join(select(C_mcalookup, -LAD21CD, -CAUTH21CD), by = c("LA" = "LAD21NM")) %>%
-    select(-LA, -region) %>% # get rid of MCA area
-    mutate(geographic_level = "MCA") %>% # rename as MCA
-    rename(area = CAUTH21NM) %>%
-    relocate(vacancy_unit, .after = geographic_level) %>%
-    mutate_at(c(4:4), as.numeric) %>% # Convert to numeric
-    group_by(year, area, geographic_level) %>% # sum for each LSIP
-    summarise(across(everything(), list(sum), na.rm = T)) %>%
-    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    mutate_at(c(4:4), as.character) %>% # Convert to sring to bind
-    filter(!is.na(area))
-
-  # join together
-  bind_rows(addLA, addRegion, addLSIP, addLEP, addMCA)
-}
-
-# vacancy (for use in downloads)
-C_Vacancy_ONS1722 <- format.Vacancy.ONS(I_Vacancy_ONS1722)
-
-# write data to folder
-write.csv(C_Vacancy_ONS1722, file = "Data\\AppData\\C_Vacancy_ONS1722.csv", row.names = FALSE)
-
-# vacancy data to use in dashboard
-C_Vacancy_England <-
-  # work with original file to utilise the relationship between LA and region (to get to only England)
-  I_Vacancy_ONS1722 %>%
-  gather(year, vacancy_unit, 3:8) %>%
-  rename(LA = "Local.authority.[note.1]", region = "Region.[note.2]") %>%
-  relocate(year, .before = LA) %>%
-  mutate(year = as.numeric(year), vacancy_unit = as.numeric(vacancy_unit)) %>%
-  filter(!region %in% c("Wales", "Scotland", "Northern Ireland")) %>%
-  group_by(year) %>%
-  summarise(England = sum(vacancy_unit)) %>%
-  right_join(C_Vacancy_ONS1722 %>%
-    filter(
-      geographic_level != "LADU" # not needed for the dashboard currently
-      & geographic_level != "GOR"
-    ) %>%
-    mutate_at(c(4:4), as.numeric), by = "year") %>%
-  mutate(pc_total = vacancy_unit / England) %>%
-  mutate(Year = as.numeric(substr(year, 3, 4))) %>%
-  group_by(area, geographic_level, year, Year) %>%
-  summarise(jobpc = sum(pc_total), jobcnt = sum(vacancy_unit), .groups = "drop")
-
-# write data to folder
-write.csv(C_Vacancy_England, file = "Data\\AppData\\C_Vacancy_England.csv", row.names = FALSE)
-
-# create max and min vacancy pc by LEP for use in setting axis
-C_Vacancy_England_max_min <- C_Vacancy_England %>%
-  filter(year >= 2018) %>% # only showing past 5 years in chart
-  group_by(geographic_level, area) %>%
-  summarise(minVac = min(jobpc), maxVac = max(jobpc))
-
-# write data to folder
-write.csv(C_Vacancy_England_max_min, file = "Data\\AppData\\C_Vacancy_England_max_min.csv", row.names = FALSE)
-
-# create change vacancy pc by LEP
-C_Vacancy_England_change <- C_Vacancy_England %>%
-  filter(year == "2022" | year == "2021") %>%
-  mutate(Row = 1:n()) %>%
-  mutate(Percentage_Change = (jobcnt / lag(jobcnt)) - 1) %>%
-  filter(year == "2022") %>%
-  select(geographic_level, area, Percentage_Change)
-
-# write data to folder
-write.csv(C_Vacancy_England_change, file = "Data\\AppData\\C_Vacancy_England_change.csv", row.names = FALSE)
+# ## Vacancy data
+# # Reshape vacancy data to long, rename and reorder and reformat some columns
+# format.Vacancy.ONS <- function(x) { # need to clean up colnames
+#   reformat <- x %>%
+#     gather(year, vacancy_unit, 3:8) %>%
+#     rename(LA = "Local.authority.[note.1]", region = "Region.[note.2]") %>%
+#     relocate(year, .before = LA) %>%
+#     mutate(year = as.numeric(year))
+#
+#   # create LA file
+#   addLA <- reformat %>%
+#     select(-region) %>%
+#     mutate(geographic_level = "LADU") %>% # rename as lsip
+#     rename(area = LA) %>%
+#     relocate(vacancy_unit, .after = geographic_level) %>%
+#     mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+#     mutate_at(c(4:4), as.numeric) %>% # Convert to numeric
+#     group_by(year, area, geographic_level) %>% # sum for each LSIP
+#     summarise(across(everything(), list(sum), na.rm = T)) %>%
+#     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+#     mutate_at(c(4:4), as.character) # Convert to sring to bind
+#
+#   # create region file
+#   addRegion <- reformat %>%
+#     select(-LA) %>% # get rid of ladu
+#     mutate(geographic_level = "GOR") %>% # rename as lsip
+#     rename(area = region) %>%
+#     relocate(vacancy_unit, .after = geographic_level) %>%
+#     mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+#     mutate_at(c(4:4), as.numeric) %>% # Convert to numeric
+#     group_by(year, area, geographic_level) %>% # sum for each LSIP
+#     summarise(across(everything(), list(sum), na.rm = T)) %>%
+#     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+#     mutate_at(c(4:4), as.character) # Convert to sring to bind
+#
+#   # create lep file
+#   addLEP <- reformat %>%
+#     left_join(select(C_LADLEP2020, -LAD21CD), by = c("LA" = "LAD21NM")) %>%
+#     filter(is.na(LEP) == FALSE) %>% # remove non-english
+#     select(-LA, -region) %>% # get rid of ladu area and region
+#     mutate(geographic_level = "LEP") %>% # rename as lsip
+#     rename(area = LEP) %>%
+#     relocate(vacancy_unit, .after = geographic_level) %>%
+#     mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+#     mutate_at(c(4:4), as.numeric) %>% # Convert to numeric
+#     group_by(year, area, geographic_level) %>% # sum for each LSIP
+#     summarise(across(everything(), list(sum), na.rm = T)) %>%
+#     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+#     mutate_at(c(4:4), as.character) # Convert to sring to bind
+#
+#
+#   # create lsip file
+#   addLSIP <- reformat %>%
+#     left_join(select(C_LADLSIP2020, -LAD21CD), by = c("LA" = "LAD21NM")) %>%
+#     filter(is.na(LSIP) == FALSE) %>% # remove non-english
+#     select(-LA, -region) %>% # get rid of ladu area and region
+#     mutate(geographic_level = "LSIP") %>% # rename as lsip
+#     rename(area = LSIP) %>%
+#     relocate(vacancy_unit, .after = geographic_level) %>%
+#     mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
+#     mutate_at(c(4:4), as.numeric) %>% # Convert to numeric
+#     group_by(year, area, geographic_level) %>% # sum for each LSIP
+#     summarise(across(everything(), list(sum), na.rm = T)) %>%
+#     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+#     mutate_at(c(4:4), as.character) # Convert to sring to bind
+#
+#   addMCA <- reformat %>%
+#     left_join(select(C_mcalookup, -LAD21CD, -CAUTH21CD), by = c("LA" = "LAD21NM")) %>%
+#     select(-LA, -region) %>% # get rid of MCA area
+#     mutate(geographic_level = "MCA") %>% # rename as MCA
+#     rename(area = CAUTH21NM) %>%
+#     relocate(vacancy_unit, .after = geographic_level) %>%
+#     mutate_at(c(4:4), as.numeric) %>% # Convert to numeric
+#     group_by(year, area, geographic_level) %>% # sum for each LSIP
+#     summarise(across(everything(), list(sum), na.rm = T)) %>%
+#     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+#     mutate_at(c(4:4), as.character) %>% # Convert to sring to bind
+#     filter(!is.na(area))
+#
+#   # join together
+#   bind_rows(addLA, addRegion, addLSIP, addLEP, addMCA)
+# }
+#
+# # vacancy (for use in downloads)
+# C_Vacancy_ONS1722 <- format.Vacancy.ONS(I_Vacancy_ONS1722)
+#
+# # write data to folder
+# write.csv(C_Vacancy_ONS1722, file = "Data\\AppData\\C_Vacancy_ONS1722.csv", row.names = FALSE)
+#
+# # vacancy data to use in dashboard
+# C_Vacancy_England <-
+#   # work with original file to utilise the relationship between LA and region (to get to only England)
+#   I_Vacancy_ONS1722 %>%
+#   gather(year, vacancy_unit, 3:8) %>%
+#   rename(LA = "Local.authority.[note.1]", region = "Region.[note.2]") %>%
+#   relocate(year, .before = LA) %>%
+#   mutate(year = as.numeric(year), vacancy_unit = as.numeric(vacancy_unit)) %>%
+#   filter(!region %in% c("Wales", "Scotland", "Northern Ireland")) %>%
+#   group_by(year) %>%
+#   summarise(England = sum(vacancy_unit)) %>%
+#   right_join(C_Vacancy_ONS1722 %>%
+#     filter(
+#       geographic_level != "LADU" # not needed for the dashboard currently
+#       & geographic_level != "GOR"
+#     ) %>%
+#     mutate_at(c(4:4), as.numeric), by = "year") %>%
+#   mutate(pc_total = vacancy_unit / England) %>%
+#   mutate(Year = as.numeric(substr(year, 3, 4))) %>%
+#   group_by(area, geographic_level, year, Year) %>%
+#   summarise(jobpc = sum(pc_total), jobcnt = sum(vacancy_unit), .groups = "drop")
+#
+# # write data to folder
+# write.csv(C_Vacancy_England, file = "Data\\AppData\\C_Vacancy_England.csv", row.names = FALSE)
+#
+# # create max and min vacancy pc by LEP for use in setting axis
+# C_Vacancy_England_max_min <- C_Vacancy_England %>%
+#   filter(year >= 2018) %>% # only showing past 5 years in chart
+#   group_by(geographic_level, area) %>%
+#   summarise(minVac = min(jobpc), maxVac = max(jobpc))
+#
+# # write data to folder
+# write.csv(C_Vacancy_England_max_min, file = "Data\\AppData\\C_Vacancy_England_max_min.csv", row.names = FALSE)
+#
+# # create change vacancy pc by LEP
+# C_Vacancy_England_change <- C_Vacancy_England %>%
+#   filter(year == "2022" | year == "2021") %>%
+#   mutate(Row = 1:n()) %>%
+#   mutate(Percentage_Change = (jobcnt / lag(jobcnt)) - 1) %>%
+#   filter(year == "2022") %>%
+#   select(geographic_level, area, Percentage_Change)
+#
+# # write data to folder
+# write.csv(C_Vacancy_England_change, file = "Data\\AppData\\C_Vacancy_England_change.csv", row.names = FALSE)
 
 
 ## UK Business Count - Enterprise by employment size
@@ -810,7 +810,6 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     mutate(geographic_level = "LADU") %>% # rename as LADU
     relocate(geographic_level, .after = area) %>%
     mutate_at(c(4:9), as.character)
-
 
   addLEP <- addLADU %>%
     left_join(select(C_LADLEP2020, -LAD21NM), by = c("LAD21CD" = "LAD21CD")) %>%
@@ -1402,3 +1401,87 @@ write.csv(D_qual_APS1721, file = "Data\\AppData\\D_qual_APS1721.csv", row.names 
 # Tidy up data table
 names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
 write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
+
+## ONS by profession
+## Employment by occupation ----
+format.OnsProf <- function(x) {
+  # Tidy
+  reformat <- x %>%
+    row_to_names(row_number = 4) # set columns
+  geogLevel <- colnames(reformat)[1] # get geog level
+  reformat <- reformat %>%
+    rename(area = geogLevel) %>% # rename to match other datafiles
+    mutate(geographic_level = geogLevel) %>% # set to the current geographic type
+    # mutate(geographic_level=gsub('\\b(\\pL)\\pL{2,}|.','\\U\\1',geographic_level,perl = TRUE))%>%#get first letter of geog level
+    relocate(geographic_level, .before = area)
+
+  # Make long
+  reformat %>%
+    pivot_longer(!c("geographic_level", "area", "Summary Profession Category", "Detailed Profession Category"),
+      names_to = "time_period", values_to = "vacancies"
+    ) %>%
+    mutate(area = case_when(
+      area == "Cambridge and Peterborough" ~ "Cambridgeshire and Peterborough",
+      area == "Buckinghamshire " ~ "Buckinghamshire",
+      area == "North East*" ~ "North East",
+      area == "Buckinghamshire " ~ "Norfolk and Suffolk",
+      area == "Norfolk and Suffolk " ~ "Norfolk and Suffolk",
+      TRUE ~ area
+    ))
+}
+
+# format data
+D_OnsProf <- bind_rows(
+  format.OnsProf(I_OnsProfLep %>% select(-X2)), # remove code since it doesn't exist in other geogs
+  format.OnsProf(I_OnsProfLsip),
+  format.OnsProf(I_OnsProfMca),
+  # format.OnsProf(I_OnsProfEng %>% mutate(`Detailed Profession Category`=NULL)),
+  format.OnsProf(I_OnsProfDetailEng)
+) %>%
+  # change lep naming to match other datafiles
+  mutate(geographic_level = case_when(
+    geographic_level == "Local Enterprise Partnership" ~ "LEP",
+    TRUE ~ geographic_level
+  ))
+
+# make suppressed data zero to use in dashboard
+C_OnsProf <- D_OnsProf %>%
+  mutate(vacancies = gsub("\\[x\\]", "0", vacancies)) %>%
+  mutate(vacancies = gsub("\\[X\\]", "0", vacancies)) %>%
+  mutate(vacancies = as.numeric(vacancies))
+
+# make summary profession over time data
+C_OnsProfTime <- C_OnsProf %>%
+  group_by(geographic_level, area, `Summary Profession Category`, time_period) %>%
+  summarise(vacancies = sum(vacancies)) %>%
+  mutate(time_period = as.Date(paste("01 ", time_period, sep = ""), "%d %b %y"))
+write.csv(C_OnsProfTime, file = "Data\\AppData\\C_OnsProfTime.csv", row.names = FALSE)
+# make download version
+D_OnsProfTime <- C_OnsProfTime %>%
+  mutate(vacancies = as.character(vacancies))
+D_OnsProfTime["vacancies"][D_OnsProfTime["vacancies"] == 0] <- "[x]"
+write.csv(D_OnsProfTime, file = "Data\\AppData\\D_OnsProfTime.csv", row.names = FALSE)
+
+# make detail in oct 22 file
+C_OnsProfDetail <- C_OnsProf %>%
+  filter(time_period == "Oct 22")
+write.csv(C_OnsProfDetail, file = "Data\\AppData\\C_OnsProfDetail.csv", row.names = FALSE)
+# make download version
+D_OnsProfDetail <- D_OnsProf %>%
+  filter(time_period == "Oct 22")
+write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.names = FALSE)
+
+# get percenatage of job adverts for each area
+# VacEng <- C_OnsProf %>%
+#   filter(area == "England", geographic_level == "Country") %>%
+#   group_by(time_period) %>%
+#   summarise(vacanciesEng = sum(vacancies))
+# C_VacPcArea <- C_OnsProf %>%
+#   group_by(geographic_level, area, time_period) %>%
+#   summarise(vacancies = sum(vacancies)) %>%
+#   left_join(VacEng, by = c("time_period" = "time_period")) %>%
+#   mutate(jobpc = vacancies / vacanciesEng) %>%
+#   filter(geographic_level != "Country", time_period != "Oct 17") %>%
+#   select(-vacanciesEng) %>%
+#   mutate(Year = as.numeric(substr(time_period, 5, 6)))
+# write.csv(C_VacPcArea, file = "Data\\AppData\\C_VacPcArea.csv", row.names = FALSE)

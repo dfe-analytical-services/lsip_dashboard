@@ -44,12 +44,12 @@ panel_overview <- function() {
           actionLink("link_to_tabpanel_employment2", "Find out more about employment")
         ),
         # fourth row - vacancies
-        h3("Job vacancy share (experimental)"),
+        h3("Online job adverts (experimental)"),
         fluidRow(
           column(
             width = 4,
             div(
-              title = "Source: ONS (Adzuna). Jan 2022. Share of job vacancies in England.",
+              title = "Source: ONS (Textkernel). Oct 2022. Online job adverts.",
               uiOutput("jobad.units"),
             )
           ),
@@ -60,7 +60,7 @@ panel_overview <- function() {
         ),
         fluidRow(
           class = "rightAlignLinks",
-          actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies")
+          actionLink("link_to_tabpanel_vacancies2", "Find out more about online job adverts")
         ),
         # fifth row - destinations
         h3("Key Stage 5 positive destination rate"),
@@ -939,4 +939,145 @@ panel_enterprise <- function() {
     ), # end of row
     column(width = 12, br(""))
   )
+}
+
+panel_onsProf <- function() {
+  tabPanel(
+    "Online job adverts",
+    h1(uiOutput("OnsProftitle")),
+    p("This data is experimental. ONS are continuing to develop these statistics and aim to move to SOC profession grouping and publish data regularly. The timescale for the next release has not yet been agreed."),
+    # ### KPI boxes ----
+    # fluidRow(
+    #   valueBoxOutput("profKpi1"),
+    #   valueBoxOutput("profKpi2"),
+    #   valueBoxOutput("profKpi2Eng")
+    # ), # close first row of kpi
+    # comparison kpis
+    # fluidRow(
+    #   uiOutput("profComp")
+    # ), # close second row of kpi
+
+    ### Vacancies by profession data table ----
+    fluidRow(
+      column(
+        width = 12,
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              12,
+              selectizeInput("profChoice", "Choose profession",
+                choices = c("All", unique(C_OnsProfDetail$`Summary Profession Category`))
+              )
+            )
+          )
+        )
+      )
+    ),
+    br(),
+    ### KPI boxes ----
+    fluidRow(
+      valueBoxOutput("profKpiProf1"),
+      valueBoxOutput("profKpiProf2"),
+      valueBoxOutput("profKpi2ProfEng")
+    ), # close first row of kpi
+    # comparison kpis
+    fluidRow(
+      uiOutput("profCompProf")
+    ), # close second row of kpi
+    details(
+      label = "Source: ONS, Textkernel",
+      inputId = "profKPISource",
+      tags$ol(
+        tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
+        tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
+        tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
+      )
+    ), # close details box
+    ### Vacancies over time line chart ----
+    fluidRow(
+      column(
+        width = 12,
+        h2(uiOutput("OnsProfTime")),
+        plotlyOutput("profTime"),
+        details(
+          label = "Source: ONS, Textkernel",
+          inputId = "profTimeSource",
+          tags$ol(
+            tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
+            tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
+            tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
+          )
+        )
+      )
+    ), # close time chart
+
+    # detailed profession chart
+    fluidRow(
+      column(
+        12,
+        h2(uiOutput("OnsProfDetail")),
+        fluidRow(
+          column(
+            12,
+            dataTableOutput("profDetail"),
+            br()
+          )
+        )
+      ) # close detailed table col
+    ), # close tables row
+    details(
+      label = "Source: ONS, Textkernel",
+      inputId = "profDetailSource",
+      tags$ol(
+        tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
+        tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
+        tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
+      )
+    ),
+    h2("Adverts by profession: Oct 2022"),
+    dataTableOutput("profTable"),
+    br(),
+    details(
+      label = "Source: ONS, Textkernel",
+      inputId = "profTableSource",
+      tags$ol(
+        tags$li("These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs."),
+        tags$li("Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time."),
+        tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
+      )
+    ),
+
+
+    ### Downloads-------------
+    br(),
+    fluidRow(
+      column(
+        width = 3,
+        downloadButton(
+          outputId = "download_prof1",
+          label = "All data   ",
+          icon = shiny::icon("download"),
+          class = "downloadButton"
+        )
+      ),
+      column(
+        width = 9,
+        "Download employment data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
+      )
+    ), # end of row
+    fluidRow(
+      column(
+        width = 3,
+        downloadButton(
+          outputId = "download_prof2",
+          label = "Current geographic area",
+          icon = shiny::icon("download"),
+          class = "downloadButton"
+        )
+      ),
+      column(width = 9, p("Download employment data for the selected geographic area"))
+    ), # end of row
+    column(width = 12, br(""))
+  ) # close panel
 }

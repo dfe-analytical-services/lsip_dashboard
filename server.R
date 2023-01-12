@@ -1,5 +1,4 @@
 server <- function(input, output, session) {
-
   # Loading screen ---------------------------------------------------------------------------
   # Call initial loading screen
 
@@ -26,7 +25,7 @@ server <- function(input, output, session) {
   # Create link to vacancy data tab
   observeEvent(input$link_to_tabpanel_vacancies, {
     updateTabsetPanel(session, "navbar", "Local skills")
-    updateTabsetPanel(session, "datatabset", "Vacancies")
+    updateTabsetPanel(session, "datatabset", "Online job adverts")
   })
   # Create link to skills data tab
   observeEvent(input$link_to_tabpanel_FE, {
@@ -85,17 +84,17 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
+  # output$downloadData4 <- downloadHandler(
+  #   filename = function() {
+  #     "VacancyIndicators.xlsx"
+  #   },
+  #   content = function(file) {
+  #     write_xlsx(list(
+  #       "2.Vacancies" = C_Vacancy_ONS1722
+  #     ), path = file)
+  #   }
+  # )
   output$downloadData4 <- downloadHandler(
-    filename = function() {
-      "VacancyIndicators.xlsx"
-    },
-    content = function(file) {
-      write_xlsx(list(
-        "2.Vacancies" = C_Vacancy_ONS1722
-      ), path = file)
-    }
-  )
-  output$downloadData5 <- downloadHandler(
     filename = function() {
       "AchievementIndicators.xlsx"
     },
@@ -105,7 +104,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  output$downloadData6 <- downloadHandler(
+  output$downloadData5 <- downloadHandler(
     filename = function() {
       "AchievementBySSAIndicators.xlsx"
     },
@@ -116,7 +115,7 @@ server <- function(input, output, session) {
     }
   )
 
-  output$downloadData7 <- downloadHandler(
+  output$downloadData6 <- downloadHandler(
     filename = function() {
       "Qualificationbyageandgendernvq.xlsx"
     },
@@ -127,7 +126,7 @@ server <- function(input, output, session) {
     }
   )
 
-  output$downloadData8 <- downloadHandler(
+  output$downloadData7 <- downloadHandler(
     filename = function() {
       "EnterprisebyemploymentsizeIndicators.xlsx"
     },
@@ -138,7 +137,7 @@ server <- function(input, output, session) {
     }
   )
 
-  output$downloadData9 <- downloadHandler(
+  output$downloadData8 <- downloadHandler(
     filename = function() {
       "EntbyempsizeandindustryIndicators.xlsx"
     },
@@ -149,7 +148,7 @@ server <- function(input, output, session) {
     }
   )
 
-  output$downloadData10 <- downloadHandler(
+  output$downloadData9 <- downloadHandler(
     filename = function() {
       "Enterprisedemography.xlsx"
     },
@@ -160,7 +159,7 @@ server <- function(input, output, session) {
     }
   )
 
-  output$downloadData11 <- downloadHandler(
+  output$downloadData10 <- downloadHandler(
     filename = function() {
       "Keystage4destinationsIndicators.xlsx"
     },
@@ -171,13 +170,25 @@ server <- function(input, output, session) {
     }
   )
 
-  output$downloadData12 <- downloadHandler(
+  output$downloadData11 <- downloadHandler(
     filename = function() {
       "Keystage5destinationsIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
         "9a.Key Stage 5 destinations" = D_KS5destin_1721
+      ), path = file)
+    }
+  )
+
+  output$downloadData12 <- downloadHandler(
+    filename = function() {
+      "JobAdvertIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "2a.Adverts over time" = D_OnsProfTime,
+        "2b.Adverts by detailed profession" = D_OnsProfDetail
       ), path = file)
     }
   )
@@ -313,13 +324,15 @@ server <- function(input, output, session) {
     "1a.Emp by occupation" = D_EmpOcc_APS1721,
     "1b.Emp rate" = D_EmpRate_APS1822,
     "1c.Emp by industry" = D_EmpInd_APS1822,
-    "2.Vacancies" = C_Vacancy_ONS1722,
+    # "2.Vacancies" = C_Vacancy_ONS1722,
+    "2a.Adverts over time" = D_OnsProfTime,
+    "2b.Adverts by detailed profession" = D_OnsProfDetail,
     "3a.FE achievements SSA" = D_Achieve_ILR21,
     "3b.FE achievements" = D_Achieve_ILR1621,
     "4a.FE achievements" = D_qual_APS1721,
     "5a.Qual by age and gender" = D_qual_APS1721,
     "6a.Ent by emp size band" = D_empent_UBC1822,
-    "7a.Ent by emp size band and industry" = D_empentind_UBC1822,
+    "7a.Ent by emp size & industry" = D_empentind_UBC1822,
     "8a.Enterprise demography" = D_enterprise_demo1621,
     "9a.Key Stage 4 destinations" = D_KS4destin_1521,
     "10a.Key Stage 5 destinations" = D_KS5destin_1721
@@ -338,12 +351,18 @@ server <- function(input, output, session) {
     list(
       "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
       "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, area == input$lep1),
-      "2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1),
+      # "2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1),
+      "2a.Adverts over time" = filter(D_OnsProfTime, geographic_level == input$GeoType, area == input$lep1),
+      "2b.Adverts by detailed profession" = filter(D_OnsProfDetail, geographic_level == input$GeoType, area == input$lep1),
       "3a.FE achievements SSA" = filter(D_Achieve_ILR21, geographic_level == input$GeoType, area == input$lep1),
       "3b.FE achievements" = filter(D_Achieve_ILR1621, geographic_level == input$GeoType, area == input$lep1),
       "4a.Ent by emp size band" = filter(D_empent_UBC1822, geographic_level == input$GeoType, area == input$lep1),
       "5a.Key Stage 5 destinations" = filter(D_KS5destin_1721, geographic_level == input$GeoType, area == input$lep1),
-      "6a.Qual by age and gender" = filter(D_qual_APS1721, geographic_level == input$GeoType, area == input$lep1)
+      "6a.Qual by age and gender" = filter(D_qual_APS1721, geographic_level == input$GeoType, area == input$lep1),
+      "7a.Ent by emp size & industry" = filter(D_empentind_UBC1822, geographic_level == input$GeoType, area == input$lep1),
+      "8a.Enterprise demography" = filter(D_enterprise_demo1621, geographic_level == input$GeoType, area == input$lep1),
+      "9a.Key Stage 4 destinations" = filter(D_KS4destin_1521, geographic_level == input$GeoType, area == input$lep1),
+      "10a.Key Stage 5 destinations" = filter(D_KS5destin_1721, geographic_level == input$GeoType, area == input$lep1)
     )
   })
   output$download_btn0b <- downloadHandler(
@@ -551,31 +570,33 @@ server <- function(input, output, session) {
   #### ONS job advert units  ----
   # get vac data for current area chosen
   VacArea <- eventReactive(input$lep1, {
-    C_Vacancy_England %>%
-      filter(area == input$lep1, geographic_level == input$GeoType)
+    C_OnsProfTime %>%
+      filter(area == input$lep1, geographic_level == input$GeoType) %>%
+      group_by(area, time_period) %>%
+      summarise(vacancies = sum(vacancies))
   })
-  # get 2022 values
-  Vac2022 <- reactive({
+  # get latest values
+  VacLatest <- reactive({
     VacArea() %>%
-      filter(year == "2022")
+      filter(time_period == "2022-10-01")
   })
   # get 2021 values
-  Vac2021 <- reactive({
+  VacLast <- reactive({
     VacArea() %>%
-      filter(year == "2021")
+      filter(time_period == "2021-10-01")
   })
 
   # Vacancy kpi
   output$jobad.units <- renderUI({
     ### ONS job advert units change
-    VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
+    VacChange <- VacLatest()$vacancies - VacLast()$vacancies
 
     # print with formatting
-    h4(span("Jan 2022", style = "font-size: 16px;font-weight:normal;"), br(),
-      paste0(format(100 * Vac2022()$jobpc, digit = 2), "%"), br(),
+    h4(span("Oct 2022", style = "font-size: 16px;font-weight:normal;"), br(),
+      format(VacLatest()$vacancies, big.mark = ","), br(),
       span(
-        paste0(sprintf("%+.1f", 100 * VacPcChange), "ppts"),
-        style = paste0("font-size: 16px;color:", cond_color(VacPcChange > 0)) # colour formating
+        format_pm(VacChange),
+        style = paste0("font-size: 16px;color:", cond_color(VacChange > 0)) # colour formating
         , .noWS = c("before", "after") # remove whitespace
       ), br(),
       style = "font-size: 21px"
@@ -584,24 +605,22 @@ server <- function(input, output, session) {
 
   # Vacancy chart
   VacLineChart <- eventReactive(input$lep1, {
-    VacLine <- VacArea() %>% filter(year >= 2018)
-    VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
+    VacLine <- VacArea()
+    VacPcChange <- VacLatest()$vacancies - VacLast()$vacancies
 
-    VacMinMax <- C_Vacancy_England_max_min %>% filter(area == input$lep1, geographic_level == input$GeoType)
-
-    ggplot(VacLine, aes(x = Year, y = jobpc, group = area, text = paste0(
-      "Period: Jan ", year, "<br>",
-      "England vacancy share: ", format(100 * jobpc, digit = 2), "%<br>"
+    ggplot(VacLine, aes(x = as.Date(time_period), y = vacancies, group = area, text = paste0(
+      "Period: ", format(as.Date(time_period), "%b %y"), "<br>",
+      "Online job adverts: ", format(vacancies, big.mark = ","), "<br>"
     ))) +
-      geom_line(data = VacLine %>% filter(Year <= 21)) +
+      geom_line(data = VacLine %>% filter(time_period <= as.Date("2021-10-01"))) +
       geom_ribbon(
-        data = VacLine %>% filter(Year >= 21),
-        aes(ymin = min(jobpc), ymax = jobpc),
+        data = VacLine %>% filter(time_period >= as.Date("2021-10-01")),
+        aes(ymin = min(vacancies), ymax = vacancies),
         fill = ifelse(VacPcChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = VacLine %>% filter(Year >= 21),
+        data = VacLine %>% filter(time_period >= as.Date("2021-10-01")),
         color = ifelse(VacPcChange > 0, "#00703c", "#d4351c")
       ) +
       theme_classic() +
@@ -613,8 +632,12 @@ server <- function(input, output, session) {
         plot.background = element_rect(fill = "#f3f2f1")
       ) +
       scale_y_continuous(
-        labels = scales::percent_format(accuracy = 0.1),
-        breaks = c(VacMinMax$minVac, VacMinMax$maxVac)
+        labels = label_number_si(accuracy = 1),
+        breaks = c(min(VacLine$vacancies), max(VacLine$vacancies))
+      ) +
+      scale_x_date(
+        name = "My date axis title", date_breaks = "1 years",
+        date_labels = "%y"
       )
   })
   # set margins
@@ -641,7 +664,7 @@ server <- function(input, output, session) {
   # Add link to vacancy data
   observeEvent(input$link_to_tabpanel_vacancies2, {
     updateTabsetPanel(session, "navbar", "Dashboard")
-    updateTabsetPanel(session, "datatabset", "Vacancies")
+    updateTabsetPanel(session, "datatabset", "Online job adverts")
   })
 
   #### E&T achievements ----
@@ -1319,14 +1342,15 @@ server <- function(input, output, session) {
         class = "small-box bg-geo2",
         div(
           class = "inner",
-          h3(format((C_EmpRate_APS1822 %>%
-            filter(
-              geographic_level == input$GeoType,
-              area == input$lep2,
-              year == "2022"
-            )
-          )$Employment,
-          scientific = FALSE, big.mark = ","
+          h3(format(
+            (C_EmpRate_APS1822 %>%
+              filter(
+                geographic_level == input$GeoType,
+                area == input$lep2,
+                year == "2022"
+              )
+            )$Employment,
+            scientific = FALSE, big.mark = ","
           )),
           p(paste0("in employment Jul-Jun 2022 in ", input$lep2)),
         )
@@ -1485,194 +1509,197 @@ server <- function(input, output, session) {
   })
 
 
-  # VACANCIES ----
-  # define page title
-  output$page3title <- renderUI({
-    paste0(
-      "Job vacancies in ", input$lep1,
-      if ("lep2" %in% names(input)) {
-        if (input$lep2 == "\nNone") {
-        } else {
-          paste0(" compared to ", input$lep2)
-        }
-      }
-    )
-  })
+  # # VACANCIES ----
+  # # define page title
+  # output$page3title <- renderUI({
+  #   paste0(
+  #     "Job vacancies in ", input$lep1,
+  #     if ("lep2" %in% names(input)) {
+  #       if (input$lep2 == "\nNone") {
+  #       } else {
+  #         paste0(" compared to ", input$lep2)
+  #       }
+  #     }
+  #   )
+  # })
 
-  ### Downloads----
-  # download skills indicators
-  list_of_datasets2 <- list("2.Vacancies" = C_Vacancy_ONS1722)
-  output$download_btn2a <- downloadHandler(
-    filename = function() {
-      "VacancyIndicators.xlsx"
-    },
-    content = function(file) {
-      write_xlsx(list_of_datasets2, path = file)
-    }
-  )
-
-  # Download current LEP indicators
-  filtered_data2 <- reactive({
-    list("2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, (area == input$lep1 |
-      area == if ("lep2" %in% names(input)) {
-        input$lep2
-      } else {
-        "\nNone"
-      })))
-  })
-  output$download_btn2b <- downloadHandler(
-    filename = function() {
-      "CurrentVacancyIndicators.xlsx"
-    },
-    content = function(file) {
-      write_xlsx(filtered_data2(), path = file)
-    }
-  )
+  # ### Downloads----
+  # # download skills indicators
+  # list_of_datasets2 <- list("2.Vacancies" = C_Vacancy_ONS1722)
+  # output$download_btn2a <- downloadHandler(
+  #   filename = function() {
+  #     "VacancyIndicators.xlsx"
+  #   },
+  #   content = function(file) {
+  #     write_xlsx(list_of_datasets2, path = file)
+  #   }
+  # )
+  #
+  # # Download current LEP indicators
+  # filtered_data2 <- reactive({
+  #   list("2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, (area == input$lep1 |
+  #     area == if ("lep2" %in% names(input)) {
+  #       input$lep2
+  #     } else {
+  #       "\nNone"
+  #     })))
+  # })
+  # output$download_btn2b <- downloadHandler(
+  #   filename = function() {
+  #     "CurrentVacancyIndicators.xlsx"
+  #   },
+  #   content = function(file) {
+  #     write_xlsx(filtered_data2(), path = file)
+  #   }
+  # )
 
   ## KPIs ----
   ### ONS job advert unit percent of total area 1
-  output$jobad.pc <- renderValueBox({
-    div(
-      class = "col-sm-4",
-      div(
-        class = "small-box bg-geo1",
-        div(
-          class = "inner",
-          h3(paste0(
-            format(100. * Vac2022()$jobpc, digits = 2),
-            "%"
-          )),
-          p(paste0("of online job adverts in England (Jan 2022) were in ", input$lep1)),
-        )
-      )
-    )
-  })
-
-  ### ONS job advert unit percent of total LEP 1
-  output$jobad.pc.2 <- renderValueBox({
-    div(
-      class = "col-sm-4",
-      div(
-        class = "small-box bg-geo2",
-        div(
-          class = "inner",
-          h3(paste0(
-            format(100. *
-              (C_Vacancy_England %>%
-                filter(area == input$lep2, geographic_level == input$GeoType, year == "2022"))$jobpc,
-            digits = 2
-            ),
-            "%"
-          )),
-          p(paste0("of online job adverts in England (Jan 2022) were in ", input$lep2)),
-        )
-      )
-    )
-  })
-
-  ### ONS job advert unit change  LEP 1
-  output$jobad.ch <- renderValueBox({
-    div(
-      class = "col-sm-4",
-      div(
-        class = "small-box bg-geo1",
-        div(
-          class = "inner",
-          h3(paste0(
-            format(100. * (C_Vacancy_England_change %>%
-              filter(area == input$lep1, geographic_level == input$GeoType))$Percentage_Change,
-            digits = 2
-            ),
-            "%"
-          )),
-          p(paste0("change in online job adverts in ", input$lep1, " from Jan
-                to Jan 2022")),
-        )
-      )
-    )
-  })
-
-  ### ONS job advert unit change  LEP 2
-  output$jobad.ch.2 <- renderValueBox({
-    div(
-      class = "col-sm-4",
-      div(
-        class = "small-box bg-geo2",
-        div(
-          class = "inner",
-          h3(paste0(
-            format(100. * (C_Vacancy_England_change %>%
-              filter(area == input$lep2, geographic_level == input$GeoType))$Percentage_Change,
-            digits = 2
-            ),
-            "%"
-          )),
-          p(paste0("change in online job adverts in ", input$lep2, " from Jan 2021 to Jan 2022")),
-        )
-      )
-    )
-  })
-
-  # turn off comparison boxes if none is selected
-  output$vac_comp <- renderUI({
-    if ("lep2" %in% names(input)) {
-      if (input$lep2 == "\nNone") {
-        tagList(
-          br(),
-          p("")
-        )
-      } else {
-        tagList(
-          valueBoxOutput("jobad.pc.2"),
-          valueBoxOutput("jobad.ch.2")
-        )
-      }
-    } else {
-      p("")
-    }
-  })
-
-  ## Online job vacancy units over time line chart ----
-  jobad.time <- eventReactive(c(input$lep1, input$lep2), {
-    JobTime <- C_Vacancy_England %>%
-      filter(geographic_level == input$GeoType & (area == input$lep1 |
-        area == if ("lep2" %in% names(input)) {
-          input$lep2
-        } else {
-          "\nNone"
-        }))
-
-    # add an extra column so the colours work in ggplot when sorting alphabetically
-    JobTime$Areas <- factor(JobTime$area,
-      levels = c(input$lep1, input$lep2)
-    )
-
-    ggplot(
-      JobTime,
-      aes(
-        x = year, y = jobcnt, colour = Areas, group = Areas,
-        text = paste0(
-          "Year: ", year, "<br>",
-          "Area: ", Areas, "<br>",
-          "Job vacancy units: ", round(jobcnt, 0), "<br>"
-        )
-      )
-    ) +
-      geom_line() +
-      theme_minimal() +
-      theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
-      labs(shape = "", colour = "") +
-      scale_color_manual(values = chartColors2)
-  })
-
-  output$jobad.time <- renderPlotly({
-    ggplotly(jobad.time(), tooltip = c("text")) %>%
-      layout(
-        legend = list(orientation = "h", x = 0, y = -0.1),
-        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
-      ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
-  })
+  # output$jobad.pc <- renderValueBox({
+  #   div(
+  #     class = "col-sm-4",
+  #     div(
+  #       class = "small-box bg-geo1",
+  #       div(
+  #         class = "inner",
+  #         h3(paste0(
+  #           format(100. * Vac2022()$jobpc, digits = 2),
+  #           "%"
+  #         )),
+  #         p(paste0("of online job adverts in England (Jan 2022) were in ", input$lep1)),
+  #       )
+  #     )
+  #   )
+  # })
+  #
+  # ### ONS job advert unit percent of total LEP 1
+  # output$jobad.pc.2 <- renderValueBox({
+  #   div(
+  #     class = "col-sm-4",
+  #     div(
+  #       class = "small-box bg-geo2",
+  #       div(
+  #         class = "inner",
+  #         h3(paste0(
+  #           format(
+  #             100. *
+  #               (C_Vacancy_England %>%
+  #                 filter(area == input$lep2, geographic_level == input$GeoType, year == "2022"))$jobpc,
+  #             digits = 2
+  #           ),
+  #           "%"
+  #         )),
+  #         p(paste0("of online job adverts in England (Jan 2022) were in ", input$lep2)),
+  #       )
+  #     )
+  #   )
+  # })
+  #
+  # ### ONS job advert unit change  LEP 1
+  # output$jobad.ch <- renderValueBox({
+  #   div(
+  #     class = "col-sm-4",
+  #     div(
+  #       class = "small-box bg-geo1",
+  #       div(
+  #         class = "inner",
+  #         h3(paste0(
+  #           format(
+  #             100. * (C_Vacancy_England_change %>%
+  #               filter(area == input$lep1, geographic_level == input$GeoType))$Percentage_Change,
+  #             digits = 2
+  #           ),
+  #           "%"
+  #         )),
+  #         p(paste0("change in online job adverts in ", input$lep1, " from Jan
+  #               to Jan 2022")),
+  #       )
+  #     )
+  #   )
+  # })
+  #
+  # ### ONS job advert unit change  LEP 2
+  # output$jobad.ch.2 <- renderValueBox({
+  #   div(
+  #     class = "col-sm-4",
+  #     div(
+  #       class = "small-box bg-geo2",
+  #       div(
+  #         class = "inner",
+  #         h3(paste0(
+  #           format(
+  #             100. * (C_Vacancy_England_change %>%
+  #               filter(area == input$lep2, geographic_level == input$GeoType))$Percentage_Change,
+  #             digits = 2
+  #           ),
+  #           "%"
+  #         )),
+  #         p(paste0("change in online job adverts in ", input$lep2, " from Jan 2021 to Jan 2022")),
+  #       )
+  #     )
+  #   )
+  # })
+  #
+  # # turn off comparison boxes if none is selected
+  # output$vac_comp <- renderUI({
+  #   if ("lep2" %in% names(input)) {
+  #     if (input$lep2 == "\nNone") {
+  #       tagList(
+  #         br(),
+  #         p("")
+  #       )
+  #     } else {
+  #       tagList(
+  #         valueBoxOutput("jobad.pc.2"),
+  #         valueBoxOutput("jobad.ch.2")
+  #       )
+  #     }
+  #   } else {
+  #     p("")
+  #   }
+  # })
+  #
+  # ## Online job vacancy units over time line chart ----
+  # jobad.time <- eventReactive(c(input$lep1, input$lep2), {
+  #   JobTime <- C_Vacancy_England %>%
+  #     filter(geographic_level == input$GeoType & (area == input$lep1 |
+  #       area == if ("lep2" %in% names(input)) {
+  #         input$lep2
+  #       } else {
+  #         "\nNone"
+  #       }))
+  #
+  #   # add an extra column so the colours work in ggplot when sorting alphabetically
+  #   JobTime$Areas <- factor(JobTime$area,
+  #     levels = c(input$lep1, input$lep2)
+  #   )
+  #
+  #   ggplot(
+  #     JobTime,
+  #     aes(
+  #       x = year, y = jobcnt, colour = Areas, group = Areas,
+  #       text = paste0(
+  #         "Year: ", year, "<br>",
+  #         "Area: ", Areas, "<br>",
+  #         "Job vacancy units: ", round(jobcnt, 0), "<br>"
+  #       )
+  #     )
+  #   ) +
+  #     geom_line() +
+  #     theme_minimal() +
+  #     theme(legend.position = "bottom", axis.title.x = element_blank(), axis.title.y = element_blank()) +
+  #     labs(shape = "", colour = "") +
+  #     scale_color_manual(values = chartColors2)
+  # })
+  #
+  # output$jobad.time <- renderPlotly({
+  #   ggplotly(jobad.time(), tooltip = c("text")) %>%
+  #     layout(
+  #       legend = list(orientation = "h", x = 0, y = -0.1),
+  #       xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+  #     ) %>% # disable zooming because it's awful on mobile
+  #     config(displayModeBar = FALSE)
+  # })
 
 
   # Skills ----
@@ -3076,6 +3103,608 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(filtered_data6(), path = file)
+    }
+  )
+
+
+  # define page title
+  output$OnsProftitle <- renderUI({
+    paste0("Online job adverts in ", input$lep1)
+  })
+  # define time chart title
+  output$OnsProfTime <- renderUI({
+    paste0(input$profChoice, " online job adverts: Oct 2017 to Oct 2022")
+  })
+  # define detailed table title
+  output$OnsProfDetail <- renderUI({
+    paste0(input$profChoice, " online job adverts by detailed profession: Oct 2022")
+  })
+
+  #### Job adverts ----
+  # job advert count
+  output$profKpi1 <- renderValueBox({
+    # call 2022 and 2021 values for chosen area
+    vacancyTotalLatest <- C_OnsProfTime %>%
+      filter(
+        time_period == "2022-10-01",
+        geographic_level == input$GeoType,
+        area == input$lep1
+      )
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
+          h3(paste0(
+            format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
+          )),
+          p(paste0("online job adverts in Oct 2022 in ", input$lep1)),
+        )
+      )
+    )
+  })
+
+  # job adverts for profession
+  output$profKpiProf1 <- renderValueBox({
+    # call 2022 and 2021 values for chosen area
+    vacancyTotalLatest <- C_OnsProfTime %>%
+      filter(
+        time_period == "2022-10-01",
+        geographic_level == input$GeoType,
+        area == input$lep1,
+        if (input$profChoice == "All") {
+          TRUE
+        } else {
+          `Summary Profession Category` == input$profChoice
+        }
+      )
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
+          h3(paste0(
+            format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
+          )),
+          p(paste0("online job adverts in Oct 2022 in ", input$lep1)),
+        )
+      )
+    )
+  })
+
+  # Job advert change ----
+  output$profKpi2 <- renderValueBox({
+    # chnage
+    vacancyTotalLatest <- C_OnsProfTime %>%
+      filter(
+        time_period == "2022-10-01",
+        geographic_level == input$GeoType,
+        area == input$lep1
+      )
+    vacancyTotalLast <-
+      C_OnsProfTime %>%
+      filter(
+        time_period == "2021-10-01",
+        geographic_level == input$GeoType,
+        area == input$lep1
+      )
+
+    vacancyTotalChange <- (sum(vacancyTotalLatest$vacancies) - sum(vacancyTotalLast$vacancies)) / sum(vacancyTotalLast$vacancies)
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
+          h3(paste0(
+            round(vacancyTotalChange * 100), "%"
+          )),
+          p(paste0("change in online job adverts since Oct 2021 in ", input$lep1)),
+        )
+      )
+    )
+  })
+
+  # Job advert change ----
+  output$profKpiProf2 <- renderValueBox({
+    # chnage
+    vacancyTotalLatest <- C_OnsProfTime %>%
+      filter(
+        time_period == "2022-10-01",
+        geographic_level == input$GeoType,
+        area == input$lep1,
+        if (input$profChoice == "All") {
+          TRUE
+        } else {
+          `Summary Profession Category` == input$profChoice
+        }
+      )
+    vacancyTotalLast <-
+      C_OnsProfTime %>%
+      filter(
+        time_period == "2021-10-01",
+        geographic_level == input$GeoType,
+        area == input$lep1,
+        if (input$profChoice == "All") {
+          TRUE
+        } else {
+          `Summary Profession Category` == input$profChoice
+        }
+      )
+
+    vacancyTotalChange <- (sum(vacancyTotalLatest$vacancies) - sum(vacancyTotalLast$vacancies)) / sum(vacancyTotalLast$vacancies)
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo1",
+        div(
+          class = "inner",
+          h3(paste0(
+            round(vacancyTotalChange * 100), "%"
+          )),
+          p(paste0("change in online job adverts since Oct 2021 in ", input$lep1)),
+        )
+      )
+    )
+  })
+
+  # Job advert change England
+  output$profKpi2Eng <- renderValueBox({
+    # chnage
+    vacancyTotalLatest <- C_OnsProfTime %>%
+      filter(
+        time_period == "2022-10-01",
+        geographic_level == "Country"
+      )
+    vacancyTotalLast <-
+      C_OnsProfTime %>%
+      filter(
+        time_period == "2021-10-01",
+        geographic_level == "Country"
+      )
+
+    vacancyTotalChange <- (sum(vacancyTotalLatest$vacancies) - sum(vacancyTotalLast$vacancies)) / sum(vacancyTotalLast$vacancies)
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo3",
+        div(
+          class = "inner",
+          h3(paste0(
+            round(vacancyTotalChange * 100), "%"
+          )),
+          p("change in online job adverts since Oct 2021 in England"),
+        )
+      )
+    )
+  })
+
+  # Job advert change England for profession
+  output$profKpi2ProfEng <- renderValueBox({
+    # chnage
+    vacancyTotalLatest <- C_OnsProfTime %>%
+      filter(
+        time_period == "2022-10-01",
+        geographic_level == "Country",
+        if (input$profChoice == "All") {
+          TRUE
+        } else {
+          `Summary Profession Category` == input$profChoice
+        }
+      )
+    vacancyTotalLast <-
+      C_OnsProfTime %>%
+      filter(
+        time_period == "2021-10-01",
+        geographic_level == "Country",
+        if (input$profChoice == "All") {
+          TRUE
+        } else {
+          `Summary Profession Category` == input$profChoice
+        }
+      )
+
+    vacancyTotalChange <- (sum(vacancyTotalLatest$vacancies) - sum(vacancyTotalLast$vacancies)) / sum(vacancyTotalLast$vacancies)
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo3",
+        div(
+          class = "inner",
+          h3(paste0(
+            round(vacancyTotalChange * 100), "%"
+          )),
+          p("change in online job adverts since Oct 2021 in England"),
+        )
+      )
+    )
+  })
+
+  # compariosn boxes
+  output$profComp <- renderUI({
+    if ("lep2" %in% names(input)) {
+      if (input$lep2 == "\nNone") {
+        tagList(
+          br(),
+          p("")
+        )
+      } else {
+        tagList(
+          valueBoxOutput("profKpi1comp"),
+          valueBoxOutput("profKpi2comp")
+        )
+      }
+    } else {
+    }
+  })
+  # for profession
+  output$profCompProf <- renderUI({
+    if ("lep2" %in% names(input)) {
+      if (input$lep2 == "\nNone") {
+        tagList(
+          br(),
+          p("")
+        )
+      } else {
+        tagList(
+          valueBoxOutput("profKpi1compProf"),
+          valueBoxOutput("profKpi2compProf")
+        )
+      }
+    } else {
+    }
+  })
+
+  # job advert count
+  output$profKpi1comp <- renderValueBox({
+    # call 2022 and 2021 values for chosen area
+    vacancyTotalLatest <- C_OnsProfTime %>%
+      filter(
+        time_period == "2022-10-01",
+        geographic_level == input$GeoType,
+        area == input$lep2
+      )
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(paste0(
+            format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
+          )),
+          p(paste0("online job adverts in Oct 2022 in ", input$lep2)),
+        )
+      )
+    )
+  })
+
+
+  # job advert count for profeesion
+  output$profKpi1compProf <- renderValueBox({
+    # call 2022 and 2021 values for chosen area
+    vacancyTotalLatest <- C_OnsProfTime %>%
+      filter(
+        time_period == "2022-10-01",
+        geographic_level == input$GeoType,
+        area == input$lep2,
+        if (input$profChoice == "All") {
+          TRUE
+        } else {
+          `Summary Profession Category` == input$profChoice
+        }
+      )
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(paste0(
+            format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
+          )),
+          p(paste0("online job adverts in Oct 2022 in ", input$lep2)),
+        )
+      )
+    )
+  })
+
+  # Job advert change ----
+  output$profKpi2comp <- renderValueBox({
+    # chnage
+    vacancyTotalLatest <- C_OnsProfTime %>%
+      filter(
+        time_period == "2022-10-01",
+        geographic_level == input$GeoType,
+        area == input$lep2
+      )
+    vacancyTotalLast <-
+      C_OnsProfTime %>%
+      filter(
+        time_period == "2021-10-01",
+        geographic_level == input$GeoType,
+        area == input$lep2
+      )
+
+    vacancyTotalChange <- (sum(vacancyTotalLatest$vacancies) - sum(vacancyTotalLast$vacancies)) / sum(vacancyTotalLast$vacancies)
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(paste0(
+            round(vacancyTotalChange * 100), "%"
+          )),
+          p(paste0("change in online job adverts since Oct 2021 in ", input$lep2)),
+        )
+      )
+    )
+  })
+
+  # Job advert change for profession ----
+  output$profKpi2compProf <- renderValueBox({
+    # chnage
+    vacancyTotalLatest <- C_OnsProfTime %>%
+      filter(
+        time_period == "2022-10-01",
+        geographic_level == input$GeoType,
+        area == input$lep2,
+        if (input$profChoice == "All") {
+          TRUE
+        } else {
+          `Summary Profession Category` == input$profChoice
+        }
+      )
+    vacancyTotalLast <-
+      C_OnsProfTime %>%
+      filter(
+        time_period == "2021-10-01",
+        geographic_level == input$GeoType,
+        area == input$lep2,
+        if (input$profChoice == "All") {
+          TRUE
+        } else {
+          `Summary Profession Category` == input$profChoice
+        }
+      )
+
+    vacancyTotalChange <- (sum(vacancyTotalLatest$vacancies) - sum(vacancyTotalLast$vacancies)) / sum(vacancyTotalLast$vacancies)
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo2",
+        div(
+          class = "inner",
+          h3(paste0(
+            round(vacancyTotalChange * 100), "%"
+          )),
+          p(paste0("change in online job adverts since Oct 2021 in ", input$lep2)),
+        )
+      )
+    )
+  })
+
+  # adverts over time
+  profTime <- eventReactive(c(input$lep1, input$lep2, input$profChoice), {
+    profTimeData <-
+      C_OnsProfTime %>%
+      filter(
+        if (input$profChoice == "All") {
+          TRUE
+        } else {
+          `Summary Profession Category` == input$profChoice
+        }
+      ) %>%
+      select(time_period, area, geographic_level, vacancies) %>%
+      filter(
+        geographic_level == input$GeoType,
+        (area == input$lep1 |
+          area == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          })
+      ) %>%
+      group_by(time_period, area, geographic_level) %>%
+      summarise(vacancies = sum(vacancies))
+
+    # add an extra column so the colours work in ggplot when sorting alphabetically
+    profTimeData$Areas <- factor(profTimeData$area,
+      levels = c(input$lep1, input$lep2)
+    )
+
+    ggplot(
+      profTimeData,
+      aes(
+        x = as.Date(time_period), y = vacancies,
+        color = Areas, group = Areas,
+        text = paste0(
+          "Period: ", format(as.Date(time_period), "%b %y"), "<br>",
+          "Area: ", Areas, "<br>",
+          "Online job adverts: ", round(vacancies), "<br>"
+        )
+      )
+    ) +
+      geom_line() +
+      theme_minimal() +
+      theme(axis.title.x = element_blank(), axis.title.y = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
+      scale_y_continuous(labels = label_number_si(accuracy = 1)) +
+      scale_x_date(
+        name = "My date axis title", date_breaks = "1 years",
+        date_labels = "%Y"
+      ) +
+      labs(colour = "") +
+      scale_color_manual(values = chartColors2)
+  })
+
+  output$profTime <- renderPlotly({
+    ggplotly(profTime(), tooltip = "text") %>%
+      layout(
+        legend = list(orientation = "h", x = 0, y = -0.1),
+        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+
+  # adverts by profession
+  ## Employment by occupation data table ----
+  profTable <- eventReactive(c(input$lep1, input$lep2), {
+    # create areas chosen table
+    profTableArea <- C_OnsProfTime %>%
+      # select(-"Detailed Profession Category") %>%
+      filter(
+        time_period == "2022-10-01",
+        geographic_level == input$GeoType,
+        (area == input$lep1 |
+          area == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          })
+      )
+    # create england table
+    profTableEngland <- C_OnsProfTime %>%
+      # select(-"Detailed Profession Category") %>%
+      filter(
+        time_period == "2022-10-01",
+        geographic_level == "Country"
+      ) %>%
+      mutate(area = "England")
+    # combine and reformat
+    profTable <- bind_rows(profTableArea, profTableEngland) %>%
+      group_by(area, `Summary Profession Category`) %>%
+      summarise(vacancies = sum(vacancies)) %>%
+      pivot_wider(names_from = area, values_from = vacancies) %>%
+      relocate(England, .after = `Summary Profession Category`) %>%
+      relocate(input$lep1, .after = England) %>%
+      mutate(across(where(is.numeric), ~ round(prop.table(.), 4)))
+  })
+
+  vals <- reactiveValues(
+    row_priority = c("All", unique(C_OnsProfTime$`Summary Profession Category`)),
+    row_color = rep("white", 26)
+  )
+
+  observeEvent(input$profChoice, {
+    vals$row_priority <-
+      c(input$profChoice, vals$row_priority[vals$row_priority != input$profChoice])
+    vals$row_color <- c("#F46A25", rep("white", 25))
+  })
+
+  output$profTable <- renderDataTable({
+    df <- profTable()
+    # check where profession is in the rank and expand table if it's low
+    tableLength <- (C_OnsProfTime %>% filter(
+      time_period == "2022-10-01", geographic_level == input$GeoType,
+      area == input$lep1
+    ) %>%
+      group_by(`Summary Profession Category`) %>%
+      summarise(vacancies = sum(vacancies)) %>%
+      mutate(vacanciesR = rank(desc(vacancies), ties.method = "first")) %>%
+      filter(`Summary Profession Category` == input$profChoice))$vacanciesR
+    datatable(df, options = list(
+      order = list(2, "desc"), pageLength =
+        if (tableLength[1] <= 10 | input$profChoice == "All") {
+          10
+        } else {
+          25
+        }
+    ), rownames = FALSE) %>%
+      formatPercentage(2:ncol(df), 0) %>%
+      formatStyle("Summary Profession Category",
+        target = "row",
+        backgroundColor = styleEqual(vals$row_priority,
+          vals$row_color,
+          default = "white"
+        )
+      )
+  })
+
+  # adverts by detailed profession
+  profDetail <- eventReactive(c(input$lep1, input$lep2, input$profChoice), {
+    # create areas chosen table
+    profDetailArea <- C_OnsProfDetail %>%
+      filter(
+        # time_period == "2022-10-01",
+        if (input$profChoice == "All") {
+          TRUE
+        } else {
+          `Summary Profession Category` == input$profChoice
+        },
+        geographic_level == input$GeoType,
+        (area == input$lep1 |
+          area == if ("lep2" %in% names(input)) {
+            input$lep2
+          } else {
+            "\nNone"
+          })
+      )
+    # create england table
+    profDetailEngland <- C_OnsProfDetail %>%
+      filter(
+        # time_period == "2022-10-01",
+        if (input$profChoice == "All") {
+          TRUE
+        } else {
+          `Summary Profession Category` == input$profChoice
+        },
+        geographic_level == "Country"
+      ) %>%
+      mutate(area = "England")
+    # combine and reformat
+    profDetail <- bind_rows(profDetailArea, profDetailEngland) %>%
+      group_by(area, `Detailed Profession Category`) %>%
+      summarise(vacancies = sum(vacancies, na.rm = T)) %>%
+      pivot_wider(names_from = area, values_from = vacancies) %>%
+      relocate(England, .after = `Detailed Profession Category`) %>%
+      relocate(input$lep1, .after = England) %>%
+      mutate_at(c(3), ~ replace(., is.na(.), 0)) %>%
+      mutate(across(where(is.numeric), ~ round(prop.table(.), 4)))
+  })
+
+  output$profDetail <- renderDataTable({
+    df <- profDetail()
+    datatable(df, options = list(order = list(2, "desc")), rownames = FALSE) %>%
+      formatPercentage(2:ncol(df), 0)
+  })
+
+  ### Downloads----
+
+  list_of_datasetsONS <- list(
+    "2a.Adverts over time" = D_OnsProfTime,
+    "2b.Adverts by detailed profession" = D_OnsProfDetail
+  )
+  output$download_prof1 <- downloadHandler(
+    filename = function() {
+      "ONS_adverts_by_profession.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list_of_datasetsONS, path = file)
+    }
+  )
+
+  # Download current area indicators
+  filtered_dataProf <- reactive({
+    list(
+      "2a.Adverts over time" = D_OnsProfTime %>% filter(
+        geographic_level == input$GeoType,
+        area == input$lep1
+      ),
+      "2b.Adverts by detailed profession" = D_OnsProfDetail %>% filter(
+        geographic_level == input$GeoType,
+        area == input$lep1
+      )
+    )
+  })
+  output$download_prof2 <- downloadHandler(
+    filename = function() {
+      "CurrentONS_adverts_by_profession.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(filtered_dataProf(), path = file)
     }
   )
 
