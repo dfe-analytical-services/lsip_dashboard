@@ -1970,11 +1970,8 @@ server <- function(input, output, session) {
   
   #create breakdown header
   output$titleBreakdown <- renderUI({
-    paste0("How does ",if(input$splashMetric=="empRate"){"employment"}else{"FE achievements per 100,000"}," vary by ",
-           if(input$splashBreakdown=="typeNeat"){"provision"}
-           else if(input$splashBreakdown=="level_or_type"){"level"}
-           else if(input$splashBreakdown=="Occupation"){"occupation"}
-           else{"age"},"?")
+    paste0("How does ",input$splashMetric," vary by ",
+           input$barBreakdown,"?")
   })
   
   #create breakdown comment
