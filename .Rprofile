@@ -8,7 +8,7 @@
 #
 # ---------------------------------------------------------
 
-source("renv/activate.R")
+# source("renv/activate.R")
 
 # Tidy code function
 tidy_code <- function() {
