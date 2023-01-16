@@ -1976,8 +1976,8 @@ server <- function(input, output, session) {
   
   #create breakdown comment
   output$commentBreakdown <- renderUI({
-    #get current area
-    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
+    # #get current area
+     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
     areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
     compareNational<-
       if((C_Geog %>%
@@ -1986,10 +1986,10 @@ server <- function(input, output, session) {
          (C_Geog %>%
           filter(geog == "COUNTRY" & areaName == "England"))[[input$splashMetric]]
       ){"higher"}else{"lower"}
-    metricUsed<-if(input$splashMetric=="empRate"){" employment rate "}else{" FE achievements per 100,000 "}
-    subgroup<-if(input$splashBreakdown=="Occupation"){"Science research"}
-    else if(input$splashBreakdown=="typeNeat"){"Education and training learners"}
-    else if(input$splashBreakdown=="level_or_type"){"level 3"}
+   metricUsed<-if(input$splashMetric=="empRate"){" employment rate "}else{" FE achievements per 100,000 "}
+    subgroup<-if(input$barBreakdown=="Occupation"){"Science research"}
+    else if(input$barBreakdown=="typeNeat"){"Education and training learners"}
+    else if(input$barBreakdown=="level_or_type"){"level 3"}
     else{"19-24 year olds"}
 paste0(areaClicked, " has a ",compareNational,metricUsed,"in ",subgroup," than the national average.")
   })
