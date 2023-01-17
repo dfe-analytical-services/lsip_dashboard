@@ -1641,6 +1641,12 @@ server <- function(input, output, session) {
 
   #---
   # Maps ----
+  
+  #get current metric in plain englush 
+  currentMetric<-reactive({
+    sub("fe","FE",tolower(gsub("^.*\\.","", names(unlist(metricChoices)[unlist(metricChoices)==input$splashMetric]))))
+  })
+  
   #add comparison area option
   output$geoComp <- renderUI({
     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
@@ -1678,7 +1684,7 @@ server <- function(input, output, session) {
   output$commentMap <- renderUI({
     #get current area
     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
-    areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
+   areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
     compareNational<-
     if((C_Geog %>%
         filter(geog == input$splashGeoType & areaName == areaClicked))[[input$splashMetric]]
@@ -1686,7 +1692,6 @@ server <- function(input, output, session) {
     (C_Geog %>%
       filter(geog == "COUNTRY" & areaName == "England"))[[input$splashMetric]]
     ){"higher"}else{"lower"}
-    metricUsed<-if(input$splashMetric=="empRate"){" employment rate "}else{" FE achievements per 100,000 "}
     areaRank<-(C_Geog %>%
                  filter(geog == input$splashGeoType)%>%
                filter(areaName==areaClicked))$ranking
@@ -1696,7 +1701,7 @@ server <- function(input, output, session) {
                       areaRank %% 10 == 3 ~'rd',
                       TRUE ~ "th")
     groupCount<-if(input$splashGeoType=="LEP"){"38 LEPs."}else{"10 MCAs."}
-    paste0(areaClicked, " has a ",compareNational,metricUsed,"than the national average. It has the ",areaRank,suff," highest", metricUsed,"of the ",groupCount)
+    paste0(areaClicked, " has a ",compareNational," ",currentMetric()," than the national average. It has the ",areaRank,suff," highest ", currentMetric()," of the ",groupCount)
   })
   
   #draw map
@@ -1719,12 +1724,13 @@ server <- function(input, output, session) {
         if(str_sub(input$splashMetric,start=-4)=="Rate"){
       sprintf(
       "<strong>%s</strong><br/>%s: %s%%",
-      mapData$areaName,input$splashMetric, 
+      mapData$areaName,currentMetric(), 
       round(mapData[[input$splashMetric]]*100)
-    )%>% lapply(htmltools::HTML) }else{
+    )%>% lapply(htmltools::HTML) }
+    else{
       sprintf(
         "<strong>%s</strong><br/>%s: %s",
-        mapData$areaName,input$splashMetric, 
+        mapData$areaName,currentMetric(), 
         format(round(mapData[[input$splashMetric]]), big.mark = ",")
       )%>% lapply(htmltools::HTML)
     }
@@ -1860,11 +1866,11 @@ server <- function(input, output, session) {
     labels <-       if(str_sub(input$splashMetric,start=-4)=="Rate"){
       sprintf(
         "<strong>%s</strong><br/>%s: %s%%",
-        mapData$areaName,input$splashMetric, round(mapData[[input$splashMetric]]*100)
+        mapData$areaName,currentMetric(), round(mapData[[input$splashMetric]]*100)
       )%>% lapply(htmltools::HTML) }else{
         sprintf(
           "<strong>%s</strong><br/>%s: %s",
-          mapData$areaName, input$splashMetric, format(mapData[[input$splashMetric]], big.mark = ",")
+          mapData$areaName, currentMetric(), format(mapData[[input$splashMetric]], big.mark = ",")
         )%>% lapply(htmltools::HTML)
       }
     
@@ -1890,12 +1896,10 @@ server <- function(input, output, session) {
   })
 
   # time chart
-  
-  
-  #create map header
+
+  #create time header
   output$titleTime <- renderUI({
-    metricUsed<-if(input$splashMetric=="empRate"){" employment rate "}else{" FE achievements per 100,000 "}
-    paste0("How is ",metricUsed," changing over time?")
+    paste0("How is ",currentMetric()," changing over time?")
   })
   
   #create time comment
@@ -1928,7 +1932,6 @@ server <- function(input, output, session) {
          (dataTimeCompare %>%
           filter(year==1,geographic_level == "COUNTRY" & area == "England"))$metric
       )){"faster"}else{"slower"}
-    metricUsed<-if(input$splashMetric=="empRate"){" employment rate "}else{" FE achievements per 100,000 "}
     areaRank<-(dataTimeCompare %>%
                  filter(geographic_level == input$splashGeoType,(year==5|year==1))%>%
                  group_by(geographic_level,area)%>%
@@ -1943,7 +1946,7 @@ server <- function(input, output, session) {
                       areaRank %% 10 == 3 ~'rd',
                       TRUE ~ "th")
     groupCount<-if(input$splashGeoType=="LEP"){"38 LEPs."}else{"10 MCAs."}
-    paste0(areaClicked, "'s",metricUsed,"has increased ",compareNational," than the national average in the last five years. It has the ",areaRank,suff," fastest growing",metricUsed,"of the ",groupCount)
+    paste0(areaClicked, "'s ",currentMetric()," has increased ",compareNational," than the national average in the last five years. It has the ",areaRank,suff," fastest growing ",currentMetric()," of the ",groupCount)
   })
   
   Splash_time <- eventReactive(c(input$map_shape_click, input$mapLA_shape_click,input$geoComps,input$levelBar,input$splashMetric), {
@@ -1982,7 +1985,7 @@ server <- function(input, output, session) {
         text = paste0(
           "Year: ", chart_year, "<br>",
           "Area: ", Areas, "<br>",
-          input$splashMetric,": ", if(str_sub(input$splashMetric,start=-4)=="Rate"){
+          currentMetric(),": ", if(str_sub(input$splashMetric,start=-4)=="Rate"){
             scales::percent(round(value, 2))}
           else{format(round(value), big.mark = ",")}, "<br>"
         )
@@ -2040,7 +2043,7 @@ server <- function(input, output, session) {
   
   #create breakdown header
   output$titleBreakdown <- renderUI({
-    paste0("How does ",input$splashMetric," vary by ",
+    paste0("How does ",currentMetric()," vary by ",
            input$barBreakdown,"?")
   })
   
@@ -2056,12 +2059,11 @@ server <- function(input, output, session) {
          (C_Geog %>%
           filter(geog == "COUNTRY" & areaName == "England"))[[input$splashMetric]]
       ){"higher"}else{"lower"}
-   metricUsed<-if(input$splashMetric=="empRate"){" employment rate "}else{" FE achievements per 100,000 "}
     subgroup<-if(input$barBreakdown=="Occupation"){"Science research"}
     else if(input$barBreakdown=="typeNeat"){"Education and training learners"}
     else if(input$barBreakdown=="level_or_type"){"level 3"}
     else{"19-24 year olds"}
-paste0(areaClicked, " has a ",compareNational,metricUsed,"in ",subgroup," than the national average.")
+paste0(areaClicked, " has a ",compareNational," ",currentMetric()," in ",subgroup," than the national average.")
   })
   
   Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps,input$barBreakdown, input$barSubgroup,input$levelBar, input$sexBar, input$metricBar,input$splashBreakdown,input$mapLA_shape_click), {
@@ -2086,16 +2088,17 @@ paste0(areaClicked, " has a ",compareNational,metricUsed,"in ",subgroup," than t
     Splash_21$Area <- factor(Splash_21$area,
       levels = c("England", C_Geog$areaName[C_Geog$areaCode == event$id], C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id], input$geoComps)
     )
-    ggplot(Splash_21, aes(x = reorder(subgroups,value,max), y = value, fill = Area, text = paste0(#reorder(input$splashBreakdown, desc(input$splashBreakdown))
+    ggplot(Splash_21, aes(x = reorder(subgroups,value,max), y = value, fill = Area, 
+                          text = paste0(#reorder(input$splashBreakdown, desc(input$splashBreakdown))
       #"Breakdown: ", input$splashBreakdown, "<br>",
       "Area: ", Area, "<br>",
       #"Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(value, 2)), "<br>",
-      input$splashBreakdown, ": ", if(input$splashMetric=="empRate"){scales::percent(round(value, 2))}else{round(value,0)}, "<br>"
+      currentMetric(), ": ", if(str_sub(input$splashMetric,start=-4)=="Rate"){scales::percent(round(value, 2))}else{round(value,0)}, "<br>"
     ))) +
       geom_col(
         position = "dodge"
       ) +
-      scale_y_continuous(labels = if(input$splashMetric=="empRate"){scales::percent}else{label_number_si(accuracy = 1)}) +
+      scale_y_continuous(labels = if(str_sub(input$splashMetric,start=-4)=="Rate"){scales::percent}else{label_number_si(accuracy = 1)}) +
       scale_x_discrete(labels = function(x) str_wrap(x, width = 26)) +
       coord_flip() +
       theme_minimal() +
