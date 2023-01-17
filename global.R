@@ -30,6 +30,26 @@ shhh(library(leaflet))
 # renv::snapshot()
 
 area_select <- c("Coast to Capital", "Greater Manchester", "England")
+
+metricChoices<-list("Employment"=list("Employment rate"="empRate",
+                                      "Self-employment rate"="selfempRate",
+                                      "Unemployment rate"="unempRate",
+                                      "Inactive rate"="inactiveRate",
+                                      "Employment volume"="Employment",
+                                      "Self-employment volume"="  Self Employed ",
+                                      "Unemployed volume"="  Unemployed ",
+                                      "Inactive volume"="  Inactive ",
+                                      "Vacancies - TO COME"="vacancies"),
+                    "Skills"=list("FE achievement rate"="achievements_rate_per_100000_population",
+                                  "FE participation rate"="participation_rate_per_100000_population",
+                                  "FE start rate"="starts_rate_per_100000_population",
+                                  "FE achievements"="achievements",
+                                  "FE participation"="participation",
+                                  "FE starts"="starts"),
+                    "Mismatch"=list("Supply vs demand TO COME"="mismatch")
+)
+
+
 # Functions ---------------------------------------------------------------------------------
 
 # Here's an example function for simplifying the code needed to commas separate numbers:

@@ -613,23 +613,7 @@ tabPanel(
         h3("What are you interested in?"),
         pickerInput(
           inputId = "splashMetric",
-          choices = list("Employment"=list("Employment rate"="empRate",
-                                           "Self-employment rate"="selfempRate",
-                                           "Unemployment rate"="unempRate",
-                                           "Inactive rate"="inactiveRate",
-                                           "Employment volume"="Employment",
-                                           "Self-employment volume"="  Self Employed ",
-                                           "Unemployed volume"="  Unemployed ",
-                                           "Inactive volume"="  Inactive ",
-                                           "Vacancies - TO COME"="vacancies"),
-                         "Skills"=list("FE achievement rate"="achievements_rate_per_100000_population",
-                                       "FE participation rate"="participation_rate_per_100000_population",
-                                       "FE start rate"="starts_rate_per_100000_population",
-                                       "FE achievements"="achievements",
-                                       "FE participation"="participation",
-                                       "FE starts"="starts"),
-                         "Mismatch"=list("Supply vs demand TO COME"="mismatch")
-        ),
+          choices = metricChoices,
         multiple = FALSE
         )
       )),
