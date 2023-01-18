@@ -2127,7 +2127,6 @@ paste0(areaClicked, " has a ",compareNational," ",currentMetric()," in ",subgrou
       config(displayModeBar = FALSE)
   })
   
-  
   # create datahub table to show
   
   
