@@ -1954,6 +1954,7 @@ server <- function(input, output, session) {
   })
   
   output$subgroupFilter <- renderUI({
+    if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
     pickerInput(
       inputId = "barSubgroup",
       label=NULL,
@@ -1965,7 +1966,11 @@ server <- function(input, output, session) {
       ,multiple=TRUE
         ,selected=(as.vector(C_breakdown%>%
           filter(metric==input$splashMetric,
-                 breakdown==input$barBreakdown)%>%
+                 breakdown==input$barBreakdown,
+                 area==C_Geog$areaName[C_Geog$areaCode == event$id],
+                 geographic_level==input$splashGeoType)%>%
+            arrange(desc(value)) %>%
+            slice(1:10) %>%
           distinct(subgroups)))$subgroups
       ,options = list(`actions-box` = TRUE)
     )
@@ -1996,6 +2001,7 @@ server <- function(input, output, session) {
 paste0(areaClicked, " has a ",compareNational," ",currentMetric()," in ",subgroup," than the national average.")
   })
   
+  #create breakdown bar
   Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps,input$barBreakdown, input$barSubgroup,input$levelBar, input$sexBar, input$metricBar,input$splashBreakdown,input$mapLA_shape_click), {
     if("map_shape_click" %in% names(input)){event <- input$map_shape_click}else{event <- data.frame(id=c("E37000025"))}
     eventLA <- input$mapLA_shape_click
@@ -2018,17 +2024,17 @@ paste0(areaClicked, " has a ",compareNational," ",currentMetric()," in ",subgrou
     Splash_21$Area <- factor(Splash_21$area,
       levels = c("England", C_Geog$areaName[C_Geog$areaCode == event$id], C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id], input$geoComps)
     )
-    ggplot(Splash_21, aes(x = reorder(subgroups,value,max), y = value, fill = Area, 
+    ggplot(Splash_21, aes(x = reorder(subgroups,value,mean), y = value, fill = Area, 
                           text = paste0(#reorder(input$splashBreakdown, desc(input$splashBreakdown))
       #"Breakdown: ", input$splashBreakdown, "<br>",
       "Area: ", Area, "<br>",
       #"Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(value, 2)), "<br>",
-      currentMetric(), ": ", if(str_sub(input$splashMetric,start=-4)=="Rate"){scales::percent(round(value, 2))}else{round(value,0)}, "<br>"
+      currentMetric(), ": ", if(str_sub(input$splashMetric,start=-4)=="Rate"|input$splashMetric=="Employment"){scales::percent(round(value, 2))}else{round(value,0)}, "<br>"
     ))) +
       geom_col(
         position = "dodge"
       ) +
-      scale_y_continuous(labels = if(str_sub(input$splashMetric,start=-4)=="Rate"){scales::percent}else{label_number_si(accuracy = 1)}) +
+      scale_y_continuous(labels = if(str_sub(input$splashMetric,start=-4)=="Rate"|input$splashMetric=="Employment"){scales::percent}else{label_number_si(accuracy = 1)}) +
       scale_x_discrete(labels = function(x) str_wrap(x, width = 26)) +
       coord_flip() +
       theme_minimal() +

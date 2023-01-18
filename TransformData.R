@@ -858,7 +858,18 @@ C_breakdown<-bind_rows(
     mutate(breakdown="No breakdowns available",subgroups="Total")%>%
     pivot_longer(!c("geographic_level","area","time_period","breakdown","subgroups"), 
                  names_to = "metric", 
-                 values_to = "value"),
+                 values_to = "value")%>%
+    filter(metric!="Employment"),
+  C_EmpOcc_APS1721%>%
+    rename(time_period=year)%>%
+    mutate_at(c('time_period'), as.integer)%>%
+    pivot_longer(!c("geographic_level","area","time_period"), 
+                 names_to = "subgroups", 
+                 values_to = "value")%>%
+    mutate(breakdown="Occupation",metric="Employment")%>%
+    mutate_all(~replace(., is.na(.), 0))%>% 
+    group_by(across(c(-value,-subgroups)))%>% 
+    mutate(across(value, ~round(prop.table(.), 3))),
   #ILR data
  C_Achieve_ILR1621%>%
     filter(time_period==202021)%>%
