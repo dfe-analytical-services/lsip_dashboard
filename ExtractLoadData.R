@@ -110,7 +110,7 @@ I_mapLA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("
 ## Load MCA boundary----
 folder <- "15_MCABoundary"
 I_mapMCA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
-                       stringsAsFactors = F
+  stringsAsFactors = F
 )
 
 ### employment by industry------------

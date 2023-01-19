@@ -24,29 +24,34 @@ shhh(library(janitor))
 shhh(library(DT))
 shhh(library(writexl))
 shhh(library(scales)) # for comma 1,000s
-#shhh(library(shinyBS))
+# shhh(library(shinyBS))
 shhh(library(leaflet))
 
 # renv::snapshot()
 
 area_select <- c("Coast to Capital", "Greater Manchester", "England")
 
-metricChoices<-list("Employment"=list("Employment rate"="empRate",
-                                      "Self-employment rate"="selfempRate",
-                                      "Unemployment rate"="unempRate",
-                                      "Inactive rate"="inactiveRate",
-                                      "Employment volume"="Employment",
-                                      "Self-employment volume"="  Self Employed ",
-                                      "Unemployed volume"="  Unemployed ",
-                                      "Inactive volume"="  Inactive ",
-                                      "Vacancies - TO COME"="vacancies"),
-                    "Skills"=list("FE achievement rate"="achievements_rate_per_100000_population",
-                                  "FE participation rate"="participation_rate_per_100000_population",
-                                  "FE start rate"="starts_rate_per_100000_population",
-                                  "FE achievements"="achievements",
-                                  "FE participation"="participation",
-                                  "FE starts"="starts"),
-                    "Mismatch"=list("Supply vs demand TO COME"="mismatch")
+metricChoices <- list(
+  "Employment" = list(
+    "Employment rate" = "empRate",
+    "Self-employment rate" = "selfempRate",
+    "Unemployment rate" = "unempRate",
+    "Inactive rate" = "inactiveRate",
+    "Employment volume" = "Employment",
+    "Self-employment volume" = "  Self Employed ",
+    "Unemployed volume" = "  Unemployed ",
+    "Inactive volume" = "  Inactive ",
+    "Vacancies - TO COME" = "vacancies"
+  ),
+  "Skills" = list(
+    "FE achievement rate" = "achievements_rate_per_100000_population",
+    "FE participation rate" = "participation_rate_per_100000_population",
+    "FE start rate" = "starts_rate_per_100000_population",
+    "FE achievements" = "achievements",
+    "FE participation" = "participation",
+    "FE starts" = "starts"
+  ),
+  "Mismatch" = list("Supply vs demand TO COME" = "mismatch")
 )
 
 
