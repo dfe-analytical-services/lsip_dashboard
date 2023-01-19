@@ -32,33 +32,34 @@ I_mcalookup <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(pa
 # Query data
 # Geography: England, LEPs, regions, LADs (as of April 2021)
 # Date: 12 months to Dec 2017-2021
-# Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people
-folder <- "3_APSempOcc"
+# Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people. 
+#Currently only available up to Dec 2021
+folder <- "18_APS_jan23_update"
 sheetNum <- 1
-I_EmpOcc_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+I_EmpOcc_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", "T09a.xlsx"), sheet = sheetNum, skipEmptyRows = T)
 
 
 ### Employment level and rate ------------
 # Geog and date as above
-# Cell: T01 Economic activity by age Aged 16-64/ All people
-folder <- "4_APSempRate"
+# Cell: T01 Economic activity by age Aged 16-64/ All people. Most recent data available (Sept 22)
+folder <- "18_APS_jan23_update"
 sheetNum <- 1
-I_EmpRate_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+I_EmpRate_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", "T01.xlsx"), sheet = sheetNum, skipEmptyRows = T)
 
 
 ### employment by industry------------
 # Geog and date as above
-# Cell: T13a	Employment by industry (SIC 2007) and flexibility
-folder <- "13_APSempind"
+# Cell: T13a	Employment by industry (SIC 2007) and flexibility. Most recent data available (Sept 2022)
+folder <- "18_APS_jan23_update"
 sheetNum <- 1
-I_empind_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+I_empind_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", "T13a.xlsx"), sheet = sheetNum, skipEmptyRows = T)
 
 ### Skill by age gender ------------
 # Geog and date as above
-# Cell: T19	Qualification by age and gender - NVQ
-folder <- "14_APSqualagegen"
+# Cell: T19	Qualification by age and gender - NVQ. All people aged 16-64. Only data up to Dec 21 available
+folder <- "18_APS_jan23_update"
 sheetNum <- 1
-I_qual_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+I_qual_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", "T19.xlsx"), sheet = sheetNum, skipEmptyRows = T)
 
 
 ## ILR
