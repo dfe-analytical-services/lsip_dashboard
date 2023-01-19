@@ -2048,8 +2048,17 @@ server <- function(input, output, session) {
   
   #create breakdown header
   output$titleBreakdown <- renderUI({
+    if(input$barBreakdown=="No breakdowns available"){
+      paste0(str_to_sentence(currentMetric())," currently has no breakdowns.",
+             if(input$splashMetric %in% c("empRate","selfempRate","unempRate","inactiveRate","  Self Employed ","  Unemployed ","  Inactive "))
+             {" Switch to Employment volume metric for occupation and industry breakdowns."}
+             else{""}
+             )
+             }
+    else{
     paste0("How does ",currentMetric()," vary by ",
            input$barBreakdown,"?")
+    }
   })
   
   #create breakdown comment
@@ -2068,7 +2077,9 @@ server <- function(input, output, session) {
     else if(input$barBreakdown=="typeNeat"){"Education and training learners"}
     else if(input$barBreakdown=="level_or_type"){"level 3"}
     else{"19-24 year olds"}
+    if(input$barBreakdown=="No breakdowns available"){}else{
 paste0(areaClicked, " has a ",compareNational," ",currentMetric()," in ",subgroup," than the national average.")
+    }
   })
   
   #create breakdown bar
