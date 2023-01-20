@@ -430,11 +430,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         ),
         column(
           4,
-          selectizeInput("hubArea",
-            choices = c("Black Country", "London", "etc", "etc"),
-            multiple = TRUE, label = NULL,
-            options = list(placeholder = "Choose areas*")
-          )
+          uiOutput("hubAreaInput")
         )
       ),
       fluidRow(
@@ -460,11 +456,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       fluidRow(
         column(
           4,
-          selectizeInput("hubMetric",
-            choices = c("participation", "achievements", "FE achievements", "Job vacancies", "etc", "etc"),
-            multiple = TRUE, label = NULL,
-            options = list(placeholder = "Choose metrics*")
-          )
+          uiOutput("hubMetricInput")
         ),
         column(
           4,
@@ -476,11 +468,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         ),
         column(
           4,
-          selectizeInput("hubYears",
-            choices = c("201617", "201718", "201819"),
-            multiple = TRUE, label = NULL,
-            options = list(placeholder = "Choose years*")
-          )
+          uiOutput("hubYearInput")
         )
       ),
       fluidRow(column(12, h2("Output"))),

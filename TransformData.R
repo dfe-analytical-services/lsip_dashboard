@@ -913,7 +913,7 @@ C_time <- bind_rows(
       values_to = "value"
     ),
   # ILR data
-  C_Achieve_ILR1621 %>%
+    C_Achieve_ILR1621 %>%
     rename(chart_year = Year) %>%
     filter(level_or_type == "Further education and skills: Total", age_group == "Total") %>%
     select(-apprenticeships_or_further_education, -level_or_type, -age_group, -typeNeat, -AY) %>%
@@ -1002,3 +1002,10 @@ C_breakdown <- bind_rows(
     select(-apprenticeships_or_further_education, -level_or_type, -age_group)
 )
 write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
+
+#Create dataHub dataset
+C_datahub<-bind_rows(
+  C_time%>%select(-chart_year)%>%mutate(breakdown="Total",subgroups="Total"),
+  C_breakdown
+)
+
