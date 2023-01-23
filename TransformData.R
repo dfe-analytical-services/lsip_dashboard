@@ -415,7 +415,7 @@ format.EmpInd.APS <- function(x) {
                                         geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP", 
                                         geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP", 
                                         geographic_level == "SEA AND THURROCK" ~ "LSIP", 
-                                        TRUE ~ geographic_level)) 
+                                        TRUE ~ geographic_level)) %>% 
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
 }
 

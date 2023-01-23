@@ -1,5 +1,6 @@
 "area","minEmp","maxEmp"
 "Black Country",471400,534300
+"Brighton and Hove, East Sussex, West Sussex",780000,806300
 "Buckinghamshire",253500,272500
 "Cambridgeshire and Peterborough",407400,430500
 "Cheshire and Warrington",426200,452400
@@ -11,7 +12,10 @@
 "Derby, Derbyshire, Nottingham and Nottinghamshire",1011900,1033600
 "Derbyshire and Nottinghamshire",1011900,1033600
 "Dorset",309800,717000
+"England",26137300,26510800
 "Enterprise M3",742300,768100
+"Enterprise M3 LEP (including all of Surrey)",566100,592500
+"Essex, Southend-on-Sea and Thurrock",856000,877700
 "Gloucestershire",294000,320000
 "Greater Birmingham and Solihull",895600,971300
 "Greater Cambridge and Greater Peterborough",407400,430500

@@ -218,7 +218,7 @@ panel_employment <- function() {
     fluidRow(
       column(
         width = 6,
-        h2("Employment rates: Jul-Jun 2018 to Jul-Jun 2022"),
+        h2("Employment rates: Oct-Sept 2018 to Oct-Sep 2022"),
         plotlyOutput("EmpRate_time"),
         details(
           label = "Source: Annual Population Survey",
@@ -260,7 +260,7 @@ panel_employment <- function() {
       column(
         12,
         ### employment by industry bar chart ----
-        h2("Employment share by industry: Jul 2021 to Jun 2022"),
+        h2("Employment share by industry: Oct 2021 to Sept 2022"),
         plotlyOutput("empind")
       )
     ),
