@@ -2260,7 +2260,7 @@ server <- function(input, output, session) {
         (if(is.null(input$hubArea)==TRUE){TRUE}else{area %in% input$hubArea}|area==if("National" %in% input$hubComparators){"England"}else{TRUE}),
         if(is.null(input$hubYears)==TRUE){TRUE}else{time_period %in% input$hubYears},
         if(is.null(input$hubMetric)==TRUE){TRUE}else{metric %in% input$hubMetric},
-        (if(is.null(input$hubBreakdowns)==TRUE){TRUE}else{breakdown %in% input$hubBreakdowns}|breakdown=="Total")
+        (if(is.null(input$hubBreakdowns)==TRUE){TRUE}else{breakdown %in% input$hubBreakdowns})
       ) %>%
       select(
         Year = time_period, Geography = geographic_level, Area = area,
