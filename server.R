@@ -2208,18 +2208,63 @@ server <- function(input, output, session) {
   })
 
   # create datahub table to show
+  
+  output$hubAreaInput <- renderUI({
+      selectizeInput("hubArea",
+                     choices =C_datahub%>%
+                       filter(if(is.null(input$hubGeog)==TRUE){TRUE}else{geographic_level %in% input$hubGeog})%>% 
+                       distinct(Area=area),
+                     multiple = TRUE, label = NULL,
+                     options = list(placeholder = "Choose areas*")
+      )
+  })
 
+  output$hubMetricInput <- renderUI({
+  selectizeInput("hubMetric",
+                 choices = C_datahub%>%filter(if(is.null(input$hubGeog)==TRUE){TRUE}else{geographic_level %in% input$hubGeog},
+                                              if(is.null(input$hubArea)==TRUE){TRUE}else{area %in% input$hubArea})%>%
+                   distinct(Metrics=metric),
+                                              multiple = TRUE, label = NULL,
+                 options = list(placeholder = "Choose metrics*")
+  )
+  })
+  
+  output$hubBreakdownInput <- renderUI({
+  selectizeInput("hubBreakdowns",
+                 choices = C_datahub%>%filter(if(is.null(input$hubGeog)==TRUE){TRUE}else{geographic_level %in% input$hubGeog},
+                                              if(is.null(input$hubArea)==TRUE){TRUE}else{area %in% input$hubArea},
+                                              if(is.null(input$hubMetric)==TRUE){TRUE}else{metric %in% input$hubMetric}
+                 )%>% distinct(Breakdowns=breakdown),
+                 multiple = TRUE, label = NULL,
+                 options = list(placeholder = "Choose breakdowns")
+  )
+  })
+  
+  output$hubYearInput <- renderUI({
+  selectizeInput("hubYears",
+                 choices = C_datahub%>%filter(if(is.null(input$hubGeog)==TRUE){TRUE}else{geographic_level %in% input$hubGeog},
+                                              if(is.null(input$hubArea)==TRUE){TRUE}else{area %in% input$hubArea},
+                                              if(is.null(input$hubMetric)==TRUE){TRUE}else{metric %in% input$hubMetric},
+                                              if(is.null(input$hubBreakdowns)==TRUE){TRUE}else{breakdown %in% input$hubBreakdowns})%>% 
+                   distinct("Time period"=time_period),
+                 multiple = TRUE, label = NULL,
+                 options = list(placeholder = "Choose years*")
+                 
+  )
+  })
 
   output$hubTable <- renderDataTable({
-    DT::datatable(C_Achieve_ILR1621 %>%
+    DT::datatable(C_datahub %>%
       filter(
-        geographic_level %in% input$hubGeog,
-        area %in% input$hubArea,
-        time_period %in% input$hubYears
+        (if(is.null(input$hubGeog)==TRUE){TRUE}else{geographic_level %in% input$hubGeog} |geographic_level==if("National" %in% input$hubComparators){"COUNTRY"}else{TRUE}),
+        (if(is.null(input$hubArea)==TRUE){TRUE}else{area %in% input$hubArea}|area==if("National" %in% input$hubComparators){"England"}else{TRUE}),
+        if(is.null(input$hubYears)==TRUE){TRUE}else{time_period %in% input$hubYears},
+        if(is.null(input$hubMetric)==TRUE){TRUE}else{metric %in% input$hubMetric},
+        (if(is.null(input$hubBreakdowns)==TRUE){TRUE}else{breakdown %in% input$hubBreakdowns})
       ) %>%
       select(
         Year = time_period, Geography = geographic_level, Area = area,
-        input$hubMetric
+        Data=metric,Breakdown=breakdown,Splits=subgroups,Value=value
       ))
     #  , escape = FALSE, options = list(dom = "t"), rownames = FALSE)
   })
