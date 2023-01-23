@@ -446,7 +446,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           4,
           selectizeInput("hubComparators",
             label = NULL,
-            choices = c("National", "Regional"),
+            choices = c("National", "Regional (to come)"),
             multiple = TRUE,
             options = list(placeholder = "Include national/regional data?")
           )
@@ -460,11 +460,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         ),
         column(
           4,
-          selectizeInput("hubBreakdowns",
-            choices = c("Age (available for FE achievments, employment rate)", "Gender (available for FE achievments, employment rate)", "etc", "etc"),
-            multiple = TRUE, label = NULL,
-            options = list(placeholder = "Choose breakdowns")
-          )
+          uiOutput("hubBreakdownInput")
         ),
         column(
           4,
