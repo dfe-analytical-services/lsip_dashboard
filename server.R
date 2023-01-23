@@ -399,7 +399,7 @@ server <- function(input, output, session) {
     empCntChange <- emp2022()$Employment - emp2021()$Employment
 
     # print with formatting
-    h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("Aug-Sept 2022", style = "font-size: 16px;font-weight:normal;"), br(),
       format(empCnt2022, big.mark = ","), br(),
       span(
         format_pm(empCntChange) # plus-minus and comma sep formatting
@@ -423,7 +423,7 @@ server <- function(input, output, session) {
       filter(area == input$lep1)
 
     ggplot(empLine, aes(x = Year - 1, y = Employment, group = area, text = paste0(
-      "Year: Jul-Jun ", year, "<br>",
+      "Year: Aug-Sept ", year, "<br>",
       "Employment: ", format(Employment, big.mark = ","), "<br>"
     ))) +
       geom_line(data = empLine %>% filter(Year <= 21)) +

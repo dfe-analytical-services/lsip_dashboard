@@ -62,7 +62,8 @@ C_mcalookup <- I_mcalookup
 #### Employment by occupation ####
 format.EmpOcc.APS <- function(x) {
   reformat <- x %>%
-    mutate(year = ifelse(annual.population.survey == "date", substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
+    mutate(year = ifelse(str_like(annual.population.survey, "%date%"), 
+                    substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
     fill(year) %>% # fill time periods for all rows
     row_to_names(row_number = 5) %>% # set col names
     clean_names() %>%
@@ -99,6 +100,7 @@ format.EmpOcc.APS <- function(x) {
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
 }
 
+
 # format data
 F_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
 # create downloadable version with new suppression rules
@@ -126,7 +128,7 @@ write.csv(C_EmpOcc_APS1721, file = "Data\\AppData\\C_EmpOcc_APS1721.csv", row.na
 #### Employment level and rate ####
 format.EmpRate.APS <- function(x) {
   reformat <- x %>%
-    mutate(year = ifelse(annual.population.survey == "date", substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
+    mutate(year = ifelse(str_like(annual.population.survey, "%date%"), substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
     fill(year) %>% # fill time periods for all rows
     row_to_names(row_number = 4) %>% # set col names
     clean_names() %>%
@@ -196,7 +198,7 @@ write.csv(C_EmpRate_APS1822_max_min, file = "Data\\AppData\\C_EmpRate_APS1822_ma
 #### Qualification level by age and gender ####
 format.qual.APS <- function(x) {
   reformat <- x %>%
-    mutate(year = ifelse(annual.population.survey == "date", substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
+    mutate(year = ifelse(str_like(annual.population.survey, "%date%"), substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
     fill(year) %>% # fill time periods for all rows
     row_to_names(row_number = 4) %>% # set col names
     clean_names() %>%
