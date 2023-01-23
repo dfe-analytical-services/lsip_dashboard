@@ -10,7 +10,9 @@ server <- function(input, output, session) {
   chartColors3 <- c("#BFBFBF", "#12436D", "#28A197")
   # geo1, geo2
   chartColors2 <- c("#12436D", "#28A197")
-  chartColors6 <- c("#BFBFBF", "#12436D", "#2073BC", "#28A197", "#801650", "#F46A25", "#A285D1")
+  chartColors6 <- c("#BFBFBF", "#12436D",  "#28A197", "#801650", "#F46A25", "#A285D1","#2073BC")
+  #for when no England
+  chartColors5 <- c("#12436D",  "#28A197", "#801650", "#F46A25", "#A285D1","#2073BC")
 
   # 1. HOMEPAGE ----
   ## Create link to overview tab ----
@@ -2045,7 +2047,7 @@ server <- function(input, output, session) {
               })
         ) |
           # get england for comparison (if a rate)
-          (if (str_sub(input$splashMetric, start = -4) == "Rate") {
+          (if (str_sub(input$splashMetric, start = -4) %in% c("Rate","tion")) {
             (geographic_level == "COUNTRY" & area == "England")
           } else {
             area == "\nNone"
@@ -2091,7 +2093,7 @@ server <- function(input, output, session) {
         # , limits = if(input$splashMetric=="empRate"){c(.65, .85)}else{c(0, 10000)}
       ) +
       labs(colour = "") +
-      scale_color_manual(values = chartColors6)
+      scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) %in% c("Rate","tion")) {chartColors6}else{chartColors5})
   })
 
   output$Splash_time <- renderPlotly({
@@ -2204,7 +2206,7 @@ server <- function(input, output, session) {
   })
 
   # create breakdown bar
-  Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$barBreakdown, input$barSubgroup, input$levelBar, input$sexBar, input$metricBar, input$splashBreakdown, input$mapLA_shape_click), {
+  Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$barBreakdown, input$barSubgroup, input$levelBar, input$sexBar, input$metricBar, input$splashBreakdown, input$mapLA_shape_click,input$splashMetric), {
     if ("map_shape_click" %in% names(input)) {
       event <- input$map_shape_click
     } else {
