@@ -65,7 +65,7 @@ format.EmpOcc.APS <- function(x) {
     mutate(year = ifelse(str_like(annual.population.survey, "%date%"), 
                     substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
     fill(year) %>% # fill time periods for all rows
-    row_to_names(row_number = 5) %>% # set col names
+    row_to_names(row_number = 4) %>% # set col names
     clean_names() %>%
     select(-starts_with("na")) %>% # remove na columns (flags and confidence)
     mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
@@ -136,7 +136,8 @@ format.EmpRate.APS <- function(x) {
     mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
     filter(check == 1) %>%
     filter(!grepl("nomisweb", area)) %>%
-    select(year = x2017, area, everything(), -check) %>%
+    select(year = x2018, area, everything(), -check) %>%
+    mutate(area = gsub(" - from dn81838", "", area)) %>% 
     mutate(area2 = gsub(".*-", "", area)) %>%
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>%
@@ -160,7 +161,11 @@ format.EmpRate.APS <- function(x) {
     rename_with(~ gsub("[[:digit:]]+", "", .)) %>%
     rename_with(str_to_title, c(4:10)) %>% # capitalise column names
     mutate(geographic_level = toupper(geographic_level)) %>%
+    mutate(geographic_level = case_when(geographic_level == "LSI" ~ "LSIP", 
+                                        geographic_level == "LS" ~ "LSIP", 
+                                        TRUE ~ geographic_level)) %>% 
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
+  
 }
 
 # format data
@@ -363,7 +368,8 @@ format.EmpInd.APS <- function(x) {
     mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
     filter(check == 1) %>%
     filter(!grepl("nomisweb", area)) %>%
-    select(year = x2017, area, everything(), -check) %>%
+    select(year = x2018, area, everything(), -check) %>%
+    mutate(area = gsub(" - from dn81838", "", area)) %>% 
     mutate(area2 = gsub(".*-", "", area)) %>%
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>%
@@ -397,6 +403,9 @@ format.EmpInd.APS <- function(x) {
       "Other Services" = " r u other services "
     ) %>%
     mutate(geographic_level = toupper(geographic_level)) %>%
+    mutate(geographic_level = case_when(geographic_level == "LSI" ~ "LSIP", 
+                                        geographic_level == "LS" ~ "LSIP", 
+                                        TRUE ~ geographic_level)) 
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
 }
 
