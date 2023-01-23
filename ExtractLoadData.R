@@ -34,9 +34,9 @@ I_mcalookup <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(pa
 # Date: 12 months to Dec 2017-2021
 # Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people. 
 #Currently only available up to Dec 2021
-folder <- "18_APS_jan23_update"
+folder <-  "3_APSempOcc"
 sheetNum <- 1
-I_EmpOcc_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", "T09a.xlsx"), sheet = sheetNum, skipEmptyRows = T)
+I_EmpOcc_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 
 ### Employment level and rate ------------
@@ -57,9 +57,9 @@ I_empind_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", "T13a.xl
 ### Skill by age gender ------------
 # Geog and date as above
 # Cell: T19	Qualification by age and gender - NVQ. All people aged 16-64. Only data up to Dec 21 available
-folder <- "18_APS_jan23_update"
+folder <- "14_APSqualagegen"
 sheetNum <- 1
-I_qual_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", "T19.xlsx"), sheet = sheetNum, skipEmptyRows = T)
+I_qual_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 
 ## ILR
