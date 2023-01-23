@@ -148,6 +148,8 @@ format.EmpRate.APS <- function(x) {
       area == "Heart of the South" ~ "Heart of the South-West",
       area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
       area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
+      area == "Brighton and Hove, East Sussex, Wes" ~"Brighton and Hove, East Sussex, West Sussex", 
+      area == "Enterprise M3 LEP (including all of" ~ "Enterprise M3 LEP (including all of Surrey)",
       TRUE ~ area
     )) %>%
     mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
@@ -163,6 +165,9 @@ format.EmpRate.APS <- function(x) {
     mutate(geographic_level = toupper(geographic_level)) %>%
     mutate(geographic_level = case_when(geographic_level == "LSI" ~ "LSIP", 
                                         geographic_level == "LS" ~ "LSIP", 
+                                        geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP", 
+                                        geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP", 
+                                        geographic_level == "SEA AND THURROCK" ~ "LSIP", 
                                         TRUE ~ geographic_level)) %>% 
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
   
@@ -380,6 +385,8 @@ format.EmpInd.APS <- function(x) {
       area == "Heart of the South" ~ "Heart of the South-West",
       area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
       area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
+      area == "Brighton and Hove, East Sussex, Wes" ~"Brighton and Hove, East Sussex, West Sussex", 
+      area == "Enterprise M3 LEP (including all of" ~ "Enterprise M3 LEP (including all of Surrey)",
       TRUE ~ area
     )) %>%
     mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
@@ -405,6 +412,9 @@ format.EmpInd.APS <- function(x) {
     mutate(geographic_level = toupper(geographic_level)) %>%
     mutate(geographic_level = case_when(geographic_level == "LSI" ~ "LSIP", 
                                         geographic_level == "LS" ~ "LSIP", 
+                                        geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP", 
+                                        geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP", 
+                                        geographic_level == "SEA AND THURROCK" ~ "LSIP", 
                                         TRUE ~ geographic_level)) 
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
 }
