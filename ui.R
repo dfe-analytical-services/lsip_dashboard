@@ -403,11 +403,11 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     #   #  ) # end of app data row
     # ), # end of app tab panel
     tabPanel(
-      "Datahub",
+      "DataHub",
       fluidRow(
         column(
           12,
-          h1("Datahub"),
+          h1("DataHub"),
           p("Use the filters to create a bespoke dataset. * fields are mandatory. Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want.")
         )
       ),
