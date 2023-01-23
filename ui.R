@@ -306,12 +306,13 @@ padding-top:15px
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("12 Jan 2023 (0.4.1)"),
-              p("Included ONS-Textkernel online job adverts by profession data."),
+              p("25 Jan 2023 (0.5.1)"),
+              p("Updated employment rates and employment by industry figures with Oct-Sept 2022 Annual Population Survey data."),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
-                p(
+                p(p("12 Jan 2023 (0.4.1)"),
+                  p("Included ONS-Textkernel online job adverts by profession data."),
                   p("20 Dec 2022 (0.3.1)"),
                   p("Addition of three new data sources:"),
                   tags$ul(
