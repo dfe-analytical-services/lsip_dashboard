@@ -1669,6 +1669,7 @@ C_breakdown <- bind_rows(
     rename(time_period = year) %>%
     filter(time_period == 2022) %>%
     mutate_at(c("time_period"), as.integer) %>%
+    select(-Year)%>%
     mutate(breakdown = "No breakdowns available", subgroups = "Total") %>%
     pivot_longer(!c("geographic_level", "area", "time_period", "breakdown", "subgroups"),
       names_to = "metric",
@@ -1739,5 +1740,28 @@ write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALS
 C_datahub<-bind_rows(
   C_time%>%select(-chart_year)%>%mutate(breakdown="Total",subgroups="Total"),
   C_breakdown
-)
+)%>%
+  #rename some of the elements so they make sense here
+  mutate(metric=case_when(metric=="  All "~"Population volume",
+                          metric=="empRate"~"Employment rate",
+                          metric== "selfempRate"~ "Self-employment rate",
+                          metric=="unempRate" ~ "Unemployment rate",
+                          metric=="inactiveRate" ~ "Inactive rate",
+                          metric=="Employment" ~ "Employment volume",
+                          metric=="  Self Employed " ~ "Self-employment volume",
+                          metric=="  Unemployed " ~ "Unemployed volume",
+                          metric=="  Inactive " ~ "Inactive volume",
+                          metric=="  Economically Active " ~ "Economically active volume",
+                          metric=="  Employees " ~ "Employees volume",
+                          metric=="achievements_rate_per_100000_population" ~ "FE achievement rate per 100k",
+                          metric=="participation_rate_per_100000_population" ~ "FE participation rate per 100k",
+                          metric=="starts_rate_per_100000_population" ~ "FE start rate per 100k",
+                          metric=="achievements" ~ "FE achievements volume",
+                          metric=="participation" ~ "FE participation volume",
+                          metric=="starts" ~ "FE starts volume",
+                          TRUE~metric
+                          ))%>%
+  mutate(breakdown=case_when(breakdown=="Occupation"~"Occupation split over geography",
+                             breakdown=="Industry"~"Industry split over geography",
+                             TRUE~breakdown))
 write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
