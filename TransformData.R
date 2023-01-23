@@ -363,7 +363,7 @@ format.EmpInd.APS <- function(x) {
     mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
     filter(check == 1) %>%
     filter(!grepl("nomisweb", area)) %>%
-    select(year = x2018, area, everything(), -check) %>%
+    select(year = x2017, area, everything(), -check) %>%
     mutate(area2 = gsub(".*-", "", area)) %>%
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>%
