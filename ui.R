@@ -272,6 +272,7 @@ padding-top:15px
               p("This tab provides a summary of labour market and skills information for the selected geographic area. It includes a time series of data on employment, online job adverts, and further education and skills achievements."),
               h3(actionLink("link_to_tabpanel_employment", "Employment")),
               p("This tab provides information on employment for the selected geographic area including data on employment rates over time, the share of employment by occupation, and the share of employment by industry. There is an option to compare against another area in England at the same geographic level."),
+              p("SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues."),
               h3(actionLink("link_to_tabpanel_vacancies", "Online job adverts")),
               p("This tab provides experimental online job advert data, split by profession, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "),
               h3(actionLink("link_to_tabpanel_enterprise_level", "Enterprises")),
@@ -306,8 +307,8 @@ padding-top:15px
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("25 Jan 2023 (0.5.1)"),
-              p("Updated employment rates and employment by industry figures with Oct-Sept 2022 Annual Population Survey data."),
+              p("25 Jan 2023 (0.4.2)"),
+              p("Updated employment rates and employment by industry figures with Oct-Sep 2022 Annual Population Survey data."),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
@@ -438,6 +439,7 @@ padding-top:15px
               .noWS = c("after")
             ), "."
           ),
+          p("SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues."),
           h3("ONS-Textkernel online job adverts"),
           p("These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.
             The dashboard shows the monthly average number of live adverts from 2017 to 2022."),

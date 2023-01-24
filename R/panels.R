@@ -218,7 +218,7 @@ panel_employment <- function() {
     fluidRow(
       column(
         width = 6,
-        h2("Employment rates: Oct-Sept 2018 to Oct-Sep 2022"),
+        h2("Employment rates: Oct-Sep 2018 to Oct-Sep 2022"),
         plotlyOutput("EmpRate_time"),
         details(
           label = "Source: Annual Population Survey",
@@ -226,7 +226,7 @@ panel_employment <- function() {
           tags$ol(
             # Is this correct (16-64 year olds)? Should be the same as for occupation table
             tags$li("Figures are for 16-64 year olds."),
-            tags$li("Years represent Oct to Sept period. So 2017 is the Oct 2017 – Sept 2018 period.")
+            tags$li("Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.")
           )
         )
       ),
@@ -234,6 +234,7 @@ panel_employment <- function() {
       column(
         width = 6,
         h2("Employment share by occupation: Jan-Dec 2021"),
+        p("SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues."),
         dataTableOutput("EmpOcc"),
         br(),
         details(
@@ -252,7 +253,6 @@ panel_employment <- function() {
                 .noWS = c("after")
               ), "."
             ),
-            tags$li("SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues.")
           )
         )
       )
@@ -261,7 +261,7 @@ panel_employment <- function() {
       column(
         12,
         ### employment by industry bar chart ----
-        h2("Employment share by industry: Oct 2021 to Sept 2022"),
+        h2("Employment share by industry: Oct 2021 to Sep 2022"),
         plotlyOutput("empind")
       )
     ),
