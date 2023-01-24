@@ -423,7 +423,7 @@ server <- function(input, output, session) {
       filter(area == input$lep1)
 
     ggplot(empLine, aes(x = Year - 1, y = Employment, group = area, text = paste0(
-      "Year: Aug-Sept ", year, "<br>",
+      "Year: Oct-Sept ", year, "<br>",
       "Employment: ", format(Employment, big.mark = ","), "<br>"
     ))) +
       geom_line(data = empLine %>% filter(Year <= 21)) +
