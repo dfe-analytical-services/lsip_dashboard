@@ -252,7 +252,7 @@ panel_employment <- function() {
                 .noWS = c("after")
               ), "."
             ),
-            tags$li("SOC2020 data is available for the latest period via NOMIS but is not included here dashbaord due to ongoing issues.")
+            tags$li("SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues.")
           )
         )
       )
