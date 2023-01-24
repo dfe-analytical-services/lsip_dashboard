@@ -15,7 +15,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div( # need a div to add hover over title
-              title = "Source: APS. 2021 calendar year",
+              title = "Source: APS. Oct-Sep 2022",
               uiOutput("locland.emplcnt0"),
             )
           ),
@@ -29,7 +29,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: APS. 2021 calendar year",
+              title = "Source: APS. Oct-Sep 2022",
               uiOutput("locland.emplrate0"),
             )
           ),
@@ -218,7 +218,7 @@ panel_employment <- function() {
     fluidRow(
       column(
         width = 6,
-        h2("Employment rates: Jul-Jun 2018 to Jul-Jun 2022"),
+        h2("Employment rates: Oct-Sept 2018 to Oct-Sep 2022"),
         plotlyOutput("EmpRate_time"),
         details(
           label = "Source: Annual Population Survey",
@@ -226,7 +226,7 @@ panel_employment <- function() {
           tags$ol(
             # Is this correct (16-64 year olds)? Should be the same as for occupation table
             tags$li("Figures are for 16-64 year olds."),
-            tags$li("Years represent Jul-Jun period. So 2017 is the Jul 2017 – June 2018 period.")
+            tags$li("Years represent Oct to Sept period. So 2017 is the Oct 2017 – Sept 2018 period.")
           )
         )
       ),
@@ -251,7 +251,8 @@ panel_employment <- function() {
                 "article",
                 .noWS = c("after")
               ), "."
-            )
+            ),
+            tags$li("SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues.")
           )
         )
       )
@@ -260,7 +261,7 @@ panel_employment <- function() {
       column(
         12,
         ### employment by industry bar chart ----
-        h2("Employment share by industry: Jul 2021 to Jun 2022"),
+        h2("Employment share by industry: Oct 2021 to Sept 2022"),
         plotlyOutput("empind")
       )
     ),

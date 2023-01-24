@@ -399,7 +399,7 @@ server <- function(input, output, session) {
     empCntChange <- emp2022()$Employment - emp2021()$Employment
 
     # print with formatting
-    h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("Oct-Sept 2022", style = "font-size: 16px;font-weight:normal;"), br(),
       format(empCnt2022, big.mark = ","), br(),
       span(
         format_pm(empCntChange) # plus-minus and comma sep formatting
@@ -423,7 +423,7 @@ server <- function(input, output, session) {
       filter(area == input$lep1)
 
     ggplot(empLine, aes(x = Year - 1, y = Employment, group = area, text = paste0(
-      "Year: Jul-Jun ", year, "<br>",
+      "Year: Oct-Sept ", year, "<br>",
       "Employment: ", format(Employment, big.mark = ","), "<br>"
     ))) +
       geom_line(data = empLine %>% filter(Year <= 21)) +
@@ -481,7 +481,7 @@ server <- function(input, output, session) {
     empRateChange <- emp2022()$empRate - emp2021()$empRate
 
     # print with formatting
-    h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("Oct-Sept 2022", style = "font-size: 16px;font-weight:normal;"), br(),
       paste0(format(100 * empRate2022, digit = 2), "%"), br(),
       span(
         paste0(sprintf("%+.0f", 100 * empRateChange), "ppts"),
@@ -509,7 +509,7 @@ server <- function(input, output, session) {
       x = Year - 1, y = empRate,
       group = area,
       text = paste0(
-        "Year: Jul-Jun ", year, "<br>",
+        "Year: Oct-Sept ", year, "<br>",
         "Area: ", area, "<br>",
         "Employment rate: ", format(100 * empRate, digit = 2), "%<br>"
       )
@@ -1290,7 +1290,7 @@ server <- function(input, output, session) {
             format(100. * emp2022()$empRate, digits = 2),
             "%"
           )),
-          p(paste0("employment rate Jul-Jun 2022 in ", input$lep1)),
+          p(paste0("employment rate Oct-Sept 2022 in ", input$lep1)),
         )
       )
     )
@@ -1313,7 +1313,7 @@ server <- function(input, output, session) {
             )$empRate, digits = 2),
             "%"
           )),
-          p(paste0("employment rate Jul-Jun 2022 in ", input$lep2)),
+          p(paste0("employment rate Oct-Sept 2022 in ", input$lep2)),
         )
       )
     )
@@ -1329,7 +1329,7 @@ server <- function(input, output, session) {
           h3(format(emp2022()$Employment,
             scientific = FALSE, big.mark = ","
           )),
-          p(paste0("in employment Jul-Jun 2022 in ", input$lep1)),
+          p(paste0("in employment Oct-Sept 2022 in ", input$lep1)),
         )
       )
     )
@@ -1352,7 +1352,7 @@ server <- function(input, output, session) {
             )$Employment,
             scientific = FALSE, big.mark = ","
           )),
-          p(paste0("in employment Jul-Jun 2022 in ", input$lep2)),
+          p(paste0("in employment Oct-Sept 2022 in ", input$lep2)),
         )
       )
     )
@@ -1402,7 +1402,7 @@ server <- function(input, output, session) {
         x = year - 1, y = empRate,
         color = Areas, group = Areas,
         text = paste0(
-          "Year: Jul-Jun ", year, "<br>",
+          "Year: Oct-Sept ", year, "<br>",
           "Area: ", Areas, "<br>",
           "Employment rate: ", scales::percent(round(empRate, 2)), "<br>"
         )
