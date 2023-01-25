@@ -1,4 +1,4 @@
-#### 0.Intro ####
+# 0.Intro ----
 # Title: LSIP dashboard data transform
 # Author: Hannah Cox/Paul James/Ali Othman
 # Date: 18th May 2022
@@ -18,7 +18,7 @@ library(janitor)
 library(openxlsx)
 library(reshape2)
 
-#### 2.Region lists and lookups ####
+# 2.Region lists and lookups ----
 # list leps, LSIPs and MCA's for dropdowns
 C_LEP2020 <- I_LEP2020 %>%
   distinct(Area = LEP21NM1) %>%
@@ -57,8 +57,8 @@ C_LADLSIP2020 <- distinct(I_LEP2020, LAD21CD, LAD21NM, LSIP) %>%
 C_mcalookup <- I_mcalookup
 
 
-#### 3 Data cleaning functions ####
-#### 3.1 APS Data ####
+# 3.Data cleaning functions -----
+## 3.1 APS Data ----
 #### Employment by occupation ####
 format.EmpOcc.APS <- function(x) {
   reformat <- x %>%
@@ -358,9 +358,6 @@ D_qual_APS1721 <- format.qual.APS(I_qual_APS1721) %>%
 write.csv(D_qual_APS1721, file = "Data\\AppData\\D_qual_APS1721.csv", row.names = FALSE)
 
 
-# Tidy up data table
-names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
-write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
 
 #### Employment by industry ####
 format.EmpInd.APS <- function(x) {
@@ -1513,3 +1510,8 @@ write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.name
 #   select(-vacanciesEng) %>%
 #   mutate(Year = as.numeric(substr(time_period, 5, 6)))
 # write.csv(C_VacPcArea, file = "Data\\AppData\\C_VacPcArea.csv", row.names = FALSE)
+
+
+#4. Tidy up data table ----
+names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
+write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
