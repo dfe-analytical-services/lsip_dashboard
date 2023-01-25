@@ -1,5 +1,5 @@
 server <- function(input, output, session) {
-  # Loading screen ---------------------------------------------------------------------------
+  # 0.Loading screen ---------------------------------------------------------------------------
   # Call initial loading screen
 
   hide(id = "loading-content", anim = TRUE, animType = "fade")
@@ -11,48 +11,48 @@ server <- function(input, output, session) {
   # geo1, geo2
   chartColors2 <- c("#12436D", "#28A197")
 
-  # HOMEPAGE ----
-  # Create link to overview tab
+  # 1. HOMEPAGE ----
+  ## Create link to overview tab ----
   observeEvent(input$link_to_tabpanel_overview, {
     updateTabsetPanel(session, "navbar", "Local skills") # Get into app
     updateTabsetPanel(session, "datatabset", "Overview") # then pick tab
   })
-  # Create link to employment data tab
+  ## Create link to employment data tab ----
   observeEvent(input$link_to_tabpanel_employment, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Employment")
   })
-  # Create link to vacancy data tab
+  ## Create link to vacancy data tab ----
   observeEvent(input$link_to_tabpanel_vacancies, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Online job adverts")
   })
-  # Create link to skills data tab
+  ## Create link to skills data tab ----
   observeEvent(input$link_to_tabpanel_FE, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Skills")
   })
-  # Create link to qualification data tab
+  ## Create link to qualification data tab ----
   observeEvent(input$link_to_tabpanel_qualification_level, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Qualification level")
   })
-  # Create link to destinations data tab
+  ## Create link to destinations data tab ----
   observeEvent(input$link_to_tabpanel_destinations_level, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Destinations")
   })
-  # Create link to enterprise data tab
+  ## Create link to enterprise data tab ----
   observeEvent(input$link_to_tabpanel_enterprise_level, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateTabsetPanel(session, "datatabset", "Enterprises")
   })
-  # Create link to data tab
+  ## Create link to data tab ----
   observeEvent(input$link_to_tabpanel_data, {
     updateTabsetPanel(session, "navbar", "Data & downloads")
   })
 
-  # create table download datasets
+  ## Create table download datasets ----
   output$downloadData1 <- downloadHandler(
     filename = function() {
       "EmploymentRateIndicators.xlsx"
@@ -194,13 +194,13 @@ server <- function(input, output, session) {
   )
 
 
-  # create download links
+  ## create download links ----
   output$hidden_downloads <- renderUI(
     lapply(1:12, function(i) {
       downloadLink(paste0("downloadData", i), "download", class = "hiddenLink")
     })
   )
-  # create data table to show
+  ## create data table to show ----
   output$DataTbl <- renderDataTable({
     DT::datatable(I_DataTable %>%
       mutate("Dashboard data" = lapply(
@@ -211,7 +211,8 @@ server <- function(input, output, session) {
       )), escape = FALSE, options = list(dom = "t", "pageLength" = 15), rownames = FALSE)
   })
 
-  # OVERVIEW ----
+  # 2. OVERVIEW ----
+  ## 2.1 Drop downs ----
 
   # alter area dropdown depending if lep or lsip
   output$lep1_geo <- renderUI({
@@ -286,7 +287,7 @@ server <- function(input, output, session) {
   })
 
 
-  # FE filters
+  ## 2.2 FE filters ----
   output$level_on <- renderUI({
     selectizeInput("levelGroup", "Choose level of training",
       choices = C_Achieve_ILR1621 %>%
@@ -318,8 +319,8 @@ server <- function(input, output, session) {
     paste0("Overview of local landscape in ", input$lep1)
   })
 
-  ### Downloads----
-  # download all indicators
+  ##  2.3 Downloads ----
+  ## download all indicators ----
   list_of_datasets0 <- list(
     "1a.Emp by occupation" = D_EmpOcc_APS1721,
     "1b.Emp rate" = D_EmpRate_APS1822,
@@ -346,7 +347,7 @@ server <- function(input, output, session) {
     }
   )
 
-  # Download current area indicators
+  ## Download current area indicators ----
   filtered_data0 <- reactive({
     list(
       "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
@@ -374,7 +375,7 @@ server <- function(input, output, session) {
     }
   )
 
-  ## KPIs and charts----
+  ## 2.4 KPIs and charts----
 
   # get emp data for current area
   empLEP <- eventReactive(input$lep1, {
@@ -1215,7 +1216,7 @@ server <- function(input, output, session) {
   })
 
 
-  # EMPLOYMENT ----
+  # 3.EMPLOYMENT ----
   # define page title
   output$page1title <- renderUI({
     paste0(
@@ -1229,7 +1230,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ### Downloads----
+  ## 3.1 Downloads----
   list_of_datasets1 <- list(
     "1a.Emp by occupation" = D_EmpOcc_APS1721,
     "1b.Emp rate" = D_EmpRate_APS1822,
@@ -1276,7 +1277,7 @@ server <- function(input, output, session) {
     }
   )
 
-  ## KPIs ----
+  ## 3.2 KPIs/Charts ----
 
   ### Employment rate -----
   output$locland.emplrate <- renderValueBox({
@@ -1377,7 +1378,7 @@ server <- function(input, output, session) {
     }
   })
 
-  ## Employment rate over time line graph ----
+  ### Employment rate over time line graph ----
   EmpRate_time <- eventReactive(c(input$lep1, input$lep2), {
     EmpRateTime <- C_EmpRate_APS1822 %>%
       select(year, area, geographic_level, empRate) %>%
@@ -1425,7 +1426,7 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
 
-  ## Employment by occupation data table ----
+  ### Employment by occupation data table ----
   EmpOcc <- eventReactive(c(input$lep1, input$lep2), {
     EmpOcc <- C_EmpOcc_APS1721 %>%
       filter(
@@ -1459,7 +1460,7 @@ server <- function(input, output, session) {
       formatPercentage(2:ncol(df), 0)
   })
 
-  ## employment by industry (SIC 2007) bar chart ----
+  ### employment by industry (SIC 2007) bar chart ----
   empind <- eventReactive(c(input$lep1, input$lep2), {
     empind_22 <- C_EmpInd2_APS1822 %>%
       filter(
@@ -1509,7 +1510,7 @@ server <- function(input, output, session) {
   })
 
 
-  # # VACANCIES ----
+  # 4.VACANCIES ----
   # # define page title
   # output$page3title <- renderUI({
   #   paste0(
@@ -1523,7 +1524,7 @@ server <- function(input, output, session) {
   #   )
   # })
 
-  # ### Downloads----
+  ## 4.1 Downloads----
   # # download skills indicators
   # list_of_datasets2 <- list("2.Vacancies" = C_Vacancy_ONS1722)
   # output$download_btn2a <- downloadHandler(
@@ -1553,7 +1554,7 @@ server <- function(input, output, session) {
   #   }
   # )
 
-  ## KPIs ----
+  ## 4.2 KPIs ----
   ### ONS job advert unit percent of total area 1
   # output$jobad.pc <- renderValueBox({
   #   div(
@@ -1659,7 +1660,7 @@ server <- function(input, output, session) {
   #   }
   # })
   #
-  # ## Online job vacancy units over time line chart ----
+  ## 4.3 Online job vacancy units over time line chart ----
   # jobad.time <- eventReactive(c(input$lep1, input$lep2), {
   #   JobTime <- C_Vacancy_England %>%
   #     filter(geographic_level == input$GeoType & (area == input$lep1 |
@@ -1702,7 +1703,7 @@ server <- function(input, output, session) {
   # })
 
 
-  # Skills ----
+  #5. SKILLS ----
   # define page title
   output$page2title <- renderUI({
     paste0(
@@ -1716,7 +1717,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ### Downloads----
+  ## 5.1 Downloads----
   # download skills indicators
   list_of_datasets3 <- list(
     "3a.FE achievements SSA" = D_Achieve_ILR21,
@@ -1757,7 +1758,7 @@ server <- function(input, output, session) {
     }
   )
 
-  ## KPIs ----
+  ## 5.2 KPIs/Charts ----
   ### FE achievements -----
   output$skisup.FEach <- renderValueBox({
     div(
@@ -1936,7 +1937,7 @@ server <- function(input, output, session) {
     }
   })
 
-  ## Achievements over time line chart ----
+  ### Achievements over time line chart ----
   # title
   output$feLineTitle <- renderUI({
     paste0(str_to_sentence(input$metricGroup), ": 2016/17 to 2021/22")
@@ -2029,7 +2030,7 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
 
-  ## Achievements pc bar chart ----
+  ### Achievements pc bar chart ----
   Ach_SSA_pc <- eventReactive(c(input$lep1, input$lep2, input$levelBar, input$sexBar, input$metricBar), {
     AchSSA_21 <- C_Achieve_ILR21 %>%
       filter(
@@ -2082,7 +2083,7 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
 
-  # Qualification level ----
+  # 6. QUALIFICATION LEVEL ----
   # turn off comparison boxes if none is selected
   output$qual_comp <- renderUI({
     if ("lep2" %in% names(input)) {
@@ -2144,8 +2145,8 @@ server <- function(input, output, session) {
 
     }
   })
-
-  # KPI 1
+## 6.1 KPIS and charts ----
+  #### KPI 1 ----
   output$qualup.nvq2 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2172,7 +2173,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # KPI 2
+  ### KPI 2 ----
   output$qualup.nvq2.2 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2200,7 +2201,7 @@ server <- function(input, output, session) {
   })
 
 
-  # KPI3
+  ### KPI3 ----
   output$qualup.nvq3 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2228,7 +2229,7 @@ server <- function(input, output, session) {
   })
 
 
-  # KPI 4
+  ### KPI 4 ----
   output$qualup.nvq3.2 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2262,7 +2263,7 @@ server <- function(input, output, session) {
   # })
 
 
-  # qualification line chart
+  ### Qualification line chart ----
   qual_time <- eventReactive(c(input$lep1, input$lep2, input$qualGroup, input$ageGroupQual, input$genGroup), {
     qtime <- C_qual2_APS1721 %>%
       filter(
@@ -2333,7 +2334,7 @@ server <- function(input, output, session) {
   })
 
 
-  ### Downloads----
+  ## 6.2 Downloads----
   # download qualifications indicators
   list_of_datasets4 <- list(
     "4a. Qualification level" = D_qual_APS1721
@@ -2371,7 +2372,7 @@ server <- function(input, output, session) {
   )
 
 
-  # Destinations ----
+  # 7. DESTINATIONS  ----
 
   # turn off comparison boxes if none is selected
   output$dest_comp <- renderUI({
@@ -2422,8 +2423,8 @@ server <- function(input, output, session) {
 
     }
   })
-
-  # KPI 1
+ ## 7.1 KPIs/Charts ----
+  ### KPI 1 ----
   output$destup.eduempks4 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2450,7 +2451,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # KPI 2
+  ### KPI 2 ----
   output$destup.eduempks4.2 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2477,7 +2478,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # KPI 3
+  ### KPI 3 ----
   output$destup.eduempks5 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2504,7 +2505,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # KPI 4
+  ### KPI 4 ----
   output$destup.eduempks5.2 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2531,7 +2532,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # KPI 5
+  ### KPI 5 ----
   output$destup.eduempks4eng <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2558,7 +2559,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # KPI 6
+  ### KPI 6 ----
   output$destup.eduempks5eng <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2605,7 +2606,7 @@ server <- function(input, output, session) {
       select(`Cohort Group`) %>% distinct()), " 19/20 cohort")
   })
 
-  # key stage bar chart
+  ### key stage bar chart ----
   key_stage_2021 <- eventReactive(c(input$lep1, input$lep2, input$cohortGroup, input$keystageGroup), {
     ks_21 <- C_KS4_KS5_2021 %>%
       filter(
@@ -2665,7 +2666,7 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
 
-  ### Downloads----
+  ## 7.2 Downloads----
   # download destinations indicators
   list_of_datasets5 <- list(
     "5a. KS4 destinations" = D_KS4destin_1521,
@@ -2710,7 +2711,7 @@ server <- function(input, output, session) {
   )
 
 
-  # Enterprise ----
+  #8. ENTERPRISE ----
 
   # turn off comparison boxes if none is selected
   output$ent_comp <- renderUI({
@@ -2760,8 +2761,8 @@ server <- function(input, output, session) {
       multiple = FALSE, selected = "Micro 0 to 9"
     )
   })
-
-
+ 
+## 8.1 KPIs/Charts ----
   # KPI 1
   output$ent.mic <- renderValueBox({
     div(
@@ -2788,7 +2789,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # KPI 2
+  ### KPI 2 ----
   output$ent.mic.2 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2814,7 +2815,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # KPI 3
+  ### KPI 3 ----
   output$ent.sma <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2840,7 +2841,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # KPI 4
+  ### KPI 4 ----
   output$ent.sma.2 <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2867,7 +2868,7 @@ server <- function(input, output, session) {
   })
 
 
-  # KPI 5
+  ### KPI 5 ----
   output$ent.microeng <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -2893,7 +2894,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # births and deaths line chart
+  ### births and deaths line chart ----
   birth_death_time <- eventReactive(c(input$lep1, input$lep2), {
     bir_dea_demo <- C_enterprise_demo1621 %>%
       filter(
@@ -2946,7 +2947,7 @@ server <- function(input, output, session) {
 
 
 
-  # enterprise bar chart
+  ### enterprise bar chart ----
   # key stage bar chart
   enterprisesize <- eventReactive(c(input$lep1, input$lep2), {
     ent_22 <- C_empent2_UBC1822 %>%
@@ -3004,7 +3005,7 @@ server <- function(input, output, session) {
     paste0(input$industryGroup, " enterprises: ", input$entGroup)
   })
 
-  # enterprise line chart
+  ### enterprise line chart ----
   enterprise <- eventReactive(c(input$lep1, input$lep2, input$industryGroup, input$entGroup), {
     ent <- C_empentind3_UBC1822 %>%
       filter(
@@ -3061,7 +3062,7 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
 
-  ### Downloads----
+  ## 8.2 Downloads----
   # download destinations indicators
   list_of_datasets6 <- list(
     "6a. Ent by emp sizey" = D_empent_UBC1822,
@@ -3120,7 +3121,8 @@ server <- function(input, output, session) {
     paste0(input$profChoice, " online job adverts by detailed profession: Oct 2022")
   })
 
-  #### Job adverts ----
+  # 9. JOB ADVERTS ----
+  ## 9.1 KPIs/Charts  ----
   # job advert count
   output$profKpi1 <- renderValueBox({
     # call 2022 and 2021 values for chosen area
@@ -3145,7 +3147,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # job adverts for profession
+  ### job adverts for profession ----
   output$profKpiProf1 <- renderValueBox({
     # call 2022 and 2021 values for chosen area
     vacancyTotalLatest <- C_OnsProfTime %>%
@@ -3174,7 +3176,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # Job advert change ----
+  ### Job advert change ----
   output$profKpi2 <- renderValueBox({
     # chnage
     vacancyTotalLatest <- C_OnsProfTime %>%
@@ -3207,7 +3209,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # Job advert change ----
+  ### Job advert change ----
   output$profKpiProf2 <- renderValueBox({
     # chnage
     vacancyTotalLatest <- C_OnsProfTime %>%
@@ -3250,7 +3252,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # Job advert change England
+  ### Job advert change England ----
   output$profKpi2Eng <- renderValueBox({
     # chnage
     vacancyTotalLatest <- C_OnsProfTime %>%
@@ -3281,7 +3283,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # Job advert change England for profession
+  ### Job advert change England for profession ----
   output$profKpi2ProfEng <- renderValueBox({
     # chnage
     vacancyTotalLatest <- C_OnsProfTime %>%
@@ -3411,7 +3413,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # Job advert change ----
+  ### Job advert change ----
   output$profKpi2comp <- renderValueBox({
     # chnage
     vacancyTotalLatest <- C_OnsProfTime %>%
@@ -3444,7 +3446,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # Job advert change for profession ----
+  ### Job advert change for profession ----
   output$profKpi2compProf <- renderValueBox({
     # chnage
     vacancyTotalLatest <- C_OnsProfTime %>%
@@ -3487,7 +3489,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # adverts over time
+  ### adverts over time ----
   profTime <- eventReactive(c(input$lep1, input$lep2, input$profChoice), {
     profTimeData <-
       C_OnsProfTime %>%
@@ -3550,7 +3552,7 @@ server <- function(input, output, session) {
   })
 
   # adverts by profession
-  ## Employment by occupation data table ----
+  ### Employment by occupation data table ----
   profTable <- eventReactive(c(input$lep1, input$lep2), {
     # create areas chosen table
     profTableArea <- C_OnsProfTime %>%
@@ -3671,7 +3673,7 @@ server <- function(input, output, session) {
       formatPercentage(2:ncol(df), 0)
   })
 
-  ### Downloads----
+  ## 9.2 Downloads----
 
   list_of_datasetsONS <- list(
     "2a.Adverts over time" = D_OnsProfTime,
