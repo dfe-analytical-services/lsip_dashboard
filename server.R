@@ -1457,7 +1457,9 @@ server <- function(input, output, session) {
   output$EmpOcc <- renderDataTable({
     df <- EmpOcc()
     datatable(df, options = list(order = list(2, "desc")), rownames = FALSE) %>%
-      formatPercentage(2:ncol(df), 0)
+      formatPercentage(2:ncol(df), 0)  %>% 
+      color_gradient("England") %>% 
+      color_gradient(input$lep1)
   })
 
   ### employment by industry (SIC 2007) bar chart ----
