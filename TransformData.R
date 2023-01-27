@@ -1770,3 +1770,7 @@ write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
 names(I_InterventionTable) <- gsub(".", " ", names(I_InterventionTable), fixed = TRUE)
 write.csv(I_InterventionTable, file = "Data\\AppData\\I_InterventionTable.csv", row.names = FALSE)
 
+# Tidy up sources table
+names(I_SourcesTable) <- gsub(".", " ", names(I_SourcesTable), fixed = TRUE)
+write.csv(I_SourcesTable, file = "Data\\AppData\\I_SourcesTable.csv", row.names = FALSE)
+

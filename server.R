@@ -2359,6 +2359,11 @@ server <- function(input, output, session) {
     DT::datatable(I_InterventionTable, escape = FALSE, options = list(dom = "t"), rownames = FALSE)
   })
   
+  ##FE sources table
+  output$sourcesTable = DT::renderDataTable({
+    DT::datatable(I_SourcesTable, escape = FALSE, options = list(dom = "t"), rownames = FALSE)
+  })
+  
   # Stop app ---------------------------------------------------------------------------------
 
   session$onSessionEnded(function() {

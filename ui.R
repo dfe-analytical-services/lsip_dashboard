@@ -710,7 +710,18 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           DT::dataTableOutput("interventionTable"),
           br()
         ))
-      )
+      ),
+    #FE data sources
+    tabPanel(
+      "FE data sources",
+      fluidRow(
+        column(
+          12,
+          h1("FE data sources"),
+          DT::dataTableOutput("sourcesTable"),
+          br()
+        ))
+    )
     
   ), # End of navBarPage
   # Footer ====================================================================

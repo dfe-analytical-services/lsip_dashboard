@@ -217,3 +217,8 @@ folder <- "17_FeInterventions"
 sheetNum <- 1
 I_InterventionTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
+## Load Fe sources table ----
+folder <- "18_FeSources"
+sheetNum <- 1
+I_SourcesTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+
