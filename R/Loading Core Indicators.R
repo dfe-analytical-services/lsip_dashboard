@@ -66,3 +66,7 @@ C_datahub <- read.csv(file = "./Data/AppData/C_datahub.csv", check.names = FALSE
 ## Intervention table ----
 I_InterventionTable <- read.csv(file = "./Data/AppData/I_InterventionTable.csv", check.names = FALSE)
 
+## Sources table ----
+I_SourcesTable <- read.csv(file = "./Data/AppData/I_SourcesTable.csv", check.names = FALSE)
+
+
