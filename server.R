@@ -2258,8 +2258,16 @@ server <- function(input, output, session) {
   output$hubTable <- renderDataTable({
     DT::datatable(C_datahub %>%
       filter(
-        (if(is.null(input$hubGeog)==TRUE){TRUE}else{geographic_level %in% input$hubGeog} |geographic_level==if("National" %in% input$hubComparators){"COUNTRY"}else{TRUE}),
-        (if(is.null(input$hubArea)==TRUE){TRUE}else{area %in% input$hubArea}|area==if("National" %in% input$hubComparators){"England"}else{TRUE}),
+        (
+          if(is.null(input$hubGeog)==TRUE){TRUE}else{geographic_level %in% input$hubGeog}
+           |(if("Yes" %in% input$hubLA){geographic_level=="LADU"}else{geographic_level=="xxx"})
+           |(if("National" %in% input$hubComparators){geographic_level=="COUNTRY"}else{geographic_level=="xxx"})
+         ) , 
+        (
+          if(is.null(input$hubArea)==TRUE){TRUE}else{area %in% input$hubArea}
+          |(if("Yes" %in% input$hubLA){area %in% (C_Geog %>% filter(geog == "LADU", LEP %in% input$hubArea)%>%distinct(areaName))$areaName}else{geographic_level=="xxx"})
+          |(if("National" %in% input$hubComparators){area=="England"}else{geographic_level=="xxx"})
+        ),
         if(is.null(input$hubYears)==TRUE){TRUE}else{time_period %in% input$hubYears},
         if(is.null(input$hubMetric)==TRUE){TRUE}else{metric %in% input$hubMetric},
         (if(is.null(input$hubBreakdowns)==TRUE){TRUE}else{breakdown %in% input$hubBreakdowns})
@@ -2269,6 +2277,7 @@ server <- function(input, output, session) {
         Data=metric,Breakdown=breakdown,Splits=subgroups,Value=value
       ))
     #  , escape = FALSE, options = list(dom = "t"), rownames = FALSE)
+    #print(input$hubLA)
   })
 
   # create hub code
