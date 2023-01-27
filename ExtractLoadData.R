@@ -211,3 +211,9 @@ I_mapMCA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0(
 folder <- "16_APSempind"
 sheetNum <- 1
 I_empind_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+
+## Load Fe Interventions table ----
+folder <- "17_FeInterventions"
+sheetNum <- 1
+I_InterventionTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+

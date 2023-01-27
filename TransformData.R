@@ -1765,3 +1765,8 @@ C_datahub<-bind_rows(
                              breakdown=="Industry"~"Industry split over geography",
                              TRUE~breakdown))
 write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
+
+# Tidy up intervention table
+names(I_InterventionTable) <- gsub(".", " ", names(I_InterventionTable), fixed = TRUE)
+write.csv(I_InterventionTable, file = "Data\\AppData\\I_InterventionTable.csv", row.names = FALSE)
+

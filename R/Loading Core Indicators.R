@@ -118,3 +118,7 @@ load(file = "./Data/AppData/C_Geog.Rdata")
 C_time <- read.csv(file = "./Data/AppData/C_time.csv", check.names = FALSE)
 C_breakdown <- read.csv(file = "./Data/AppData/C_breakdown.csv", check.names = FALSE)
 C_datahub <- read.csv(file = "./Data/AppData/C_datahub.csv", check.names = FALSE)
+
+## Intervention table ----
+I_InterventionTable <- read.csv(file = "./Data/AppData/I_InterventionTable.csv", check.names = FALSE)
+
