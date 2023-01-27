@@ -448,7 +448,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         column(
           12,
           p("If you have a query code, enter it here:"),
-          textInput("hubCode", label = NULL)
+          textInput("hubCode", label = NULL),
+          
         )
       ),
       fluidRow(column(12, h2("Geography"))),
@@ -505,7 +506,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         column(
           12,
           p("If you want to reuse this query, use this code:"),
-          p(uiOutput("hubCode")),
+          p(uiOutput("uniqueCode")),
         )
       ),
       fluidRow(
