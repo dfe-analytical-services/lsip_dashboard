@@ -2282,7 +2282,12 @@ server <- function(input, output, session) {
   output$hubCode <- renderUI({
     round(runif(1, 0, 10) * 1000000, 0)
   })
-
+  
+  ##FE interventions table
+  output$interventionTable = DT::renderDataTable({
+    DT::datatable(I_InterventionTable, escape = FALSE, options = list(dom = "t"), rownames = FALSE)
+  })
+  
   # Stop app ---------------------------------------------------------------------------------
 
   session$onSessionEnded(function() {

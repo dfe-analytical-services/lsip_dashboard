@@ -657,7 +657,19 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         )
       ),
       br()
-    )
+    ),
+    #FE interventions
+    tabPanel(
+      "FE interventions",
+      fluidRow(
+        column(
+          12,
+          h1("FE interventions"),
+          DT::dataTableOutput("interventionTable"),
+          br()
+        ))
+      )
+    
   ), # End of navBarPage
   # Footer ====================================================================
 
