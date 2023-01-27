@@ -2347,6 +2347,8 @@ server <- function(input, output, session) {
         Year = time_period, Geography = geographic_level, Area = area,
         Data=metric,Breakdown=breakdown,Splits=subgroups,Value=value
       ))
+    #  , escape = FALSE, options = list(dom = "t"), rownames = FALSE)
+    #print(input$hubLA)
   })
 
   # create hub code
