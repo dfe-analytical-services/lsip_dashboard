@@ -3624,7 +3624,9 @@ server <- function(input, output, session) {
           vals$row_color,
           default = "white"
         )
-      )
+      ) %>% 
+      color_gradient("England") %>% 
+      color_gradient(input$lep1)
   })
 
   # adverts by detailed profession
