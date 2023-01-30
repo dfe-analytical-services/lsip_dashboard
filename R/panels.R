@@ -202,7 +202,8 @@ panel_employment <- function() {
     ### KPI boxes ----
     fluidRow(
       valueBoxOutput("locland.emplcnt"),
-      valueBoxOutput("locland.emplrate")
+      valueBoxOutput("locland.emplrate"),
+      valueBoxOutput("locland.engrate")
     ),
     fluidRow(
       uiOutput("emp_comp")

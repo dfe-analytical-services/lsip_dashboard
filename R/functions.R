@@ -23,8 +23,9 @@ color_gradient <- function(dt, column_name, gradient_colors = c("#718ea7","#F7FB
   dt %>% 
     formatStyle(column_name, 
                 backgroundColor = styleEqual(
-                  sort(unique(dt$x$data[[column_name]]), decreasing = TRUE),
+               sort(unique(dt$x$data[[column_name]]), decreasing = TRUE),
                   col_func(length(unique(dt$x$data[[column_name]])))
                 )
     ) 
 }
+
