@@ -1457,7 +1457,9 @@ server <- function(input, output, session) {
   output$EmpOcc <- renderDataTable({
     df <- EmpOcc()
     datatable(df, options = list(order = list(2, "desc")), rownames = FALSE) %>%
-      formatPercentage(2:ncol(df), 0)
+      formatPercentage(2:ncol(df), 0)  %>% 
+      color_gradient("England") %>% 
+      color_gradient(input$lep1)
   })
 
   ### employment by industry (SIC 2007) bar chart ----
@@ -3622,7 +3624,9 @@ server <- function(input, output, session) {
           vals$row_color,
           default = "white"
         )
-      )
+      ) %>% 
+      color_gradient("England") %>% 
+      color_gradient(input$lep1)
   })
 
   # adverts by detailed profession
@@ -3670,7 +3674,9 @@ server <- function(input, output, session) {
   output$profDetail <- renderDataTable({
     df <- profDetail()
     datatable(df, options = list(order = list(2, "desc")), rownames = FALSE) %>%
-      formatPercentage(2:ncol(df), 0)
+      formatPercentage(2:ncol(df), 0) %>% 
+      color_gradient("England") %>% 
+      color_gradient(input$lep1)
   })
 
   ## 9.2 Downloads----
