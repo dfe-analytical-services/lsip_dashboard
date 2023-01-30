@@ -258,8 +258,8 @@ padding-top:15px
             div(
               class = "panel-body",
               h2("Dashboard pages"),
-              p("The four tabs in the Local Skills page on different parts of the jobs and skills market. Each page includes options to download all of the indicators shown, either just for the selected geographic area or for all available geographies."),
-              p("Where published figures are not available, area totals for LEP, LSIP or MCA are calculated by adding up the relevant local authorities, rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
+              p("The tabs along the top of Local Skills page focus on different parts of the jobs and skills market. Each page includes options to download all of the indicators shown, either just for the selected geographic area or for all available geographies."),
+              p("Where published figures are not available, area totals for LEP, LSIP or MCA are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."),
               p(
                 "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS ",
                 a(
@@ -317,7 +317,7 @@ padding-top:15px
                   p("20 Dec 2022 (0.3.1)"),
                   p("Addition of three new data sources:"),
                   tags$ul(
-                    tags$li("Highest qualificaiton by age and gender"),
+                    tags$li("Highest qualification by age and gender"),
                     tags$li("KS4 and KS5 destinations"),
                     tags$li("Enterprise count by employment size and industry")
                   ),

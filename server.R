@@ -1280,7 +1280,7 @@ server <- function(input, output, session) {
   ## 3.2 KPIs/Charts ----
 
   ### Employment rate -----
-  output$locland.emplrate <- renderValueBox({
+     output$locland.emplrate <- renderValueBox({
     div(
       class = "col-sm-4",
       div(
@@ -2895,6 +2895,33 @@ server <- function(input, output, session) {
       )
     )
   })
+  
+  ### KPI 6 ----
+  output$ent.smaeng <- renderValueBox({
+    div(
+      class = "col-sm-4",
+      div(
+        class = "small-box bg-geo3",
+        div(
+          class = "inner",
+          h3(paste0(
+            format(100. * (C_empentind3_UBC1822 %>%
+                             filter(
+                               geographic_level == "COUNTRY",
+                               area == "England", year == "2022",
+                               variable == "Small 10 to 49",
+                               industry == "Total"
+                             ) %>%
+                             select(rate)
+            )[1, 1], scientific = FALSE, digits = 2),
+            "%"
+          )),
+          p(paste0("of enterprises in England in 2022 are small (with 10 to 49 employees)")),
+        )
+      )
+    )
+  })
+  
 
   ### births and deaths line chart ----
   birth_death_time <- eventReactive(c(input$lep1, input$lep2), {
