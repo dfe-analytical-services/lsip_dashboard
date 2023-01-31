@@ -2238,8 +2238,7 @@ server <- function(input, output, session) {
   
   
   output$uniqueCode<-renderUI({
-    
-   print( allOptions%>%
+    allOptions%>%
       mutate(chosen=case_when(Choice %in% input$hubArea ~ 1,
                               Choice %in% input$hubMetric ~1,
                               Choice %in% input$hubGeog ~1,
@@ -2251,7 +2250,6 @@ server <- function(input, output, session) {
         filter(chosen==1)%>%
         select(ChoiceID)%>%
         summarize(strong = str_c(ChoiceID, collapse = ''), .groups = 'drop')
-   )
   })
 
   output$hubMetricInput <- renderUI({
