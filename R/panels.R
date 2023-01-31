@@ -202,7 +202,8 @@ panel_employment <- function() {
     ### KPI boxes ----
     fluidRow(
       valueBoxOutput("locland.emplcnt"),
-      valueBoxOutput("locland.emplrate")
+      valueBoxOutput("locland.emplrate"),
+      valueBoxOutput("locland.engrate")
     ),
     fluidRow(
       uiOutput("emp_comp")
@@ -829,7 +830,8 @@ panel_enterprise <- function() {
     fluidRow(
       uiOutput("ent_comp")
     ),
-    fluidRow(valueBoxOutput("ent.microeng")),
+    fluidRow(valueBoxOutput("ent.microeng"),
+             valueBoxOutput("ent.smaeng")),
     details(
       label = "Source: UK Business Counts",
       inputId = "UK Business Counts",
