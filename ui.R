@@ -667,20 +667,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           12,
           h1("FE interventions"),
           DT::dataTableOutput("interventionTable"),
-          br()
-        ))
-      ),
-    #FE data sources
-    tabPanel(
-      "FE data sources",
-      fluidRow(
-        column(
-          12,
-          h1("FE data sources"),
           DT::dataTableOutput("sourcesTable"),
           br()
         ))
-    )
+      )
     
   ), # End of navBarPage
   # Footer ====================================================================

@@ -1571,6 +1571,7 @@ server <- function(input, output, session) {
 
 
   #---
+  
   # Maps ----
 
   # get current metric in plain englush
