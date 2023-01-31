@@ -2068,7 +2068,7 @@ server <- function(input, output, session) {
     ggplot(
       SplashTime,
       aes(
-        x = chart_year, y = value,
+        x = as.Date(chart_year), y = value,
         color = Areas, group = Areas,
         text = paste0(
           "Year: ", chart_year, "<br>",
@@ -2093,7 +2093,11 @@ server <- function(input, output, session) {
         # , limits = if(input$splashMetric=="empRate"){c(.65, .85)}else{c(0, 10000)}
       ) +
       labs(colour = "") +
-      scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) %in% c("Rate","tion")) {chartColors6}else{chartColors5})
+      scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) %in% c("Rate","tion")) {chartColors6}else{chartColors5})+
+      scale_x_date(
+        name = "My date axis title", date_breaks = "1 years",
+        date_labels = "%y"
+      )
   })
 
   output$Splash_time <- renderPlotly({

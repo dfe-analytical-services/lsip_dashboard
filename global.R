@@ -43,7 +43,7 @@ metricChoices <- list(
     "Self-employment volume" = "  Self Employed ",
     "Unemployed volume" = "  Unemployed ",
     "Inactive volume" = "  Inactive ",
-    "Vacancies - TO COME" = "vacancies"
+    "Job adverts" = "vacancies"
   ),
   "Skills" = list(
     "FE achievement rate" = "achievements_rate_per_100000_population",
