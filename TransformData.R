@@ -864,191 +864,6 @@ write.csv(C_EmpInd2_APS1822, file = "Data\\AppData\\C_EmpInd2_APS1822.csv", row.
 names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
 write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
 
-# Neaten geog files
-neatLA <- I_mapLA %>%
-  mutate(geog = "LADU") %>% # add geog type
-  rename(areaCode = LAD22CD, areaName = LAD22NM) %>% # consistent naming
-  # add on lsip, lep and mca groupings
-  left_join(I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by = c("areaCode" = "LAD21CD")) %>%
-  left_join(C_mcalookup %>% select(LAD21CD, MCA = CAUTH21NM), by = c("areaCode" = "LAD21CD")) %>%
-  filter(is.na(LSIP) == FALSE) # remove non England
-
-neatMCA <- I_mapMCA %>%
-  mutate(geog = "MCA") %>% # add geog type
-  rename(areaCode = CAUTH21CD, areaName = CAUTH21NM) # consistent naming
-
-neatLEP <- I_mapLEP %>%
-  mutate(geog = "LEP") %>% # add geog type
-  rename(areaCode = LEP21CD, areaName = LEP21NM) # consistent naming
-
-addEngland <- data.frame(
-  areaName = "England", areaCode = "x",
-  geog = "COUNTRY"
-)
-
-neatGeog <- bind_rows(neatMCA, neatLEP, addEngland, neatLA)
-# add on data
-C_Geog <- neatGeog %>%
-  # add employment rate
-  left_join(C_EmpRate_APS1822 %>% filter(year == 2022), by = c("areaName" = "area", "geog" = "geographic_level")) %>%
-  # add achievment rate
-  left_join(
-    C_Achieve_ILR1621 %>% filter(time_period == 202021, level_or_type == "Further education and skills: Total", age_group == "Total") %>%
-      mutate(geographic_level = case_when(geographic_level == "National" ~ "COUNTRY", TRUE ~ geographic_level)) %>%
-      mutate(geographic_level = case_when(geographic_level == "Local authority district" ~ "LADU", TRUE ~ geographic_level)),
-    by = c("areaName" = "area", "geog" = "geographic_level")
-    )%>%
-      left_join(
-        C_OnsProfTime %>%filter(time_period == "2022-10-01")%>%
-          group_by(area, geographic_level) %>%
-          summarise(vacancies = sum(vacancies)),
-        by = c("areaName" = "area", "geog" = "geographic_level")
-      )
-  
-save(C_Geog, file = "Data\\AppData\\C_Geog.RData")
-
-# create neat over time chart
-# geographic_level,area,time_period,metric
-C_time <- bind_rows(
-  # employment data
-  C_EmpRate_APS1822 %>%
-    rename(time_period = year, chart_year = Year) %>%
-    mutate(chart_year=as.Date(ISOdate(time_period, 1, 1)))%>%
-    #mutate_at(c("time_period"), as.integer) %>%
-    pivot_longer(!c("geographic_level", "area", "time_period", "chart_year"),
-      names_to = "metric",
-      values_to = "value"
-    ),
-  # ILR data
-    C_Achieve_ILR1621 %>%
-    rename(chart_year = Year) %>%
-    mutate(chart_year=as.Date(ISOdate(str_sub(time_period,1,4), 1, 1)))%>%
-    mutate_at(c("time_period"), as.character) %>%
-    filter(level_or_type == "Further education and skills: Total", age_group == "Total") %>%
-    select(-apprenticeships_or_further_education, -level_or_type, -age_group, -typeNeat, -AY) %>%
-    mutate(geographic_level = case_when(
-      geographic_level == "National" ~ "COUNTRY",
-      geographic_level == "Local authority district" ~ "LADU",
-      TRUE ~ geographic_level
-    )) %>%
-    pivot_longer(!c("geographic_level", "area", "time_period", "chart_year"),
-      names_to = "metric",
-      values_to = "value"
-    ),
-  C_OnsProfTime%>%
-    mutate(time_period=format(as.Date(time_period)))%>%
-    mutate(chart_year=as.Date(time_period))%>%
-    group_by(area, geographic_level,time_period,chart_year) %>%
-    summarise(vacancies = sum(vacancies))%>%
-    mutate(metric="vacancies")%>%
-    rename(value=vacancies)
-)
-write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
-
-# create neat breakdown file
-# geographic_level,area,time_period,breakdown,subgroups,metric,value,
-C_breakdown <- bind_rows(
-  # employment data
-  C_EmpRate_APS1822 %>%
-    rename(time_period = year) %>%
-    filter(time_period == 2022) %>%
-    mutate_at(c("time_period"), as.integer) %>%
-    select(-Year)%>%
-    mutate(breakdown = "No breakdowns available", subgroups = "Total") %>%
-    pivot_longer(!c("geographic_level", "area", "time_period", "breakdown", "subgroups"),
-      names_to = "metric",
-      values_to = "value"
-    ) %>%
-    filter(metric != "Employment"),
-  C_EmpOcc_APS1721 %>%
-    rename(time_period = year) %>%
-    mutate_at(c("time_period"), as.integer) %>%
-    pivot_longer(!c("geographic_level", "area", "time_period"),
-      names_to = "subgroups",
-      values_to = "value"
-    ) %>%
-    mutate(breakdown = "Occupation", metric = "Employment") %>%
-    mutate_all(~ replace(., is.na(.), 0)) %>%
-    group_by(across(c(-value, -subgroups))) %>%
-    mutate(across(value, ~ round(prop.table(.), 3))),
-  # employment by industry
-  C_EmpInd2_APS1822 %>%
-    filter(year == "2022") %>%
-    rename(time_period = year) %>%
-    mutate_at(c("time_period"), as.integer) %>%
-    mutate(breakdown = "Industry", metric = "Employment") %>%
-    rename(subgroups = variable) %>%
-    select(-Total, -rate) %>%
-    group_by(across(c(-value, -subgroups))) %>%
-    mutate(across(value, ~ round(prop.table(.), 3))),
-
-  # ILR data
-  C_Achieve_ILR1621 %>%
-    filter(time_period == 202021) %>%
-    select(-Year, -typeNeat, -AY) %>%
-    mutate(geographic_level = case_when(
-      geographic_level == "National" ~ "COUNTRY",
-      geographic_level == "Local authority district" ~ "LADU",
-      TRUE ~ geographic_level
-    )) %>%
-    pivot_longer(!c("geographic_level", "area", "time_period", "apprenticeships_or_further_education", "level_or_type", "age_group"),
-      names_to = "metric",
-      values_to = "value"
-    ) %>%
-    # get subgroups when the other fields are total
-    mutate(subgroups = case_when(
-      apprenticeships_or_further_education == "Further education and skills" &
-        level_or_type == "Further education and skills: Total" ~ age_group,
-      apprenticeships_or_further_education == "Further education and skills" &
-        age_group == "Total" ~ level_or_type,
-      str_sub(level_or_type, -5, -1) == "Total" &
-        age_group == "Total" ~ apprenticeships_or_further_education,
-      TRUE ~ "NA"
-    )) %>%
-    # get breakdown when other fields are total
-    mutate(breakdown = case_when(
-      apprenticeships_or_further_education == "Further education and skills" &
-        level_or_type == "Further education and skills: Total" ~ "Age",
-      apprenticeships_or_further_education == "Further education and skills" &
-        age_group == "Total" ~ "Level",
-      str_sub(level_or_type, -5, -1) == "Total" &
-        age_group == "Total" ~ "Provision",
-      TRUE ~ "NA"
-    )) %>%
-    filter(breakdown != "NA") %>%
-    select(-apprenticeships_or_further_education, -level_or_type, -age_group)
-)
-write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
-
-#Create dataHub dataset
-C_datahub<-bind_rows(
-  C_time%>%select(-chart_year)%>%mutate(breakdown="Total",subgroups="Total"),
-  C_breakdown
-)%>%
-  #rename some of the elements so they make sense here
-  mutate(metric=case_when(metric=="  All "~"Population volume",
-                          metric=="empRate"~"Employment rate",
-                          metric== "selfempRate"~ "Self-employment rate",
-                          metric=="unempRate" ~ "Unemployment rate",
-                          metric=="inactiveRate" ~ "Inactive rate",
-                          metric=="Employment" ~ "Employment volume",
-                          metric=="  Self Employed " ~ "Self-employment volume",
-                          metric=="  Unemployed " ~ "Unemployed volume",
-                          metric=="  Inactive " ~ "Inactive volume",
-                          metric=="  Economically Active " ~ "Economically active volume",
-                          metric=="  Employees " ~ "Employees volume",
-                          metric=="achievements_rate_per_100000_population" ~ "FE achievement rate per 100k",
-                          metric=="participation_rate_per_100000_population" ~ "FE participation rate per 100k",
-                          metric=="starts_rate_per_100000_population" ~ "FE start rate per 100k",
-                          metric=="achievements" ~ "FE achievements volume",
-                          metric=="participation" ~ "FE participation volume",
-                          metric=="starts" ~ "FE starts volume",
-                          TRUE~metric
-                          ))%>%
-  mutate(breakdown=case_when(breakdown=="Occupation"~"Occupation split over geography",
-                             breakdown=="Industry"~"Industry split over geography",
-                             TRUE~breakdown))
-write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
 
 # Tidy up intervention table
 names(I_InterventionTable) <- gsub(".", " ", names(I_InterventionTable), fixed = TRUE)
@@ -1824,15 +1639,17 @@ D_OnsProf <- bind_rows(
   format.OnsProf(I_OnsProfLep %>% select(-X2)), # remove code since it doesn't exist in other geogs
   format.OnsProf(I_OnsProfLsip),
   format.OnsProf(I_OnsProfMca),
-  format.OnsProf(I_OnsProfLA),
+  format.OnsProf(I_OnsProfLA%>% select(-1)),# remove region code
   # format.OnsProf(I_OnsProfEng %>% mutate(`Detailed Profession Category`=NULL)),
   format.OnsProf(I_OnsProfDetailEng)
 ) %>%
   # change lep naming to match other datafiles
   mutate(geographic_level = case_when(
+    geographic_level == "Local Authority District" ~ "LADU",
     geographic_level == "Local Enterprise Partnership" ~ "LEP",
     TRUE ~ geographic_level
-  ))
+  ))%>%
+  mutate(geographic_level=toupper(geographic_level))
 
 # make suppressed data zero to use in dashboard
 C_OnsProf <- D_OnsProf %>%
@@ -1861,5 +1678,209 @@ D_OnsProfDetail <- D_OnsProf %>%
   filter(time_period == "Oct 22")
 write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.names = FALSE)
 
+# Neaten geog files
+neatLA <- I_mapLA %>%
+  mutate(geog = "LADU") %>% # add geog type
+  rename(areaCode = LAD22CD, areaName = LAD22NM) %>% # consistent naming
+  # add on lsip, lep and mca groupings
+  left_join(I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by = c("areaCode" = "LAD21CD")) %>%
+  left_join(C_mcalookup %>% select(LAD21CD, MCA = CAUTH21NM), by = c("areaCode" = "LAD21CD")) %>%
+  filter(is.na(LSIP) == FALSE) # remove non England
+
+neatMCA <- I_mapMCA %>%
+  mutate(geog = "MCA") %>% # add geog type
+  rename(areaCode = CAUTH21CD, areaName = CAUTH21NM) # consistent naming
+
+neatLEP <- I_mapLEP %>%
+  mutate(geog = "LEP") %>% # add geog type
+  rename(areaCode = LEP21CD, areaName = LEP21NM) # consistent naming
+
+addEngland <- data.frame(
+  areaName = "England", areaCode = "x",
+  geog = "COUNTRY"
+)
+
+neatGeog <- bind_rows(neatMCA, neatLEP, addEngland, neatLA)
+# add on data
+C_Geog <- neatGeog %>%
+  # add employment rate
+  left_join(C_EmpRate_APS1822 %>% filter(year == 2022), by = c("areaName" = "area", "geog" = "geographic_level")) %>%
+  # add achievment rate
+  left_join(
+    C_Achieve_ILR1621 %>% filter(time_period == 202021, level_or_type == "Further education and skills: Total", age_group == "Total") %>%
+      mutate(geographic_level = case_when(geographic_level == "National" ~ "COUNTRY", TRUE ~ geographic_level)) %>%
+      mutate(geographic_level = case_when(geographic_level == "Local authority district" ~ "LADU", TRUE ~ geographic_level)),
+    by = c("areaName" = "area", "geog" = "geographic_level")
+  )%>%
+  left_join(
+    C_OnsProfTime %>%filter(time_period == "2022-10-01")%>%
+      group_by(area, geographic_level) %>%
+      summarise(vacancies = sum(vacancies)),
+    by = c("areaName" = "area", "geog" = "geographic_level")
+  )
+
+save(C_Geog, file = "Data\\AppData\\C_Geog.RData")
+
+# create neat over time chart
+# geographic_level,area,time_period,metric
+C_time <- bind_rows(
+  # employment data
+  C_EmpRate_APS1822 %>%
+    rename(time_period = year, chart_year = Year) %>%
+    mutate(chart_year=as.Date(ISOdate(time_period, 1, 1)))%>%
+    #mutate_at(c("time_period"), as.integer) %>%
+    pivot_longer(!c("geographic_level", "area", "time_period", "chart_year"),
+                 names_to = "metric",
+                 values_to = "value"
+    ),
+  # ILR data
+  C_Achieve_ILR1621 %>%
+    rename(chart_year = Year) %>%
+    mutate(chart_year=as.Date(ISOdate(str_sub(time_period,1,4), 1, 1)))%>%
+    mutate_at(c("time_period"), as.character) %>%
+    filter(level_or_type == "Further education and skills: Total", age_group == "Total") %>%
+    select(-apprenticeships_or_further_education, -level_or_type, -age_group, -typeNeat, -AY) %>%
+    mutate(geographic_level = case_when(
+      geographic_level == "National" ~ "COUNTRY",
+      geographic_level == "Local authority district" ~ "LADU",
+      TRUE ~ geographic_level
+    )) %>%
+    pivot_longer(!c("geographic_level", "area", "time_period", "chart_year"),
+                 names_to = "metric",
+                 values_to = "value"
+    ),
+  C_OnsProfTime%>%
+    mutate(time_period=format(as.Date(time_period)))%>%
+    mutate(chart_year=as.Date(time_period))%>%
+    group_by(area, geographic_level,time_period,chart_year) %>%
+    summarise(vacancies = sum(vacancies))%>%
+    mutate(metric="vacancies")%>%
+    rename(value=vacancies)
+)
+write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
+
+# create neat breakdown file
+# geographic_level,area,time_period,breakdown,subgroups,metric,value,
+C_breakdown <- bind_rows(
+  # employment data
+  C_EmpRate_APS1822 %>%
+    rename(time_period = year) %>%
+    filter(time_period == 2022) %>%
+    mutate_at(c("time_period"), as.integer) %>%
+    select(-Year)%>%
+    mutate(breakdown = "No breakdowns available", subgroups = "Total") %>%
+    pivot_longer(!c("geographic_level", "area", "time_period", "breakdown", "subgroups"),
+                 names_to = "metric",
+                 values_to = "value"
+    ) %>%
+    filter(metric != "Employment"),
+  C_EmpOcc_APS1721 %>%
+    rename(time_period = year) %>%
+    mutate_at(c("time_period"), as.integer) %>%
+    pivot_longer(!c("geographic_level", "area", "time_period"),
+                 names_to = "subgroups",
+                 values_to = "value"
+    ) %>%
+    mutate(breakdown = "Occupation", metric = "Employment") %>%
+    mutate_all(~ replace(., is.na(.), 0)) %>%
+    group_by(across(c(-value, -subgroups))) %>%
+    mutate(across(value, ~ round(prop.table(.), 3))),
+  # employment by industry
+  C_EmpInd2_APS1822 %>%
+    filter(year == "2022") %>%
+    rename(time_period = year) %>%
+    mutate_at(c("time_period"), as.integer) %>%
+    mutate(breakdown = "Industry", metric = "Employment") %>%
+    rename(subgroups = variable) %>%
+    select(-Total, -rate) %>%
+    group_by(across(c(-value, -subgroups))) %>%
+    mutate(across(value, ~ round(prop.table(.), 3))),
+  
+  # ILR data
+  C_Achieve_ILR1621 %>%
+    filter(time_period == 202021) %>%
+    select(-Year, -typeNeat, -AY) %>%
+    mutate(geographic_level = case_when(
+      geographic_level == "National" ~ "COUNTRY",
+      geographic_level == "Local authority district" ~ "LADU",
+      TRUE ~ geographic_level
+    )) %>%
+    pivot_longer(!c("geographic_level", "area", "time_period", "apprenticeships_or_further_education", "level_or_type", "age_group"),
+                 names_to = "metric",
+                 values_to = "value"
+    ) %>%
+    # get subgroups when the other fields are total
+    mutate(subgroups = case_when(
+      apprenticeships_or_further_education == "Further education and skills" &
+        level_or_type == "Further education and skills: Total" ~ age_group,
+      apprenticeships_or_further_education == "Further education and skills" &
+        age_group == "Total" ~ level_or_type,
+      str_sub(level_or_type, -5, -1) == "Total" &
+        age_group == "Total" ~ apprenticeships_or_further_education,
+      TRUE ~ "NA"
+    )) %>%
+    # get breakdown when other fields are total
+    mutate(breakdown = case_when(
+      apprenticeships_or_further_education == "Further education and skills" &
+        level_or_type == "Further education and skills: Total" ~ "Age",
+      apprenticeships_or_further_education == "Further education and skills" &
+        age_group == "Total" ~ "Level",
+      str_sub(level_or_type, -5, -1) == "Total" &
+        age_group == "Total" ~ "Provision",
+      TRUE ~ "NA"
+    )) %>%
+    filter(breakdown != "NA") %>%
+    select(-apprenticeships_or_further_education, -level_or_type, -age_group),
+  C_OnsProf%>%
+    filter(time_period == "Oct 22") %>%
+    mutate(time_period=102022) %>%
+    group_by(geographic_level,area,time_period,`Summary Profession Category`)%>%
+    summarise(value=sum(vacancies))%>%
+    mutate(breakdown="Summary Profession Category",metric="vacancies")%>%
+    rename(subgroups=`Summary Profession Category`)%>%
+    group_by(across(c(-value, -subgroups))) %>%
+    mutate(across(value, ~ round(prop.table(.), 3))),
+  C_OnsProf%>%
+    filter(time_period == "Oct 22") %>%
+    mutate(time_period=102022) %>%
+    group_by(geographic_level,area,time_period,`Detailed Profession Category`)%>%
+    summarise(value=sum(vacancies))%>%
+    mutate(breakdown="Detailed Profession Category",metric="vacancies")%>%
+    rename(subgroups=`Detailed Profession Category`)%>%
+    group_by(across(c(-value, -subgroups))) %>%
+    mutate(across(value, ~ round(prop.table(.), 3)))
+    
+)
+write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
+
+#Create dataHub dataset
+C_datahub<-bind_rows(
+  C_time%>%select(-chart_year)%>%mutate(breakdown="Total",subgroups="Total"),
+  C_breakdown
+)%>%
+  #rename some of the elements so they make sense here
+  mutate(metric=case_when(metric=="  All "~"Population volume",
+                          metric=="empRate"~"Employment rate",
+                          metric== "selfempRate"~ "Self-employment rate",
+                          metric=="unempRate" ~ "Unemployment rate",
+                          metric=="inactiveRate" ~ "Inactive rate",
+                          metric=="Employment" ~ "Employment volume",
+                          metric=="  Self Employed " ~ "Self-employment volume",
+                          metric=="  Unemployed " ~ "Unemployed volume",
+                          metric=="  Inactive " ~ "Inactive volume",
+                          metric=="  Economically Active " ~ "Economically active volume",
+                          metric=="  Employees " ~ "Employees volume",
+                          metric=="achievements_rate_per_100000_population" ~ "FE achievement rate per 100k",
+                          metric=="participation_rate_per_100000_population" ~ "FE participation rate per 100k",
+                          metric=="starts_rate_per_100000_population" ~ "FE start rate per 100k",
+                          metric=="achievements" ~ "FE achievements volume",
+                          metric=="participation" ~ "FE participation volume",
+                          metric=="starts" ~ "FE starts volume",
+                          TRUE~metric
+  ))%>%
+  mutate(breakdown=case_when(breakdown=="Occupation"~"Occupation split over geography",
+                             breakdown=="Industry"~"Industry split over geography",
+                             TRUE~breakdown))
+write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
 
 
