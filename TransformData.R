@@ -1334,6 +1334,13 @@ C_enterprise_demo1621 <- df_list %>%
 # write data to folder
 write.csv(C_enterprise_demo1621, file = "Data\\AppData\\C_enterprise_demo1621.csv", row.names = FALSE)
 
+#Put into new format
+C_enterpriseBirthDeath<-C_enterprise_demo1621%>%
+  rename(time_period=year,value=rate,metric=variable)%>%
+  mutate(breakdown="No breakdowns available",subgroups="Total",
+         metric=case_when(metric=="births" ~ "birthRate",
+                   metric=="deaths" ~ "deathRate"),
+         time_period=as.numeric(time_period))
 
 
 #### 3.4 National Pupil Database ####
@@ -1717,7 +1724,17 @@ C_Geog <- neatGeog %>%
       group_by(area, geographic_level) %>%
       summarise(vacancies = sum(vacancies)),
     by = c("areaName" = "area", "geog" = "geographic_level")
-  )
+  )%>%
+  #add death of entreprises
+  left_join(
+C_enterpriseBirthDeath%>%filter(time_period =="2021",metric=="deathRate")%>%select(area,geographic_level,deathRate=value),
+by = c("areaName" = "area", "geog" = "geographic_level")
+)%>%
+  #add birth of entreprises
+  left_join(
+    C_enterpriseBirthDeath%>%filter(time_period =="2021",metric=="birthRate")%>%select(area,geographic_level,birthRate=value),
+    by = c("areaName" = "area", "geog" = "geographic_level")
+)
 
 save(C_Geog, file = "Data\\AppData\\C_Geog.RData")
 
@@ -1755,7 +1772,13 @@ C_time <- bind_rows(
     group_by(area, geographic_level,time_period,chart_year) %>%
     summarise(vacancies = sum(vacancies))%>%
     mutate(metric="vacancies")%>%
-    rename(value=vacancies)
+    rename(value=vacancies),
+  #add enterprise birth and deaths
+  C_enterpriseBirthDeath%>%
+    select(-breakdown,-subgroups)%>%
+    mutate(chart_year=as.Date(ISOdate(time_period, 1, 1)),
+           time_period=as.character(time_period))
+    
 )
 write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
 
@@ -1848,15 +1871,17 @@ C_breakdown <- bind_rows(
     mutate(breakdown="Detailed Profession Category",metric="vacancies")%>%
     rename(subgroups=`Detailed Profession Category`)%>%
     group_by(across(c(-value, -subgroups))) %>%
-    mutate(across(value, ~ round(prop.table(.), 3)))
-    
+    mutate(across(value, ~ round(prop.table(.), 3))),
+  #add enterprise birth and deaths
+  C_enterpriseBirthDeath%>%
+    filter(time_period==2021)
 )
 write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
 
 #Create dataHub dataset
 C_datahub<-bind_rows(
   C_time%>%select(-chart_year)%>%mutate(breakdown="Total",subgroups="Total"),
-  C_breakdown
+  C_breakdown%>%mutate(time_period=as.character(time_period))
 )%>%
   #rename some of the elements so they make sense here
   mutate(metric=case_when(metric=="  All "~"Population volume",
@@ -1876,6 +1901,8 @@ C_datahub<-bind_rows(
                           metric=="achievements" ~ "FE achievements volume",
                           metric=="participation" ~ "FE participation volume",
                           metric=="starts" ~ "FE starts volume",
+                          metric=="birthRate" ~ "Enterprise birth rate",
+                          metric=="deathRate" ~ "Enterprise death rate",
                           TRUE~metric
   ))%>%
   mutate(breakdown=case_when(breakdown=="Occupation"~"Occupation split over geography",

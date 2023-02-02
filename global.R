@@ -43,6 +43,10 @@ metricChoices <- list(
     "Inactive volume" = "  Inactive ",
     "Job adverts" = "vacancies"
   ),
+  "Enterprises" = list(
+    "Enterprise birth rate" = "birthRate",
+    "Enterprise death rate" = "deathRate"
+  ),
   "Skills" = list(
     "FE achievement rate" = "achievements_rate_per_100000_population",
     "FE participation rate" = "participation_rate_per_100000_population",
