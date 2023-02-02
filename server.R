@@ -2248,7 +2248,7 @@ if(areaClicked=="London"&currentMetric()=="job adverts"){"ONS job adverts in Lon
         # "Breakdown: ", input$splashBreakdown, "<br>",
         "Area: ", Area, "<br>",
         # "Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(value, 2)), "<br>",
-        currentMetric(), ": ", if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies") {
+        currentMetric(), ": ", if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies"| input$splashMetric == "enterpriseCount") {
           scales::percent(round(value, 2))
         } else {
           round(value, 0)
@@ -2258,7 +2258,7 @@ if(areaClicked=="London"&currentMetric()=="job adverts"){"ONS job adverts in Lon
       geom_col(
         position = "dodge"
       ) +
-      scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies") {
+      scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies"| input$splashMetric == "enterpriseCount") {
         scales::percent
       } else {
         label_number_si(accuracy = 1)

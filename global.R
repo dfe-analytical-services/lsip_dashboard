@@ -46,6 +46,7 @@ metricChoices <- list(
     "Job adverts" = "vacancies"
   ),
   "Enterprises" = list(
+    "Enterprise count"="enterpriseCount",
     "Enterprise birth rate" = "birthRate",
     "Enterprise death rate" = "deathRate"
   ),
