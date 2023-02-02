@@ -1908,8 +1908,9 @@ server <- function(input, output, session) {
 
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <- (LaHighLow %>% filter(ranking == max(ranking)))$areaName
-
+if(areaClicked=="London"&currentMetric()=="job adverts"){"ONS job adverts in London are not broken down by LA."}else{
     paste0(str_to_sentence(currentMetric()), " is highest in ", LaHigh, " and lowest in ", LaLow, ".")
+}
   })
 
   # make LA map
@@ -2247,7 +2248,7 @@ server <- function(input, output, session) {
         # "Breakdown: ", input$splashBreakdown, "<br>",
         "Area: ", Area, "<br>",
         # "Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(value, 2)), "<br>",
-        currentMetric(), ": ", if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment") {
+        currentMetric(), ": ", if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies") {
           scales::percent(round(value, 2))
         } else {
           round(value, 0)
@@ -2257,7 +2258,7 @@ server <- function(input, output, session) {
       geom_col(
         position = "dodge"
       ) +
-      scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment") {
+      scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies") {
         scales::percent
       } else {
         label_number_si(accuracy = 1)
