@@ -1190,6 +1190,30 @@ C_empentind3_UBC1822 <- C_empentind2_UBC1822 %>%
 # write data to folder
 write.csv(C_empentind3_UBC1822, file = "Data\\AppData\\C_empentind3_UBC1822.csv", row.names = FALSE)
 
+#create new format version
+C_enterpriseSizeIndustry<-bind_rows(
+  F_empent_UBC1822%>%
+    rename(time_period=year,subgroups=variable)%>%
+    mutate(time_period=as.numeric(time_period),
+           metric="enterpriseCount", breakdown="Size")
+  ,
+  F_empentind_UBC1822 %>%
+    filter(variable == "Total")%>%
+    select(-variable)%>%
+    rename(time_period=year,subgroups=industry)%>%
+    mutate(time_period=as.numeric(time_period),
+           metric="enterpriseCount", breakdown="Industry")
+) %>%
+  mutate(value=as.numeric(value)) %>%
+  mutate(value=replace_na(value, 0)) %>%
+  mutate(subgroups = case_when(
+    subgroups == "Micro_0_to_9" ~ "Micro 0 to 9",
+    subgroups == "Small_10_to_49" ~ "Small 10 to 49",
+    subgroups == "Medium_sized_50_to_249" ~ "Medium 50 to 249",
+    subgroups == "Large_250" ~ "Large 250+",
+    TRUE ~ subgroups
+  ))
+
 # create max and min for use in setting axis
 C_empentind_max_min <- C_empentind3_UBC1822 %>%
   filter(geographic_level != "LADU", variable == "Micro 0 to 9", industry == "Total") %>%
@@ -1734,8 +1758,12 @@ by = c("areaName" = "area", "geog" = "geographic_level")
   left_join(
     C_enterpriseBirthDeath%>%filter(time_period =="2021",metric=="birthRate")%>%select(area,geographic_level,birthRate=value),
     by = c("areaName" = "area", "geog" = "geographic_level")
-)
-
+)%>%
+  #add enterprise count
+  left_join(
+  C_enterpriseSizeIndustry%>%filter(time_period =="2022",subgroups=="Total")%>%select(area,geographic_level,enterpriseCount=value),
+  by = c("areaName" = "area", "geog" = "geographic_level")
+  )
 save(C_Geog, file = "Data\\AppData\\C_Geog.RData")
 
 # create neat over time chart
@@ -1777,8 +1805,13 @@ C_time <- bind_rows(
   C_enterpriseBirthDeath%>%
     select(-breakdown,-subgroups)%>%
     mutate(chart_year=as.Date(ISOdate(time_period, 1, 1)),
+           time_period=as.character(time_period)),
+  #add enterprise count
+  C_enterpriseSizeIndustry%>%
+    filter(subgroups=="Total")%>%#just get total
+    select(-breakdown,-subgroups)%>%
+    mutate(chart_year=as.Date(ISOdate(time_period, 1, 1)),
            time_period=as.character(time_period))
-    
 )
 write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
 
@@ -1874,7 +1907,12 @@ C_breakdown <- bind_rows(
     mutate(across(value, ~ round(prop.table(.), 3))),
   #add enterprise birth and deaths
   C_enterpriseBirthDeath%>%
-    filter(time_period==2021)
+    filter(time_period==2021),
+  #add enterprise count
+  C_enterpriseSizeIndustry%>%
+    filter(time_period==2022,subgroups!="Total")%>%
+    group_by(across(c(-value, -subgroups))) %>%
+    mutate(across(value, ~ round(prop.table(.), 3)))
 )
 write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
 
@@ -1903,6 +1941,7 @@ C_datahub<-bind_rows(
                           metric=="starts" ~ "FE starts volume",
                           metric=="birthRate" ~ "Enterprise birth rate",
                           metric=="deathRate" ~ "Enterprise death rate",
+                          metric=="enterpriseCount" ~ "Enterprise count",
                           TRUE~metric
   ))%>%
   mutate(breakdown=case_when(breakdown=="Occupation"~"Occupation split over geography",
