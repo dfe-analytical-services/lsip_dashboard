@@ -416,7 +416,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           12,
           p("If you have a query code, enter it here:"),
           textInput("hubCode", label = NULL),
-          
         )
       ),
       fluidRow(column(12, h2("Geography"))),
@@ -659,7 +658,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       ),
       br()
     ),
-    #FE interventions
+    # FE interventions
     tabPanel(
       "FE interventions",
       fluidRow(
@@ -668,9 +667,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           h1("FE interventions"),
           DT::dataTableOutput("interventionTable"),
           br()
-        ))
-      ),
-    #FE data sources
+        )
+      )
+    ),
+    # FE data sources
     tabPanel(
       "FE data sources",
       fluidRow(
@@ -679,9 +679,9 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           h1("FE data sources"),
           DT::dataTableOutput("sourcesTable"),
           br()
-        ))
+        )
+      )
     )
-    
   ), # End of navBarPage
   # Footer ====================================================================
 

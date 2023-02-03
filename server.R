@@ -10,9 +10,9 @@ server <- function(input, output, session) {
   chartColors3 <- c("#BFBFBF", "#12436D", "#28A197")
   # geo1, geo2
   chartColors2 <- c("#12436D", "#28A197")
-  chartColors6 <- c("#BFBFBF", "#12436D",  "#28A197", "#801650", "#F46A25", "#A285D1","#2073BC")
-  #for when no England
-  chartColors5 <- c("#12436D",  "#28A197", "#801650", "#F46A25", "#A285D1","#2073BC")
+  chartColors6 <- c("#BFBFBF", "#12436D", "#28A197", "#801650", "#F46A25", "#A285D1", "#2073BC")
+  # for when no England
+  chartColors5 <- c("#12436D", "#28A197", "#801650", "#F46A25", "#A285D1", "#2073BC")
 
   # HOMEPAGE ----
   # Create link to overview tab
@@ -1837,8 +1837,11 @@ server <- function(input, output, session) {
 
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <- (LaHighLow %>% filter(ranking == max(ranking)))$areaName
-
-    paste0(str_to_sentence(currentMetric()), " is highest in ", LaHigh, " and lowest in ", LaLow, ".")
+    if (areaClicked == "London" & currentMetric() == "job adverts") {
+      "ONS job adverts in London are not broken down by LA."
+    } else {
+      paste0(str_to_sentence(currentMetric()), " is highest in ", LaHigh, " and lowest in ", LaLow, ".")
+    }
   })
 
   # make LA map
@@ -1976,7 +1979,7 @@ server <- function(input, output, session) {
               })
         ) |
           # get england for comparison (if a rate)
-          (if (str_sub(input$splashMetric, start = -4) %in% c("Rate","tion")) {
+          (if (str_sub(input$splashMetric, start = -4) %in% c("Rate", "tion")) {
             (geographic_level == "COUNTRY" & area == "England")
           } else {
             area == "\nNone"
@@ -1997,7 +2000,7 @@ server <- function(input, output, session) {
     ggplot(
       SplashTime,
       aes(
-        x = chart_year, y = value,
+        x = as.Date(chart_year), y = value,
         color = Areas, group = Areas,
         text = paste0(
           "Year: ", chart_year, "<br>",
@@ -2022,7 +2025,15 @@ server <- function(input, output, session) {
         # , limits = if(input$splashMetric=="empRate"){c(.65, .85)}else{c(0, 10000)}
       ) +
       labs(colour = "") +
-      scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) %in% c("Rate","tion")) {chartColors6}else{chartColors5})
+      scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) %in% c("Rate", "tion")) {
+        chartColors6
+      } else {
+        chartColors5
+      }) +
+      scale_x_date(
+        name = "My date axis title", date_breaks = "1 years",
+        date_labels = "%y"
+      )
   })
 
   output$Splash_time <- renderPlotly({
@@ -2135,7 +2146,7 @@ server <- function(input, output, session) {
   })
 
   # create breakdown bar
-  Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$barBreakdown, input$barSubgroup, input$levelBar, input$sexBar, input$metricBar, input$splashBreakdown, input$mapLA_shape_click,input$splashMetric), {
+  Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$barBreakdown, input$barSubgroup, input$levelBar, input$sexBar, input$metricBar, input$splashBreakdown, input$mapLA_shape_click, input$splashMetric), {
     if ("map_shape_click" %in% names(input)) {
       event <- input$map_shape_click
     } else {
@@ -2172,7 +2183,7 @@ server <- function(input, output, session) {
         # "Breakdown: ", input$splashBreakdown, "<br>",
         "Area: ", Area, "<br>",
         # "Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(value, 2)), "<br>",
-        currentMetric(), ": ", if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment") {
+        currentMetric(), ": ", if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies" | input$splashMetric == "enterpriseCount") {
           scales::percent(round(value, 2))
         } else {
           round(value, 0)
@@ -2182,7 +2193,7 @@ server <- function(input, output, session) {
       geom_col(
         position = "dodge"
       ) +
-      scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment") {
+      scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies" | input$splashMetric == "enterpriseCount") {
         scales::percent
       } else {
         label_number_si(accuracy = 1)
@@ -2210,102 +2221,188 @@ server <- function(input, output, session) {
   })
 
   # create datahub table to show
-  
+
   output$hubAreaInput <- renderUI({
-      selectizeInput("hubArea",
-                     choices =C_datahub%>%
-                       filter(if(is.null(input$hubGeog)==TRUE){TRUE}else{geographic_level %in% input$hubGeog})%>% 
-                       distinct(Area=area),
-                     multiple = TRUE, label = NULL,
-                     options = list(placeholder = "Choose areas*")
-      )
+    selectizeInput("hubArea",
+      choices = C_datahub %>%
+        filter(if (is.null(input$hubGeog) == TRUE) {
+          TRUE
+        } else {
+          geographic_level %in% input$hubGeog
+        }) %>%
+        distinct(Area = area),
+      multiple = TRUE, label = NULL,
+      options = list(placeholder = "Choose areas*")
+    )
   })
-  
- allOptions<- bind_rows(
-    data.frame(Choice=c("LEP", "LSIP", "MCA", "LA"),filterID="a"),
-  C_datahub%>%distinct(Choice=area)%>%mutate(filterID="b"),
-  data.frame(Choice=c("Yes", "No"),filterID="c"),
-  data.frame(Choice=c("National", "Regional (to come)"),filterID="d"),
-  C_datahub%>%distinct(Choice=metric)%>%mutate(filterID="e"),
-  C_datahub%>%distinct(Choice=breakdown)%>%mutate(filterID="f"),
-  C_datahub%>%distinct(Choice=as.character(time_period))%>%mutate(filterID="g")
-  )%>%
-   group_by(filterID) %>%
-   mutate(ChoiceNo = row_number())%>%
-   mutate(ChoiceID=paste0(filterID,ChoiceNo))%>%
-   ungroup()%>%
-   select(-filterID,-ChoiceNo)
-  
-  
-  output$uniqueCode<-renderUI({
-    allOptions%>%
-      mutate(chosen=case_when(Choice %in% input$hubArea ~ 1,
-                              Choice %in% input$hubMetric ~1,
-                              Choice %in% input$hubGeog ~1,
-                              Choice %in% input$hubComparators ~1,
-                              Choice %in% input$hubLA ~1,
-                              Choice %in% input$hubBreakdowns ~1,
-                              Choice %in% input$hubYears ~1,
-                              TRUE~0))%>%
-        filter(chosen==1)%>%
-        select(ChoiceID)%>%
-        summarize(strong = str_c(ChoiceID, collapse = ''), .groups = 'drop')
+
+  allOptions <- bind_rows(
+    data.frame(Choice = c("LEP", "LSIP", "MCA", "LA"), filterID = "a"),
+    C_datahub %>% distinct(Choice = area) %>% mutate(filterID = "b"),
+    data.frame(Choice = c("Yes", "No"), filterID = "c"),
+    data.frame(Choice = c("National", "Regional (to come)"), filterID = "d"),
+    C_datahub %>% distinct(Choice = metric) %>% mutate(filterID = "e"),
+    C_datahub %>% distinct(Choice = breakdown) %>% mutate(filterID = "f"),
+    C_datahub %>% distinct(Choice = as.character(time_period)) %>% mutate(filterID = "g")
+  ) %>%
+    group_by(filterID) %>%
+    mutate(ChoiceNo = row_number()) %>%
+    mutate(ChoiceID = paste0(filterID, ChoiceNo)) %>%
+    ungroup() %>%
+    select(-filterID, -ChoiceNo)
+
+
+  output$uniqueCode <- renderUI({
+    allOptions %>%
+      mutate(chosen = case_when(
+        Choice %in% input$hubArea ~ 1,
+        Choice %in% input$hubMetric ~ 1,
+        Choice %in% input$hubGeog ~ 1,
+        Choice %in% input$hubComparators ~ 1,
+        Choice %in% input$hubLA ~ 1,
+        Choice %in% input$hubBreakdowns ~ 1,
+        Choice %in% input$hubYears ~ 1,
+        TRUE ~ 0
+      )) %>%
+      filter(chosen == 1) %>%
+      select(ChoiceID) %>%
+      summarize(strong = str_c(ChoiceID, collapse = ""), .groups = "drop")
   })
 
   output$hubMetricInput <- renderUI({
-  selectizeInput("hubMetric",
-                 choices = C_datahub%>%filter(if(is.null(input$hubGeog)==TRUE){TRUE}else{geographic_level %in% input$hubGeog},
-                                              if(is.null(input$hubArea)==TRUE){TRUE}else{area %in% input$hubArea})%>%
-                   distinct(Metrics=metric),
-                                              multiple = TRUE, label = NULL,
-                 options = list(placeholder = "Choose metrics*")
-  )
+    selectizeInput("hubMetric",
+      choices = C_datahub %>% filter(
+        if (is.null(input$hubGeog) == TRUE) {
+          TRUE
+        } else {
+          geographic_level %in% input$hubGeog
+        },
+        if (is.null(input$hubArea) == TRUE) {
+          TRUE
+        } else {
+          area %in% input$hubArea
+        }
+      ) %>%
+        distinct(Metrics = metric),
+      multiple = TRUE, label = NULL,
+      options = list(placeholder = "Choose metrics*")
+    )
   })
-  
+
   output$hubBreakdownInput <- renderUI({
-  selectizeInput("hubBreakdowns",
-                 choices = C_datahub%>%filter(if(is.null(input$hubGeog)==TRUE){TRUE}else{geographic_level %in% input$hubGeog},
-                                              if(is.null(input$hubArea)==TRUE){TRUE}else{area %in% input$hubArea},
-                                              if(is.null(input$hubMetric)==TRUE){TRUE}else{metric %in% input$hubMetric}
-                 )%>% distinct(Breakdowns=breakdown),
-                 multiple = TRUE, label = NULL,
-                 options = list(placeholder = "Choose breakdowns")
-  )
+    selectizeInput("hubBreakdowns",
+      choices = C_datahub %>% filter(
+        if (is.null(input$hubGeog) == TRUE) {
+          TRUE
+        } else {
+          geographic_level %in% input$hubGeog
+        },
+        if (is.null(input$hubArea) == TRUE) {
+          TRUE
+        } else {
+          area %in% input$hubArea
+        },
+        if (is.null(input$hubMetric) == TRUE) {
+          TRUE
+        } else {
+          metric %in% input$hubMetric
+        }
+      ) %>% distinct(Breakdowns = breakdown),
+      multiple = TRUE, label = NULL,
+      options = list(placeholder = "Choose breakdowns")
+    )
   })
-  
+
   output$hubYearInput <- renderUI({
-  selectizeInput("hubYears",
-                 choices = C_datahub%>%filter(if(is.null(input$hubGeog)==TRUE){TRUE}else{geographic_level %in% input$hubGeog},
-                                              if(is.null(input$hubArea)==TRUE){TRUE}else{area %in% input$hubArea},
-                                              if(is.null(input$hubMetric)==TRUE){TRUE}else{metric %in% input$hubMetric},
-                                              if(is.null(input$hubBreakdowns)==TRUE){TRUE}else{breakdown %in% input$hubBreakdowns})%>% 
-                   distinct("Time period"=time_period),
-                 multiple = TRUE, label = NULL,
-                 options = list(placeholder = "Choose years*")
-                 
-  )
+    selectizeInput("hubYears",
+      choices = C_datahub %>% filter(
+        if (is.null(input$hubGeog) == TRUE) {
+          TRUE
+        } else {
+          geographic_level %in% input$hubGeog
+        },
+        if (is.null(input$hubArea) == TRUE) {
+          TRUE
+        } else {
+          area %in% input$hubArea
+        },
+        if (is.null(input$hubMetric) == TRUE) {
+          TRUE
+        } else {
+          metric %in% input$hubMetric
+        },
+        if (is.null(input$hubBreakdowns) == TRUE) {
+          TRUE
+        } else {
+          breakdown %in% input$hubBreakdowns
+        }
+      ) %>%
+        distinct("Time period" = time_period),
+      multiple = TRUE, label = NULL,
+      options = list(placeholder = "Choose years*")
+    )
   })
 
   output$hubTable <- renderDataTable({
     DT::datatable(C_datahub %>%
       filter(
         (
-          if(is.null(input$hubGeog)==TRUE){TRUE}else{geographic_level %in% input$hubGeog}
-           |(if("Yes" %in% input$hubLA){geographic_level=="LADU"}else{geographic_level=="xxx"})
-           |(if("National" %in% input$hubComparators){geographic_level=="COUNTRY"}else{geographic_level=="xxx"})
-         ) , 
-        (
-          if(is.null(input$hubArea)==TRUE){TRUE}else{area %in% input$hubArea}
-          |(if("Yes" %in% input$hubLA){area %in% (C_Geog %>% filter(geog == "LADU", LEP %in% input$hubArea)%>%distinct(areaName))$areaName}else{geographic_level=="xxx"})
-          |(if("National" %in% input$hubComparators){area=="England"}else{geographic_level=="xxx"})
+          if (is.null(input$hubGeog) == TRUE) {
+            TRUE
+          } else {
+            {
+              geographic_level %in% input$hubGeog
+            } |
+              (if ("Yes" %in% input$hubLA) {
+                geographic_level == "LADU"
+              } else {
+                geographic_level == "xxx"
+              }) |
+              (if ("National" %in% input$hubComparators) {
+                geographic_level == "COUNTRY"
+              } else {
+                geographic_level == "xxx"
+              })
+          }
         ),
-        if(is.null(input$hubYears)==TRUE){TRUE}else{time_period %in% input$hubYears},
-        if(is.null(input$hubMetric)==TRUE){TRUE}else{metric %in% input$hubMetric},
-        (if(is.null(input$hubBreakdowns)==TRUE){TRUE}else{breakdown %in% input$hubBreakdowns})
+        (
+          if (is.null(input$hubArea) == TRUE) {
+            TRUE
+          } else {
+            {
+              area %in% input$hubArea
+            } |
+              (if ("Yes" %in% input$hubLA) {
+                area %in% (C_Geog %>% filter(geog == "LADU", LEP %in% input$hubArea) %>% distinct(areaName))$areaName
+              } else {
+                geographic_level == "xxx"
+              }) |
+              (if ("National" %in% input$hubComparators) {
+                area == "England"
+              } else {
+                geographic_level == "xxx"
+              })
+          }
+        ),
+        if (is.null(input$hubYears) == TRUE) {
+          TRUE
+        } else {
+          time_period %in% input$hubYears
+        },
+        if (is.null(input$hubMetric) == TRUE) {
+          TRUE
+        } else {
+          metric %in% input$hubMetric
+        },
+        (if (is.null(input$hubBreakdowns) == TRUE) {
+          TRUE
+        } else {
+          breakdown %in% input$hubBreakdowns
+        })
       ) %>%
       select(
         Year = time_period, Geography = geographic_level, Area = area,
-        Data=metric,Breakdown=breakdown,Splits=subgroups,Value=value
+        Data = metric, Breakdown = breakdown, Splits = subgroups, Value = value
       ))
   })
 
@@ -2313,17 +2410,17 @@ server <- function(input, output, session) {
   output$hubCode <- renderUI({
     round(runif(1, 0, 10) * 1000000, 0)
   })
-  
-  ##FE interventions table
-  output$interventionTable = DT::renderDataTable({
+
+  ## FE interventions table
+  output$interventionTable <- DT::renderDataTable({
     DT::datatable(I_InterventionTable, escape = FALSE, options = list(dom = "t"), rownames = FALSE)
   })
-  
-  ##FE sources table
-  output$sourcesTable = DT::renderDataTable({
+
+  ## FE sources table
+  output$sourcesTable <- DT::renderDataTable({
     DT::datatable(I_SourcesTable, escape = FALSE, options = list(dom = "t"), rownames = FALSE)
   })
-  
+
   # Stop app ---------------------------------------------------------------------------------
 
   session$onSessionEnded(function() {
