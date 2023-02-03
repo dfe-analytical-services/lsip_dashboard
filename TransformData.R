@@ -1733,19 +1733,23 @@ C_qualevel3plus_APS1721 <- F_qual_APS1721 %>%
 # write data to folder
 write.csv(C_qualevel3plus_APS1721, file = "Data\\AppData\\C_qualevel3plus_APS1721.csv", row.names = FALSE)
 
-#get in new format
-C_level3Plus<-C_qualevel3plus_APS1721%>%
-  rename(time_period=year,value=rate)%>%
-  mutate(metric="level3AndAboveRate")%>%
-  mutate(breakdown=case_when(gender %in% c("Male","Female") ~ "Gender",
-                             (gender=="Total"&age_band=="16-64") ~ "Total",
-                             TRUE ~ "Age"))%>%
-  mutate(subgroups=case_when(breakdown=="Gender"~gender,
-                             breakdown=="Age" ~ age_band,
-                             TRUE ~ "Total"))%>%
-  mutate(time_period=as.numeric(time_period))%>%
-  ungroup()%>%
-select(-Year,-Level,-value2,-gender,-age_band)
+# get in new format
+C_level3Plus <- C_qualevel3plus_APS1721 %>%
+  rename(time_period = year, value = rate) %>%
+  mutate(metric = "level3AndAboveRate") %>%
+  mutate(breakdown = case_when(
+    gender %in% c("Male", "Female") ~ "Gender",
+    (gender == "Total" & age_band == "16-64") ~ "Total",
+    TRUE ~ "Age"
+  )) %>%
+  mutate(subgroups = case_when(
+    breakdown == "Gender" ~ gender,
+    breakdown == "Age" ~ age_band,
+    TRUE ~ "Total"
+  )) %>%
+  mutate(time_period = as.numeric(time_period)) %>%
+  ungroup() %>%
+  select(-Year, -Level, -value2, -gender, -age_band)
 
 # create max and min for use in setting axis
 # C_qual_max_min <- C_qual2_APS1721 %>%
@@ -1771,7 +1775,7 @@ D_qual_APS1721 <- format.qual.APS(I_qual_APS1721) %>%
 # write the data to folder
 write.csv(D_qual_APS1721, file = "Data\\AppData\\D_qual_APS1721.csv", row.names = FALSE)
 
-#### 3.3 UK Business Count #### 
+#### 3.3 UK Business Count ####
 ##### Enterprise by employment size ####
 # Reshape data to long, rename and reorder and reformat some columns
 
@@ -1935,22 +1939,25 @@ C_empentind3_UBC1822 <- C_empentind2_UBC1822 %>%
 # write data to folder
 write.csv(C_empentind3_UBC1822, file = "Data\\AppData\\C_empentind3_UBC1822.csv", row.names = FALSE)
 
-#create new format version
-C_enterpriseSizeIndustry<-bind_rows(
-  F_empent_UBC1822%>%
-    rename(time_period=year,subgroups=variable)%>%
-    mutate(time_period=as.numeric(time_period),
-           metric="enterpriseCount", breakdown="Size")
-  ,
+# create new format version
+C_enterpriseSizeIndustry <- bind_rows(
+  F_empent_UBC1822 %>%
+    rename(time_period = year, subgroups = variable) %>%
+    mutate(
+      time_period = as.numeric(time_period),
+      metric = "enterpriseCount", breakdown = "Size"
+    ),
   F_empentind_UBC1822 %>%
-    filter(variable == "Total")%>%
-    select(-variable)%>%
-    rename(time_period=year,subgroups=industry)%>%
-    mutate(time_period=as.numeric(time_period),
-           metric="enterpriseCount", breakdown="Industry")
+    filter(variable == "Total") %>%
+    select(-variable) %>%
+    rename(time_period = year, subgroups = industry) %>%
+    mutate(
+      time_period = as.numeric(time_period),
+      metric = "enterpriseCount", breakdown = "Industry"
+    )
 ) %>%
-  mutate(value=as.numeric(value)) %>%
-  mutate(value=replace_na(value, 0)) %>%
+  mutate(value = as.numeric(value)) %>%
+  mutate(value = replace_na(value, 0)) %>%
   mutate(subgroups = case_when(
     subgroups == "Micro_0_to_9" ~ "Micro 0 to 9",
     subgroups == "Small_10_to_49" ~ "Small 10 to 49",
@@ -1982,23 +1989,23 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     rename(X1 = 1) %>%
     mutate(X1 = trimws(X1, which = c("both"))) %>%
     select(-X2)
-  
+
   x <- x %>%
     mutate(X1 = trimws(X1, which = c("both"))) %>%
     select(-X2)
-  
+
   y <- y %>%
     mutate(X1 = trimws(X1, which = c("both"))) %>%
     select(-X2)
-  
+
   z <- z %>%
     mutate(X1 = trimws(X1, which = c("both"))) %>%
     mutate(X2 = trimws(X2, which = c("both")))
-  
+
   df_list <- list(z, y, x, w)
   df <- df_list %>%
     reduce(full_join, by = "X1")
-  
+
   England <- df %>%
     filter(X2 == "ENGLAND") %>%
     select(-c(1:2)) %>%
@@ -2006,11 +2013,11 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     mutate(geographic_level = "COUNTRY") %>%
     relocate(area, geographic_level, .before = `2021`) %>%
     mutate_at(c(3:8), as.character)
-  
+
   LADU <- C_LADLEP2020 %>%
     select("LAD21CD", "LAD21NM") %>%
     distinct()
-  
+
   addLADU <- LADU %>%
     left_join(select(df, -X2), by = c("LAD21CD" = "X1")) %>%
     rename(area = LAD21NM) %>%
@@ -2018,7 +2025,7 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     mutate(geographic_level = "LADU") %>% # rename as LADU
     relocate(geographic_level, .after = area) %>%
     mutate_at(c(4:9), as.character)
-  
+
   addLEP <- addLADU %>%
     left_join(select(C_LADLEP2020, -LAD21NM), by = c("LAD21CD" = "LAD21CD")) %>%
     filter(is.na(LEP) == FALSE) %>% # remove non-english
@@ -2032,7 +2039,7 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(3:8), as.character) # Convert to sring to bind
-  
+
   addLSIP <- addLADU %>%
     left_join(select(C_LADLSIP2020, -LAD21NM), by = c("LAD21CD" = "LAD21CD")) %>%
     filter(is.na(LSIP) == FALSE) %>% # remove non-english
@@ -2046,7 +2053,7 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(3:8), as.character) # Convert to sring to bind
-  
+
   addMCA <- addLADU %>%
     left_join(select(C_mcalookup, -LAD21NM, -CAUTH21CD), by = c("LAD21CD" = "LAD21CD")) %>%
     select(-c(1:3)) %>%
@@ -2059,10 +2066,10 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(3:8), as.character) # Convert to sring to bind
-  
+
   addLADU <- addLADU %>%
     select(-LAD21CD)
-  
+
   combined <- bind_rows(addLADU, addLEP, addLSIP, addMCA, England) %>%
     melt(id.vars = c("geographic_level", "area")) %>%
     rename(year = variable) %>%
@@ -2103,22 +2110,26 @@ C_enterprise_demo1621 <- df_list %>%
 # write data to folder
 write.csv(C_enterprise_demo1621, file = "Data\\AppData\\C_enterprise_demo1621.csv", row.names = FALSE)
 
-#Put into new format
-C_enterpriseBirthDeath<-C_enterprise_demo1621%>%
-  rename(time_period=year,value=rate,metric=variable)%>%
-  mutate(breakdown="No breakdowns available",subgroups="Total",
-         metric=case_when(metric=="births" ~ "birthRate",
-                   metric=="deaths" ~ "deathRate"),
-         time_period=as.numeric(time_period))
+# Put into new format
+C_enterpriseBirthDeath <- C_enterprise_demo1621 %>%
+  rename(time_period = year, value = rate, metric = variable) %>%
+  mutate(
+    breakdown = "No breakdowns available", subgroups = "Total",
+    metric = case_when(
+      metric == "births" ~ "birthRate",
+      metric == "deaths" ~ "deathRate"
+    ),
+    time_period = as.numeric(time_period)
+  )
 
 
 #### 3.4 National Pupil Database ####
-####- Key Stage 4 Destinations ####
+#### - Key Stage 4 Destinations ####
 # Reshape data to long, rename and reorder and reformat some columns
 
 format.ks4 <- function(x) {
   colnames(x)[1] <- "area"
-  
+
   addcountry <- x %>%
     select(-location_code, -characteristic, -data_type, -institution_group, -level_methodology) %>%
     select(-c(1:2)) %>%
@@ -2130,13 +2141,13 @@ format.ks4 <- function(x) {
     mutate(area = "England") %>%
     mutate(geographic_level = "COUNTRY") %>%
     relocate(area, geographic_level, .before = time_period)
-  
+
   addladu <- x %>%
     select(-location_code, -characteristic, -data_type, -institution_group, -level_methodology) %>%
     mutate(geographic_level = replace(geographic_level, geographic_level == "localAuthorityDistrict", "LADU")) %>%
     mutate_at(c(4:9), as.character) # Convert to string to bind
-  
-  
+
+
   # create lep file
   addLEP <- x %>%
     left_join(select(C_LADLEP2020, -LAD21NM), by = c("location_code" = "LAD21CD")) %>%
@@ -2152,7 +2163,7 @@ format.ks4 <- function(x) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:9), as.character) # Convert to sring to bind
-  
+
   # create lsip file
   addLSIP <- x %>%
     left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
@@ -2168,7 +2179,7 @@ format.ks4 <- function(x) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:9), as.character) # Convert to string to bind
-  
+
   addMCA <- x %>%
     left_join(select(C_mcalookup, -LAD21NM, -CAUTH21CD), by = c("location_code" = "LAD21CD")) %>%
     select(-area, -location_code) %>% # get rid of MCA area
@@ -2183,7 +2194,7 @@ format.ks4 <- function(x) {
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(4:9), as.character) %>% # Convert to string to bind
     filter(!is.na(area))
-  
+
   # join together and rename columns
   LEP_LSIP <- bind_rows(addcountry, addladu, addLEP, addLSIP, addMCA) %>%
     rename(
@@ -2210,13 +2221,13 @@ write.csv(D_KS4destin_1521, file = "Data\\AppData\\D_KS4destin_1521.csv", row.na
 
 
 
-## National Pupil Database  
+## National Pupil Database
 #### - Key Stage 5 Destinations ####
 # Reshape data to long, rename and reorder and reformat some columns
 
 format.ks5 <- function(x) {
   colnames(x)[1] <- "area"
-  
+
   addcountry <- x %>%
     select(-location_code, -characteristic, -data_type, -institution_group, -level_methodology) %>%
     select(-c(1:2)) %>%
@@ -2228,14 +2239,14 @@ format.ks5 <- function(x) {
     mutate(area = "England") %>%
     mutate(geographic_level = "COUNTRY") %>%
     relocate(area, geographic_level, .before = time_period)
-  
-  
+
+
   addladu <- x %>%
     select(-location_code, -characteristic, -data_type, -institution_group, -level_methodology) %>%
     mutate(geographic_level = replace(geographic_level, geographic_level == "localAuthorityDistrict", "LADU")) %>%
     mutate_at(c(5:10), as.character) # Convert to string to bind
-  
-  
+
+
   # create lep file
   addLEP <- x %>%
     left_join(select(C_LADLEP2020, -LAD21NM), by = c("location_code" = "LAD21CD")) %>%
@@ -2251,7 +2262,7 @@ format.ks5 <- function(x) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(5:10), as.character) # Convert to sring to bind
-  
+
   # create lsip file
   addLSIP <- x %>%
     left_join(select(C_LADLSIP2020, -LAD21CD), by = c("area" = "LAD21NM")) %>%
@@ -2267,7 +2278,7 @@ format.ks5 <- function(x) {
     summarise(across(everything(), list(sum), na.rm = T)) %>%
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(5:10), as.character) # Convert to string to bind
-  
+
   addMCA <- x %>%
     left_join(select(C_mcalookup, -LAD21NM, -CAUTH21CD), by = c("location_code" = "LAD21CD")) %>%
     select(-area, -location_code) %>% # get rid of MCA area
@@ -2282,8 +2293,8 @@ format.ks5 <- function(x) {
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(5:10), as.character) %>% # Convert to string to bind
     filter(!is.na(area))
-  
-  
+
+
   # join together and rename columns
   LEP_LSIP <- bind_rows(addcountry, addladu, addLEP, addLSIP, addMCA) %>%
     rename(
@@ -2366,26 +2377,32 @@ C_KS4_KS5eduempapp <- F_KS4destin_1521 %>%
 # write data to folder
 write.csv(C_KS4_KS5eduempapp, file = "Data\\AppData\\C_KS4_KS5eduempapp.csv", row.names = FALSE)
 
-#reformat to new format
-C_destinationsPreStep1<-C_KS4_KS5eduempapp%>%
-  mutate(metric=case_when(`Key Stage`=="Key Stage 4" ~"sustainedPositiveDestinationKS4Rate",
-                          `Key Stage`=="Key Stage 5" ~"sustainedPositiveDestinationKS5Rate",
-                          TRUE ~ "Error"))%>%
-  mutate(breakdown=case_when(`Cohort Group`=="Total" ~ "Total",
-                              TRUE~"Level"))%>%
-  rename(value=rate,subgroups=`Cohort Group`)%>%
-  mutate(sustEdu=`Sustained Education`/Total,
-         sustApp=`Sustained Apprenticeships`/Total,
-         sustEmp=`Sustained Employment`/Total)%>%
-  select(-positive_sust,-AY,-Year,-positive_sust_count,-`Sustained Education`,-`Sustained Apprenticeships`,-`Sustained Employment`,-`Key Stage`)
+# reformat to new format
+C_destinationsPreStep1 <- C_KS4_KS5eduempapp %>%
+  mutate(metric = case_when(
+    `Key Stage` == "Key Stage 4" ~ "sustainedPositiveDestinationKS4Rate",
+    `Key Stage` == "Key Stage 5" ~ "sustainedPositiveDestinationKS5Rate",
+    TRUE ~ "Error"
+  )) %>%
+  mutate(breakdown = case_when(
+    `Cohort Group` == "Total" ~ "Total",
+    TRUE ~ "Level"
+  )) %>%
+  rename(value = rate, subgroups = `Cohort Group`) %>%
+  mutate(
+    sustEdu = `Sustained Education` / Total,
+    sustApp = `Sustained Apprenticeships` / Total,
+    sustEmp = `Sustained Employment` / Total
+  ) %>%
+  select(-positive_sust, -AY, -Year, -positive_sust_count, -`Sustained Education`, -`Sustained Apprenticeships`, -`Sustained Employment`, -`Key Stage`)
 
-#add in outcome subgrousps
-C_destinations<-bind_rows(
-  C_destinationsPreStep1%>%select(-sustEdu,-sustApp,-sustEmp),
-  C_destinationsPreStep1%>%filter(subgroups=="Total")%>%mutate(breakdown="Outcome",subgroups="Sustained education")%>%select(-sustApp,-sustEmp,-value)%>%rename(value=sustEdu),
-  C_destinationsPreStep1%>%filter(subgroups=="Total")%>%mutate(breakdown="Outcome",subgroups="Sustained apprenticeship")%>%select(-sustEdu,-sustEmp,-value)%>%rename(value=sustApp),
-  C_destinationsPreStep1%>%filter(subgroups=="Total")%>%mutate(breakdown="Outcome",subgroups="Sustained employment")%>%select(-sustApp,-sustEdu,-value)%>%rename(value=sustEmp)
-  )
+# add in outcome subgrousps
+C_destinations <- bind_rows(
+  C_destinationsPreStep1 %>% select(-sustEdu, -sustApp, -sustEmp),
+  C_destinationsPreStep1 %>% filter(subgroups == "Total") %>% mutate(breakdown = "Outcome", subgroups = "Sustained education") %>% select(-sustApp, -sustEmp, -value) %>% rename(value = sustEdu),
+  C_destinationsPreStep1 %>% filter(subgroups == "Total") %>% mutate(breakdown = "Outcome", subgroups = "Sustained apprenticeship") %>% select(-sustEdu, -sustEmp, -value) %>% rename(value = sustApp),
+  C_destinationsPreStep1 %>% filter(subgroups == "Total") %>% mutate(breakdown = "Outcome", subgroups = "Sustained employment") %>% select(-sustApp, -sustEdu, -value) %>% rename(value = sustEmp)
+)
 # create max and KS5 positive sustained destination  rate by area for use in setting axis
 C_KS5_eduempapp_max_min <- C_KS4_KS5eduempapp %>%
   filter(
@@ -2414,11 +2431,11 @@ format.OnsProf <- function(x) {
     mutate(geographic_level = geogLevel) %>% # set to the current geographic type
     # mutate(geographic_level=gsub('\\b(\\pL)\\pL{2,}|.','\\U\\1',geographic_level,perl = TRUE))%>%#get first letter of geog level
     relocate(geographic_level, .before = area)
-  
+
   # Make long
   reformat %>%
     pivot_longer(!c("geographic_level", "area", "Summary Profession Category", "Detailed Profession Category"),
-                 names_to = "time_period", values_to = "vacancies"
+      names_to = "time_period", values_to = "vacancies"
     ) %>%
     mutate(area = case_when(
       area == "Cambridge and Peterborough" ~ "Cambridgeshire and Peterborough",
@@ -2435,7 +2452,7 @@ D_OnsProf <- bind_rows(
   format.OnsProf(I_OnsProfLep %>% select(-X2)), # remove code since it doesn't exist in other geogs
   format.OnsProf(I_OnsProfLsip),
   format.OnsProf(I_OnsProfMca),
-  format.OnsProf(I_OnsProfLA%>% select(-1)),# remove region code
+  format.OnsProf(I_OnsProfLA %>% select(-1)), # remove region code
   # format.OnsProf(I_OnsProfEng %>% mutate(`Detailed Profession Category`=NULL)),
   format.OnsProf(I_OnsProfDetailEng)
 ) %>%
@@ -2444,8 +2461,8 @@ D_OnsProf <- bind_rows(
     geographic_level == "Local Authority District" ~ "LADU",
     geographic_level == "Local Enterprise Partnership" ~ "LEP",
     TRUE ~ geographic_level
-  ))%>%
-  mutate(geographic_level=toupper(geographic_level))
+  )) %>%
+  mutate(geographic_level = toupper(geographic_level))
 
 # make suppressed data zero to use in dashboard
 C_OnsProf <- D_OnsProf %>%
@@ -2507,44 +2524,44 @@ C_Geog <- neatGeog %>%
       mutate(geographic_level = case_when(geographic_level == "National" ~ "COUNTRY", TRUE ~ geographic_level)) %>%
       mutate(geographic_level = case_when(geographic_level == "Local authority district" ~ "LADU", TRUE ~ geographic_level)),
     by = c("areaName" = "area", "geog" = "geographic_level")
-  )%>%
+  ) %>%
   left_join(
-    C_OnsProfTime %>%filter(time_period == "2022-10-01")%>%
+    C_OnsProfTime %>% filter(time_period == "2022-10-01") %>%
       group_by(area, geographic_level) %>%
       summarise(vacancies = sum(vacancies)),
     by = c("areaName" = "area", "geog" = "geographic_level")
-  )%>%
-  #add death of entreprises
+  ) %>%
+  # add death of entreprises
   left_join(
-C_enterpriseBirthDeath%>%filter(time_period =="2021",metric=="deathRate")%>%select(area,geographic_level,deathRate=value),
-by = c("areaName" = "area", "geog" = "geographic_level")
-)%>%
-  #add birth of entreprises
-  left_join(
-    C_enterpriseBirthDeath%>%filter(time_period =="2021",metric=="birthRate")%>%select(area,geographic_level,birthRate=value),
+    C_enterpriseBirthDeath %>% filter(time_period == "2021", metric == "deathRate") %>% select(area, geographic_level, deathRate = value),
     by = c("areaName" = "area", "geog" = "geographic_level")
-)%>%
-  #add enterprise count
+  ) %>%
+  # add birth of entreprises
   left_join(
-  C_enterpriseSizeIndustry%>%filter(time_period =="2022",subgroups=="Total")%>%select(area,geographic_level,enterpriseCount=value),
-  by = c("areaName" = "area", "geog" = "geographic_level")
-  )%>%
-  #add over level 3
-  left_join(
-    C_level3Plus%>%filter(time_period =="2021",subgroups=="Total")%>%select(area,geographic_level,level3AndAboveRate=value),
+    C_enterpriseBirthDeath %>% filter(time_period == "2021", metric == "birthRate") %>% select(area, geographic_level, birthRate = value),
     by = c("areaName" = "area", "geog" = "geographic_level")
-  )%>%
-  #add KS4 sustained positive outcome
+  ) %>%
+  # add enterprise count
   left_join(
-    C_destinations%>%filter(time_period =="202021",subgroups=="Total",metric=="sustainedPositiveDestinationKS4Rate")%>%select(area,geographic_level,sustainedPositiveDestinationKS4Rate=value),
+    C_enterpriseSizeIndustry %>% filter(time_period == "2022", subgroups == "Total") %>% select(area, geographic_level, enterpriseCount = value),
     by = c("areaName" = "area", "geog" = "geographic_level")
-  )%>%
-  #add KS5 sustained positive outcome
+  ) %>%
+  # add over level 3
   left_join(
-    C_destinations%>%filter(time_period =="202021",subgroups=="Total",metric=="sustainedPositiveDestinationKS5Rate")%>%select(area,geographic_level,sustainedPositiveDestinationKS5Rate=value),
+    C_level3Plus %>% filter(time_period == "2021", subgroups == "Total") %>% select(area, geographic_level, level3AndAboveRate = value),
+    by = c("areaName" = "area", "geog" = "geographic_level")
+  ) %>%
+  # add KS4 sustained positive outcome
+  left_join(
+    C_destinations %>% filter(time_period == "202021", subgroups == "Total", metric == "sustainedPositiveDestinationKS4Rate") %>% select(area, geographic_level, sustainedPositiveDestinationKS4Rate = value),
+    by = c("areaName" = "area", "geog" = "geographic_level")
+  ) %>%
+  # add KS5 sustained positive outcome
+  left_join(
+    C_destinations %>% filter(time_period == "202021", subgroups == "Total", metric == "sustainedPositiveDestinationKS5Rate") %>% select(area, geographic_level, sustainedPositiveDestinationKS5Rate = value),
     by = c("areaName" = "area", "geog" = "geographic_level")
   )
-  
+
 save(C_Geog, file = "Data\\AppData\\C_Geog.RData")
 
 # create neat over time chart
@@ -2553,16 +2570,16 @@ C_time <- bind_rows(
   # employment data
   C_EmpRate_APS1822 %>%
     rename(time_period = year, chart_year = Year) %>%
-    mutate(chart_year=as.Date(ISOdate(time_period, 1, 1)))%>%
-    #mutate_at(c("time_period"), as.integer) %>%
+    mutate(chart_year = as.Date(ISOdate(time_period, 1, 1))) %>%
+    # mutate_at(c("time_period"), as.integer) %>%
     pivot_longer(!c("geographic_level", "area", "time_period", "chart_year"),
-                 names_to = "metric",
-                 values_to = "value"
+      names_to = "metric",
+      values_to = "value"
     ),
   # ILR data
   C_Achieve_ILR1621 %>%
     rename(chart_year = Year) %>%
-    mutate(chart_year=as.Date(ISOdate(str_sub(time_period,1,4), 1, 1)))%>%
+    mutate(chart_year = as.Date(ISOdate(str_sub(time_period, 1, 4), 1, 1))) %>%
     mutate_at(c("time_period"), as.character) %>%
     filter(level_or_type == "Further education and skills: Total", age_group == "Total") %>%
     select(-apprenticeships_or_further_education, -level_or_type, -age_group, -typeNeat, -AY) %>%
@@ -2572,45 +2589,55 @@ C_time <- bind_rows(
       TRUE ~ geographic_level
     )) %>%
     pivot_longer(!c("geographic_level", "area", "time_period", "chart_year"),
-                 names_to = "metric",
-                 values_to = "value"
+      names_to = "metric",
+      values_to = "value"
     ),
-  C_OnsProfTime%>%
-    mutate(time_period=format(as.Date(time_period)))%>%
-    mutate(chart_year=as.Date(time_period))%>%
-    group_by(area, geographic_level,time_period,chart_year) %>%
-    summarise(vacancies = sum(vacancies))%>%
-    mutate(metric="vacancies")%>%
-    rename(value=vacancies),
-  #add enterprise birth and deaths
-  C_enterpriseBirthDeath%>%
-    select(-breakdown,-subgroups)%>%
-    mutate(chart_year=as.Date(ISOdate(time_period, 1, 1)),
-           time_period=as.character(time_period)),
-  #add enterprise count
-  C_enterpriseSizeIndustry%>%
-    filter(subgroups=="Total")%>%#just get total
-    select(-breakdown,-subgroups)%>%
-    mutate(chart_year=as.Date(ISOdate(time_period, 1, 1)),
-           time_period=as.character(time_period)),
-  #add level 3 + rate
-  C_level3Plus%>%
-    filter(subgroups=="Total")%>%#just get total
-    select(-breakdown,-subgroups)%>%
-    mutate(chart_year=as.Date(ISOdate(time_period, 1, 1)),
-           time_period=as.character(time_period)),
-  #add ks4 destinations
-  C_destinations%>%
-    filter(subgroups=="Total",metric=="sustainedPositiveDestinationKS4Rate")%>%#just get total
-    select(-breakdown,-subgroups)%>%
-    mutate(chart_year=as.Date(ISOdate(str_sub(time_period,1,4), 1, 1)),
-           time_period=as.character(time_period)),
-  #add ks5 destinations
-  C_destinations%>%
-    filter(subgroups=="Total",metric=="sustainedPositiveDestinationKS5Rate")%>%#just get total
-    select(-breakdown,-subgroups)%>%
-    mutate(chart_year=as.Date(ISOdate(str_sub(time_period,1,4), 1, 1)),
-           time_period=as.character(time_period))
+  C_OnsProfTime %>%
+    mutate(time_period = format(as.Date(time_period))) %>%
+    mutate(chart_year = as.Date(time_period)) %>%
+    group_by(area, geographic_level, time_period, chart_year) %>%
+    summarise(vacancies = sum(vacancies)) %>%
+    mutate(metric = "vacancies") %>%
+    rename(value = vacancies),
+  # add enterprise birth and deaths
+  C_enterpriseBirthDeath %>%
+    select(-breakdown, -subgroups) %>%
+    mutate(
+      chart_year = as.Date(ISOdate(time_period, 1, 1)),
+      time_period = as.character(time_period)
+    ),
+  # add enterprise count
+  C_enterpriseSizeIndustry %>%
+    filter(subgroups == "Total") %>% # just get total
+    select(-breakdown, -subgroups) %>%
+    mutate(
+      chart_year = as.Date(ISOdate(time_period, 1, 1)),
+      time_period = as.character(time_period)
+    ),
+  # add level 3 + rate
+  C_level3Plus %>%
+    filter(subgroups == "Total") %>% # just get total
+    select(-breakdown, -subgroups) %>%
+    mutate(
+      chart_year = as.Date(ISOdate(time_period, 1, 1)),
+      time_period = as.character(time_period)
+    ),
+  # add ks4 destinations
+  C_destinations %>%
+    filter(subgroups == "Total", metric == "sustainedPositiveDestinationKS4Rate") %>% # just get total
+    select(-breakdown, -subgroups) %>%
+    mutate(
+      chart_year = as.Date(ISOdate(str_sub(time_period, 1, 4), 1, 1)),
+      time_period = as.character(time_period)
+    ),
+  # add ks5 destinations
+  C_destinations %>%
+    filter(subgroups == "Total", metric == "sustainedPositiveDestinationKS5Rate") %>% # just get total
+    select(-breakdown, -subgroups) %>%
+    mutate(
+      chart_year = as.Date(ISOdate(str_sub(time_period, 1, 4), 1, 1)),
+      time_period = as.character(time_period)
+    )
 )
 write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
 
@@ -2622,19 +2649,19 @@ C_breakdown <- bind_rows(
     rename(time_period = year) %>%
     filter(time_period == 2022) %>%
     mutate_at(c("time_period"), as.integer) %>%
-    select(-Year)%>%
+    select(-Year) %>%
     mutate(breakdown = "No breakdowns available", subgroups = "Total") %>%
     pivot_longer(!c("geographic_level", "area", "time_period", "breakdown", "subgroups"),
-                 names_to = "metric",
-                 values_to = "value"
+      names_to = "metric",
+      values_to = "value"
     ) %>%
     filter(metric != "Employment"),
   C_EmpOcc_APS1721 %>%
     rename(time_period = year) %>%
     mutate_at(c("time_period"), as.integer) %>%
     pivot_longer(!c("geographic_level", "area", "time_period"),
-                 names_to = "subgroups",
-                 values_to = "value"
+      names_to = "subgroups",
+      values_to = "value"
     ) %>%
     mutate(breakdown = "Occupation", metric = "Employment") %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
@@ -2650,7 +2677,7 @@ C_breakdown <- bind_rows(
     select(-Total, -rate) %>%
     group_by(across(c(-value, -subgroups))) %>%
     mutate(across(value, ~ round(prop.table(.), 3))),
-  
+
   # ILR data
   C_Achieve_ILR1621 %>%
     filter(time_period == 202021) %>%
@@ -2661,8 +2688,8 @@ C_breakdown <- bind_rows(
       TRUE ~ geographic_level
     )) %>%
     pivot_longer(!c("geographic_level", "area", "time_period", "apprenticeships_or_further_education", "level_or_type", "age_group"),
-                 names_to = "metric",
-                 values_to = "value"
+      names_to = "metric",
+      values_to = "value"
     ) %>%
     # get subgroups when the other fields are total
     mutate(subgroups = case_when(
@@ -2686,78 +2713,79 @@ C_breakdown <- bind_rows(
     )) %>%
     filter(breakdown != "NA") %>%
     select(-apprenticeships_or_further_education, -level_or_type, -age_group),
-  C_OnsProf%>%
+  C_OnsProf %>%
     filter(time_period == "Oct 22") %>%
-    mutate(time_period=102022) %>%
-    group_by(geographic_level,area,time_period,`Summary Profession Category`)%>%
-    summarise(value=sum(vacancies))%>%
-    mutate(breakdown="Summary Profession Category",metric="vacancies")%>%
-    rename(subgroups=`Summary Profession Category`)%>%
+    mutate(time_period = 102022) %>%
+    group_by(geographic_level, area, time_period, `Summary Profession Category`) %>%
+    summarise(value = sum(vacancies)) %>%
+    mutate(breakdown = "Summary Profession Category", metric = "vacancies") %>%
+    rename(subgroups = `Summary Profession Category`) %>%
     group_by(across(c(-value, -subgroups))) %>%
     mutate(across(value, ~ round(prop.table(.), 3))),
-  C_OnsProf%>%
+  C_OnsProf %>%
     filter(time_period == "Oct 22") %>%
-    mutate(time_period=102022) %>%
-    group_by(geographic_level,area,time_period,`Detailed Profession Category`)%>%
-    summarise(value=sum(vacancies))%>%
-    mutate(breakdown="Detailed Profession Category",metric="vacancies")%>%
-    rename(subgroups=`Detailed Profession Category`)%>%
+    mutate(time_period = 102022) %>%
+    group_by(geographic_level, area, time_period, `Detailed Profession Category`) %>%
+    summarise(value = sum(vacancies)) %>%
+    mutate(breakdown = "Detailed Profession Category", metric = "vacancies") %>%
+    rename(subgroups = `Detailed Profession Category`) %>%
     group_by(across(c(-value, -subgroups))) %>%
     mutate(across(value, ~ round(prop.table(.), 3))),
-  #add enterprise birth and deaths
-  C_enterpriseBirthDeath%>%
-    filter(time_period==2021),
-  #add enterprise count
-  C_enterpriseSizeIndustry%>%
-    filter(time_period==2022,subgroups!="Total")%>%
+  # add enterprise birth and deaths
+  C_enterpriseBirthDeath %>%
+    filter(time_period == 2021),
+  # add enterprise count
+  C_enterpriseSizeIndustry %>%
+    filter(time_period == 2022, subgroups != "Total") %>%
     group_by(across(c(-value, -subgroups))) %>%
     mutate(across(value, ~ round(prop.table(.), 3))),
-  #add level 3 + rate
-  C_level3Plus%>%
-    filter(time_period==2021,subgroups!="Total"),
-  #add ks4 destinations
-  C_destinations%>%
-    filter(time_period==202021,subgroups!="Total",metric=="sustainedPositiveDestinationKS4Rate"),
-  #add ks5 destinations
-  C_destinations%>%
-    filter(time_period==202021,subgroups!="Total",metric=="sustainedPositiveDestinationKS5Rate")
+  # add level 3 + rate
+  C_level3Plus %>%
+    filter(time_period == 2021, subgroups != "Total"),
+  # add ks4 destinations
+  C_destinations %>%
+    filter(time_period == 202021, subgroups != "Total", metric == "sustainedPositiveDestinationKS4Rate"),
+  # add ks5 destinations
+  C_destinations %>%
+    filter(time_period == 202021, subgroups != "Total", metric == "sustainedPositiveDestinationKS5Rate")
 )
 write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
 
-#Create dataHub dataset
-C_datahub<-bind_rows(
-  C_time%>%select(-chart_year)%>%mutate(breakdown="Total",subgroups="Total"),
-  C_breakdown%>%mutate(time_period=as.character(time_period))
-)%>%
-  #rename some of the elements so they make sense here
-  mutate(metric=case_when(metric=="  All "~"Population volume",
-                          metric=="empRate"~"Employment rate",
-                          metric== "selfempRate"~ "Self-employment rate",
-                          metric=="unempRate" ~ "Unemployment rate",
-                          metric=="inactiveRate" ~ "Inactive rate",
-                          metric=="Employment" ~ "Employment volume",
-                          metric=="  Self Employed " ~ "Self-employment volume",
-                          metric=="  Unemployed " ~ "Unemployed volume",
-                          metric=="  Inactive " ~ "Inactive volume",
-                          metric=="  Economically Active " ~ "Economically active volume",
-                          metric=="  Employees " ~ "Employees volume",
-                          metric=="achievements_rate_per_100000_population" ~ "FE achievement rate per 100k",
-                          metric=="participation_rate_per_100000_population" ~ "FE participation rate per 100k",
-                          metric=="starts_rate_per_100000_population" ~ "FE start rate per 100k",
-                          metric=="achievements" ~ "FE achievements volume",
-                          metric=="participation" ~ "FE participation volume",
-                          metric=="starts" ~ "FE starts volume",
-                          metric=="birthRate" ~ "Enterprise birth rate",
-                          metric=="deathRate" ~ "Enterprise death rate",
-                          metric=="enterpriseCount" ~ "Enterprise count",
-                          metric=="level3AndAboveRate" ~ "Qualified at Level 3 or above",
-                          metric=="sustainedPositiveDestinationKS4Rate" ~ "KS4 completers sustained positive detination rate",
-                          metric=="sustainedPositiveDestinationKS5Rate" ~ "KS4 completers sustained positive detination rate",
-                          TRUE~metric
-  ))%>%
-  mutate(breakdown=case_when(breakdown=="Occupation"~"Occupation split over geography",
-                             breakdown=="Industry"~"Industry split over geography",
-                             TRUE~breakdown))
+# Create dataHub dataset
+C_datahub <- bind_rows(
+  C_time %>% select(-chart_year) %>% mutate(breakdown = "Total", subgroups = "Total"),
+  C_breakdown %>% mutate(time_period = as.character(time_period))
+) %>%
+  # rename some of the elements so they make sense here
+  mutate(metric = case_when(
+    metric == "  All " ~ "Population volume",
+    metric == "empRate" ~ "Employment rate",
+    metric == "selfempRate" ~ "Self-employment rate",
+    metric == "unempRate" ~ "Unemployment rate",
+    metric == "inactiveRate" ~ "Inactive rate",
+    metric == "Employment" ~ "Employment volume",
+    metric == "  Self Employed " ~ "Self-employment volume",
+    metric == "  Unemployed " ~ "Unemployed volume",
+    metric == "  Inactive " ~ "Inactive volume",
+    metric == "  Economically Active " ~ "Economically active volume",
+    metric == "  Employees " ~ "Employees volume",
+    metric == "achievements_rate_per_100000_population" ~ "FE achievement rate per 100k",
+    metric == "participation_rate_per_100000_population" ~ "FE participation rate per 100k",
+    metric == "starts_rate_per_100000_population" ~ "FE start rate per 100k",
+    metric == "achievements" ~ "FE achievements volume",
+    metric == "participation" ~ "FE participation volume",
+    metric == "starts" ~ "FE starts volume",
+    metric == "birthRate" ~ "Enterprise birth rate",
+    metric == "deathRate" ~ "Enterprise death rate",
+    metric == "enterpriseCount" ~ "Enterprise count",
+    metric == "level3AndAboveRate" ~ "Qualified at Level 3 or above",
+    metric == "sustainedPositiveDestinationKS4Rate" ~ "KS4 completers sustained positive detination rate",
+    metric == "sustainedPositiveDestinationKS5Rate" ~ "KS4 completers sustained positive detination rate",
+    TRUE ~ metric
+  )) %>%
+  mutate(breakdown = case_when(
+    breakdown == "Occupation" ~ "Occupation split over geography",
+    breakdown == "Industry" ~ "Industry split over geography",
+    TRUE ~ breakdown
+  ))
 write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
-
-

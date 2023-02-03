@@ -449,7 +449,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           12,
           p("If you have a query code, enter it here:"),
           textInput("hubCode", label = NULL),
-          
         )
       ),
       fluidRow(column(12, h2("Geography"))),
@@ -701,7 +700,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       ),
       br()
     ),
-    #FE interventions
+    # FE interventions
     tabPanel(
       "FE interventions",
       fluidRow(
@@ -710,9 +709,10 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           h1("FE interventions"),
           DT::dataTableOutput("interventionTable"),
           br()
-        ))
-      ),
-    #FE data sources
+        )
+      )
+    ),
+    # FE data sources
     tabPanel(
       "FE data sources",
       fluidRow(
@@ -721,9 +721,9 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           h1("FE data sources"),
           DT::dataTableOutput("sourcesTable"),
           br()
-        ))
+        )
+      )
     )
-    
   ), # End of navBarPage
   # Footer ====================================================================
 
