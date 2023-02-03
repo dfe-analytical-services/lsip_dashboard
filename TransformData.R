@@ -1001,6 +1001,19 @@ C_qualevel3plus_APS1721 <- F_qual_APS1721 %>%
 # write data to folder
 write.csv(C_qualevel3plus_APS1721, file = "Data\\AppData\\C_qualevel3plus_APS1721.csv", row.names = FALSE)
 
+#get in new format
+C_level3Plus<-C_qualevel3plus_APS1721%>%
+  rename(time_period=year,value=rate)%>%
+  mutate(metric="level3AndAboveRate")%>%
+  mutate(breakdown=case_when(gender %in% c("Male","Female") ~ "Gender",
+                             (gender=="Total"&age_band=="16-64") ~ "Total",
+                             TRUE ~ "Age"))%>%
+  mutate(subgroups=case_when(breakdown=="Gender"~gender,
+                             breakdown=="Age" ~ age_band,
+                             TRUE ~ "Total"))%>%
+  mutate(time_period=as.numeric(time_period))%>%
+  ungroup()%>%
+select(-Year,-Level,-value2,-gender,-age_band)
 
 # create max and min for use in setting axis
 # C_qual_max_min <- C_qual2_APS1721 %>%
@@ -1763,7 +1776,13 @@ by = c("areaName" = "area", "geog" = "geographic_level")
   left_join(
   C_enterpriseSizeIndustry%>%filter(time_period =="2022",subgroups=="Total")%>%select(area,geographic_level,enterpriseCount=value),
   by = c("areaName" = "area", "geog" = "geographic_level")
+  )%>%
+  #add over level 3
+  left_join(
+    C_level3Plus%>%filter(time_period =="2021",subgroups=="Total")%>%select(area,geographic_level,level3AndAboveRate=value),
+    by = c("areaName" = "area", "geog" = "geographic_level")
   )
+  
 save(C_Geog, file = "Data\\AppData\\C_Geog.RData")
 
 # create neat over time chart
@@ -1808,6 +1827,12 @@ C_time <- bind_rows(
            time_period=as.character(time_period)),
   #add enterprise count
   C_enterpriseSizeIndustry%>%
+    filter(subgroups=="Total")%>%#just get total
+    select(-breakdown,-subgroups)%>%
+    mutate(chart_year=as.Date(ISOdate(time_period, 1, 1)),
+           time_period=as.character(time_period)),
+  #add level 3 + rate
+  C_level3Plus%>%
     filter(subgroups=="Total")%>%#just get total
     select(-breakdown,-subgroups)%>%
     mutate(chart_year=as.Date(ISOdate(time_period, 1, 1)),
@@ -1912,7 +1937,10 @@ C_breakdown <- bind_rows(
   C_enterpriseSizeIndustry%>%
     filter(time_period==2022,subgroups!="Total")%>%
     group_by(across(c(-value, -subgroups))) %>%
-    mutate(across(value, ~ round(prop.table(.), 3)))
+    mutate(across(value, ~ round(prop.table(.), 3))),
+  #add level 3 + rate
+  C_level3Plus%>%
+    filter(time_period==2021,subgroups!="Total")
 )
 write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
 
@@ -1942,6 +1970,7 @@ C_datahub<-bind_rows(
                           metric=="birthRate" ~ "Enterprise birth rate",
                           metric=="deathRate" ~ "Enterprise death rate",
                           metric=="enterpriseCount" ~ "Enterprise count",
+                          metric=="level3AndAboveRate" ~ "Qualified at Level 3 or above",
                           TRUE~metric
   ))%>%
   mutate(breakdown=case_when(breakdown=="Occupation"~"Occupation split over geography",

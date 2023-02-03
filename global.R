@@ -54,7 +54,8 @@ metricChoices <- list(
     "FE start rate" = "starts_rate_per_100000_population",
     "FE achievements" = "achievements",
     "FE participation" = "participation",
-    "FE starts" = "starts"
+    "FE starts" = "starts",
+    "Qualified at Level 3 or above" ="level3AndAboveRate" 
   ),
   "Mismatch" = list("Supply vs demand TO COME" = "mismatch")
 )
