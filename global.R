@@ -55,7 +55,9 @@ metricChoices <- list(
     "FE achievements" = "achievements",
     "FE participation" = "participation",
     "FE starts" = "starts",
-    "Qualified at Level 3 or above" ="level3AndAboveRate" 
+    "Qualified at Level 3 or above" ="level3AndAboveRate",
+    "KS4 completers sustained positive detination rate"="sustainedPositiveDestinationKS4Rate",
+    "KS5 completers sustained positive detination rate"="sustainedPositiveDestinationKS5Rate"
   ),
   "Mismatch" = list("Supply vs demand TO COME" = "mismatch")
 )

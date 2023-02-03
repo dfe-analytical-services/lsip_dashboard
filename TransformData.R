@@ -1634,6 +1634,26 @@ C_KS4_KS5eduempapp <- F_KS4destin_1521 %>%
 # write data to folder
 write.csv(C_KS4_KS5eduempapp, file = "Data\\AppData\\C_KS4_KS5eduempapp.csv", row.names = FALSE)
 
+#reformat to new format
+C_destinationsPreStep1<-C_KS4_KS5eduempapp%>%
+  mutate(metric=case_when(`Key Stage`=="Key Stage 4" ~"sustainedPositiveDestinationKS4Rate",
+                          `Key Stage`=="Key Stage 5" ~"sustainedPositiveDestinationKS5Rate",
+                          TRUE ~ "Error"))%>%
+  mutate(breakdown=case_when(`Cohort Group`=="Total" ~ "Total",
+                              TRUE~"Level"))%>%
+  rename(value=rate,subgroups=`Cohort Group`)%>%
+  mutate(sustEdu=`Sustained Education`/Total,
+         sustApp=`Sustained Apprenticeships`/Total,
+         sustEmp=`Sustained Employment`/Total)%>%
+  select(-positive_sust,-AY,-Year,-positive_sust_count,-`Sustained Education`,-`Sustained Apprenticeships`,-`Sustained Employment`,-`Key Stage`)
+
+#add in outcome subgrousps
+C_destinations<-bind_rows(
+  C_destinationsPreStep1%>%select(-sustEdu,-sustApp,-sustEmp),
+  C_destinationsPreStep1%>%filter(subgroups=="Total")%>%mutate(breakdown="Outcome",subgroups="Sustained education")%>%select(-sustApp,-sustEmp,-value)%>%rename(value=sustEdu),
+  C_destinationsPreStep1%>%filter(subgroups=="Total")%>%mutate(breakdown="Outcome",subgroups="Sustained apprenticeship")%>%select(-sustEdu,-sustEmp,-value)%>%rename(value=sustApp),
+  C_destinationsPreStep1%>%filter(subgroups=="Total")%>%mutate(breakdown="Outcome",subgroups="Sustained employment")%>%select(-sustApp,-sustEdu,-value)%>%rename(value=sustEmp)
+  )
 # create max and KS5 positive sustained destination  rate by area for use in setting axis
 C_KS5_eduempapp_max_min <- C_KS4_KS5eduempapp %>%
   filter(
@@ -1781,6 +1801,16 @@ by = c("areaName" = "area", "geog" = "geographic_level")
   left_join(
     C_level3Plus%>%filter(time_period =="2021",subgroups=="Total")%>%select(area,geographic_level,level3AndAboveRate=value),
     by = c("areaName" = "area", "geog" = "geographic_level")
+  )%>%
+  #add KS4 sustained positive outcome
+  left_join(
+    C_destinations%>%filter(time_period =="202021",subgroups=="Total",metric=="sustainedPositiveDestinationKS4Rate")%>%select(area,geographic_level,sustainedPositiveDestinationKS4Rate=value),
+    by = c("areaName" = "area", "geog" = "geographic_level")
+  )%>%
+  #add KS5 sustained positive outcome
+  left_join(
+    C_destinations%>%filter(time_period =="202021",subgroups=="Total",metric=="sustainedPositiveDestinationKS5Rate")%>%select(area,geographic_level,sustainedPositiveDestinationKS5Rate=value),
+    by = c("areaName" = "area", "geog" = "geographic_level")
   )
   
 save(C_Geog, file = "Data\\AppData\\C_Geog.RData")
@@ -1836,6 +1866,18 @@ C_time <- bind_rows(
     filter(subgroups=="Total")%>%#just get total
     select(-breakdown,-subgroups)%>%
     mutate(chart_year=as.Date(ISOdate(time_period, 1, 1)),
+           time_period=as.character(time_period)),
+  #add ks4 destinations
+  C_destinations%>%
+    filter(subgroups=="Total",metric=="sustainedPositiveDestinationKS4Rate")%>%#just get total
+    select(-breakdown,-subgroups)%>%
+    mutate(chart_year=as.Date(ISOdate(str_sub(time_period,1,4), 1, 1)),
+           time_period=as.character(time_period)),
+  #add ks5 destinations
+  C_destinations%>%
+    filter(subgroups=="Total",metric=="sustainedPositiveDestinationKS5Rate")%>%#just get total
+    select(-breakdown,-subgroups)%>%
+    mutate(chart_year=as.Date(ISOdate(str_sub(time_period,1,4), 1, 1)),
            time_period=as.character(time_period))
 )
 write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
@@ -1940,7 +1982,13 @@ C_breakdown <- bind_rows(
     mutate(across(value, ~ round(prop.table(.), 3))),
   #add level 3 + rate
   C_level3Plus%>%
-    filter(time_period==2021,subgroups!="Total")
+    filter(time_period==2021,subgroups!="Total"),
+  #add ks4 destinations
+  C_destinations%>%
+    filter(time_period==202021,subgroups!="Total",metric=="sustainedPositiveDestinationKS4Rate"),
+  #add ks5 destinations
+  C_destinations%>%
+    filter(time_period==202021,subgroups!="Total",metric=="sustainedPositiveDestinationKS5Rate")
 )
 write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
 
@@ -1971,6 +2019,8 @@ C_datahub<-bind_rows(
                           metric=="deathRate" ~ "Enterprise death rate",
                           metric=="enterpriseCount" ~ "Enterprise count",
                           metric=="level3AndAboveRate" ~ "Qualified at Level 3 or above",
+                          metric=="sustainedPositiveDestinationKS4Rate" ~ "KS4 completers sustained positive detination rate",
+                          metric=="sustainedPositiveDestinationKS5Rate" ~ "KS4 completers sustained positive detination rate",
                           TRUE~metric
   ))%>%
   mutate(breakdown=case_when(breakdown=="Occupation"~"Occupation split over geography",
