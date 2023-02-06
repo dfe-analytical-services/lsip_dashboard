@@ -341,6 +341,7 @@ format.EmpInd.APS <- function(x) {
                                         geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP", 
                                         geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP", 
                                         geographic_level == "SEA AND THURROCK" ~ "LSIP", 
+                                        area=="West of England and North Somerset" ~"LSIP",
                                         TRUE ~ geographic_level)) %>% 
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
   
@@ -2506,7 +2507,6 @@ write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.name
 # Neaten geog files
 neatLA <- I_mapLA %>%
   mutate(geog = "LADU") %>% # add geog type
-  rename(areaCode = LAD22CD, areaName = LAD22NM) %>% # consistent naming
   # add on lsip, lep and mca groupings
   left_join(I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by = c("areaCode" = "LAD21CD")) %>%
   left_join(C_mcalookup %>% select(LAD21CD, MCA = CAUTH21NM), by = c("areaCode" = "LAD21CD")) %>%
@@ -2525,7 +2525,23 @@ addEngland <- data.frame(
   geog = "COUNTRY"
 )
 
-neatGeog <- bind_rows(neatMCA, neatLEP, addEngland, neatLA)
+#read in LA shapefile
+LAs <- readOGR("./Data/14_LABoundary/Local_Authority_Districts_(May_2022)_UK_BGC_V3.geojson")
+#add on LSIPs
+LasLsip <- merge(states, I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by.x="LAD22CD", by.y="LAD21CD")
+#dissolve the LSIP LAs 
+LSIPsh <- gUnaryUnion(LasLsip, id = LasLsip@data$LSIP)
+#turn into GoeJson
+LSIPgeojson = st_as_sf(LSIPsh)  
+#add on LSIP names
+LSIPmap<-bind_cols(LSIPgeojson,C_LEP2020%>%filter(geographic_level=="LSIP"))
+#neaten
+neatLSIP<-LSIPmap%>%
+  rename(areaName=Area, geog=geographic_level)%>%
+  mutate(areaCode=paste0("LSIP",row_number()))
+
+
+neatGeog <- bind_rows(neatMCA, neatLEP, addEngland, neatLA,neatLSIP)
 # add on data
 C_Geog <- neatGeog %>%
   # add employment rate
