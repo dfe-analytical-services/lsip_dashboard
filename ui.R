@@ -203,14 +203,11 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         column(
           12,
           h1("Local Skills Dashboard"),
-          p("This prototype dashboard shows statistics on local employment and skills in England, to support local skills planning and delivery.
-            It includes a subset of employment and skills statistics that can be viewed for three geographic areas: Local Enterprise Partnership (LEP), Local Skills Improvement Plan (LSIP) and Mayoral Combined Authority (MCA) areas.
-            The underlying data can also contains breakdowns by Local Authority and region and can be downloaded using the links on each page or directly from the downloads page."),
-          p("The dashboard currently uses data that is published by the Office for National Statistics (ONS) and the Department for Education (DfE).
-            It currently only includes a small number of sources and will be gradually updated to include further sources and functionality."),
+          p("This dashboard brings together published statistics on local employment and skills in England, to support local skills planning and delivery."),
+          p("It includes a subset of employment and skills statistics that can be viewed for three geographic areas: Local Enterprise Partnership (LEP), Local Skills Improvement Plan (LSIP) and Mayoral Combined Authority (MCA) areas. The underlying data can be downloaded using the links on each page or directly from the downloads page and contains breakdowns by Local Authority (LA) and region."),
+          p("The dashboard currently uses data published by the Office for National Statistics (ONS) and the Department for Education (DfE). The sources currently included in the dashboard will be added to alongside additional functionality in response to user feedback and new sources being published."),
           p(
-            "This dashboard does not currently include any information on the labour market outcomes of training.
-            Separate tools are available that have been developed to help understand these data through the links below, or from the ",
+            "To access the additional dashboards developed to help users further understand the labour market outcomes of training use the links below, or from the ",
             a(
               href = "https://www.gov.uk/government/groups/unit-for-future-skills",
               "Unit for Future Skills",
@@ -251,7 +248,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           ),
         )
       ), # end intro text row
-
+      
       ## dashboard contents -------------------------------------------------------
       fluidRow(
         column(
@@ -266,40 +263,41 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             div(
               class = "panel-body",
               h2("Dashboard pages"),
-              p("There are four pages which focus on different parts of the jobs and skills market.
-                Each page includes options to download all of the indicators shown for either just the selected geographic area or for all available geographies.
-                Where published figures are not available, totals for LEP/LSIP/MCA areas are calculated by adding up the relevant local authorities.
-                As local authority volumes are rounded and small volumes are suppressed, there may be rounding errors in the LEP/LSIP/MCA area totals."),
-              h3(actionLink("link_to_tabpanel_overview", "Overview")),
-              p("This page provides a summary of labour market and skills information for the selected geographic area.
-                It includes a time series of data on employment, online job adverts, and further education and skills achievements."),
+              p("The tabs along the top of Local Skills page focus on different parts of the jobs and skills market. Each page includes options to download all of the indicators shown, either just for the selected geographic area or for all available geographies."),
+              p("Where published figures are not available, area totals for LEP, LSIP or MCA are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."),
               p(
-                "ONS have announced that there is an issue with the collection of their occupational data surveys.
-            As such please see this data with caution.
-                    For more information see this ONS  ",
+                "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS ",
                 a(
                   href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
                   "article",
                   .noWS = c("after")
                 ), "."
               ),
+              h3(actionLink("link_to_tabpanel_overview", "Overview")),
+              p("This tab provides a summary of labour market and skills information for the selected geographic area. It includes a time series of data on employment, online job adverts, and further education and skills achievements."),
               h3(actionLink("link_to_tabpanel_employment", "Employment")),
-              p("This page includes information on employment for the selected geographic area, and the option to compare against another area. It includes data on employment rates over time, and the share of employment for occupations."),
-              h3(actionLink("link_to_tabpanel_vacancies", "Vacancies")),
-              p("This page includes experimental data on the share of online job adverts for the selected geographic area, and the option to compare against another area.
-                The data has been included temporarily, and will be replaced when ONS release further, more detailed, experimental data on online job adverts (currently planned before the end of 2022).
-                LEP/LSIP/MCA area totals are calculated by adding up the relevant local authorities."),
+              p("This tab provides information on employment for the selected geographic area including data on employment rates over time, the share of employment by occupation, and the share of employment by industry. There is an option to compare against another area in England at the same geographic level."),
+              p("SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues."),
+              h3(actionLink("link_to_tabpanel_vacancies", "Online job adverts")),
+              p("This tab provides experimental online job advert data, split by profession, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "),
+              h3(actionLink("link_to_tabpanel_enterprise_level", "Enterprises")),
+              p("This tab provides data on the count of new and no longer trading enterprises and count of enterprises by employment size and industry for the selected geographic area, and the option to compare against another area in England at the same geographic level."),
               h3(actionLink("link_to_tabpanel_FE", "Skills")),
-              p("This page includes information on training activity for the selected geographic area, and the option to compare against another area.
-                It includes data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period.
-                LEP/LSIP/MCA area totals are calculated by adding up the relevant local authorities."),
+              p("This tab provides information on training activity for the selected geographic area including data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period. There is an option to compare against another area in England at the same geographic level."),
+              p("LEP, LSIP and MCA area totals are calculated by aggregating the relevant local authorities."),
+              h3(actionLink("link_to_tabpanel_qualification_level", "Qualification level")),
+              p("This page includes information on the highest qualification level for working age individuals (16-64) for the selected geographic area, and the option to compare against another area.
+                It includes data on qualification level, with breakdowns by age band and gender."),
+              h3(actionLink("link_to_tabpanel_destinations_level", "Destinations")),
+              p("This page includes information on the destinations of young people after KS4 and KS5 education for the selected geographic area, and the option to compare against another area.
+                It includes data on destinations, with breakdowns by level and key stage group."),
               h2("Data download page"),
               p("The", actionLink("link_to_tabpanel_data", "data download page"), " includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
             )
           )
         )
       ), # end of dashboard contents row
-
+      
       ## Version control ------------------------------------------------------
       fluidRow(
         column(
@@ -314,17 +312,29 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("29 Nov 2022 (0.2.3)"),
-              tags$ul(
-                tags$li("Included MCA areas."),
-                tags$li("Employment data for LEPs, LSIPs (and MCAs) taken directly from the APS data (previously aggregated from LAs)."),
-                tags$li("Characteristic and course breakdowns added to the Skills page."),
-                tags$li("Updated ILR data to the final AY21/22 data.")
-              ),
+              p("25 Jan 2023 (0.4.2)"),
+              p("Updated employment rates and employment by industry figures with Oct-Sep 2022 Annual Population Survey data."),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
-                p(
+                p(p("12 Jan 2023 (0.4.1)"),
+                  p("Included ONS-Textkernel online job adverts by profession data."),
+                  p("20 Dec 2022 (0.3.1)"),
+                  p("Addition of three new data sources:"),
+                  tags$ul(
+                    tags$li("Highest qualification by age and gender"),
+                    tags$li("KS4 and KS5 destinations"),
+                    tags$li("Enterprise count by employment size and industry")
+                  ),
+                  p("29 Nov 2022 (0.2.3)"),
+                  p("Applied various improvements and updates, including:"),
+                  tags$ul(
+                    tags$li("Included MCA areas."),
+                    tags$li("Employment data for LEPs, LSIPs and MCAs taken directly from the APS data (previously aggregated from LAs)."),
+                    tags$li("Industry (SIC 2007) breakdown added to the Employment page."),
+                    tags$li("Characteristic and course breakdowns added to the Skills page."),
+                    tags$li("Updated ILR data to the final AY21/22 data.")
+                  ),
                   p("25 Oct 2022 (0.2.2)"),
                   p("Applied fixes and included new datasets to the data sources page."),
                   br(),
@@ -511,45 +521,54 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           12,
           h2("Data information"),
           h3("Annual Population Survey"),
-          p("The Annual Population Survey (APS) is a continuous household survey, covering the UK.
-            The topics covered include employment and unemployment, as well as housing, ethnicity, religion, health and education.
-            The dashboard shows employment volumes and rates for each geographic area and split by sub-major Standard Occupational Classification (SOC) 2010 grouping."),
+          p("The Annual Population Survey (APS) is a continuous household survey covering the UK.
+          Topics included cover employment and unemployment, and education as well as housing, ethnicity and religion.
+            This dashboard currently shows employment volumes and rates for each geographic area and by occupation (SOC2010) and industry (SIC 2007)."),
           p(
-            "ONS have announced that there is an issue with the collection of their occupational data surveys.
-            As such please see this data with caution.
-                    For more information see this ONS  ",
+            "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS  ",
             a(
               href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
               "article",
               .noWS = c("after")
             ), "."
           ),
-          h3("ONS online job adverts"),
-          p("These data tables are created based upon online job adverts data provided by Adzuna.
-            Each time point in the series covers a monthly average of the volume of online job adverts in the month of January for the years 2017 to 2022.
-            The dashboard shows job 'units' which is the number of job adverts divided a set value for all regions.
-            It is therefore not an indication of the real volume of job adverts, but can be used in comparisons across areas or to follow trends over time.
-            Totals for LEP/LSIP/MCA areas are calculated by adding up the relevant local authorities (LAs).
-            Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP/MCA totals."),
+          p("SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues."),
+          h3("ONS-Textkernel online job adverts"),
+          p("These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.
+            The dashboard shows the monthly average number of live adverts from 2017 to 2022."),
+          p("Advert volumes are shown split by profession. Textkernel have derived these professions from the job advert job title. These professions do not align directly to the Standard Occupation Classification (SOC2020). ONS are working on using SOC coding in future releases of this data."),
+          p("Counts have been rounded to the nearest 5 and so totals may not add due to this rounding. The scope of online job adverts does not fully capture the scope of UK economic activity because of differing advertising methods, for example, casual work may be advertised by word-of-mouth or in shop windows as opposed to online."),
+          p("As this data is experimental, there are some quality issues with the data. The ONS dataset has a full rundown on its cover sheet (link on downloads page). In brief:"),
+          tags$ul(
+            tags$li("There are methodological changes throughout the time series (classification of profession and location) that may result in step-changes. "),
+            tags$li("When job location information is limited, the centroid of the region is used. This may lead to clustering of job counts."),
+          ),
           h3("Individualised Learner Record"),
           p("The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
-          The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training.
-          Totals for LEP/LSIP/MCA areas are calculated by adding up the relevant local authorities (LAs).
-            Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP/MCA totals."),
+          The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training."),
+          p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
+            rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
+Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset."),
           h3("KS4 and KS5 destinations"),
-          p("Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education and,
-            employment or apprenticeship in the year following completion of their qualification:"),
+          p("Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education, employment or an apprenticeship
+            in the academic year following completion of their qualification:"),
           tags$ul(
             tags$li("Key Stage 4 (year 10 and 11 students) includes GCSEs and equivalent qualifications"),
             tags$li("Key Stage 5 (students 16-18 years) includes A Levels, T levels and other 2-year vocational education programmes.")
           ),
-          p(" Totals for LEP/LSIP/MCA areas are calculated by adding up the relevant local authorities (LAs).
-            Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP/MCA totals."),
-          h3("UK Business Count (UBC)"),
-          p("A record of the number of enterprises from the Inter Departmental Business Register (IDBR), which is broken down by employment size band, detailed
-            industry (5 digit SIC2007) and legal status.
-             Totals for LEP/LSIP/MCA areas are calculated by adding up the relevant local authorities (LAs).
-            Since the published LA volumes are rounded, there may be a small rounding error in the LEP/LSIP/MCA totals."),
+          p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
+            rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
+            Some new local authorities due to boundary changes are not included due to these changes not being updated in data publications."),
+          p("The dashboard currently shows the number of young people going into education and, employment or apprenticeship in the year following completion of their qualification by level, KS4 and KS5."),
+          h3("UK Business Counts (UBC)"),
+          p("The UK Business Counts (UBC) is a record of the number of enterprises from the Inter Departmental Business Register (IDBR). Topics included cover employment size band, detailed industry (5 digit SIC 2007) and legal status.
+            The dashboard currently shows the count of enterprises by employment size and industry."),
+          h3("ONS Business Demography 2021"),
+          p("The business demography data comes from the IDBR and the main administrative sources for the IDBR are VAT trader and PAYE employer information passed to the ONS by HM Revenue & Customs under the Value Added Tax Act 1994 for VAT traders and the Finance Act 1969 for PAYE employers; details of incorporated businesses are also passed to ONS by Companies House."),
+          p("The dashboard currently shows the number of new and no longer trading enterprises from 2016 to 2021. Business demography measures businesses that were active throughout the reference year.
+            The reference period is December, and therefore the 2021 publication measures businesses that were active between December 2020 and December 2021."),
+          p("LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
+            rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."),
           br()
         )
       ) # end of data information row

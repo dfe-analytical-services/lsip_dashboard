@@ -39,8 +39,7 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_data, {
     updateTabsetPanel(session, "navbar", "Data & downloads")
   })
-
-  # create table download datasets
+  ## Create table download datasets ----
   output$downloadData1 <- downloadHandler(
     filename = function() {
       "EmploymentRateIndicators.xlsx"
@@ -61,16 +60,27 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
+  
   output$downloadData3 <- downloadHandler(
     filename = function() {
-      "VacancyIndicators.xlsx"
+      "EmpbyindustryIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
-        "2.Vacancies" = C_Vacancy_ONS1722
+        "1c.Emp by industry" = D_EmpInd_APS1822
       ), path = file)
     }
   )
+  # output$downloadData4 <- downloadHandler(
+  #   filename = function() {
+  #     "VacancyIndicators.xlsx"
+  #   },
+  #   content = function(file) {
+  #     write_xlsx(list(
+  #       "2.Vacancies" = C_Vacancy_ONS1722
+  #     ), path = file)
+  #   }
+  # )
   output$downloadData4 <- downloadHandler(
     filename = function() {
       "AchievementIndicators.xlsx"
@@ -91,56 +101,101 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-
+  
   output$downloadData6 <- downloadHandler(
+    filename = function() {
+      "Qualificationbyageandgendernvq.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "4a.Qualification by age and gender" = D_qual_APS1721
+      ), path = file)
+    }
+  )
+  
+  output$downloadData7 <- downloadHandler(
     filename = function() {
       "EnterprisebyemploymentsizeIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
-        "4a.Enterprise by emp size" = D_empent_UBC1822
+        "5a.Enterprise by emp size" = D_empent_UBC1822
       ), path = file)
     }
   )
-
-
-  output$downloadData7 <- downloadHandler(
+  
+  output$downloadData8 <- downloadHandler(
+    filename = function() {
+      "EntbyempsizeandindustryIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "6a.Ent by emp size and ind" = D_empentind_UBC1822
+      ), path = file)
+    }
+  )
+  
+  output$downloadData9 <- downloadHandler(
+    filename = function() {
+      "Enterprisedemography.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "7a.Enterprise demography" = D_enterprise_demo1621
+      ), path = file)
+    }
+  )
+  
+  output$downloadData10 <- downloadHandler(
     filename = function() {
       "Keystage4destinationsIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
-        "5a.Key Stage 4 destinations" = D_KS4destin_1521
+        "8a.Key Stage 4 destinations" = D_KS4destin_1521
       ), path = file)
     }
   )
-
-  output$downloadData8 <- downloadHandler(
+  
+  output$downloadData11 <- downloadHandler(
     filename = function() {
       "Keystage5destinationsIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
-        "6a.Key Stage 5 destinations" = D_KS5destin_1721
+        "9a.Key Stage 5 destinations" = D_KS5destin_1721
       ), path = file)
     }
   )
-
-  # create download links
+  
+  output$downloadData12 <- downloadHandler(
+    filename = function() {
+      "JobAdvertIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list(
+        "2a.Adverts over time" = D_OnsProfTime,
+        "2b.Adverts by detailed profession" = D_OnsProfDetail
+      ), path = file)
+    }
+  )
+  
+  
+  ## create download links ----
   output$hidden_downloads <- renderUI(
-    lapply(1:8, function(i) {
+    lapply(1:12, function(i) {
       downloadLink(paste0("downloadData", i), "download", class = "hiddenLink")
     })
   )
-  # create data table to show
+  ## create data table to show ----
   output$DataTbl <- renderDataTable({
     DT::datatable(I_DataTable %>%
-      mutate("Dashboard data" = lapply(
-        1:n(),
-        function(i) {
-          paste0('<a onClick=document.getElementById("downloadData', i, '").click() >Download</a>')
-        }
-      )), escape = FALSE, options = list(dom = "t"), rownames = FALSE)
+                    mutate("Dashboard data" = lapply(
+                      1:n(),
+                      function(i) {
+                        paste0('<a onClick=document.getElementById("downloadData', i, '").click() >Download</a>')
+                      }
+                    )), escape = FALSE, options = list(dom = "t", "pageLength" = 15), rownames = FALSE)
   })
 
   # OVERVIEW ----
