@@ -1905,58 +1905,47 @@ server <- function(input, output, session) {
       event <- data.frame(id = c("E37000025"))
     }
     areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
-    dataTimeCompare <- if (input$splashMetric == "empRate") {
-      EmpRateData <- C_EmpRate_APS1822 %>%
-        filter(geographic_level != "LADU") %>%
-        select(year, area, geographic_level, metric = empRate) %>%
-        mutate(year = as.numeric(year) - 2017)
-    } else {
-      FeData <- C_Achieve_ILR1621 %>%
-        filter(geographic_level != "Local authority district", level_or_type == "Further education and skills: Total", age_group == "Total") %>%
-        select(year = time_period, area, geographic_level, metric = achievements_rate_per_100000_population) %>%
-        mutate(geographic_level = case_when(
-          geographic_level == "National" ~ "COUNTRY",
-          TRUE ~ geographic_level
-        )) %>%
-        mutate(year = round(year / 100, 0) - 2015)
-    }
+    
+    currentArea<-C_time %>%
+      filter(geographic_level == input$splashGeoType, area == areaClicked,metric == input$splashMetric)
+    englandArea<-C_time %>%
+      filter(geographic_level == "COUNTRY", area == "England",metric == input$splashMetric)
+    currentChange<-(currentArea %>%
+                      filter(chart_year == max(chart_year)))$value -
+      (currentArea %>%
+         filter(chart_year == (ymd(max(chart_year))-years(4))))$value
+    englandChange<-(englandArea %>%
+                      filter(chart_year == max(chart_year)))$value -
+      (englandArea %>%
+         filter(chart_year == (ymd(max(chart_year))-years(4))))$value
 
-    compareNational <-
-      if (((dataTimeCompare %>%
-        filter(year == 5, geographic_level == input$splashGeoType & area == areaClicked))$metric -
-        (dataTimeCompare %>%
-          filter(year == 1, geographic_level == input$splashGeoType & area == areaClicked))$metric
-      ) >
-        ((dataTimeCompare %>%
-          filter(year == 5, geographic_level == "COUNTRY" & area == "England"))$metric -
-          (dataTimeCompare %>%
-            filter(year == 1, geographic_level == "COUNTRY" & area == "England"))$metric
-        )) {
-        "faster"
-      } else {
-        "slower"
-      }
-    areaRank <- (dataTimeCompare %>%
-      filter(geographic_level == input$splashGeoType, (year == 5 | year == 1)) %>%
-      group_by(geographic_level, area) %>%
-      mutate(change = metric - lag(metric, default = 0)) %>%
-      filter(year == 5) %>%
-      ungroup() %>%
-      mutate(ranking = rank(desc(change))) %>%
-      filter(area == areaClicked))$ranking
-    suff <- case_when(
-      areaRank %in% c(11, 12, 13) ~ "th",
-      areaRank %% 10 == 1 ~ "st",
-      areaRank %% 10 == 2 ~ "nd",
-      areaRank %% 10 == 3 ~ "rd",
-      TRUE ~ "th"
+    # areaRank <- (dataTimeCompare %>%
+    #   filter(geographic_level == input$splashGeoType, (year == 5 | year == 1)) %>%
+    #   group_by(geographic_level, area) %>%
+    #   mutate(change = metric - lag(metric, default = 0)) %>%
+    #   filter(year == 5) %>%
+    #   ungroup() %>%
+    #   mutate(ranking = rank(desc(change))) %>%
+    #   filter(area == areaClicked))$ranking
+    # suff <- case_when(
+    #   areaRank %in% c(11, 12, 13) ~ "th",
+    #   areaRank %% 10 == 1 ~ "st",
+    #   areaRank %% 10 == 2 ~ "nd",
+    #   areaRank %% 10 == 3 ~ "rd",
+    #   TRUE ~ "th"
+    # )
+    # groupCount <- if (input$splashGeoType == "LEP") {
+    #   "38 LEPs."
+    # } else {
+    #   "10 MCAs."
+    # }
+    paste0(areaClicked, "'s ", currentMetric(), " has ",
+    if(currentChange>0){"increased "}else{"decreased "},
+    if(sign(currentChange)==sign(englandChange)){if(currentChange>englandChange){"faster than the national average in the last five years"}else{"slower than the national average in the last five years"}}else{paste0(" while nationally it has ",if(englandChange>0){"increased"}else{"decreased"}) }
+    , "."
+    #,"It has the "
+    #, areaRank, suff, " fastest growing ", currentMetric(), " of the ", groupCount
     )
-    groupCount <- if (input$splashGeoType == "LEP") {
-      "38 LEPs."
-    } else {
-      "10 MCAs."
-    }
-    paste0(areaClicked, "'s ", currentMetric(), " has increased ", compareNational, " than the national average in the last five years. It has the ", areaRank, suff, " fastest growing ", currentMetric(), " of the ", groupCount)
   })
 
   Splash_time <- eventReactive(c(input$map_shape_click, input$mapLA_shape_click, input$geoComps, input$levelBar, input$splashMetric), {
