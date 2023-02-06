@@ -1,6 +1,39 @@
 panel_overview <- function() {
   tabPanel(
     "Overview",
+    
+    fluidRow(
+      column(
+        12,
+        br(),
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              width = 4,
+              selectInput("GeoType", "Choose geography",
+                          choices = c(
+                            "Local Enterprise Partnership (LEP)" = "LEP",
+                            "Local Skills Improvement Plan (LSIP)" = "LSIP",
+                            "Mayoral Combined Authority (MCA)" = "MCA"
+                          ),
+                          selected = "LEP"
+              )
+            ),
+            column(
+              width = 4,
+              uiOutput("lep1_geo"),
+            )#,
+            # column(
+            #   width = 4,
+            #   uiOutput("lep2_off")
+            # )
+          )
+        ),
+        br(),
+      )
+    ), # end of filters row
+    
     h1(uiOutput("page0title")),
     p("Change metrics are measured since the same period the year before."),
     fluidRow(

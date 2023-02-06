@@ -354,37 +354,37 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     #
     # tabPanel(
     #   "Local skills",
-    #   fluidRow(
-    #     column(
-    #       12,
-    #       br(),
-    #       div(
-    #         class = "filterRow",
-    #         fluidRow(
-    #           column(
-    #             width = 4,
-    #             selectInput("GeoType", "Choose geography",
-    #               choices = c(
-    #                 "Local Enterprise Partnership (LEP)" = "LEP",
-    #                 "Local Skills Improvement Plan (LSIP)" = "LSIP",
-    #                 "Mayoral Combined Authority (MCA)" = "MCA"
-    #               ),
-    #               selected = "LEP"
-    #             )
-    #           ),
-    #           column(
-    #             width = 4,
-    #             uiOutput("lep1_geo"),
-    #           ),
-    #           column(
-    #             width = 4,
-    #             uiOutput("lep2_off")
-    #           )
-    #         )
-    #       ),
-    #       br(),
-    #     )
-    #   ), # end of filters row
+      # fluidRow(
+      #   column(
+      #     12,
+      #     br(),
+      #     div(
+      #       class = "filterRow",
+      #       fluidRow(
+      #         column(
+      #           width = 4,
+      #           selectInput("GeoType", "Choose geography",
+      #             choices = c(
+      #               "Local Enterprise Partnership (LEP)" = "LEP",
+      #               "Local Skills Improvement Plan (LSIP)" = "LSIP",
+      #               "Mayoral Combined Authority (MCA)" = "MCA"
+      #             ),
+      #             selected = "LEP"
+      #           )
+      #         ),
+      #         column(
+      #           width = 4,
+      #           uiOutput("lep1_geo"),
+      #         ),
+      #         column(
+      #           width = 4,
+      #           uiOutput("lep2_off")
+      #         )
+      #       )
+      #     ),
+      #     br(),
+      #   )
+      # ), # end of filters row
     #
     #   # next row is the data tabs
     #   fluidRow(
@@ -596,6 +596,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       "Support and feedback",
       support_links() # defined in R/supporting_links.R
     ),
+    
+    panel_overview(),
 
     # mapsplash ======
     tabPanel(
