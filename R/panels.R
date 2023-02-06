@@ -82,7 +82,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: ONS (Textkernel). Dec 2022. Online job adverts.",
+              title = "Source: ONS (Textkernel). Oct 2022. Online job adverts.",
               uiOutput("jobad.units"),
             )
           ),
@@ -225,6 +225,7 @@ panel_overview <- function() {
       column(width = 9, "Download all data for the selected geographic area")
     ),
     column(width = 12, br(""))
+    
   )
 }
 

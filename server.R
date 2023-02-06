@@ -319,18 +319,25 @@ server <- function(input, output, session) {
   output$page0title <- renderUI({
     paste0("Overview of local landscape in ", input$lep1)
   })
-
-  ### Downloads----
-  # download all indicators
+  
+  ##  2.3 Downloads ----
+  ## download all indicators ----
   list_of_datasets0 <- list(
     "1a.Emp by occupation" = D_EmpOcc_APS1721,
     "1b.Emp rate" = D_EmpRate_APS1822,
-    "2.Vacancies" = C_Vacancy_ONS1722,
+    "1c.Emp by industry" = D_EmpInd_APS1822,
+    # "2.Vacancies" = C_Vacancy_ONS1722,
+    "2a.Adverts over time" = D_OnsProfTime,
+    "2b.Adverts by detailed profession" = D_OnsProfDetail,
     "3a.FE achievements SSA" = D_Achieve_ILR21,
     "3b.FE achievements" = D_Achieve_ILR1621,
-    "4a.Enterprise by emp size" = D_empent_UBC1822,
-    "5a.Key Stage 4 destinations" = D_KS4destin_1521,
-    "6a.Key Stage 5 destinations" = D_KS5destin_1721
+    "4a.FE achievements" = D_qual_APS1721,
+    "5a.Qual by age and gender" = D_qual_APS1721,
+    "6a.Ent by emp size band" = D_empent_UBC1822,
+    "7a.Ent by emp size & industry" = D_empentind_UBC1822,
+    "8a.Enterprise demography" = D_enterprise_demo1621,
+    "9a.Key Stage 4 destinations" = D_KS4destin_1521,
+    "10a.Key Stage 5 destinations" = D_KS5destin_1721
   )
   output$download_btn0a <- downloadHandler(
     filename = function() {
@@ -340,15 +347,24 @@ server <- function(input, output, session) {
       write_xlsx(list_of_datasets0, path = file)
     }
   )
-
-  # Download current LEP indicators
+  
+  ## Download current area indicators ----
   filtered_data0 <- reactive({
     list(
       "1a.Emp by occupation" = filter(D_EmpOcc_APS1721, geographic_level == input$GeoType, area == input$lep1),
       "1b.Emp rate" = filter(D_EmpRate_APS1822, geographic_level == input$GeoType, area == input$lep1),
-      "2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1),
+      # "2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1),
+      "2a.Adverts over time" = filter(D_OnsProfTime, geographic_level == input$GeoType, area == input$lep1),
+      "2b.Adverts by detailed profession" = filter(D_OnsProfDetail, geographic_level == input$GeoType, area == input$lep1),
       "3a.FE achievements SSA" = filter(D_Achieve_ILR21, geographic_level == input$GeoType, area == input$lep1),
-      "3b.FE achievements" = filter(D_Achieve_ILR1621, geographic_level == input$GeoType, area == input$lep1)
+      "3b.FE achievements" = filter(D_Achieve_ILR1621, geographic_level == input$GeoType, area == input$lep1),
+      "4a.Ent by emp size band" = filter(D_empent_UBC1822, geographic_level == input$GeoType, area == input$lep1),
+      "5a.Key Stage 5 destinations" = filter(D_KS5destin_1721, geographic_level == input$GeoType, area == input$lep1),
+      "6a.Qual by age and gender" = filter(D_qual_APS1721, geographic_level == input$GeoType, area == input$lep1),
+      "7a.Ent by emp size & industry" = filter(D_empentind_UBC1822, geographic_level == input$GeoType, area == input$lep1),
+      "8a.Enterprise demography" = filter(D_enterprise_demo1621, geographic_level == input$GeoType, area == input$lep1),
+      "9a.Key Stage 4 destinations" = filter(D_KS4destin_1521, geographic_level == input$GeoType, area == input$lep1),
+      "10a.Key Stage 5 destinations" = filter(D_KS5destin_1721, geographic_level == input$GeoType, area == input$lep1)
     )
   })
   output$download_btn0b <- downloadHandler(
@@ -359,10 +375,10 @@ server <- function(input, output, session) {
       write_xlsx(filtered_data0(), path = file)
     }
   )
-
-  ## KPIs and charts----
-
-  # get emp data for current lep
+  
+  ## 2.4 KPIs and charts----
+  
+  # get emp data for current area
   empLEP <- eventReactive(input$lep1, {
     C_EmpRate_APS1822 %>%
       filter(area == input$lep1, geographic_level == input$GeoType)
@@ -377,39 +393,39 @@ server <- function(input, output, session) {
     empLEP() %>%
       filter(year == "2021")
   })
-
+  
   #### Employment count ----
   output$locland.emplcnt0 <- renderUI({
-    # call 2022 and 2021 values for chosen LEP
+    # call 2022 and 2021 values for chosen area
     empCnt2022 <- emp2022()$Employment
     empCntChange <- emp2022()$Employment - emp2021()$Employment
-
+    
     # print with formatting
-    h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
-      format(empCnt2022, big.mark = ","), br(),
-      span(
-        format_pm(empCntChange) # plus-minus and comma sep formatting
-        ,
-        style = paste0("font-size: 16px;color:", cond_color(empCntChange > 0)) # colour formating
-
-        , .noWS = c("before", "after") # remove whitespace
-      ), br(),
-      style = "font-size: 21px"
+    h4(span("Oct-Sep 2022", style = "font-size: 16px;font-weight:normal;"), br(),
+       format(empCnt2022, big.mark = ","), br(),
+       span(
+         format_pm(empCntChange) # plus-minus and comma sep formatting
+         ,
+         style = paste0("font-size: 16px;color:", cond_color(empCntChange > 0)) # colour formating
+         
+         , .noWS = c("before", "after") # remove whitespace
+       ), br(),
+       style = "font-size: 21px"
     )
   })
-
+  
   # Emp chart
   empLineChart <- eventReactive(input$lep1, {
-    # call 2022 to 2021 change  for chosen LEP
+    # call 2022 to 2021 change  for chosen area
     empCntChange <- emp2022()$Employment - emp2021()$Employment
     empLine <- empLEP()
-
-    # find min and max for lep
+    
+    # find min and max for area
     empCntMinMax <- C_EmpRate_APS1822_max_min %>%
       filter(area == input$lep1)
-
+    
     ggplot(empLine, aes(x = Year - 1, y = Employment, group = area, text = paste0(
-      "Year: Jul-Jun ", year, "<br>",
+      "Year: Oct-Sep ", year, "<br>",
       "Employment: ", format(Employment, big.mark = ","), "<br>"
     ))) +
       geom_line(data = empLine %>% filter(Year <= 21)) +
@@ -444,14 +460,14 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-
+  
   output$empLineChart <- renderPlotly({
     validate(
       need(input$lep1 != "", "") # if area not yet loaded don't try to load ch
     )
     ggplotly(empLineChart(),
-      tooltip = "text",
-      height = 81
+             tooltip = "text",
+             height = 81
     ) %>%
       layout(
         margin = m,
@@ -459,43 +475,43 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-
+  
   #### Employment rate -----
   output$locland.emplrate0 <- renderUI({
-    # call 2021 values and 21-22 change for chosen LEP
+    # call 2021 values and 21-22 change for chosen area
     empRate2022 <- emp2022()$empRate
     empRateChange <- emp2022()$empRate - emp2021()$empRate
-
+    
     # print with formatting
-    h4(span("Jul-Jun 2022", style = "font-size: 16px;font-weight:normal;"), br(),
-      paste0(format(100 * empRate2022, digit = 2), "%"), br(),
-      span(
-        paste0(sprintf("%+.0f", 100 * empRateChange), "ppts"),
-        style = paste0("font-size: 16px;color:", cond_color(empRateChange > 0)) # colour formating
-        , .noWS = c("before", "after") # remove whitespace
-      ), br(),
-      style = "font-size: 21px"
+    h4(span("Oct-Sep 2022", style = "font-size: 16px;font-weight:normal;"), br(),
+       paste0(format(100 * empRate2022, digit = 2), "%"), br(),
+       span(
+         paste0(sprintf("%+.0f", 100 * empRateChange), "ppts"),
+         style = paste0("font-size: 16px;color:", cond_color(empRateChange > 0)) # colour formating
+         , .noWS = c("before", "after") # remove whitespace
+       ), br(),
+       style = "font-size: 21px"
     )
   })
-
+  
   # Emp chart
-
+  
   # find emp chart y axis min and max
   EmpRateMin <- C_EmpRate_APS1822 %>%
     summarise(min(empRate, na.rm = T), .groups = "drop")
   EmpRateMax <- C_EmpRate_APS1822 %>%
     summarise(max(empRate, na.rm = T), .groups = "drop")
-
+  
   empRateLineChart <- eventReactive(input$lep1, {
     empRateChange <- emp2022()$empRate - emp2021()$empRate
     empRateLine <- C_EmpRate_APS1822 %>%
       filter((geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"))
-
+    
     ggplot(empRateLine, aes(
       x = Year - 1, y = empRate,
       group = area,
       text = paste0(
-        "Year: Jul-Jun ", year, "<br>",
+        "Year: Oct-Sep ", year, "<br>",
         "Area: ", area, "<br>",
         "Employment rate: ", format(100 * empRate, digit = 2), "%<br>"
       )
@@ -534,11 +550,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-
+  
   output$empRateLineChart <- renderPlotly({
     ggplotly(empRateLineChart(),
-      tooltip = "text",
-      height = 81
+             tooltip = "text",
+             height = 81
     ) %>%
       layout(
         margin = m,
@@ -546,67 +562,67 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-
+  
   # Add link to employment data
   observeEvent(input$link_to_tabpanel_employment2, {
     updateTabsetPanel(session, "navbar", "Dashboard")
     updateTabsetPanel(session, "datatabset", "Employment")
   })
-
+  
   #### ONS job advert units  ----
   # get vac data for current area chosen
   VacArea <- eventReactive(input$lep1, {
-    C_Vacancy_England %>%
-      filter(area == input$lep1, geographic_level == input$GeoType)
+    C_OnsProfTime %>%
+      filter(area == input$lep1, geographic_level == input$GeoType) %>%
+      group_by(area, time_period) %>%
+      summarise(vacancies = sum(vacancies))
   })
-  # get 2022 values
-  Vac2022 <- reactive({
+  # get latest values
+  VacLatest <- reactive({
     VacArea() %>%
-      filter(year == "2022")
+      filter(time_period == "2022-10-01")
   })
   # get 2021 values
-  Vac2021 <- reactive({
+  VacLast <- reactive({
     VacArea() %>%
-      filter(year == "2021")
+      filter(time_period == "2021-10-01")
   })
-
+  
   # Vacancy kpi
   output$jobad.units <- renderUI({
     ### ONS job advert units change
-    VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
-
+    VacChange <- VacLatest()$vacancies - VacLast()$vacancies
+    
     # print with formatting
-    h4(span("Jan 2022", style = "font-size: 16px;font-weight:normal;"), br(),
-      paste0(format(100 * Vac2022()$jobpc, digit = 2), "%"), br(),
-      span(
-        paste0(sprintf("%+.1f", 100 * VacPcChange), "ppts"),
-        style = paste0("font-size: 16px;color:", cond_color(VacPcChange > 0)) # colour formating
-        , .noWS = c("before", "after") # remove whitespace
-      ), br(),
-      style = "font-size: 21px"
+    h4(span("Oct 2022", style = "font-size: 16px;font-weight:normal;"), br(),
+       format(VacLatest()$vacancies, big.mark = ","), br(),
+       span(
+         format_pm(VacChange),
+         style = paste0("font-size: 16px;color:", cond_color(VacChange > 0)) # colour formating
+         , .noWS = c("before", "after") # remove whitespace
+       ), br(),
+       style = "font-size: 21px"
     )
   })
-
+  
   # Vacancy chart
   VacLineChart <- eventReactive(input$lep1, {
-    VacLine <- VacArea() %>% filter(year >= 2018)
-    VacPcChange <- Vac2022()$jobpc - Vac2021()$jobpc
-
-    VacMinMax <- C_Vacancy_England_max_min %>% filter(area == input$lep1, geographic_level == input$GeoType)
-
-    ggplot(VacLine, aes(x = Year, y = jobpc, group = area, text = paste0(
-      "Period: Jan ", year, "<br>",
-      "England vacancy share: ", format(100 * jobpc, digit = 2), "%<br>"
+    VacLine <- VacArea()
+    VacPcChange <- VacLatest()$vacancies - VacLast()$vacancies
+    
+    ggplot(VacLine, aes(x = as.Date(time_period), y = vacancies, group = area, text = paste0(
+      "Period: ", format(as.Date(time_period), "%b %y"), "<br>",
+      "Online job adverts: ", format(vacancies, big.mark = ","), "<br>"
     ))) +
-      geom_line(data = VacLine %>% filter(Year <= 21)) +
+      geom_line(data = VacLine %>% filter(time_period <= as.Date("2021-10-01"))) +
       geom_ribbon(
-        data = VacLine %>% filter(Year >= 21),
-        aes(ymin = min(jobpc), ymax = jobpc),
+        data = VacLine %>% filter(time_period >= as.Date("2021-10-01")),
+        aes(ymin = min(vacancies), ymax = vacancies),
         fill = ifelse(VacPcChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = VacLine %>% filter(Year >= 21),
+        data = VacLine %>% filter(time_period >= as.Date("2021-10-01")),
         color = ifelse(VacPcChange > 0, "#00703c", "#d4351c")
       ) +
       theme_classic() +
@@ -618,8 +634,12 @@ server <- function(input, output, session) {
         plot.background = element_rect(fill = "#f3f2f1")
       ) +
       scale_y_continuous(
-        labels = scales::percent_format(accuracy = 0.1),
-        breaks = c(VacMinMax$minVac, VacMinMax$maxVac)
+        labels = label_number_si(accuracy = 1),
+        breaks = c(min(VacLine$vacancies), max(VacLine$vacancies))
+      ) +
+      scale_x_date(
+        name = "My date axis title", date_breaks = "1 years",
+        date_labels = "%y"
       )
   })
   # set margins
@@ -630,11 +650,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-
+  
   output$VacLineChart <- renderPlotly({
     ggplotly(VacLineChart(),
-      tooltip = "text",
-      height = 81
+             tooltip = "text",
+             height = 81
     ) %>%
       layout(
         margin = m,
@@ -642,16 +662,16 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-
+  
   # Add link to vacancy data
   observeEvent(input$link_to_tabpanel_vacancies2, {
     updateTabsetPanel(session, "navbar", "Dashboard")
-    updateTabsetPanel(session, "datatabset", "Vacancies")
+    updateTabsetPanel(session, "datatabset", "Online job adverts")
   })
-
+  
   #### E&T achievements ----
-
-  # get EandT data for current lep
+  
+  # get EandT data for current area
   EtLEP <- eventReactive(input$lep1, {
     C_Achieve_ILR1621 %>%
       filter(
@@ -661,59 +681,59 @@ server <- function(input, output, session) {
         age_group == "Total"
       )
   })
+  # get 21/22 values
+  EtLatest <- reactive({
+    EtLEP() %>%
+      filter(time_period == "202122")
+  })
   # get 20/21 values
-  Et2021 <- reactive({
+  EtLast <- reactive({
     EtLEP() %>%
       filter(time_period == "202021")
   })
-  # get 19/20 values
-  Et1920 <- reactive({
-    EtLEP() %>%
-      filter(time_period == "201920")
-  })
-
+  
   output$skisup.ETach <- renderUI({
-    ETach <- Et2021()$achievements
-
+    ETach <- EtLatest()$achievements
+    
     # E&T achievements change
-    ETachChange <- Et2021()$achievements - Et1920()$achievements
-
+    ETachChange <- EtLatest()$achievements - EtLast()$achievements
+    
     # print with formatting
-    h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
-      format(ETach, big.mark = ","), br(),
-      span(
-        format_pm(ETachChange) # plus-minus and comma sep formatting
-        ,
-        style = paste0("font-size: 16px;color:", cond_color(ETachChange > 0)) # colour formating
-        , .noWS = c("before", "after") # remove whitespace
-      ), br(),
-      style = "font-size: 21px"
+    h4(span("2021/22", style = "font-size: 16px;font-weight:normal;"), br(),
+       format(ETach, big.mark = ","), br(),
+       span(
+         format_pm(ETachChange) # plus-minus and comma sep formatting
+         ,
+         style = paste0("font-size: 16px;color:", cond_color(ETachChange > 0)) # colour formating
+         , .noWS = c("before", "after") # remove whitespace
+       ), br(),
+       style = "font-size: 21px"
     )
   })
-
+  
   # e and t chart
   etLineChart <- eventReactive(input$lep1, {
     etLine <- EtLEP()
-    etCntChange <- Et2021()$achievements - Et1920()$achievements
+    etCntChange <- EtLatest()$achievements - EtLast()$achievements
     EtMinMax <- C_Achieve_ILR1621_max_min %>% filter(
       geographic_level == input$GeoType,
       area == input$lep1,
       level_or_type == "Education and training: Total"
     )
-
+    
     ggplot(etLine, aes(x = Year, y = achievements, group = area, text = paste0(
       "Academic year: ", time_period, "<br>",
       "Achievements: ", format(achievements, big.mark = ","), "<br>"
     ))) +
-      geom_line(data = etLine %>% filter(Year <= 19)) +
+      geom_line(data = etLine %>% filter(Year <= 20 & Year >= 17)) +
       geom_ribbon(
-        data = etLine %>% filter(Year >= 19),
+        data = etLine %>% filter(Year >= 20),
         aes(ymin = min(achievements), ymax = achievements),
         fill = ifelse(etCntChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = etLine %>% filter(Year >= 19),
+        data = etLine %>% filter(Year >= 20),
         color = ifelse(etCntChange > 0, "#00703c", "#d4351c")
       ) +
       # add a blank line for the formatted tooltip
@@ -739,11 +759,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-
+  
   output$etLineChart <- renderPlotly({
     ggplotly(etLineChart(),
-      tooltip = "text",
-      height = 81
+             tooltip = "text",
+             height = 81
     ) %>%
       layout(
         margin = m,
@@ -751,9 +771,9 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-
+  
   #### App achievements ----
-  # get App data for current lep
+  # get App data for current area
   AppLEP <- eventReactive(input$lep1, {
     C_Achieve_ILR1621 %>%
       filter(
@@ -763,59 +783,59 @@ server <- function(input, output, session) {
         age_group == "Total"
       )
   })
+  # get 21/22 values
+  AppLatest <- reactive({
+    AppLEP() %>%
+      filter(time_period == "202122")
+  })
   # get 20/21 values
-  App2021 <- reactive({
+  AppLast <- reactive({
     AppLEP() %>%
       filter(time_period == "202021")
   })
-  # get 19/20 values
-  App1920 <- reactive({
-    AppLEP() %>%
-      filter(time_period == "201920")
-  })
   output$skisup.APPach <- renderUI({
-    Appach <- App2021()$achievements
-
+    Appach <- AppLatest()$achievements
+    
     # E&T achievements change
-    AppachChange <- App2021()$achievements - App1920()$achievements
-
+    AppachChange <- AppLatest()$achievements - AppLast()$achievements
+    
     # print with formatting
-    h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
-      format(Appach, big.mark = ","), br(),
-      span(
-        format_pm(AppachChange) # plus-minus and comma sep formatting
-        ,
-        style = paste0("font-size: 16px;color:", cond_color(AppachChange > 0)) # colour formating
-        , .noWS = c("before", "after") # remove whitespace
-      ), br(),
-      style = "font-size: 21px"
+    h4(span("2021/22", style = "font-size: 16px;font-weight:normal;"), br(),
+       format(Appach, big.mark = ","), br(),
+       span(
+         format_pm(AppachChange) # plus-minus and comma sep formatting
+         ,
+         style = paste0("font-size: 16px;color:", cond_color(AppachChange > 0)) # colour formating
+         , .noWS = c("before", "after") # remove whitespace
+       ), br(),
+       style = "font-size: 21px"
     )
   })
-
+  
   # app chart
   AppLineChart <- eventReactive(input$lep1, {
     AppLine <- AppLEP()
-    AppCntChange <- App2021()$achievements - App1920()$achievements
+    AppCntChange <- AppLatest()$achievements - AppLast()$achievements
     AppMinMax <- C_Achieve_ILR1621_max_min %>% filter(
       geographic_level == input$GeoType,
       area == input$lep1,
       level_or_type == "Apprenticeships: Total"
     )
-
-
+    
+    
     ggplot(AppLine, aes(x = Year, y = achievements, group = area, text = paste0(
       "Academic year: ", time_period, "<br>",
       "Achievements: ", format(achievements, big.mark = ","), "<br>"
     ))) +
-      geom_line(data = AppLine %>% filter(Year <= 19)) +
+      geom_line(data = AppLine %>% filter(Year <= 20 & Year >= 17)) +
       geom_ribbon(
-        data = AppLine %>% filter(Year >= 19),
+        data = AppLine %>% filter(Year >= 20),
         aes(ymin = min(achievements), ymax = achievements),
         fill = ifelse(AppCntChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = AppLine %>% filter(Year >= 19),
+        data = AppLine %>% filter(Year >= 20),
         color = ifelse(AppCntChange > 0, "#00703c", "#d4351c")
       ) +
       # add a blank line for the formatted tooltip
@@ -836,16 +856,16 @@ server <- function(input, output, session) {
   # set margins
   m <- list(
     l = 0,
-    r = 4, # increase this margin a bit to prevent the last lable dissapearing
+    r = 4, # increase this margin a bit to prevent the last label dissapearing
     b = 0,
     t = 0,
     pad = 0
   )
-
+  
   output$AppLineChart <- renderPlotly({
     ggplotly(AppLineChart(),
-      tooltip = "text",
-      height = 81
+             tooltip = "text",
+             height = 81
     ) %>%
       layout(
         margin = m,
@@ -853,13 +873,348 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-
+  
   # Add link to skills data
   observeEvent(input$link_to_tabpanel_FE2, {
     updateTabsetPanel(session, "navbar", "Dashboard")
     updateTabsetPanel(session, "datatabset", "Skills")
   })
-
+  
+  
+  
+  #### KS5 sustained positive destination rate ----
+  # get dest data for current area
+  
+  KS5geo <- eventReactive(input$lep1, {
+    C_KS4_KS5eduempapp %>%
+      filter(
+        geographic_level == input$GeoType & area == input$lep1,
+        `Cohort Group` == "Total",
+        `Key Stage` == "Key Stage 5"
+      )
+  })
+  # get 21/22 values
+  KS5Latest <- reactive({
+    KS5geo() %>%
+      filter(time_period == "202021")
+  })
+  # get 20/21 values
+  KS5Last <- reactive({
+    KS5geo() %>%
+      filter(time_period == "201920")
+  })
+  
+  
+  # destinations overview KPI
+  output$dest.ks5over <- renderUI({
+    # change in positive sustained rate
+    KS5sustChange <- KS5Latest()$rate - KS5Last()$rate
+    
+    # print with formatting
+    h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
+       paste0(format(100 * KS5Latest()$rate, digit = 2), "%"), br(),
+       span(
+         paste0(sprintf("%+.1f", 100 * KS5sustChange), "ppts"),
+         style = paste0("font-size: 16px;color:", cond_color(KS5sustChange > 0)) # colour formating
+         , .noWS = c("before", "after") # remove whitespace
+       ), br(),
+       style = "font-size: 21px"
+    )
+  })
+  
+  # KS5 destinations chart
+  KS5LineChart <- eventReactive(input$lep1, {
+    KS5Line <- C_KS4_KS5eduempapp %>% filter(
+      (geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"), `Cohort Group` == "Total",
+      `Key Stage` == "Key Stage 5"
+    )
+    KS5sustChange <- KS5Latest()$rate - KS5Last()$rate
+    KS5MinMax <- C_KS5_eduempapp_max_min
+    
+    ggplot(KS5Line, aes(x = Year, y = rate, group = area, text = paste0(
+      "Academic year: ", time_period, "<br>",
+      "Area: ", area, "<br>",
+      "Sustained positive destination rate: ", scales::percent(round(rate, 2)), "<br>"
+    ))) +
+      geom_line(data = KS5Line %>% filter(Year <= 19, geographic_level == input$GeoType)) +
+      geom_line(data = KS5Line %>% filter(geographic_level == "COUNTRY"), alpha = 0.5) +
+      geom_ribbon(
+        data = KS5Line %>% filter(Year >= 19, geographic_level == input$GeoType),
+        aes(ymin = min(rate), ymax = rate),
+        fill = ifelse(KS5sustChange > 0, "#00703c", "#d4351c"),
+        alpha = 0.3
+      ) +
+      geom_line(
+        data = KS5Line %>% filter(Year >= 19, geographic_level == input$GeoType),
+        color = ifelse(KS5sustChange > 0, "#00703c", "#d4351c")
+      ) +
+      # add a blank line for the formatted tooltip
+      theme_classic() +
+      theme(
+        axis.line = element_blank(),
+        # axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        panel.background = element_rect(fill = "#f3f2f1"),
+        plot.background = element_rect(fill = "#f3f2f1")
+      ) +
+      scale_y_continuous(
+        labels = scales::percent_format(accuracy = 1),
+        breaks = c(KS5MinMax$minks5, KS5MinMax$maxks5),
+        limits = c(KS5MinMax$minks5, KS5MinMax$maxks5)
+      )
+  })
+  # set margins
+  m <- list(
+    l = 0,
+    r = 4, # increase this margin a bit to prevent the last label dissapearing
+    b = 0,
+    t = 0,
+    pad = 0
+  )
+  
+  output$KS5LineChart <- renderPlotly({
+    ggplotly(KS5LineChart(),
+             tooltip = "text",
+             height = 81
+    ) %>%
+      layout(
+        margin = m,
+        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+  
+  # add link to destinations
+  observeEvent(input$link_to_tabpanel_destinations2, {
+    updateTabsetPanel(session, "navbar", "Dashboard")
+    updateTabsetPanel(session, "datatabset", "Destinations")
+  })
+  
+  
+  
+  #### Micro enterprise  ----
+  # get Enterprise data for current area
+  
+  Entgeo <- eventReactive(input$lep1, {
+    C_empentind3_UBC1822 %>%
+      filter(
+        geographic_level == input$GeoType & area == input$lep1,
+        variable == "Micro 0 to 9",
+        industry == "Total"
+      )
+  })
+  # get 21/22 values
+  EntLatest <- reactive({
+    Entgeo() %>%
+      filter(year == "2022")
+  })
+  # get 20/21 values
+  EntLast <- reactive({
+    Entgeo() %>%
+      filter(year == "2021")
+  })
+  
+  
+  # enterprise overview KPI
+  output$UBC.micro <- renderUI({
+    # change in micro enterprises
+    EntChange <- EntLatest()$rate - EntLast()$rate
+    
+    # print with formatting
+    h4(span("Mar 2022", style = "font-size: 16px;font-weight:normal;"), br(),
+       paste0(format(100 * EntLatest()$rate, digit = 2), "%"), br(),
+       span(
+         paste0(sprintf("%+.1f", 100 * EntChange), "ppts"),
+         style = paste0("font-size: 16px;color:", cond_color(EntChange > 0)) # colour formating
+         , .noWS = c("before", "after") # remove whitespace
+       ), br(),
+       style = "font-size: 21px"
+    )
+  })
+  
+  
+  # micro enterprise chart
+  UBCLineChart <- eventReactive(input$lep1, {
+    EntLine <- C_empentind3_UBC1822 %>% filter(
+      (geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"), variable == "Micro 0 to 9",
+      industry == "Total"
+    )
+    EntChange <- EntLatest()$rate - EntLast()$rate
+    EntMinMax <- C_empentind_max_min
+    
+    ggplot(EntLine, aes(x = Year - 1, y = rate, group = area, text = paste0(
+      "March: ", year, "<br>",
+      "Area: ", area, "<br>",
+      "Percentage: ", scales::percent(round(rate, 2)), "<br>"
+    ))) +
+      geom_line(data = EntLine %>% filter(Year <= 21, geographic_level == input$GeoType)) +
+      geom_line(data = EntLine %>% filter(geographic_level == "COUNTRY"), alpha = 0.5) +
+      geom_ribbon(
+        data = EntLine %>% filter(Year >= 21, geographic_level == input$GeoType),
+        aes(ymin = min(rate), ymax = rate),
+        fill = ifelse(EntChange > 0, "#00703c", "#d4351c"),
+        alpha = 0.3
+      ) +
+      geom_line(
+        data = EntLine %>% filter(Year >= 21, geographic_level == input$GeoType),
+        color = ifelse(EntChange > 0, "#00703c", "#d4351c")
+      ) +
+      # add a blank line for the formatted tooltip
+      theme_classic() +
+      theme(
+        axis.line = element_blank(),
+        # axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        panel.background = element_rect(fill = "#f3f2f1"),
+        plot.background = element_rect(fill = "#f3f2f1")
+      ) +
+      scale_y_continuous(
+        labels = scales::percent_format(accuracy = 1),
+        breaks = c(EntMinMax$minmic, EntMinMax$maxmic),
+        limits = c(EntMinMax$minmic, EntMinMax$maxmic)
+      )
+  })
+  # set margins
+  m <- list(
+    l = 0,
+    r = 4, # increase this margin a bit to prevent the last label dissapearing
+    b = 0,
+    t = 0,
+    pad = 0
+  )
+  
+  output$UBCLineChart <- renderPlotly({
+    ggplotly(UBCLineChart(),
+             tooltip = "text",
+             height = 81
+    ) %>%
+      layout(
+        margin = m,
+        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+  
+  # add link to enterprise
+  observeEvent(input$link_to_tabpanel_enterprise2, {
+    updateTabsetPanel(session, "navbar", "Dashboard")
+    updateTabsetPanel(session, "datatabset", "Enterprises")
+  })
+  
+  #### qualifications NVQ  ----
+  # get entprise data for current area
+  
+  Qualgeo <- eventReactive(input$lep1, {
+    C_qualevel3plus_APS1721 %>%
+      filter(
+        geographic_level == input$GeoType & area == input$lep1,
+        Level == "Level 3 and above",
+        age_band == "16-64",
+        gender == "Total"
+      )
+  })
+  # get 21/22 values
+  QualLatest <- reactive({
+    Qualgeo() %>%
+      filter(year == "2021")
+  })
+  # get 20/21 values
+  QualLast <- reactive({
+    Qualgeo() %>%
+      filter(year == "2020")
+  })
+  
+  
+  # NVQ3 or above overview KPI
+  output$APS.nvq3plus <- renderUI({
+    # change in NVQ3 or above
+    QualChange <- QualLatest()$rate - QualLast()$rate
+    
+    # print with formatting
+    h4(span("Jan-Dec 2021", style = "font-size: 16px;font-weight:normal;"), br(),
+       paste0(format(100 * QualLatest()$rate, digit = 2), "%"), br(),
+       span(
+         paste0(sprintf("%+.1f", 100 * QualChange), "ppts"),
+         style = paste0("font-size: 16px;color:", cond_color(QualChange > 0)) # colour formating
+         , .noWS = c("before", "after") # remove whitespace
+       ), br(),
+       style = "font-size: 21px"
+    )
+  })
+  
+  
+  # qualification chart
+  Nvq3plusLineChart <- eventReactive(input$lep1, {
+    QualLine <- C_qualevel3plus_APS1721 %>% filter(
+      (geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"),
+      Level == "Level 3 and above",
+      age_band == "16-64",
+      gender == "Total"
+    )
+    QualChange <- QualLatest()$rate - QualLast()$rate
+    # QualMinMax <- C_qual_max_min
+    
+    ggplot(QualLine, aes(x = Year, y = rate, group = area, text = paste0(
+      "Jan-Dec: ", year, "<br>",
+      "Area: ", area, "<br>",
+      "Percentage: ", scales::percent(round(rate, 2)), "<br>"
+    ))) +
+      geom_line(data = QualLine %>% filter(Year <= 20, geographic_level == input$GeoType)) +
+      geom_line(data = QualLine %>% filter(geographic_level == "COUNTRY"), alpha = 0.5) +
+      geom_ribbon(
+        data = QualLine %>% filter(Year >= 20, geographic_level == input$GeoType),
+        aes(ymin = min(rate), ymax = rate),
+        fill = ifelse(QualChange > 0, "#00703c", "#d4351c"),
+        alpha = 0.3
+      ) +
+      geom_line(
+        data = QualLine %>% filter(Year >= 20, geographic_level == input$GeoType),
+        color = ifelse(QualChange > 0, "#00703c", "#d4351c")
+      ) +
+      # add a blank line for the formatted tooltip
+      theme_classic() +
+      theme(
+        axis.line = element_blank(),
+        # axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        panel.background = element_rect(fill = "#f3f2f1"),
+        plot.background = element_rect(fill = "#f3f2f1")
+      ) +
+      scale_y_continuous(
+        labels = scales::percent_format(accuracy = 1),
+        breaks = c(.39, .72),
+        limits = c(.39, .72)
+      )
+  })
+  # set margins
+  m <- list(
+    l = 0,
+    r = 4, # increase this margin a bit to prevent the last lable dissapearing
+    b = 0,
+    t = 0,
+    pad = 0
+  )
+  
+  output$Nvq3plusLineChart <- renderPlotly({
+    ggplotly(Nvq3plusLineChart(),
+             tooltip = "text",
+             height = 81
+    ) %>%
+      layout(
+        margin = m,
+        xaxis = list(fixedrange = TRUE), yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+  
+  # add link to qualification level
+  observeEvent(input$link_to_tabpanel_qualification2, {
+    updateTabsetPanel(session, "navbar", "Dashboard")
+    updateTabsetPanel(session, "datatabset", "Qualification level")
+  })
   # # EMPLOYMENT ----
   # # define page title
   # output$page1title <- renderUI({
