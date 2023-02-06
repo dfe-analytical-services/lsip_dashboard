@@ -1,8 +1,41 @@
 panel_overview <- function() {
   tabPanel(
     "Overview",
+    
+    fluidRow(
+      column(
+        12,
+        br(),
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              width = 4,
+              selectInput("GeoType", "Choose geography",
+                          choices = c(
+                            "Local Enterprise Partnership (LEP)" = "LEP",
+                            "Local Skills Improvement Plan (LSIP)" = "LSIP",
+                            "Mayoral Combined Authority (MCA)" = "MCA"
+                          ),
+                          selected = "LEP"
+              )
+            ),
+            column(
+              width = 4,
+              uiOutput("lep1_geo"),
+            )#,
+            # column(
+            #   width = 4,
+            #   uiOutput("lep2_off")
+            # )
+          )
+        ),
+        br(),
+      )
+    ), # end of filters row
+    
     h1(uiOutput("page0title")),
-    p("Change metrics are measured since the same period the year before."),
+    p("Change metrics are measured against the same period in the previous year."),
     fluidRow(
       style = "padding-left: 15px;padding-right: 15px;", # indent slightly so box aligns
       # left column
@@ -15,7 +48,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div( # need a div to add hover over title
-              title = "Source: APS. 2021 calendar year",
+              title = "Source: APS. Oct-Sep 2022",
               uiOutput("locland.emplcnt0"),
             )
           ),
@@ -29,7 +62,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: APS. 2021 calendar year",
+              title = "Source: APS. Oct-Sep 2022",
               uiOutput("locland.emplrate0"),
             )
           ),
@@ -44,12 +77,12 @@ panel_overview <- function() {
           actionLink("link_to_tabpanel_employment2", "Find out more about employment")
         ),
         # fourth row - vacancies
-        h3("Job vacancy share (experimental)"),
+        h3("Online job adverts (experimental)"),
         fluidRow(
           column(
             width = 4,
             div(
-              title = "Source: ONS (Adzuna). Jan 2022. Share of job vacancies in England.",
+              title = "Source: ONS (Textkernel). Oct 2022. Online job adverts.",
               uiOutput("jobad.units"),
             )
           ),
@@ -60,7 +93,45 @@ panel_overview <- function() {
         ),
         fluidRow(
           class = "rightAlignLinks",
-          actionLink("link_to_tabpanel_vacancies2", "Find out more about vacancies")
+          actionLink("link_to_tabpanel_vacancies2", "Find out more about online job adverts")
+        ),
+        # fifth row - destinations
+        h3("Key Stage 5 positive destination rate"),
+        fluidRow(
+          column(
+            width = 4,
+            div(
+              title = "Source: NPD. 2021 academic year",
+              uiOutput("dest.ks5over"),
+            )
+          ),
+          column(
+            width = 8,
+            plotlyOutput("KS5LineChart", height = 81)
+          )
+        ),
+        fluidRow(
+          class = "rightAlignLinks",
+          actionLink("link_to_tabpanel_destinations2", "Find out more about destinations")
+        ),
+        # sixth row - enterprise
+        h3("Enterprise count: Micro (0-9 employees)"),
+        fluidRow(
+          column(
+            width = 4,
+            div(
+              title = "Source: UBC. 2022 calendar year",
+              uiOutput("UBC.micro"),
+            )
+          ),
+          column(
+            width = 8,
+            plotlyOutput("UBCLineChart", height = 81)
+          )
+        ),
+        fluidRow(
+          class = "rightAlignLinks",
+          actionLink("link_to_tabpanel_enterprise2", "Find out more about enterprises")
         ),
         br()
       ),
@@ -74,7 +145,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: ILR AY20/21",
+              title = "Source: ILR AY21/22",
               uiOutput("skisup.ETach"),
             )
           ),
@@ -88,7 +159,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: ILR AY20/21",
+              title = "Source: ILR AY21/22",
               uiOutput("skisup.APPach"),
             )
           ),
@@ -101,6 +172,25 @@ panel_overview <- function() {
         fluidRow(
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_FE2", "Find out more about skills")
+        ),
+        h3("Qualification level: NVQ3 or above"),
+        fluidRow(
+          column(
+            width = 4,
+            div(
+              title = "Source: APS. 2021 calendar year",
+              uiOutput("APS.nvq3plus"),
+            )
+          ),
+          column(
+            width = 8,
+            plotlyOutput("Nvq3plusLineChart", height = 81)
+          )
+        ),
+        # third row - link to emp tab
+        fluidRow(
+          class = "rightAlignLinks",
+          actionLink("link_to_tabpanel_qualification2", "Find out more about qualification level")
         ),
         br()
       ) # end of right column
@@ -127,7 +217,7 @@ panel_overview <- function() {
         width = 3,
         downloadButton(
           outputId = "download_btn0b",
-          label = "Current LEP/LSIP",
+          label = "Current geographic area",
           icon = shiny::icon("download"),
           class = "downloadButton"
         )
@@ -135,6 +225,7 @@ panel_overview <- function() {
       column(width = 9, "Download all data for the selected geographic area")
     ),
     column(width = 12, br(""))
+    
   )
 }
 

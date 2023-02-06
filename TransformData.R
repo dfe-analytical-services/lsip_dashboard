@@ -339,7 +339,7 @@ C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
   mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
   mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.numeric) %>% # Convert to numeric
   mutate(Year = as.numeric(substr(time_period, 3, 4))) %>% # add year name for charts
-  filter(time_period != "202122") %>% # ignore temporary data in the latest year
+ # filter(time_period != "202122") %>% # ignore temporary data in the latest year
   mutate(typeNeat = case_when(
     apprenticeships_or_further_education == "Further education and skills" ~ "Total FE and skills provision",
     apprenticeships_or_further_education == "Education and training" ~ "Education and training (adults only)",
@@ -1042,6 +1042,98 @@ D_qual_APS1721 <- format.qual.APS(I_qual_APS1721) %>%
 
 # write the data to folder
 write.csv(D_qual_APS1721, file = "Data\\AppData\\D_qual_APS1721.csv", row.names = FALSE)
+
+
+
+#### Employment by industry ####
+format.EmpInd.APS <- function(x) {
+  reformat <- x %>%
+    mutate(year = ifelse(annual.population.survey == "date", substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
+    fill(year) %>% # fill time periods for all rows
+    row_to_names(row_number = 4) %>% # set col names
+    clean_names() %>%
+    select(-starts_with("na")) %>% # remove na columns (flags and confidence)
+    mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
+    filter(check == 1) %>%
+    filter(!grepl("nomisweb", area)) %>%
+    select(year = x2018, area, everything(), -check) %>%
+    mutate(area = gsub(" - from dn81838", "", area)) %>% 
+    mutate(area2 = gsub(".*-", "", area)) %>%
+    mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
+    mutate(area = gsub(".*:", "", area)) %>%
+    mutate(area = gsub("-.*", "", area)) %>%
+    mutate(area = case_when(
+      area == "Hull and East Riding" ~ "Hull and East Yorkshire",
+      area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+      area == "Heart of the South" ~ "Heart of the South-West",
+      area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
+      area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
+      area == "Brighton and Hove, East Sussex, Wes" ~"Brighton and Hove, East Sussex, West Sussex", 
+      area == "Enterprise M3 LEP (including all of" ~ "Enterprise M3 LEP (including all of Surrey)",
+      TRUE ~ area
+    )) %>%
+    mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
+    select(area, everything(), -area2) %>%
+    relocate(geographic_level, year, .after = area) %>%
+    # mutate(year = as.numeric(substr(year, 5, 8))) %>%
+    rename_with(
+      .fn = ~ str_replace_all(.x, c("t13a_" = "", "_" = " ", "sic 2007 all people" = "")),
+      .cols = starts_with("t13a_")
+    ) %>%
+    rename_with(~ gsub("[[:digit:]]+", "", .)) %>%
+    rename(
+      "Agriculture and Fishing" = " a agricuture fishing ",
+      "Energy and Water" = " b d e energy water ",
+      "Manufacturing" = " c manufacturing ",
+      "Construction" = " f construction ",
+      "Distribution, Hotels and Restaurants" = " g i distribution hotels restaurants ",
+      "Transport and Communication" = " h j transport communication ",
+      "Banking, Finance and Insurance" = " k n banking finance insurance etc ",
+      "Public Administration, Education and Health" = " o q public admin education health ",
+      "Other Services" = " r u other services "
+    ) %>%
+    mutate(geographic_level = toupper(geographic_level)) %>%
+    mutate(geographic_level = case_when(geographic_level == "LSI" ~ "LSIP", 
+                                        geographic_level == "LS" ~ "LSIP", 
+                                        geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP", 
+                                        geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP", 
+                                        geographic_level == "SEA AND THURROCK" ~ "LSIP", 
+                                        TRUE ~ geographic_level)) %>% 
+    filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
+}
+
+# format data
+F_EmpInd_APS1822 <- format.EmpInd.APS(I_empind_APS1822) %>%
+  mutate_at(vars(c(4:12)), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "")))
+
+# dashboard data
+C_EmpInd_APS1822 <- F_EmpInd_APS1822 %>%
+  mutate_at(c(4:12), as.numeric) %>%
+  melt(id.vars = c("year", "geographic_level", "area")) %>%
+  mutate_at(c("value"), ~ replace_na(., 0)) %>%
+  group_by(area, year, geographic_level) %>%
+  summarise(Total = sum(`value`))
+
+C_EmpInd2_APS1822 <- F_EmpInd_APS1822 %>%
+  mutate_at(c(4:12), as.numeric) %>%
+  melt(id.vars = c("year", "geographic_level", "area")) %>%
+  mutate_at(c("value"), ~ replace_na(., 0)) %>%
+  left_join(C_EmpInd_APS1822, by = c(
+    "area" = "area", "year" = "year",
+    "geographic_level" = "geographic_level"
+  )) %>%
+  mutate(rate = value / Total)
+
+# write to data folder
+write.csv(C_EmpInd2_APS1822, file = "Data\\AppData\\C_EmpInd2_APS1822.csv", row.names = FALSE)
+
+# downloadable version
+D_EmpInd_APS1822 <- format.EmpInd.APS(I_empind_APS1822) %>%
+  mutate_at(vars(c(4:12)), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
+
+# write the data to folder
+write.csv(D_EmpInd_APS1822, file = "Data\\AppData\\D_EmpInd_APS1822.csv", row.names = FALSE)
+
 
 #### 3.3 UK Business Count ####
 ##### Enterprise by employment size ####
