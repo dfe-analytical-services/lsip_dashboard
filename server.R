@@ -2331,9 +2331,9 @@ server <- function(input, output, session) {
       options = list(placeholder = "Choose years*")
     )
   })
-
-  output$hubTable <- renderDataTable({
-    DT::datatable(C_datahub %>%
+  
+datahubDataset<-reactive({
+    C_datahub %>%
       filter(
         (
           if (is.null(input$hubGeog) == TRUE) {
@@ -2392,8 +2392,28 @@ server <- function(input, output, session) {
       select(
         Year = time_period, Geography = geographic_level, Area = area,
         Data = metric, Breakdown = breakdown, Splits = subgroups, Value = value
-      ))
+      )
   })
+  
+
+  output$hubTable <- renderDataTable({
+    DT::datatable(datahubDataset())
+  })
+  
+  # Download current LEP indicators
+  filtered_data1 <- reactive({
+    list(
+      "LocalSkillIndicators" = datahubDataset()
+    )
+  })
+  output$hubDownload <- downloadHandler(
+    filename = function() {
+      "LocalSkillsV1Dataset.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(filtered_data1(), path = file)
+    }
+  )
 
   # create hub code
   output$hubCode <- renderUI({
