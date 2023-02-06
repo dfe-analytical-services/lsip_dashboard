@@ -205,6 +205,83 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
   #     "Please be aware that you may experience performance issues and the dashboard may require a reload. We are working to fix this."
   #   )
   # ),
+  #js to get page to go back to the top
+  tags$script(" $(document).ready(function () {
+         $('#navbar a[data-toggle=\"tab\"]').on('click', function (e) {
+          window.scrollTo(0, 0)
+               });
+
+               });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_overview').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_employment').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_vacancies').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_enterprise').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_FE').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_qualification').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_destinations').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_data').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_employment2').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_vacancies2').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_destinations2').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_enterprise2').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_FE2').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+  tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_qualification2').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
 
   # Navbar ====================================================================
   navlistPanel(
@@ -704,10 +781,61 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
         column(
           12,
           h1("FE interventions"),
-          DT::dataTableOutput("interventionTable"),
-          br()
-        )
-      )
+          p("There have been several interventions and policies in recent years which have affected FE. Below provides a list of interventions in FE which hopefully provide some context around the data and trends within this dashboard."),
+          h3(2021),
+          tags$div(
+            tags$ul(
+              tags$li("The Department for Education White Paper created the policy for Local Skills Improvement Plans and the involvement of employer bodies."), 
+              tags$li("Skills for Jobs: Lifelong Learning for Opportunity and Growth policy paper suggests the Lifetime Loan Entitlement and increased IfATEs role in technical qualifications."), 
+              tags$li("The Skills and Post-16 education bill confirmed the introduction of the Lifelong Loan Entitlement.")
+            )
+          ),
+          h3(2020), 
+          tags$div(
+            tags$ul(
+              tags$li("The Chancellor announced 'Plan for Jobs' in July 2020, to help combat the impact of the pandemic on the education system. There was a particular focus on apprenticeships, with £2,000 for each new apprentice under 25, later raised to £3,000."),
+              tags$li("In September 2020 as part of 'Build Back Better', the Lifetime Skills Guarantee was introduced to give adults without a full Level 3 qualification the chance to take free college courses.
+                      SKills Bootcamps were also introduced  offering flexible courses of 12-16 weeks to build up digital skills (later expanded in 2021 and 022 to cover construction, engineering and green skills)."),
+              tags$li("Independent Commissions on the College of the Future report was published. This called for long-term education and skills reforms, and extra investment to address current and future skilsl gaps.")
+            )
+          ),
+          h3(2019), 
+          tags$div(
+            tags$ul(
+              tags$li("The Adult Education Budget (AEB) devolved to six MCAs and the GLA."), 
+              tags$li("The Auger report, and independent panel report to the Reveiw of Post-18 Education and Funding was published.
+                      This called for a major overhaul of the sturcture and funding system for HE and FE, including rationalising the FE college ‘network’, first free full level 2 and 3 qualification for all learners, simplifying the ESFA funding rules, investing in the FE workforce as a ‘priority' and introducing maintenance support for level 4 and 5 qualifications.")
+            )
+          ),
+          h3(2018), 
+          tags$div(
+            tags$ul(
+              tags$li("The Technical and Further Education Act extended the remite of IfA to cover college-based technical education from 2018 onwards, creating IfATE.")
+              
+              
+            )
+          ),
+          h3(2017), 
+          tags$div(
+            tags$ul(
+              tags$li("Plans for establishing 'Institutes of Technology' were published by DfE. £170 million fund to ‘establish high quality institutions which specialised in delivering high-level technical skills that employers need across all regions of England’. First 12 successful bids were announced in 2019."),
+              tags$li("The Education Funding Agency and the SFA were merged to create the Education and Skills Funding Agency (ESFA) that sits within DfE."), 
+              tags$li("IfA formally became operational alongside the new apprenticeship levy in April 2017."),
+              tags$li("UKCES was closed following withdrawal of government funding.")
+              
+            )
+            
+          ),
+          h3(2016), 
+          tags$div(
+            tags$ul(
+              tags$li("Lord Sainsbury report was published, a report of the Independent Panel on Technical Education. This called for new approach to technical education, including: a technical pathway for learners including employment-based (apprenticeship) and college-based training, a single framework of standards for both apprenticeships and college-based provision, a common framework of 15 routes for levels 2 to 5."),
+              tags$li("Post-16 skills plan published alongside to deliver recommendations.")
+            )
+          )
+          
+          
+        ))
     ),
     # FE data sources
     tabPanel(
@@ -716,96 +844,13 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
         column(
           12,
           h1("FE data sources"),
+          p("In the below table you can find a list of other data sources which cover Further Education and local skills."),
           DT::dataTableOutput("sourcesTable"),
           br()
         )
       )
-    ),
-    #js to get page to go back to the top
-    tags$script(" $(document).ready(function () {
-         $('#navbar a[data-toggle=\"tab\"]').on('click', function (e) {
-          window.scrollTo(0, 0)
-               });
-
-               });"),
+    )
     
-    
-
-    
-    
-    
-    
-    
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_overview').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"),
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_employment').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"),
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_vacancies').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"),
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_enterprise').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"),
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_FE').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"),
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_qualification').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"),
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_destinations').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"),
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_data').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"),
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_employment2').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"),
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_vacancies2').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"),
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_destinations2').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"),
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_enterprise2').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"),
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_FE2').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"),
-    tags$script(" $(document).ready(function () {
-                $('#link_to_tabpanel_qualification2').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });")
 
   ), # End of navBarPage
   # Footer ====================================================================
