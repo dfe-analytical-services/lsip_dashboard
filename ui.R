@@ -211,7 +211,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     id = "navbar",
     widths = c(2, 10),
     well = FALSE,
-    selected = "Local skills v2",
+    selected = "Local skills",
 
     # HOMEPAGE ============================================================
 
@@ -298,15 +298,15 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               p("SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues."),
               h3(actionLink("link_to_tabpanel_vacancies", "Online job adverts")),
               p("This tab provides experimental online job advert data, split by profession, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "),
-              h3(actionLink("link_to_tabpanel_enterprise_level", "Enterprises")),
+              h3(actionLink("link_to_tabpanel_enterprise", "Enterprises")),
               p("This tab provides data on the count of new and no longer trading enterprises and count of enterprises by employment size and industry for the selected geographic area, and the option to compare against another area in England at the same geographic level."),
               h3(actionLink("link_to_tabpanel_FE", "Skills")),
               p("This tab provides information on training activity for the selected geographic area including data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period. There is an option to compare against another area in England at the same geographic level."),
               p("LEP, LSIP and MCA area totals are calculated by aggregating the relevant local authorities."),
-              h3(actionLink("link_to_tabpanel_qualification_level", "Qualification level")),
+              h3(actionLink("link_to_tabpanel_qualification", "Qualification level")),
               p("This page includes information on the highest qualification level for working age individuals (16-64) for the selected geographic area, and the option to compare against another area.
                 It includes data on qualification level, with breakdowns by age band and gender."),
-              h3(actionLink("link_to_tabpanel_destinations_level", "Destinations")),
+              h3(actionLink("link_to_tabpanel_destinations", "Destinations")),
               p("This page includes information on the destinations of young people after KS4 and KS5 education for the selected geographic area, and the option to compare against another area.
                 It includes data on destinations, with breakdowns by level and key stage group."),
               h2("Data download page"),
@@ -638,7 +638,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
 
     # mapsplash ======
     tabPanel(
-      "Local skills v2",
+      "Local skills",
       br(),
       fluidRow(column(
         12,
@@ -720,7 +720,93 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           br()
         )
       )
-    )
+    ),
+    #js to get page to go back to the top
+    tags$script(" $(document).ready(function () {
+         $('#navbar a[data-toggle=\"tab\"]').on('click', function (e) {
+          window.scrollTo(0, 0)
+               });
+
+               });"),
+    
+    
+
+    
+    
+    
+    
+    
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_overview').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_employment').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_vacancies').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_enterprise').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_FE').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_qualification').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_destinations').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_data').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_employment2').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_vacancies2').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_destinations2').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_enterprise2').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_FE2').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"),
+    tags$script(" $(document).ready(function () {
+                $('#link_to_tabpanel_qualification2').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });")
+
   ), # End of navBarPage
   # Footer ====================================================================
 
