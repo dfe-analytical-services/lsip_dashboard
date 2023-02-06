@@ -2088,8 +2088,8 @@ server <- function(input, output, session) {
     )
     groupCount <- if (input$splashGeoType == "LEP") {
       "38 LEPs."
-    } else {
-      "10 MCAs."
+    } else {if(input$splashGeoType == "MCA"){
+      "10 MCAs."}else{"38 LSIPs."}
     }
     paste0(areaClicked, " has a ", compareNational, " ", currentMetric(), " than the national average. It has the ", areaRank, suff, " highest ", currentMetric(), " of the ", groupCount)
   })
