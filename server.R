@@ -54,7 +54,6 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_data, {
     updateTabsetPanel(session, "navbar", "Data & downloads")
   })
-
   ## Create table download datasets ----
   output$downloadData1 <- downloadHandler(
     filename = function() {
@@ -76,7 +75,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-
+  
   output$downloadData3 <- downloadHandler(
     filename = function() {
       "EmpbyindustryIndicators.xlsx"
@@ -117,7 +116,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-
+  
   output$downloadData6 <- downloadHandler(
     filename = function() {
       "Qualificationbyageandgendernvq.xlsx"
@@ -128,7 +127,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-
+  
   output$downloadData7 <- downloadHandler(
     filename = function() {
       "EnterprisebyemploymentsizeIndicators.xlsx"
@@ -139,7 +138,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-
+  
   output$downloadData8 <- downloadHandler(
     filename = function() {
       "EntbyempsizeandindustryIndicators.xlsx"
@@ -150,7 +149,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-
+  
   output$downloadData9 <- downloadHandler(
     filename = function() {
       "Enterprisedemography.xlsx"
@@ -161,10 +160,10 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-
+  
   output$downloadData10 <- downloadHandler(
     filename = function() {
-      "Keystage4destinationsIndicators.xlsx"
+      "EnterprisebyemploymentsizeIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
@@ -172,10 +171,10 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-
+  
   output$downloadData11 <- downloadHandler(
     filename = function() {
-      "Keystage5destinationsIndicators.xlsx"
+      "EntbyempsizeandindustryIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list(
@@ -183,7 +182,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-
+  
   output$downloadData12 <- downloadHandler(
     filename = function() {
       "JobAdvertIndicators.xlsx"
@@ -195,8 +194,8 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-
-
+  
+  
   ## create download links ----
   output$hidden_downloads <- renderUI(
     lapply(1:12, function(i) {
@@ -206,12 +205,12 @@ server <- function(input, output, session) {
   ## create data table to show ----
   output$DataTbl <- renderDataTable({
     DT::datatable(I_DataTable %>%
-      mutate("Dashboard data" = lapply(
-        1:n(),
-        function(i) {
-          paste0('<a onClick=document.getElementById("downloadData', i, '").click() >Download</a>')
-        }
-      )), escape = FALSE, options = list(dom = "t", "pageLength" = 15), rownames = FALSE)
+                    mutate("Dashboard data" = lapply(
+                      1:n(),
+                      function(i) {
+                        paste0('<a onClick=document.getElementById("downloadData', i, '").click() >Download</a>')
+                      }
+                    )), escape = FALSE, options = list(dom = "t", "pageLength" = 15), rownames = FALSE)
   })
 
   # OVERVIEW ----

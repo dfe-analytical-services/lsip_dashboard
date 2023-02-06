@@ -208,7 +208,7 @@ I_mapMCA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0(
 ### employment by industry------------
 # Geog and date as above
 # Cell: T13a	Employment by industry (SIC 2007) and flexibility
-folder <- "16_APSempind"
+folder <- "13_APSempind"
 sheetNum <- 1
 I_empind_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 

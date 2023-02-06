@@ -266,7 +266,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           ),
         )
       ), # end intro text row
-
+      
       ## dashboard contents -------------------------------------------------------
       fluidRow(
         column(
@@ -315,7 +315,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           )
         )
       ), # end of dashboard contents row
-
+      
       ## Version control ------------------------------------------------------
       fluidRow(
         column(
@@ -330,17 +330,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("16 Feb 2023 (0.4.4)"),
-              p("Updated online job advert data to Dec 2022, including an ONS revision to the previous Oct 2022 figures."),
+              p("25 Jan 2023 (0.4.2)"),
+              p("Updated employment rates and employment by industry figures with Oct-Sep 2022 Annual Population Survey data."),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
-                p(
-                  p("9 Feb 2023 (0.4.3)"),
-                  p("Updated destinations data with the February revision."),
-                  p("25 Jan 2023 (0.4.2)"),
-                  p("Updated employment rates and employment by industry figures with Oct-Sep 2022 Annual Population Survey data."),
-                  p("12 Jan 2023 (0.4.1)"),
+                p(p("12 Jan 2023 (0.4.1)"),
                   p("Included ONS-Textkernel online job adverts by profession data."),
                   p("20 Dec 2022 (0.3.1)"),
                   p("Addition of three new data sources:"),

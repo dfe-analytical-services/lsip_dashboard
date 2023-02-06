@@ -143,7 +143,7 @@ format.EmpRate.APS <- function(x) {
     filter(check == 1) %>%
     filter(!grepl("nomisweb", area)) %>%
     select(year = x2018, area, everything(), -check) %>%
-    mutate(area = gsub(" - from dn81838", "", area)) %>%
+    mutate(area = gsub(" - from dn81838", "", area)) %>% 
     mutate(area2 = gsub(".*-", "", area)) %>%
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>%
@@ -154,87 +154,8 @@ format.EmpRate.APS <- function(x) {
       area == "Heart of the South" ~ "Heart of the South-West",
       area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
       area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
-      area == "Brighton and Hove, East Sussex, Wes" ~ "Brighton and Hove, East Sussex, West Sussex",
+      area == "Brighton and Hove, East Sussex, Wes" ~"Brighton and Hove, East Sussex, West Sussex", 
       area == "Enterprise M3 LEP (including all of" ~ "Enterprise M3 LEP (including all of Surrey)",
-      TRUE ~ area
-    )) %>%
-    mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
-    select(area, everything(), -area2) %>%
-    relocate(geographic_level, year, .after = area) %>%
-    # mutate(year = as.numeric(substr(year, 5, 8))) %>%
-    rename_with(
-      .fn = ~ str_replace_all(.x, c("t01_" = "", "_" = " ", "aged 16 64" = "", "all people" = "")),
-      .cols = starts_with("t01_")
-    ) %>%
-    rename_with(~ gsub("[[:digit:]]+", "", .)) %>%
-    rename_with(str_to_title, c(4:10)) %>% # capitalise column names
-    mutate(geographic_level = toupper(geographic_level)) %>%
-    mutate(geographic_level = case_when(
-      geographic_level == "LSI" ~ "LSIP",
-      geographic_level == "LS" ~ "LSIP",
-      geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP",
-      geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP",
-      geographic_level == "SEA AND THURROCK" ~ "LSIP",
-      area == "West of England and North Somerset" ~ "LSIP",
-      TRUE ~ geographic_level
-    )) %>%
-    filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
-}
-
-# format data
-F_EmpRate_APS1822 <- format.EmpRate.APS(I_EmpRate_APS1822)
-# create downloadable version with new suppression rules
-D_EmpRate_APS1822 <- F_EmpRate_APS1822 %>%
-  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
-
-# write data to folder
-write.csv(D_EmpRate_APS1822, file = "Data\\AppData\\D_EmpRate_APS1822.csv", row.names = FALSE)
-
-# create version to use in dashboard
-C_EmpRate_APS1822 <- F_EmpRate_APS1822 %>%
-  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-  mutate_at(c(4:10), as.numeric) %>% # Convert to numeric
-  mutate(empRate = .[[6]] / .[[4]]) %>%
-  filter(
-    geographic_level != "LADU" # not needed for the dashboard currently
-    & geographic_level != "GOR"
-  ) %>%
-  mutate(Year = as.numeric(substr(year, 3, 4))) %>% # for use in charts
-  rename(Employment = `  In Employment `) # for use in charts
-
-# write data to folder
-write.csv(C_EmpRate_APS1822, file = "Data\\AppData\\C_EmpRate_APS1822.csv", row.names = FALSE)
-
-# create max and min emp count and rate by LEP for use in setting axis
-C_EmpRate_APS1822_max_min <- C_EmpRate_APS1822 %>%
-  group_by(area) %>%
-  summarise(minEmp = min(Employment), maxEmp = max(Employment))
-
-# write data to folder
-write.csv(C_EmpRate_APS1822_max_min, file = "Data\\AppData\\C_EmpRate_APS1822_max_min.csv", row.names = FALSE)
-
-#### Qualification level by age and gender ####
-format.qual.APS <- function(x) {
-  reformat <- x %>%
-    mutate(year = ifelse(str_like(annual.population.survey, "%date%"), substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
-    fill(year) %>% # fill time periods for all rows
-    row_to_names(row_number = 4) %>% # set col names
-    clean_names() %>%
-    select(-starts_with("na")) %>% # remove na columns (flags and confidence)
-    mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
-    filter(check == 1) %>%
-    filter(!grepl("nomisweb", area)) %>%
-    select(year = x2017, area, everything(), -check) %>% # reorder and remove
-    mutate(area2 = gsub(".*-", "", area)) %>%
-    mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
-    mutate(area = gsub(".*:", "", area)) %>%
-    mutate(area = gsub("-.*", "", area)) %>%
-    mutate(area = case_when(
-      area == "Hull and East Riding" ~ "Hull and East Yorkshire",
-      area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
-      area == "Heart of the South" ~ "Heart of the South-West",
-      area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
-      area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
       TRUE ~ area
     )) %>%
     mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
@@ -415,15 +336,14 @@ format.EmpInd.APS <- function(x) {
       "Other Services" = " r u other services "
     ) %>%
     mutate(geographic_level = toupper(geographic_level)) %>%
-    mutate(geographic_level = case_when(
-      geographic_level == "LSI" ~ "LSIP",
-      geographic_level == "LS" ~ "LSIP",
-      geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP",
-      geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP",
-      geographic_level == "SEA AND THURROCK" ~ "LSIP",
-      TRUE ~ geographic_level
-    )) %>%
+    mutate(geographic_level = case_when(geographic_level == "LSI" ~ "LSIP", 
+                                        geographic_level == "LS" ~ "LSIP", 
+                                        geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP", 
+                                        geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP", 
+                                        geographic_level == "SEA AND THURROCK" ~ "LSIP", 
+                                        TRUE ~ geographic_level)) %>% 
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
+  
 }
 
 # format data
