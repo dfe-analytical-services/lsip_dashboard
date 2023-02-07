@@ -18,14 +18,13 @@ cond_color <- function(condition, true_color = "green") {
 # function which returns background colour based on cell value (using colour map)
 # also takes column name as an input, which allows to get max and min
 
-color_gradient <- function(dt, column_name, gradient_colors = c("#718ea7","#F7FBFF")) {
+color_gradient <- function(dt, column_name, gradient_colors = c("#718ea7", "#F7FBFF")) {
   col_func <- colorRampPalette(gradient_colors)
-  dt %>% 
-    formatStyle(column_name, 
-                backgroundColor = styleEqual(
-               sort(unique(dt$x$data[[column_name]]), decreasing = TRUE),
-                  col_func(length(unique(dt$x$data[[column_name]])))
-                )
-    ) 
+  dt %>%
+    formatStyle(column_name,
+      backgroundColor = styleEqual(
+        sort(unique(dt$x$data[[column_name]]), decreasing = TRUE),
+        col_func(length(unique(dt$x$data[[column_name]])))
+      )
+    )
 }
-

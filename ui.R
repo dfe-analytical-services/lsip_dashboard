@@ -312,7 +312,8 @@ padding-top:15px
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
-                p(p("12 Jan 2023 (0.4.1)"),
+                p(
+                  p("12 Jan 2023 (0.4.1)"),
                   p("Included ONS-Textkernel online job adverts by profession data."),
                   p("20 Dec 2022 (0.3.1)"),
                   p("Addition of three new data sources:"),

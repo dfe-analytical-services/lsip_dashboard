@@ -9,7 +9,7 @@
 
 # 0. Load libraries ----
 library(openxlsx)
-#### 0.1 Loading geographies---- 
+#### 0.1 Loading geographies----
 ## Load list of LEPs 2020 and LA-LSIP lookup ----
 folder <- "1_GeogLkup"
 sheetNum <- "LAD21 - LSIP - LEP21"
@@ -32,9 +32,9 @@ I_mcalookup <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(pa
 # Query data
 # Geography: England, LEPs, regions, LADs (as of April 2021)
 # Date: 12 months to Dec 2017-2021
-# Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people. 
-#Currently only available up to Dec 2021
-folder <-  "3_APSempOcc"
+# Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people.
+# Currently only available up to Dec 2021
+folder <- "3_APSempOcc"
 sheetNum <- 1
 I_EmpOcc_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
@@ -74,7 +74,7 @@ folder <- "6_ILRach"
 I_Achieve_ILR1621 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 # 3.ONS ----
-###3.1 Vacancy by year and LAD ------------
+### 3.1 Vacancy by year and LAD ------------
 # ## Download link: https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/onlinejobadvertsbyitl1regionandlocalauthority
 # folder <- "7_ONSvacancy"
 # sheetNum <- "1"
