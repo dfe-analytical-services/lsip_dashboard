@@ -46,7 +46,7 @@ metricChoices <- list(
     "Job adverts" = "vacancies"
   ),
   "Enterprises" = list(
-    "Enterprise count"="enterpriseCount",
+    "Enterprise count" = "enterpriseCount",
     "Enterprise birth rate" = "birthRate",
     "Enterprise death rate" = "deathRate"
   ),
@@ -57,9 +57,9 @@ metricChoices <- list(
     "FE achievements" = "achievements",
     "FE participation" = "participation",
     "FE starts" = "starts",
-    "Qualified at Level 3 or above" ="level3AndAboveRate",
-    "KS4 completers sustained positive destination rate"="sustainedPositiveDestinationKS4Rate",
-    "KS5 completers sustained positive destination rate"="sustainedPositiveDestinationKS5Rate"
+    "Qualified at Level 3 or above" = "level3AndAboveRate",
+    "KS4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
+    "KS5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
   ),
   "Mismatch" = list("Supply vs demand TO COME" = "mismatch")
 )
