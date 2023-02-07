@@ -62,8 +62,9 @@ C_mcalookup <- I_mcalookup
 #### Employment by occupation ####
 format.EmpOcc.APS <- function(x) {
   reformat <- x %>%
-    mutate(year = ifelse(str_like(annual.population.survey, "%date%"), 
-                    substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
+    mutate(year = ifelse(str_like(annual.population.survey, "%date%"),
+      substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA
+    )) %>% # tag time periods
     fill(year) %>% # fill time periods for all rows
     row_to_names(row_number = 4) %>% # set col names
     clean_names() %>%
@@ -137,7 +138,7 @@ format.EmpRate.APS <- function(x) {
     filter(check == 1) %>%
     filter(!grepl("nomisweb", area)) %>%
     select(year = x2018, area, everything(), -check) %>%
-    mutate(area = gsub(" - from dn81838", "", area)) %>% 
+    mutate(area = gsub(" - from dn81838", "", area)) %>%
     mutate(area2 = gsub(".*-", "", area)) %>%
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>%
@@ -148,7 +149,7 @@ format.EmpRate.APS <- function(x) {
       area == "Heart of the South" ~ "Heart of the South-West",
       area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
       area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
-      area == "Brighton and Hove, East Sussex, Wes" ~"Brighton and Hove, East Sussex, West Sussex", 
+      area == "Brighton and Hove, East Sussex, Wes" ~ "Brighton and Hove, East Sussex, West Sussex",
       area == "Enterprise M3 LEP (including all of" ~ "Enterprise M3 LEP (including all of Surrey)",
       TRUE ~ area
     )) %>%
@@ -163,14 +164,16 @@ format.EmpRate.APS <- function(x) {
     rename_with(~ gsub("[[:digit:]]+", "", .)) %>%
     rename_with(str_to_title, c(4:10)) %>% # capitalise column names
     mutate(geographic_level = toupper(geographic_level)) %>%
-    mutate(geographic_level = case_when(geographic_level == "LSI" ~ "LSIP", 
-                                        geographic_level == "LS" ~ "LSIP", 
-                                        geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP", 
-                                        geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP", 
-                                        geographic_level == "SEA AND THURROCK" ~ "LSIP", 
-                                        TRUE ~ geographic_level)) %>% 
+    mutate(geographic_level = case_when(
+      geographic_level == "LSI" ~ "LSIP",
+      geographic_level == "LS" ~ "LSIP",
+      geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP",
+      geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP",
+      geographic_level == "SEA AND THURROCK" ~ "LSIP",
+      area == "West of England and North Somerset" ~ "LSIP",
+      TRUE ~ geographic_level
+    )) %>%
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
-  
 }
 
 # format data
@@ -371,7 +374,7 @@ format.EmpInd.APS <- function(x) {
     filter(check == 1) %>%
     filter(!grepl("nomisweb", area)) %>%
     select(year = x2018, area, everything(), -check) %>%
-    mutate(area = gsub(" - from dn81838", "", area)) %>% 
+    mutate(area = gsub(" - from dn81838", "", area)) %>%
     mutate(area2 = gsub(".*-", "", area)) %>%
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>%
@@ -382,7 +385,7 @@ format.EmpInd.APS <- function(x) {
       area == "Heart of the South" ~ "Heart of the South-West",
       area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
       area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
-      area == "Brighton and Hove, East Sussex, Wes" ~"Brighton and Hove, East Sussex, West Sussex", 
+      area == "Brighton and Hove, East Sussex, Wes" ~ "Brighton and Hove, East Sussex, West Sussex",
       area == "Enterprise M3 LEP (including all of" ~ "Enterprise M3 LEP (including all of Surrey)",
       TRUE ~ area
     )) %>%
@@ -407,12 +410,14 @@ format.EmpInd.APS <- function(x) {
       "Other Services" = " r u other services "
     ) %>%
     mutate(geographic_level = toupper(geographic_level)) %>%
-    mutate(geographic_level = case_when(geographic_level == "LSI" ~ "LSIP", 
-                                        geographic_level == "LS" ~ "LSIP", 
-                                        geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP", 
-                                        geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP", 
-                                        geographic_level == "SEA AND THURROCK" ~ "LSIP", 
-                                        TRUE ~ geographic_level)) %>% 
+    mutate(geographic_level = case_when(
+      geographic_level == "LSI" ~ "LSIP",
+      geographic_level == "LS" ~ "LSIP",
+      geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP",
+      geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP",
+      geographic_level == "SEA AND THURROCK" ~ "LSIP",
+      TRUE ~ geographic_level
+    )) %>%
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
 }
 
@@ -847,7 +852,7 @@ write.csv(C_Achieve_ILR21, file = "Data\\AppData\\C_Achieve_ILR21.csv", row.name
 # write.csv(C_Vacancy_England_change, file = "Data\\AppData\\C_Vacancy_England_change.csv", row.names = FALSE)
 
 
-#### 3.3 UK Business Count #### 
+#### 3.3 UK Business Count ####
 ##### Enterprise by employment size ####
 # Reshape data to long, rename and reorder and reformat some columns
 
@@ -1158,7 +1163,7 @@ write.csv(C_enterprise_demo1621, file = "Data\\AppData\\C_enterprise_demo1621.cs
 
 
 #### 3.4 National Pupil Database ####
-####- Key Stage 4 Destinations ####
+#### - Key Stage 4 Destinations ####
 # Reshape data to long, rename and reorder and reformat some columns
 
 format.ks4 <- function(x) {
@@ -1255,7 +1260,7 @@ write.csv(D_KS4destin_1521, file = "Data\\AppData\\D_KS4destin_1521.csv", row.na
 
 
 
-## National Pupil Database  
+## National Pupil Database
 #### - Key Stage 5 Destinations ####
 # Reshape data to long, rename and reorder and reformat some columns
 
@@ -1512,6 +1517,6 @@ write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.name
 # write.csv(C_VacPcArea, file = "Data\\AppData\\C_VacPcArea.csv", row.names = FALSE)
 
 
-#4. Tidy up data table ----
+# 4. Tidy up data table ----
 names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
 write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)

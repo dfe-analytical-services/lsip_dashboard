@@ -830,8 +830,10 @@ panel_enterprise <- function() {
     fluidRow(
       uiOutput("ent_comp")
     ),
-    fluidRow(valueBoxOutput("ent.microeng"),
-             valueBoxOutput("ent.smaeng")),
+    fluidRow(
+      valueBoxOutput("ent.microeng"),
+      valueBoxOutput("ent.smaeng")
+    ),
     details(
       label = "Source: UK Business Counts",
       inputId = "UK Business Counts",
