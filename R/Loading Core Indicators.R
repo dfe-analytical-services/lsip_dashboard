@@ -97,8 +97,20 @@ C_enterprise_demo1621 <- read.csv(file = "./Data/AppData/C_enterprise_demo1621.c
 D_KS4destin_1521 <- read.csv(file = "./Data/AppData/D_KS4destin_1521.csv", check.names = FALSE)
 D_KS5destin_1721 <- read.csv(file = "./Data/AppData/D_KS5destin_1721.csv", check.names = FALSE)
 
-# data for dashboard
-C_KS4_KS5_2021 <- read.csv(file = "./Data/AppData/C_KS4_KS5_2021.csv", check.names = FALSE)
+## 2.3 employment by industry ----
+D_EmpInd_APS1822 <- read.csv(file = "./Data/AppData/D_EmpInd_APS1822.csv", check.names = FALSE)
+
+## 2.4 qualification level by age and gender ----
+# data for download
+D_qual_APS1721 <- read.csv(file = "./Data/AppData/D_qual_APS1721.csv", check.names = FALSE)
+
+## 4.2 Enterprise by employment size and industry----
+# data for download
+D_empentind_UBC1822 <- read.csv(file = "./Data/AppData/D_empentind_UBC1822.csv", check.names = FALSE)
+
+# 5. Enterprise births, deaths and active ----
+# data for download
+D_enterprise_demo1621 <- read.csv(file = "./Data/AppData/D_enterprise_demo1621.csv", check.names = FALSE)
 
 # data for dashboard
 C_KS4_KS5eduempapp <- read.csv(file = "./Data/AppData/C_KS4_KS5eduempapp.csv", check.names = FALSE)
@@ -118,6 +130,8 @@ load(file = "./Data/AppData/C_Geog.Rdata")
 C_time <- read.csv(file = "./Data/AppData/C_time.csv", check.names = FALSE)
 C_breakdown <- read.csv(file = "./Data/AppData/C_breakdown.csv", check.names = FALSE)
 C_datahub <- read.csv(file = "./Data/AppData/C_datahub.csv", check.names = FALSE)
+D_OnsProfTime <- read.csv(file = "./Data/AppData/D_OnsProfTime.csv", check.names = FALSE)
+D_OnsProfDetail <- read.csv(file = "./Data/AppData/D_OnsProfDetail.csv", check.names = FALSE)
 
 ## Intervention table ----
 I_InterventionTable <- read.csv(file = "./Data/AppData/I_InterventionTable.csv", check.names = FALSE)
