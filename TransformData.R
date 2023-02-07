@@ -20,6 +20,8 @@ library(reshape2)
 library(broom)
 library(mapproj)
 library(leaflet)
+library(rgdal)
+library(rgeos)
 
 library(shinyalert)
 
@@ -143,7 +145,7 @@ format.EmpRate.APS <- function(x) {
     filter(check == 1) %>%
     filter(!grepl("nomisweb", area)) %>%
     select(year = x2018, area, everything(), -check) %>%
-    mutate(area = gsub(" - from dn81838", "", area)) %>% 
+    mutate(area = gsub(" - from dn81838", "", area)) %>%
     mutate(area2 = gsub(".*-", "", area)) %>%
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>%
@@ -154,7 +156,7 @@ format.EmpRate.APS <- function(x) {
       area == "Heart of the South" ~ "Heart of the South-West",
       area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
       area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
-      area == "Brighton and Hove, East Sussex, Wes" ~"Brighton and Hove, East Sussex, West Sussex", 
+      area == "Brighton and Hove, East Sussex, Wes" ~ "Brighton and Hove, East Sussex, West Sussex",
       area == "Enterprise M3 LEP (including all of" ~ "Enterprise M3 LEP (including all of Surrey)",
       TRUE ~ area
     )) %>%
@@ -336,15 +338,16 @@ format.EmpInd.APS <- function(x) {
       "Other Services" = " r u other services "
     ) %>%
     mutate(geographic_level = toupper(geographic_level)) %>%
-    mutate(geographic_level = case_when(geographic_level == "LSI" ~ "LSIP", 
-                                        geographic_level == "LS" ~ "LSIP", 
-                                        geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP", 
-                                        geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP", 
-                                        geographic_level == "SEA AND THURROCK" ~ "LSIP", 
-                                        area=="West of England and North Somerset" ~"LSIP",
-                                        TRUE ~ geographic_level)) %>% 
+    mutate(geographic_level = case_when(
+      geographic_level == "LSI" ~ "LSIP",
+      geographic_level == "LS" ~ "LSIP",
+      geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP",
+      geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP",
+      geographic_level == "SEA AND THURROCK" ~ "LSIP",
+      area == "West of England and North Somerset" ~ "LSIP",
+      TRUE ~ geographic_level
+    )) %>%
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
-  
 }
 
 # format data
@@ -540,7 +543,7 @@ C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
   mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
   mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.numeric) %>% # Convert to numeric
   mutate(Year = as.numeric(substr(time_period, 3, 4))) %>% # add year name for charts
- # filter(time_period != "202122") %>% # ignore temporary data in the latest year
+  # filter(time_period != "202122") %>% # ignore temporary data in the latest year
   mutate(typeNeat = case_when(
     apprenticeships_or_further_education == "Further education and skills" ~ "Total FE and skills provision",
     apprenticeships_or_further_education == "Education and training" ~ "Education and training (adults only)",
@@ -1710,7 +1713,7 @@ format.EmpInd.APS <- function(x) {
     filter(check == 1) %>%
     filter(!grepl("nomisweb", area)) %>%
     select(year = x2018, area, everything(), -check) %>%
-    mutate(area = gsub(" - from dn81838", "", area)) %>% 
+    mutate(area = gsub(" - from dn81838", "", area)) %>%
     mutate(area2 = gsub(".*-", "", area)) %>%
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
     mutate(area = gsub(".*:", "", area)) %>%
@@ -1721,7 +1724,7 @@ format.EmpInd.APS <- function(x) {
       area == "Heart of the South" ~ "Heart of the South-West",
       area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
       area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
-      area == "Brighton and Hove, East Sussex, Wes" ~"Brighton and Hove, East Sussex, West Sussex", 
+      area == "Brighton and Hove, East Sussex, Wes" ~ "Brighton and Hove, East Sussex, West Sussex",
       area == "Enterprise M3 LEP (including all of" ~ "Enterprise M3 LEP (including all of Surrey)",
       TRUE ~ area
     )) %>%
@@ -1746,12 +1749,14 @@ format.EmpInd.APS <- function(x) {
       "Other Services" = " r u other services "
     ) %>%
     mutate(geographic_level = toupper(geographic_level)) %>%
-    mutate(geographic_level = case_when(geographic_level == "LSI" ~ "LSIP", 
-                                        geographic_level == "LS" ~ "LSIP", 
-                                        geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP", 
-                                        geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP", 
-                                        geographic_level == "SEA AND THURROCK" ~ "LSIP", 
-                                        TRUE ~ geographic_level)) %>% 
+    mutate(geographic_level = case_when(
+      geographic_level == "LSI" ~ "LSIP",
+      geographic_level == "LS" ~ "LSIP",
+      geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP",
+      geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP",
+      geographic_level == "SEA AND THURROCK" ~ "LSIP",
+      TRUE ~ geographic_level
+    )) %>%
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
 }
 
@@ -2507,6 +2512,7 @@ write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.name
 # Neaten geog files
 neatLA <- I_mapLA %>%
   mutate(geog = "LADU") %>% # add geog type
+  rename(areaCode = LAD22CD, areaName = LAD22NM) %>% # consistent naming
   # add on lsip, lep and mca groupings
   left_join(I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by = c("areaCode" = "LAD21CD")) %>%
   left_join(C_mcalookup %>% select(LAD21CD, MCA = CAUTH21NM), by = c("areaCode" = "LAD21CD")) %>%
@@ -2525,23 +2531,23 @@ addEngland <- data.frame(
   geog = "COUNTRY"
 )
 
-#read in LA shapefile
+# read in LA shapefile
 LAs <- readOGR("./Data/14_LABoundary/Local_Authority_Districts_(May_2022)_UK_BGC_V3.geojson")
-#add on LSIPs
-LasLsip <- merge(states, I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by.x="LAD22CD", by.y="LAD21CD")
-#dissolve the LSIP LAs 
+# add on LSIPs
+LasLsip <- merge(LAs, I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by.x = "LAD22CD", by.y = "LAD21CD")
+# dissolve the LSIP LAs
 LSIPsh <- gUnaryUnion(LasLsip, id = LasLsip@data$LSIP)
-#turn into GoeJson
-LSIPgeojson = st_as_sf(LSIPsh)  
-#add on LSIP names
-LSIPmap<-bind_cols(LSIPgeojson,C_LEP2020%>%filter(geographic_level=="LSIP"))
-#neaten
-neatLSIP<-LSIPmap%>%
-  rename(areaName=Area, geog=geographic_level)%>%
-  mutate(areaCode=paste0("LSIP",row_number()))
+# turn into GoeJson
+LSIPgeojson <- st_as_sf(LSIPsh)
+# add on LSIP names
+LSIPmap <- bind_cols(LSIPgeojson, C_LEP2020 %>% filter(geographic_level == "LSIP"))
+# neaten
+neatLSIP <- LSIPmap %>%
+  rename(areaName = Area, geog = geographic_level) %>%
+  mutate(areaCode = paste0("LSIP", row_number()))
 
 
-neatGeog <- bind_rows(neatMCA, neatLEP, addEngland, neatLA,neatLSIP)
+neatGeog <- bind_rows(neatMCA, neatLEP, addEngland, neatLA, neatLSIP)
 # add on data
 C_Geog <- neatGeog %>%
   # add employment rate

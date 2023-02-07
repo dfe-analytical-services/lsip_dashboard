@@ -1,7 +1,6 @@
 panel_overview <- function() {
   tabPanel(
     "Overview",
-    
     fluidRow(
       column(
         12,
@@ -12,18 +11,18 @@ panel_overview <- function() {
             column(
               width = 4,
               selectInput("GeoType", "Choose geography",
-                          choices = c(
-                            "Local Enterprise Partnership (LEP)" = "LEP",
-                            "Local Skills Improvement Plan (LSIP)" = "LSIP",
-                            "Mayoral Combined Authority (MCA)" = "MCA"
-                          ),
-                          selected = "LEP"
+                choices = c(
+                  "Local Enterprise Partnership (LEP)" = "LEP",
+                  "Local Skills Improvement Plan (LSIP)" = "LSIP",
+                  "Mayoral Combined Authority (MCA)" = "MCA"
+                ),
+                selected = "LEP"
               )
             ),
             column(
               width = 4,
               uiOutput("lep1_geo"),
-            )#,
+            ) # ,
             # column(
             #   width = 4,
             #   uiOutput("lep2_off")
@@ -33,7 +32,7 @@ panel_overview <- function() {
         br(),
       )
     ), # end of filters row
-    
+
     h1(uiOutput("page0title")),
     p("Change metrics are measured against the same period in the previous year."),
     fluidRow(
@@ -225,7 +224,6 @@ panel_overview <- function() {
       column(width = 9, "Download all data for the selected geographic area")
     ),
     column(width = 12, br(""))
-    
   )
 }
 

@@ -19,41 +19,47 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_overview, {
     updateTabsetPanel(session, "navbar", "Overview") # Get into app
   })
-  # Create link to employment data 
+  # Create link to employment data
   observeEvent(input$link_to_tabpanel_employment, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "empRate")
+      selected = "empRate"
+    )
   })
   # Create link to job advert
   observeEvent(input$link_to_tabpanel_vacancies, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "vacancies")
+      selected = "vacancies"
+    )
   })
   ## Create link to skills data tab ----
   observeEvent(input$link_to_tabpanel_FE, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "achievements_rate_per_100000_population")
+      selected = "achievements_rate_per_100000_population"
+    )
   })
   # Create link to enterprises
   observeEvent(input$link_to_tabpanel_enterprise, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "enterpriseCount")
+      selected = "enterpriseCount"
+    )
   })
   # Create link to qualification
   observeEvent(input$link_to_tabpanel_qualification, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "level3AndAboveRate")
+      selected = "level3AndAboveRate"
+    )
   })
   # Create link to destinations
   observeEvent(input$link_to_tabpanel_destinations, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "sustainedPositiveDestinationKS4Rate")
+      selected = "sustainedPositiveDestinationKS4Rate"
+    )
   })
   ## Create link to qualification data tab ----
   observeEvent(input$link_to_tabpanel_qualification_level, {
@@ -95,7 +101,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
+
   output$downloadData3 <- downloadHandler(
     filename = function() {
       "EmpbyindustryIndicators.xlsx"
@@ -136,7 +142,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
+
   output$downloadData6 <- downloadHandler(
     filename = function() {
       "Qualificationbyageandgendernvq.xlsx"
@@ -147,7 +153,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
+
   output$downloadData7 <- downloadHandler(
     filename = function() {
       "EnterprisebyemploymentsizeIndicators.xlsx"
@@ -158,7 +164,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
+
   output$downloadData8 <- downloadHandler(
     filename = function() {
       "EntbyempsizeandindustryIndicators.xlsx"
@@ -169,7 +175,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
+
   output$downloadData9 <- downloadHandler(
     filename = function() {
       "Enterprisedemography.xlsx"
@@ -180,7 +186,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
+
   output$downloadData10 <- downloadHandler(
     filename = function() {
       "EnterprisebyemploymentsizeIndicators.xlsx"
@@ -191,7 +197,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
+
   output$downloadData11 <- downloadHandler(
     filename = function() {
       "EntbyempsizeandindustryIndicators.xlsx"
@@ -202,7 +208,7 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
+
   output$downloadData12 <- downloadHandler(
     filename = function() {
       "JobAdvertIndicators.xlsx"
@@ -214,8 +220,8 @@ server <- function(input, output, session) {
       ), path = file)
     }
   )
-  
-  
+
+
   ## create download links ----
   output$hidden_downloads <- renderUI(
     lapply(1:12, function(i) {
@@ -225,12 +231,12 @@ server <- function(input, output, session) {
   ## create data table to show ----
   output$DataTbl <- renderDataTable({
     DT::datatable(I_DataTable %>%
-                    mutate("Dashboard data" = lapply(
-                      1:n(),
-                      function(i) {
-                        paste0('<a onClick=document.getElementById("downloadData', i, '").click() >Download</a>')
-                      }
-                    )), escape = FALSE, options = list(dom = "t", "pageLength" = 15), rownames = FALSE)
+      mutate("Dashboard data" = lapply(
+        1:n(),
+        function(i) {
+          paste0('<a onClick=document.getElementById("downloadData', i, '").click() >Download</a>')
+        }
+      )), escape = FALSE, options = list(dom = "t", "pageLength" = 15), rownames = FALSE)
   })
 
   # OVERVIEW ----
@@ -338,7 +344,7 @@ server <- function(input, output, session) {
   output$page0title <- renderUI({
     paste0("Overview of local landscape in ", input$lep1)
   })
-  
+
   ##  2.3 Downloads ----
   ## download all indicators ----
   list_of_datasets0 <- list(
@@ -366,7 +372,7 @@ server <- function(input, output, session) {
       write_xlsx(list_of_datasets0, path = file)
     }
   )
-  
+
   ## Download current area indicators ----
   filtered_data0 <- reactive({
     list(
@@ -394,9 +400,9 @@ server <- function(input, output, session) {
       write_xlsx(filtered_data0(), path = file)
     }
   )
-  
+
   ## 2.4 KPIs and charts----
-  
+
   # get emp data for current area
   empLEP <- eventReactive(input$lep1, {
     C_EmpRate_APS1822 %>%
@@ -412,37 +418,37 @@ server <- function(input, output, session) {
     empLEP() %>%
       filter(year == "2021")
   })
-  
+
   #### Employment count ----
   output$locland.emplcnt0 <- renderUI({
     # call 2022 and 2021 values for chosen area
     empCnt2022 <- emp2022()$Employment
     empCntChange <- emp2022()$Employment - emp2021()$Employment
-    
+
     # print with formatting
     h4(span("Oct-Sep 2022", style = "font-size: 16px;font-weight:normal;"), br(),
-       format(empCnt2022, big.mark = ","), br(),
-       span(
-         format_pm(empCntChange) # plus-minus and comma sep formatting
-         ,
-         style = paste0("font-size: 16px;color:", cond_color(empCntChange > 0)) # colour formating
-         
-         , .noWS = c("before", "after") # remove whitespace
-       ), br(),
-       style = "font-size: 21px"
+      format(empCnt2022, big.mark = ","), br(),
+      span(
+        format_pm(empCntChange) # plus-minus and comma sep formatting
+        ,
+        style = paste0("font-size: 16px;color:", cond_color(empCntChange > 0)) # colour formating
+
+        , .noWS = c("before", "after") # remove whitespace
+      ), br(),
+      style = "font-size: 21px"
     )
   })
-  
+
   # Emp chart
   empLineChart <- eventReactive(input$lep1, {
     # call 2022 to 2021 change  for chosen area
     empCntChange <- emp2022()$Employment - emp2021()$Employment
     empLine <- empLEP()
-    
+
     # find min and max for area
     empCntMinMax <- C_EmpRate_APS1822_max_min %>%
       filter(area == input$lep1)
-    
+
     ggplot(empLine, aes(x = Year - 1, y = Employment, group = area, text = paste0(
       "Year: Oct-Sep ", year, "<br>",
       "Employment: ", format(Employment, big.mark = ","), "<br>"
@@ -479,14 +485,14 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$empLineChart <- renderPlotly({
     validate(
       need(input$lep1 != "", "") # if area not yet loaded don't try to load ch
     )
     ggplotly(empLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -494,38 +500,38 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   #### Employment rate -----
   output$locland.emplrate0 <- renderUI({
     # call 2021 values and 21-22 change for chosen area
     empRate2022 <- emp2022()$empRate
     empRateChange <- emp2022()$empRate - emp2021()$empRate
-    
+
     # print with formatting
     h4(span("Oct-Sep 2022", style = "font-size: 16px;font-weight:normal;"), br(),
-       paste0(format(100 * empRate2022, digit = 2), "%"), br(),
-       span(
-         paste0(sprintf("%+.0f", 100 * empRateChange), "ppts"),
-         style = paste0("font-size: 16px;color:", cond_color(empRateChange > 0)) # colour formating
-         , .noWS = c("before", "after") # remove whitespace
-       ), br(),
-       style = "font-size: 21px"
+      paste0(format(100 * empRate2022, digit = 2), "%"), br(),
+      span(
+        paste0(sprintf("%+.0f", 100 * empRateChange), "ppts"),
+        style = paste0("font-size: 16px;color:", cond_color(empRateChange > 0)) # colour formating
+        , .noWS = c("before", "after") # remove whitespace
+      ), br(),
+      style = "font-size: 21px"
     )
   })
-  
+
   # Emp chart
-  
+
   # find emp chart y axis min and max
   EmpRateMin <- C_EmpRate_APS1822 %>%
     summarise(min(empRate, na.rm = T), .groups = "drop")
   EmpRateMax <- C_EmpRate_APS1822 %>%
     summarise(max(empRate, na.rm = T), .groups = "drop")
-  
+
   empRateLineChart <- eventReactive(input$lep1, {
     empRateChange <- emp2022()$empRate - emp2021()$empRate
     empRateLine <- C_EmpRate_APS1822 %>%
       filter((geographic_level == input$GeoType & area == input$lep1) | (geographic_level == "COUNTRY" & area == "England"))
-    
+
     ggplot(empRateLine, aes(
       x = Year - 1, y = empRate,
       group = area,
@@ -569,11 +575,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$empRateLineChart <- renderPlotly({
     ggplotly(empRateLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -581,14 +587,15 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   # Add link to employment data
   observeEvent(input$link_to_tabpanel_employment2, {
-      updateTabsetPanel(session, "navbar", "Local skills")
-      updateSelectInput(session, "splashMetric",
-                        selected = "empRate")
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateSelectInput(session, "splashMetric",
+      selected = "empRate"
+    )
   })
-  
+
   #### ONS job advert units  ----
   # get vac data for current area chosen
   VacArea <- eventReactive(input$lep1, {
@@ -607,29 +614,29 @@ server <- function(input, output, session) {
     VacArea() %>%
       filter(time_period == "2021-10-01")
   })
-  
+
   # Vacancy kpi
   output$jobad.units <- renderUI({
     ### ONS job advert units change
     VacChange <- VacLatest()$vacancies - VacLast()$vacancies
-    
+
     # print with formatting
     h4(span("Oct 2022", style = "font-size: 16px;font-weight:normal;"), br(),
-       format(VacLatest()$vacancies, big.mark = ","), br(),
-       span(
-         format_pm(VacChange),
-         style = paste0("font-size: 16px;color:", cond_color(VacChange > 0)) # colour formating
-         , .noWS = c("before", "after") # remove whitespace
-       ), br(),
-       style = "font-size: 21px"
+      format(VacLatest()$vacancies, big.mark = ","), br(),
+      span(
+        format_pm(VacChange),
+        style = paste0("font-size: 16px;color:", cond_color(VacChange > 0)) # colour formating
+        , .noWS = c("before", "after") # remove whitespace
+      ), br(),
+      style = "font-size: 21px"
     )
   })
-  
+
   # Vacancy chart
   VacLineChart <- eventReactive(input$lep1, {
     VacLine <- VacArea()
     VacPcChange <- VacLatest()$vacancies - VacLast()$vacancies
-    
+
     ggplot(VacLine, aes(x = as.Date(time_period), y = vacancies, group = area, text = paste0(
       "Period: ", format(as.Date(time_period), "%b %y"), "<br>",
       "Online job adverts: ", format(vacancies, big.mark = ","), "<br>"
@@ -670,11 +677,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$VacLineChart <- renderPlotly({
     ggplotly(VacLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -682,16 +689,17 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   # Add link to vacancy data
   observeEvent(input$link_to_tabpanel_vacancies2, {
-      updateTabsetPanel(session, "navbar", "Local skills")
-      updateSelectInput(session, "splashMetric",
-                        selected = "vacancies")
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateSelectInput(session, "splashMetric",
+      selected = "vacancies"
+    )
   })
-  
+
   #### E&T achievements ----
-  
+
   # get EandT data for current area
   EtLEP <- eventReactive(input$lep1, {
     C_Achieve_ILR1621 %>%
@@ -712,26 +720,26 @@ server <- function(input, output, session) {
     EtLEP() %>%
       filter(time_period == "202021")
   })
-  
+
   output$skisup.ETach <- renderUI({
     ETach <- EtLatest()$achievements
-    
+
     # E&T achievements change
     ETachChange <- EtLatest()$achievements - EtLast()$achievements
-    
+
     # print with formatting
     h4(span("2021/22", style = "font-size: 16px;font-weight:normal;"), br(),
-       format(ETach, big.mark = ","), br(),
-       span(
-         format_pm(ETachChange) # plus-minus and comma sep formatting
-         ,
-         style = paste0("font-size: 16px;color:", cond_color(ETachChange > 0)) # colour formating
-         , .noWS = c("before", "after") # remove whitespace
-       ), br(),
-       style = "font-size: 21px"
+      format(ETach, big.mark = ","), br(),
+      span(
+        format_pm(ETachChange) # plus-minus and comma sep formatting
+        ,
+        style = paste0("font-size: 16px;color:", cond_color(ETachChange > 0)) # colour formating
+        , .noWS = c("before", "after") # remove whitespace
+      ), br(),
+      style = "font-size: 21px"
     )
   })
-  
+
   # e and t chart
   etLineChart <- eventReactive(input$lep1, {
     etLine <- EtLEP()
@@ -741,7 +749,7 @@ server <- function(input, output, session) {
       area == input$lep1,
       level_or_type == "Education and training: Total"
     )
-    
+
     ggplot(etLine, aes(x = Year, y = achievements, group = area, text = paste0(
       "Academic year: ", time_period, "<br>",
       "Achievements: ", format(achievements, big.mark = ","), "<br>"
@@ -780,11 +788,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$etLineChart <- renderPlotly({
     ggplotly(etLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -792,7 +800,7 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   #### App achievements ----
   # get App data for current area
   AppLEP <- eventReactive(input$lep1, {
@@ -816,23 +824,23 @@ server <- function(input, output, session) {
   })
   output$skisup.APPach <- renderUI({
     Appach <- AppLatest()$achievements
-    
+
     # E&T achievements change
     AppachChange <- AppLatest()$achievements - AppLast()$achievements
-    
+
     # print with formatting
     h4(span("2021/22", style = "font-size: 16px;font-weight:normal;"), br(),
-       format(Appach, big.mark = ","), br(),
-       span(
-         format_pm(AppachChange) # plus-minus and comma sep formatting
-         ,
-         style = paste0("font-size: 16px;color:", cond_color(AppachChange > 0)) # colour formating
-         , .noWS = c("before", "after") # remove whitespace
-       ), br(),
-       style = "font-size: 21px"
+      format(Appach, big.mark = ","), br(),
+      span(
+        format_pm(AppachChange) # plus-minus and comma sep formatting
+        ,
+        style = paste0("font-size: 16px;color:", cond_color(AppachChange > 0)) # colour formating
+        , .noWS = c("before", "after") # remove whitespace
+      ), br(),
+      style = "font-size: 21px"
     )
   })
-  
+
   # app chart
   AppLineChart <- eventReactive(input$lep1, {
     AppLine <- AppLEP()
@@ -842,8 +850,8 @@ server <- function(input, output, session) {
       area == input$lep1,
       level_or_type == "Apprenticeships: Total"
     )
-    
-    
+
+
     ggplot(AppLine, aes(x = Year, y = achievements, group = area, text = paste0(
       "Academic year: ", time_period, "<br>",
       "Achievements: ", format(achievements, big.mark = ","), "<br>"
@@ -882,11 +890,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$AppLineChart <- renderPlotly({
     ggplotly(AppLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -894,19 +902,20 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   # Add link to skills data
   observeEvent(input$link_to_tabpanel_FE2, {
-      updateTabsetPanel(session, "navbar", "Local skills")
-      updateSelectInput(session, "splashMetric",
-                        selected = "achievements_rate_per_100000_population")
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateSelectInput(session, "splashMetric",
+      selected = "achievements_rate_per_100000_population"
+    )
   })
-  
-  
-  
+
+
+
   #### KS5 sustained positive destination rate ----
   # get dest data for current area
-  
+
   KS5geo <- eventReactive(input$lep1, {
     C_KS4_KS5eduempapp %>%
       filter(
@@ -925,25 +934,25 @@ server <- function(input, output, session) {
     KS5geo() %>%
       filter(time_period == "201920")
   })
-  
-  
+
+
   # destinations overview KPI
   output$dest.ks5over <- renderUI({
     # change in positive sustained rate
     KS5sustChange <- KS5Latest()$rate - KS5Last()$rate
-    
+
     # print with formatting
     h4(span("2020/21", style = "font-size: 16px;font-weight:normal;"), br(),
-       paste0(format(100 * KS5Latest()$rate, digit = 2), "%"), br(),
-       span(
-         paste0(sprintf("%+.1f", 100 * KS5sustChange), "ppts"),
-         style = paste0("font-size: 16px;color:", cond_color(KS5sustChange > 0)) # colour formating
-         , .noWS = c("before", "after") # remove whitespace
-       ), br(),
-       style = "font-size: 21px"
+      paste0(format(100 * KS5Latest()$rate, digit = 2), "%"), br(),
+      span(
+        paste0(sprintf("%+.1f", 100 * KS5sustChange), "ppts"),
+        style = paste0("font-size: 16px;color:", cond_color(KS5sustChange > 0)) # colour formating
+        , .noWS = c("before", "after") # remove whitespace
+      ), br(),
+      style = "font-size: 21px"
     )
   })
-  
+
   # KS5 destinations chart
   KS5LineChart <- eventReactive(input$lep1, {
     KS5Line <- C_KS4_KS5eduempapp %>% filter(
@@ -952,7 +961,7 @@ server <- function(input, output, session) {
     )
     KS5sustChange <- KS5Latest()$rate - KS5Last()$rate
     KS5MinMax <- C_KS5_eduempapp_max_min
-    
+
     ggplot(KS5Line, aes(x = Year, y = rate, group = area, text = paste0(
       "Academic year: ", time_period, "<br>",
       "Area: ", area, "<br>",
@@ -994,11 +1003,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$KS5LineChart <- renderPlotly({
     ggplotly(KS5LineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -1006,19 +1015,20 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   # add link to destinations
   observeEvent(input$link_to_tabpanel_destinations2, {
-      updateTabsetPanel(session, "navbar", "Local skills")
-      updateSelectInput(session, "splashMetric",
-                        selected = "sustainedPositiveDestinationKS4Rate")
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateSelectInput(session, "splashMetric",
+      selected = "sustainedPositiveDestinationKS4Rate"
+    )
   })
-  
-  
-  
+
+
+
   #### Micro enterprise  ----
   # get Enterprise data for current area
-  
+
   Entgeo <- eventReactive(input$lep1, {
     C_empentind3_UBC1822 %>%
       filter(
@@ -1037,26 +1047,26 @@ server <- function(input, output, session) {
     Entgeo() %>%
       filter(year == "2021")
   })
-  
-  
+
+
   # enterprise overview KPI
   output$UBC.micro <- renderUI({
     # change in micro enterprises
     EntChange <- EntLatest()$rate - EntLast()$rate
-    
+
     # print with formatting
     h4(span("Mar 2022", style = "font-size: 16px;font-weight:normal;"), br(),
-       paste0(format(100 * EntLatest()$rate, digit = 2), "%"), br(),
-       span(
-         paste0(sprintf("%+.1f", 100 * EntChange), "ppts"),
-         style = paste0("font-size: 16px;color:", cond_color(EntChange > 0)) # colour formating
-         , .noWS = c("before", "after") # remove whitespace
-       ), br(),
-       style = "font-size: 21px"
+      paste0(format(100 * EntLatest()$rate, digit = 2), "%"), br(),
+      span(
+        paste0(sprintf("%+.1f", 100 * EntChange), "ppts"),
+        style = paste0("font-size: 16px;color:", cond_color(EntChange > 0)) # colour formating
+        , .noWS = c("before", "after") # remove whitespace
+      ), br(),
+      style = "font-size: 21px"
     )
   })
-  
-  
+
+
   # micro enterprise chart
   UBCLineChart <- eventReactive(input$lep1, {
     EntLine <- C_empentind3_UBC1822 %>% filter(
@@ -1065,7 +1075,7 @@ server <- function(input, output, session) {
     )
     EntChange <- EntLatest()$rate - EntLast()$rate
     EntMinMax <- C_empentind_max_min
-    
+
     ggplot(EntLine, aes(x = Year - 1, y = rate, group = area, text = paste0(
       "March: ", year, "<br>",
       "Area: ", area, "<br>",
@@ -1107,11 +1117,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$UBCLineChart <- renderPlotly({
     ggplotly(UBCLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -1119,17 +1129,18 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   # add link to enterprise
   observeEvent(input$link_to_tabpanel_enterprise2, {
-      updateTabsetPanel(session, "navbar", "Local skills")
-      updateSelectInput(session, "splashMetric",
-                        selected = "enterpriseCount")
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateSelectInput(session, "splashMetric",
+      selected = "enterpriseCount"
+    )
   })
-  
+
   #### qualifications NVQ  ----
   # get entprise data for current area
-  
+
   Qualgeo <- eventReactive(input$lep1, {
     C_qualevel3plus_APS1721 %>%
       filter(
@@ -1149,26 +1160,26 @@ server <- function(input, output, session) {
     Qualgeo() %>%
       filter(year == "2020")
   })
-  
-  
+
+
   # NVQ3 or above overview KPI
   output$APS.nvq3plus <- renderUI({
     # change in NVQ3 or above
     QualChange <- QualLatest()$rate - QualLast()$rate
-    
+
     # print with formatting
     h4(span("Jan-Dec 2021", style = "font-size: 16px;font-weight:normal;"), br(),
-       paste0(format(100 * QualLatest()$rate, digit = 2), "%"), br(),
-       span(
-         paste0(sprintf("%+.1f", 100 * QualChange), "ppts"),
-         style = paste0("font-size: 16px;color:", cond_color(QualChange > 0)) # colour formating
-         , .noWS = c("before", "after") # remove whitespace
-       ), br(),
-       style = "font-size: 21px"
+      paste0(format(100 * QualLatest()$rate, digit = 2), "%"), br(),
+      span(
+        paste0(sprintf("%+.1f", 100 * QualChange), "ppts"),
+        style = paste0("font-size: 16px;color:", cond_color(QualChange > 0)) # colour formating
+        , .noWS = c("before", "after") # remove whitespace
+      ), br(),
+      style = "font-size: 21px"
     )
   })
-  
-  
+
+
   # qualification chart
   Nvq3plusLineChart <- eventReactive(input$lep1, {
     QualLine <- C_qualevel3plus_APS1721 %>% filter(
@@ -1179,7 +1190,7 @@ server <- function(input, output, session) {
     )
     QualChange <- QualLatest()$rate - QualLast()$rate
     # QualMinMax <- C_qual_max_min
-    
+
     ggplot(QualLine, aes(x = Year, y = rate, group = area, text = paste0(
       "Jan-Dec: ", year, "<br>",
       "Area: ", area, "<br>",
@@ -1221,11 +1232,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$Nvq3plusLineChart <- renderPlotly({
     ggplotly(Nvq3plusLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -1233,12 +1244,13 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   # add link to qualification level
   observeEvent(input$link_to_tabpanel_qualification2, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "level3AndAboveRate")
+      selected = "level3AndAboveRate"
+    )
   })
   # # EMPLOYMENT ----
   # # define page title
@@ -2103,8 +2115,12 @@ server <- function(input, output, session) {
     )
     groupCount <- if (input$splashGeoType == "LEP") {
       "38 LEPs."
-    } else {if(input$splashGeoType == "MCA"){
-      "10 MCAs."}else{"38 LSIPs."}
+    } else {
+      if (input$splashGeoType == "MCA") {
+        "10 MCAs."
+      } else {
+        "38 LSIPs."
+      }
     }
     paste0(areaClicked, " has a ", compareNational, " ", currentMetric(), " than the national average. It has the ", areaRank, suff, " highest ", currentMetric(), " of the ", groupCount)
   })
@@ -2356,19 +2372,19 @@ server <- function(input, output, session) {
       event <- data.frame(id = c("E37000025"))
     }
     areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
-    
-    currentArea<-C_time %>%
-      filter(geographic_level == input$splashGeoType, area == areaClicked,metric == input$splashMetric)
-    englandArea<-C_time %>%
-      filter(geographic_level == "COUNTRY", area == "England",metric == input$splashMetric)
-    currentChange<-(currentArea %>%
-                      filter(chart_year == max(chart_year)))$value -
+
+    currentArea <- C_time %>%
+      filter(geographic_level == input$splashGeoType, area == areaClicked, metric == input$splashMetric)
+    englandArea <- C_time %>%
+      filter(geographic_level == "COUNTRY", area == "England", metric == input$splashMetric)
+    currentChange <- (currentArea %>%
+      filter(chart_year == max(chart_year)))$value -
       (currentArea %>%
-         filter(chart_year == (ymd(max(chart_year))-years(4))))$value
-    englandChange<-(englandArea %>%
-                      filter(chart_year == max(chart_year)))$value -
+        filter(chart_year == (ymd(max(chart_year)) - years(4))))$value
+    englandChange <- (englandArea %>%
+      filter(chart_year == max(chart_year)))$value -
       (englandArea %>%
-         filter(chart_year == (ymd(max(chart_year))-years(4))))$value
+        filter(chart_year == (ymd(max(chart_year)) - years(4))))$value
 
     # areaRank <- (dataTimeCompare %>%
     #   filter(geographic_level == input$splashGeoType, (year == 5 | year == 1)) %>%
@@ -2390,12 +2406,29 @@ server <- function(input, output, session) {
     # } else {
     #   "10 MCAs."
     # }
-    paste0(areaClicked, "'s ", currentMetric(), " has ",
-    if(currentChange>0){"increased "}else{"decreased "},
-    if(sign(currentChange)==sign(englandChange)){if(currentChange>englandChange){"faster than the national average in the last five years"}else{"slower than the national average in the last five years"}}else{paste0(" while nationally it has ",if(englandChange>0){"increased"}else{"decreased"}) }
-    , "."
-    #,"It has the "
-    #, areaRank, suff, " fastest growing ", currentMetric(), " of the ", groupCount
+    paste0(
+      areaClicked, "'s ", currentMetric(), " has ",
+      if (currentChange > 0) {
+        "increased "
+      } else {
+        "decreased "
+      },
+      if (sign(currentChange) == sign(englandChange)) {
+        if (currentChange > englandChange) {
+          "faster than the national average in the last five years"
+        } else {
+          "slower than the national average in the last five years"
+        }
+      } else {
+        paste0(" while nationally it has ", if (englandChange > 0) {
+          "increased"
+        } else {
+          "decreased"
+        })
+      },
+      "."
+      # ,"It has the "
+      # , areaRank, suff, " fastest growing ", currentMetric(), " of the ", groupCount
     )
   })
 
@@ -2782,8 +2815,8 @@ server <- function(input, output, session) {
       options = list(placeholder = "Choose years*")
     )
   })
-  
-datahubDataset<-reactive({
+
+  datahubDataset <- reactive({
     C_datahub %>%
       filter(
         (
@@ -2803,8 +2836,7 @@ datahubDataset<-reactive({
               } else {
                 geographic_level == "xxx"
               })
-          }
-        ),
+          }),
         (
           if (is.null(input$hubArea) == TRUE) {
             TRUE
@@ -2822,8 +2854,7 @@ datahubDataset<-reactive({
               } else {
                 geographic_level == "xxx"
               })
-          }
-        ),
+          }),
         if (is.null(input$hubYears) == TRUE) {
           TRUE
         } else {
@@ -2845,12 +2876,12 @@ datahubDataset<-reactive({
         Data = metric, Breakdown = breakdown, Splits = subgroups, Value = value
       )
   })
-  
+
 
   output$hubTable <- renderDataTable({
     DT::datatable(datahubDataset())
   })
-  
+
   # Download current LEP indicators
   filtered_data1 <- reactive({
     list(
