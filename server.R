@@ -2414,7 +2414,7 @@ server <- function(input, output, session) {
         "decreased "
       },
       if (sign(currentChange) == sign(englandChange)) {
-        if (currentChange > englandChange) {
+        if (abs(currentChange) > abs(englandChange)) {
           "faster than the national average in the last five years"
         } else {
           "slower than the national average in the last five years"
