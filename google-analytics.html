@@ -6,4 +6,12 @@
     gtag('js', new Date());
     
     gtag('config', 'G-MMB6NG2FE1');
+    
+        /*
+Adding tracking for the downlaod button*/
+     $(document).on('click', 'a#hubDownload', function(e) {
+    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    });
+  });
+  
     </script>
