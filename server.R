@@ -2469,7 +2469,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the Key Stage 4 201920 cohort group had a sustained positive destination in 202021 in ", input$lep1)),
+          p(paste0("of the Key Stage 4 cohort had a sustained positive destination in 2020/21 in ", input$lep1)),
         )
       )
     )
@@ -2496,7 +2496,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the Key Stage 4 201920 cohort group had a sustained positive destination in 202021 in ", input$lep2)),
+          p(paste0("of the Key Stage 4 cohort had a sustained positive destination in 2020/21 in ", input$lep2)),
         )
       )
     )
@@ -2523,7 +2523,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the Key Stage 5 201920 cohort group had a sustained positive destination in 202021 in ", input$lep1)),
+          p(paste0("of the Key Stage 5 cohort had a sustained positive destination in 2020/21 in ", input$lep1)),
         )
       )
     )
@@ -2550,7 +2550,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the Key Stage 5 201920 cohort group had a sustained positive destination in 202021 in ", input$lep2)),
+          p(paste0("of the Key Stage 5 cohort had a sustained positive destination in 2020/21 in ", input$lep2)),
         )
       )
     )
@@ -2577,7 +2577,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the Key Stage 4 201920 cohort group had a sustained positive destination in 202021 in England")),
+          p(paste0("of the Key Stage 4 cohort had a sustained positive destination in 2020/21 in England")),
         )
       )
     )
@@ -2604,7 +2604,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the Key Stage 5 201920 cohort group had a sustained positive destination in 202021 in England")),
+          p(paste0("of the Key Stage 5 cohort had a sustained positive destination in 2020/21 in England")),
         )
       )
     )
@@ -2658,12 +2658,14 @@ server <- function(input, output, session) {
     ks_21$Area <- factor(ks_21$area,
       levels = c(input$lep1, input$lep2)
     )
-    ggplot(ks_21, aes(x = reorder(variable, desc(variable)), y = rate, fill = Area, text = paste0(
+    ggplot(ks_21, aes(x = reorder(variable, desc(variable)), y = rate, fill = Area, text = paste0
+                      (
       "Area: ", Area, "<br>",
       "Key stage group: ", `Key Stage`, "<br>",
-      "Cohort group: ", `Cohort Group`, "<br>",
+      # "Cohort group: ", `Cohort Group`, "<br>",
       "Percentage: ", scales::percent(round(rate, 2)), "<br>"
-    ))) +
+    )
+    )) +
       geom_col(
         position = "dodge"
       ) +
