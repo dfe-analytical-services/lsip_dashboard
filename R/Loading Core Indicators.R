@@ -68,6 +68,13 @@ D_enterprise_demo1621 <- read.csv(file = "./Data/AppData/D_enterprise_demo1621.c
 ## Data table ----
 I_DataTable <- read.csv(file = "./Data/AppData/I_DataTable.csv", check.names = FALSE)
 
+C_qualevel3plus_APS1721 <- read.csv(file = "./Data/AppData/C_qualevel3plus_APS1721.csv", check.names = FALSE)
+C_empentind3_UBC1822 <- read.csv(file = "./Data/AppData/C_empentind3_UBC1822.csv", check.names = FALSE)
+C_KS4_KS5eduempapp <- read.csv(file = "./Data/AppData/C_KS4_KS5eduempapp.csv", check.names = FALSE)
+C_KS5_eduempapp_max_min <- read.csv(file = "./Data/AppData/C_KS5_eduempapp_max_min.csv", check.names = FALSE)
+C_empentind_max_min <- read.csv(file = "./Data/AppData/C_empentind_max_min.csv", check.names = FALSE)
+
+
 # map tables
 load(file = "./Data/AppData/C_mapLA.Rdata")
 load(file = "./Data/AppData/C_Geog.Rdata")
@@ -78,6 +85,7 @@ C_breakdown <- read.csv(file = "./Data/AppData/C_breakdown.csv", check.names = F
 C_datahub <- read.csv(file = "./Data/AppData/C_datahub.csv", check.names = FALSE)
 D_OnsProfTime <- read.csv(file = "./Data/AppData/D_OnsProfTime.csv", check.names = FALSE)
 D_OnsProfDetail <- read.csv(file = "./Data/AppData/D_OnsProfDetail.csv", check.names = FALSE)
+C_OnsProfTime <- read.csv(file = "./Data/AppData/C_OnsProfTime.csv", check.names = FALSE)
 
 ## Intervention table ----
 I_InterventionTable <- read.csv(file = "./Data/AppData/I_InterventionTable.csv", check.names = FALSE)
