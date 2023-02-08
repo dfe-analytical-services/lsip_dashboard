@@ -2532,6 +2532,9 @@ server <- function(input, output, session) {
   })
 
   output$subgroupFilter <- renderUI({
+    validate(
+      need(input$barBreakdown != "", "") # if area not yet loaded don't try to load ch
+    )
     if ("map_shape_click" %in% names(input)) {
       event <- input$map_shape_click
     } else {
@@ -2564,6 +2567,9 @@ server <- function(input, output, session) {
 
   # create breakdown header
   output$titleBreakdown <- renderUI({
+    validate(
+      need(input$barBreakdown != "", "") # if area not yet loaded don't try to load ch
+    )
     if (input$barBreakdown == "No breakdowns available") {
       paste0(
         str_to_sentence(currentMetric()), " currently has no breakdowns.",
@@ -2583,6 +2589,9 @@ server <- function(input, output, session) {
 
   # create breakdown comment
   output$commentBreakdown <- renderUI({
+    validate(
+      need(input$barBreakdown != "", "") # if area not yet loaded don't try to load ch
+    )
     # #get current area
     if ("map_shape_click" %in% names(input)) {
       event <- input$map_shape_click
@@ -2605,7 +2614,7 @@ server <- function(input, output, session) {
       mutate(ranking = rank(desc(abs(change)))) %>%
       filter(ranking == 1)
 
-    breakdownDirection <- if (breakdownDiff$change > 0) {
+    breakdownDirection <- if (isTRUE(breakdownDiff$change) && breakdownDiff$change > 0) {
       "high"
     } else {
       "low"
@@ -2619,33 +2628,44 @@ server <- function(input, output, session) {
   })
 
   # create breakdown bar
-  Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, input$barBreakdown, input$barSubgroup, input$levelBar, input$sexBar, input$metricBar, input$splashBreakdown, input$mapLA_shape_click, input$splashMetric), {
-    if ("map_shape_click" %in% names(input)) {
+  Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, #input$barBreakdown,
+                               input$barSubgroup, input$mapLA_shape_click
+                               #, input$splashMetric
+                               ), {
+                                 #print(input$barBreakdown)
+                                 #print(input$barSubgroup)
+                                 #print(input$splashMetric)
+    validate(
+      need(input$barBreakdown != "", ""), # if area not yet loaded don't try to load ch
+      need(input$barSubgroup != "", "")
+    )
+                                 if ("map_shape_click" %in% names(input)) {
       event <- input$map_shape_click
     } else {
       event <- data.frame(id = c("E37000025"))
     }
     eventLA <- input$mapLA_shape_click
     Splash_21 <- C_breakdown %>% filter(
-      breakdown == input$barBreakdown,
+      breakdown ==  input$barBreakdown ,
       subgroups %in% input$barSubgroup,
       metric == input$splashMetric,
       (geographic_level == "COUNTRY" & area == "England") |
         ((geographic_level == input$splashGeoType &
-
-          (area == C_Geog$areaName[C_Geog$areaCode == event$id] |
+          (area ==  C_Geog$areaName[C_Geog$areaCode == event$id] |
             area %in% if ("geoComps" %in% names(input)) {
               input$geoComps
             } else {
               "\nNone"
-            })) |
+            }
+           )) |
           if (is.null(eventLA) == TRUE) {
             area == "\nNone"
           } else {
             (geographic_level == "LADU" & area == C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id])
-          })
+          }
+         )
     )
-
+   # print(Splash_21)
     # add an extra column so the colours work in ggplot when sorting alphabetically
     Splash_21$Area <- factor(Splash_21$area,
       levels = c("England", C_Geog$areaName[C_Geog$areaCode == event$id], C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id], input$geoComps)
@@ -2660,7 +2680,8 @@ server <- function(input, output, session) {
           scales::percent(round(value, 2))
         } else {
           round(value, 0)
-        }, "<br>"
+        },
+         "<br>"
       )
     )) +
       geom_col(
