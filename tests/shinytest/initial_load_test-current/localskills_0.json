@@ -1,5 +1,19 @@
 {
   "input": {
+    ".clientValue-default-plotlyCrosstalkOpts": {
+      "on": "plotly_click",
+      "persistent": false,
+      "dynamic": false,
+      "selectize": false,
+      "opacityDim": 0.2,
+      "selected": {
+        "opacity": 1
+      },
+      "debounce": 0,
+      "color": [
+
+      ]
+    },
     "ageGroupQual": "16-64",
     "datatabset": "Overview",
     "GeoType": "LEP",
@@ -22,6 +36,7 @@
     "link_to_tabpanel_vacancies2": 0,
     "metricBar": "Achievements",
     "navbar": "Local skills",
+    "plotly_afterplot-A": "\"empLineChart\"",
     "profChoice": "All",
     "sexBar": "Total"
   },
