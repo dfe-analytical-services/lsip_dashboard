@@ -461,7 +461,7 @@ server <- function(input, output, session) {
   )
 
   output$empLineChart <- renderPlotly({
-    validate(
+    shiny::validate(
       need(input$lep1 != "", "") # if area not yet loaded don't try to load ch
     )
     ggplotly(empLineChart(),
@@ -1280,7 +1280,7 @@ server <- function(input, output, session) {
   ## 3.2 KPIs/Charts ----
 
   ### Employment rate -----
-     output$locland.emplrate <- renderValueBox({
+  output$locland.emplrate <- renderValueBox({
     div(
       class = "col-sm-4",
       div(
@@ -1319,7 +1319,7 @@ server <- function(input, output, session) {
       )
     )
   })
-  
+
   output$locland.engrate <- renderValueBox({
     div(
       class = "col-sm-4",
@@ -1329,11 +1329,11 @@ server <- function(input, output, session) {
           class = "inner",
           h3(paste0(
             format(100. * (C_EmpRate_APS1822 %>%
-                             filter(
-                               geographic_level == "COUNTRY",
-                               area == "England",
-                               year == "2022"
-                             )
+              filter(
+                geographic_level == "COUNTRY",
+                area == "England",
+                year == "2022"
+              )
             )$empRate, digits = 2),
             "%"
           )),
@@ -1481,7 +1481,7 @@ server <- function(input, output, session) {
   output$EmpOcc <- renderDataTable({
     df <- EmpOcc()
     datatable(df, options = list(order = list(2, "desc")), rownames = FALSE) %>%
-      formatPercentage(2:ncol(df), 0) 
+      formatPercentage(2:ncol(df), 0)
   })
 
   ### employment by industry (SIC 2007) bar chart ----
@@ -1727,7 +1727,7 @@ server <- function(input, output, session) {
   # })
 
 
-  #5. SKILLS ----
+  # 5. SKILLS ----
   # define page title
   output$page2title <- renderUI({
     paste0(
@@ -1968,7 +1968,7 @@ server <- function(input, output, session) {
   })
 
   Ach_time <- eventReactive(c(input$lep1, input$lep2, input$levelGroup, input$ageGroup, input$metricGroup), { # , input$splitLine), {
-    validate(
+    shiny::validate(
       need(input$ageGroup != "", "") # if area not yet loaded don't try to load ch
     )
     FETime <- C_Achieve_ILR1621 %>%
@@ -2169,7 +2169,7 @@ server <- function(input, output, session) {
 
     }
   })
-## 6.1 KPIS and charts ----
+  ## 6.1 KPIS and charts ----
   #### KPI 1 ----
   output$qualup.nvq2 <- renderValueBox({
     div(
@@ -2447,7 +2447,7 @@ server <- function(input, output, session) {
 
     }
   })
- ## 7.1 KPIs/Charts ----
+  ## 7.1 KPIs/Charts ----
   ### KPI 1 ----
   output$destup.eduempks4 <- renderValueBox({
     div(
@@ -2469,7 +2469,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the Key Stage 4 201920 cohort group had a sustained positive destination in 202021 in ", input$lep1)),
+          p(paste0("of the Key Stage 4 cohort had a sustained positive destination in 2020/21 in ", input$lep1)),
         )
       )
     )
@@ -2496,7 +2496,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the Key Stage 4 201920 cohort group had a sustained positive destination in 202021 in ", input$lep2)),
+          p(paste0("of the Key Stage 4 cohort had a sustained positive destination in 2020/21 in ", input$lep2)),
         )
       )
     )
@@ -2523,7 +2523,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the Key Stage 5 201920 cohort group had a sustained positive destination in 202021 in ", input$lep1)),
+          p(paste0("of the Key Stage 5 cohort had a sustained positive destination in 2020/21 in ", input$lep1)),
         )
       )
     )
@@ -2550,7 +2550,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the Key Stage 5 201920 cohort group had a sustained positive destination in 202021 in ", input$lep2)),
+          p(paste0("of the Key Stage 5 cohort had a sustained positive destination in 2020/21 in ", input$lep2)),
         )
       )
     )
@@ -2577,7 +2577,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the Key Stage 4 201920 cohort group had a sustained positive destination in 202021 in England")),
+          p(paste0("of the Key Stage 4 cohort had a sustained positive destination in 2020/21 in England")),
         )
       )
     )
@@ -2604,7 +2604,7 @@ server <- function(input, output, session) {
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
-          p(paste0("of the Key Stage 5 201920 cohort group had a sustained positive destination in 202021 in England")),
+          p(paste0("of the Key Stage 5 cohort had a sustained positive destination in 2020/21 in England")),
         )
       )
     )
@@ -2658,12 +2658,14 @@ server <- function(input, output, session) {
     ks_21$Area <- factor(ks_21$area,
       levels = c(input$lep1, input$lep2)
     )
-    ggplot(ks_21, aes(x = reorder(variable, desc(variable)), y = rate, fill = Area, text = paste0(
+    ggplot(ks_21, aes(x = reorder(variable, desc(variable)), y = rate, fill = Area, text = paste0
+                      (
       "Area: ", Area, "<br>",
       "Key stage group: ", `Key Stage`, "<br>",
       "Cohort group: ", `Cohort Group`, "<br>",
       "Percentage: ", scales::percent(round(rate, 2)), "<br>"
-    ))) +
+    )
+    )) +
       geom_col(
         position = "dodge"
       ) +
@@ -2735,7 +2737,7 @@ server <- function(input, output, session) {
   )
 
 
-  #8. ENTERPRISE ----
+  # 8. ENTERPRISE ----
 
   # turn off comparison boxes if none is selected
   output$ent_comp <- renderUI({
@@ -2785,8 +2787,8 @@ server <- function(input, output, session) {
       multiple = FALSE, selected = "Micro 0 to 9"
     )
   })
- 
-## 8.1 KPIs/Charts ----
+
+  ## 8.1 KPIs/Charts ----
   # KPI 1
   output$ent.mic <- renderValueBox({
     div(
@@ -2917,7 +2919,7 @@ server <- function(input, output, session) {
       )
     )
   })
-  
+
   ### KPI 6 ----
   output$ent.smaeng <- renderValueBox({
     div(
@@ -2928,13 +2930,13 @@ server <- function(input, output, session) {
           class = "inner",
           h3(paste0(
             format(100. * (C_empentind3_UBC1822 %>%
-                             filter(
-                               geographic_level == "COUNTRY",
-                               area == "England", year == "2022",
-                               variable == "Small 10 to 49",
-                               industry == "Total"
-                             ) %>%
-                             select(rate)
+              filter(
+                geographic_level == "COUNTRY",
+                area == "England", year == "2022",
+                variable == "Small 10 to 49",
+                industry == "Total"
+              ) %>%
+              select(rate)
             )[1, 1], scientific = FALSE, digits = 2),
             "%"
           )),
@@ -2943,7 +2945,7 @@ server <- function(input, output, session) {
       )
     )
   })
-  
+
 
   ### births and deaths line chart ----
   birth_death_time <- eventReactive(c(input$lep1, input$lep2), {
@@ -3673,7 +3675,7 @@ server <- function(input, output, session) {
           vals$row_color,
           default = "white"
         )
-      ) 
+      )
   })
 
   # adverts by detailed profession
@@ -3721,8 +3723,8 @@ server <- function(input, output, session) {
   output$profDetail <- renderDataTable({
     df <- profDetail()
     datatable(df, options = list(order = list(2, "desc")), rownames = FALSE) %>%
-      formatPercentage(2:ncol(df), 0) 
-})
+      formatPercentage(2:ncol(df), 0)
+  })
 
   ## 9.2 Downloads----
 

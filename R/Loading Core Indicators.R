@@ -1,10 +1,10 @@
 # load app data
 
-#1. LEP data ----
+# 1. LEP data ----
 # list of LEPS
 C_LEP2020 <- read.csv(file = "./Data/AppData/C_LEP2020.csv", check.names = FALSE)
 
-#2. APS data ----
+# 2. APS data ----
 ## 2.1 Employment by occupation ----
 # data for download
 D_EmpOcc_APS1721 <- read.csv(file = "./Data/AppData/D_EmpOcc_APS1721.csv", check.names = FALSE)
@@ -47,7 +47,7 @@ D_Achieve_ILR1621 <- read.csv(file = "./Data/AppData/D_Achieve_ILR1621.csv", che
 C_Achieve_ILR1621 <- read.csv(file = "./Data/AppData/C_Achieve_ILR1621.csv", check.names = FALSE)
 C_Achieve_ILR1621_max_min <- read.csv(file = "./Data/AppData/C_Achieve_ILR1621_max_min.csv", check.names = FALSE)
 
-##3.1 FE achievements by SSA----
+## 3.1 FE achievements by SSA----
 # data for download
 D_Achieve_ILR21 <- read.csv(file = "./Data/AppData/D_Achieve_ILR21.csv", check.names = FALSE)
 # data for dashboard
@@ -109,5 +109,3 @@ C_KS5_eduempapp_max_min <- read.csv(file = "./Data/AppData/C_KS5_eduempapp_max_m
 
 ## 7. Data table ----
 I_DataTable <- read.csv(file = "./Data/AppData/I_DataTable.csv", check.names = FALSE)
-
-
