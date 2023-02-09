@@ -2025,6 +2025,21 @@ server <- function(input, output, session) {
   currentMetric <- reactive({
     sub("fe", "FE", tolower(gsub("^.*\\.", "", names(unlist(metricChoices)[unlist(metricChoices) == input$splashMetric]))))
   })
+  
+  # create data source 
+  output$dataSource <- renderUI({
+    HTML(paste0("<p>Source: ",(I_DataText%>%filter(metric==input$splashMetric))$sourceText,"<p>"))
+  })
+  
+  # create data note 
+  output$dataNote <- renderUI({
+    (I_DataText%>%filter(metric==input$splashMetric))$dataText
+  })
+  
+  # create data caveat 
+  output$dataCaveat <- renderUI({
+    HTML((I_DataText%>%filter(metric==input$splashMetric))$caveatText)
+  })
 
   # add comparison area option
   output$geoComp <- renderUI({

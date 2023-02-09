@@ -2181,3 +2181,7 @@ C_datahub <- bind_rows(
     TRUE ~ breakdown
   ))
 write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
+
+# Tidy up data text table
+names(I_DataText) <- gsub(".", " ", names(I_DataText), fixed = TRUE)
+write.csv(I_DataText, file = "Data\\AppData\\I_DataText.csv", row.names = FALSE)
