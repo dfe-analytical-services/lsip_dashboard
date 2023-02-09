@@ -723,7 +723,13 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
         pickerInput(
           inputId = "splashMetric",
           choices = metricChoices,
-          multiple = FALSE
+          multiple = FALSE,
+          choicesOpt = list(
+            disabled = unlist(metricChoices) %in% c("workingFutures"),
+            style = ifelse(unlist(metricChoices) %in% c("workingFutures"),
+                           yes = "color: rgba(119, 119, 119, 0.5);",
+                           no = "")
+          )
         )
       )),
       fluidRow(
