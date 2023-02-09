@@ -51,12 +51,12 @@ metricChoices <- list(
     "Enterprise birth rate" = "birthRate",
     "Enterprise death rate" = "deathRate"
   ),
-  "Skills" = list(
+  "FE and skills" = list(
     "FE achievement rate" = "achievements_rate_per_100000_population",
     "FE participation rate" = "participation_rate_per_100000_population",
     #"FE start rate" = "starts_rate_per_100000_population",
-    "FE achievements" = "achievements",
-    "FE participation" = "participation",
+    "FE achievement volumes" = "achievements",
+    "FE participation volumes" = "participation",
     #"FE starts" = "starts",
     "Qualified at Level 3 or above" = "level3AndAboveRate",
     "KS4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
