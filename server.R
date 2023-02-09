@@ -2627,7 +2627,7 @@ server <- function(input, output, session) {
           "Key Stage 4"
         }
       ) %>%
-      select(`Cohort Group`) %>% distinct()))
+      select(`Cohort Group`) %>% distinct()), " 19/20 cohort")
   })
 
   ### key stage bar chart ----
@@ -2662,7 +2662,7 @@ server <- function(input, output, session) {
                       (
       "Area: ", Area, "<br>",
       "Key stage group: ", `Key Stage`, "<br>",
-      # "Cohort group: ", `Cohort Group`, "<br>",
+      "Cohort group: ", `Cohort Group`, "<br>",
       "Percentage: ", scales::percent(round(rate, 2)), "<br>"
     )
     )) +

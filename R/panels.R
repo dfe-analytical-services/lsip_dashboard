@@ -698,7 +698,7 @@ panel_destinations <- function() {
   tabPanel(
     "Destinations",
     h1(uiOutput("page5title")),
-    p("Destination measures show the percentage of students going to or remaining in an education, apprenticeship or employment destination in the academic year after completing Key Stage 4 studies (usually aged between 14 to 16) and Key Stage 5 studies (usually aged 18). The cohort of learners used in the metrics here completed in AY19/20."),
+    p("Destination measures show the percentage of students going to or remaining in an education, apprenticeship or employment destination in the academic year after completing Key Stage 4 studies (usually aged between 14 to 16) and Key Stage 5 studies (usually aged 18). The cohort of learners used in the metrics here completed in Academic Year 19/20."),
     br(),
 
     ### KPI boxes ----
