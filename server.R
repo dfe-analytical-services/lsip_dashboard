@@ -2412,8 +2412,6 @@ server <- function(input, output, session) {
     # } else {
     #   "10 MCAs."
     # }
-    print(currentChange)
-    print(englandChange)
     paste0(
       areaClicked, "'s ", currentMetric(), " has ",
       if (currentChange > 0) {
