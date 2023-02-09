@@ -307,7 +307,7 @@ padding-top:15px
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("7 Feb 2023 (0.4.3)"),
+              p("9 Feb 2023 (0.4.3)"),
               p("Updated destinations data with the February revision."),
               details(
                 label = "Previous updates",
