@@ -2627,7 +2627,7 @@ server <- function(input, output, session) {
           "Key Stage 4"
         }
       ) %>%
-      select(`Cohort Group`) %>% distinct()), " 19/20 cohort")
+      select(`Cohort Group`) %>% distinct()))
   })
 
   ### key stage bar chart ----
