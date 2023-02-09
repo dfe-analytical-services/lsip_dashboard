@@ -2637,14 +2637,12 @@ server <- function(input, output, session) {
   # create breakdown bar
   Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, #input$barBreakdown,
                                input$barSubgroup, input$mapLA_shape_click
-                               #, input$splashMetric
+                               , input$splashMetric
                                ), {
-                                 #print(input$barBreakdown)
-                                 #print(input$barSubgroup)
-                                 #print(input$splashMetric)
     validate(
       need(input$barBreakdown != "", ""), # if area not yet loaded don't try to load ch
-      need(input$barSubgroup != "", "")
+      need(input$barSubgroup != "", ""),
+      need(input$splashMetric != "", "")
     )
                                  if ("map_shape_click" %in% names(input)) {
       event <- input$map_shape_click
@@ -2683,7 +2681,7 @@ server <- function(input, output, session) {
         # "Breakdown: ", input$splashBreakdown, "<br>",
         "Area: ", Area, "<br>",
         # "Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(value, 2)), "<br>",
-        currentMetric(), ": ", if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies" | input$splashMetric == "enterpriseCount") {
+        currentMetric(), ": ", if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies" | input$splashMetric == "enterpriseCount" | input$splashMetric == "achievements"| input$splashMetric == "participation"| input$splashMetric == "starts") {
           scales::percent(round(value, 2))
         } else {
           round(value, 0)
