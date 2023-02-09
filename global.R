@@ -43,7 +43,7 @@ metricChoices <- list(
     "Self-employment volume" = "  Self Employed ",
     "Unemployed volume" = "  Unemployed ",
     "Inactive volume" = "  Inactive ",
-    "Job adverts" = "vacancies",
+    "Online job adverts" = "vacancies",
     "Job projections - TO COME" = "workingFutures"
   ),
   "Enterprises" = list(
@@ -51,16 +51,16 @@ metricChoices <- list(
     "Enterprise birth rate" = "birthRate",
     "Enterprise death rate" = "deathRate"
   ),
-  "Skills" = list(
+  "FE and skills" = list(
     "FE achievement rate" = "achievements_rate_per_100000_population",
     "FE participation rate" = "participation_rate_per_100000_population",
     #"FE start rate" = "starts_rate_per_100000_population",
-    "FE achievements" = "achievements",
-    "FE participation" = "participation",
+    "FE achievement volumes" = "achievements",
+    "FE participation volumes" = "participation",
     #"FE starts" = "starts",
     "Qualified at Level 3 or above" = "level3AndAboveRate",
-    "KS4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
-    "KS5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
+    "Key stage 4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
+    "Key stage 5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
   )
   #,
   #"Mismatch" = list("Supply vs demand TO COME" = "mismatch")
