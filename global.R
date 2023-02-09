@@ -59,8 +59,8 @@ metricChoices <- list(
     "FE participation volumes" = "participation",
     #"FE starts" = "starts",
     "Qualified at Level 3 or above" = "level3AndAboveRate",
-    "KS4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
-    "KS5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
+    "Key stage 4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
+    "Key stage 5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
   )
   #,
   #"Mismatch" = list("Supply vs demand TO COME" = "mismatch")
