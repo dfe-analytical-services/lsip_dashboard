@@ -2512,7 +2512,7 @@ server <- function(input, output, session) {
       }) +
       scale_x_date(
         name = "My date axis title", date_breaks = "1 years",
-        date_labels = "%y"
+        date_labels = "%Y"
       )
   })
 
