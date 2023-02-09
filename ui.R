@@ -774,8 +774,10 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
         column(
           12,
           h2("Data notes"),
-          p("Data source: .........."),
-          p("Caveats: ..............")
+          p(uiOutput("dataSource")),
+          p(uiOutput("dataNote")),
+          p("Caveats:"),
+          p(uiOutput("dataCaveat"))
         )
       ),
       br()
