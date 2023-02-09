@@ -43,7 +43,8 @@ metricChoices <- list(
     "Self-employment volume" = "  Self Employed ",
     "Unemployed volume" = "  Unemployed ",
     "Inactive volume" = "  Inactive ",
-    "Job adverts" = "vacancies"
+    "Job adverts" = "vacancies",
+    "Job projections - TO COME" = "workingFutures"
   ),
   "Enterprises" = list(
     "Enterprise count" = "enterpriseCount",
@@ -60,8 +61,9 @@ metricChoices <- list(
     "Qualified at Level 3 or above" = "level3AndAboveRate",
     "KS4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
     "KS5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
-  ),
-  "Mismatch" = list("Supply vs demand TO COME" = "mismatch")
+  )
+  #,
+  #"Mismatch" = list("Supply vs demand TO COME" = "mismatch")
 )
 
 
