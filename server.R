@@ -2380,11 +2380,17 @@ server <- function(input, output, session) {
     currentChange <- (currentArea %>%
       filter(chart_year == max(chart_year)))$value -
       (currentArea %>%
-        filter(chart_year == (ymd(max(chart_year)) - years(4))))$value
+        filter(chart_year == (ymd(max(chart_year)) - years(
+          #ks5 only has the data fr the last 4 years
+          if(input$splashMetric == "sustainedPositiveDestinationKS5Rate"){3}else{4}
+          ))))$value
     englandChange <- (englandArea %>%
       filter(chart_year == max(chart_year)))$value -
       (englandArea %>%
-        filter(chart_year == (ymd(max(chart_year)) - years(4))))$value
+        filter(chart_year == (ymd(max(chart_year)) - years(
+          #ks5 only has the data fr the last 4 years
+          if(input$splashMetric == "sustainedPositiveDestinationKS5Rate"){3}else{4}
+          ))))$value
 
     # areaRank <- (dataTimeCompare %>%
     #   filter(geographic_level == input$splashGeoType, (year == 5 | year == 1)) %>%
@@ -2406,6 +2412,8 @@ server <- function(input, output, session) {
     # } else {
     #   "10 MCAs."
     # }
+    print(currentChange)
+    print(englandChange)
     paste0(
       areaClicked, "'s ", currentMetric(), " has ",
       if (currentChange > 0) {
@@ -2415,9 +2423,9 @@ server <- function(input, output, session) {
       },
       if (sign(currentChange) == sign(englandChange)) {
         if (abs(currentChange) > abs(englandChange)) {
-          "faster than the national average in the last five years"
+          "faster than the national average"
         } else {
-          "slower than the national average in the last five years"
+          "slower than the national average"
         }
       } else {
         paste0(" while nationally it has ", if (englandChange > 0) {
@@ -2426,7 +2434,8 @@ server <- function(input, output, session) {
           "decreased"
         })
       },
-      "."
+      #ks5 only has the data fr the last 4 years
+      if(input$splashMetric == "sustainedPositiveDestinationKS5Rate"){" in the last four years."}else{" in the last five years."}
       # ,"It has the "
       # , areaRank, suff, " fastest growing ", currentMetric(), " of the ", groupCount
     )
