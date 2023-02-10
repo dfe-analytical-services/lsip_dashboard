@@ -531,83 +531,83 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     ## 2.2 Overview ----
     panel_overview(),
 
-    ## 2.3 Local skills ----
-    tabPanel(
-      "Local skills",
-      br(),
-      ### 2.3.1 Filters ----
-      fluidRow(
-        column(
-          9,
-          h3("What are you interested in?"),
-          pickerInput(
-            inputId = "splashMetric",
-            choices = metricChoices,
-            multiple = FALSE,
-            choicesOpt = list(
-              disabled = unlist(metricChoices) %in% c("workingFutures"),
-              style = ifelse(
-                unlist(metricChoices) %in% c("workingFutures"),
-                yes = "color: rgba(119, 119, 119, 0.5);",
-                no = ""
-              )
-            )
-          )
-        ),
-        column(
-          3#,
-          #uiOutput("screenshotFile")
-        )
-      ),
-      ### 2.3.2 Visuals row 1 ----
-      fluidRow(
-        column(
-          6,
-          h3(uiOutput("titleMap")),
-          radioGroupButtons(
-            inputId = "splashGeoType",
-            choices = c("LEP", "LSIP", "MCA")
-          ),
-          p(uiOutput("commentMap")),
-          leafletOutput("map")
-        ),
-        column(
-          6,
-          h3(uiOutput("titleTime")),
-          p(uiOutput("commentTime")),
-          uiOutput("geoComp"),
-          plotlyOutput("Splash_time")
-        )
-      ),
-      br(),
-      ### 2.3.3 Visuals row 2 ----
-      fluidRow(
-        column(
-          6,
-          h3(uiOutput("titleBreakdown")),
-          uiOutput("breakdownFilter"),
-          uiOutput("subgroupFilter"),
-          p(uiOutput("commentBreakdown")),
-          plotlyOutput("Splash_pc")
-        ),
-        column(
-          6,
-          h3(uiOutput("titleLaMap")),
-          p(uiOutput("commentLA")),
-          leafletOutput("mapLA")
-        )
-      ),
-      ### 2.3.3 Data notes ----
-      fluidRow(column(
-        12,
-        h2("Data notes"),
-        p(uiOutput("dataSource")),
-        p(uiOutput("dataNote")),
-        p("Caveats:"),
-        p(uiOutput("dataCaveat"))
-      )),
-      br()
-    ),
+    # ## 2.3 Local skills ----
+    # tabPanel(
+    #   "Local skills",
+    #   br(),
+    #   ### 2.3.1 Filters ----
+    #   fluidRow(
+    #     column(
+    #       9,
+    #       h3("What are you interested in?"),
+    #       pickerInput(
+    #         inputId = "splashMetric",
+    #         choices = metricChoices,
+    #         multiple = FALSE,
+    #         choicesOpt = list(
+    #           disabled = unlist(metricChoices) %in% c("workingFutures"),
+    #           style = ifelse(
+    #             unlist(metricChoices) %in% c("workingFutures"),
+    #             yes = "color: rgba(119, 119, 119, 0.5);",
+    #             no = ""
+    #           )
+    #         )
+    #       )
+    #     ),
+    #     column(
+    #       3#,
+    #       #uiOutput("screenshotFile")
+    #     )
+    #   ),
+    #   ### 2.3.2 Visuals row 1 ----
+    #   fluidRow(
+    #     column(
+    #       6,
+    #       h3(uiOutput("titleMap")),
+    #       radioGroupButtons(
+    #         inputId = "splashGeoType",
+    #         choices = c("LEP", "LSIP", "MCA")
+    #       ),
+    #       p(uiOutput("commentMap")),
+    #       leafletOutput("map")
+    #     ),
+    #     column(
+    #       6,
+    #       h3(uiOutput("titleTime")),
+    #       p(uiOutput("commentTime")),
+    #       uiOutput("geoComp"),
+    #       plotlyOutput("Splash_time")
+    #     )
+    #   ),
+    #   br(),
+    #   ### 2.3.3 Visuals row 2 ----
+    #   fluidRow(
+    #     column(
+    #       6,
+    #       h3(uiOutput("titleBreakdown")),
+    #       uiOutput("breakdownFilter"),
+    #       uiOutput("subgroupFilter"),
+    #       p(uiOutput("commentBreakdown")),
+    #       plotlyOutput("Splash_pc")
+    #     ),
+    #     column(
+    #       6,
+    #       h3(uiOutput("titleLaMap")),
+    #       p(uiOutput("commentLA")),
+    #       leafletOutput("mapLA")
+    #     )
+    #   ),
+    #   ### 2.3.3 Data notes ----
+    #   fluidRow(column(
+    #     12,
+    #     h2("Data notes"),
+    #     p(uiOutput("dataSource")),
+    #     p(uiOutput("dataNote")),
+    #     p("Caveats:"),
+    #     p(uiOutput("dataCaveat"))
+    #   )),
+    #   br()
+    # ),
 
     ## 2.4 Datahub ----
     tabPanel(
