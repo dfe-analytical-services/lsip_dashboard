@@ -2594,7 +2594,9 @@ C_Geog <- neatGeog %>%
   left_join(
     C_destinations %>% filter(time_period == "202021", subgroups == "Total", metric == "sustainedPositiveDestinationKS5Rate") %>% select(area, geographic_level, sustainedPositiveDestinationKS5Rate = value),
     by = c("areaName" = "area", "geog" = "geographic_level")
-  )
+  )%>%
+  rename_all(~str_replace_all(., "\\s+", ""))
+  
 
 save(C_Geog, file = "Data\\AppData\\C_Geog.RData")
 
@@ -2672,7 +2674,8 @@ C_time <- bind_rows(
       chart_year = as.Date(ISOdate(str_sub(time_period, 1, 4), 1, 1)),
       time_period = as.character(time_period)
     )
-)
+)%>%
+  mutate(metric=gsub(" ", "",metric))
 write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
 
 # create neat breakdown file
@@ -2823,7 +2826,8 @@ C_Achieve_ILR1621 %>%
   # add ks5 destinations
   C_destinations %>%
     filter(time_period == 202021, subgroups != "Total", metric == "sustainedPositiveDestinationKS5Rate")
-)
+)%>%
+  mutate(metric=gsub(" ", "",metric))
 write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
 
 # Create dataHub dataset
@@ -2833,17 +2837,17 @@ C_datahub <- bind_rows(
 ) %>%
   # rename some of the elements so they make sense here
   mutate(metric = case_when(
-    metric == "  All " ~ "Population volume",
+    metric == "All " ~ "Population volume",
     metric == "empRate" ~ "Employment rate",
     metric == "selfempRate" ~ "Self-employment rate",
     metric == "unempRate" ~ "Unemployment rate",
     metric == "inactiveRate" ~ "Inactive rate",
     metric == "Employment" ~ "Employment volume",
-    metric == "  Self Employed " ~ "Self-employment volume",
-    metric == "  Unemployed " ~ "Unemployed volume",
-    metric == "  Inactive " ~ "Inactive volume",
-    metric == "  Economically Active " ~ "Economically active volume",
-    metric == "  Employees " ~ "Employees volume",
+    metric == "SelfEmployed" ~ "Self-employment volume",
+    metric == "Unemployed" ~ "Unemployed volume",
+    metric == "Inactive" ~ "Inactive volume",
+    metric == "EconomicallyActive" ~ "Economically active volume",
+    metric == "Employees" ~ "Employees volume",
     metric == "achievements_rate_per_100000_population" ~ "FE achievement rate per 100k",
     metric == "participation_rate_per_100000_population" ~ "FE participation rate per 100k",
     metric == "starts_rate_per_100000_population" ~ "FE start rate per 100k",

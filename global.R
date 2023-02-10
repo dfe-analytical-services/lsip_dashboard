@@ -42,9 +42,9 @@ metricChoices <- list(
     "Unemployment rate" = "unempRate",
     "Inactive rate" = "inactiveRate",
     "Employment volume" = "Employment",
-    "Self-employment volume" = "  Self Employed ",
-    "Unemployed volume" = "  Unemployed ",
-    "Inactive volume" = "  Inactive ",
+    "Self-employment volume" = "SelfEmployed",
+    "Unemployed volume" = "Unemployed",
+    "Inactive volume" = "Inactive",
     "Online job adverts" = "vacancies",
     "Job projections - TO COME" = "workingFutures"
   ),
