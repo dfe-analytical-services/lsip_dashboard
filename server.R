@@ -2104,7 +2104,7 @@ server <- function(input, output, session) {
       }
     areaRank <- (C_Geog %>%
       filter(geog == input$splashGeoType) %>%
-      mutate(ranking = rank(desc(eval(parse(text = input$splashMetric))))) %>%
+      mutate(ranking = rank(desc(eval(parse(text = input$splashMetric))),ties.method = c("first"))) %>%
       filter(areaName == areaClicked))$ranking
     suff <- case_when(
       areaRank %in% c(11, 12, 13) ~ "th",
@@ -2300,7 +2300,7 @@ server <- function(input, output, session) {
         geog == "LADU",
         eval(parse(text = input$splashGeoType)) == areaClicked
       ) %>%
-      mutate(ranking = rank(desc(eval(parse(text = input$splashMetric)))))
+      mutate(ranking = rank(desc(eval(parse(text = input$splashMetric))),ties.method = c("first")))
 
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <- (LaHighLow %>% filter(ranking == max(ranking)))$areaName
@@ -2618,7 +2618,7 @@ server <- function(input, output, session) {
       mutate(change = (value - lag(value, default = 1)) / value) %>%
       ungroup() %>%
       filter(area == areaClicked) %>%
-      mutate(ranking = rank(desc(abs(change)))) %>%
+      mutate(ranking = rank(desc(abs(change)),ties.method = c("first"))) %>%
       filter(ranking == 1)
 
     breakdownDirection <- if (isTRUE(breakdownDiff$change) && breakdownDiff$change > 0) {
@@ -2670,7 +2670,8 @@ server <- function(input, output, session) {
           }
          )
     )
-   # print(Splash_21)
+    #if no rows (because of filter lag) then don't plot
+    if(nrow(Splash_21)==0){"x"}else{
     # add an extra column so the colours work in ggplot when sorting alphabetically
     Splash_21$Area <- factor(Splash_21$area,
       levels = c("England", C_Geog$areaName[C_Geog$areaCode == event$id], C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id], input$geoComps)
@@ -2706,9 +2707,12 @@ server <- function(input, output, session) {
         panel.grid.major = element_blank(), panel.grid.minor = element_blank()
       ) +
       scale_fill_manual(values = chartColors6)
+    }
   })
 
   output$Splash_pc <- renderPlotly({
+    #check it exists
+   validate(need(Splash_pc() != "x", ""))
     ggplotly(Splash_pc(),
       tooltip = c("text") # , height = 474
     ) %>%
