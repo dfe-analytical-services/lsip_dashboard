@@ -40,16 +40,16 @@
 <li>Counts have been rounded to the nearest 5. Totals may not add due to this rounding.</li>
 </ol>"
 "workingFutures",NA," ",NA
-"enterpriseCount","<a href='https://www.nomisweb.co.uk/datasets/idbrent'>ONS UK Business Counts</a>","An enterprise can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
+"enterpriseCount","<a href='https://www.nomisweb.co.uk/datasets/idbrent'>ONS UK Business Counts</a>","Represented here are enterprises, which can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
   <li>Overall total may not equal the sum of all industries due to rounding and suppression.</li>
  <li>Unregistered businesses that are not large enough to be registered for VAT or PAYE are not included.</li>
 </ol>"
-"birthRate","<a href=' https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable'>ONS Business Demography</a>","An enterprise can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
+"birthRate","<a href=' https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable'>ONS Business Demography</a>","Represented here are enterprises, which can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
   <li>A birth is identified as a business that was present in year t, but did not exist in year t-1 or t-2. Births are identified by making comparison of annual active population files and identifying those present in the latest file, but not the two previous ones.</li>
  <li>A death is defined as a business that was on the active file in year t, but was no longer present in the active file in t+1 and t+2. In order to provide an early estimate of deaths, an adjustment has been made to the latest two years deaths to allow for reactivations. These figures are provisional and subject to revision.</li>
  <li>An IDBR birth does not always represent the start of trading, as some businesses register for VAT or PAYE many years into their existence. And businesses that die on IDBR can continue trading if the death has been triggered by a VAT deregistration.</li>
 </ol>"
-"deathRate","<a href=' https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable'>ONS Business Demography</a>","An enterprise can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
+"deathRate","<a href=' https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable'>ONS Business Demography</a>","Represented here are enterprises, which can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
   <li>A birth is identified as a business that was present in year t, but did not exist in year t-1 or t-2. Births are identified by making comparison of annual active population files and identifying those present in the latest file, but not the two previous ones.</li>
  <li>A death is defined as a business that was on the active file in year t, but was no longer present in the active file in t+1 and t+2. In order to provide an early estimate of deaths, an adjustment has been made to the latest two years deaths to allow for reactivations. These figures are provisional and subject to revision.</li>
  <li>An IDBR birth does not always represent the start of trading, as some businesses register for VAT or PAYE many years into their existence. And businesses that die on IDBR can continue trading if the death has been triggered by a VAT deregistration.</li>
