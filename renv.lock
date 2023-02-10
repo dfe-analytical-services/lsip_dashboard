@@ -9,6 +9,14 @@
     ]
   },
   "Packages": {
+    "BH": {
+      "Package": "BH",
+      "Version": "1.81.0-1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "68122010f01c4dcfbe58ce7112f2433d",
+      "Requirements": []
+    },
     "DBI": {
       "Package": "DBI",
       "Version": "1.1.3",
@@ -151,6 +159,7 @@
       "Repository": "CRAN",
       "Hash": "74a64813f17b492da9c6afda6b128e3d",
       "Requirements": [
+        "BH",
         "Rcpp"
       ]
     },
@@ -305,23 +314,6 @@
       "Requirements": [
         "R6",
         "processx"
-      ]
-    },
-    "capture": {
-      "Package": "capture",
-      "Version": "0.1.3",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "capture",
-      "RemoteUsername": "dreamRs",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "b751ed966c8d171c890ab5464772080c8493c44a",
-      "Hash": "b11515a0c199da108ee8edc3c4387665",
-      "Requirements": [
-        "htmltools",
-        "jsonlite",
-        "shiny"
       ]
     },
     "cellranger": {
