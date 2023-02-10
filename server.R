@@ -2036,24 +2036,39 @@ server <- function(input, output, session) {
   #---
   # Maps ----
 
+  # take screenshot
+  output$screenshotFile <- renderUI({
+    if ("map_shape_click" %in% names(input)) {
+      event <- input$map_shape_click
+    } else {
+      event <- data.frame(id = c("E37000025"))
+    }
+    areaClicked <- C_Geog$areaName[C_Geog$areaCode == event$id]
+    capture::capture(
+      selector = "body",
+      filename = paste0(areaClicked, "-", input$splashMetric, ".png"),
+      icon("camera"), "Screenshot"
+    )
+  })
+
   # get current metric in plain englush
   currentMetric <- reactive({
     sub("fe", "FE", tolower(gsub("^.*\\.", "", names(unlist(metricChoices)[unlist(metricChoices) == input$splashMetric]))))
   })
-  
-  # create data source 
+
+  # create data source
   output$dataSource <- renderUI({
-    HTML(paste0("<p>Source: ",(I_DataText%>%filter(metric==input$splashMetric))$sourceText,"<p>"))
+    HTML(paste0("<p>Source: ", (I_DataText %>% filter(metric == input$splashMetric))$sourceText, "<p>"))
   })
-  
-  # create data note 
+
+  # create data note
   output$dataNote <- renderUI({
-    (I_DataText%>%filter(metric==input$splashMetric))$dataText
+    (I_DataText %>% filter(metric == input$splashMetric))$dataText
   })
-  
-  # create data caveat 
+
+  # create data caveat
   output$dataCaveat <- renderUI({
-    HTML((I_DataText%>%filter(metric==input$splashMetric))$caveatText)
+    HTML((I_DataText %>% filter(metric == input$splashMetric))$caveatText)
   })
 
   # add comparison area option
@@ -2119,7 +2134,7 @@ server <- function(input, output, session) {
       }
     areaRank <- (C_Geog %>%
       filter(geog == input$splashGeoType) %>%
-      mutate(ranking = rank(desc(eval(parse(text = input$splashMetric))),ties.method = c("first"))) %>%
+      mutate(ranking = rank(desc(eval(parse(text = input$splashMetric))), ties.method = c("first"))) %>%
       filter(areaName == areaClicked))$ranking
     suff <- case_when(
       areaRank %in% c(11, 12, 13) ~ "th",
@@ -2315,7 +2330,7 @@ server <- function(input, output, session) {
         geog == "LADU",
         eval(parse(text = input$splashGeoType)) == areaClicked
       ) %>%
-      mutate(ranking = rank(desc(eval(parse(text = input$splashMetric))),ties.method = c("first")))
+      mutate(ranking = rank(desc(eval(parse(text = input$splashMetric))), ties.method = c("first")))
 
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <- (LaHighLow %>% filter(ranking == max(ranking)))$areaName
@@ -2396,16 +2411,24 @@ server <- function(input, output, session) {
       filter(chart_year == max(chart_year)))$value -
       (currentArea %>%
         filter(chart_year == (ymd(max(chart_year)) - years(
-          #ks5 only has the data fr the last 4 years
-          if(input$splashMetric == "sustainedPositiveDestinationKS5Rate"){3}else{4}
-          ))))$value
+          # ks5 only has the data fr the last 4 years
+          if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
+            3
+          } else {
+            4
+          }
+        ))))$value
     englandChange <- (englandArea %>%
       filter(chart_year == max(chart_year)))$value -
       (englandArea %>%
         filter(chart_year == (ymd(max(chart_year)) - years(
-          #ks5 only has the data fr the last 4 years
-          if(input$splashMetric == "sustainedPositiveDestinationKS5Rate"){3}else{4}
-          ))))$value
+          # ks5 only has the data fr the last 4 years
+          if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
+            3
+          } else {
+            4
+          }
+        ))))$value
 
     # areaRank <- (dataTimeCompare %>%
     #   filter(geographic_level == input$splashGeoType, (year == 5 | year == 1)) %>%
@@ -2447,8 +2470,12 @@ server <- function(input, output, session) {
           "decreased"
         })
       },
-      #ks5 only has the data fr the last 4 years
-      if(input$splashMetric == "sustainedPositiveDestinationKS5Rate"){" in the last four years."}else{" in the last five years."}
+      # ks5 only has the data fr the last 4 years
+      if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
+        " in the last four years."
+      } else {
+        " in the last five years."
+      }
       # ,"It has the "
       # , areaRank, suff, " fastest growing ", currentMetric(), " of the ", groupCount
     )
@@ -2604,7 +2631,7 @@ server <- function(input, output, session) {
     } else {
       paste0(
         "How does ", currentMetric(), " vary by ",
-        input$barBreakdown, "?"
+        tolower(input$barBreakdown), "?"
       )
     }
   })
@@ -2633,7 +2660,7 @@ server <- function(input, output, session) {
       mutate(change = (value - lag(value, default = 1)) / value) %>%
       ungroup() %>%
       filter(area == areaClicked) %>%
-      mutate(ranking = rank(desc(abs(change)),ties.method = c("first"))) %>%
+      mutate(ranking = rank(desc(abs(change)), ties.method = c("first"))) %>%
       filter(ranking == 1)
 
     breakdownDirection <- if (isTRUE(breakdownDiff$change) && breakdownDiff$change > 0) {
@@ -2650,84 +2677,85 @@ server <- function(input, output, session) {
   })
 
   # create breakdown bar
-  Splash_pc <- eventReactive(c(input$map_shape_click, input$geoComps, #input$barBreakdown,
-                               input$barSubgroup, input$mapLA_shape_click
-                               , input$splashMetric
-                               ), {
+  Splash_pc <- eventReactive(c(
+    input$map_shape_click, input$geoComps, # input$barBreakdown,
+    input$barSubgroup, input$mapLA_shape_click,
+    input$splashMetric
+  ), {
     validate(
       need(input$barBreakdown != "", ""), # if area not yet loaded don't try to load ch
       need(input$barSubgroup != "", ""),
       need(input$splashMetric != "", "")
     )
-                                 if ("map_shape_click" %in% names(input)) {
+    if ("map_shape_click" %in% names(input)) {
       event <- input$map_shape_click
     } else {
       event <- data.frame(id = c("E37000025"))
     }
     eventLA <- input$mapLA_shape_click
     Splash_21 <- C_breakdown %>% filter(
-      breakdown ==  input$barBreakdown ,
+      breakdown == input$barBreakdown,
       subgroups %in% input$barSubgroup,
       metric == input$splashMetric,
       (geographic_level == "COUNTRY" & area == "England") |
         ((geographic_level == input$splashGeoType &
-          (area ==  C_Geog$areaName[C_Geog$areaCode == event$id] |
+          (area == C_Geog$areaName[C_Geog$areaCode == event$id] |
             area %in% if ("geoComps" %in% names(input)) {
               input$geoComps
             } else {
               "\nNone"
-            }
-           )) |
+            })) |
           if (is.null(eventLA) == TRUE) {
             area == "\nNone"
           } else {
             (geographic_level == "LADU" & area == C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id])
-          }
-         )
+          })
     )
-    #if no rows (because of filter lag) then don't plot
-    if(nrow(Splash_21)==0){"x"}else{
-    # add an extra column so the colours work in ggplot when sorting alphabetically
-    Splash_21$Area <- factor(Splash_21$area,
-      levels = c("England", C_Geog$areaName[C_Geog$areaCode == event$id], C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id], input$geoComps)
-    )
-    ggplot(Splash_21, aes(
-      x = reorder(subgroups, value, mean), y = value, fill = Area,
-      text = paste0( # reorder(input$splashBreakdown, desc(input$splashBreakdown))
-        # "Breakdown: ", input$splashBreakdown, "<br>",
-        "Area: ", Area, "<br>",
-        # "Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(value, 2)), "<br>",
-        currentMetric(), ": ", if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies" | input$splashMetric == "enterpriseCount" | input$splashMetric == "achievements"| input$splashMetric == "participation"| input$splashMetric == "starts") {
-          scales::percent(round(value, 2))
-        } else {
-          round(value, 0)
-        },
-         "<br>"
+    # if no rows (because of filter lag) then don't plot
+    if (nrow(Splash_21) == 0) {
+      "x"
+    } else {
+      # add an extra column so the colours work in ggplot when sorting alphabetically
+      Splash_21$Area <- factor(Splash_21$area,
+        levels = c("England", C_Geog$areaName[C_Geog$areaCode == event$id], C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id], input$geoComps)
       )
-    )) +
-      geom_col(
-        position = "dodge"
-      ) +
-      scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies" | input$splashMetric == "enterpriseCount") {
-        scales::percent
-      } else {
-        label_number_si(accuracy = 1)
-      }) +
-      scale_x_discrete(labels = function(x) str_wrap(x, width = 26)) +
-      coord_flip() +
-      theme_minimal() +
-      labs(fill = "") +
-      theme(
-        legend.position = "none", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
-        panel.grid.major = element_blank(), panel.grid.minor = element_blank()
-      ) +
-      scale_fill_manual(values = chartColors6)
+      ggplot(Splash_21, aes(
+        x = reorder(subgroups, value, mean), y = value, fill = Area,
+        text = paste0( # reorder(input$splashBreakdown, desc(input$splashBreakdown))
+          # "Breakdown: ", input$splashBreakdown, "<br>",
+          "Area: ", Area, "<br>",
+          # "Percentage of ", str_to_lower(input$metricBar), ": ", scales::percent(round(value, 2)), "<br>",
+          currentMetric(), ": ", if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies" | input$splashMetric == "enterpriseCount" | input$splashMetric == "achievements" | input$splashMetric == "participation" | input$splashMetric == "starts") {
+            scales::percent(round(value, 2))
+          } else {
+            round(value, 0)
+          },
+          "<br>"
+        )
+      )) +
+        geom_col(
+          position = "dodge"
+        ) +
+        scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "Employment" | input$splashMetric == "vacancies" | input$splashMetric == "enterpriseCount") {
+          scales::percent
+        } else {
+          label_number_si(accuracy = 1)
+        }) +
+        scale_x_discrete(labels = function(x) str_wrap(x, width = 26)) +
+        coord_flip() +
+        theme_minimal() +
+        labs(fill = "") +
+        theme(
+          legend.position = "none", axis.title.x = element_blank(), axis.title.y = element_blank(), axis.text.y = element_text(size = 7),
+          panel.grid.major = element_blank(), panel.grid.minor = element_blank()
+        ) +
+        scale_fill_manual(values = chartColors6)
     }
   })
 
   output$Splash_pc <- renderPlotly({
-    #check it exists
-   validate(need(Splash_pc() != "x", ""))
+    # check it exists
+    validate(need(Splash_pc() != "x", ""))
     ggplotly(Splash_pc(),
       tooltip = c("text") # , height = 474
     ) %>%

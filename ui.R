@@ -717,21 +717,27 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
     tabPanel(
       "Local skills",
       br(),
-      fluidRow(column(
-        12,
-        h3("What are you interested in?"),
-        pickerInput(
-          inputId = "splashMetric",
-          choices = metricChoices,
-          multiple = FALSE,
-          choicesOpt = list(
-            disabled = unlist(metricChoices) %in% c("workingFutures"),
-            style = ifelse(unlist(metricChoices) %in% c("workingFutures"),
-                           yes = "color: rgba(119, 119, 119, 0.5);",
-                           no = "")
+      fluidRow(
+        column(
+          9,
+          h3("What are you interested in?"),
+          pickerInput(
+            inputId = "splashMetric",
+            choices = metricChoices,
+            multiple = FALSE,
+            choicesOpt = list(
+              disabled = unlist(metricChoices) %in% c("workingFutures"),
+              style = ifelse(unlist(metricChoices) %in% c("workingFutures"),
+                yes = "color: rgba(119, 119, 119, 0.5);",
+                no = ""
+              )
+            )
           )
+        ),
+        column(3,
+          uiOutput("screenshotFile")
         )
-      )),
+      ),
       fluidRow(
         column(
           6,
