@@ -28,7 +28,7 @@ shhh(library(scales)) # for comma 1,000s
 shhh(library(leaflet))
 shhh(library(lubridate))
 shhh(library(sf))
-shhh(library(capture))
+#shhh(library(capture))
 
 # renv::snapshot()
 
