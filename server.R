@@ -1445,14 +1445,14 @@ server <- function(input, output, session) {
     filter(geog == "COUNTRY" & areaName == "England")
 
   ### 2.3.3 Screenshot----
-  output$screenshotFile <- renderUI({
-    capture::capture(
-      selector = "body",
-      filename = paste0(areaClicked(), "-", input$splashMetric, ".png"),
-      icon("camera"),
-      "Screenshot"
-    )
-  })
+  # output$screenshotFile <- renderUI({
+  #   capture::capture(
+  #     selector = "body",
+  #     filename = paste0(areaClicked(), "-", input$splashMetric, ".png"),
+  #     icon("camera"),
+  #     "Screenshot"
+  #   )
+  # })
 
   ### 2.3.4 Data note----
   # create data source
