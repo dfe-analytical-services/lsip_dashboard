@@ -28,6 +28,7 @@ shhh(library(scales)) # for comma 1,000s
 shhh(library(leaflet))
 shhh(library(lubridate))
 shhh(library(sf))
+shhh(library(shinyscreenshot))
 
 # renv::snapshot()
 
@@ -54,16 +55,16 @@ metricChoices <- list(
   "FE and skills" = list(
     "FE achievement rate" = "achievements_rate_per_100000_population",
     "FE participation rate" = "participation_rate_per_100000_population",
-    #"FE start rate" = "starts_rate_per_100000_population",
+    # "FE start rate" = "starts_rate_per_100000_population",
     "FE achievement volumes" = "achievements",
     "FE participation volumes" = "participation",
-    #"FE starts" = "starts",
+    # "FE starts" = "starts",
     "Qualified at Level 3 or above" = "level3AndAboveRate",
     "Key stage 4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
     "Key stage 5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
   )
-  #,
-  #"Mismatch" = list("Supply vs demand TO COME" = "mismatch")
+  # ,
+  # "Mismatch" = list("Supply vs demand TO COME" = "mismatch")
 )
 
 
