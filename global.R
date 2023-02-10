@@ -48,10 +48,10 @@ metricChoices <- list(
     "Online job adverts" = "vacancies",
     "Job projections - TO COME" = "workingFutures"
   ),
-  "Enterprises" = list(
-    "Enterprise count" = "enterpriseCount",
-    "Enterprise birth rate" = "birthRate",
-    "Enterprise death rate" = "deathRate"
+  "Businesses" = list(
+    "Business count" = "enterpriseCount",
+    "Business birth rate" = "birthRate",
+    "Business death rate" = "deathRate"
   ),
   "FE and skills" = list(
     "FE achievement rate" = "achievements_rate_per_100000_population",
