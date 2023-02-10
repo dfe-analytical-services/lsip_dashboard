@@ -1,6 +1,7 @@
 server <- function(input, output, session) {
   # 1 Set up ----
   ## 1.1 Loading screen ----
+
   # Call initial loading screen
   hide(
     id = "loading-content",
@@ -57,7 +58,7 @@ server <- function(input, output, session) {
       selected = "vacancies"
     )
   })
-  # Create link to skills data tab
+  ## Create link to skills data tab ----
   observeEvent(input$link_to_tabpanel_FE, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
@@ -85,7 +86,22 @@ server <- function(input, output, session) {
       selected = "sustainedPositiveDestinationKS4Rate"
     )
   })
-  # Create link to data tab
+  ## Create link to qualification data tab ----
+  observeEvent(input$link_to_tabpanel_qualification_level, {
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "datatabset", "Qualification level")
+  })
+  ## Create link to destinations data tab ----
+  observeEvent(input$link_to_tabpanel_destinations_level, {
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "datatabset", "Destinations")
+  })
+  ## Create link to enterprise data tab ----
+  observeEvent(input$link_to_tabpanel_enterprise_level, {
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "datatabset", "Enterprises")
+  })
+  ## Create link to data tab ----
   observeEvent(input$link_to_tabpanel_data, {
     updateTabsetPanel(session, "navbar", "Data infomation")
   })
@@ -107,6 +123,7 @@ server <- function(input, output, session) {
       write_xlsx(list("1a.Emp by occupation" = D_EmpOcc_APS1721), path = file)
     }
   )
+
   output$downloadData3 <- downloadHandler(
     filename = function() {
       "EmpbyindustryIndicators.xlsx"
@@ -115,6 +132,7 @@ server <- function(input, output, session) {
       write_xlsx(list("1c.Emp by industry" = D_EmpInd_APS1822), path = file)
     }
   )
+
   output$downloadData4 <- downloadHandler(
     filename = function() {
       "AchievementIndicators.xlsx"
@@ -171,7 +189,7 @@ server <- function(input, output, session) {
   )
   output$downloadData10 <- downloadHandler(
     filename = function() {
-      "Keystage4destinationsIndicators.xlsx"
+      "EnterprisebyemploymentsizeIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list("8a.Key Stage 4 destinations" = D_KS4destin_1521),
@@ -181,7 +199,7 @@ server <- function(input, output, session) {
   )
   output$downloadData11 <- downloadHandler(
     filename = function() {
-      "Keystage5destinationsIndicators.xlsx"
+      "EntbyempsizeandindustryIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list("9a.Key Stage 5 destinations" = D_KS5destin_1721),
@@ -229,7 +247,6 @@ server <- function(input, output, session) {
   })
 
   ## 2.2 Overview ----
-
   # define page title
   output$page0title <- renderUI({
     paste0("Overview of local landscape in ", input$lep1)
@@ -896,6 +913,7 @@ server <- function(input, output, session) {
   # app chart
   AppLineChart <- eventReactive(input$lep1, {
     AppLine <- AppLEP()
+
     AppCntChange <-
       AppLatest()$achievements - AppLast()$achievements
     AppMinMax <- C_Achieve_ILR1621_max_min %>% filter(
@@ -903,6 +921,7 @@ server <- function(input, output, session) {
       area == input$lep1,
       level_or_type == "Apprenticeships: Total"
     )
+
 
 
     ggplot(
@@ -951,6 +970,7 @@ server <- function(input, output, session) {
   # set margins
   m <- list(
     l = 0,
+
     r = 4,
     # increase this margin a bit to prevent the last label dissapearing
     b = 0,
@@ -973,6 +993,7 @@ server <- function(input, output, session) {
 
   # Add link to skills data
   observeEvent(input$link_to_tabpanel_FE2, {
+
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
       selected = "achievements_rate_per_100000_population"
@@ -2282,6 +2303,7 @@ server <- function(input, output, session) {
       write_xlsx(filtered_data1(), path = file)
     }
   )
+
 
   ### 2.4.3 Unique code----
   allOptions <- bind_rows(

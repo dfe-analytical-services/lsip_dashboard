@@ -1,4 +1,5 @@
 "geographic_level","area","SSA","Level","sex","Achievements","Enrolments","Total","Total_ach","Total_enr","pcAch","pcEnr"
+<<<<<<< HEAD
 "country","England","Agriculture, Horticulture and Animal Care","Total","Total",16250,20990,"Total",1309710,1691340,0.0124073268128059,0.0124102782409214
 "country","England","Agriculture, Horticulture and Animal Care","Total","Female",9950,12970,"Total",776930,1015570,0.0128068165729216,0.0127711531455242
 "country","England","Agriculture, Horticulture and Animal Care","Total","Male",6300,8020,"Total",532790,675760,0.0118245462564988,0.0118681188587664
@@ -323,6 +324,8 @@
 "country","England","Social Sciences","Not Assigned","Total",NA,NA,"Total",53100,67530,NA,NA
 "country","England","Social Sciences","Not Assigned","Female",NA,NA,"Total",19980,24940,NA,NA
 "country","England","Social Sciences","Not Assigned","Male",NA,NA,"Total",33120,42590,NA,NA
+=======
+>>>>>>> d231ffba6719ce99eeb75ba59dbf3d8e79efd608
 "LEP","Black Country","Agriculture, Horticulture and Animal Care","1","Female",40,50,"Total",4370,5970,0.0091533180778032,0.00837520938023451
 "LEP","Black Country","Agriculture, Horticulture and Animal Care","1","Male",80,80,"Total",3070,4100,0.0260586319218241,0.0195121951219512
 "LEP","Black Country","Agriculture, Horticulture and Animal Care","1","Total",110,140,"Total",7440,10090,0.0147849462365591,0.0138751238850347

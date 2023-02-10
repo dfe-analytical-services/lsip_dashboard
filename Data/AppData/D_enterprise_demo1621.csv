@@ -323,7 +323,10 @@
 "Greater Cambridge and Greater Peterborough","LEP","2021","4545","4275","39030"
 "Greater Lincolnshire","LEP","2021","4545","4090","40695"
 "Greater Manchester","LEP","2021","17510","14410","119160"
+<<<<<<< HEAD
 "Heart of South West","LEP","2021","0","0","0"
+=======
+>>>>>>> d231ffba6719ce99eeb75ba59dbf3d8e79efd608
 "Heart of the South West","LEP","2021","7540","6565","68790"
 "Hertfordshire","LEP","2021","7350","8540","69700"
 "Hull and East Yorkshire","LEP","2021","2505","1880","20515"
@@ -369,7 +372,10 @@
 "Leicester and Leicestershire","LSIP","2021","5675","6010","48140"
 "Liverpool City Region","LSIP","2021","7450","6615","49965"
 "Norfolk and Suffolk","LSIP","2021","7030","5670","64140"
+<<<<<<< HEAD
 "Norfolk and Suffolk (Greater Anglia)","LSIP","2021","0","0","0"
+=======
+>>>>>>> d231ffba6719ce99eeb75ba59dbf3d8e79efd608
 "North East","LSIP","2021","4300","3690","31990"
 "North of Tyne","LSIP","2021","3160","2595","26025"
 "Oxfordshire","LSIP","2021","3330","3130","33565"
@@ -721,7 +727,10 @@
 "Greater Cambridge and Greater Peterborough","LEP","2020","4165","3835","38480"
 "Greater Lincolnshire","LEP","2020","4285","3415","39595"
 "Greater Manchester","LEP","2020","15740","12800","115450"
+<<<<<<< HEAD
 "Heart of South West","LEP","2020","0","0","0"
+=======
+>>>>>>> d231ffba6719ce99eeb75ba59dbf3d8e79efd608
 "Heart of the South West","LEP","2020","6740","5515","66625"
 "Hertfordshire","LEP","2020","6970","7660","70275"
 "Hull and East Yorkshire","LEP","2020","2120","1810","19920"
@@ -767,7 +776,10 @@
 "Leicester and Leicestershire","LSIP","2020","7325","4470","47150"
 "Liverpool City Region","LSIP","2020","6825","5825","48670"
 "Norfolk and Suffolk","LSIP","2020","6125","5255","62240"
+<<<<<<< HEAD
 "Norfolk and Suffolk (Greater Anglia)","LSIP","2020","0","0","0"
+=======
+>>>>>>> d231ffba6719ce99eeb75ba59dbf3d8e79efd608
 "North East","LSIP","2020","4040","3050","30880"
 "North of Tyne","LSIP","2020","2835","2450","25505"
 "Oxfordshire","LSIP","2020","3065","2845","33500"
@@ -1119,7 +1131,10 @@
 "Greater Cambridge and Greater Peterborough","LEP","2019","4845","3620","38145"
 "Greater Lincolnshire","LEP","2019","4270","3815","39195"
 "Greater Manchester","LEP","2019","16470","15010","117205"
+<<<<<<< HEAD
 "Heart of South West","LEP","2019","0","0","0"
+=======
+>>>>>>> d231ffba6719ce99eeb75ba59dbf3d8e79efd608
 "Heart of the South West","LEP","2019","6515","6075","66050"
 "Hertfordshire","LEP","2019","8695","7785","71185"
 "Hull and East Yorkshire","LEP","2019","2255","1910","19905"
@@ -1165,7 +1180,10 @@
 "Leicester and Leicestershire","LSIP","2019","5760","4290","44340"
 "Liverpool City Region","LSIP","2019","7430","5735","48810"
 "Norfolk and Suffolk","LSIP","2019","6095","5745","61975"
+<<<<<<< HEAD
 "Norfolk and Suffolk (Greater Anglia)","LSIP","2019","0","0","0"
+=======
+>>>>>>> d231ffba6719ce99eeb75ba59dbf3d8e79efd608
 "North East","LSIP","2019","3895","3555","30700"
 "North of Tyne","LSIP","2019","3045","2670","25500"
 "Oxfordshire","LSIP","2019","3360","2860","32995"
@@ -1517,8 +1535,12 @@
 "Greater Cambridge and Greater Peterborough","LEP","2016","4565","3245","35970"
 "Greater Lincolnshire","LEP","2016","4580","3865","39145"
 "Greater Manchester","LEP","2016","19720","11800","109535"
+<<<<<<< HEAD
 "Heart of South West","LEP","2016","600","500","5780"
 "Heart of the South West","LEP","2016","6220","5190","59005"
+=======
+"Heart of the South West","LEP","2016","6820","5690","64785"
+>>>>>>> d231ffba6719ce99eeb75ba59dbf3d8e79efd608
 "Hertfordshire","LEP","2016","11475","6410","69000"
 "Hull and East Yorkshire","LEP","2016","2720","1750","19760"
 "Lancashire","LEP","2016","6405","5200","53110"
@@ -1562,8 +1584,12 @@
 "Lancashire","LSIP","2016","6405","5200","53110"
 "Leicester and Leicestershire","LSIP","2016","6560","4005","43170"
 "Liverpool City Region","LSIP","2016","6805","4885","45180"
+<<<<<<< HEAD
 "Norfolk and Suffolk","LSIP","2016","5170","3920","44895"
 "Norfolk and Suffolk (Greater Anglia)","LSIP","2016","1760","1365","16100"
+=======
+"Norfolk and Suffolk","LSIP","2016","6930","5285","60995"
+>>>>>>> d231ffba6719ce99eeb75ba59dbf3d8e79efd608
 "North East","LSIP","2016","4005","2920","29180"
 "North of Tyne","LSIP","2016","3145","2450","24610"
 "Oxfordshire","LSIP","2016","3420","2620","31855"
@@ -1915,8 +1941,12 @@
 "Greater Cambridge and Greater Peterborough","LEP","2017","4070","3840","36485"
 "Greater Lincolnshire","LEP","2017","3940","4275","39045"
 "Greater Manchester","LEP","2017","20285","14425","118100"
+<<<<<<< HEAD
 "Heart of South West","LEP","2017","580","565","5885"
 "Heart of the South West","LEP","2017","5790","5695","59385"
+=======
+"Heart of the South West","LEP","2017","6370","6260","65270"
+>>>>>>> d231ffba6719ce99eeb75ba59dbf3d8e79efd608
 "Hertfordshire","LEP","2017","10010","9210","71675"
 "Hull and East Yorkshire","LEP","2017","2155","2060","19805"
 "Lancashire","LEP","2017","6905","5820","54820"
@@ -1960,8 +1990,12 @@
 "Lancashire","LSIP","2017","6905","5820","54820"
 "Leicester and Leicestershire","LSIP","2017","5430","5425","44455"
 "Liverpool City Region","LSIP","2017","7000","6000","46895"
+<<<<<<< HEAD
 "Norfolk and Suffolk","LSIP","2017","5160","4390","46070"
 "Norfolk and Suffolk (Greater Anglia)","LSIP","2017","1620","1545","16320"
+=======
+"Norfolk and Suffolk","LSIP","2017","6780","5935","62390"
+>>>>>>> d231ffba6719ce99eeb75ba59dbf3d8e79efd608
 "North East","LSIP","2017","3940","3500","29990"
 "North of Tyne","LSIP","2017","2850","2650","24910"
 "Oxfordshire","LSIP","2017","3255","2900","32185"
@@ -2313,8 +2347,12 @@
 "Greater Cambridge and Greater Peterborough","LEP","2018","4465","3515","37030"
 "Greater Lincolnshire","LEP","2018","4065","3610","38565"
 "Greater Manchester","LEP","2018","17845","15745","118535"
+<<<<<<< HEAD
 "Heart of South West","LEP","2018","650","535","5940"
 "Heart of the South West","LEP","2018","5505","5015","59155"
+=======
+"Heart of the South West","LEP","2018","6155","5550","65095"
+>>>>>>> d231ffba6719ce99eeb75ba59dbf3d8e79efd608
 "Hertfordshire","LEP","2018","9080","7200","71875"
 "Hull and East Yorkshire","LEP","2018","2105","2070","20005"
 "Lancashire","LEP","2018","6185","5330","54600"
@@ -2358,8 +2396,12 @@
 "Lancashire","LSIP","2018","6185","5330","54600"
 "Leicester and Leicestershire","LSIP","2018","5085","4890","43890"
 "Liverpool City Region","LSIP","2018","6580","5440","46935"
+<<<<<<< HEAD
 "Norfolk and Suffolk","LSIP","2018","4455","4385","45505"
 "Norfolk and Suffolk (Greater Anglia)","LSIP","2018","1650","1415","16475"
+=======
+"Norfolk and Suffolk","LSIP","2018","6105","5800","61980"
+>>>>>>> d231ffba6719ce99eeb75ba59dbf3d8e79efd608
 "North East","LSIP","2018","3515","3165","29575"
 "North of Tyne","LSIP","2018","2970","2475","25140"
 "Oxfordshire","LSIP","2018","3190","2660","32285"

@@ -168,8 +168,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     <div class="govuk-header__logo" style="width: 15%; margin-left: 15px;float:left;">
     <a href="https://www.gov.uk/government/organisations/department-for-education" class="govuk-header__link govuk-header__link--homepage">
     <span class="govuk-header__logotype">
-    <img src="images/DfE_logo_landscape.png" height=32 width=146/>
-    <span class="govuk-header__logotype-text"></span>
+    <img src="images/DfE_logo.png" class="govuk-header__logotype-crown-fallback-image"/>
+    <span class="govuk-header__logotype-text">DfE</span>
     </span>
     </a>
     </div>
@@ -311,6 +311,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 
     tabPanel(
       "Homepage",
+
       ### 2.1.1 Intro ----
       fluidRow(column(
         12,
@@ -362,8 +363,9 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               "dashboard",
               .noWS = c("after", "before")
             ),
+
             ")"
-          )
+            )
         )
       )),
       # end intro text row
@@ -384,6 +386,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             p(
               "The tabs along the top of Local Skills page focus on different parts of the jobs and skills market. Each page includes options to download all of the indicators shown, either just for the selected geographic area or for all available geographies."
             ),
+
             p(
               "Where published figures are not available, area totals for LEP, LSIP or MCA are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
             ),
@@ -572,6 +575,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           leafletOutput("map")
         ),
         column(
+
           6,
           h3(uiOutput("titleTime")),
           p(uiOutput("commentTime")),
@@ -719,6 +723,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           12,
           h2("Data information"),
           h3("Annual Population Survey"),
+
           p(
             "The Annual Population Survey (APS) is a continuous household survey covering the UK.
           Topics included cover employment and unemployment, and education as well as housing, ethnicity and religion.
