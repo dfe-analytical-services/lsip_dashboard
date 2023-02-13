@@ -15,7 +15,7 @@ fluidPage(
     )
   ),
   # use_tota11y(), # accessibility layer for local testing
-  
+
   # Set metadata for browser
   tags$html(lang = "en"),
   tags$head(
@@ -23,13 +23,13 @@ fluidPage(
     tags$meta(name = "description", content = "Data dashboard presenting Local skills data from the Unit for Future Skills in the Department for Education."),
     tags$meta(name = "subject", content = "Education data dashboards.")
   ),
-  
+
   # Set title for search engines
   HTML("<title>Local Skills Dashboard</title>"),
   tags$head(includeHTML((
     "google-analytics.html"
   ))),
-  
+
   ## 1.2. Internal CSS ----
   tags$head(
     tags$style(
@@ -160,7 +160,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       )
     )
   ),
-  
+
   # Force the top nav bar to left align and centre the title
   HTML(
     '<header class="govuk-header" role="banner">
@@ -181,7 +181,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     </div>
     </header>'
   ),
-  
+
   # Add bug header
   HTML(
     '<div class="govuk-phase-banner govuk-width-container govuk-main-wrapper" id="beta banner" style="margin-left:0px;margin-right:0px">
@@ -192,7 +192,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
   </p>
 </div>'
   ),
-  
+
   # Force page to scroll to top when links clicked
   tags$script(
     " $(document).ready(function () {
@@ -299,16 +299,16 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
                 });
                 });"
   ),
-  
+
   # 2 Main page ----
   navlistPanel(
     id = "navbar",
     widths = c(2, 10),
     well = FALSE,
     selected = "Local skills",
-    
+
     ## 2.1 Homepage ----
-    
+
     tabPanel(
       "Homepage",
       ### 2.1.1 Intro ----
@@ -367,7 +367,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         )
       )),
       # end intro text row
-      
+
       ### 2.1.2 Contents ----
       fluidRow(column(
         12,
@@ -452,7 +452,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         )
       )),
       # end of dashboard contents row
-      
+
       ### 2.1.3 Version control ----
       fluidRow(column(
         12,
@@ -527,10 +527,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       )) # end of version control row
     ),
     # end of homepage Panel
-    
+
     ## 2.2 Overview ----
     panel_overview(),
-    
+
     ## 2.3 Local skills ----
     tabPanel(
       "Local skills",
@@ -553,12 +553,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               )
             )
           )
-        )
-      ,column(
+        ),
+        column(
           3,
           uiOutput("screenshotFile")
         )
-       ),
+      ),
       ### 2.3.2 Visuals row 1 ----
       fluidRow(
         column(
@@ -608,7 +608,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       )),
       br()
     ),
-    
+
     ## 2.4 Data info and download hub ----
     tabPanel(
       "Data info and download hub",
@@ -701,7 +701,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         dataTableOutput("hubTable")
       )),
       br(),
-    ## 2.5 Data infomation ----
+      ## 2.5 Data infomation ----
       ### 2.5.1 Data sources table ----
       fluidRow(column(
         12,
@@ -805,7 +805,8 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           ),
           br()
         )
-      )), 
+      )
+    ),
 
     ## 2.6 FE interventions and sources ----
     tabPanel(
@@ -949,7 +950,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       )
     ),
     # End of accessibility tab
-    
+
     ## 2.9 Support ----
     tabPanel(
       "Support and feedback",
@@ -958,6 +959,6 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
   ),
   # End of navBarPage
   # 3 Footer ----
-  
+
   shinyGovstyle::footer(TRUE)
 )

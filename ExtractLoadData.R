@@ -98,19 +98,19 @@ I_DataTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(pa
 ## Load lep boundary----
 folder <- "13_LEPBoundary"
 I_mapLEP <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
-                        stringsAsFactors = F
+  stringsAsFactors = F
 )
 
 ## Load la boundary----
 folder <- "14_LABoundary"
 I_mapLA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
-                       stringsAsFactors = F
+  stringsAsFactors = F
 )
 
 ## Load MCA boundary----
 folder <- "15_MCABoundary"
 I_mapMCA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
-                        stringsAsFactors = F
+  stringsAsFactors = F
 )
 
 ### employment by industry------------

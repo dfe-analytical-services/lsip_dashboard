@@ -8,7 +8,7 @@ server <- function(input, output, session) {
     animType = "fade"
   )
   show("app-content")
-  
+
   ## 1.2 Load chart colours ----
   # https://analysisfunction.civilservice.gov.uk/policy-store/data-visualisation-colours-in-charts/
   # England, geo1, geo2
@@ -18,24 +18,24 @@ server <- function(input, output, session) {
   chartColors6 <-
     c(
       "#BFBFBF",
-               "#12436D",
-               "#28A197",
-               "#801650",
-               "#F46A25",
-               "#A285D1",
-               "#2073BC"
+      "#12436D",
+      "#28A197",
+      "#801650",
+      "#F46A25",
+      "#A285D1",
+      "#2073BC"
     )
   # for when no England
   chartColors5 <-
     c(
       "#12436D",
-               "#28A197",
-               "#801650",
-               "#F46A25",
-               "#A285D1",
-               "#2073BC"
+      "#28A197",
+      "#801650",
+      "#F46A25",
+      "#A285D1",
+      "#2073BC"
     )
-  
+
   # 2 Main page ----
   ## 2.1 Homepage ----
   ### 2.1.1 Make links ----
@@ -47,42 +47,42 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_employment, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "empRate"
+      selected = "empRate"
     )
   })
   # Create link to job advert
   observeEvent(input$link_to_tabpanel_vacancies, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "vacancies"
+      selected = "vacancies"
     )
   })
   # Create link to skills data tab
   observeEvent(input$link_to_tabpanel_FE, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "achievements_rate_per_100000_population"
+      selected = "achievements_rate_per_100000_population"
     )
   })
   # Create link to enterprises
   observeEvent(input$link_to_tabpanel_enterprise, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "enterpriseCount"
+      selected = "enterpriseCount"
     )
   })
   # Create link to qualification
   observeEvent(input$link_to_tabpanel_qualification, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "level3AndAboveRate"
+      selected = "level3AndAboveRate"
     )
   })
   # Create link to destinations
   observeEvent(input$link_to_tabpanel_destinations, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "sustainedPositiveDestinationKS4Rate"
+      selected = "sustainedPositiveDestinationKS4Rate"
     )
   })
   # Create link to data tab
@@ -137,7 +137,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list("4a.Qualification by age and gender" = D_qual_APS1721),
-                 path = file
+        path = file
       )
     }
   )
@@ -155,7 +155,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list("6a.Ent by emp size and ind" = D_empentind_UBC1822),
-                 path = file
+        path = file
       )
     }
   )
@@ -165,7 +165,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list("7a.Enterprise demography" = D_enterprise_demo1621),
-                 path = file
+        path = file
       )
     }
   )
@@ -175,7 +175,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list("8a.Key Stage 4 destinations" = D_KS4destin_1521),
-                 path = file
+        path = file
       )
     }
   )
@@ -185,7 +185,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list("9a.Key Stage 5 destinations" = D_KS5destin_1721),
-                 path = file
+        path = file
       )
     }
   )
@@ -203,7 +203,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  
+
   ### 2.5.2 Create download links ----
   output$hidden_downloads <- renderUI(lapply(1:12, function(i) {
     downloadLink(paste0("downloadData", i), "download", class = "hiddenLink")
@@ -227,14 +227,14 @@ server <- function(input, output, session) {
       rownames = FALSE
     )
   })
-  
+
   ## 2.2 Overview ----
-  
+
   # define page title
   output$page0title <- renderUI({
     paste0("Overview of local landscape in ", input$lep1)
   })
-  
+
   ### 2.2.1 Filters ----
   # alter area dropdown depending if lep or lsip
   output$lep1_geo <- renderUI({
@@ -261,7 +261,7 @@ server <- function(input, output, session) {
       )
     }
   })
-  
+
   ###  2.2.2 Downloads ----
   # download all indicators
   list_of_datasets0 <- list(
@@ -288,7 +288,7 @@ server <- function(input, output, session) {
       write_xlsx(list_of_datasets0, path = file)
     }
   )
-  
+
   # Download current area indicators
   filtered_data0 <- reactive({
     list(
@@ -367,7 +367,7 @@ server <- function(input, output, session) {
       write_xlsx(filtered_data0(), path = file)
     }
   )
-  
+
   ### 2.2.3 KPIs and charts----
   #### 2.2.3.1 Employment count ----
   # get emp data for current area
@@ -385,13 +385,13 @@ server <- function(input, output, session) {
     empLEP() %>%
       filter(year == "2021")
   })
-  
+
   # Employment count
   output$locland.emplcnt0 <- renderUI({
     # call 2022 and 2021 values for chosen area
     empCnt2022 <- emp2022()$Employment
     empCntChange <- emp2022()$Employment - emp2021()$Employment
-    
+
     # print with formatting
     h4(
       span("Oct-Sep 2022", style = "font-size: 16px;font-weight:normal;"),
@@ -402,7 +402,7 @@ server <- function(input, output, session) {
         format_pm(empCntChange) # plus-minus and comma sep formatting
         ,
         style = paste0("font-size: 16px;color:", cond_color(empCntChange > 0)) # colour formating
-        
+
         ,
         .noWS = c("before", "after") # remove whitespace
       ),
@@ -410,17 +410,17 @@ server <- function(input, output, session) {
       style = "font-size: 21px"
     )
   })
-  
+
   # Emp chart
   empLineChart <- eventReactive(input$lep1, {
     # call 2022 to 2021 change  for chosen area
     empCntChange <- emp2022()$Employment - emp2021()$Employment
     empLine <- empLEP()
-    
+
     # find min and max for area
     empCntMinMax <- C_EmpRate_APS1822_max_min %>%
       filter(area == input$lep1)
-    
+
     ggplot(
       empLine,
       aes(
@@ -470,12 +470,12 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$empLineChart <- renderPlotly({
     validate(need(input$lep1 != "", "")) # if area not yet loaded don't try to load ch)
     ggplotly(empLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -484,13 +484,13 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   #### 2.2.3.2 Employment rate ----
   output$locland.emplrate0 <- renderUI({
     # call 2021 values and 21-22 change for chosen area
     empRate2022 <- emp2022()$empRate
     empRateChange <- emp2022()$empRate - emp2021()$empRate
-    
+
     # print with formatting
     h4(
       span("Oct-Sep 2022", style = "font-size: 16px;font-weight:normal;"),
@@ -507,22 +507,22 @@ server <- function(input, output, session) {
       style = "font-size: 21px"
     )
   })
-  
+
   # Emp chart
-  
+
   # find emp chart y axis min and max
   EmpRateMin <- C_EmpRate_APS1822 %>%
     summarise(min(empRate, na.rm = T), .groups = "drop")
   EmpRateMax <- C_EmpRate_APS1822 %>%
     summarise(max(empRate, na.rm = T), .groups = "drop")
-  
+
   empRateLineChart <- eventReactive(input$lep1, {
     empRateChange <- emp2022()$empRate - emp2021()$empRate
     empRateLine <- C_EmpRate_APS1822 %>%
       filter((geographic_level == input$GeoType &
-                area == input$lep1) |
-               (geographic_level == "COUNTRY" & area == "England"))
-    
+        area == input$lep1) |
+        (geographic_level == "COUNTRY" & area == "England"))
+
     ggplot(
       empRateLine,
       aes(
@@ -580,11 +580,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$empRateLineChart <- renderPlotly({
     ggplotly(empRateLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -593,15 +593,15 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   # Add link to employment data
   observeEvent(input$link_to_tabpanel_employment2, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "empRate"
+      selected = "empRate"
     )
   })
-  
+
   #### 2.2.3.3 Job adverts ----
   # get vac data for current area chosen
   VacArea <- eventReactive(input$lep1, {
@@ -620,12 +620,12 @@ server <- function(input, output, session) {
     VacArea() %>%
       filter(time_period == "2021-10-01")
   })
-  
+
   # Vacancy kpi
   output$jobad.units <- renderUI({
     ### ONS job advert units change
     VacChange <- VacLatest()$vacancies - VacLast()$vacancies
-    
+
     # print with formatting
     h4(
       span("Oct 2022", style = "font-size: 16px;font-weight:normal;"),
@@ -642,12 +642,12 @@ server <- function(input, output, session) {
       style = "font-size: 21px"
     )
   })
-  
+
   # Vacancy chart
   VacLineChart <- eventReactive(input$lep1, {
     VacLine <- VacArea()
     VacPcChange <- VacLatest()$vacancies - VacLast()$vacancies
-    
+
     ggplot(
       VacLine,
       aes(
@@ -702,11 +702,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$VacLineChart <- renderPlotly({
     ggplotly(VacLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -715,17 +715,17 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   # Add link to vacancy data
   observeEvent(input$link_to_tabpanel_vacancies2, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "vacancies"
+      selected = "vacancies"
     )
   })
-  
+
   #### 2.2.3.4 FE achieve ----
-  
+
   # get EandT data for current area
   EtLEP <- eventReactive(input$lep1, {
     C_Achieve_ILR1621 %>%
@@ -746,13 +746,13 @@ server <- function(input, output, session) {
     EtLEP() %>%
       filter(time_period == "202021")
   })
-  
+
   output$skisup.ETach <- renderUI({
     ETach <- EtLatest()$achievements
-    
+
     # E&T achievements change
     ETachChange <- EtLatest()$achievements - EtLast()$achievements
-    
+
     # print with formatting
     h4(
       span("2021/22", style = "font-size: 16px;font-weight:normal;"),
@@ -770,7 +770,7 @@ server <- function(input, output, session) {
       style = "font-size: 21px"
     )
   })
-  
+
   # e and t chart
   etLineChart <- eventReactive(input$lep1, {
     etLine <- EtLEP()
@@ -780,7 +780,7 @@ server <- function(input, output, session) {
       area == input$lep1,
       level_or_type == "Education and training: Total"
     )
-    
+
     ggplot(
       etLine,
       aes(
@@ -832,11 +832,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$etLineChart <- renderPlotly({
     ggplotly(etLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -845,7 +845,7 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   #### 2.2.3.5 FE app achieve ----
   # get App data for current area
   AppLEP <- eventReactive(input$lep1, {
@@ -869,11 +869,11 @@ server <- function(input, output, session) {
   })
   output$skisup.APPach <- renderUI({
     Appach <- AppLatest()$achievements
-    
+
     # E&T achievements change
     AppachChange <-
       AppLatest()$achievements - AppLast()$achievements
-    
+
     # print with formatting
     h4(
       span("2021/22", style = "font-size: 16px;font-weight:normal;"),
@@ -891,7 +891,7 @@ server <- function(input, output, session) {
       style = "font-size: 21px"
     )
   })
-  
+
   # app chart
   AppLineChart <- eventReactive(input$lep1, {
     AppLine <- AppLEP()
@@ -902,8 +902,8 @@ server <- function(input, output, session) {
       area == input$lep1,
       level_or_type == "Apprenticeships: Total"
     )
-    
-    
+
+
     ggplot(
       AppLine,
       aes(
@@ -921,7 +921,7 @@ server <- function(input, output, session) {
       )
     ) +
       geom_line(data = AppLine %>% filter(Year <= 20 &
-                                            Year >= 17)) +
+        Year >= 17)) +
       geom_ribbon(
         data = AppLine %>% filter(Year >= 20),
         aes(ymin = min(achievements), ymax = achievements),
@@ -956,11 +956,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$AppLineChart <- renderPlotly({
     ggplotly(AppLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -969,15 +969,15 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   # Add link to skills data
   observeEvent(input$link_to_tabpanel_FE2, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "achievements_rate_per_100000_population"
+      selected = "achievements_rate_per_100000_population"
     )
   })
-  
+
   #### 2.2.3.6 KS5 sustained positive destination rate ----
   # get dest data for current area
   KS5geo <- eventReactive(input$lep1, {
@@ -998,12 +998,12 @@ server <- function(input, output, session) {
     KS5geo() %>%
       filter(time_period == "201920")
   })
-  
+
   # destinations overview KPI
   output$dest.ks5over <- renderUI({
     # change in positive sustained rate
     KS5sustChange <- KS5Latest()$rate - KS5Last()$rate
-    
+
     # print with formatting
     h4(
       span("2020/21", style = "font-size: 16px;font-weight:normal;"),
@@ -1020,20 +1020,20 @@ server <- function(input, output, session) {
       style = "font-size: 21px"
     )
   })
-  
+
   # KS5 destinations chart
   KS5LineChart <- eventReactive(input$lep1, {
     KS5Line <- C_KS4_KS5eduempapp %>% filter(
       (geographic_level == input$GeoType &
-         area == input$lep1) |
+        area == input$lep1) |
         (geographic_level == "COUNTRY" &
-           area == "England"),
+          area == "England"),
       `Cohort Group` == "Total",
       `Key Stage` == "Key Stage 5"
     )
     KS5sustChange <- KS5Latest()$rate - KS5Last()$rate
     KS5MinMax <- C_KS5_eduempapp_max_min
-    
+
     ggplot(KS5Line, aes(
       x = Year,
       y = rate,
@@ -1090,11 +1090,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$KS5LineChart <- renderPlotly({
     ggplotly(KS5LineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -1103,15 +1103,15 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   # add link to destinations
   observeEvent(input$link_to_tabpanel_destinations2, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "sustainedPositiveDestinationKS4Rate"
+      selected = "sustainedPositiveDestinationKS4Rate"
     )
   })
-  
+
   #### 2.2.3.7 Micro enterprise ----
   # get Enterprise data for current area
   Entgeo <- eventReactive(input$lep1, {
@@ -1132,12 +1132,12 @@ server <- function(input, output, session) {
     Entgeo() %>%
       filter(year == "2021")
   })
-  
+
   # enterprise overview KPI
   output$UBC.micro <- renderUI({
     # change in micro enterprises
     EntChange <- EntLatest()$rate - EntLast()$rate
-    
+
     # print with formatting
     h4(
       span("Mar 2022", style = "font-size: 16px;font-weight:normal;"),
@@ -1154,20 +1154,20 @@ server <- function(input, output, session) {
       style = "font-size: 21px"
     )
   })
-  
+
   # micro enterprise chart
   UBCLineChart <- eventReactive(input$lep1, {
     EntLine <- C_empentind3_UBC1822 %>% filter(
       (geographic_level == input$GeoType &
-         area == input$lep1) |
+        area == input$lep1) |
         (geographic_level == "COUNTRY" &
-           area == "England"),
+          area == "England"),
       variable == "Micro 0 to 9",
       industry == "Total"
     )
     EntChange <- EntLatest()$rate - EntLast()$rate
     EntMinMax <- C_empentind_max_min
-    
+
     ggplot(EntLine, aes(
       x = Year - 1,
       y = rate,
@@ -1224,11 +1224,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$UBCLineChart <- renderPlotly({
     ggplotly(UBCLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -1237,15 +1237,15 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   # add link to enterprise
   observeEvent(input$link_to_tabpanel_enterprise2, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "enterpriseCount"
+      selected = "enterpriseCount"
     )
   })
-  
+
   #### 2.2.3.8 Qualifications NVQ ----
   # get entprise data for current area
   Qualgeo <- eventReactive(input$lep1, {
@@ -1267,12 +1267,12 @@ server <- function(input, output, session) {
     Qualgeo() %>%
       filter(year == "2020")
   })
-  
+
   # NVQ3 or above overview KPI
   output$APS.nvq3plus <- renderUI({
     # change in NVQ3 or above
     QualChange <- QualLatest()$rate - QualLast()$rate
-    
+
     # print with formatting
     h4(
       span("Jan-Dec 2021", style = "font-size: 16px;font-weight:normal;"),
@@ -1289,12 +1289,12 @@ server <- function(input, output, session) {
       style = "font-size: 21px"
     )
   })
-  
+
   # qualification chart
   Nvq3plusLineChart <- eventReactive(input$lep1, {
     QualLine <- C_qualevel3plus_APS1721 %>% filter(
       (geographic_level == input$GeoType &
-         area == input$lep1) |
+        area == input$lep1) |
         (geographic_level == "COUNTRY" & area == "England"),
       Level == "Level 3 and above",
       age_band == "16-64",
@@ -1302,7 +1302,7 @@ server <- function(input, output, session) {
     )
     QualChange <- QualLatest()$rate - QualLast()$rate
     # QualMinMax <- C_qual_max_min
-    
+
     ggplot(QualLine, aes(
       x = Year,
       y = rate,
@@ -1359,11 +1359,11 @@ server <- function(input, output, session) {
     t = 0,
     pad = 0
   )
-  
+
   output$Nvq3plusLineChart <- renderPlotly({
     ggplotly(Nvq3plusLineChart(),
-             tooltip = "text",
-             height = 81
+      tooltip = "text",
+      height = 81
     ) %>%
       layout(
         margin = m,
@@ -1372,17 +1372,17 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   # add link to qualification level
   observeEvent(input$link_to_tabpanel_qualification2, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "level3AndAboveRate"
+      selected = "level3AndAboveRate"
     )
   })
-  
+
   ## 2.3 Local skills----
-  
+
   ### 2.3.2 Reusable variables----
   # get current metric in plain English
   currentMetric <- reactive({
@@ -1392,13 +1392,35 @@ server <- function(input, output, session) {
   })
   # get current area name
   areaClicked <- reactive({
-    if ("map_shape_click" %in% names(input)) {
+    if ("map_shape_click" %in% names(input) &&
+      (nrow(C_LEP2020 %>%
+        filter(
+          geographic_level == input$splashGeoType,
+          Area == C_Geog$areaName[C_Geog$areaCode == input$map_shape_click$id]
+        ))) != 0) {
       event <- input$map_shape_click
     } else {
       event <- data.frame(id = c("E37000025"))
     }
     C_Geog$areaName[C_Geog$areaCode == event$id]
   })
+
+  # Update overview to match map
+  observe({
+    updateSelectInput(session, "lep1",
+      selected = areaClicked()
+    )
+    updateSelectInput(session, "GeoType",
+      selected = input$splashGeoType
+    )
+  })
+  # observeEvent(input$lep1, {
+  #   print(input$lep1)
+  #   print(areaClicked())
+  #   if(is.null(areaClicked())==FALSE){
+  #   areaClicked()<-input$lep1}else{}
+  # })
+
   # get current LA
   laClicked <- reactive({
     eventLA <- input$mapLA_shape_click
@@ -1427,7 +1449,7 @@ server <- function(input, output, session) {
   # filter for just england
   englandGeog <- C_Geog %>%
     filter(geog == "COUNTRY" & areaName == "England")
-  
+
   ### 2.3.3 Screenshot----
   output$screenshotFile <- renderUI({
     capture::capture(
@@ -1453,7 +1475,7 @@ server <- function(input, output, session) {
   output$dataCaveat <- renderUI({
     HTML((I_DataText %>% filter(metric == input$splashMetric))$caveatText)
   })
-  
+
   ### 2.3.5 Comparison filter----
   output$geoComp <- renderUI({
     if (input$splashGeoType == "LEP") {
@@ -1488,27 +1510,27 @@ server <- function(input, output, session) {
       )
     }
   })
-  
+
   ### 2.3.5 National map ----
   #### 2.3.5.1 Title ----
   output$titleMap <- renderUI({
     paste0("Where does ", areaClicked(), " fit in the national picture?")
   })
-  
+
   #### 2.3.5.2 Comment ----
   output$commentMap <- renderUI({
     compareNational <-
       if ((C_Geog %>%
-           filter(geog == input$splashGeoType &
-                  areaName == areaClicked()))[[input$splashMetric]]
-          >
-          (englandGeog)[[input$splashMetric]]) {
+        filter(geog == input$splashGeoType &
+          areaName == areaClicked()))[[input$splashMetric]]
+      >
+        (englandGeog)[[input$splashMetric]]) {
         "higher"
       } else {
         "lower"
       }
     areaRank <- (geogRank() %>%
-                   filter(areaName == areaClicked()))$ranking
+      filter(areaName == areaClicked()))$ranking
     suff <- case_when(
       areaRank %in% c(11, 12, 13) ~ "th",
       areaRank %% 10 == 1 ~ "st",
@@ -1531,7 +1553,7 @@ server <- function(input, output, session) {
       groupCount()
     )
   })
-  
+
   #### 2.3.5.3 Map ----
   output$map <- renderLeaflet({
     mapData <- C_Geog %>% filter(geog == input$splashGeoType)
@@ -1553,7 +1575,7 @@ server <- function(input, output, session) {
           format(round(mapData[[input$splashMetric]]), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
-    
+
     leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
       addProviderTiles(providers$CartoDB.Positron) %>%
       addPolygons(
@@ -1587,7 +1609,7 @@ server <- function(input, output, session) {
         zoom = 5.7
       )
   })
-  
+
   ### 2.3.6 LA map ----
   #### 2.3.6.1 Title ----
   output$titleLaMap <- renderUI({
@@ -1603,12 +1625,12 @@ server <- function(input, output, session) {
       mutate(ranking = rank(desc(eval(
         parse(text = input$splashMetric)
       )), ties.method = c("first")))
-    
+
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <-
       (LaHighLow %>% filter(ranking == max(ranking)))$areaName
     if (areaClicked() == "London" &
-        currentMetric() == "job adverts") {
+      currentMetric() == "job adverts") {
       "ONS job adverts in London are not broken down by LA."
     } else {
       paste0(
@@ -1621,7 +1643,7 @@ server <- function(input, output, session) {
       )
     }
   })
-  
+
   #### 2.3.6.3 Map----
   output$mapLA <- renderLeaflet({
     # Filter to those LAs in that region
@@ -1631,7 +1653,7 @@ server <- function(input, output, session) {
         eval(parse(text = input$splashGeoType)) == areaClicked()
       )
     pal <- colorNumeric("Blues", mapData[[input$splashMetric]])
-    
+
     labels <-
       if (str_sub(input$splashMetric, start = -4) == "Rate") {
         sprintf(
@@ -1648,7 +1670,7 @@ server <- function(input, output, session) {
           format(mapData[[input$splashMetric]], big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
-    
+
     leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
       addProviderTiles(providers$CartoDB.Positron) %>%
       addPolygons(
@@ -1669,14 +1691,14 @@ server <- function(input, output, session) {
         )
       )
   })
-  
+
   ### 2.3.7 Time chart ----
-  
+
   # create time header
   output$titleTime <- renderUI({
     paste0("How is ", currentMetric(), " changing over time?")
   })
-  
+
   #### 2.3.7.1 Comment ----
   output$commentTime <- renderUI({
     currentArea <- C_time %>%
@@ -1692,29 +1714,29 @@ server <- function(input, output, session) {
         metric == input$splashMetric
       )
     currentChange <- (currentArea %>%
-                        filter(chart_year == max(chart_year)))$value -
+      filter(chart_year == max(chart_year)))$value -
       (currentArea %>%
-         filter(chart_year == (ymd(
-           max(chart_year)
-         ) - years( # ks5 only has the data fr the last 4 years
-           if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
-             3
-           } else {
-             4
-           }
-         ))))$value
+        filter(chart_year == (ymd(
+          max(chart_year)
+        ) - years( # ks5 only has the data fr the last 4 years
+          if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
+            3
+          } else {
+            4
+          }
+        ))))$value
     englandChange <- (englandArea %>%
-                        filter(chart_year == max(chart_year)))$value -
+      filter(chart_year == max(chart_year)))$value -
       (englandArea %>%
-         filter(chart_year == (ymd(
-           max(chart_year)
-         ) - years( # ks5 only has the data fr the last 4 years
-           if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
-             3
-           } else {
-             4
-           }
-         ))))$value
+        filter(chart_year == (ymd(
+          max(chart_year)
+        ) - years( # ks5 only has the data fr the last 4 years
+          if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
+            3
+          } else {
+            4
+          }
+        ))))$value
     paste0(
       areaClicked(), "'s ", currentMetric(), " has ",
       if (currentChange > 0) {
@@ -1745,7 +1767,7 @@ server <- function(input, output, session) {
       # , areaRank, suff, " fastest growing ", currentMetric(), " of the ", groupCount)
     )
   })
-  
+
   #### 2.3.7.2 Chart ----
   Splash_time <-
     eventReactive(
@@ -1762,11 +1784,11 @@ server <- function(input, output, session) {
             (
               geographic_level == input$splashGeoType &
                 (area == areaClicked() |
-                   area %in% if ("geoComps" %in% names(input)) {
-                     input$geoComps
-                   } else {
-                     "\nNone"
-                   })
+                  area %in% if ("geoComps" %in% names(input)) {
+                    input$geoComps
+                  } else {
+                    "\nNone"
+                  })
             ) |
               # get england for comparison (if a rate)
               (if (str_sub(input$splashMetric, start = -4) %in% c("Rate", "tion")) {
@@ -1784,9 +1806,9 @@ server <- function(input, output, session) {
           )
         # add an extra column so the colours work in ggplot when sorting alphabetically
         SplashTime$Areas <- factor(SplashTime$area,
-                                   levels = c("England", areaClicked(), laClicked(), input$geoComps)
+          levels = c("England", areaClicked(), laClicked(), input$geoComps)
         )
-        
+
         ggplot(
           SplashTime,
           aes(
@@ -1838,7 +1860,7 @@ server <- function(input, output, session) {
           )
       }
     )
-  
+
   output$Splash_time <- renderPlotly({
     ggplotly(Splash_time(), tooltip = "text") %>%
       layout(
@@ -1852,7 +1874,7 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   ### 2.3.8 Breakdown chart ----
   #### 2.3.8.1 Breakdown filter ----
   distinctBreakdowns <- C_breakdown %>%
@@ -1875,7 +1897,7 @@ server <- function(input, output, session) {
     group_by(metric, breakdown, area, geographic_level) %>%
     arrange(desc(value)) %>%
     slice(1:10)
-  
+
   output$subgroupFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
@@ -1907,7 +1929,7 @@ server <- function(input, output, session) {
       options = list(`actions-box` = TRUE)
     )
   })
-  
+
   #### 2.3.8.3 Title ----
   output$titleBreakdown <- renderUI({
     validate(need(input$barBreakdown != "", "")) # if area not yet loaded don't try to load ch)
@@ -1939,7 +1961,7 @@ server <- function(input, output, session) {
       )
     }
   })
-  
+
   #### 2.3.8.4 Comment ----
   output$commentBreakdown <- renderUI({
     validate(
@@ -1961,7 +1983,7 @@ server <- function(input, output, session) {
       filter(area == areaClicked()) %>%
       mutate(ranking = rank(desc(abs(change)), ties.method = c("first"))) %>%
       filter(ranking == 1)
-    
+
     breakdownDirection <-
       if (isTRUE(breakdownDiff$change) && breakdownDiff$change > 0) {
         "high"
@@ -1979,7 +2001,7 @@ server <- function(input, output, session) {
       " than the national average."
     )
   })
-  
+
   #### 2.3.8.3 Bar chart ----
   Splash_pc <- eventReactive(
     c(
@@ -2006,11 +2028,11 @@ server <- function(input, output, session) {
           ((
             geographic_level == input$splashGeoType &
               (area == areaClicked() |
-                 area %in% if ("geoComps" %in% names(input)) {
-                   input$geoComps
-                 } else {
-                   "\nNone"
-                 })
+                area %in% if ("geoComps" %in% names(input)) {
+                  input$geoComps
+                } else {
+                  "\nNone"
+                })
           ) |
             if (is.null(input$mapLA_shape_click) == TRUE) {
               area == "\nNone"
@@ -2024,7 +2046,7 @@ server <- function(input, output, session) {
       } else {
         # add an extra column so the colours work in ggplot when sorting alphabetically
         Splash_21$Area <- factor(Splash_21$area,
-                                 levels = c("England", areaClicked(), laClicked(), input$geoComps)
+          levels = c("England", areaClicked(), laClicked(), input$geoComps)
         )
         ggplot(
           Splash_21,
@@ -2039,12 +2061,12 @@ server <- function(input, output, session) {
               currentMetric(),
               ": ",
               if (str_sub(input$splashMetric, start = -4) == "Rate" |
-                  input$splashMetric == "Employment" |
-                  input$splashMetric == "vacancies" |
-                  input$splashMetric == "enterpriseCount" |
-                  input$splashMetric == "achievements" |
-                  input$splashMetric == "participation" |
-                  input$splashMetric == "starts") {
+                input$splashMetric == "Employment" |
+                input$splashMetric == "vacancies" |
+                input$splashMetric == "enterpriseCount" |
+                input$splashMetric == "achievements" |
+                input$splashMetric == "participation" |
+                input$splashMetric == "starts") {
                 scales::percent(round(value, 2))
               } else {
                 round(value, 0)
@@ -2055,9 +2077,9 @@ server <- function(input, output, session) {
         ) +
           geom_col(position = "dodge") +
           scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" |
-                                          input$splashMetric == "Employment" |
-                                          input$splashMetric == "vacancies" |
-                                          input$splashMetric == "enterpriseCount") {
+            input$splashMetric == "Employment" |
+            input$splashMetric == "vacancies" |
+            input$splashMetric == "enterpriseCount") {
             scales::percent
           } else {
             label_number_si(accuracy = 1)
@@ -2082,12 +2104,12 @@ server <- function(input, output, session) {
       }
     }
   )
-  
+
   output$Splash_pc <- renderPlotly({
     # check it exists
     validate(need(Splash_pc() != "x", ""))
     ggplotly(Splash_pc(),
-             tooltip = c("text")
+      tooltip = c("text")
     ) %>%
       layout(
         legend = list(
@@ -2100,7 +2122,7 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-  
+
   ## 2.4 DataHub----
   ### 2.4.1 Filters----
   output$hubAreaInput <- renderUI({
@@ -2139,7 +2161,7 @@ server <- function(input, output, session) {
       options = list(placeholder = "Choose metrics*")
     )
   })
-  
+
   output$hubBreakdownInput <- renderUI({
     selectizeInput(
       "hubBreakdowns",
@@ -2165,7 +2187,7 @@ server <- function(input, output, session) {
       options = list(placeholder = "Choose breakdowns")
     )
   })
-  
+
   output$hubYearInput <- renderUI({
     selectizeInput(
       "hubYears",
@@ -2197,7 +2219,7 @@ server <- function(input, output, session) {
       options = list(placeholder = "Choose years*")
     )
   })
-  
+
   ### 2.4.2 Table----
   datahubDataset <- reactive({
     C_datahub %>%
@@ -2264,11 +2286,11 @@ server <- function(input, output, session) {
         Value = value
       )
   })
-  
+
   output$hubTable <- renderDataTable({
     DT::datatable(datahubDataset())
   })
-  
+
   # Download button
   filtered_data1 <- reactive({
     list("LocalSkillIndicators" = datahubDataset())
@@ -2281,7 +2303,7 @@ server <- function(input, output, session) {
       write_xlsx(filtered_data1(), path = file)
     }
   )
-  
+
   ### 2.4.3 Unique code----
   allOptions <- bind_rows(
     data.frame(
@@ -2303,7 +2325,7 @@ server <- function(input, output, session) {
     mutate(ChoiceID = paste0(filterID, ChoiceNo)) %>%
     ungroup() %>%
     select(-filterID, -ChoiceNo)
-  
+
   output$uniqueCode <- renderUI({
     allOptions %>%
       mutate(
@@ -2325,7 +2347,7 @@ server <- function(input, output, session) {
         .groups = "drop"
       )
   })
-  
+
   ## 2.6 FE interventions table----
   output$interventionTable <- DT::renderDataTable({
     DT::datatable(
@@ -2335,7 +2357,7 @@ server <- function(input, output, session) {
       rownames = FALSE
     )
   })
-  
+
   ## 2.7 FE sources table----
   output$sourcesTable <- DT::renderDataTable({
     DT::datatable(
@@ -2345,7 +2367,7 @@ server <- function(input, output, session) {
       rownames = FALSE
     )
   })
-  
+
   # 3.Stop app -----
   session$onSessionEnded(function() {
     stopApp()
