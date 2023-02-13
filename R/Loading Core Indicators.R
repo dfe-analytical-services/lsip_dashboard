@@ -7,8 +7,6 @@ C_LEP2020 <- read.csv(file = "./Data/AppData/C_LEP2020.csv", check.names = FALSE
 ## Employment by occupation ----
 # data for download
 D_EmpOcc_APS1721 <- read.csv(file = "./Data/AppData/D_EmpOcc_APS1721.csv", check.names = FALSE)
-# data for dashboard
-C_EmpOcc_APS1721 <- read.csv(file = "./Data/AppData/C_EmpOcc_APS1721.csv", check.names = FALSE)
 
 ## Employment level and rate ----
 # data for download
@@ -27,16 +25,6 @@ C_Achieve_ILR1621_max_min <- read.csv(file = "./Data/AppData/C_Achieve_ILR1621_m
 ## FE achievements by SSA----
 # data for download
 D_Achieve_ILR21 <- read.csv(file = "./Data/AppData/D_Achieve_ILR21.csv", check.names = FALSE)
-# data for dashboard
-C_Achieve_ILR21 <- read.csv(file = "./Data/AppData/C_Achieve_ILR21.csv", check.names = FALSE)
-
-## ONS vacancy ----
-# data for download
-C_Vacancy_ONS1722 <- read.csv(file = "./Data/AppData/C_Vacancy_ONS1722.csv", check.names = FALSE)
-# data for dashboard
-C_Vacancy_England <- read.csv(file = "./Data/AppData/C_Vacancy_England.csv", check.names = FALSE)
-C_Vacancy_England_max_min <- read.csv(file = "./Data/AppData/C_Vacancy_England_max_min.csv", check.names = FALSE)
-C_Vacancy_England_change <- read.csv(file = "./Data/AppData/C_Vacancy_England_change.csv", check.names = FALSE)
 
 ## Enterprise by employment size ----
 # data for download
