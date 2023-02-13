@@ -76,7 +76,7 @@ C_empentind_max_min <- read.csv(file = "./Data/AppData/C_empentind_max_min.csv",
 
 
 # map tables
-load(file = "./Data/AppData/C_Geog.Rdata")
+load(file = "./Data/AppData/C_Geog.rdata")
 
 # v1 files
 C_time <- read.csv(file = "./Data/AppData/C_time.csv", check.names = FALSE)
