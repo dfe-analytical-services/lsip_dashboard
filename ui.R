@@ -554,8 +554,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             )
           )
         )
-      ,
-        column(
+      ,column(
           3,
           uiOutput("screenshotFile")
         )
@@ -610,6 +609,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       br()
     ),
     
+    navbarMenu("Data info and download hub",
     ## 2.4 Datahub ----
     tabPanel(
       "DataHub",
@@ -810,9 +810,10 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           br()
         )
       )
-    ), # end of data information row),
-    # end of data tab
+    )
+    ), 
     
+    navbarMenu("FE interventions and data sources",
     ## 2.6 FE interventions ----
     tabPanel(
       "FE interventions",
@@ -902,8 +903,9 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           br()
         )
       )
-    ),
-    
+    )
+    ), 
+    navbarMenu("Accessibility and support",
     ## 2.8 Accessibility ----
     tabPanel(
       "Accessibility",
@@ -966,6 +968,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       "Support and feedback",
       support_links() # defined in R/supporting_links.R))
     )
+  )
   ),
   # End of navBarPage
   # 3 Footer ----
