@@ -1403,7 +1403,7 @@ server <- function(input, output, session) {
   # get current LA
   laClicked <- reactive({
     eventLA <- input$mapLA_shape_click
-    C_mapLA$LAD22NM[C_mapLA$LAD22CD == eventLA$id]
+    C_Geog$areaName[C_Geog$areaCode == eventLA$id]
   })
   # ranking for each geog
   geogRank <- reactive({
