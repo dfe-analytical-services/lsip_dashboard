@@ -12,12 +12,12 @@ panel_overview <- function() {
             column(
               width = 4,
               selectInput("GeoType", "Choose geography",
-                choices = c(
-                  "Local Enterprise Partnership (LEP)" = "LEP",
-                  "Local Skills Improvement Plan (LSIP)" = "LSIP",
-                  "Mayoral Combined Authority (MCA)" = "MCA"
-                ),
-                selected = "LEP"
+                          choices = c(
+                            "Local Enterprise Partnership (LEP)" = "LEP",
+                            "Local Skills Improvement Plan (LSIP)" = "LSIP",
+                            "Mayoral Combined Authority (MCA)" = "MCA"
+                          ),
+                          selected = "LEP"
               )
             ),
             column(
@@ -29,7 +29,7 @@ panel_overview <- function() {
         br(),
       )
     ), # end of filters row
-
+    
     h1(uiOutput("page0title")),
     p("Change metrics are measured against the same period in the previous year."),
     fluidRow(

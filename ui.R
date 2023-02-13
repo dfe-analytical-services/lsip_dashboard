@@ -15,7 +15,7 @@ fluidPage(
     )
   ),
   # use_tota11y(), # accessibility layer for local testing
-
+  
   # Set metadata for browser
   tags$html(lang = "en"),
   tags$head(
@@ -23,13 +23,13 @@ fluidPage(
     tags$meta(name = "description", content = "Data dashboard presenting Local skills data from the Unit for Future Skills in the Department for Education."),
     tags$meta(name = "subject", content = "Education data dashboards.")
   ),
-
+  
   # Set title for search engines
   HTML("<title>Local Skills Dashboard</title>"),
   tags$head(includeHTML((
     "google-analytics.html"
   ))),
-
+  
   ## 1.2. Internal CSS ----
   tags$head(
     tags$style(
@@ -160,7 +160,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       )
     )
   ),
-
+  
   # Force the top nav bar to left align and centre the title
   HTML(
     '<header class="govuk-header" role="banner">
@@ -168,8 +168,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     <div class="govuk-header__logo" style="width: 15%; margin-left: 15px;float:left;">
     <a href="https://www.gov.uk/government/organisations/department-for-education" class="govuk-header__link govuk-header__link--homepage">
     <span class="govuk-header__logotype">
-    <img src="images/DfE_logo.png" class="govuk-header__logotype-crown-fallback-image"/>
-    <span class="govuk-header__logotype-text">DfE</span>
+    <img src="images/DfE_logo_landscape.png" height=32 width=146/>
+    <span class="govuk-header__logotype-text"></span>
     </span>
     </a>
     </div>
@@ -181,23 +181,18 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     </div>
     </header>'
   ),
-
+  
   # Add bug header
   HTML(
     '<div class="govuk-phase-banner govuk-width-container govuk-main-wrapper" id="beta banner" style="margin-left:0px;margin-right:0px">
   <p class="govuk-phase-banner__content">
     <strong class="govuk-tag govuk-phase-banner__content__tag ">beta</strong>
-    <span class="govuk-phase-banner__text">',
-    "<b>We're looking for volunteers! We've developed several new dashboards ",
-    "in the last 12 months and we'd really like to know what you think of them. ",
-    "If you're interested in helping us improve our products, please sign up ",
-    "using our <a href='https://forms.office.com/e/ZjNxf10uuN'>user-testing volunteer form</a>.</b><br>",
-    "We are aware of performance issues that require some users to reload the page. We are working to fix this.
+    <span class="govuk-phase-banner__text">We are aware of performance issues that require some users to reload the page. We are working to fix this.
 </span>
   </p>
 </div>'
   ),
-
+  
   # Force page to scroll to top when links clicked
   tags$script(
     " $(document).ready(function () {
@@ -304,16 +299,16 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
                 });
                 });"
   ),
-
+  
   # 2 Main page ----
   navlistPanel(
     id = "navbar",
     widths = c(2, 10),
     well = FALSE,
     selected = "Local skills",
-
+    
     ## 2.1 Homepage ----
-
+    
     tabPanel(
       "Homepage",
       ### 2.1.1 Intro ----
@@ -372,7 +367,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         )
       )),
       # end intro text row
-
+      
       ### 2.1.2 Contents ----
       fluidRow(column(
         12,
@@ -457,7 +452,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         )
       )),
       # end of dashboard contents row
-
+      
       ### 2.1.3 Version control ----
       fluidRow(column(
         12,
@@ -532,88 +527,88 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       )) # end of version control row
     ),
     # end of homepage Panel
-
+    
     ## 2.2 Overview ----
     panel_overview(),
-
-    # ## 2.3 Local skills ----
-    # tabPanel(
-    #   "Local skills",
-    #   br(),
-    #   ### 2.3.1 Filters ----
-    #   fluidRow(
-    #     column(
-    #       9,
-    #       h3("What are you interested in?"),
-    #       pickerInput(
-    #         inputId = "splashMetric",
-    #         choices = metricChoices,
-    #         multiple = FALSE,
-    #         choicesOpt = list(
-    #           disabled = unlist(metricChoices) %in% c("workingFutures"),
-    #           style = ifelse(
-    #             unlist(metricChoices) %in% c("workingFutures"),
-    #             yes = "color: rgba(119, 119, 119, 0.5);",
-    #             no = ""
-    #           )
-    #         )
-    #       )
-    #     ),
-    #     column(
-    #       3#,
-    #       #uiOutput("screenshotFile")
-    #     )
-    #   ),
-    #   ### 2.3.2 Visuals row 1 ----
-    #   fluidRow(
-    #     column(
-    #       6,
-    #       h3(uiOutput("titleMap")),
-    #       radioGroupButtons(
-    #         inputId = "splashGeoType",
-    #         choices = c("LEP", "LSIP", "MCA")
-    #       ),
-    #       p(uiOutput("commentMap")),
-    #       leafletOutput("map")
-    #     ),
-    #     column(
-    #       6,
-    #       h3(uiOutput("titleTime")),
-    #       p(uiOutput("commentTime")),
-    #       uiOutput("geoComp"),
-    #       plotlyOutput("Splash_time")
-    #     )
-    #   ),
-    #   br(),
-    #   ### 2.3.3 Visuals row 2 ----
-    #   fluidRow(
-    #     column(
-    #       6,
-    #       h3(uiOutput("titleBreakdown")),
-    #       uiOutput("breakdownFilter"),
-    #       uiOutput("subgroupFilter"),
-    #       p(uiOutput("commentBreakdown")),
-    #       plotlyOutput("Splash_pc")
-    #     ),
-    #     column(
-    #       6,
-    #       h3(uiOutput("titleLaMap")),
-    #       p(uiOutput("commentLA")),
-    #       leafletOutput("mapLA")
-    #     )
-    #   ),
-    #   ### 2.3.3 Data notes ----
-    #   fluidRow(column(
-    #     12,
-    #     h2("Data notes"),
-    #     p(uiOutput("dataSource")),
-    #     p(uiOutput("dataNote")),
-    #     p("Caveats:"),
-    #     p(uiOutput("dataCaveat"))
-    #   )),
-    #   br()
-    # ),
-
+    
+    ## 2.3 Local skills ----
+    tabPanel(
+      "Local skills",
+      br(),
+      ### 2.3.1 Filters ----
+      fluidRow(
+        column(
+          9,
+          h3("What are you interested in?"),
+          pickerInput(
+            inputId = "splashMetric",
+            choices = metricChoices,
+            multiple = FALSE,
+            choicesOpt = list(
+              disabled = unlist(metricChoices) %in% c("workingFutures"),
+              style = ifelse(
+                unlist(metricChoices) %in% c("workingFutures"),
+                yes = "color: rgba(119, 119, 119, 0.5);",
+                no = ""
+              )
+            )
+          )
+        ),
+        column(
+          3,
+          uiOutput("screenshotFile")
+        )
+      ),
+      ### 2.3.2 Visuals row 1 ----
+      fluidRow(
+        column(
+          6,
+          h3(uiOutput("titleMap")),
+          radioGroupButtons(
+            inputId = "splashGeoType",
+            choices = c("LEP", "LSIP", "MCA")
+          ),
+          p(uiOutput("commentMap")),
+          leafletOutput("map")
+        ),
+        column(
+          6,
+          h3(uiOutput("titleTime")),
+          p(uiOutput("commentTime")),
+          uiOutput("geoComp"),
+          plotlyOutput("Splash_time")
+        )
+      ),
+      br(),
+      ### 2.3.3 Visuals row 2 ----
+      fluidRow(
+        column(
+          6,
+          h3(uiOutput("titleBreakdown")),
+          uiOutput("breakdownFilter"),
+          uiOutput("subgroupFilter"),
+          p(uiOutput("commentBreakdown")),
+          plotlyOutput("Splash_pc")
+        ),
+        column(
+          6,
+          h3(uiOutput("titleLaMap")),
+          p(uiOutput("commentLA")),
+          leafletOutput("mapLA")
+        )
+      ),
+      ### 2.3.3 Data notes ----
+      fluidRow(column(
+        12,
+        h2("Data notes"),
+        p(uiOutput("dataSource")),
+        p(uiOutput("dataNote")),
+        p("Caveats:"),
+        p(uiOutput("dataCaveat"))
+      )),
+      br()
+    ),
+    
     ## 2.4 Datahub ----
     tabPanel(
       "DataHub",
@@ -816,7 +811,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       )
     ), # end of data information row),
     # end of data tab
-
+    
     ## 2.6 FE interventions ----
     tabPanel(
       "FE interventions",
@@ -907,7 +902,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
         )
       )
     ),
-
+    
     ## 2.8 Accessibility ----
     tabPanel(
       "Accessibility",
@@ -964,7 +959,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       )
     ),
     # End of accessibility tab
-
+    
     ## 2.9 Support ----
     tabPanel(
       "Support and feedback",
@@ -973,6 +968,6 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
   ),
   # End of navBarPage
   # 3 Footer ----
-
+  
   shinyGovstyle::footer(TRUE)
 )
