@@ -246,7 +246,7 @@ format.Achieve.ILR <- function(x) {
     )) %>%
     left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup")) %>%
     # addLEPS
-    left_join(select(C_LADLEP2020, -LAD21NM), by = c("lad_code" = "LAD21CD")) %>%
+    left_join(select(C_LADLEP2020, -LAD21NM), by = c("lad_code" = "LAD21CD"),multiple = "all") %>%
     filter(is.na(LEP) == FALSE) %>% # remove non-english
     select(
       -time_identifier, -country_code, -country_name, -region_code, -region_name, -old_la_code,
