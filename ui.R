@@ -609,10 +609,9 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       br()
     ),
     
-    navbarMenu("Data info and download hub",
-    ## 2.4 Datahub ----
+    ## 2.4 Data info and download hub ----
     tabPanel(
-      "DataHub",
+      "Data info and download hub",
       fluidRow(column(
         12,
         h1("DataHub"),
@@ -701,11 +700,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         12,
         dataTableOutput("hubTable")
       )),
-      br()
-    ),
+      br(),
     ## 2.5 Data infomation ----
-    tabPanel(
-      "Data infomation",
       ### 2.5.1 Data sources table ----
       fluidRow(column(
         12,
@@ -809,14 +805,22 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           ),
           br()
         )
-      )
-    )
-    ), 
-    
-    navbarMenu("FE interventions and data sources",
-    ## 2.6 FE interventions ----
+      )), 
+
+    ## 2.6 FE interventions and sources ----
     tabPanel(
-      "FE interventions",
+      "FE sources and interventions",
+      fluidRow(
+        column(
+          12,
+          h1("FE data sources"),
+          p(
+            "In the below table you can find a list of other data sources which cover Further Education and local skills."
+          ),
+          DT::dataTableOutput("sourcesTable"),
+          br()
+        )
+      ),
       fluidRow(
         column(
           12,
@@ -889,23 +893,6 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       ),
       br()
     ),
-    ## 2.7 FE data sources ----
-    tabPanel(
-      "FE data sources",
-      fluidRow(
-        column(
-          12,
-          h1("FE data sources"),
-          p(
-            "In the below table you can find a list of other data sources which cover Further Education and local skills."
-          ),
-          DT::dataTableOutput("sourcesTable"),
-          br()
-        )
-      )
-    )
-    ), 
-    navbarMenu("Accessibility and support",
     ## 2.8 Accessibility ----
     tabPanel(
       "Accessibility",
@@ -968,7 +955,6 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       "Support and feedback",
       support_links() # defined in R/supporting_links.R))
     )
-  )
   ),
   # End of navBarPage
   # 3 Footer ----
