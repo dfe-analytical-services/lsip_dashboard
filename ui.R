@@ -554,11 +554,11 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             )
           )
         )
-        #,
-      #   column(
-      #     3,
-      #     uiOutput("screenshotFile")
-      #   )
+      ,
+        column(
+          3,
+          uiOutput("screenshotFile")
+        )
        ),
       ### 2.3.2 Visuals row 1 ----
       fluidRow(
