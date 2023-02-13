@@ -1,4 +1,328 @@
 "geographic_level","area","SSA","Level","sex","Achievements","Enrolments","Total","Total_ach","Total_enr","pcAch","pcEnr"
+"country","England","Agriculture, Horticulture and Animal Care","Total","Total",16250,20990,"Total",1309710,1691340,0.0124073268128059,0.0124102782409214
+"country","England","Agriculture, Horticulture and Animal Care","Total","Female",9950,12970,"Total",776930,1015570,0.0128068165729216,0.0127711531455242
+"country","England","Agriculture, Horticulture and Animal Care","Total","Male",6300,8020,"Total",532790,675760,0.0118245462564988,0.0118681188587664
+"country","England","Arts, Media and Publishing","Total","Total",40120,46960,"Total",1309710,1691340,0.0306327354910629,0.0277649674222806
+"country","England","Arts, Media and Publishing","Total","Female",27890,32200,"Total",776930,1015570,0.0358976999214859,0.0317063324044625
+"country","England","Arts, Media and Publishing","Total","Male",12220,14760,"Total",532790,675760,0.0229358659133993,0.0218420741091512
+"country","England","Business, Administration and Law","Total","Total",82270,112160,"Total",1309710,1691340,0.0628154324239717,0.066314283349297
+"country","England","Business, Administration and Law","Total","Female",43620,62970,"Total",776930,1015570,0.0561440541618936,0.0620045885561803
+"country","England","Business, Administration and Law","Total","Male",38650,49190,"Total",532790,675760,0.0725426528275681,0.0727921155439801
+"country","England","Construction, Planning and the Built Environment","Total","Total",55380,67530,"Total",1309710,1691340,0.0422841697780425,0.0399269218489482
+"country","England","Construction, Planning and the Built Environment","Total","Female",4000,4850,"Total",776930,1015570,0.00514846897403885,0.00477564323483364
+"country","England","Construction, Planning and the Built Environment","Total","Male",51380,62690,"Total",532790,675760,0.0964357439141125,0.0927696223511306
+"country","England","Education and Training","Total","Total",26510,35330,"Total",1309710,1691340,0.0202411220804606,0.0208887627561578
+"country","England","Education and Training","Total","Female",22770,30420,"Total",776930,1015570,0.0293076596347161,0.0299536221038432
+"country","England","Education and Training","Total","Male",3740,4900,"Total",532790,675760,0.00701965126973104,0.0072510950633361
+"country","England","Engineering and Manufacturing Technologies","Total","Total",44690,56520,"Total",1309710,1691340,0.0341220575547259,0.0334172904324382
+"country","England","Engineering and Manufacturing Technologies","Total","Female",7100,8760,"Total",776930,1015570,0.00913853242891895,0.00862569788394695
+"country","England","Engineering and Manufacturing Technologies","Total","Male",37590,47760,"Total",532790,675760,0.0705531259971096,0.0706759796377412
+"country","England","Health, Public Services and Care","Total","Total",215660,297840,"Total",1309710,1691340,0.164662406181521,0.176097059136543
+"country","England","Health, Public Services and Care","Total","Female",165450,232790,"Total",776930,1015570,0.212953547938682,0.229221028584933
+"country","England","Health, Public Services and Care","Total","Male",50210,65050,"Total",532790,675760,0.0942397567521913,0.0962619865040843
+"country","England","History, Philosophy and Theology","Total","Total",1890,2680,"Total",1309710,1691340,0.00144306754930481,0.00158454243380988
+"country","England","History, Philosophy and Theology","Total","Female",1400,1980,"Total",776930,1015570,0.0018019641409136,0.00194964404226198
+"country","England","History, Philosophy and Theology","Total","Male",490,700,"Total",532790,675760,0.000919686931061018,0.00103587072333373
+"country","England","Information and Communication Technology","Total","Total",62410,84190,"Total",1309710,1691340,0.0476517702392133,0.0497770998143484
+"country","England","Information and Communication Technology","Total","Female",35610,47170,"Total",776930,1015570,0.0458342450413808,0.0464468229664129
+"country","England","Information and Communication Technology","Total","Male",26790,37020,"Total",532790,675760,0.050282475271683,0.0547827631111637
+"country","England","Languages, Literature and Culture","Total","Total",26270,33960,"Total",1309710,1691340,0.020057875407533,0.0200787541239491
+"country","England","Languages, Literature and Culture","Total","Female",16900,21500,"Total",776930,1015570,0.0217522814153141,0.0211703772265821
+"country","England","Languages, Literature and Culture","Total","Male",9370,12460,"Total",532790,675760,0.0175866664164117,0.0184384988753404
+"country","England","Leisure, Travel and Tourism","Total","Total",14830,21220,"Total",1309710,1691340,0.0113231173313176,0.0125462650915842
+"country","England","Leisure, Travel and Tourism","Total","Female",6780,9720,"Total",776930,1015570,0.00872665491099584,0.00957097984383154
+"country","England","Leisure, Travel and Tourism","Total","Male",8050,11500,"Total",532790,675760,0.0151091424388596,0.0170178761690541
+"country","England","Not Applicable/ Not Known","Total","Total",5030,10860,"Total",1309710,1691340,0.00384054485344084,0.00642094433999078
+"country","England","Not Applicable/ Not Known","Total","Female",1780,3880,"Total",776930,1015570,0.00229106869344729,0.00382051458786691
+"country","England","Not Applicable/ Not Known","Total","Male",3240,6980,"Total",532790,675760,0.00608119521762796,0.0103291109269563
+"country","England","Preparation for Life and Work","Total","Total",615420,770140,"Total",1309710,1691340,0.469890281054585,0.455343100736694
+"country","England","Preparation for Life and Work","Total","Female",374070,468580,"Total",776930,1015570,0.481471947279678,0.461396063294505
+"country","England","Preparation for Life and Work","Total","Male",241350,301560,"Total",532790,675760,0.452992736350157,0.44625310761217
+"country","England","Retail and Commercial Enterprise","Total","Total",73080,89460,"Total",1309710,1691340,0.0557986119064526,0.0528929724360566
+"country","England","Retail and Commercial Enterprise","Total","Female",39660,50440,"Total",776930,1015570,0.0510470698775951,0.0496666896422699
+"country","England","Retail and Commercial Enterprise","Total","Male",33420,39030,"Total",532790,675760,0.0627264025225699,0.0577571919024506
+"country","England","Science and Mathematics","Total","Total",27180,37400,"Total",1309710,1691340,0.0207526857090501,0.0221126444121229
+"country","England","Science and Mathematics","Total","Female",18010,24490,"Total",776930,1015570,0.0231809815556099,0.0241145366641394
+"country","England","Science and Mathematics","Total","Male",9180,12920,"Total",532790,675760,0.0172300531166125,0.0191192139221025
+"country","England","Social Sciences","Total","Total",2740,4100,"Total",1309710,1691340,0.00209206618259004,0.0024241134248584
+"country","England","Social Sciences","Total","Female",1940,2860,"Total",776930,1015570,0.00249700745240884,0.00281615250548953
+"country","England","Social Sciences","Total","Male",800,1240,"Total",532790,675760,0.00150152968336493,0.00183497099561975
+"country","England","Agriculture, Horticulture and Animal Care","1","Total",5160,5790,"Total",325040,394910,0.0158749692345557,0.0146615684586361
+"country","England","Agriculture, Horticulture and Animal Care","1","Female",3040,3380,"Total",164340,203370,0.0184982353657052,0.0166199537788268
+"country","England","Agriculture, Horticulture and Animal Care","1","Male",2130,2410,"Total",160700,191540,0.0132545115121344,0.0125822282551947
+"country","England","Arts, Media and Publishing","1","Total",10890,12210,"Total",325040,394910,0.0335035687915334,0.0309184371122534
+"country","England","Arts, Media and Publishing","1","Female",7810,8790,"Total",164340,203370,0.0475234270414993,0.0432217141171264
+"country","England","Arts, Media and Publishing","1","Male",3080,3420,"Total",160700,191540,0.0191661481020535,0.0178552782708573
+"country","England","Business, Administration and Law","1","Total",30490,34630,"Total",325040,394910,0.0938038395274428,0.0876908662733281
+"country","England","Business, Administration and Law","1","Female",15010,17270,"Total",164340,203370,0.0913350371181696,0.0849191129468456
+"country","England","Business, Administration and Law","1","Male",15490,17360,"Total",160700,191540,0.0963907902924704,0.0906338101701994
+"country","England","Construction, Planning and the Built Environment","1","Total",26960,30990,"Total",325040,394910,0.0829436377061285,0.0784735762578815
+"country","England","Construction, Planning and the Built Environment","1","Female",2420,2770,"Total",164340,203370,0.0147255689424364,0.0136204946648965
+"country","England","Construction, Planning and the Built Environment","1","Male",24540,28220,"Total",160700,191540,0.152706907280647,0.147332149942571
+"country","England","Education and Training","1","Total",2850,3210,"Total",325040,394910,0.00876815161210928,0.00812843432680864
+"country","England","Education and Training","1","Female",2570,2900,"Total",164340,203370,0.0156383108190337,0.0142597236563898
+"country","England","Education and Training","1","Male",280,320,"Total",160700,191540,0.00174237710018668,0.00167066931189308
+"country","England","Engineering and Manufacturing Technologies","1","Total",9190,10740,"Total",325040,394910,0.0282734432685208,0.0271960699906308
+"country","England","Engineering and Manufacturing Technologies","1","Female",1510,1750,"Total",164340,203370,0.0091882682244128,0.008605005654718
+"country","England","Engineering and Manufacturing Technologies","1","Male",7680,8990,"Total",160700,191540,0.0477909147479776,0.0469353659809961
+"country","England","Health, Public Services and Care","1","Total",31310,34430,"Total",325040,394910,0.09632660595619,0.0871844217669849
+"country","England","Health, Public Services and Care","1","Female",19640,21600,"Total",164340,203370,0.119508336375806,0.106210355509662
+"country","England","Health, Public Services and Care","1","Male",11670,12840,"Total",160700,191540,0.0726197884256378,0.0670356061397097
+"country","England","History, Philosophy and Theology","1","Total",250,260,"Total",325040,394910,0.000769136106325375,0.000658377858246183
+"country","England","History, Philosophy and Theology","1","Female",160,160,"Total",164340,203370,0.000973591335037118,0.000786743374145646
+"country","England","History, Philosophy and Theology","1","Male",100,100,"Total",160700,191540,0.000622277535780958,0.000522084159966587
+"country","England","Information and Communication Technology","1","Total",17360,22760,"Total",325040,394910,0.0534088112232341,0.0576333848218581
+"country","England","Information and Communication Technology","1","Female",9730,12650,"Total",164340,203370,0.0592065230619448,0.0622018980183901
+"country","England","Information and Communication Technology","1","Male",7630,10100,"Total",160700,191540,0.0474797759800871,0.0527305001566252
+"country","England","Languages, Literature and Culture","1","Total",2950,3550,"Total",325040,394910,0.00907580605463943,0.00898938998759211
+"country","England","Languages, Literature and Culture","1","Female",1990,2430,"Total",164340,203370,0.0121090422295242,0.011948664994837
+"country","England","Languages, Literature and Culture","1","Male",960,1110,"Total",160700,191540,0.0059738643434972,0.00579513417562911
+"country","England","Leisure, Travel and Tourism","1","Total",1410,1590,"Total",325040,394910,0.00433792763967512,0.00402623382542858
+"country","England","Leisure, Travel and Tourism","1","Female",750,840,"Total",164340,203370,0.00456370938298649,0.00413040271426464
+"country","England","Leisure, Travel and Tourism","1","Male",660,750,"Total",160700,191540,0.00410703173615432,0.0039156311997494
+"country","England","Preparation for Life and Work","1","Total",169170,216010,"Total",325040,394910,0.520459020428255,0.546985389075992
+"country","England","Preparation for Life and Work","1","Female",91990,120240,"Total",164340,203370,0.559754168187903,0.591237645670453
+"country","England","Preparation for Life and Work","1","Male",77190,95770,"Total",160700,191540,0.480336029869322,0.5
+"country","England","Retail and Commercial Enterprise","1","Total",16460,18060,"Total",325040,394910,0.0506399212404627,0.0457319389227925
+"country","England","Retail and Commercial Enterprise","1","Female",7310,8110,"Total",164340,203370,0.0444809541195083,0.0398780547770074
+"country","England","Retail and Commercial Enterprise","1","Male",9150,9960,"Total",160700,191540,0.0569383945239577,0.051999582332672
+"country","England","Science and Mathematics","1","Total",450,560,"Total",325040,394910,0.00138444499138568,0.00141804461776101
+"country","England","Science and Mathematics","1","Female",350,430,"Total",164340,203370,0.0021297310453937,0.00211437281801642
+"country","England","Science and Mathematics","1","Male",90,130,"Total",160700,191540,0.000560049782202862,0.000678709407956563
+"country","England","Social Sciences","1","Total",130,140,"Total",325040,394910,0.000399950775289195,0.000354511154440252
+"country","England","Social Sciences","1","Female",60,70,"Total",164340,203370,0.000365096750638919,0.00034420022618872
+"country","England","Social Sciences","1","Male",70,70,"Total",160700,191540,0.000435594275046671,0.000365458911976611
+"country","England","Agriculture, Horticulture and Animal Care","2","Total",7170,9440,"Total",427760,585040,0.0167617355526463,0.0161356488445235
+"country","England","Agriculture, Horticulture and Animal Care","2","Female",4250,5660,"Total",273680,380840,0.0155290850628471,0.0148618842558555
+"country","England","Agriculture, Horticulture and Animal Care","2","Male",2920,3780,"Total",154080,204200,0.018951194184839,0.018511263467189
+"country","England","Arts, Media and Publishing","2","Total",7270,8620,"Total",427760,585040,0.0169955115017767,0.014734035279639
+"country","England","Arts, Media and Publishing","2","Female",5320,6150,"Total",273680,380840,0.0194387605963169,0.0161485138115744
+"country","England","Arts, Media and Publishing","2","Male",1950,2470,"Total",154080,204200,0.0126557632398754,0.0120959843290891
+"country","England","Business, Administration and Law","2","Total",39750,55120,"Total",427760,585040,0.0929259397793155,0.0942157801175988
+"country","England","Business, Administration and Law","2","Female",22250,32710,"Total",273680,380840,0.0812993276819643,0.0858890872807478
+"country","England","Business, Administration and Law","2","Male",17500,22410,"Total",154080,204200,0.113577362409138,0.109745347698335
+"country","England","Construction, Planning and the Built Environment","2","Total",12930,16720,"Total",427760,585040,0.0302272302225547,0.028579242444961
+"country","England","Construction, Planning and the Built Environment","2","Female",620,880,"Total",273680,380840,0.00226541946799182,0.00231068165108707
+"country","England","Construction, Planning and the Built Environment","2","Male",12300,15840,"Total",154080,204200,0.0798286604361371,0.0775710088148874
+"country","England","Education and Training","2","Total",18320,23310,"Total",427760,585040,0.0428277538806808,0.0398434295090934
+"country","England","Education and Training","2","Female",15570,19890,"Total",273680,380840,0.0568912598655364,0.0522266568637748
+"country","England","Education and Training","2","Male",2750,3420,"Total",154080,204200,0.0178478712357217,0.0167482859941234
+"country","England","Engineering and Manufacturing Technologies","2","Total",28330,34730,"Total",427760,585040,0.0662287263886291,0.0593634623273622
+"country","England","Engineering and Manufacturing Technologies","2","Female",4780,5830,"Total",273680,380840,0.0174656533177434,0.0153082659384518
+"country","England","Engineering and Manufacturing Technologies","2","Male",23560,28900,"Total",154080,204200,0.152907580477674,0.14152791380999
+"country","England","Health, Public Services and Care","2","Total",145920,200540,"Total",427760,585040,0.341125864971012,0.34277998085601
+"country","England","Health, Public Services and Care","2","Female",118170,163190,"Total",273680,380840,0.431781642794505,0.428500157546476
+"country","England","Health, Public Services and Care","2","Male",27750,37350,"Total",154080,204200,0.180101246105919,0.182908912830558
+"country","England","History, Philosophy and Theology","2","Total",1090,1680,"Total",427760,585040,0.00254815784552085,0.0028715985231779
+"country","England","History, Philosophy and Theology","2","Female",880,1350,"Total",273680,380840,0.00321543408360129,0.00354479571473585
+"country","England","History, Philosophy and Theology","2","Male",220,320,"Total",154080,204200,0.00142782969885774,0.00156709108716944
+"country","England","Information and Communication Technology","2","Total",17280,24320,"Total",427760,585040,0.0403964840097251,0.0415698071926706
+"country","England","Information and Communication Technology","2","Female",9460,13580,"Total",273680,380840,0.0345659163987138,0.0356580191156391
+"country","England","Information and Communication Technology","2","Male",7820,10740,"Total",154080,204200,0.0507528556593977,0.0525954946131244
+"country","England","Languages, Literature and Culture","2","Total",18350,24480,"Total",427760,585040,0.0428978866654199,0.0418432927663066
+"country","England","Languages, Literature and Culture","2","Female",11610,15260,"Total",273680,380840,0.0424218064893306,0.0400693204495326
+"country","England","Languages, Literature and Culture","2","Male",6740,9210,"Total",154080,204200,0.0437435098650052,0.0451028403525955
+"country","England","Leisure, Travel and Tourism","2","Total",6980,9220,"Total",427760,585040,0.0163175612492987,0.015759606180774
+"country","England","Leisure, Travel and Tourism","2","Female",2440,3390,"Total",273680,380840,0.00891552177725811,0.00890137590589224
+"country","England","Leisure, Travel and Tourism","2","Male",4540,5830,"Total",154080,204200,0.0294652128764278,0.0285504407443683
+"country","England","Preparation for Life and Work","2","Total",59200,95190,"Total",427760,585040,0.138395361885169,0.162706823465062
+"country","England","Preparation for Life and Work","2","Female",41940,66560,"Total",273680,380840,0.153244665302543,0.174771557609495
+"country","England","Preparation for Life and Work","2","Male",17260,28640,"Total",154080,204200,0.112019730010384,0.140254652301665
+"country","England","Retail and Commercial Enterprise","2","Total",43100,51640,"Total",427760,585040,0.100757434075182,0.088267468891016
+"country","England","Retail and Commercial Enterprise","2","Female",21560,26380,"Total",273680,380840,0.0787781350482315,0.069267934040542
+"country","England","Retail and Commercial Enterprise","2","Male",21550,25260,"Total",154080,204200,0.13986240913811,0.123702252693438
+"country","England","Science and Mathematics","2","Total",21890,29820,"Total",427760,585040,0.0511735552646344,0.0509708737864078
+"country","England","Science and Mathematics","2","Female",14710,19850,"Total",273680,380840,0.0537489038292897,0.0521216258796345
+"country","England","Science and Mathematics","2","Male",7180,9970,"Total",154080,204200,0.0465991692627207,0.0488246816846229
+"country","England","Social Sciences","2","Total",170,230,"Total",427760,585040,0.000397419113521601,0.000393135512101737
+"country","England","Social Sciences","2","Female",130,170,"Total",273680,380840,0.000475007307804735,0.000446381682596366
+"country","England","Social Sciences","2","Male",50,70,"Total",154080,204200,0.000324506749740395,0.000342801175318315
+"country","England","Agriculture, Horticulture and Animal Care","3","Total",2240,3940,"Total",81280,136830,0.0275590551181102,0.0287948549294745
+"country","England","Agriculture, Horticulture and Animal Care","3","Female",1550,2720,"Total",50640,86970,0.030608214849921,0.0312751523513855
+"country","England","Agriculture, Horticulture and Animal Care","3","Male",690,1210,"Total",30640,49850,0.0225195822454308,0.0242728184553661
+"country","England","Arts, Media and Publishing","3","Total",6520,9140,"Total",81280,136830,0.0802165354330709,0.0667982167653292
+"country","England","Arts, Media and Publishing","3","Female",3220,4570,"Total",50640,86970,0.0635860979462875,0.0525468552374382
+"country","England","Arts, Media and Publishing","3","Male",3300,4570,"Total",30640,49850,0.107702349869452,0.0916750250752257
+"country","England","Business, Administration and Law","3","Total",5990,13600,"Total",81280,136830,0.0736958661417323,0.0993934078783892
+"country","England","Business, Administration and Law","3","Female",3380,8300,"Total",50640,86970,0.0667456556082149,0.0954352075428309
+"country","England","Business, Administration and Law","3","Male",2610,5300,"Total",30640,49850,0.0851827676240209,0.106318956870612
+"country","England","Construction, Planning and the Built Environment","3","Total",4230,7270,"Total",81280,136830,0.0520423228346457,0.0531316231820507
+"country","England","Construction, Planning and the Built Environment","3","Female",170,290,"Total",50640,86970,0.00335703001579779,0.00333448315511096
+"country","England","Construction, Planning and the Built Environment","3","Male",4060,6990,"Total",30640,49850,0.132506527415144,0.140220661985958
+"country","England","Education and Training","3","Total",4410,7290,"Total",81280,136830,0.0542568897637795,0.0532777899583425
+"country","England","Education and Training","3","Female",3930,6510,"Total",50640,86970,0.07760663507109,0.0748533977233529
+"country","England","Education and Training","3","Male",480,780,"Total",30640,49850,0.0156657963446475,0.0156469408224674
+"country","England","Engineering and Manufacturing Technologies","3","Total",4160,6740,"Total",81280,136830,0.0511811023622047,0.0492582036103194
+"country","England","Engineering and Manufacturing Technologies","3","Female",430,680,"Total",50640,86970,0.0084913112164297,0.00781878808784638
+"country","England","Engineering and Manufacturing Technologies","3","Male",3720,6060,"Total",30640,49850,0.121409921671018,0.121564694082247
+"country","England","Health, Public Services and Care","3","Total",28690,48230,"Total",81280,136830,0.352977362204724,0.352481181027552
+"country","England","Health, Public Services and Care","3","Female",21990,38500,"Total",50640,86970,0.434241706161137,0.44268138438542
+"country","England","Health, Public Services and Care","3","Male",6700,9730,"Total",30640,49850,0.218668407310705,0.19518555667001
+"country","England","History, Philosophy and Theology","3","Total",250,400,"Total",81280,136830,0.0030757874015748,0.00292333552583498
+"country","England","History, Philosophy and Theology","3","Female",150,230,"Total",50640,86970,0.00296208530805687,0.00264459008853628
+"country","England","History, Philosophy and Theology","3","Male",100,180,"Total",30640,49850,0.00326370757180157,0.00361083249749248
+"country","England","Information and Communication Technology","3","Total",4020,7410,"Total",81280,136830,0.0494586614173228,0.054154790616093
+"country","England","Information and Communication Technology","3","Female",900,1870,"Total",50640,86970,0.0177725118483412,0.0215016672415776
+"country","England","Information and Communication Technology","3","Male",3120,5550,"Total",30640,49850,0.101827676240209,0.111334002006018
+"country","England","Languages, Literature and Culture","3","Total",670,940,"Total",81280,136830,0.00824311023622047,0.0068698384857122
+"country","England","Languages, Literature and Culture","3","Female",420,590,"Total",50640,86970,0.00829383886255924,0.00678394848798436
+"country","England","Languages, Literature and Culture","3","Male",250,350,"Total",30640,49850,0.00815926892950392,0.00702106318956871
+"country","England","Leisure, Travel and Tourism","3","Total",3700,7100,"Total",81280,136830,0.0455216535433071,0.0518892055835709
+"country","England","Leisure, Travel and Tourism","3","Female",1590,3130,"Total",50640,86970,0.0313981042654028,0.0359894216396459
+"country","England","Leisure, Travel and Tourism","3","Male",2110,3970,"Total",30640,49850,0.0688642297650131,0.0796389167502508
+"country","England","Not Applicable/ Not Known","3","Total",NA,NA,"Total",81280,136830,NA,NA
+"country","England","Not Applicable/ Not Known","3","Female",NA,NA,"Total",50640,86970,NA,NA
+"country","England","Not Applicable/ Not Known","3","Male",NA,NA,"Total",30640,49850,NA,NA
+"country","England","Preparation for Life and Work","3","Total",930,1100,"Total",81280,136830,0.0114419291338583,0.00803917269604619
+"country","England","Preparation for Life and Work","3","Female",400,480,"Total",50640,86970,0.00789889415481832,0.00551914453259745
+"country","England","Preparation for Life and Work","3","Male",530,620,"Total",30640,49850,0.0172976501305483,0.0124373119358074
+"country","England","Retail and Commercial Enterprise","3","Total",8850,13770,"Total",81280,136830,0.108882874015748,0.100635825476869
+"country","England","Retail and Commercial Enterprise","3","Female",8210,12810,"Total",50640,86970,0.162124802527646,0.147292169713694
+"country","England","Retail and Commercial Enterprise","3","Male",640,970,"Total",30640,49850,0.02088772845953,0.0194583751253761
+"country","England","Science and Mathematics","3","Total",4280,6300,"Total",81280,136830,0.0526574803149606,0.0460425345319009
+"country","England","Science and Mathematics","3","Female",2590,3750,"Total",50640,86970,0.0511453396524487,0.0431183166609176
+"country","England","Science and Mathematics","3","Male",1680,2550,"Total",30640,49850,0.0548302872062663,0.0511534603811434
+"country","England","Social Sciences","3","Total",2360,3610,"Total",81280,136830,0.0290354330708661,0.0263831031206607
+"country","England","Social Sciences","3","Female",1720,2580,"Total",50640,86970,0.0339652448657188,0.0296654018627113
+"country","England","Social Sciences","3","Male",640,1030,"Total",30640,49850,0.02088772845953,0.0206619859578736
+"country","England","Agriculture, Horticulture and Animal Care","4+","Total",30,100,"Total",5940,14960,0.00505050505050505,0.00668449197860963
+"country","England","Agriculture, Horticulture and Animal Care","4+","Female",20,90,"Total",4180,10500,0.00478468899521531,0.00857142857142857
+"country","England","Agriculture, Horticulture and Animal Care","4+","Male",10,10,"Total",1760,4450,0.00568181818181818,0.00224719101123596
+"country","England","Arts, Media and Publishing","4+","Total",330,540,"Total",5940,14960,0.0555555555555556,0.036096256684492
+"country","England","Arts, Media and Publishing","4+","Female",210,350,"Total",4180,10500,0.0502392344497608,0.0333333333333333
+"country","England","Arts, Media and Publishing","4+","Male",120,200,"Total",1760,4450,0.0681818181818182,0.0449438202247191
+"country","England","Business, Administration and Law","4+","Total",830,3200,"Total",5940,14960,0.13973063973064,0.213903743315508
+"country","England","Business, Administration and Law","4+","Female",540,2060,"Total",4180,10500,0.129186602870813,0.196190476190476
+"country","England","Business, Administration and Law","4+","Male",290,1140,"Total",1760,4450,0.164772727272727,0.256179775280899
+"country","England","Construction, Planning and the Built Environment","4+","Total",70,290,"Total",5940,14960,0.0117845117845118,0.0193850267379679
+"country","England","Construction, Planning and the Built Environment","4+","Female",10,50,"Total",4180,10500,0.00239234449760766,0.00476190476190476
+"country","England","Construction, Planning and the Built Environment","4+","Male",60,240,"Total",1760,4450,0.0340909090909091,0.0539325842696629
+"country","England","Education and Training","4+","Total",570,1120,"Total",5940,14960,0.095959595959596,0.0748663101604278
+"country","England","Education and Training","4+","Female",450,860,"Total",4180,10500,0.107655502392345,0.0819047619047619
+"country","England","Education and Training","4+","Male",120,270,"Total",1760,4450,0.0681818181818182,0.0606741573033708
+"country","England","Engineering and Manufacturing Technologies","4+","Total",640,1320,"Total",5940,14960,0.107744107744108,0.0882352941176471
+"country","England","Engineering and Manufacturing Technologies","4+","Female",80,170,"Total",4180,10500,0.0191387559808612,0.0161904761904762
+"country","England","Engineering and Manufacturing Technologies","4+","Male",560,1150,"Total",1760,4450,0.318181818181818,0.258426966292135
+"country","England","Health, Public Services and Care","4+","Total",2170,6300,"Total",5940,14960,0.365319865319865,0.421122994652406
+"country","England","Health, Public Services and Care","4+","Female",1810,5320,"Total",4180,10500,0.433014354066986,0.506666666666667
+"country","England","Health, Public Services and Care","4+","Male",350,990,"Total",1760,4450,0.198863636363636,0.22247191011236
+"country","England","History, Philosophy and Theology","4+","Total",NA,NA,"Total",5940,14960,NA,NA
+"country","England","History, Philosophy and Theology","4+","Female",NA,NA,"Total",4180,10500,NA,NA
+"country","England","History, Philosophy and Theology","4+","Male",NA,NA,"Total",1760,4450,NA,NA
+"country","England","Information and Communication Technology","4+","Total",40,220,"Total",5940,14960,0.00673400673400673,0.0147058823529412
+"country","England","Information and Communication Technology","4+","Female",10,50,"Total",4180,10500,0.00239234449760766,0.00476190476190476
+"country","England","Information and Communication Technology","4+","Male",30,170,"Total",1760,4450,0.0170454545454545,0.0382022471910112
+"country","England","Languages, Literature and Culture","4+","Total",310,340,"Total",5940,14960,0.0521885521885522,0.0227272727272727
+"country","England","Languages, Literature and Culture","4+","Female",180,200,"Total",4180,10500,0.0430622009569378,0.019047619047619
+"country","England","Languages, Literature and Culture","4+","Male",120,140,"Total",1760,4450,0.0681818181818182,0.0314606741573034
+"country","England","Leisure, Travel and Tourism","4+","Total",90,170,"Total",5940,14960,0.0151515151515152,0.0113636363636364
+"country","England","Leisure, Travel and Tourism","4+","Female",40,80,"Total",4180,10500,0.00956937799043062,0.00761904761904762
+"country","England","Leisure, Travel and Tourism","4+","Male",50,90,"Total",1760,4450,0.0284090909090909,0.0202247191011236
+"country","England","Preparation for Life and Work","4+","Total",10,10,"Total",5940,14960,0.00168350168350168,0.000668449197860963
+"country","England","Preparation for Life and Work","4+","Female",NA,NA,"Total",4180,10500,NA,NA
+"country","England","Preparation for Life and Work","4+","Male",NA,NA,"Total",1760,4450,NA,NA
+"country","England","Retail and Commercial Enterprise","4+","Total",820,1210,"Total",5940,14960,0.138047138047138,0.0808823529411765
+"country","England","Retail and Commercial Enterprise","4+","Female",780,1160,"Total",4180,10500,0.186602870813397,0.11047619047619
+"country","England","Retail and Commercial Enterprise","4+","Male",40,50,"Total",1760,4450,0.0227272727272727,0.0112359550561798
+"country","England","Science and Mathematics","4+","Total",20,100,"Total",5940,14960,0.00336700336700337,0.00668449197860963
+"country","England","Science and Mathematics","4+","Female",10,90,"Total",4180,10500,0.00239234449760766,0.00857142857142857
+"country","England","Science and Mathematics","4+","Male",NA,10,"Total",1760,4450,NA,0.00224719101123596
+"country","England","Social Sciences","4+","Total",20,50,"Total",5940,14960,0.00336700336700337,0.00334224598930481
+"country","England","Social Sciences","4+","Female",20,40,"Total",4180,10500,0.00478468899521531,0.00380952380952381
+"country","England","Social Sciences","4+","Male",NA,10,"Total",1760,4450,NA,0.00224719101123596
+"country","England","Agriculture, Horticulture and Animal Care","E","Total",1590,1670,"Total",416600,492080,0.00381661065770523,0.00339375711266461
+"country","England","Agriculture, Horticulture and Animal Care","E","Female",1030,1080,"Total",264110,308950,0.00389989019726629,0.00349571128014242
+"country","England","Agriculture, Horticulture and Animal Care","E","Male",560,590,"Total",152490,183130,0.00367237195881697,0.00322175503740512
+"country","England","Arts, Media and Publishing","E","Total",13900,15120,"Total",416600,492080,0.0333653384541527,0.0307267111038855
+"country","England","Arts, Media and Publishing","E","Female",10340,11240,"Total",264110,308950,0.0391503540191587,0.0363812914711118
+"country","England","Arts, Media and Publishing","E","Male",3560,3880,"Total",152490,183130,0.023345793166765,0.0211871348222574
+"country","England","Business, Administration and Law","E","Total",5080,5490,"Total",416600,492080,0.0121939510321651,0.0111567224841489
+"country","England","Business, Administration and Law","E","Female",2340,2530,"Total",264110,308950,0.00885994472000303,0.008189027350704
+"country","England","Business, Administration and Law","E","Male",2740,2960,"Total",152490,183130,0.0179683913699259,0.0161633812046087
+"country","England","Construction, Planning and the Built Environment","E","Total",3220,3330,"Total",416600,492080,0.00772923667786846,0.00676719232645098
+"country","England","Construction, Planning and the Built Environment","E","Female",460,500,"Total",264110,308950,0.00174169853470145,0.00161838485191779
+"country","England","Construction, Planning and the Built Environment","E","Male",2750,2830,"Total",152490,183130,0.0180339694406191,0.015453502976028
+"country","England","Education and Training","E","Total",300,310,"Total",416600,492080,0.00072011521843495,0.000629978865225167
+"country","England","Education and Training","E","Female",200,210,"Total",264110,308950,0.000757260232478891,0.00067972163780547
+"country","England","Education and Training","E","Male",100,100,"Total",152490,183130,0.000655780706931602,0.000546060175831377
+"country","England","Engineering and Manufacturing Technologies","E","Total",480,520,"Total",416600,492080,0.00115218434949592,0.00105673874166802
+"country","England","Engineering and Manufacturing Technologies","E","Female",130,140,"Total",264110,308950,0.000492219151111279,0.00045314775853698
+"country","England","Engineering and Manufacturing Technologies","E","Male",340,380,"Total",152490,183130,0.00222965440356745,0.00207502866815923
+"country","England","Health, Public Services and Care","E","Total",3170,3440,"Total",416600,492080,0.00760921747479597,0.00699073321411153
+"country","England","Health, Public Services and Care","E","Female",2590,2790,"Total",264110,308950,0.00980652001060164,0.00903058747370125
+"country","England","Health, Public Services and Care","E","Male",590,650,"Total",152490,183130,0.00386910617089645,0.00354939114290395
+"country","England","History, Philosophy and Theology","E","Total",160,180,"Total",416600,492080,0.000384061449831973,0.000365794179808161
+"country","England","History, Philosophy and Theology","E","Female",90,100,"Total",264110,308950,0.000340767104615501,0.000323676970383557
+"country","England","History, Philosophy and Theology","E","Male",60,80,"Total",152490,183130,0.000393468424158961,0.000436848140665101
+"country","England","Information and Communication Technology","E","Total",21310,27000,"Total",416600,492080,0.0511521843494959,0.0548691269712242
+"country","England","Information and Communication Technology","E","Female",14060,17520,"Total",264110,308950,0.0532353943432661,0.0567082052111992
+"country","England","Information and Communication Technology","E","Male",7250,9480,"Total",152490,183130,0.0475441012525412,0.0517665046688145
+"country","England","Languages, Literature and Culture","E","Total",3230,3840,"Total",416600,492080,0.00775324051848296,0.00780360916924077
+"country","England","Languages, Literature and Culture","E","Female",2090,2360,"Total",264110,308950,0.00791336942940441,0.00763877650105195
+"country","England","Languages, Literature and Culture","E","Male",1140,1490,"Total",152490,183130,0.00747590005902026,0.00813629661988751
+"country","England","Leisure, Travel and Tourism","E","Total",1970,2210,"Total",416600,492080,0.00472875660105617,0.00449113965208909
+"country","England","Leisure, Travel and Tourism","E","Female",1490,1680,"Total",264110,308950,0.00564158873196774,0.00543777310244376
+"country","England","Leisure, Travel and Tourism","E","Male",480,530,"Total",152490,183130,0.00314774739327169,0.0028941189319063
+"country","England","Preparation for Life and Work","E","Total",359030,425540,"Total",416600,492080,0.861809889582333,0.86477808486425
+"country","England","Preparation for Life and Work","E","Female",227420,266810,"Total",264110,308950,0.861080610351747,0.863602524680369
+"country","England","Preparation for Life and Work","E","Male",131610,158730,"Total",152490,183130,0.863072988392682,0.866761317097144
+"country","England","Retail and Commercial Enterprise","E","Total",2630,2810,"Total",416600,492080,0.00631301008161306,0.00571045358478296
+"country","England","Retail and Commercial Enterprise","E","Female",1560,1670,"Total",264110,308950,0.00590662981333535,0.00540540540540541
+"country","England","Retail and Commercial Enterprise","E","Male",1070,1140,"Total",152490,183130,0.00701685356416814,0.00622508600447769
+"country","England","Science and Mathematics","E","Total",490,530,"Total",416600,492080,0.00117618819011042,0.00107706064054625
+"country","England","Science and Mathematics","E","Female",300,320,"Total",264110,308950,0.00113589034871834,0.00103576630522738
+"country","England","Science and Mathematics","E","Male",190,210,"Total",152490,183130,0.00124598334317004,0.00114672636924589
+"country","England","Social Sciences","E","Total",40,80,"Total",416600,492080,9.60153624579933e-05,0.000162575191025849
+"country","England","Social Sciences","E","Female",NA,10,"Total",264110,308950,NA,3.23676970383557e-05
+"country","England","Social Sciences","E","Male",40,70,"Total",152490,183130,0.000262312282772641,0.000382242123081964
+"country","England","Agriculture, Horticulture and Animal Care","Not Assigned","Total",60,60,"Total",53100,67530,0.00112994350282486,0.000888494002665482
+"country","England","Agriculture, Horticulture and Animal Care","Not Assigned","Female",50,50,"Total",19980,24940,0.0025025025025025,0.00200481154771451
+"country","England","Agriculture, Horticulture and Animal Care","Not Assigned","Male",10,10,"Total",33120,42590,0.000301932367149758,0.000234796900680911
+"country","England","Arts, Media and Publishing","Not Assigned","Total",1210,1340,"Total",53100,67530,0.0227871939736347,0.0198430327261958
+"country","England","Arts, Media and Publishing","Not Assigned","Female",1000,1100,"Total",19980,24940,0.0500500500500501,0.0441058540497193
+"country","England","Arts, Media and Publishing","Not Assigned","Male",210,230,"Total",33120,42590,0.00634057971014493,0.00540032871566095
+"country","England","Business, Administration and Law","Not Assigned","Total",120,130,"Total",53100,67530,0.00225988700564972,0.00192507033910854
+"country","England","Business, Administration and Law","Not Assigned","Female",100,100,"Total",19980,24940,0.005005005005005,0.00400962309542903
+"country","England","Business, Administration and Law","Not Assigned","Male",20,20,"Total",33120,42590,0.000603864734299517,0.000469593801361822
+"country","England","Construction, Planning and the Built Environment","Not Assigned","Total",7980,8930,"Total",53100,67530,0.150282485875706,0.132237524063379
+"country","England","Construction, Planning and the Built Environment","Not Assigned","Female",320,360,"Total",19980,24940,0.016016016016016,0.0144346431435445
+"country","England","Construction, Planning and the Built Environment","Not Assigned","Male",7660,8580,"Total",33120,42590,0.231280193236715,0.201455740784222
+"country","England","Education and Training","Not Assigned","Total",60,80,"Total",53100,67530,0.00112994350282486,0.00118465867022064
+"country","England","Education and Training","Not Assigned","Female",50,70,"Total",19980,24940,0.0025025025025025,0.00280673616680032
+"country","England","Education and Training","Not Assigned","Male",10,10,"Total",33120,42590,0.000301932367149758,0.000234796900680911
+"country","England","Engineering and Manufacturing Technologies","Not Assigned","Total",1890,2470,"Total",53100,67530,0.0355932203389831,0.0365763364430623
+"country","England","Engineering and Manufacturing Technologies","Not Assigned","Female",170,200,"Total",19980,24940,0.00850850850850851,0.00801924619085806
+"country","England","Engineering and Manufacturing Technologies","Not Assigned","Male",1730,2280,"Total",33120,42590,0.0522342995169082,0.0535336933552477
+"country","England","Health, Public Services and Care","Not Assigned","Total",4400,4900,"Total",53100,67530,0.0828625235404896,0.0725603435510144
+"country","England","Health, Public Services and Care","Not Assigned","Female",1260,1400,"Total",19980,24940,0.0630630630630631,0.0561347233360064
+"country","England","Health, Public Services and Care","Not Assigned","Male",3150,3500,"Total",33120,42590,0.0951086956521739,0.0821789152383189
+"country","England","History, Philosophy and Theology","Not Assigned","Total",140,160,"Total",53100,67530,0.00263653483992467,0.00236931734044129
+"country","England","History, Philosophy and Theology","Not Assigned","Female",130,150,"Total",19980,24940,0.00650650650650651,0.00601443464314354
+"country","England","History, Philosophy and Theology","Not Assigned","Male",10,20,"Total",33120,42590,0.000301932367149758,0.000469593801361822
+"country","England","Information and Communication Technology","Not Assigned","Total",2400,2490,"Total",53100,67530,0.0451977401129944,0.0368725011106175
+"country","England","Information and Communication Technology","Not Assigned","Female",1460,1510,"Total",19980,24940,0.0730730730730731,0.0605453087409783
+"country","England","Information and Communication Technology","Not Assigned","Male",940,980,"Total",33120,42590,0.0283816425120773,0.0230100962667293
+"country","England","Languages, Literature and Culture","Not Assigned","Total",760,820,"Total",53100,67530,0.0143126177024482,0.0121427513697616
+"country","England","Languages, Literature and Culture","Not Assigned","Female",600,660,"Total",19980,24940,0.03003003003003,0.0264635124298316
+"country","England","Languages, Literature and Culture","Not Assigned","Male",160,170,"Total",33120,42590,0.00483091787439614,0.00399154731157549
+"country","England","Leisure, Travel and Tourism","Not Assigned","Total",680,930,"Total",53100,67530,0.0128060263653484,0.013771657041315
+"country","England","Leisure, Travel and Tourism","Not Assigned","Female",460,610,"Total",19980,24940,0.023023023023023,0.0244587008821171
+"country","England","Leisure, Travel and Tourism","Not Assigned","Male",220,330,"Total",33120,42590,0.00664251207729469,0.00774829772247006
+"country","England","Not Applicable/ Not Known","Not Assigned","Total",5030,10860,"Total",53100,67530,0.0947269303201507,0.160817414482452
+"country","England","Not Applicable/ Not Known","Not Assigned","Female",1780,3880,"Total",19980,24940,0.0890890890890891,0.155573376102646
+"country","England","Not Applicable/ Not Known","Not Assigned","Male",3240,6980,"Total",33120,42590,0.0978260869565217,0.163888236675276
+"country","England","Preparation for Life and Work","Not Assigned","Total",27080,32290,"Total",53100,67530,0.509981167608286,0.478157855767807
+"country","England","Preparation for Life and Work","Not Assigned","Female",12330,14490,"Total",19980,24940,0.617117117117117,0.580994386527666
+"country","England","Preparation for Life and Work","Not Assigned","Male",14750,17800,"Total",33120,42590,0.445350241545894,0.417938483212022
+"country","England","Retail and Commercial Enterprise","Not Assigned","Total",1220,1960,"Total",53100,67530,0.0229755178907721,0.0290241374204057
+"country","England","Retail and Commercial Enterprise","Not Assigned","Female",240,310,"Total",19980,24940,0.012012012012012,0.01242983159583
+"country","England","Retail and Commercial Enterprise","Not Assigned","Male",990,1660,"Total",33120,42590,0.0298913043478261,0.0389762855130312
+"country","England","Science and Mathematics","Not Assigned","Total",70,100,"Total",53100,67530,0.00131826741996234,0.0014808233377758
+"country","England","Science and Mathematics","Not Assigned","Female",40,60,"Total",19980,24940,0.002002002002002,0.00240577385725742
+"country","England","Science and Mathematics","Not Assigned","Male",30,40,"Total",33120,42590,0.000905797101449275,0.000939187602723644
+"country","England","Social Sciences","Not Assigned","Total",NA,NA,"Total",53100,67530,NA,NA
+"country","England","Social Sciences","Not Assigned","Female",NA,NA,"Total",19980,24940,NA,NA
+"country","England","Social Sciences","Not Assigned","Male",NA,NA,"Total",33120,42590,NA,NA
 "LEP","Black Country","Agriculture, Horticulture and Animal Care","1","Female",40,50,"Total",4370,5970,0.0091533180778032,0.00837520938023451
 "LEP","Black Country","Agriculture, Horticulture and Animal Care","1","Male",80,80,"Total",3070,4100,0.0260586319218241,0.0195121951219512
 "LEP","Black Country","Agriculture, Horticulture and Animal Care","1","Total",110,140,"Total",7440,10090,0.0147849462365591,0.0138751238850347

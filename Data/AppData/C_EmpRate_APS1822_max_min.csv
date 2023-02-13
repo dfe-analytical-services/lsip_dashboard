@@ -1,56 +1,416 @@
 "area","minEmp","maxEmp"
+"Aberdeen City",105400,125400
+"Aberdeenshire",125500,133600
+"Adur",29100,32800
+"Allerdale",40100,48800
+"Amber Valley",59900,72100
+"Angus",51100,52600
+"Argyll and Bute",30300,38500
+"Arun",62400,91000
+"Ashfield",54100,63200
+"Ashford",56500,65300
+"Babergh",35800,41700
+"Barking and Dagenham",84000,102500
+"Barnet",179100,201300
+"Barnsley",107700,113500
+"Barrow",26300,30100
+"Basildon",86300,101600
+"Basingstoke and Deane",89600,96500
+"Bassetlaw",49600,53500
+"Bath and North East Somerset",78000,96800
+"Bedford",73800,90500
+"Bexley",117700,123700
+"Birmingham",474700,518400
+"Blaby",43400,48000
 "Black Country",471400,534300
+"Blackburn with Darwen",52800,62900
+"Blackpool",53500,60600
+"Blaenau Gwent",28500,31100
+"Bolsover",19800,38100
+"Bolton",116700,123500
+"Boston",22200,32800
+"Bournemouth, Christchurch and Poole",159000,193200
+"Bracknell Forest",57500,64900
+"Bradford",210000,238800
+"Braintree",72600,94900
+"Breckland",53400,63100
+"Brent",146600,163800
+"Brentwood",33800,45700
+"Bridgend",61600,64400
+"Brighton and Hove",140100,158300
 "Brighton and Hove, East Sussex, West Sussex",780000,806300
+"Bristol, City of",242500,270700
+"Broadland",58200,62900
+"Bromley",161100,178800
+"Bromsgrove",41800,50800
+"Broxbourne",42600,50900
+"Broxtowe",51700,57400
 "Buckinghamshire",253500,272500
+"Burnley",34200,40600
+"Bury",83100,86200
+"Caerphilly",77900,84500
+"Calderdale",87800,99700
+"Cambridge",60900,71500
 "Cambridgeshire and Peterborough",407400,430500
+"Camden",107100,132800
+"Cannock Chase",46800,62700
+"Canterbury",70300,106700
+"Cardiff",174100,187800
+"Carlisle",49800,58600
+"Carmarthenshire",73500,87200
+"Castle Point",35100,44900
+"Central Bedfordshire",138100,149200
+"Ceredigion",29200,35100
+"Charnwood",83700,98600
+"Chelmsford",83800,91000
+"Cheltenham",56400,64400
+"Cherwell",75600,78200
 "Cheshire and Warrington",426200,452400
+"Cheshire East",162600,190400
+"Cheshire West and Chester",154700,164700
+"Chesterfield",43400,60700
+"Chichester",44800,57100
+"Chorley",49000,61900
+"City of Edinburgh",262900,298400
+"City of London",6700,21600
+"Clackmannanshire",21500,23000
 "Coast to Capital",726800,758800
+"Colchester",71900,94800
+"Conwy",47500,48400
+"Copeland",27600,33200
+"Cornwall",242900,253800
 "Cornwall and Isles of Scilly",242900,253800
 "Cornwall and the Isles of Scilly",242900,253800
+"Cotswold",38100,40800
+"County Durham",229400,254000
+"Coventry",165900,176600
 "Coventry and Warwickshire",445600,483000
+"Craven",22700,24900
+"Crawley",54700,86500
+"Croydon",184900,202900
 "Cumbria",211000,244500
+"Dacorum",75800,81100
+"Darlington",47100,50800
+"Dartford",40100,61100
+"Denbighshire",36900,39900
+"Derby",105100,122100
 "Derby, Derbyshire, Nottingham and Nottinghamshire",1011900,1033600
 "Derbyshire and Nottinghamshire",1011900,1033600
-"Dorset",309800,717000
+"Derbyshire Dales",25900,34600
+"Doncaster",127400,136100
+"Dorset",150800,717000
+"Dover",47300,60600
+"Dudley",134000,149600
+"Dumfries and Galloway",56800,64100
+"Dundee City",64200,68600
+"Ealing",161700,174200
+"East Ayrshire",51900,54500
+"East Cambridgeshire",42900,53400
+"East Devon",56700,72300
+"East Dunbartonshire",45600,50300
+"East Hampshire",49000,57200
+"East Hertfordshire",67300,73000
+"East Lindsey",45800,51800
+"East Lothian",48600,51000
+"East Renfrewshire",39600,43700
+"East Riding of Yorkshire",142200,149800
+"East Staffordshire",54900,69300
+"East Suffolk",98600,107000
+"Eastbourne",37200,44500
+"Eastleigh",63100,69700
+"Eden",19400,26300
+"Elmbridge",60200,78300
+"Enfield",140700,160200
 "England",26137300,26510800
 "Enterprise M3",742300,768100
 "Enterprise M3 LEP (including all of Surrey)",566100,592500
+"Epping Forest",64000,76100
+"Epsom and Ewell",31100,42500
+"Erewash",53200,58700
 "Essex, Southend-on-Sea and Thurrock",856000,877700
+"Exeter",65100,70500
+"Falkirk",75100,82700
+"Fareham",54400,69400
+"Fenland",41800,47300
+"Fife",158700,179500
+"Flintshire",71300,74700
+"Folkestone and Hythe",44000,52500
+"Forest of Dean",36700,40800
+"Fylde",31400,40400
+"Gateshead",91300,96200
+"Gedling",51600,80100
+"Glasgow City",283400,331900
+"Gloucester",62600,67600
 "Gloucestershire",294000,320000
+"Gosport",34500,42300
+"Gravesham",35400,56100
+"Great Yarmouth",31100,42300
 "Greater Birmingham and Solihull",895600,971300
 "Greater Cambridge and Greater Peterborough",407400,430500
 "Greater Lincolnshire",466500,497300
 "Greater London",4465900,4660900
 "Greater Manchester",1236000,1298600
+"Greenwich",137300,156400
+"Guildford",65200,83100
+"Gwynedd",53200,58500
+"Hackney",140200,172200
+"Halton",56000,59000
+"Hambleton",36200,42400
+"Hammersmith and Fulham",92600,98900
+"Harborough",43000,49600
+"Haringey",143900,150800
+"Harlow",30200,41900
+"Harrogate",70800,81300
+"Harrow",109900,122300
+"Hart",42900,58800
+"Hartlepool",36100,38900
+"Hastings",38500,43800
+"Havant",39300,58600
+"Havering",121200,143400
 "Heart of the South-West",770900,803000
 "Heart of the South West",770900,803000
+"Herefordshire, County of",78800,90300
 "Hertfordshire",578000,598400
+"Hertsmere",46200,51800
+"High Peak",41300,50300
+"Highland",76900,113200
+"Hillingdon",144200,155500
+"Hinckley and Bosworth",49700,58000
+"Horsham",56300,66900
+"Hounslow",127700,137000
 "Hull and East Yorkshire",254700,276200
+"Huntingdonshire",85600,92200
+"Hyndburn",34600,38200
+"Inverclyde",32400,35500
+"Ipswich",66500,72900
+"Isle of Anglesey",28400,30900
+"Isle of Wight",46300,56500
+"Isles of Scilly",NA,NA
+"Islington",132400,136300
+"Kensington and Chelsea",63100,76100
 "Kent and Medway",843100,872800
+"King's Lynn and West Norfolk",63800,68700
+"Kingston upon Hull, City of",112500,126800
+"Kingston upon Thames",87200,95400
+"Kirklees",195000,204300
+"Knowsley",67300,71300
+"Lambeth",187600,221000
 "Lancashire",652700,674200
+"Lancaster",62900,70600
+"Leeds",383500,411600
 "Leeds City Region",1047000,1086900
+"Leicester",156500,176700
 "Leicester and Leicestershire",481400,511500
+"Lewes",40900,46900
+"Lewisham",167600,183700
+"Lichfield",44100,46400
+"Lincoln",43200,59800
+"Liverpool",226000,246100
 "Liverpool City Region",694100,709000
 "London",4465900,4660900
+"Luton",88500,98400
+"Maidstone",78800,90500
+"Maldon",20700,31400
+"Malvern Hills",29800,32100
+"Manchester",254500,270600
+"Mansfield",41800,50000
+"Medway",128800,139800
+"Melton",22400,24500
+"Mendip",49200,56700
+"Merthyr Tydfil",24300,27600
+"Merton",106900,123900
+"Mid Devon",36600,55300
+"Mid Suffolk",44700,48700
+"Mid Sussex",64600,79800
+"Middlesbrough",50200,56600
+"Midlothian",40100,45100
+"Milton Keynes",128600,140500
+"Mole Valley",35400,44100
+"Monmouthshire",41300,43200
+"Moray",43200,44000
+"Na h",9800,12600
+"Neath Port Talbot",58800,64300
 "New Anglia",738500,774900
+"New Forest",73000,98200
+"Newark and Sherwood",49400,60500
+"Newcastle",54900,61700
+"Newcastle upon Tyne",132100,140700
+"Newham",173000,193900
+"Newport",66600,70900
 "Norfolk and Suffolk",738500,774900
+"North Ayrshire",52200,59200
+"North Devon",41800,46200
 "North East",499400,884700
+"North East Derbyshire",33000,48100
+"North East Lincolnshire",62100,71600
+"North Hertfordshire",60000,69900
+"North Kesteven",49400,54600
+"North Lanarkshire",145600,165500
+"North Lincolnshire",69600,74800
+"North Norfolk",37700,44600
+"North Northamptonshire",161500,180400
 "North of Tyne",355400,369700
+"North Somerset",98400,101600
+"North Tyneside",90600,98400
+"North Warwickshire",27800,30700
+"North West Leicestershire",43500,46100
+"Northumberland",125700,134200
+"Norwich",68500,83800
+"Nottingham",140200,162900
+"Nuneaton and Bedworth",59800,63800
+"Oadby and Wigston",23500,26700
+"Oldham",95100,104400
+"Orkney Islands",8500,11500
+"Oxford",70100,85000
 "Oxfordshire",325500,351900
+"Pembrokeshire",51700,53900
+"Pendle",34400,42700
+"Perth and Kinross",67900,73900
+"Peterborough",87700,93900
+"Plymouth",111300,128200
+"Portsmouth",92300,109600
+"Powys",49600,58900
+"Preston",54900,70800
+"Reading",81400,90900
+"Redbridge",137800,150400
+"Redcar and Cleveland",52200,55500
+"Redditch",39600,55400
+"Reigate and Banstead",67200,83300
+"Renfrewshire",79600,87300
+"Rhondda Cynon Taff",102100,107000
+"Ribble Valley",26200,33800
+"Richmond upon Thames",96200,102600
+"Richmondshire",19400,24700
+"Rochdale",82300,94200
+"Rochford",31600,44600
+"Rossendale",32500,34800
+"Rother",29300,41800
+"Rotherham",112500,118700
+"Rugby",51300,65900
+"Runnymede",36900,47000
+"Rushcliffe",51600,66800
+"Rushmoor",45500,53400
+"Rutland",13500,16400
+"Ryedale",22600,35400
+"Salford",112000,126600
+"Sandwell",122000,151600
+"Scarborough",43000,66000
+"Scottish Borders",46800,52500
+"Sedgemoor",53200,61000
+"Sefton",116300,123800
+"Selby",34500,41700
+"Sevenoaks",49800,54700
+"Sheffield",270200,294500
 "Sheffield City Region",618900,645400
+"Shetland Islands",7100,12600
+"Shropshire",127100,150600
+"Slough",65700,73200
 "Solent",573100,587300
+"Solihull",92500,100300
+"Somerset West and Taunton",64200,93400
+"South Ayrshire",41100,47800
+"South Cambridgeshire",73900,81600
+"South Derbyshire",48400,56200
 "South East",1944800,1982900
 "South East Midlands",809400,843500
+"South Gloucestershire",140000,143400
+"South Hams",28700,39300
+"South Holland",40200,43800
+"South Kesteven",44900,69900
+"South Lakeland",43400,55600
+"South Lanarkshire",149700,171900
+"South Norfolk",58900,81100
+"South Oxfordshire",64900,71300
+"South Ribble",52200,70000
+"South Somerset",52800,79300
+"South Staffordshire",48700,52600
+"South Tyneside",60300,64000
 "South Yorkshire",618900,645400
-"Stoke-on-Trent and Staffordshire",521500,553300
+"Southampton",121600,132200
+"Southend",77700,89200
+"Southwark",175800,187000
+"Spelthorne",47600,74300
+"St Albans",63800,79700
+"St. Helens",78100,82500
+"Stafford",55900,64400
+"Staffordshire Moorlands",43500,58200
+"Stevenage",37000,46400
+"Stirling",40800,44400
+"Stockport",129200,138000
+"Stockton",84700,89100
+"Stoke-on-Trent and Staffordshire",111500,553300
+"Stratford",53700,67300
+"Stroud",54500,62000
+"Sunderland",114600,125100
+"Surrey Heath",39800,46900
+"Sutton",94500,104600
+"Swale",57500,79300
+"Swansea",102400,120300
+"Swindon",104900,112300
 "Swindon and Wiltshire",339000,354000
+"Tameside",101800,105000
+"Tamworth",35300,41200
+"Tandridge",38100,45700
 "Tees Valley",276800,285600
+"Teignbridge",56000,80800
+"Telford and Wrekin",75100,82300
+"Tendring",49100,59600
+"Test Valley",58600,68100
+"Tewkesbury",38400,49300
 "Thames Valley Berkshire",427500,458200
+"Thanet",54900,69400
 "The Marches",281000,320600
+"Three Rivers",42400,46100
+"Thurrock",81400,84600
+"Tonbridge and Malling",54800,66700
+"Torbay",48700,57800
+"Torfaen",39500,40400
+"Torridge",19500,32200
+"Tower Hamlets",157700,184500
+"Trafford",105700,116000
+"Tunbridge Wells",39700,56800
+"Uttlesford",39900,61300
+"Vale of Glamorgan",56100,60200
+"Vale of White Horse",58500,70600
+"Wakefield",151900,163400
+"Walsall",118600,126600
+"Waltham Forest",133900,146700
+"Wandsworth",186100,203000
+"Warrington",97300,105700
+"Warwick",69900,95300
+"Watford",46400,64100
+"Waverley",48700,58200
+"Wealden",71100,77200
+"Welwyn Hatfield",64300,69500
+"West Berkshire",74000,80900
+"West Devon",12700,22200
+"West Dunbartonshire",38900,41900
+"West Lancashire",31100,51600
+"West Lindsey",37600,56900
+"West Lothian",87000,91400
 "West Midlands",1245800,1289800
 "West Midlands and Warwickshire",1525200,1565300
+"West Northamptonshire",185300,204200
 "West of England",475300,591300
 "West of England and North Somerset",574400,591300
+"West Oxfordshire",51100,63400
+"West Suffolk",79200,96700
 "West Yorkshire",1047000,1086900
+"Westminster",109400,125800
+"Wigan",149400,157200
+"Wiltshire",226700,246200
+"Winchester",52900,63400
+"Windsor and Maidenhead",70200,73900
+"Wirral",139700,146000
+"Woking",48400,55000
+"Wokingham",76200,81400
+"Wolverhampton",95500,118000
+"Worcester",39600,55100
 "Worcestershire",271900,282300
+"Worthing",42300,57500
+"Wrexham",58400,66400
+"Wychavon",56100,70000
+"Wyre",47600,53400
+"Wyre Forest",39300,47300
+"York",105800,107600
 "York and North Yorkshire",374700,398100

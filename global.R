@@ -24,11 +24,50 @@ shhh(library(janitor))
 shhh(library(DT))
 shhh(library(writexl))
 shhh(library(scales)) # for comma 1,000s
-shhh(library(shinyBS))
+# shhh(library(shinyBS))
+shhh(library(leaflet))
+shhh(library(lubridate))
+shhh(library(sf))
+shhh(library(capture))
 
 # renv::snapshot()
 
 area_select <- c("Coast to Capital", "Greater Manchester", "England")
+
+metricChoices <- list(
+  "Employment" = list(
+    "Employment rate" = "empRate",
+    "Self-employment rate" = "selfempRate",
+    "Unemployment rate" = "unempRate",
+    "Inactive rate" = "inactiveRate",
+    "Employment volume" = "Employment",
+    "Self-employment volume" = "SelfEmployed",
+    "Unemployed volume" = "Unemployed",
+    "Inactive volume" = "Inactive",
+    "Online job adverts" = "vacancies",
+    "Job projections - TO COME" = "workingFutures"
+  ),
+  "Businesses" = list(
+    "Business count" = "enterpriseCount",
+    "Business birth rate" = "birthRate",
+    "Business death rate" = "deathRate"
+  ),
+  "FE and skills" = list(
+    "FE achievement rate" = "achievements_rate_per_100000_population",
+    "FE participation rate" = "participation_rate_per_100000_population",
+    # "FE start rate" = "starts_rate_per_100000_population",
+    "FE achievement volumes" = "achievements",
+    "FE participation volumes" = "participation",
+    # "FE starts" = "starts",
+    "Qualified at Level 3 or above" = "level3AndAboveRate",
+    "Key stage 4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
+    "Key stage 5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
+  )
+  # ,
+  # "Mismatch" = list("Supply vs demand TO COME" = "mismatch")
+)
+
+
 # Functions ---------------------------------------------------------------------------------
 
 # Here's an example function for simplifying the code needed to commas separate numbers:
