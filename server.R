@@ -302,7 +302,6 @@ server <- function(input, output, session) {
         geographic_level == input$GeoType,
         area == input$lep1
       ),
-      # "2.Vacancies" = filter(C_Vacancy_ONS1722, geographic_level == input$GeoType, area == input$lep1),
       "2a.Adverts over time" = filter(
         D_OnsProfTime,
         geographic_level == input$GeoType,

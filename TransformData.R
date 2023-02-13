@@ -121,8 +121,6 @@ C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
 # mutate(allOccsRemain = case_when(allOccsRemain <= 0 ~ 0, TRUE ~ allOccsRemain)) %>%
 # select(-allOccs)
 
-write.csv(C_EmpOcc_APS1721, file = "Data\\AppData\\C_EmpOcc_APS1721.csv", row.names = FALSE)
-
 ## Employment level and rate ----
 format.EmpRate.APS <- function(x) {
   reformat <- x %>%
@@ -437,26 +435,6 @@ D_Achieve_ILR21 <- F_Achieve_ILR21 %>%
   mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
 write.csv(D_Achieve_ILR21, file = "Data\\AppData\\D_Achieve_ILR21.csv", row.names = FALSE)
 
-# create version to use in dashboard
-# group by ssa and lep
-SSA_LEP_Achieve_ILR21 <- F_Achieve_ILR21 %>%
-  filter(geographic_level != "localAuthorityDistrict", geographic_level != "region") %>%
-  mutate_at(vars(achievements, enrolments), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "low" = ""))) %>% # convert to blank to avoid error msg
-  mutate(Achievements = as.numeric(achievements), Enrolments = as.numeric(enrolments)) %>%
-  filter(time_period == "202122") %>%
-  select(geographic_level, area, SSA = ssa_t1_desc, Level = notional_nvq_level, sex, Achievements, Enrolments)
-# group by ssa to get ssa totals
-Ach_pc_Achieve_ILR21 <- SSA_LEP_Achieve_ILR21 %>%
-  filter(SSA == "Total") %>%
-  select(geographic_level, area, Level, sex, Total = SSA, Total_ach = Achievements, Total_enr = Enrolments)
-# calculate ssa %s
-C_Achieve_ILR21 <- SSA_LEP_Achieve_ILR21 %>%
-  left_join(Ach_pc_Achieve_ILR21, by = c("geographic_level", "area", "Level", "sex")) %>%
-  group_by(geographic_level, area, Level, sex) %>%
-  mutate(pcAch = Achievements / Total_ach, pcEnr = Enrolments / Total_enr) %>%
-  filter(SSA != "Total")
-write.csv(C_Achieve_ILR21, file = "Data\\AppData\\C_Achieve_ILR21.csv", row.names = FALSE)
-
 ## Vacancy data
 # Reshape vacancy data to long, rename and reorder and reformat some columns
 format.Vacancy.ONS <- function(x) { # need to clean up colnames
@@ -539,50 +517,6 @@ format.Vacancy.ONS <- function(x) { # need to clean up colnames
   # join together
   bind_rows(addLA, addRegion, addLSIP, addLEP, addMCA)
 }
-
-# vacancy (for use in downloads)
-C_Vacancy_ONS1722 <- format.Vacancy.ONS(I_Vacancy_ONS1722)
-write.csv(C_Vacancy_ONS1722, file = "Data\\AppData\\C_Vacancy_ONS1722.csv", row.names = FALSE)
-
-# vacancy data to use in dashboard
-C_Vacancy_England <-
-  # work with original file to utilise the relationship between LA and region (to get to only England)
-  I_Vacancy_ONS1722 %>%
-  gather(year, vacancy_unit, 3:8) %>%
-  rename(LA = "Local.authority.[note.1]", region = "Region.[note.2]") %>%
-  relocate(year, .before = LA) %>%
-  mutate(year = as.numeric(year), vacancy_unit = as.numeric(vacancy_unit)) %>%
-  filter(!region %in% c("Wales", "Scotland", "Northern Ireland")) %>%
-  group_by(year) %>%
-  summarise(England = sum(vacancy_unit)) %>%
-  right_join(C_Vacancy_ONS1722 %>%
-               filter(
-                 geographic_level != "LADU" # not needed for the dashboard currently
-                 & geographic_level != "GOR"
-               ) %>%
-               mutate_at(c(4:4), as.numeric), by = "year") %>%
-  mutate(pc_total = vacancy_unit / England) %>%
-  mutate(Year = as.numeric(substr(year, 3, 4))) %>%
-  group_by(area, geographic_level, year, Year) %>%
-  summarise(jobpc = sum(pc_total), jobcnt = sum(vacancy_unit), .groups = "drop")
-write.csv(C_Vacancy_England, file = "Data\\AppData\\C_Vacancy_England.csv", row.names = FALSE)
-
-# create max and min vacancy pc by LEP for use in setting axis
-C_Vacancy_England_max_min <- C_Vacancy_England %>%
-  filter(year >= 2018) %>% # only showing past 5 years in chart
-  group_by(geographic_level, area) %>%
-  summarise(minVac = min(jobpc), maxVac = max(jobpc))
-write.csv(C_Vacancy_England_max_min, file = "Data\\AppData\\C_Vacancy_England_max_min.csv", row.names = FALSE)
-
-# create change vacancy pc by LEP
-C_Vacancy_England_change <- C_Vacancy_England %>%
-  filter(year == "2022" | year == "2021") %>%
-  mutate(Row = 1:n()) %>%
-  mutate(Percentage_Change = (jobcnt / lag(jobcnt)) - 1) %>%
-  filter(year == "2022") %>%
-  select(geographic_level, area, Percentage_Change)
-write.csv(C_Vacancy_England_change, file = "Data\\AppData\\C_Vacancy_England_change.csv", row.names = FALSE)
-
 
 ## UK Business Count - Enterprise by employment size
 # Reshape data to long, rename and reorder and reformat some columns
@@ -871,9 +805,6 @@ C_EmpInd2_APS1822 <- F_EmpInd_APS1822 %>%
   )) %>%
   mutate(rate = value / Total)
 
-# write to data folder
-write.csv(C_EmpInd2_APS1822, file = "Data\\AppData\\C_EmpInd2_APS1822.csv", row.names = FALSE)
-
 # Tidy up data table
 names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
 write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
@@ -965,37 +896,6 @@ F_qual_APS1721 <- format.qual.APS(I_qual_APS1721) %>%
 C_qual_APS1721 <- F_qual_APS1721 %>%
   group_by(area, year, geographic_level, gender, age_band) %>%
   summarise(Total = sum(`value`))
-
-C_qual2_APS1721 <- F_qual_APS1721 %>%
-  left_join(C_qual_APS1721, by = c(
-    "area" = "area", "year" = "year",
-    "geographic_level" = "geographic_level",
-    "gender" = "gender", "age_band" = "age_band"
-  )) %>%
-  mutate(rate = value / Total) %>%
-  select(-Total) %>%
-  mutate(Year = as.numeric(substr(year, 3, 4))) # add year name for charts
-
-# write data to folder
-write.csv(C_qual2_APS1721, file = "Data\\AppData\\C_qual2_APS1721.csv", row.names = FALSE)
-
-#### Below level 3 ####
-C_qualevel2_APS1721 <- F_qual_APS1721 %>%
-  filter(Level %in% c("NVQ1", "NVQ2", "Trade Apprenticeships", "None")) %>%
-  group_by(area, year, geographic_level, gender, age_band) %>%
-  summarise(value2 = sum(`value`)) %>%
-  mutate(Level = "below Level 3") %>%
-  left_join(C_qual_APS1721, by = c(
-    "area" = "area", "year" = "year",
-    "geographic_level" = "geographic_level",
-    "gender" = "gender", "age_band" = "age_band"
-  )) %>%
-  mutate(rate = value2 / Total) %>%
-  select(-Total) %>%
-  mutate(Year = as.numeric(substr(year, 3, 4))) # add year name for charts
-
-# write data to folder
-write.csv(C_qualevel2_APS1721, file = "Data\\AppData\\C_qualevel2_APS1721.csv", row.names = FALSE)
 
 #### Level 3 plus ####
 C_qualevel3plus_APS1721 <- F_qual_APS1721 %>%
@@ -1218,9 +1118,6 @@ C_empent2_UBC1822 <- F_empent_UBC1822 %>%
     variable == "Large_250" ~ "Large 250+",
     TRUE ~ variable
   ))
-
-# write the data to folder
-write.csv(C_empent2_UBC1822, file = "Data\\AppData\\C_empent2_UBC1822.csv", row.names = FALSE)
 
 # Downloadable version
 D_empent_UBC1822 <- F_empent_UBC1822 %>%
@@ -1482,9 +1379,6 @@ C_enterprise_demo1621 <- df_list %>%
   select(-active_prop) %>%
   melt(id.vars = c("geographic_level", "area", "year")) %>%
   rename(rate = value)
-
-# write data to folder
-write.csv(C_enterprise_demo1621, file = "Data\\AppData\\C_enterprise_demo1621.csv", row.names = FALSE)
 
 # Put into new format
 C_enterpriseBirthDeath <- C_enterprise_demo1621 %>%
@@ -2733,41 +2627,6 @@ D_KS5destin_1721 <- F_KS5destin_1721 %>%
 # write data to folder
 write.csv(D_KS5destin_1721, file = "Data\\AppData\\D_KS5destin_1721.csv", row.names = FALSE)
 
-# merge KS4 and KS5 into one dataframe for destinations tab graph
-# dashboard data
-C_KS4_KS5_2021 <- F_KS4destin_1521 %>%
-  mutate(`Cohort Group` = "Total") %>%
-  mutate(`Key Stage` = "Key Stage 4") %>%
-  filter(time_period == "202021") %>%
-  bind_rows(
-    F_KS5destin_1721 %>%
-      filter(time_period == "202021") %>%
-      mutate(`Key Stage` = "Key Stage 5")
-  ) %>%
-  relocate(`Key Stage`, .after = geographic_level) %>%
-  mutate_at(c(5:10), as.numeric) %>%
-  mutate(
-    edrate = .[[5]] / .[[10]],
-    apprate = .[[6]] / .[[10]],
-    emprate = .[[7]] / .[[10]],
-    notrecrate = .[[8]] / .[[10]],
-    unkrate = .[[9]] / .[[10]]
-  ) %>%
-  select(-c(5:10)) %>%
-  rename(
-    "Unknown" = "unkrate",
-    "Not Recorded as a sustained destination" = "notrecrate",
-    "Sustained Education" = "edrate",
-    "Sustained Employment" = "emprate",
-    "Sustained Apprenticeships" = "apprate"
-  ) %>%
-  melt(id.vars = c("time_period", "geographic_level", "area", "Cohort Group", "Key Stage")) %>%
-  rename(rate = value)
-
-
-# write data to folder
-write.csv(C_KS4_KS5_2021, file = "Data\\AppData\\C_KS4_KS5_2021.csv", row.names = FALSE)
-
 #### Employment and education ####
 C_KS4_KS5eduempapp <- F_KS4destin_1521 %>%
   mutate(`Cohort Group` = "Total") %>%
@@ -2894,10 +2753,6 @@ D_OnsProfTime <- C_OnsProfTime %>%
 D_OnsProfTime["vacancies"][D_OnsProfTime["vacancies"] == 0] <- "[x]"
 write.csv(D_OnsProfTime, file = "Data\\AppData\\D_OnsProfTime.csv", row.names = FALSE)
 
-# make detail in oct 22 file
-C_OnsProfDetail <- C_OnsProf %>%
-  filter(time_period == "Oct 22")
-write.csv(C_OnsProfDetail, file = "Data\\AppData\\C_OnsProfDetail.csv", row.names = FALSE)
 # make download version
 D_OnsProfDetail <- D_OnsProf %>%
   filter(time_period == "Oct 22")
