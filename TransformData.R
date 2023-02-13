@@ -2992,7 +2992,7 @@ C_Geog <- neatGeog %>%
   rename_all(~ str_replace_all(., "\\s+", ""))
 
 
-save(C_Geog, file = "Data\\AppData\\C_Geog.RData")
+save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 
 # create neat over time chart
 # geographic_level,area,time_period,metric
