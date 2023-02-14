@@ -1459,6 +1459,11 @@ server <- function(input, output, session) {
       "Screenshot"
     )
   })
+  
+  # create subheading
+  output$subheading <- renderUI({
+    (I_DataText %>% filter(metric == input$splashMetric))$subheading
+  })
 
   ### 2.3.4 Data note----
   # create data source
