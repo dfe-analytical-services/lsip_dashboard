@@ -559,6 +559,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           uiOutput("screenshotFile")
         )
       ),
+      fluidRow(
+        column(
+          12,
+          p(uiOutput("subheading"))
+        )
+      ),
       ### 2.3.2 Visuals row 1 ----
       fluidRow(
         column(
