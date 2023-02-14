@@ -369,6 +369,11 @@ server <- function(input, output, session) {
   )
 
   ### 2.2.3 KPIs and charts----
+  # currentOverview<-eventReactive(input$lep1,input$GeoType {
+  #   C_time%>%
+  #   filter(area == input$lep1, geographic_level == input$GeoType)
+  # })
+  
   #### 2.2.3.1 Employment count ----
   # get emp data for current area
   empLEP <- eventReactive(input$lep1, {
@@ -1634,8 +1639,8 @@ server <- function(input, output, session) {
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <-
       (LaHighLow %>% filter(ranking == max(ranking)))$areaName
-    if (areaClicked() == "London" &
-      currentMetric() == "job adverts") {
+    if (areaClicked() %in% c("London","Greater London") &
+      currentMetric() == "online job adverts") {
       "ONS job adverts in London are not broken down by LA."
     } else {
       paste0(
@@ -1651,6 +1656,10 @@ server <- function(input, output, session) {
 
   #### 2.3.6.3 Map----
   output$mapLA <- renderLeaflet({
+    validate(
+      need(!(areaClicked() %in% c("London","Greater London") &
+                   currentMetric() == "online job adverts"),"")
+    )
     # Filter to those LAs in that region
     mapData <- C_Geog %>%
       filter(
