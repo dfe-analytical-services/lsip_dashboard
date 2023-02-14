@@ -1698,6 +1698,8 @@ D_OnsProf <- bind_rows(
   mutate(geographic_level = case_when(
     geographic_level == "Local Authority District" ~ "LADU",
     geographic_level == "Local Enterprise Partnership" ~ "LEP",
+    geographic_level == "Local Skills Improvement Plan" ~ "LSIP",
+    geographic_level == "Mayoral Combined Authorities" ~ "MCA",
     TRUE ~ geographic_level
   )) %>%
   mutate(geographic_level = toupper(geographic_level))
@@ -2084,6 +2086,6 @@ C_datahub <- bind_rows(
   ))
 write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
 
-# Tidy up data text table
+# Tidy up data text tablewarnings()
 names(I_DataText) <- gsub(".", " ", names(I_DataText), fixed = TRUE)
 write.csv(I_DataText, file = "Data\\AppData\\I_DataText.csv", row.names = FALSE)
