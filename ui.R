@@ -617,10 +617,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 
     ## 2.4 Data info and download hub ----
     tabPanel(
-      "Data info and download hub",
+      "Data info and download",
       fluidRow(column(
         12,
-        h1("DataHub"),
+        h1("Data explorer"),
         p(
           "Use the filters to create a bespoke dataset. * fields are mandatory. Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want."
         )
