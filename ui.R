@@ -313,12 +313,14 @@ padding-top:15px
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("9 Feb 2023 (0.4.3)"),
-              p("Updated destinations data with the February revision."),
+              p("14 Feb 2023 (0.4.4)"),
+              p("Updated online job advert data to Dec 2022."),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("9 Feb 2023 (0.4.3)"),
+                  p("Updated destinations data with the February revision."),
                   p("25 Jan 2023 (0.4.2)"),
                   p("Updated employment rates and employment by industry figures with Oct-Sep 2022 Annual Population Survey data."),
                   p("12 Jan 2023 (0.4.1)"),

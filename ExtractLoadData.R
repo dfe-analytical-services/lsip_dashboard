@@ -99,7 +99,6 @@ sheetNum <- 1
 I_EmpEntind_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 
-
 ## 3.3 Business demography, UK ----
 # Number of enterprise births, deaths and active
 # Download from https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable
@@ -146,18 +145,17 @@ I_active_ONS20 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files
 sheet <- "Table 3.1d"
 I_active_ONS21 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 
-
 ## 3.4 Load ONS job vacancies by profession data ----
 folder <- "17_OnsProf"
-sheet <- "Table 10"
+sheet <- "Table 13"
 I_OnsProfLep <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 11"
+sheet <- "Table 14"
 I_OnsProfLsip <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 12"
+sheet <- "Table 15"
 I_OnsProfMca <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 # sheet <- "Table 1"
 # I_OnsProfEng <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 7"
+sheet <- "Table 10"
 I_OnsProfDetailEng <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 
 

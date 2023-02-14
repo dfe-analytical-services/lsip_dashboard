@@ -1449,7 +1449,9 @@ format.OnsProf <- function(x) {
     rename(area = geogLevel) %>% # rename to match other datafiles
     mutate(geographic_level = geogLevel) %>% # set to the current geographic type
     # mutate(geographic_level=gsub('\\b(\\pL)\\pL{2,}|.','\\U\\1',geographic_level,perl = TRUE))%>%#get first letter of geog level
-    relocate(geographic_level, .before = area)
+    relocate(geographic_level, .before = area)%>%
+    rename(`Summary Profession Category`=`Summary profession category`,
+           `Detailed Profession Category`=`Detailed profession category`)
   
   # Make long
   reformat %>%
@@ -1468,7 +1470,7 @@ format.OnsProf <- function(x) {
 
 # format data
 D_OnsProf <- bind_rows(
-  format.OnsProf(I_OnsProfLep %>% select(-X2)), # remove code since it doesn't exist in other geogs
+  format.OnsProf(I_OnsProfLep), # remove code since it doesn't exist in other geogs
   format.OnsProf(I_OnsProfLsip),
   format.OnsProf(I_OnsProfMca),
   # format.OnsProf(I_OnsProfEng %>% mutate(`Detailed Profession Category`=NULL)),
