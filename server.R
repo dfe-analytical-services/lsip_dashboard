@@ -1902,6 +1902,8 @@ server <- function(input, output, session) {
 
   ### 2.3.8 Breakdown chart ----
   #### 2.3.8.1 Breakdown filter ----
+  distinctSubgroups <- C_breakdown %>%
+    distinct(metric, breakdown, subgroups)
   distinctBreakdowns <- C_breakdown %>%
     distinct(metric, breakdown)
   output$breakdownFilter <- renderUI({
@@ -1935,8 +1937,6 @@ server <- function(input, output, session) {
   })
   
   #### 2.3.8.2 Subgroup filter ----
-  distinctSubgroups <- C_breakdown %>%
-    distinct(metric, breakdown, subgroups)
   detailLookup<-D_OnsProfDetail%>%distinct(`Summary Profession Category`,`Detailed Profession Category`)
   topTenEachBreakdown <- bind_rows(
     C_breakdown %>%
