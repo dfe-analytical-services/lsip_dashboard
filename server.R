@@ -262,7 +262,17 @@ server <- function(input, output, session) {
     }
   })
 
-  ###  2.2.2 Downloads ----
+  ### 2.2.2 Screenshot----
+  output$screenshotOverview <- renderUI({
+    capture::capture(
+      selector = "body",
+      filename = paste0(input$lep1, "-overview", ".png"),
+      icon("camera"),
+      "Screenshot"
+    )
+  })
+
+  ###  2.2.3 Downloads ----
   # download all indicators
   list_of_datasets0 <- list(
     "1a.Emp by occupation" = D_EmpOcc_APS1721,
@@ -373,7 +383,7 @@ server <- function(input, output, session) {
   #   C_time%>%
   #   filter(area == input$lep1, geographic_level == input$GeoType)
   # })
-  
+
   #### 2.2.3.1 Employment count ----
   # get emp data for current area
   empLEP <- eventReactive(input$lep1, {
@@ -1464,7 +1474,7 @@ server <- function(input, output, session) {
       "Screenshot"
     )
   })
-  
+
   # create subheading
   output$subheading <- renderUI({
     (I_DataText %>% filter(metric == input$splashMetric))$subheading
@@ -1639,7 +1649,7 @@ server <- function(input, output, session) {
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <-
       (LaHighLow %>% filter(ranking == max(ranking)))$areaName
-    if (areaClicked() %in% c("London","Greater London") &
+    if (areaClicked() %in% c("London", "Greater London") &
       currentMetric() == "online job adverts") {
       "ONS job adverts in London are not broken down by LA."
     } else {
@@ -1657,8 +1667,8 @@ server <- function(input, output, session) {
   #### 2.3.6.3 Map----
   output$mapLA <- renderLeaflet({
     validate(
-      need(!(areaClicked() %in% c("London","Greater London") &
-                   currentMetric() == "online job adverts"),"")
+      need(!(areaClicked() %in% c("London", "Greater London") &
+        currentMetric() == "online job adverts"), "")
     )
     # Filter to those LAs in that region
     mapData <- C_Geog %>%

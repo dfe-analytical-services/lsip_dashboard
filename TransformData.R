@@ -1666,9 +1666,11 @@ format.OnsProf <- function(x) {
     rename(area = geogLevel) %>% # rename to match other datafiles
     mutate(geographic_level = geogLevel) %>% # set to the current geographic type
     # mutate(geographic_level=gsub('\\b(\\pL)\\pL{2,}|.','\\U\\1',geographic_level,perl = TRUE))%>%#get first letter of geog level
-    relocate(geographic_level, .before = area)%>%
-    rename(`Summary Profession Category`=`Summary profession category`,
-           `Detailed Profession Category`=`Detailed profession category`)
+    relocate(geographic_level, .before = area) %>%
+    rename(
+      `Summary Profession Category` = `Summary profession category`,
+      `Detailed Profession Category` = `Detailed profession category`
+    )
 
   # Make long
   reformat %>%
@@ -1693,8 +1695,8 @@ D_OnsProf <- bind_rows(
   format.OnsProf(I_OnsProfLA %>% select(-1)), # remove region code
   # format.OnsProf(I_OnsProfEng %>% mutate(`Detailed Profession Category`=NULL)),
   format.OnsProf(I_OnsProfDetailEng),
-  format.OnsProf(I_OnsProfRegion)%>%filter(area=="London")%>%mutate(geographic_level="LSIP",area="Greater London"),
-  format.OnsProf(I_OnsProfRegion)%>%filter(area=="London")%>%mutate(geographic_level="LEP")
+  format.OnsProf(I_OnsProfRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LSIP", area = "Greater London"),
+  format.OnsProf(I_OnsProfRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LEP")
 ) %>%
   # change lep naming to match other datafiles
   mutate(geographic_level = case_when(
