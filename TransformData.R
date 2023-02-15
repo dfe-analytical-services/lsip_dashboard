@@ -1692,7 +1692,9 @@ D_OnsProf <- bind_rows(
   format.OnsProf(I_OnsProfMca),
   format.OnsProf(I_OnsProfLA %>% select(-1)), # remove region code
   # format.OnsProf(I_OnsProfEng %>% mutate(`Detailed Profession Category`=NULL)),
-  format.OnsProf(I_OnsProfDetailEng)
+  format.OnsProf(I_OnsProfDetailEng),
+  format.OnsProf(I_OnsProfRegion)%>%filter(area=="London")%>%mutate(geographic_level="LSIP",area="Greater London"),
+  format.OnsProf(I_OnsProfRegion)%>%filter(area=="London")%>%mutate(geographic_level="LEP")
 ) %>%
   # change lep naming to match other datafiles
   mutate(geographic_level = case_when(
@@ -2009,8 +2011,8 @@ C_breakdown <- bind_rows(
     group_by(across(c(-value, -subgroups))) %>%
     mutate(across(value, ~ round(prop.table(.), 3))),
   C_OnsProf %>%
-    filter(time_period == "Oct 22") %>%
-    mutate(time_period = 102022) %>%
+    filter(time_period == "Dec 22") %>%
+    mutate(time_period = 122022) %>%
     group_by(geographic_level, area, time_period, `Summary Profession Category`) %>%
     summarise(value = sum(vacancies)) %>%
     mutate(breakdown = "Summary Profession Category", metric = "vacancies") %>%
@@ -2018,8 +2020,8 @@ C_breakdown <- bind_rows(
     group_by(across(c(-value, -subgroups))) %>%
     mutate(across(value, ~ round(prop.table(.), 3))),
   C_OnsProf %>%
-    filter(time_period == "Oct 22") %>%
-    mutate(time_period = 102022) %>%
+    filter(time_period == "Dec 22") %>%
+    mutate(time_period = 122022) %>%
     group_by(geographic_level, area, time_period, `Detailed Profession Category`) %>%
     summarise(value = sum(vacancies)) %>%
     mutate(breakdown = "Detailed Profession Category", metric = "vacancies") %>%
@@ -2086,6 +2088,6 @@ C_datahub <- bind_rows(
   ))
 write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
 
-# Tidy up data text tablewarnings()
+# Tidy up data text table
 names(I_DataText) <- gsub(".", " ", names(I_DataText), fixed = TRUE)
 write.csv(I_DataText, file = "Data\\AppData\\I_DataText.csv", row.names = FALSE)
