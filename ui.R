@@ -575,7 +575,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             choices = c("LEP", "LSIP", "MCA")
           ),
           p(uiOutput("commentMap")),
-          leafletOutput("map")
+          leafletOutput("map"),
+          p(uiOutput("mapFoot"))
         ),
         column(
           6,
@@ -595,13 +596,15 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           uiOutput("professionFilter"),
           uiOutput("subgroupFilter"),
           p(uiOutput("commentBreakdown")),
-          plotlyOutput("Splash_pc")
+          plotlyOutput("Splash_pc"),
+          p(uiOutput("breakdownFoot"))
         ),
         column(
           6,
           h3(uiOutput("titleLaMap")),
           p(uiOutput("commentLA")),
-          leafletOutput("mapLA")
+          leafletOutput("mapLA"),
+          p(uiOutput("mapLaFoot"))
         )
       ),
       ### 2.3.3 Data notes ----
