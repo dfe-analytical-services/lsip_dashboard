@@ -1508,11 +1508,11 @@ write.csv(D_OnsProfTime, file = "Data\\AppData\\D_OnsProfTime.csv", row.names = 
 
 # make detail in oct 22 file
 C_OnsProfDetail <- C_OnsProf %>%
-  filter(time_period == "Oct 22")
+  filter(time_period == "Dec 22")
 write.csv(C_OnsProfDetail, file = "Data\\AppData\\C_OnsProfDetail.csv", row.names = FALSE)
 # make download version
 D_OnsProfDetail <- D_OnsProf %>%
-  filter(time_period == "Oct 22")
+  filter(time_period == "Dec 22")
 write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.names = FALSE)
 
 # get percenatage of job adverts for each area
