@@ -23,6 +23,11 @@ panel_overview <- function() {
             column(
               width = 4,
               uiOutput("lep1_geo"),
+            ),
+            column(1),
+            column(
+              3,
+              uiOutput("screenshotOverview")
             )
           )
         ),
