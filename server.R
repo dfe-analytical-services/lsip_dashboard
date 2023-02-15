@@ -2659,13 +2659,12 @@ server <- function(input, output, session) {
       levels = c(input$lep1, input$lep2)
     )
     ggplot(ks_21, aes(x = reorder(variable, desc(variable)), y = rate, fill = Area, text = paste0
-                      (
+    (
       "Area: ", Area, "<br>",
       "Key stage group: ", `Key Stage`, "<br>",
       "Cohort group: ", `Cohort Group`, "<br>",
       "Percentage: ", scales::percent(round(rate, 2)), "<br>"
-    )
-    )) +
+    ))) +
       geom_col(
         position = "dodge"
       ) +

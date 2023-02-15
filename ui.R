@@ -169,18 +169,19 @@ padding-top:15px
   # ),
 
   HTML(paste(
-  '<div class="govuk-phase-banner govuk-width-container govuk-main-wrapper" id="beta banner" style="margin-left:0px;margin-right:0px">
+    '<div class="govuk-phase-banner govuk-width-container govuk-main-wrapper" id="beta banner" style="margin-left:0px;margin-right:0px">
     <p class="govuk-phase-banner__content">
     <strong class="govuk-tag govuk-phase-banner__content__tag ">beta</strong>
     <span class="govuk-phase-banner__text">',
-        "<b>We're looking for volunteers! We've developed several new dashboards ",
-        "in the last 12 months and we'd really like to know what you think of them. ",
-        "If you're interested in helping us improve our products, please sign up ",
-        "using our <a href='https://forms.office.com/e/ZjNxf10uuN'>user-testing volunteer form</a>.</b><br>",
-    'We are aware of performance issues that require some users to reload the page. We are working to fix this.
+    "<b>We're looking for volunteers! We've developed several new dashboards ",
+    "in the last 12 months and we'd really like to know what you think of them. ",
+    "If you're interested in helping us improve our products, please sign up ",
+    "using our <a href='https://forms.office.com/e/ZjNxf10uuN'>user-testing volunteer form</a>.</b><br>",
+    "We are aware of performance issues that require some users to reload the page. We are working to fix this.
 </span>
   </p>
-</div>')),
+</div>"
+  )),
   # shinyGovstyle::banner(
   #   "beta banner",
   #   "beta",
