@@ -592,6 +592,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           6,
           h3(uiOutput("titleBreakdown")),
           uiOutput("breakdownFilter"),
+          uiOutput("professionFilter"),
           uiOutput("subgroupFilter"),
           p(uiOutput("commentBreakdown")),
           plotlyOutput("Splash_pc")
