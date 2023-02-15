@@ -1660,7 +1660,7 @@ server <- function(input, output, session) {
         LaHigh,
         " and lowest in ",
         LaLow,
-        "."
+        ". Click an area to add data to the other charts. "
       )
     }
   })
