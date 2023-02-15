@@ -42,7 +42,8 @@ metricChoices <- list(
     "Employment volume" = "Employment",
     "Self-employment volume" = "SelfEmployed",
     "Unemployed volume" = "Unemployed",
-    "Inactive volume" = "Inactive",
+    "Inactive volume" = "Inactive"),
+  "Jobs" = list(
     "Online job adverts" = "vacancies",
     "Job projections (Skills imperative 2035) - TO COME" = "workingFutures"
   ),
@@ -58,7 +59,9 @@ metricChoices <- list(
     "FE achievement volumes" = "achievements",
     "FE participation volumes" = "participation",
     # "FE starts" = "starts",
-    "Qualified at Level 3 or above" = "level3AndAboveRate",
+    "Qualified at Level 3 or above" = "level3AndAboveRate"
+  ),
+  "Destinations" = list(
     "Key stage 4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
     "Key stage 5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
   )
