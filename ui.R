@@ -620,7 +620,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       "Data info and download",
       fluidRow(column(
         12,
-        h1("Data explorer"),
+        h1("Data download"),
         p(
           "Use the filters to create a bespoke dataset. * fields are mandatory. Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want."
         )

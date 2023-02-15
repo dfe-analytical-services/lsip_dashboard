@@ -44,7 +44,7 @@ metricChoices <- list(
     "Unemployed volume" = "Unemployed",
     "Inactive volume" = "Inactive",
     "Online job adverts" = "vacancies",
-    "Job projections - TO COME" = "workingFutures"
+    "Job projections (Skills imperative 2035) - TO COME" = "workingFutures"
   ),
   "Businesses" = list(
     "Business count" = "enterpriseCount",
