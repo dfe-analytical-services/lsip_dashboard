@@ -1636,6 +1636,7 @@ server <- function(input, output, session) {
     paste0("What is the variation within ", areaClicked(), "?")
   })
   #### 2.3.6.2 Comment----
+  
   output$commentLA <- renderUI({
     LaHighLow <- C_Geog %>%
       filter(
@@ -1914,18 +1915,45 @@ server <- function(input, output, session) {
         ))$breakdown
     )
   })
+  #### 2.3.8.2 Optional summary profession filter ----
+  summaryCategories<-c("All",(as.vector(
+    distinctSubgroups %>%
+      filter(breakdown == "Summary Profession Category")
+  ))$subgroups)
+  output$professionFilter <- renderUI({
+    validate(
+      need(input$barBreakdown != "", ""),
+      need(input$barBreakdown != "No breakdowns available", "")
+    )
+    if(input$barBreakdown=="Detailed Profession Category"){
+      selectizeInput(
+        inputId = "summaryProfession",
+        label = "Limit to particular summary profession",
+        choices = summaryCategories
+      )
+    }else{}
+  })
+  
   #### 2.3.8.2 Subgroup filter ----
   distinctSubgroups <- C_breakdown %>%
     distinct(metric, breakdown, subgroups)
-  topTenEachBreakdown <- C_breakdown %>%
-    group_by(metric, breakdown, area, geographic_level) %>%
+  detailLookup<-D_OnsProfDetail%>%distinct(`Summary Profession Category`,`Detailed Profession Category`)
+  topTenEachBreakdown <- bind_rows(
+    C_breakdown %>%
+      group_by(metric, breakdown, area, geographic_level) %>%
+      arrange(desc(value)) %>%
+      slice(1:10)%>%
+      mutate(`Summary Profession Category`="All"),
+    C_breakdown %>%
+      filter(breakdown=="Detailed Profession Category")%>%
+    left_join(detailLookup,by = c("subgroups"="Detailed Profession Category"))%>%
+    group_by(metric, breakdown, area, geographic_level,`Summary Profession Category`) %>%
     arrange(desc(value)) %>%
     slice(1:10)
-
+  )
   output$subgroupFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
-      # if area not yet loaded don't try to load ch
       need(input$barBreakdown != "No breakdowns available", "")
     )
     pickerInput(
@@ -1936,7 +1964,11 @@ server <- function(input, output, session) {
           distinctSubgroups %>%
             filter(
               metric == input$splashMetric,
-              breakdown == input$barBreakdown
+              breakdown == input$barBreakdown,
+              if(input$barBreakdown!="Detailed Profession Category"){TRUE}
+              else{if(input$summaryProfession=="All"){TRUE}else{
+              subgroups %in%  
+              (detailLookup%>%filter(`Summary Profession Category`==input$summaryProfession))$`Detailed Profession Category`}}
             )
         ))$subgroups,
       multiple = TRUE,
@@ -1946,11 +1978,14 @@ server <- function(input, output, session) {
             metric == input$splashMetric,
             breakdown == input$barBreakdown,
             area == areaClicked(),
-            geographic_level == input$splashGeoType
+            geographic_level == input$splashGeoType,
+            if(input$barBreakdown!="Detailed Profession Category"){TRUE}
+            else{if(input$summaryProfession=="All"){`Summary Profession Category`=="All"}else{
+            `Summary Profession Category`==input$summaryProfession}}
           ) %>%
           distinct(subgroups)
       ))$subgroups,
-      options = list(`actions-box` = TRUE)
+      options = list(`actions-box` = TRUE,`live-search`=TRUE)
     )
   })
 
@@ -2014,6 +2049,7 @@ server <- function(input, output, session) {
       } else {
         "low"
       }
+    
     paste0(
       areaClicked(),
       " has a ",
@@ -2022,7 +2058,10 @@ server <- function(input, output, session) {
       currentMetric(),
       " in ",
       breakdownDiff$subgroups,
-      " than the national average."
+      " than the national average. ",
+      if(nrow(C_breakdown %>%
+             filter(breakdown == input$barBreakdown)%>%
+             distinct(subgroups))>10){"The top 10 subgroups are shown. Use the filter to add or remove subgroups. "}else{""}
     )
   })
 
