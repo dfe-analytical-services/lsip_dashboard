@@ -1629,6 +1629,11 @@ server <- function(input, output, session) {
         zoom = 5.7
       )
   })
+  #### 2.3.5.4 Map footnote ----
+  output$mapFoot <- renderUI({
+    paste0(
+    (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod," data. Click an area to update dashboard.")
+  })
 
   ### 2.3.6 LA map ----
   #### 2.3.6.1 Title ----
@@ -1660,7 +1665,7 @@ server <- function(input, output, session) {
         LaHigh,
         " and lowest in ",
         LaLow,
-        ". Click an area to add data to the other charts. "
+        "."
       )
     }
   })
@@ -1715,6 +1720,12 @@ server <- function(input, output, session) {
           direction = "auto"
         )
       )
+  })
+  
+  #### 2.3.6.4 Map footnote ----
+  output$mapLaFoot <- renderUI({
+    paste0(
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod," data. Click an area to update other charts with LA data.")
   })
 
   ### 2.3.7 Time chart ----
@@ -2184,6 +2195,15 @@ server <- function(input, output, session) {
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
+  })
+  #### 2.3.8.6 Bar footnote ----
+  output$breakdownFoot <- renderUI({
+    validate(
+      need(input$barBreakdown != "", ""),
+      need(input$barBreakdown != "No breakdowns available", "")
+    )
+    paste0(
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod," data.")
   })
 
   ## 2.4 DataHub----
