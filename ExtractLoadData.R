@@ -121,7 +121,6 @@ folder <- "18_FeSources"
 sheetNum <- 1
 I_SourcesTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
-
 ### Skill by age gender ------------
 # Geog and date as above
 # Cell: T19	Qualification by age and gender - NVQ. All people aged 16-64. Only data up to Dec 21 available
