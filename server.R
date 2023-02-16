@@ -590,13 +590,13 @@ server <- function(input, output, session) {
   # Vacancy kpi
   output$jobad.units <- renderUI({
     ### ONS job advert units change
-    VacChange <- VacLatest()$vacancies - VacLast()$vacancies
+    VacChange <- (VacLatest()$vacancies - VacLast()$vacancies) / VacLast()$vacancies
 
     # print with formatting
     h4(span("Dec 2022", style = "font-size: 16px;font-weight:normal;"), br(),
       format(VacLatest()$vacancies, big.mark = ","), br(),
       span(
-        format_pm(VacChange),
+        paste0(format(VacChange * 100, digits = 2), "%"),
         style = paste0("font-size: 16px;color:", cond_color(VacChange > 0)) # colour formating
         , .noWS = c("before", "after") # remove whitespace
       ), br(),
@@ -3710,12 +3710,12 @@ server <- function(input, output, session) {
       mutate(area = "England")
     # combine and reformat
     profDetail <- bind_rows(profDetailArea, profDetailEngland) %>%
-      group_by(area,`Detailed Profession Category`) %>%
+      group_by(area, `Detailed Profession Category`) %>%
       summarise(vacancies = sum(vacancies, na.rm = T)) %>%
       pivot_wider(names_from = area, values_from = vacancies) %>%
       relocate(England, .after = `Detailed Profession Category`) %>%
-      left_join(C_OnsProfDetail%>%distinct(`Detailed Profession Category`,`Summary Profession Category`))%>%
-      relocate(`Summary Profession Category`, .after = `Detailed Profession Category`)%>%
+      left_join(C_OnsProfDetail %>% distinct(`Detailed Profession Category`, `Summary Profession Category`)) %>%
+      relocate(`Summary Profession Category`, .after = `Detailed Profession Category`) %>%
       relocate(input$lep1, .after = England) %>%
       mutate_at(c(4), ~ replace(., is.na(.), 0)) %>%
       mutate(across(where(is.numeric), ~ round(prop.table(.), 4)))
