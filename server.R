@@ -1419,6 +1419,12 @@ server <- function(input, output, session) {
     }
     C_Geog$areaName[C_Geog$areaCode == event$id]
   })
+  
+  # areaClicked <- reactive({
+  #   input$lep1
+  # })
+  
+
 
   # Update overview to match map
   observe({
@@ -1600,14 +1606,6 @@ server <- function(input, output, session) {
           style = list("font-weight" = "normal", padding = "3px 8px"),
           textsize = "12px",
           direction = "auto"
-        ),
-        popup = labels,
-        popupOptions = popupOptions(
-          className = "myspecial-popup",
-          textsize = "12px",
-          direction = "auto",
-          closeOnClick = TRUE,
-          closeButton = FALSE
         )
       ) %>%
       setView(
@@ -1616,6 +1614,40 @@ server <- function(input, output, session) {
         zoom = 5.7
       )
   })
+  observe({
+    mapData <- C_Geog %>% filter(geog == input$splashGeoType,areaName==areaClicked())
+    labels <-
+      # if a percentage then format as %, else big number
+      if (str_sub(input$splashMetric, start = -4) == "Rate") {
+        sprintf(
+          "<strong>%s</strong><br/>%s: %s%%",
+          mapData$areaName,
+          currentMetric(),
+          round(mapData[[input$splashMetric]] * 100)
+        ) %>% lapply(htmltools::HTML)
+      } else {
+        sprintf(
+          "<strong>%s</strong><br/>%s: %s",
+          mapData$areaName,
+          currentMetric(),
+          format(round(mapData[[input$splashMetric]]), big.mark = ",")
+        ) %>% lapply(htmltools::HTML)
+      }
+    proxy <- leafletProxy("map")
+    addPopups(
+      proxy,
+      lng = C_Geog$LONG[C_Geog$areaName == areaClicked()],
+      lat =C_Geog$LAT[C_Geog$areaName == areaClicked()],
+      popup = labels,
+      layerId = "popup",
+      options  = popupOptions(className = "myspecial-popup",
+                              textsize = "12px",
+                              direction = "auto",
+                              closeOnClick = TRUE,
+                              closeButton = FALSE)
+    )
+  })
+  
   #### 2.3.5.4 Map footnote ----
   output$mapFoot <- renderUI({
     paste0(
