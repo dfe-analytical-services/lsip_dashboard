@@ -579,24 +579,24 @@ server <- function(input, output, session) {
   # get latest values
   VacLatest <- reactive({
     VacArea() %>%
-      filter(time_period == "2022-10-01")
+      filter(time_period == "2022-12-01")
   })
   # get 2021 values
   VacLast <- reactive({
     VacArea() %>%
-      filter(time_period == "2021-10-01")
+      filter(time_period == "2021-12-01")
   })
 
   # Vacancy kpi
   output$jobad.units <- renderUI({
     ### ONS job advert units change
-    VacChange <- VacLatest()$vacancies - VacLast()$vacancies
+    VacChange <- (VacLatest()$vacancies - VacLast()$vacancies) / VacLast()$vacancies
 
     # print with formatting
-    h4(span("Oct 2022", style = "font-size: 16px;font-weight:normal;"), br(),
+    h4(span("Dec 2022", style = "font-size: 16px;font-weight:normal;"), br(),
       format(VacLatest()$vacancies, big.mark = ","), br(),
       span(
-        format_pm(VacChange),
+        paste0(format(VacChange * 100, digits = 2), "%"),
         style = paste0("font-size: 16px;color:", cond_color(VacChange > 0)) # colour formating
         , .noWS = c("before", "after") # remove whitespace
       ), br(),
@@ -613,15 +613,15 @@ server <- function(input, output, session) {
       "Period: ", format(as.Date(time_period), "%b %y"), "<br>",
       "Online job adverts: ", format(vacancies, big.mark = ","), "<br>"
     ))) +
-      geom_line(data = VacLine %>% filter(time_period <= as.Date("2021-10-01"))) +
+      geom_line(data = VacLine %>% filter(time_period <= as.Date("2021-12-01"))) +
       geom_ribbon(
-        data = VacLine %>% filter(time_period >= as.Date("2021-10-01")),
+        data = VacLine %>% filter(time_period >= as.Date("2021-12-01")),
         aes(ymin = min(vacancies), ymax = vacancies),
         fill = ifelse(VacPcChange > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = VacLine %>% filter(time_period >= as.Date("2021-10-01")),
+        data = VacLine %>% filter(time_period >= as.Date("2021-12-01")),
         color = ifelse(VacPcChange > 0, "#00703c", "#d4351c")
       ) +
       theme_classic() +
@@ -2659,13 +2659,12 @@ server <- function(input, output, session) {
       levels = c(input$lep1, input$lep2)
     )
     ggplot(ks_21, aes(x = reorder(variable, desc(variable)), y = rate, fill = Area, text = paste0
-                      (
+    (
       "Area: ", Area, "<br>",
       "Key stage group: ", `Key Stage`, "<br>",
       "Cohort group: ", `Cohort Group`, "<br>",
       "Percentage: ", scales::percent(round(rate, 2)), "<br>"
-    )
-    )) +
+    ))) +
       geom_col(
         position = "dodge"
       ) +
@@ -3167,11 +3166,11 @@ server <- function(input, output, session) {
   })
   # define time chart title
   output$OnsProfTime <- renderUI({
-    paste0(input$profChoice, " online job adverts: Oct 2017 to Oct 2022")
+    paste0(input$profChoice, " online job adverts: Oct 2017 to Dec 2022")
   })
   # define detailed table title
   output$OnsProfDetail <- renderUI({
-    paste0(input$profChoice, " online job adverts by detailed profession: Oct 2022")
+    paste0(input$profChoice, " online job adverts by detailed profession: Dec 2022")
   })
 
   # 9. JOB ADVERTS ----
@@ -3181,7 +3180,7 @@ server <- function(input, output, session) {
     # call 2022 and 2021 values for chosen area
     vacancyTotalLatest <- C_OnsProfTime %>%
       filter(
-        time_period == "2022-10-01",
+        time_period == "2022-12-01",
         geographic_level == input$GeoType,
         area == input$lep1
       )
@@ -3194,7 +3193,7 @@ server <- function(input, output, session) {
           h3(paste0(
             format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
           )),
-          p(paste0("online job adverts in Oct 2022 in ", input$lep1)),
+          p(paste0("online job adverts in Dec 2022 in ", input$lep1)),
         )
       )
     )
@@ -3205,7 +3204,7 @@ server <- function(input, output, session) {
     # call 2022 and 2021 values for chosen area
     vacancyTotalLatest <- C_OnsProfTime %>%
       filter(
-        time_period == "2022-10-01",
+        time_period == "2022-12-01",
         geographic_level == input$GeoType,
         area == input$lep1,
         if (input$profChoice == "All") {
@@ -3223,7 +3222,7 @@ server <- function(input, output, session) {
           h3(paste0(
             format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
           )),
-          p(paste0("online job adverts in Oct 2022 in ", input$lep1)),
+          p(paste0("online job adverts in Dec 2022 in ", input$lep1)),
         )
       )
     )
@@ -3234,14 +3233,14 @@ server <- function(input, output, session) {
     # chnage
     vacancyTotalLatest <- C_OnsProfTime %>%
       filter(
-        time_period == "2022-10-01",
+        time_period == "2022-12-01",
         geographic_level == input$GeoType,
         area == input$lep1
       )
     vacancyTotalLast <-
       C_OnsProfTime %>%
       filter(
-        time_period == "2021-10-01",
+        time_period == "2021-12-01",
         geographic_level == input$GeoType,
         area == input$lep1
       )
@@ -3256,7 +3255,7 @@ server <- function(input, output, session) {
           h3(paste0(
             round(vacancyTotalChange * 100), "%"
           )),
-          p(paste0("change in online job adverts since Oct 2021 in ", input$lep1)),
+          p(paste0("change in online job adverts since Dec 2021 in ", input$lep1)),
         )
       )
     )
@@ -3267,7 +3266,7 @@ server <- function(input, output, session) {
     # chnage
     vacancyTotalLatest <- C_OnsProfTime %>%
       filter(
-        time_period == "2022-10-01",
+        time_period == "2022-12-01",
         geographic_level == input$GeoType,
         area == input$lep1,
         if (input$profChoice == "All") {
@@ -3279,7 +3278,7 @@ server <- function(input, output, session) {
     vacancyTotalLast <-
       C_OnsProfTime %>%
       filter(
-        time_period == "2021-10-01",
+        time_period == "2021-12-01",
         geographic_level == input$GeoType,
         area == input$lep1,
         if (input$profChoice == "All") {
@@ -3299,7 +3298,7 @@ server <- function(input, output, session) {
           h3(paste0(
             round(vacancyTotalChange * 100), "%"
           )),
-          p(paste0("change in online job adverts since Oct 2021 in ", input$lep1)),
+          p(paste0("change in online job adverts since Dec 2021 in ", input$lep1)),
         )
       )
     )
@@ -3310,13 +3309,13 @@ server <- function(input, output, session) {
     # chnage
     vacancyTotalLatest <- C_OnsProfTime %>%
       filter(
-        time_period == "2022-10-01",
+        time_period == "2022-12-01",
         geographic_level == "Country"
       )
     vacancyTotalLast <-
       C_OnsProfTime %>%
       filter(
-        time_period == "2021-10-01",
+        time_period == "2021-12-01",
         geographic_level == "Country"
       )
 
@@ -3330,7 +3329,7 @@ server <- function(input, output, session) {
           h3(paste0(
             round(vacancyTotalChange * 100), "%"
           )),
-          p("change in online job adverts since Oct 2021 in England"),
+          p("change in online job adverts since Dec 2021 in England"),
         )
       )
     )
@@ -3341,7 +3340,7 @@ server <- function(input, output, session) {
     # chnage
     vacancyTotalLatest <- C_OnsProfTime %>%
       filter(
-        time_period == "2022-10-01",
+        time_period == "2022-12-01",
         geographic_level == "Country",
         if (input$profChoice == "All") {
           TRUE
@@ -3352,7 +3351,7 @@ server <- function(input, output, session) {
     vacancyTotalLast <-
       C_OnsProfTime %>%
       filter(
-        time_period == "2021-10-01",
+        time_period == "2021-12-01",
         geographic_level == "Country",
         if (input$profChoice == "All") {
           TRUE
@@ -3371,13 +3370,13 @@ server <- function(input, output, session) {
           h3(paste0(
             round(vacancyTotalChange * 100), "%"
           )),
-          p("change in online job adverts since Oct 2021 in England"),
+          p("change in online job adverts since Dec 2021 in England"),
         )
       )
     )
   })
 
-  # compariosn boxes
+  # comparison boxes
   output$profComp <- renderUI({
     if ("lep2" %in% names(input)) {
       if (input$lep2 == "\nNone") {
@@ -3417,7 +3416,7 @@ server <- function(input, output, session) {
     # call 2022 and 2021 values for chosen area
     vacancyTotalLatest <- C_OnsProfTime %>%
       filter(
-        time_period == "2022-10-01",
+        time_period == "2022-12-01",
         geographic_level == input$GeoType,
         area == input$lep2
       )
@@ -3430,7 +3429,7 @@ server <- function(input, output, session) {
           h3(paste0(
             format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
           )),
-          p(paste0("online job adverts in Oct 2022 in ", input$lep2)),
+          p(paste0("online job adverts in Dec 2022 in ", input$lep2)),
         )
       )
     )
@@ -3442,7 +3441,7 @@ server <- function(input, output, session) {
     # call 2022 and 2021 values for chosen area
     vacancyTotalLatest <- C_OnsProfTime %>%
       filter(
-        time_period == "2022-10-01",
+        time_period == "2022-12-01",
         geographic_level == input$GeoType,
         area == input$lep2,
         if (input$profChoice == "All") {
@@ -3460,7 +3459,7 @@ server <- function(input, output, session) {
           h3(paste0(
             format(sum(vacancyTotalLatest$vacancies), big.mark = ",")
           )),
-          p(paste0("online job adverts in Oct 2022 in ", input$lep2)),
+          p(paste0("online job adverts in Dec 2022 in ", input$lep2)),
         )
       )
     )
@@ -3471,14 +3470,14 @@ server <- function(input, output, session) {
     # chnage
     vacancyTotalLatest <- C_OnsProfTime %>%
       filter(
-        time_period == "2022-10-01",
+        time_period == "2022-12-01",
         geographic_level == input$GeoType,
         area == input$lep2
       )
     vacancyTotalLast <-
       C_OnsProfTime %>%
       filter(
-        time_period == "2021-10-01",
+        time_period == "2021-12-01",
         geographic_level == input$GeoType,
         area == input$lep2
       )
@@ -3493,7 +3492,7 @@ server <- function(input, output, session) {
           h3(paste0(
             round(vacancyTotalChange * 100), "%"
           )),
-          p(paste0("change in online job adverts since Oct 2021 in ", input$lep2)),
+          p(paste0("change in online job adverts since Dec 2021 in ", input$lep2)),
         )
       )
     )
@@ -3504,7 +3503,7 @@ server <- function(input, output, session) {
     # chnage
     vacancyTotalLatest <- C_OnsProfTime %>%
       filter(
-        time_period == "2022-10-01",
+        time_period == "2022-12-01",
         geographic_level == input$GeoType,
         area == input$lep2,
         if (input$profChoice == "All") {
@@ -3516,7 +3515,7 @@ server <- function(input, output, session) {
     vacancyTotalLast <-
       C_OnsProfTime %>%
       filter(
-        time_period == "2021-10-01",
+        time_period == "2021-12-01",
         geographic_level == input$GeoType,
         area == input$lep2,
         if (input$profChoice == "All") {
@@ -3536,7 +3535,7 @@ server <- function(input, output, session) {
           h3(paste0(
             round(vacancyTotalChange * 100), "%"
           )),
-          p(paste0("change in online job adverts since Oct 2021 in ", input$lep2)),
+          p(paste0("change in online job adverts since Dec 2021 in ", input$lep2)),
         )
       )
     )
@@ -3611,7 +3610,7 @@ server <- function(input, output, session) {
     profTableArea <- C_OnsProfTime %>%
       # select(-"Detailed Profession Category") %>%
       filter(
-        time_period == "2022-10-01",
+        time_period == "2022-12-01",
         geographic_level == input$GeoType,
         (area == input$lep1 |
           area == if ("lep2" %in% names(input)) {
@@ -3624,7 +3623,7 @@ server <- function(input, output, session) {
     profTableEngland <- C_OnsProfTime %>%
       # select(-"Detailed Profession Category") %>%
       filter(
-        time_period == "2022-10-01",
+        time_period == "2022-12-01",
         geographic_level == "Country"
       ) %>%
       mutate(area = "England")
@@ -3653,7 +3652,7 @@ server <- function(input, output, session) {
     df <- profTable()
     # check where profession is in the rank and expand table if it's low
     tableLength <- (C_OnsProfTime %>% filter(
-      time_period == "2022-10-01", geographic_level == input$GeoType,
+      time_period == "2022-12-01", geographic_level == input$GeoType,
       area == input$lep1
     ) %>%
       group_by(`Summary Profession Category`) %>%
@@ -3683,7 +3682,7 @@ server <- function(input, output, session) {
     # create areas chosen table
     profDetailArea <- C_OnsProfDetail %>%
       filter(
-        # time_period == "2022-10-01",
+        # time_period == "2022-12-01",
         if (input$profChoice == "All") {
           TRUE
         } else {
@@ -3700,7 +3699,7 @@ server <- function(input, output, session) {
     # create england table
     profDetailEngland <- C_OnsProfDetail %>%
       filter(
-        # time_period == "2022-10-01",
+        # time_period == "2022-12-01",
         if (input$profChoice == "All") {
           TRUE
         } else {
@@ -3715,15 +3714,17 @@ server <- function(input, output, session) {
       summarise(vacancies = sum(vacancies, na.rm = T)) %>%
       pivot_wider(names_from = area, values_from = vacancies) %>%
       relocate(England, .after = `Detailed Profession Category`) %>%
+      left_join(C_OnsProfDetail %>% distinct(`Detailed Profession Category`, `Summary Profession Category`)) %>%
+      relocate(`Summary Profession Category`, .after = `Detailed Profession Category`) %>%
       relocate(input$lep1, .after = England) %>%
-      mutate_at(c(3), ~ replace(., is.na(.), 0)) %>%
+      mutate_at(c(4), ~ replace(., is.na(.), 0)) %>%
       mutate(across(where(is.numeric), ~ round(prop.table(.), 4)))
   })
 
   output$profDetail <- renderDataTable({
     df <- profDetail()
-    datatable(df, options = list(order = list(2, "desc")), rownames = FALSE) %>%
-      formatPercentage(2:ncol(df), 0)
+    datatable(df, options = list(order = list(3, "desc")), rownames = FALSE) %>%
+      formatPercentage(3:ncol(df), 0)
   })
 
   ## 9.2 Downloads----
@@ -3763,6 +3764,89 @@ server <- function(input, output, session) {
     }
   )
 
+  # Code to allow cookie consent control.
+  # output if cookie is unspecified
+  observeEvent(input$cookies, {
+    if (!is.null(input$cookies)) {
+      if (!("dfe_analytics" %in% names(input$cookies))) {
+        shinyalert(
+          inputId = "cookie_consent",
+          title = "Cookie consent",
+          text = "This site uses cookies to record traffic flow using Google Analytics",
+          size = "s",
+          closeOnEsc = TRUE,
+          closeOnClickOutside = FALSE,
+          html = FALSE,
+          type = "",
+          showConfirmButton = TRUE,
+          showCancelButton = TRUE,
+          confirmButtonText = "Accept",
+          confirmButtonCol = "#AEDEF4",
+          timer = 0,
+          imageUrl = "",
+          animation = TRUE
+        )
+      } else {
+        msg <- list(
+          name = "dfe_analytics",
+          value = input$cookies$dfe_analytics
+        )
+        session$sendCustomMessage("analytics-consent", msg)
+        if ("cookies" %in% names(input)) {
+          if ("dfe_analytics" %in% names(input$cookies)) {
+            if (input$cookies$dfe_analytics == "denied") {
+              ga_msg <- list(name = paste0("_ga_", google_analytics_key))
+              session$sendCustomMessage("cookie-remove", ga_msg)
+            }
+          }
+        }
+      }
+    }
+  })
+  
+  observeEvent(input$cookie_consent, {
+    msg <- list(
+      name = "dfe_analytics",
+      value = ifelse(input$cookie_consent, "granted", "denied")
+    )
+    session$sendCustomMessage("cookie-set", msg)
+    session$sendCustomMessage("analytics-consent", msg)
+    if ("cookies" %in% names(input)) {
+      if ("dfe_analytics" %in% names(input$cookies)) {
+        if (input$cookies$dfe_analytics == "denied") {
+          ga_msg <- list(name = paste0("_ga_", google_analytics_key))
+          session$sendCustomMessage("cookie-remove", ga_msg)
+        }
+      }
+    }
+  })
+  
+  observeEvent(input$remove, {
+    msg <- list(name = "dfe_analytics", value = "denied")
+    session$sendCustomMessage("cookie-remove", msg)
+    session$sendCustomMessage("analytics-consent", msg)
+  })
+  
+  cookies_data <- reactive({
+    input$cookies
+  })
+  
+  output$cookie_status <- renderText({
+    cookie_text_stem <- "To better understand the reach of our dashboard tools, this site uses cookies to identify numbers of unique users as part of Google Analytics. You have chosen to"
+    cookie_text_tail <- "the use of cookies on this website."
+    if ("cookies" %in% names(input)) {
+      if ("dfe_analytics" %in% names(input$cookies)) {
+        if (input$cookies$dfe_analytics == "granted") {
+          paste(cookie_text_stem, "accept", cookie_text_tail)
+        } else {
+          paste(cookie_text_stem, "reject", cookie_text_tail)
+        }
+      }
+    } else {
+      "Cookies consent has not been confirmed."
+    }
+  })
+  # End of cookie consent code
 
   # Stop app ---------------------------------------------------------------------------------
 

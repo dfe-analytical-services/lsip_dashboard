@@ -49,7 +49,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: ONS (Textkernel). Oct 2022. Online job adverts.",
+              title = "Source: ONS (Textkernel). Dec 2022. Online job adverts.",
               uiOutput("jobad.units"),
             )
           ),
@@ -1040,7 +1040,7 @@ panel_onsProf <- function() {
         tags$li("Counts have been rounded to the nearest 5. Totals may not add due to this rounding.")
       )
     ),
-    h2("Adverts by profession: Oct 2022"),
+    h2("Online job adverts by summary profession: Dec 2022"),
     dataTableOutput("profTable"),
     br(),
     details(

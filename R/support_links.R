@@ -23,6 +23,13 @@ support_links <- function() {
         "."
       ),
       br()
+    ),
+    column(
+      12,
+      h2("Use of cookies"),
+      textOutput("cookie_status"),
+      actionButton("remove", "Reset cookie consent"),
+      br()
     )
   )
 }

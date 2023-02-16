@@ -25,6 +25,17 @@ fluidPage(
   # Set title for search engines
 
   HTML("<title>Local Skills Dashboard</title>"),
+  # Setting up cookie consent based on a cookie recording the consent:
+  # https://book.javascript-for-r.com/shiny-cookies.html
+  tags$head(
+    tags$script(
+      src = paste0(
+        "https://cdn.jsdelivr.net/npm/js-cookie@rc/",
+        "dist/js.cookie.min.js"
+      )
+    ),
+    tags$script(src = "cookie-consent.js")
+  ),
   tags$head(includeHTML(("google-analytics.html"))),
 
   # internal CSS
@@ -169,18 +180,19 @@ padding-top:15px
   # ),
 
   HTML(paste(
-  '<div class="govuk-phase-banner govuk-width-container govuk-main-wrapper" id="beta banner" style="margin-left:0px;margin-right:0px">
+    '<div class="govuk-phase-banner govuk-width-container govuk-main-wrapper" id="beta banner" style="margin-left:0px;margin-right:0px">
     <p class="govuk-phase-banner__content">
     <strong class="govuk-tag govuk-phase-banner__content__tag ">beta</strong>
     <span class="govuk-phase-banner__text">',
-        "<b>We're looking for volunteers! We've developed several new dashboards ",
-        "in the last 12 months and we'd really like to know what you think of them. ",
-        "If you're interested in helping us improve our products, please sign up ",
-        "using our <a href='https://forms.office.com/e/ZjNxf10uuN'>user-testing volunteer form</a>.</b><br>",
-    'We are aware of performance issues that require some users to reload the page. We are working to fix this.
+    "<b>We're looking for volunteers! We've developed several new dashboards ",
+    "in the last 12 months and we'd really like to know what you think of them. ",
+    "If you're interested in helping us improve our products, please sign up ",
+    "using our <a href='https://forms.office.com/e/ZjNxf10uuN'>user-testing volunteer form</a>.</b><br>",
+    "We are aware of performance issues that require some users to reload the page. We are working to fix this.
 </span>
   </p>
-</div>')),
+</div>"
+  )),
   # shinyGovstyle::banner(
   #   "beta banner",
   #   "beta",
@@ -313,12 +325,14 @@ padding-top:15px
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("9 Feb 2023 (0.4.3)"),
-              p("Updated destinations data with the February revision."),
+              p("16 Feb 2023 (0.4.4)"),
+              p("Updated online job advert data to Dec 2022, including an ONS revision to the previous Oct 2022 figures."),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("9 Feb 2023 (0.4.3)"),
+                  p("Updated destinations data with the February revision."),
                   p("25 Jan 2023 (0.4.2)"),
                   p("Updated employment rates and employment by industry figures with Oct-Sep 2022 Annual Population Survey data."),
                   p("12 Jan 2023 (0.4.1)"),

@@ -388,8 +388,8 @@
 202021,"LSIP","Thames Valley Berkshire","Total","Key Stage 4","Sustained Education",0.923044575273339
 202021,"LSIP","The Marches","Total","Key Stage 4","Sustained Education",0.876380692994402
 202021,"LSIP","West Midlands and Warwickshire","Total","Key Stage 4","Sustained Education",0.892573314713723
-202021,"LSIP","West of England and North Somerset","Total","Key Stage 4","Sustained Education",0.891223247594738
 202021,"LSIP","West Yorkshire","Total","Key Stage 4","Sustained Education",0.870037658873372
+202021,"LSIP","West of England and North Somerset","Total","Key Stage 4","Sustained Education",0.891223247594738
 202021,"LSIP","Worcestershire","Total","Key Stage 4","Sustained Education",0.889270852180206
 202021,"LSIP","York and North Yorkshire","Total","Key Stage 4","Sustained Education",0.884054261581776
 202021,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 4","Sustained Education",0.900611995104039
@@ -400,8 +400,8 @@
 202021,"MCA","South Yorkshire","Total","Key Stage 4","Sustained Education",0.846320816149338
 202021,"MCA","Tees Valley","Total","Key Stage 4","Sustained Education",0.861929359207036
 202021,"MCA","West Midlands","Total","Key Stage 4","Sustained Education",0.892315952750268
-202021,"MCA","West of England","Total","Key Stage 4","Sustained Education",0.883027808953735
 202021,"MCA","West Yorkshire","Total","Key Stage 4","Sustained Education",0.870037658873372
+202021,"MCA","West of England","Total","Key Stage 4","Sustained Education",0.883027808953735
 202021,"COUNTRY","England","All other qualifications","Key Stage 5","Sustained Education",0.239083725681277
 202021,"COUNTRY","England","Level 2","Key Stage 5","Sustained Education",0.374349930921385
 202021,"COUNTRY","England","Level 3","Key Stage 5","Sustained Education",0.618333907635872
@@ -1938,14 +1938,14 @@
 202021,"LSIP","West Midlands and Warwickshire","Level 2","Key Stage 5","Sustained Education",0.443987948507258
 202021,"LSIP","West Midlands and Warwickshire","Level 3","Key Stage 5","Sustained Education",0.653145727101944
 202021,"LSIP","West Midlands and Warwickshire","Total","Key Stage 5","Sustained Education",0.547332823183827
-202021,"LSIP","West of England and North Somerset","All other qualifications","Key Stage 5","Sustained Education",0.206374085684431
-202021,"LSIP","West of England and North Somerset","Level 2","Key Stage 5","Sustained Education",0.298661174047374
-202021,"LSIP","West of England and North Somerset","Level 3","Key Stage 5","Sustained Education",0.533606905334654
-202021,"LSIP","West of England and North Somerset","Total","Key Stage 5","Sustained Education",0.434496017577589
 202021,"LSIP","West Yorkshire","All other qualifications","Key Stage 5","Sustained Education",0.237642083002908
 202021,"LSIP","West Yorkshire","Level 2","Key Stage 5","Sustained Education",0.401820250284414
 202021,"LSIP","West Yorkshire","Level 3","Key Stage 5","Sustained Education",0.654401582591494
 202021,"LSIP","West Yorkshire","Total","Key Stage 5","Sustained Education",0.539305145011352
+202021,"LSIP","West of England and North Somerset","All other qualifications","Key Stage 5","Sustained Education",0.206374085684431
+202021,"LSIP","West of England and North Somerset","Level 2","Key Stage 5","Sustained Education",0.298661174047374
+202021,"LSIP","West of England and North Somerset","Level 3","Key Stage 5","Sustained Education",0.533606905334654
+202021,"LSIP","West of England and North Somerset","Total","Key Stage 5","Sustained Education",0.434496017577589
 202021,"LSIP","Worcestershire","All other qualifications","Key Stage 5","Sustained Education",0.169257340241796
 202021,"LSIP","Worcestershire","Level 2","Key Stage 5","Sustained Education",0.267343485617597
 202021,"LSIP","Worcestershire","Level 3","Key Stage 5","Sustained Education",0.596420128335022
@@ -1986,14 +1986,14 @@
 202021,"MCA","West Midlands","Level 2","Key Stage 5","Sustained Education",0.467090257412838
 202021,"MCA","West Midlands","Level 3","Key Stage 5","Sustained Education",0.66002674413243
 202021,"MCA","West Midlands","Total","Key Stage 5","Sustained Education",0.55953798523458
-202021,"MCA","West of England","All other qualifications","Key Stage 5","Sustained Education",0.215618521078093
-202021,"MCA","West of England","Level 2","Key Stage 5","Sustained Education",0.294077134986226
-202021,"MCA","West of England","Level 3","Key Stage 5","Sustained Education",0.533379815234443
-202021,"MCA","West of England","Total","Key Stage 5","Sustained Education",0.439902732746642
 202021,"MCA","West Yorkshire","All other qualifications","Key Stage 5","Sustained Education",0.237642083002908
 202021,"MCA","West Yorkshire","Level 2","Key Stage 5","Sustained Education",0.401820250284414
 202021,"MCA","West Yorkshire","Level 3","Key Stage 5","Sustained Education",0.654401582591494
 202021,"MCA","West Yorkshire","Total","Key Stage 5","Sustained Education",0.539305145011352
+202021,"MCA","West of England","All other qualifications","Key Stage 5","Sustained Education",0.215618521078093
+202021,"MCA","West of England","Level 2","Key Stage 5","Sustained Education",0.294077134986226
+202021,"MCA","West of England","Level 3","Key Stage 5","Sustained Education",0.533379815234443
+202021,"MCA","West of England","Total","Key Stage 5","Sustained Education",0.439902732746642
 202021,"COUNTRY","England","Total","Key Stage 4","Sustained Apprenticeships",0.0243591932209054
 202021,"LADU","County Durham","Total","Key Stage 4","Sustained Apprenticeships",0.0377397401526088
 202021,"LADU","Darlington","Total","Key Stage 4","Sustained Apprenticeships",0.0219876868953386
@@ -2383,8 +2383,8 @@
 202021,"LSIP","Thames Valley Berkshire","Total","Key Stage 4","Sustained Apprenticeships",0.0149285113540791
 202021,"LSIP","The Marches","Total","Key Stage 4","Sustained Apprenticeships",0.0308669995460735
 202021,"LSIP","West Midlands and Warwickshire","Total","Key Stage 4","Sustained Apprenticeships",0.0180017773263933
-202021,"LSIP","West of England and North Somerset","Total","Key Stage 4","Sustained Apprenticeships",0.0327901040644021
 202021,"LSIP","West Yorkshire","Total","Key Stage 4","Sustained Apprenticeships",0.0303624666562059
+202021,"LSIP","West of England and North Somerset","Total","Key Stage 4","Sustained Apprenticeships",0.0327901040644021
 202021,"LSIP","Worcestershire","Total","Key Stage 4","Sustained Apprenticeships",0.0275013569748507
 202021,"LSIP","York and North Yorkshire","Total","Key Stage 4","Sustained Apprenticeships",0.0421039160481188
 202021,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 4","Sustained Apprenticeships",0.0192166462668299
@@ -2395,8 +2395,8 @@
 202021,"MCA","South Yorkshire","Total","Key Stage 4","Sustained Apprenticeships",0.0334273930974604
 202021,"MCA","Tees Valley","Total","Key Stage 4","Sustained Apprenticeships",0.0284796872818651
 202021,"MCA","West Midlands","Total","Key Stage 4","Sustained Apprenticeships",0.0167044505428946
-202021,"MCA","West of England","Total","Key Stage 4","Sustained Apprenticeships",0.0346676642972939
 202021,"MCA","West Yorkshire","Total","Key Stage 4","Sustained Apprenticeships",0.0303624666562059
+202021,"MCA","West of England","Total","Key Stage 4","Sustained Apprenticeships",0.0346676642972939
 202021,"COUNTRY","England","All other qualifications","Key Stage 5","Sustained Apprenticeships",0.116952953470078
 202021,"COUNTRY","England","Level 2","Key Stage 5","Sustained Apprenticeships",0.107684013074391
 202021,"COUNTRY","England","Level 3","Key Stage 5","Sustained Apprenticeships",0.0413470695647691
@@ -3933,14 +3933,14 @@
 202021,"LSIP","West Midlands and Warwickshire","Level 2","Key Stage 5","Sustained Apprenticeships",0.0958641468090934
 202021,"LSIP","West Midlands and Warwickshire","Level 3","Key Stage 5","Sustained Apprenticeships",0.0408695318790016
 202021,"LSIP","West Midlands and Warwickshire","Total","Key Stage 5","Sustained Apprenticeships",0.060946409617141
-202021,"LSIP","West of England and North Somerset","All other qualifications","Key Stage 5","Sustained Apprenticeships",0.125914315569488
-202021,"LSIP","West of England and North Somerset","Level 2","Key Stage 5","Sustained Apprenticeships",0.149845520082389
-202021,"LSIP","West of England and North Somerset","Level 3","Key Stage 5","Sustained Apprenticeships",0.0451393802179142
-202021,"LSIP","West of England and North Somerset","Total","Key Stage 5","Sustained Apprenticeships",0.0779089993591504
 202021,"LSIP","West Yorkshire","All other qualifications","Key Stage 5","Sustained Apprenticeships",0.129526830557758
 202021,"LSIP","West Yorkshire","Level 2","Key Stage 5","Sustained Apprenticeships",0.102389078498294
 202021,"LSIP","West Yorkshire","Level 3","Key Stage 5","Sustained Apprenticeships",0.0520936366633696
 202021,"LSIP","West Yorkshire","Total","Key Stage 5","Sustained Apprenticeships",0.0741121535363921
+202021,"LSIP","West of England and North Somerset","All other qualifications","Key Stage 5","Sustained Apprenticeships",0.125914315569488
+202021,"LSIP","West of England and North Somerset","Level 2","Key Stage 5","Sustained Apprenticeships",0.149845520082389
+202021,"LSIP","West of England and North Somerset","Level 3","Key Stage 5","Sustained Apprenticeships",0.0451393802179142
+202021,"LSIP","West of England and North Somerset","Total","Key Stage 5","Sustained Apprenticeships",0.0779089993591504
 202021,"LSIP","Worcestershire","All other qualifications","Key Stage 5","Sustained Apprenticeships",0.157167530224525
 202021,"LSIP","Worcestershire","Level 2","Key Stage 5","Sustained Apprenticeships",0.115059221658206
 202021,"LSIP","Worcestershire","Level 3","Key Stage 5","Sustained Apprenticeships",0.0489699425869639
@@ -3981,14 +3981,14 @@
 202021,"MCA","West Midlands","Level 2","Key Stage 5","Sustained Apprenticeships",0.0884652981427175
 202021,"MCA","West Midlands","Level 3","Key Stage 5","Sustained Apprenticeships",0.0394706506201872
 202021,"MCA","West Midlands","Total","Key Stage 5","Sustained Apprenticeships",0.0580495356037152
-202021,"MCA","West of England","All other qualifications","Key Stage 5","Sustained Apprenticeships",0.125777470628887
-202021,"MCA","West of England","Level 2","Key Stage 5","Sustained Apprenticeships",0.134986225895317
-202021,"MCA","West of England","Level 3","Key Stage 5","Sustained Apprenticeships",0.0477601533902737
-202021,"MCA","West of England","Total","Key Stage 5","Sustained Apprenticeships",0.0754979157017138
 202021,"MCA","West Yorkshire","All other qualifications","Key Stage 5","Sustained Apprenticeships",0.129526830557758
 202021,"MCA","West Yorkshire","Level 2","Key Stage 5","Sustained Apprenticeships",0.102389078498294
 202021,"MCA","West Yorkshire","Level 3","Key Stage 5","Sustained Apprenticeships",0.0520936366633696
 202021,"MCA","West Yorkshire","Total","Key Stage 5","Sustained Apprenticeships",0.0741121535363921
+202021,"MCA","West of England","All other qualifications","Key Stage 5","Sustained Apprenticeships",0.125777470628887
+202021,"MCA","West of England","Level 2","Key Stage 5","Sustained Apprenticeships",0.134986225895317
+202021,"MCA","West of England","Level 3","Key Stage 5","Sustained Apprenticeships",0.0477601533902737
+202021,"MCA","West of England","Total","Key Stage 5","Sustained Apprenticeships",0.0754979157017138
 202021,"COUNTRY","England","Total","Key Stage 4","Sustained Employment",0.023638206140558
 202021,"LADU","County Durham","Total","Key Stage 4","Sustained Employment",0.0323778098577026
 202021,"LADU","Darlington","Total","Key Stage 4","Sustained Employment",0.0211081794195251
@@ -4378,8 +4378,8 @@
 202021,"LSIP","Thames Valley Berkshire","Total","Key Stage 4","Sustained Employment",0.0192388561816653
 202021,"LSIP","The Marches","Total","Key Stage 4","Sustained Employment",0.0287486760478136
 202021,"LSIP","West Midlands and Warwickshire","Total","Key Stage 4","Sustained Employment",0.0200837882442554
-202021,"LSIP","West of England and North Somerset","Total","Key Stage 4","Sustained Employment",0.0229727076379344
 202021,"LSIP","West Yorkshire","Total","Key Stage 4","Sustained Employment",0.0251451435744547
+202021,"LSIP","West of England and North Somerset","Total","Key Stage 4","Sustained Employment",0.0229727076379344
 202021,"LSIP","Worcestershire","Total","Key Stage 4","Sustained Employment",0.0331101863578795
 202021,"LSIP","York and North Yorkshire","Total","Key Stage 4","Sustained Employment",0.0336575377527515
 202021,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 4","Sustained Employment",0.0244798041615667
@@ -4390,8 +4390,8 @@
 202021,"MCA","South Yorkshire","Total","Key Stage 4","Sustained Employment",0.0397221619275016
 202021,"MCA","Tees Valley","Total","Key Stage 4","Sustained Employment",0.0307133882451487
 202021,"MCA","West Midlands","Total","Key Stage 4","Sustained Employment",0.0191504593723899
-202021,"MCA","West of England","Total","Key Stage 4","Sustained Employment",0.0241925427110612
 202021,"MCA","West Yorkshire","Total","Key Stage 4","Sustained Employment",0.0251451435744547
+202021,"MCA","West of England","Total","Key Stage 4","Sustained Employment",0.0241925427110612
 202021,"COUNTRY","England","All other qualifications","Key Stage 5","Sustained Employment",0.226908219934015
 202021,"COUNTRY","England","Level 2","Key Stage 5","Sustained Employment",0.249884868975278
 202021,"COUNTRY","England","Level 3","Key Stage 5","Sustained Employment",0.198658031327073
@@ -5928,14 +5928,14 @@
 202021,"LSIP","West Midlands and Warwickshire","Level 2","Key Stage 5","Sustained Employment",0.184059161873459
 202021,"LSIP","West Midlands and Warwickshire","Level 3","Key Stage 5","Sustained Employment",0.152628148602538
 202021,"LSIP","West Midlands and Warwickshire","Total","Key Stage 5","Sustained Employment",0.164770062452173
-202021,"LSIP","West of England and North Somerset","All other qualifications","Key Stage 5","Sustained Employment",0.27533960292581
-202021,"LSIP","West of England and North Somerset","Level 2","Key Stage 5","Sustained Employment",0.326982492276004
-202021,"LSIP","West of England and North Somerset","Level 3","Key Stage 5","Sustained Employment",0.276496391679638
-202021,"LSIP","West of England and North Somerset","Total","Key Stage 5","Sustained Employment",0.285269614574751
 202021,"LSIP","West Yorkshire","All other qualifications","Key Stage 5","Sustained Employment",0.187153053132435
 202021,"LSIP","West Yorkshire","Level 2","Key Stage 5","Sustained Employment",0.184755403868032
 202021,"LSIP","West Yorkshire","Level 3","Key Stage 5","Sustained Employment",0.155093966369931
 202021,"LSIP","West Yorkshire","Total","Key Stage 5","Sustained Employment",0.165874137857173
+202021,"LSIP","West of England and North Somerset","All other qualifications","Key Stage 5","Sustained Employment",0.27533960292581
+202021,"LSIP","West of England and North Somerset","Level 2","Key Stage 5","Sustained Employment",0.326982492276004
+202021,"LSIP","West of England and North Somerset","Level 3","Key Stage 5","Sustained Employment",0.276496391679638
+202021,"LSIP","West of England and North Somerset","Total","Key Stage 5","Sustained Employment",0.285269614574751
 202021,"LSIP","Worcestershire","All other qualifications","Key Stage 5","Sustained Employment",0.286701208981002
 202021,"LSIP","Worcestershire","Level 2","Key Stage 5","Sustained Employment",0.358714043993232
 202021,"LSIP","Worcestershire","Level 3","Key Stage 5","Sustained Employment",0.23032759202972
@@ -5976,14 +5976,14 @@
 202021,"MCA","West Midlands","Level 2","Key Stage 5","Sustained Employment",0.16454871293581
 202021,"MCA","West Midlands","Level 3","Key Stage 5","Sustained Employment",0.138838935767972
 202021,"MCA","West Midlands","Total","Key Stage 5","Sustained Employment",0.149559418909264
-202021,"MCA","West of England","All other qualifications","Key Stage 5","Sustained Employment",0.285418106427091
-202021,"MCA","West of England","Level 2","Key Stage 5","Sustained Employment",0.347796143250689
-202021,"MCA","West of England","Level 3","Key Stage 5","Sustained Employment",0.268607286037999
-202021,"MCA","West of England","Total","Key Stage 5","Sustained Employment",0.284738304770727
 202021,"MCA","West Yorkshire","All other qualifications","Key Stage 5","Sustained Employment",0.187153053132435
 202021,"MCA","West Yorkshire","Level 2","Key Stage 5","Sustained Employment",0.184755403868032
 202021,"MCA","West Yorkshire","Level 3","Key Stage 5","Sustained Employment",0.155093966369931
 202021,"MCA","West Yorkshire","Total","Key Stage 5","Sustained Employment",0.165874137857173
+202021,"MCA","West of England","All other qualifications","Key Stage 5","Sustained Employment",0.285418106427091
+202021,"MCA","West of England","Level 2","Key Stage 5","Sustained Employment",0.347796143250689
+202021,"MCA","West of England","Level 3","Key Stage 5","Sustained Employment",0.268607286037999
+202021,"MCA","West of England","Total","Key Stage 5","Sustained Employment",0.284738304770727
 202021,"COUNTRY","England","Total","Key Stage 4","Not Recorded as a sustained destination",0.0476868482512885
 202021,"LADU","County Durham","Total","Key Stage 4","Not Recorded as a sustained destination",0.0734171994225613
 202021,"LADU","Darlington","Total","Key Stage 4","Not Recorded as a sustained destination",0.0518909410729991
@@ -6373,8 +6373,8 @@
 202021,"LSIP","Thames Valley Berkshire","Total","Key Stage 4","Not Recorded as a sustained destination",0.0333263246425568
 202021,"LSIP","The Marches","Total","Key Stage 4","Not Recorded as a sustained destination",0.0499319110304131
 202021,"LSIP","West Midlands and Warwickshire","Total","Key Stage 4","Not Recorded as a sustained destination",0.0531420591595785
-202021,"LSIP","West of England and North Somerset","Total","Key Stage 4","Not Recorded as a sustained destination",0.0452581975260161
 202021,"LSIP","West Yorkshire","Total","Key Stage 4","Not Recorded as a sustained destination",0.0589596736230974
+202021,"LSIP","West of England and North Somerset","Total","Key Stage 4","Not Recorded as a sustained destination",0.0452581975260161
 202021,"LSIP","Worcestershire","Total","Key Stage 4","Not Recorded as a sustained destination",0.0446897050841324
 202021,"LSIP","York and North Yorkshire","Total","Key Stage 4","Not Recorded as a sustained destination",0.0327617097517277
 202021,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 4","Not Recorded as a sustained destination",0.0440636474908201
@@ -6385,8 +6385,8 @@
 202021,"MCA","South Yorkshire","Total","Key Stage 4","Not Recorded as a sustained destination",0.0687359814774618
 202021,"MCA","Tees Valley","Total","Key Stage 4","Not Recorded as a sustained destination",0.0714784308250733
 202021,"MCA","West Midlands","Total","Key Stage 4","Not Recorded as a sustained destination",0.0545877580241021
-202021,"MCA","West of England","Total","Key Stage 4","Not Recorded as a sustained destination",0.0497568275346053
 202021,"MCA","West Yorkshire","Total","Key Stage 4","Not Recorded as a sustained destination",0.0589596736230974
+202021,"MCA","West of England","Total","Key Stage 4","Not Recorded as a sustained destination",0.0497568275346053
 202021,"COUNTRY","England","All other qualifications","Key Stage 5","Not Recorded as a sustained destination",0.312488992732268
 202021,"COUNTRY","England","Level 2","Key Stage 5","Not Recorded as a sustained destination",0.214368351885341
 202021,"COUNTRY","England","Level 3","Key Stage 5","Not Recorded as a sustained destination",0.103268640639456
@@ -7923,14 +7923,14 @@
 202021,"LSIP","West Midlands and Warwickshire","Level 2","Key Stage 5","Not Recorded as a sustained destination",0.228293618186798
 202021,"LSIP","West Midlands and Warwickshire","Level 3","Key Stage 5","Not Recorded as a sustained destination",0.11754782808726
 202021,"LSIP","West Midlands and Warwickshire","Total","Key Stage 5","Not Recorded as a sustained destination",0.175927525857175
-202021,"LSIP","West of England and North Somerset","All other qualifications","Key Stage 5","Not Recorded as a sustained destination",0.315047021943574
-202021,"LSIP","West of England and North Somerset","Level 2","Key Stage 5","Not Recorded as a sustained destination",0.181771369721936
-202021,"LSIP","West of England and North Somerset","Level 3","Key Stage 5","Not Recorded as a sustained destination",0.10669308051507
-202021,"LSIP","West of England and North Somerset","Total","Key Stage 5","Not Recorded as a sustained destination",0.156550398242241
 202021,"LSIP","West Yorkshire","All other qualifications","Key Stage 5","Not Recorded as a sustained destination",0.338620142743854
 202021,"LSIP","West Yorkshire","Level 2","Key Stage 5","Not Recorded as a sustained destination",0.251194539249147
 202021,"LSIP","West Yorkshire","Level 3","Key Stage 5","Not Recorded as a sustained destination",0.105703923508078
 202021,"LSIP","West Yorkshire","Total","Key Stage 5","Not Recorded as a sustained destination",0.170843507689671
+202021,"LSIP","West of England and North Somerset","All other qualifications","Key Stage 5","Not Recorded as a sustained destination",0.315047021943574
+202021,"LSIP","West of England and North Somerset","Level 2","Key Stage 5","Not Recorded as a sustained destination",0.181771369721936
+202021,"LSIP","West of England and North Somerset","Level 3","Key Stage 5","Not Recorded as a sustained destination",0.10669308051507
+202021,"LSIP","West of England and North Somerset","Total","Key Stage 5","Not Recorded as a sustained destination",0.156550398242241
 202021,"LSIP","Worcestershire","All other qualifications","Key Stage 5","Not Recorded as a sustained destination",0.295336787564767
 202021,"LSIP","Worcestershire","Level 2","Key Stage 5","Not Recorded as a sustained destination",0.196277495769882
 202021,"LSIP","Worcestershire","Level 3","Key Stage 5","Not Recorded as a sustained destination",0.0935494765281999
@@ -7971,14 +7971,14 @@
 202021,"MCA","West Midlands","Level 2","Key Stage 5","Not Recorded as a sustained destination",0.232486151840991
 202021,"MCA","West Midlands","Level 3","Key Stage 5","Not Recorded as a sustained destination",0.123899110065938
 202021,"MCA","West Midlands","Total","Key Stage 5","Not Recorded as a sustained destination",0.1799237913789
-202021,"MCA","West of England","All other qualifications","Key Stage 5","Not Recorded as a sustained destination",0.290946786454734
-202021,"MCA","West of England","Level 2","Key Stage 5","Not Recorded as a sustained destination",0.184573002754821
-202021,"MCA","West of England","Level 3","Key Stage 5","Not Recorded as a sustained destination",0.109290569984312
-202021,"MCA","West of England","Total","Key Stage 5","Not Recorded as a sustained destination",0.152385363594257
 202021,"MCA","West Yorkshire","All other qualifications","Key Stage 5","Not Recorded as a sustained destination",0.338620142743854
 202021,"MCA","West Yorkshire","Level 2","Key Stage 5","Not Recorded as a sustained destination",0.251194539249147
 202021,"MCA","West Yorkshire","Level 3","Key Stage 5","Not Recorded as a sustained destination",0.105703923508078
 202021,"MCA","West Yorkshire","Total","Key Stage 5","Not Recorded as a sustained destination",0.170843507689671
+202021,"MCA","West of England","All other qualifications","Key Stage 5","Not Recorded as a sustained destination",0.290946786454734
+202021,"MCA","West of England","Level 2","Key Stage 5","Not Recorded as a sustained destination",0.184573002754821
+202021,"MCA","West of England","Level 3","Key Stage 5","Not Recorded as a sustained destination",0.109290569984312
+202021,"MCA","West of England","Total","Key Stage 5","Not Recorded as a sustained destination",0.152385363594257
 202021,"COUNTRY","England","Total","Key Stage 4","Unknown",0.0112288743521105
 202021,"LADU","County Durham","Total","Key Stage 4","Unknown",0.00701175500103114
 202021,"LADU","Darlington","Total","Key Stage 4","Unknown",0.00439753737906772
@@ -8368,8 +8368,8 @@
 202021,"LSIP","Thames Valley Berkshire","Total","Key Stage 4","Unknown",0.00946173254835997
 202021,"LSIP","The Marches","Total","Key Stage 4","Unknown",0.0140717203812982
 202021,"LSIP","West Midlands and Warwickshire","Total","Key Stage 4","Unknown",0.0161990605560493
-202021,"LSIP","West of England and North Somerset","Total","Key Stage 4","Unknown",0.00775574317690948
 202021,"LSIP","West Yorkshire","Total","Key Stage 4","Unknown",0.0154950572728699
+202021,"LSIP","West of England and North Somerset","Total","Key Stage 4","Unknown",0.00775574317690948
 202021,"LSIP","Worcestershire","Total","Key Stage 4","Unknown",0.00542789940293107
 202021,"LSIP","York and North Yorkshire","Total","Key Stage 4","Unknown",0.0074225748656258
 202021,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 4","Unknown",0.0116279069767442
@@ -8380,8 +8380,8 @@
 202021,"MCA","South Yorkshire","Total","Key Stage 4","Unknown",0.0117936473482382
 202021,"MCA","Tees Valley","Total","Key Stage 4","Unknown",0.00739913444087673
 202021,"MCA","West Midlands","Total","Key Stage 4","Unknown",0.0172413793103448
-202021,"MCA","West of England","Total","Key Stage 4","Unknown",0.00835515650330465
 202021,"MCA","West Yorkshire","Total","Key Stage 4","Unknown",0.0154950572728699
+202021,"MCA","West of England","Total","Key Stage 4","Unknown",0.00835515650330465
 202021,"COUNTRY","England","All other qualifications","Key Stage 5","Unknown",0.104566108182363
 202021,"COUNTRY","England","Level 2","Key Stage 5","Unknown",0.0537128351436049
 202021,"COUNTRY","England","Level 3","Key Stage 5","Unknown",0.0383923508328291
@@ -9918,14 +9918,14 @@
 202021,"LSIP","West Midlands and Warwickshire","Level 2","Key Stage 5","Unknown",0.0477951246233909
 202021,"LSIP","West Midlands and Warwickshire","Level 3","Key Stage 5","Unknown",0.0358087643292566
 202021,"LSIP","West Midlands and Warwickshire","Total","Key Stage 5","Unknown",0.0510231788896843
-202021,"LSIP","West of England and North Somerset","All other qualifications","Key Stage 5","Unknown",0.077324973876698
-202021,"LSIP","West of England and North Somerset","Level 2","Key Stage 5","Unknown",0.0427394438722966
-202021,"LSIP","West of England and North Somerset","Level 3","Key Stage 5","Unknown",0.0380642422527239
-202021,"LSIP","West of England and North Somerset","Total","Key Stage 5","Unknown",0.0457749702462693
 202021,"LSIP","West Yorkshire","All other qualifications","Key Stage 5","Unknown",0.107057890563045
 202021,"LSIP","West Yorkshire","Level 2","Key Stage 5","Unknown",0.0598407281001138
 202021,"LSIP","West Yorkshire","Level 3","Key Stage 5","Unknown",0.0327068908671283
 202021,"LSIP","West Yorkshire","Total","Key Stage 5","Unknown",0.0498650559054106
+202021,"LSIP","West of England and North Somerset","All other qualifications","Key Stage 5","Unknown",0.077324973876698
+202021,"LSIP","West of England and North Somerset","Level 2","Key Stage 5","Unknown",0.0427394438722966
+202021,"LSIP","West of England and North Somerset","Level 3","Key Stage 5","Unknown",0.0380642422527239
+202021,"LSIP","West of England and North Somerset","Total","Key Stage 5","Unknown",0.0457749702462693
 202021,"LSIP","Worcestershire","All other qualifications","Key Stage 5","Unknown",0.0915371329879102
 202021,"LSIP","Worcestershire","Level 2","Key Stage 5","Unknown",0.0626057529610829
 202021,"LSIP","Worcestershire","Level 3","Key Stage 5","Unknown",0.0307328605200946
@@ -9966,11 +9966,11 @@
 202021,"MCA","West Midlands","Level 2","Key Stage 5","Unknown",0.0474095796676442
 202021,"MCA","West Midlands","Level 3","Key Stage 5","Unknown",0.0377645594134735
 202021,"MCA","West Midlands","Total","Key Stage 5","Unknown",0.0529292688735413
-202021,"MCA","West of England","All other qualifications","Key Stage 5","Unknown",0.0822391154111956
-202021,"MCA","West of England","Level 2","Key Stage 5","Unknown",0.0385674931129477
-202021,"MCA","West of England","Level 3","Key Stage 5","Unknown",0.0409621753529719
-202021,"MCA","West of England","Total","Key Stage 5","Unknown",0.0474756831866605
 202021,"MCA","West Yorkshire","All other qualifications","Key Stage 5","Unknown",0.107057890563045
 202021,"MCA","West Yorkshire","Level 2","Key Stage 5","Unknown",0.0598407281001138
 202021,"MCA","West Yorkshire","Level 3","Key Stage 5","Unknown",0.0327068908671283
 202021,"MCA","West Yorkshire","Total","Key Stage 5","Unknown",0.0498650559054106
+202021,"MCA","West of England","All other qualifications","Key Stage 5","Unknown",0.0822391154111956
+202021,"MCA","West of England","Level 2","Key Stage 5","Unknown",0.0385674931129477
+202021,"MCA","West of England","Level 3","Key Stage 5","Unknown",0.0409621753529719
+202021,"MCA","West of England","Total","Key Stage 5","Unknown",0.0474756831866605
