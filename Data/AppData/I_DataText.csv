@@ -1,136 +1,136 @@
 "metric","LatestPeriod","subheading","sourceText","dataText","caveatText"
-"empRate","Oct-Sep 2022"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16-64 year olds.</li>
-<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
+"empRate","Oct-Sep 2022"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+  <li>Figures are for 16-64 year olds.</li>
+<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
 </ol>"
-"selfempRate","Oct-Sep 2023"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16-64 year olds.</li>
-<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
+"selfempRate","Oct-Sep 2023"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+  <li>Figures are for 16-64 year olds.</li>
+<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
 </ol>"
-"unempRate","Oct-Sep 2024"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16-64 year olds.</li>
-<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
+"unempRate","Oct-Sep 2024"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+  <li>Figures are for 16-64 year olds.</li>
+<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
 </ol>"
-"inactiveRate","Oct-Sep 2025"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16-64 year olds.</li>
-<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
+"inactiveRate","Oct-Sep 2025"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+  <li>Figures are for 16-64 year olds.</li>
+<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
 </ol>"
-"Employment","Oct-Sep 2026"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Employment volumes are for 16-64 year olds.</li>
-<li>Industry split volumes are for all ages. </li>
-<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
-<li>Standard Occupational Classification 2010 (SOC2010). The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see the data tab.</li>
-<li>Industry groups are Standard Industrial Classification: SIC 2007.</li>
+"Employment","Oct-Sep 2026"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+  <li>Employment volumes are for 16-64 year olds.</li>
+<li>Industry split volumes are for all ages. </li>
+<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
+<li>Standard Occupational Classification 2010 (SOC2010). The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see the data tab.</li>
+<li>Industry groups are Standard Industrial Classification: SIC 2007.</li>
 </ol>"
-"  Self Employed ","Oct-Sep 2027"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16-64 year olds.</li>
-<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
+"  Self Employed ","Oct-Sep 2027"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+  <li>Figures are for 16-64 year olds.</li>
+<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
 </ol>"
-"  Unemployed ","Oct-Sep 2028"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16-64 year olds.</li>
-<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
+"  Unemployed ","Oct-Sep 2028"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+  <li>Figures are for 16-64 year olds.</li>
+<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
 </ol>"
-"  Inactive ","Oct-Sep 2029"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16-64 year olds.</li>
-<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
+"  Inactive ","Oct-Sep 2029"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+  <li>Figures are for 16-64 year olds.</li>
+<li>Years represent Oct to Sep period. So 2017 is the Oct 2017 – Sep 2018 period.</li>
 </ol>"
-"vacancies","Dec 2022"," ","<a href='https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbyprofessionandlocalauthorityuk'>ONS Textkernel</a>","This data is experimental. ONS are continuing to develop these statistics and aim to move to SOC profession grouping and publish data regularly. The timescale for the next release has not yet been agreed.","<ol>
-  <li>These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs.</li>
-<li>Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time.</li>
-<li>Counts have been rounded to the nearest 5. Totals may not add due to this rounding.</li>
+"vacancies","Dec 2022"," ","<a href='https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbyprofessionandlocalauthorityuk'>ONS Textkernel</a>","This data is experimental. ONS are continuing to develop these statistics and aim to move to SOC profession grouping and publish data regularly. The timescale for the next release has not yet been agreed.","<ol>
+  <li>These statistics should be treated as experimental, as they are still subject to testing the ability to meet user needs.</li>
+<li>Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time.</li>
+<li>Counts have been rounded to the nearest 5. Totals may not add due to this rounding.</li>
 </ol>"
 "workingFutures",NA," ",NA," ",NA
-"enterpriseCount","Mar 2022"," ","<a href='https://www.nomisweb.co.uk/datasets/idbrent'>ONS UK Business Counts</a>","Represented here are enterprises, which can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
-  <li>Overall total may not equal the sum of all industries due to rounding and suppression.</li>
- <li>Unregistered businesses that are not large enough to be registered for VAT or PAYE are not included.</li>
+"enterpriseCount","Mar 2022"," ","<a href='https://www.nomisweb.co.uk/datasets/idbrent'>ONS UK Business Counts</a>","Represented here are enterprises, which can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
+  <li>Overall total may not equal the sum of all industries due to rounding and suppression.</li>
+ <li>Unregistered businesses that are not large enough to be registered for VAT or PAYE are not included.</li>
 </ol>"
-"birthRate","Dec 2020 - Dec 2021 ("," ","<a href=' https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable'>ONS Business Demography</a>","Represented here are enterprises, which can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
-  <li>A birth is identified as a business that was present in year t, but did not exist in year t-1 or t-2. Births are identified by making comparison of annual active population files and identifying those present in the latest file, but not the two previous ones.</li>
- <li>A death is defined as a business that was on the active file in year t, but was no longer present in the active file in t+1 and t+2. In order to provide an early estimate of deaths, an adjustment has been made to the latest two years deaths to allow for reactivations. These figures are provisional and subject to revision.</li>
- <li>An IDBR birth does not always represent the start of trading, as some businesses register for VAT or PAYE many years into their existence. And businesses that die on IDBR can continue trading if the death has been triggered by a VAT deregistration.</li>
+"birthRate","Dec 2020 - Dec 2021 ("," ","<a href=' https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable'>ONS Business Demography</a>","Represented here are enterprises, which can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
+  <li>A birth is identified as a business that was present in year t, but did not exist in year t-1 or t-2. Births are identified by making comparison of annual active population files and identifying those present in the latest file, but not the two previous ones.</li>
+ <li>A death is defined as a business that was on the active file in year t, but was no longer present in the active file in t+1 and t+2. In order to provide an early estimate of deaths, an adjustment has been made to the latest two years deaths to allow for reactivations. These figures are provisional and subject to revision.</li>
+ <li>An IDBR birth does not always represent the start of trading, as some businesses register for VAT or PAYE many years into their existence. And businesses that die on IDBR can continue trading if the death has been triggered by a VAT deregistration.</li>
 </ol>"
-"deathRate","Dec 2020 - Dec 2021 ("," ","<a href=' https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable'>ONS Business Demography</a>","Represented here are enterprises, which can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
-  <li>A birth is identified as a business that was present in year t, but did not exist in year t-1 or t-2. Births are identified by making comparison of annual active population files and identifying those present in the latest file, but not the two previous ones.</li>
- <li>A death is defined as a business that was on the active file in year t, but was no longer present in the active file in t+1 and t+2. In order to provide an early estimate of deaths, an adjustment has been made to the latest two years deaths to allow for reactivations. These figures are provisional and subject to revision.</li>
- <li>An IDBR birth does not always represent the start of trading, as some businesses register for VAT or PAYE many years into their existence. And businesses that die on IDBR can continue trading if the death has been triggered by a VAT deregistration.</li>
+"deathRate","Dec 2020 - Dec 2021 ("," ","<a href=' https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable'>ONS Business Demography</a>","Represented here are enterprises, which can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
+  <li>A birth is identified as a business that was present in year t, but did not exist in year t-1 or t-2. Births are identified by making comparison of annual active population files and identifying those present in the latest file, but not the two previous ones.</li>
+ <li>A death is defined as a business that was on the active file in year t, but was no longer present in the active file in t+1 and t+2. In order to provide an early estimate of deaths, an adjustment has been made to the latest two years deaths to allow for reactivations. These figures are provisional and subject to revision.</li>
+ <li>An IDBR birth does not always represent the start of trading, as some businesses register for VAT or PAYE many years into their existence. And businesses that die on IDBR can continue trading if the death has been triggered by a VAT deregistration.</li>
 </ol>"
-"achievements_rate_per_100000_population","AY21/22","Rates are per 100,000 people","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
-FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
-Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
-Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups.
-Achievements are the number of learners who successfully complete an individual aim in an academic year.","<ol>
-  <li>Total achievements is the count of learners that completed their qualification at any point during the stated academic period.</li>
- <li>Learners achieving more than one course will appear only once in the grand total.</li>
- <li>Years shown represent academic years.</li>
+"achievements_rate_per_100000_population","AY21/22","Rates are per 100,000 people","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
+FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
+Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
+Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups.
+Achievements are the number of learners who successfully complete an individual aim in an academic year.","<ol>
+  <li>Total achievements is the count of learners that completed their qualification at any point during the stated academic period.</li>
+ <li>Learners achieving more than one course will appear only once in the grand total.</li>
+ <li>Years shown represent academic years.</li>
 </ol>"
-"participation_rate_per_100000_population","AY21/22","Rates are per 100,000 people","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
-FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
-Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
-Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups.
-Achievements are the number of learners who successfully complete an individual aim in an academic year.","<ol>
-  <li>Total achievements is the count of learners that completed their qualification at any point during the stated academic period.</li>
- <li>Learners achieving more than one course will appear only once in the grand total.</li>
- <li>Years shown represent academic years.</li>
+"participation_rate_per_100000_population","AY21/22","Rates are per 100,000 people","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
+FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
+Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
+Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups.
+Achievements are the number of learners who successfully complete an individual aim in an academic year.","<ol>
+  <li>Total achievements is the count of learners that completed their qualification at any point during the stated academic period.</li>
+ <li>Learners achieving more than one course will appear only once in the grand total.</li>
+ <li>Years shown represent academic years.</li>
 </ol>"
-"starts_rate_per_100000_population","AY21/22","Rates are per 100,000 people","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
-FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
-Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
-Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups.
-Achievements are the number of learners who successfully complete an individual aim in an academic year.","<ol>
-  <li>Total achievements is the count of learners that completed their qualification at any point during the stated academic period.</li>
- <li>Learners achieving more than one course will appear only once in the grand total.</li>
- <li>Years shown represent academic years.</li>
+"starts_rate_per_100000_population","AY21/22","Rates are per 100,000 people","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
+FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
+Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
+Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups.
+Achievements are the number of learners who successfully complete an individual aim in an academic year.","<ol>
+  <li>Total achievements is the count of learners that completed their qualification at any point during the stated academic period.</li>
+ <li>Learners achieving more than one course will appear only once in the grand total.</li>
+ <li>Years shown represent academic years.</li>
 </ol>"
-"achievements","AY21/22"," ","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
-FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
-Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
-Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups.
-Achievements are the number of learners who successfully complete an individual aim in an academic year.","<ol>
-  <li>Total achievements is the count of learners that completed their qualification at any point during the stated academic period.</li>
- <li>Learners achieving more than one course will appear only once in the grand total.</li>
- <li>Years shown represent academic years.</li>
+"achievements","AY21/22"," ","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
+FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
+Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
+Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups.
+Achievements are the number of learners who successfully complete an individual aim in an academic year.","<ol>
+  <li>Total achievements is the count of learners that completed their qualification at any point during the stated academic period.</li>
+ <li>Learners achieving more than one course will appear only once in the grand total.</li>
+ <li>Years shown represent academic years.</li>
 </ol>"
-"participation","AY21/22"," ","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
-FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
-Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
-Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups.
-Achievements are the number of learners who successfully complete an individual aim in an academic year.","<ol>
-  <li>Total achievements is the count of learners that completed their qualification at any point during the stated academic period.</li>
- <li>Learners achieving more than one course will appear only once in the grand total.</li>
- <li>Years shown represent academic years.</li>
+"participation","AY21/22"," ","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
+FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
+Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
+Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups.
+Achievements are the number of learners who successfully complete an individual aim in an academic year.","<ol>
+  <li>Total achievements is the count of learners that completed their qualification at any point during the stated academic period.</li>
+ <li>Learners achieving more than one course will appear only once in the grand total.</li>
+ <li>Years shown represent academic years.</li>
 </ol>"
-"starts","AY21/22"," ","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
-FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
-Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
-Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups.
-Achievements are the number of learners who successfully complete an individual aim in an academic year.","<ol>
-  <li>Total achievements is the count of learners that completed their qualification at any point during the stated academic period.</li>
- <li>Learners achieving more than one course will appear only once in the grand total.</li>
- <li>Years shown represent academic years.</li>
+"starts","AY21/22"," ","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
+FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
+Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
+Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups.
+Achievements are the number of learners who successfully complete an individual aim in an academic year.","<ol>
+  <li>Total achievements is the count of learners that completed their qualification at any point during the stated academic period.</li>
+ <li>Learners achieving more than one course will appear only once in the grand total.</li>
+ <li>Years shown represent academic years.</li>
 </ol>"
-"level3AndAboveRate","2021"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16-64 year olds.</li>
- <li>NVQ3 or above consists of NVQ3 and NVQ4. </li>
- <li>NVQ3: 2+ A Levels/VCEs, 4+ AS Levels, Higher School Certificate, Progression/Advanced Diploma, Welsh Baccalaureate Advanced Diploma, NVQ Level 3; Advanced GNVQ, City and Guilds Advanced Craft, ONC, OND, BTEC National, RSA Advanced Diploma.</li>
- <li>NVQ4 or above: Degree (for example BA, BSc), Higher Degree (for example MA, PhD, PGCE), NVQ Level 4-5, HNC, HND, RSA Higher Diploma, BTEC Higher level, Foundation degree (NI), Professional qualifications (for example teaching, nursing, accountancy).</li>
+"level3AndAboveRate","2021"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+  <li>Figures are for 16-64 year olds.</li>
+ <li>NVQ3 or above consists of NVQ3 and NVQ4. </li>
+ <li>NVQ3: 2+ A Levels/VCEs, 4+ AS Levels, Higher School Certificate, Progression/Advanced Diploma, Welsh Baccalaureate Advanced Diploma, NVQ Level 3; Advanced GNVQ, City and Guilds Advanced Craft, ONC, OND, BTEC National, RSA Advanced Diploma.</li>
+ <li>NVQ4 or above: Degree (for example BA, BSc), Higher Degree (for example MA, PhD, PGCE), NVQ Level 4-5, HNC, HND, RSA Higher Diploma, BTEC Higher level, Foundation degree (NI), Professional qualifications (for example teaching, nursing, accountancy).</li>
 </ol>"
-"sustainedPositiveDestinationKS4Rate","AY20/21","The percentage of AY19/20 Key Stage 4 completers in education, an apprenticeship or employment in AY20/21","<a href = 'https://explore-education-statistics.service.gov.uk/data-tables/permalink/1683bef5-5daa-49d7-9323-08db08498a11'>National Pupil Database</a>","Destination measures show the percentage of students going to or remaining in an education, apprenticeship or employment destination in the academic year after completing Key Stage 4 studies (usually aged between 14 to 16) and Key Stage 5 studies (usually aged 18). The cohort of learners used in the metrics here completed in AY19/20.
-A sustained destination is a count of young people recorded as having sustained participation (education and employment) for a 6 month period in the destination year.
-This means attending for all of the first two terms of the academic year (e.g. October 2020 to March 2021) at one or more education providers; spending 5 of the 6 months in employment or a combination of the two.
-A sustained apprenticeship is recorded when 6 months continuous participation is recorded at any point in the destination year (between August 2020 and July 2021).
-Not recorded includes pupils who were captured in the destination source data but who failed to meet the sustained participation criteria.
-Unknown (activity not captured): The student was not found to have any participation in education, apprenticeship or employment nor recorded as receiving out-of-work benefits at any point in the year. This also includes not being recorded by their Local Authority as NEET (not engaged in education, employment or training).","<ol>
-  <li>Data based on destinations of state-funded mainstream schools.</li>
- <li>There is no double counting across destinations, a young person is reported in one destination category only.</li>
- <li>If a student is registered as being in education and an apprenticeship, it is recorded as a sustained education and if a student is registered in employment along with an apprenticeship or in education, it is recorded as sustained employment.</li>
+"sustainedPositiveDestinationKS4Rate","AY20/21","The percentage of AY19/20 Key Stage 4 completers in education, an apprenticeship or employment in AY20/21","<a href = 'https://explore-education-statistics.service.gov.uk/data-tables/permalink/1683bef5-5daa-49d7-9323-08db08498a11'>National Pupil Database</a>","Destination measures show the percentage of students going to or remaining in an education, apprenticeship or employment destination in the academic year after completing Key Stage 4 studies (usually aged between 14 to 16) and Key Stage 5 studies (usually aged 18). The cohort of learners used in the metrics here completed in AY19/20.
+A sustained destination is a count of young people recorded as having sustained participation (education and employment) for a 6 month period in the destination year.
+This means attending for all of the first two terms of the academic year (e.g. October 2020 to March 2021) at one or more education providers; spending 5 of the 6 months in employment or a combination of the two.
+A sustained apprenticeship is recorded when 6 months continuous participation is recorded at any point in the destination year (between August 2020 and July 2021).
+Not recorded includes pupils who were captured in the destination source data but who failed to meet the sustained participation criteria.
+Unknown (activity not captured): The student was not found to have any participation in education, apprenticeship or employment nor recorded as receiving out-of-work benefits at any point in the year. This also includes not being recorded by their Local Authority as NEET (not engaged in education, employment or training).","<ol>
+  <li>Data based on destinations of state-funded mainstream schools.</li>
+ <li>There is no double counting across destinations, a young person is reported in one destination category only.</li>
+ <li>If a student is registered as being in education and an apprenticeship, it is recorded as a sustained education and if a student is registered in employment along with an apprenticeship or in education, it is recorded as sustained employment.</li>
 </ol>"
-"sustainedPositiveDestinationKS5Rate","AY20/21","The percentage of AY19/20 Key Stage 5 completers in education, an apprenticeship or employment in AY20/21","<a href = 'https://explore-education-statistics.service.gov.uk/data-tables/permalink/1703fe2c-2e57-4bfe-9325-08db08498a11'>National Pupil Database</a>","Destination measures show the percentage of students going to or remaining in an education, apprenticeship or employment destination in the academic year after completing Key Stage 4 studies (usually aged between 14 to 16) and Key Stage 5 studies (usually aged 18). The cohort of learners used in the metrics here completed in AY19/20.
-A sustained destination is a count of young people recorded as having sustained participation (education and employment) for a 6 month period in the destination year.
-This means attending for all of the first two terms of the academic year (e.g. October 2020 to March 2021) at one or more education providers; spending 5 of the 6 months in employment or a combination of the two.
-A sustained apprenticeship is recorded when 6 months continuous participation is recorded at any point in the destination year (between August 2020 and July 2021).
-Not recorded includes pupils who were captured in the destination source data but who failed to meet the sustained participation criteria.
-Unknown (activity not captured): The student was not found to have any participation in education, apprenticeship or employment nor recorded as receiving out-of-work benefits at any point in the year. This also includes not being recorded by their Local Authority as NEET (not engaged in education, employment or training).","<ol>
-  <li>Data based on destinations of state-funded mainstream schools.</li>
- <li>There is no double counting across destinations, a young person is reported in one destination category only.</li>
- <li>If a student is registered as being in education and an apprenticeship, it is recorded as a sustained education and if a student is registered in employment along with an apprenticeship or in education, it is recorded as sustained employment.</li>
+"sustainedPositiveDestinationKS5Rate","AY20/21","The percentage of AY19/20 Key Stage 5 completers in education, an apprenticeship or employment in AY20/21","<a href = 'https://explore-education-statistics.service.gov.uk/data-tables/permalink/1703fe2c-2e57-4bfe-9325-08db08498a11'>National Pupil Database</a>","Destination measures show the percentage of students going to or remaining in an education, apprenticeship or employment destination in the academic year after completing Key Stage 4 studies (usually aged between 14 to 16) and Key Stage 5 studies (usually aged 18). The cohort of learners used in the metrics here completed in AY19/20.
+A sustained destination is a count of young people recorded as having sustained participation (education and employment) for a 6 month period in the destination year.
+This means attending for all of the first two terms of the academic year (e.g. October 2020 to March 2021) at one or more education providers; spending 5 of the 6 months in employment or a combination of the two.
+A sustained apprenticeship is recorded when 6 months continuous participation is recorded at any point in the destination year (between August 2020 and July 2021).
+Not recorded includes pupils who were captured in the destination source data but who failed to meet the sustained participation criteria.
+Unknown (activity not captured): The student was not found to have any participation in education, apprenticeship or employment nor recorded as receiving out-of-work benefits at any point in the year. This also includes not being recorded by their Local Authority as NEET (not engaged in education, employment or training).","<ol>
+  <li>Data based on destinations of state-funded mainstream schools.</li>
+ <li>There is no double counting across destinations, a young person is reported in one destination category only.</li>
+ <li>If a student is registered as being in education and an apprenticeship, it is recorded as a sustained education and if a student is registered in employment along with an apprenticeship or in education, it is recorded as sustained employment.</li>
 </ol>"

@@ -2141,7 +2141,10 @@ server <- function(input, output, session) {
           scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" |
             input$splashMetric == "Employment" |
             input$splashMetric == "vacancies" |
-            input$splashMetric == "enterpriseCount") {
+            input$splashMetric == "enterpriseCount" |
+            input$splashMetric == "achievements" |
+            input$splashMetric == "participation" |
+            input$splashMetric == "starts") {
             scales::percent
           } else {
             label_number_si(accuracy = 1)
