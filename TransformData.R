@@ -436,6 +436,30 @@ D_Achieve_ILR21 <- F_Achieve_ILR21 %>%
   mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
 write.csv(D_Achieve_ILR21, file = "Data\\AppData\\D_Achieve_ILR21.csv", row.names = FALSE)
 
+# create version to use in dashboard
+# group by ssa and lep
+SSA_LEP_Achieve_ILR21 <- F_Achieve_ILR21 %>%
+  filter(geographic_level != "region") %>%
+  mutate_at(vars(achievements, enrolments), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "low" = ""))) %>% # convert to blank to avoid error msg
+  mutate(Achievements = as.numeric(achievements), Enrolments = as.numeric(enrolments)) %>%
+  filter(time_period == "202122") %>%
+  select(geographic_level, area, SSA = ssa_t1_desc, Level = notional_nvq_level, sex, Achievements, Enrolments)
+# group by ssa to get ssa totals
+Ach_pc_Achieve_ILR21 <- SSA_LEP_Achieve_ILR21 %>%
+  filter(SSA == "Total") %>%
+  select(geographic_level, area, Level, sex, Total = SSA, Total_ach = Achievements, Total_enr = Enrolments)
+# calculate ssa %s
+C_Achieve_ILR21 <- SSA_LEP_Achieve_ILR21 %>%
+  left_join(Ach_pc_Achieve_ILR21, by = c("geographic_level", "area", "Level", "sex")) %>%
+  group_by(geographic_level, area, Level, sex) %>%
+  mutate(pcAch = Achievements / Total_ach, pcEnr = Enrolments / Total_enr) %>%
+  filter(SSA != "Total") %>%
+  mutate(geographic_level = case_when(
+    geographic_level == "localAuthorityDistrict" ~ "LADU",
+    geographic_level == "country" ~ "COUNTRY",
+    TRUE ~ geographic_level
+  ))
+
 ## Vacancy data
 # Reshape vacancy data to long, rename and reorder and reformat some columns
 format.Vacancy.ONS <- function(x) { # need to clean up colnames
@@ -1651,9 +1675,6 @@ C_KS5_eduempapp_max_min <- C_KS4_KS5eduempapp %>%
 # write data to folder
 write.csv(C_KS5_eduempapp_max_min, file = "Data\\AppData\\C_KS5_eduempapp_max_min.csv", row.names = FALSE)
 
-
-
-
 #### 3.5 ONS by profession ####
 #### Employment by occupation ####
 format.OnsProf <- function(x) {
@@ -1688,14 +1709,20 @@ format.OnsProf <- function(x) {
 
 # format data
 D_OnsProf <- bind_rows(
-  format.OnsProf(I_OnsProfLep), # remove code since it doesn't exist in other geogs
-  format.OnsProf(I_OnsProfLsip),
-  format.OnsProf(I_OnsProfMca),
-  format.OnsProf(I_OnsProfLA %>% select(-1)), # remove region code
-  # format.OnsProf(I_OnsProfEng %>% mutate(`Detailed Profession Category`=NULL)),
-  format.OnsProf(I_OnsProfDetailEng),
-  format.OnsProf(I_OnsProfRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LSIP", area = "Greater London"),
-  format.OnsProf(I_OnsProfRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LEP")
+  format.OnsProf(I_OnsProfDetailLep), # remove code since it doesn't exist in other geogs
+  format.OnsProf(I_OnsProfDetailLsip),
+  format.OnsProf(I_OnsProfDetailMca),
+  format.OnsProf(I_OnsProfDetailLA %>% select(-1)), # remove region code
+  format.OnsProf(I_OnsProfDetailEng) %>% filter(area == "England"),
+  format.OnsProf(I_OnsProfDetailRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LSIP", area = "Greater London"),
+  format.OnsProf(I_OnsProfDetailRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LEP"),
+  format.OnsProf(I_OnsProfLep %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
+  format.OnsProf(I_OnsProfLsip %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
+  format.OnsProf(I_OnsProfMca %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
+  format.OnsProf(I_OnsProfLA %>% select(-1) %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
+  format.OnsProf(I_OnsProfEng %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "England"),
+  format.OnsProf(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "London") %>% mutate(geographic_level = "LSIP", area = "Greater London"),
+  format.OnsProf(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "London") %>% mutate(geographic_level = "LEP")
 ) %>%
   # change lep naming to match other datafiles
   mutate(geographic_level = case_when(
@@ -1715,6 +1742,7 @@ C_OnsProf <- D_OnsProf %>%
 
 # make summary profession over time data
 C_OnsProfTime <- C_OnsProf %>%
+  filter(`Detailed Profession Category` == "None") %>% # limit to only summary data
   group_by(geographic_level, area, `Summary Profession Category`, time_period) %>%
   summarise(vacancies = sum(vacancies)) %>%
   mutate(time_period = as.Date(paste("01 ", time_period, sep = ""), "%d %b %y"))
@@ -1727,7 +1755,7 @@ write.csv(D_OnsProfTime, file = "Data\\AppData\\D_OnsProfTime.csv", row.names = 
 
 # make download version
 D_OnsProfDetail <- D_OnsProf %>%
-  filter(time_period == "Oct 22")
+  filter(time_period == "Dec 22", `Detailed Profession Category` != "None")
 write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.names = FALSE)
 
 # Neaten geog files
@@ -2011,8 +2039,17 @@ C_breakdown <- bind_rows(
     filter(subgroups != "Total") %>%
     group_by(across(c(-value, -subgroups))) %>%
     mutate(across(value, ~ round(prop.table(.), 3))),
+  C_Achieve_ILR21 %>%
+    filter(Level == "Total", sex == "Total") %>%
+    ungroup() %>%
+    select(-Level, -sex, -Enrolments, -Total, -Total_ach, -Total_enr, -pcAch, -pcEnr) %>%
+    mutate(metric = "achievements", time_period = 202122, breakdown = "SSA") %>%
+    rename(subgroups = SSA, value = Achievements) %>%
+    mutate_all(~ replace(., is.na(.), 0)) %>%
+    group_by(across(c(-value, -subgroups))) %>%
+    mutate(across(value, ~ round(prop.table(.), 3))),
   C_OnsProf %>%
-    filter(time_period == "Dec 22") %>%
+    filter(time_period == "Dec 22", `Detailed Profession Category` == "None") %>%
     mutate(time_period = 122022) %>%
     group_by(geographic_level, area, time_period, `Summary Profession Category`) %>%
     summarise(value = sum(vacancies)) %>%
@@ -2021,7 +2058,7 @@ C_breakdown <- bind_rows(
     group_by(across(c(-value, -subgroups))) %>%
     mutate(across(value, ~ round(prop.table(.), 3))),
   C_OnsProf %>%
-    filter(time_period == "Dec 22") %>%
+    filter(time_period == "Dec 22", `Detailed Profession Category` != "None") %>%
     mutate(time_period = 122022) %>%
     group_by(geographic_level, area, time_period, `Detailed Profession Category`) %>%
     summarise(value = sum(vacancies)) %>%
