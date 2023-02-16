@@ -1632,7 +1632,8 @@ server <- function(input, output, session) {
   #### 2.3.5.4 Map footnote ----
   output$mapFoot <- renderUI({
     paste0(
-    (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod," data. Click an area to update dashboard.")
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, " data. Click an area to update dashboard."
+    )
   })
 
   ### 2.3.6 LA map ----
@@ -1641,7 +1642,7 @@ server <- function(input, output, session) {
     paste0("What is the variation within ", areaClicked(), "?")
   })
   #### 2.3.6.2 Comment----
-  
+
   output$commentLA <- renderUI({
     LaHighLow <- C_Geog %>%
       filter(
@@ -1721,11 +1722,12 @@ server <- function(input, output, session) {
         )
       )
   })
-  
+
   #### 2.3.6.4 Map footnote ----
   output$mapLaFoot <- renderUI({
     paste0(
-      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod," data. Click an area to update other charts with LA data.")
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, " data. Click an area to update other charts with LA data."
+    )
   })
 
   ### 2.3.7 Time chart ----
@@ -1929,7 +1931,7 @@ server <- function(input, output, session) {
     )
   })
   #### 2.3.8.2 Optional summary profession filter ----
-  summaryCategories<-c("All",(as.vector(
+  summaryCategories <- c("All", (as.vector(
     distinctSubgroups %>%
       filter(breakdown == "Summary Profession Category")
   ))$subgroups)
@@ -1938,29 +1940,29 @@ server <- function(input, output, session) {
       need(input$barBreakdown != "", ""),
       need(input$barBreakdown != "No breakdowns available", "")
     )
-    if(input$barBreakdown=="Detailed Profession Category"){
+    if (input$barBreakdown == "Detailed Profession Category") {
       selectizeInput(
         inputId = "summaryProfession",
         label = "Limit to particular summary profession",
         choices = summaryCategories
       )
-    }else{}
+    } else {}
   })
-  
+
   #### 2.3.8.2 Subgroup filter ----
-  detailLookup<-D_OnsProfDetail%>%distinct(`Summary Profession Category`,`Detailed Profession Category`)
+  detailLookup <- D_OnsProfDetail %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)
   topTenEachBreakdown <- bind_rows(
     C_breakdown %>%
       group_by(metric, breakdown, area, geographic_level) %>%
       arrange(desc(value)) %>%
-      slice(1:10)%>%
-      mutate(`Summary Profession Category`="All"),
+      slice(1:10) %>%
+      mutate(`Summary Profession Category` = "All"),
     C_breakdown %>%
-      filter(breakdown=="Detailed Profession Category")%>%
-    left_join(detailLookup,by = c("subgroups"="Detailed Profession Category"))%>%
-    group_by(metric, breakdown, area, geographic_level,`Summary Profession Category`) %>%
-    arrange(desc(value)) %>%
-    slice(1:10)
+      filter(breakdown == "Detailed Profession Category") %>%
+      left_join(detailLookup, by = c("subgroups" = "Detailed Profession Category")) %>%
+      group_by(metric, breakdown, area, geographic_level, `Summary Profession Category`) %>%
+      arrange(desc(value)) %>%
+      slice(1:10)
   )
   output$subgroupFilter <- renderUI({
     validate(
@@ -1976,10 +1978,16 @@ server <- function(input, output, session) {
             filter(
               metric == input$splashMetric,
               breakdown == input$barBreakdown,
-              if(input$barBreakdown!="Detailed Profession Category"){TRUE}
-              else{if(input$summaryProfession=="All"){TRUE}else{
-              subgroups %in%  
-              (detailLookup%>%filter(`Summary Profession Category`==input$summaryProfession))$`Detailed Profession Category`}}
+              if (input$barBreakdown != "Detailed Profession Category") {
+                TRUE
+              } else {
+                if (input$summaryProfession == "All") {
+                  TRUE
+                } else {
+                  subgroups %in%
+                    (detailLookup %>% filter(`Summary Profession Category` == input$summaryProfession))$`Detailed Profession Category`
+                }
+              }
             )
         ))$subgroups,
       multiple = TRUE,
@@ -1990,13 +1998,19 @@ server <- function(input, output, session) {
             breakdown == input$barBreakdown,
             area == areaClicked(),
             geographic_level == input$splashGeoType,
-            if(input$barBreakdown!="Detailed Profession Category"){TRUE}
-            else{if(input$summaryProfession=="All"){`Summary Profession Category`=="All"}else{
-            `Summary Profession Category`==input$summaryProfession}}
+            if (input$barBreakdown != "Detailed Profession Category") {
+              TRUE
+            } else {
+              if (input$summaryProfession == "All") {
+                `Summary Profession Category` == "All"
+              } else {
+                `Summary Profession Category` == input$summaryProfession
+              }
+            }
           ) %>%
           distinct(subgroups)
       ))$subgroups,
-      options = list(`actions-box` = TRUE,`live-search`=TRUE)
+      options = list(`actions-box` = TRUE, `live-search` = TRUE)
     )
   })
 
@@ -2060,7 +2074,7 @@ server <- function(input, output, session) {
       } else {
         "low"
       }
-    
+
     paste0(
       areaClicked(),
       " has a ",
@@ -2070,9 +2084,13 @@ server <- function(input, output, session) {
       " in ",
       breakdownDiff$subgroups,
       " than the national average. ",
-      if(nrow(C_breakdown %>%
-             filter(breakdown == input$barBreakdown)%>%
-             distinct(subgroups))>10){"The top 10 subgroups are shown. Use the filter to add or remove subgroups. "}else{""}
+      if (nrow(C_breakdown %>%
+        filter(breakdown == input$barBreakdown) %>%
+        distinct(subgroups)) > 10) {
+        "The top 10 subgroups are shown. Use the filter to add or remove subgroups. "
+      } else {
+        ""
+      }
     )
   })
 
@@ -2153,7 +2171,10 @@ server <- function(input, output, session) {
           scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" |
             input$splashMetric == "Employment" |
             input$splashMetric == "vacancies" |
-            input$splashMetric == "enterpriseCount") {
+            input$splashMetric == "enterpriseCount" |
+            input$splashMetric == "achievements" |
+            input$splashMetric == "participation" |
+            input$splashMetric == "starts") {
             scales::percent
           } else {
             label_number_si(accuracy = 1)
@@ -2203,7 +2224,8 @@ server <- function(input, output, session) {
       need(input$barBreakdown != "No breakdowns available", "")
     )
     paste0(
-      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod," data.")
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, " data."
+    )
   })
 
   ## 2.4 DataHub----
