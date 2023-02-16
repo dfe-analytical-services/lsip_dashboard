@@ -314,8 +314,8 @@ padding-top:15px
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("14 Feb 2023 (0.4.4)"),
-              p("Updated online job advert data to Dec 2022."),
+              p("16 Feb 2023 (0.4.4)"),
+              p("Updated online job advert data to Dec 2022, including an ONS revision to the previous Oct 2022 figures."),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
