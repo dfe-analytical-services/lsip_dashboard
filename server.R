@@ -3376,7 +3376,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # compariosn boxes
+  # comparison boxes
   output$profComp <- renderUI({
     if ("lep2" %in% names(input)) {
       if (input$lep2 == "\nNone") {

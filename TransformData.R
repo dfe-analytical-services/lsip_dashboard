@@ -1472,13 +1472,18 @@ format.OnsProf <- function(x) {
 
 # format data
 D_OnsProf <- bind_rows(
-  format.OnsProf(I_OnsProfLep), # remove code since it doesn't exist in other geogs
-  format.OnsProf(I_OnsProfLsip),
-  format.OnsProf(I_OnsProfMca),
-  # format.OnsProf(I_OnsProfEng %>% mutate(`Detailed Profession Category`=NULL)),
-  format.OnsProf(I_OnsProfDetailEng),
-  format.OnsProf(I_OnsProfRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LSIP", area = "Greater London"),
-  format.OnsProf(I_OnsProfRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LEP")
+  format.OnsProf(I_OnsProfDetailLep),
+  format.OnsProf(I_OnsProfDetailLsip),
+  format.OnsProf(I_OnsProfDetailMca),
+  format.OnsProf(I_OnsProfDetailEng)%>%filter(area=="England"),
+  format.OnsProf(I_OnsProfDetailRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LSIP", area = "Greater London"),
+  format.OnsProf(I_OnsProfDetailRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LEP"),
+  format.OnsProf(I_OnsProfLep%>%mutate(`Detailed Profession Category`="Detailed profession category"))%>%mutate(`Detailed Profession Category`="None"), 
+  format.OnsProf(I_OnsProfLsip%>%mutate(`Detailed Profession Category`="Detailed profession category"))%>%mutate(`Detailed Profession Category`="None"),
+  format.OnsProf(I_OnsProfMca%>%mutate(`Detailed Profession Category`="Detailed profession category"))%>%mutate(`Detailed Profession Category`="None"),
+  format.OnsProf(I_OnsProfEng%>%mutate(`Detailed Profession Category`="Detailed profession category"))%>%mutate(`Detailed Profession Category`="None")%>%filter(area=="England"),
+  format.OnsProf(I_OnsProfRegion%>%mutate(`Detailed Profession Category`="Detailed profession category"))%>%mutate(`Detailed Profession Category`="None") %>% filter(area == "London") %>% mutate(geographic_level = "LSIP", area = "Greater London"),
+  format.OnsProf(I_OnsProfRegion%>%mutate(`Detailed Profession Category`="Detailed profession category"))%>%mutate(`Detailed Profession Category`="None") %>% filter(area == "London") %>% mutate(geographic_level = "LEP")
 ) %>%
   # change lep naming to match other datafiles
   mutate(geographic_level = case_when(
@@ -1496,6 +1501,7 @@ C_OnsProf <- D_OnsProf %>%
 
 # make summary profession over time data
 C_OnsProfTime <- C_OnsProf %>%
+  filter(`Detailed Profession Category`=="None")%>%#limit to only summary data
   group_by(geographic_level, area, `Summary Profession Category`, time_period) %>%
   summarise(vacancies = sum(vacancies)) %>%
   mutate(time_period = as.Date(paste("01 ", time_period, sep = ""), "%d %b %y"))
@@ -1508,11 +1514,11 @@ write.csv(D_OnsProfTime, file = "Data\\AppData\\D_OnsProfTime.csv", row.names = 
 
 # make detail in oct 22 file
 C_OnsProfDetail <- C_OnsProf %>%
-  filter(time_period == "Dec 22")
+  filter(time_period == "Dec 22",`Detailed Profession Category`!="None")#limit to only detailed data 
 write.csv(C_OnsProfDetail, file = "Data\\AppData\\C_OnsProfDetail.csv", row.names = FALSE)
 # make download version
 D_OnsProfDetail <- D_OnsProf %>%
-  filter(time_period == "Dec 22")
+  filter(time_period == "Dec 22",`Detailed Profession Category`!="None")#limit to only detailed data 
 write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.names = FALSE)
 
 # get percenatage of job adverts for each area
