@@ -1497,38 +1497,25 @@ server <- function(input, output, session) {
   })
 
   ### 2.3.5 Comparison filter----
+  geogLookup <- C_Geog %>%
+    st_drop_geometry() %>%
+    distinct(areaName, geog) %>%
+    mutate(concatGeog = paste0(areaName, geog))
   output$geoComp <- renderUI({
-    if (input$splashGeoType == "LEP") {
-      selectizeInput(
-        "geoComps",
-        multiple = TRUE,
-        label = NULL,
-        choices = c(
-          C_LEP2020 %>% filter(geographic_level == "LEP", Area != areaClicked()) %>% select(Area)
-        ),
-        options = list(maxItems = 4, placeholder = "Choose comparison LEPs")
-      )
-    } else if (input$splashGeoType == "LSIP") {
-      selectizeInput(
-        "geoComps",
-        multiple = TRUE,
-        label = NULL,
-        choices = c(
-          C_LEP2020 %>% filter(geographic_level == "LSIP", Area != areaClicked()) %>% select(Area)
-        ),
-        options = list(maxItems = 4, placeholder = "Choose comparison LSIPs")
-      )
-    } else {
-      selectizeInput(
-        "geoComps",
-        multiple = TRUE,
-        label = NULL,
-        choices = c(
-          C_LEP2020 %>% filter(geographic_level == "MCA", Area != areaClicked()) %>% select(Area)
-        ),
-        options = list(maxItems = 4, placeholder = "Choose comparison MCAs")
-      )
-    }
+    selectizeInput(
+      "geoComps",
+      multiple = TRUE,
+      label = NULL,
+      choices = areaChoices,
+      options = list(maxItems = 10, placeholder = "Choose comparison areas")
+    )
+  })
+
+  observeEvent(input$mapLA_shape_click, {
+    # edit <- input$sel
+    updateSelectizeInput(session, "geoComps",
+      selected = c(input$geoComps, paste0(laClicked(), " LADU")), options = list()
+    )
   })
 
   ### 2.3.5 National map ----
@@ -1819,32 +1806,22 @@ server <- function(input, output, session) {
         SplashTime <- C_time %>%
           filter(
             # get lep/lsip/mca areas
-            (
-              geographic_level == input$splashGeoType &
-                (area == areaClicked() |
-                  area %in% if ("geoComps" %in% names(input)) {
-                    input$geoComps
-                  } else {
-                    "\nNone"
-                  })
-            ) |
+            (geogConcat == paste0(areaClicked(), " ", input$splashGeoType) | geogConcat %in% if ("geoComps" %in% names(input)) {
+              input$geoComps
+            } else {
+              "\nNone"
+            }) |
               # get england for comparison (if a rate)
               (if (str_sub(input$splashMetric, start = -4) %in% c("Rate", "tion")) {
-                (geographic_level == "COUNTRY" & area == "England")
+                (geogConcat == "England")
               } else {
                 area == "\nNone"
-              }) |
-              # get LA
-              if (is.null(input$mapLA_shape_click) == TRUE) {
-                area == "\nNone"
-              } else {
-                (geographic_level == "LADU" & area == laClicked())
-              },
+              }),
             metric == input$splashMetric
           )
         # add an extra column so the colours work in ggplot when sorting alphabetically
-        SplashTime$Areas <- factor(SplashTime$area,
-          levels = c("England", areaClicked(), laClicked(), input$geoComps)
+        SplashTime$Areas <- factor(SplashTime$geogConcat,
+          levels = c("England", paste0(areaClicked(), " ", input$splashGeoType), input$geoComps) # paste0(laClicked()," LADU"),
         )
 
         ggplot(
@@ -2116,29 +2093,22 @@ server <- function(input, output, session) {
         breakdown == input$barBreakdown,
         subgroups %in% input$barSubgroup,
         metric == input$splashMetric,
-        (geographic_level == "COUNTRY" & area == "England") |
-          ((
-            geographic_level == input$splashGeoType &
-              (area == areaClicked() |
-                area %in% if ("geoComps" %in% names(input)) {
-                  input$geoComps
-                } else {
-                  "\nNone"
-                })
-          ) |
-            if (is.null(input$mapLA_shape_click) == TRUE) {
-              area == "\nNone"
-            } else {
-              (geographic_level == "LADU" & area == laClicked())
-            })
+        # get lep/lsip/mca areas
+        (geogConcat == paste0(areaClicked(), " ", input$splashGeoType) | geogConcat %in% if ("geoComps" %in% names(input)) {
+          input$geoComps
+        } else {
+          "\nNone"
+        }) |
+          # get england for comparison
+          (geogConcat == "England")
       )
       # if no rows (because of filter lag) then don't plot
       if (nrow(Splash_21) == 0) {
         "x"
       } else {
         # add an extra column so the colours work in ggplot when sorting alphabetically
-        Splash_21$Area <- factor(Splash_21$area,
-          levels = c("England", areaClicked(), laClicked(), input$geoComps)
+        Splash_21$Area <- factor(Splash_21$geogConcat,
+          levels = c("England", paste0(areaClicked(), " ", input$splashGeoType), input$geoComps) # paste0(laClicked()," LADU"),
         )
         ggplot(
           Splash_21,
