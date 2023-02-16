@@ -1896,8 +1896,12 @@ C_time <- bind_rows(
       time_period = as.character(time_period)
     )
 ) %>%
-  mutate(metric = gsub(" ", "", metric))%>%
-  mutate(geogConcat=paste0(area, geographic_level))
+  mutate(metric = gsub(" ", "", metric)) %>%
+  mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
+  mutate(geogConcat = case_when(
+    geogConcat == "England COUNTRY" ~ "England",
+    TRUE ~ geogConcat
+  ))
 write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
 
 # create neat breakdown file
@@ -2048,7 +2052,12 @@ C_breakdown <- bind_rows(
   C_destinations %>%
     filter(time_period == 202021, subgroups != "Total", metric == "sustainedPositiveDestinationKS5Rate")
 ) %>%
-  mutate(metric = gsub(" ", "", metric))
+  mutate(metric = gsub(" ", "", metric)) %>%
+  mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
+  mutate(geogConcat = case_when(
+    geogConcat == "England COUNTRY" ~ "England",
+    TRUE ~ geogConcat
+  ))
 write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
 
 # Create dataHub dataset

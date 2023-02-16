@@ -1497,55 +1497,25 @@ server <- function(input, output, session) {
   })
 
   ### 2.3.5 Comparison filter----
-  geogLookup<-C_Geog%>%st_drop_geometry()%>%distinct(areaName,geog)%>%mutate(concatGeog=paste0(areaName,geog))
+  geogLookup <- C_Geog %>%
+    st_drop_geometry() %>%
+    distinct(areaName, geog) %>%
+    mutate(concatGeog = paste0(areaName, geog))
   output$geoComp <- renderUI({
     selectizeInput(
       "geoComps",
       multiple = TRUE,
       label = NULL,
       choices = areaChoices,
-      options = list(maxItems = 4, placeholder = "Choose comparison areas")
+      options = list(maxItems = 10, placeholder = "Choose comparison areas")
     )
-    # geoComps <- eventReactive(input$geoCompsFilter,
-    #                           {
-    #                             (geogLookup%>%filter(concatGeog==input$geoCompsFilter))$areaName 
-    #                           })     
-    # splashGeoTypeComp <- eventReactive(input$geoCompsFilter,
-    #                           {
-    #                             (geogLookup%>%filter(concatGeog==input$geoCompsFilter))$geog 
-    #                           })  
-    
-    # if (input$splashGeoType == "LEP") {
-    #   selectizeInput(
-    #     "geoComps",
-    #     multiple = TRUE,
-    #     label = NULL,
-    #     choices = c(
-    #       C_LEP2020 %>% filter(geographic_level == "LEP", Area != areaClicked()) %>% select(Area)
-    #     ),
-    #     options = list(maxItems = 4, placeholder = "Choose comparison LEPs")
-    #   )
-    # } else if (input$splashGeoType == "LSIP") {
-    #   selectizeInput(
-    #     "geoComps",
-    #     multiple = TRUE,
-    #     label = NULL,
-    #     choices = c(
-    #       C_LEP2020 %>% filter(geographic_level == "LSIP", Area != areaClicked()) %>% select(Area)
-    #     ),
-    #     options = list(maxItems = 4, placeholder = "Choose comparison LSIPs")
-    #   )
-    # } else {
-    #   selectizeInput(
-    #     "geoComps",
-    #     multiple = TRUE,
-    #     label = NULL,
-    #     choices = c(
-    #       C_LEP2020 %>% filter(geographic_level == "MCA", Area != areaClicked()) %>% select(Area)
-    #     ),
-    #     options = list(maxItems = 4, placeholder = "Choose comparison MCAs")
-    #   )
-    # }
+  })
+
+  observeEvent(input$mapLA_shape_click, {
+    # edit <- input$sel
+    updateSelectizeInput(session, "geoComps",
+      selected = c(input$geoComps, paste0(laClicked(), " LADU")), options = list()
+    )
   })
 
   ### 2.3.5 National map ----
@@ -1649,7 +1619,8 @@ server <- function(input, output, session) {
   #### 2.3.5.4 Map footnote ----
   output$mapFoot <- renderUI({
     paste0(
-    (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod," data. Click an area to update dashboard.")
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, " data. Click an area to update dashboard."
+    )
   })
 
   ### 2.3.6 LA map ----
@@ -1658,7 +1629,7 @@ server <- function(input, output, session) {
     paste0("What is the variation within ", areaClicked(), "?")
   })
   #### 2.3.6.2 Comment----
-  
+
   output$commentLA <- renderUI({
     LaHighLow <- C_Geog %>%
       filter(
@@ -1738,11 +1709,12 @@ server <- function(input, output, session) {
         )
       )
   })
-  
+
   #### 2.3.6.4 Map footnote ----
   output$mapLaFoot <- renderUI({
     paste0(
-      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod," data. Click an area to update other charts with LA data.")
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, " data. Click an area to update other charts with LA data."
+    )
   })
 
   ### 2.3.7 Time chart ----
@@ -1831,32 +1803,25 @@ server <- function(input, output, session) {
         input$splashMetric
       ),
       {
-        print(areaClicked())
         SplashTime <- C_time %>%
           filter(
             # get lep/lsip/mca areas
-            (geogConcat==paste0(areaClicked(),input$splashGeoType) | geogConcat %in% if ("geoComps" %in% names(input)) {
+            (geogConcat == paste0(areaClicked(), " ", input$splashGeoType) | geogConcat %in% if ("geoComps" %in% names(input)) {
               input$geoComps
             } else {
               "\nNone"
-            }  )|
+            }) |
               # get england for comparison (if a rate)
               (if (str_sub(input$splashMetric, start = -4) %in% c("Rate", "tion")) {
-                (geographic_level == "COUNTRY" & area == "England")
+                (geogConcat == "England")
               } else {
                 area == "\nNone"
-              }) |
-              # get LA
-              if (is.null(input$mapLA_shape_click) == TRUE) {
-                area == "\nNone"
-              } else {
-                (geographic_level == "LADU" & area == laClicked())
-              },
+              }),
             metric == input$splashMetric
           )
         # add an extra column so the colours work in ggplot when sorting alphabetically
         SplashTime$Areas <- factor(SplashTime$geogConcat,
-          levels = c("EnglandCOUNTRY", paste0(areaClicked(),input$splashGeoType), laClicked(), input$geoComps)
+          levels = c("England", paste0(areaClicked(), " ", input$splashGeoType), input$geoComps) # paste0(laClicked()," LADU"),
         )
 
         ggplot(
@@ -1943,7 +1908,7 @@ server <- function(input, output, session) {
     )
   })
   #### 2.3.8.2 Optional summary profession filter ----
-  summaryCategories<-c("All",(as.vector(
+  summaryCategories <- c("All", (as.vector(
     distinctSubgroups %>%
       filter(breakdown == "Summary Profession Category")
   ))$subgroups)
@@ -1952,29 +1917,29 @@ server <- function(input, output, session) {
       need(input$barBreakdown != "", ""),
       need(input$barBreakdown != "No breakdowns available", "")
     )
-    if(input$barBreakdown=="Detailed Profession Category"){
+    if (input$barBreakdown == "Detailed Profession Category") {
       selectizeInput(
         inputId = "summaryProfession",
         label = "Limit to particular summary profession",
         choices = summaryCategories
       )
-    }else{}
+    } else {}
   })
-  
+
   #### 2.3.8.2 Subgroup filter ----
-  detailLookup<-D_OnsProfDetail%>%distinct(`Summary Profession Category`,`Detailed Profession Category`)
+  detailLookup <- D_OnsProfDetail %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)
   topTenEachBreakdown <- bind_rows(
     C_breakdown %>%
       group_by(metric, breakdown, area, geographic_level) %>%
       arrange(desc(value)) %>%
-      slice(1:10)%>%
-      mutate(`Summary Profession Category`="All"),
+      slice(1:10) %>%
+      mutate(`Summary Profession Category` = "All"),
     C_breakdown %>%
-      filter(breakdown=="Detailed Profession Category")%>%
-    left_join(detailLookup,by = c("subgroups"="Detailed Profession Category"))%>%
-    group_by(metric, breakdown, area, geographic_level,`Summary Profession Category`) %>%
-    arrange(desc(value)) %>%
-    slice(1:10)
+      filter(breakdown == "Detailed Profession Category") %>%
+      left_join(detailLookup, by = c("subgroups" = "Detailed Profession Category")) %>%
+      group_by(metric, breakdown, area, geographic_level, `Summary Profession Category`) %>%
+      arrange(desc(value)) %>%
+      slice(1:10)
   )
   output$subgroupFilter <- renderUI({
     validate(
@@ -1990,10 +1955,16 @@ server <- function(input, output, session) {
             filter(
               metric == input$splashMetric,
               breakdown == input$barBreakdown,
-              if(input$barBreakdown!="Detailed Profession Category"){TRUE}
-              else{if(input$summaryProfession=="All"){TRUE}else{
-              subgroups %in%  
-              (detailLookup%>%filter(`Summary Profession Category`==input$summaryProfession))$`Detailed Profession Category`}}
+              if (input$barBreakdown != "Detailed Profession Category") {
+                TRUE
+              } else {
+                if (input$summaryProfession == "All") {
+                  TRUE
+                } else {
+                  subgroups %in%
+                    (detailLookup %>% filter(`Summary Profession Category` == input$summaryProfession))$`Detailed Profession Category`
+                }
+              }
             )
         ))$subgroups,
       multiple = TRUE,
@@ -2004,13 +1975,19 @@ server <- function(input, output, session) {
             breakdown == input$barBreakdown,
             area == areaClicked(),
             geographic_level == input$splashGeoType,
-            if(input$barBreakdown!="Detailed Profession Category"){TRUE}
-            else{if(input$summaryProfession=="All"){`Summary Profession Category`=="All"}else{
-            `Summary Profession Category`==input$summaryProfession}}
+            if (input$barBreakdown != "Detailed Profession Category") {
+              TRUE
+            } else {
+              if (input$summaryProfession == "All") {
+                `Summary Profession Category` == "All"
+              } else {
+                `Summary Profession Category` == input$summaryProfession
+              }
+            }
           ) %>%
           distinct(subgroups)
       ))$subgroups,
-      options = list(`actions-box` = TRUE,`live-search`=TRUE)
+      options = list(`actions-box` = TRUE, `live-search` = TRUE)
     )
   })
 
@@ -2074,7 +2051,7 @@ server <- function(input, output, session) {
       } else {
         "low"
       }
-    
+
     paste0(
       areaClicked(),
       " has a ",
@@ -2084,9 +2061,13 @@ server <- function(input, output, session) {
       " in ",
       breakdownDiff$subgroups,
       " than the national average. ",
-      if(nrow(C_breakdown %>%
-             filter(breakdown == input$barBreakdown)%>%
-             distinct(subgroups))>10){"The top 10 subgroups are shown. Use the filter to add or remove subgroups. "}else{""}
+      if (nrow(C_breakdown %>%
+        filter(breakdown == input$barBreakdown) %>%
+        distinct(subgroups)) > 10) {
+        "The top 10 subgroups are shown. Use the filter to add or remove subgroups. "
+      } else {
+        ""
+      }
     )
   })
 
@@ -2112,29 +2093,22 @@ server <- function(input, output, session) {
         breakdown == input$barBreakdown,
         subgroups %in% input$barSubgroup,
         metric == input$splashMetric,
-        (geographic_level == "COUNTRY" & area == "England") |
-          ((
-            geographic_level == input$splashGeoType &
-              (area == areaClicked() |
-                area %in% if ("geoComps" %in% names(input)) {
-                  input$geoComps
-                } else {
-                  "\nNone"
-                })
-          ) |
-            if (is.null(input$mapLA_shape_click) == TRUE) {
-              area == "\nNone"
-            } else {
-              (geographic_level == "LADU" & area == laClicked())
-            })
+        # get lep/lsip/mca areas
+        (geogConcat == paste0(areaClicked(), " ", input$splashGeoType) | geogConcat %in% if ("geoComps" %in% names(input)) {
+          input$geoComps
+        } else {
+          "\nNone"
+        }) |
+          # get england for comparison
+          (geogConcat == "England")
       )
       # if no rows (because of filter lag) then don't plot
       if (nrow(Splash_21) == 0) {
         "x"
       } else {
         # add an extra column so the colours work in ggplot when sorting alphabetically
-        Splash_21$Area <- factor(Splash_21$area,
-          levels = c("England", areaClicked(), laClicked(), input$geoComps)
+        Splash_21$Area <- factor(Splash_21$geogConcat,
+          levels = c("England", paste0(areaClicked(), " ", input$splashGeoType), input$geoComps) # paste0(laClicked()," LADU"),
         )
         ggplot(
           Splash_21,
@@ -2217,7 +2191,8 @@ server <- function(input, output, session) {
       need(input$barBreakdown != "No breakdowns available", "")
     )
     paste0(
-      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod," data.")
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, " data."
+    )
   })
 
   ## 2.4 DataHub----
