@@ -1896,7 +1896,8 @@ C_time <- bind_rows(
       time_period = as.character(time_period)
     )
 ) %>%
-  mutate(metric = gsub(" ", "", metric))
+  mutate(metric = gsub(" ", "", metric))%>%
+  mutate(geogConcat=paste0(area, geographic_level))
 write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
 
 # create neat breakdown file

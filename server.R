@@ -1497,38 +1497,55 @@ server <- function(input, output, session) {
   })
 
   ### 2.3.5 Comparison filter----
+  geogLookup<-C_Geog%>%st_drop_geometry()%>%distinct(areaName,geog)%>%mutate(concatGeog=paste0(areaName,geog))
   output$geoComp <- renderUI({
-    if (input$splashGeoType == "LEP") {
-      selectizeInput(
-        "geoComps",
-        multiple = TRUE,
-        label = NULL,
-        choices = c(
-          C_LEP2020 %>% filter(geographic_level == "LEP", Area != areaClicked()) %>% select(Area)
-        ),
-        options = list(maxItems = 4, placeholder = "Choose comparison LEPs")
-      )
-    } else if (input$splashGeoType == "LSIP") {
-      selectizeInput(
-        "geoComps",
-        multiple = TRUE,
-        label = NULL,
-        choices = c(
-          C_LEP2020 %>% filter(geographic_level == "LSIP", Area != areaClicked()) %>% select(Area)
-        ),
-        options = list(maxItems = 4, placeholder = "Choose comparison LSIPs")
-      )
-    } else {
-      selectizeInput(
-        "geoComps",
-        multiple = TRUE,
-        label = NULL,
-        choices = c(
-          C_LEP2020 %>% filter(geographic_level == "MCA", Area != areaClicked()) %>% select(Area)
-        ),
-        options = list(maxItems = 4, placeholder = "Choose comparison MCAs")
-      )
-    }
+    selectizeInput(
+      "geoComps",
+      multiple = TRUE,
+      label = NULL,
+      choices = areaChoices,
+      options = list(maxItems = 4, placeholder = "Choose comparison areas")
+    )
+    # geoComps <- eventReactive(input$geoCompsFilter,
+    #                           {
+    #                             (geogLookup%>%filter(concatGeog==input$geoCompsFilter))$areaName 
+    #                           })     
+    # splashGeoTypeComp <- eventReactive(input$geoCompsFilter,
+    #                           {
+    #                             (geogLookup%>%filter(concatGeog==input$geoCompsFilter))$geog 
+    #                           })  
+    
+    # if (input$splashGeoType == "LEP") {
+    #   selectizeInput(
+    #     "geoComps",
+    #     multiple = TRUE,
+    #     label = NULL,
+    #     choices = c(
+    #       C_LEP2020 %>% filter(geographic_level == "LEP", Area != areaClicked()) %>% select(Area)
+    #     ),
+    #     options = list(maxItems = 4, placeholder = "Choose comparison LEPs")
+    #   )
+    # } else if (input$splashGeoType == "LSIP") {
+    #   selectizeInput(
+    #     "geoComps",
+    #     multiple = TRUE,
+    #     label = NULL,
+    #     choices = c(
+    #       C_LEP2020 %>% filter(geographic_level == "LSIP", Area != areaClicked()) %>% select(Area)
+    #     ),
+    #     options = list(maxItems = 4, placeholder = "Choose comparison LSIPs")
+    #   )
+    # } else {
+    #   selectizeInput(
+    #     "geoComps",
+    #     multiple = TRUE,
+    #     label = NULL,
+    #     choices = c(
+    #       C_LEP2020 %>% filter(geographic_level == "MCA", Area != areaClicked()) %>% select(Area)
+    #     ),
+    #     options = list(maxItems = 4, placeholder = "Choose comparison MCAs")
+    #   )
+    # }
   })
 
   ### 2.3.5 National map ----
@@ -1814,18 +1831,15 @@ server <- function(input, output, session) {
         input$splashMetric
       ),
       {
+        print(areaClicked())
         SplashTime <- C_time %>%
           filter(
             # get lep/lsip/mca areas
-            (
-              geographic_level == input$splashGeoType &
-                (area == areaClicked() |
-                  area %in% if ("geoComps" %in% names(input)) {
-                    input$geoComps
-                  } else {
-                    "\nNone"
-                  })
-            ) |
+            (geogConcat==paste0(areaClicked(),input$splashGeoType) | geogConcat %in% if ("geoComps" %in% names(input)) {
+              input$geoComps
+            } else {
+              "\nNone"
+            }  )|
               # get england for comparison (if a rate)
               (if (str_sub(input$splashMetric, start = -4) %in% c("Rate", "tion")) {
                 (geographic_level == "COUNTRY" & area == "England")
@@ -1841,8 +1855,8 @@ server <- function(input, output, session) {
             metric == input$splashMetric
           )
         # add an extra column so the colours work in ggplot when sorting alphabetically
-        SplashTime$Areas <- factor(SplashTime$area,
-          levels = c("England", areaClicked(), laClicked(), input$geoComps)
+        SplashTime$Areas <- factor(SplashTime$geogConcat,
+          levels = c("EnglandCOUNTRY", paste0(areaClicked(),input$splashGeoType), laClicked(), input$geoComps)
         )
 
         ggplot(
