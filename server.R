@@ -43,6 +43,27 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_overview, {
     updateTabsetPanel(session, "navbar", "Overview")
   })
+  
+  # Create link to local skills tab
+  observeEvent(input$link_to_tabpanel_localskills, {
+    updateTabsetPanel(session, "navbar", "Local skills")
+  })
+  
+  # Create link to further resources tab
+  observeEvent(input$link_to_tabpanel_furtherresources, {
+    updateTabsetPanel(session, "navbar", "Further resources")
+  })
+  
+  # Create link to accessibility tab
+  observeEvent(input$link_to_tabpanel_accessibility, {
+    updateTabsetPanel(session, "navbar", "Accessibility")
+  })
+  
+  # Create link to support and feedback tab
+  observeEvent(input$link_to_tabpanel_supportandfeedback, {
+    updateTabsetPanel(session, "navbar", "Support and feedback")
+  })
+  
   # Create link to employment data
   observeEvent(input$link_to_tabpanel_employment, {
     updateTabsetPanel(session, "navbar", "Local skills")
@@ -87,7 +108,7 @@ server <- function(input, output, session) {
   })
   # Create link to data tab
   observeEvent(input$link_to_tabpanel_data, {
-    updateTabsetPanel(session, "navbar", "Data infomation")
+    updateTabsetPanel(session, "navbar", "Data information and download")
   })
   ## 2.5 Data information ----
   ### 2.5.1 Data table downloads ----
