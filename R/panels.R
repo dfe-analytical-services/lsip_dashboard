@@ -21,13 +21,13 @@ panel_overview <- function() {
             #   )
             # ),
             column(
-              width = 5,
-              h3("Choose an area of interest"),
+              width = 4,
+              p("Choose an area of interest"),
               uiOutput("geoChoiceOver")
             ),
             column(5),
             column(
-              2,
+              3,
               uiOutput("screenshotOverview")
             )
           )
