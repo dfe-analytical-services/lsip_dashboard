@@ -538,7 +538,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       ### 2.3.1 Filters ----
       fluidRow(
         column(
-          9,
+          5,
           h3("What are you interested in?"),
           pickerInput(
             inputId = "splashMetric",
@@ -553,6 +553,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               )
             )
           )
+        ),
+        column(
+          4,
+          uiOutput("metricSplit")
         ),
         column(
           3,

@@ -31,18 +31,18 @@ shhh(library(capture))
 
 # renv::snapshot()
 
-area_select <- c("Coast to Capital", "Greater Manchester", "England")
+#area_select <- c("Coast to Capital", "Greater Manchester", "England")
 
 metricChoices <- list(
   "Employment" = list(
-    "Employment rate" = "empRate",
-    "Self-employment rate" = "selfempRate",
-    "Unemployment rate" = "unempRate",
-    "Inactive rate" = "inactiveRate",
-    "Employment volume" = "Employment",
-    "Self-employment volume" = "SelfEmployed",
-    "Unemployed volume" = "Unemployed",
-    "Inactive volume" = "Inactive"
+    "Employment" = "emp",
+    "Self-employment" = "selfemp",
+    "Unemployment" = "unemp",
+    "Inactive" = "inactive"#,
+   # "Employment volume" = "Employment",
+  #  "Self-employment volume" = "SelfEmployed",
+    #"Unemployed volume" = "Unemployed",
+    #"Inactive volume" = "Inactive"
   ),
   "Jobs" = list(
     "Online job adverts" = "vacancies",
@@ -54,17 +54,17 @@ metricChoices <- list(
     "Business death rate" = "deathRate"
   ),
   "FE and skills" = list(
-    "FE achievement rate" = "achievements_rate_per_100000_population",
-    "FE participation rate" = "participation_rate_per_100000_population",
+    "FE achievements" = "achievements",#_rate_per_100000_population
+    "FE participation" = "participation",
     # "FE start rate" = "starts_rate_per_100000_population",
-    "FE achievement volumes" = "achievements",
-    "FE participation volumes" = "participation",
+   # "FE achievement volumes" = "achievements",
+   # "FE participation volumes" = "participation",
     # "FE starts" = "starts",
     "Qualified at Level 3 or above" = "level3AndAboveRate"
   ),
   "Destinations" = list(
-    "Key stage 4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
-    "Key stage 5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
+    "Completers sustained positive destination rate" = "sustainedPositiveDestination"
+   # "Key stage 5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
   )
   # ,
   # "Mismatch" = list("Supply vs demand TO COME" = "mismatch")
