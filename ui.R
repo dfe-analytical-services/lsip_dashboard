@@ -305,7 +305,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     id = "navbar",
     widths = c(2, 10),
     well = FALSE,
-    selected = "Local skills",
+    selected = "Overview",
 
     ## 2.1 Homepage ----
 
@@ -537,8 +537,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       br(),
       ### 2.3.1 Filters ----
       fluidRow(
+        column(5,
+               h3("Choose an area of interest"),
+               uiOutput("geoChoice")
+        ),
         column(
-          9,
+          5,
           h3("What are you interested in?"),
           pickerInput(
             inputId = "splashMetric",
@@ -555,7 +559,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           )
         ),
         column(
-          3,
+          2,
           uiOutput("screenshotFile")
         )
       ),
