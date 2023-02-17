@@ -576,13 +576,13 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       br(),
       ### 2.3.1 Filters ----
       fluidRow(
-        column(5,
-               h3("Choose an area of interest"),
+        column(4,
+               p("Choose an area of interest"),
                uiOutput("geoChoice")
         ),
         column(
-          5,
-          h3("What are you interested in?"),
+          4,
+          p("What are you interested in?"),
           pickerInput(
             inputId = "splashMetric",
             choices = metricChoices,
@@ -597,8 +597,9 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             )
           )
         ),
+        column(1),
         column(
-          2,
+          3,
           uiOutput("screenshotFile")
         )
       ),
