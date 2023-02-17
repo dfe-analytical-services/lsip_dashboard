@@ -96,27 +96,9 @@ panel_overview <- function() {
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_vacancies2", "Find out more about online job adverts")
         ),
-        # fifth row - destinations
-        h3("Key Stage 5 positive destination rate"),
-        fluidRow(
-          column(
-            width = 4,
-            div(
-              title = "Source: NPD. 2021 academic year",
-              uiOutput("dest.ks5over"),
-            )
-          ),
-          column(
-            width = 8,
-            plotlyOutput("KS5LineChart", height = 81)
-          )
-        ),
-        fluidRow(
-          class = "rightAlignLinks",
-          actionLink("link_to_tabpanel_destinations2", "Find out more about destinations")
-        ),
+
         # sixth row - enterprise
-        h3("Enterprise count: Micro (0-9 employees)"),
+        h3("Business count: Micro (0-9 employees)"),
         fluidRow(
           column(
             width = 4,
@@ -169,11 +151,30 @@ panel_overview <- function() {
             plotlyOutput("AppLineChart", height = 81)
           )
         ),
-        # 6th row - link to app data
         fluidRow(
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_FE2", "Find out more about skills")
         ),
+        # fifth row - destinations
+        h3("Key Stage 5 positive destination rate"),
+        fluidRow(
+          column(
+            width = 4,
+            div(
+              title = "Source: NPD. 2021 academic year",
+              uiOutput("dest.ks5over"),
+            )
+          ),
+          column(
+            width = 8,
+            plotlyOutput("KS5LineChart", height = 81)
+          )
+        ),
+        fluidRow(
+          class = "rightAlignLinks",
+          actionLink("link_to_tabpanel_destinations2", "Find out more about destinations")
+        ),
+        # 6th row - link to app data
         h3("Qualification level: NVQ3 or above"),
         fluidRow(
           column(
