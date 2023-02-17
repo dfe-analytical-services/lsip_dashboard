@@ -2407,10 +2407,20 @@ server <- function(input, output, session) {
       )
   })
 
-  ## 2.6 FE interventions table----
-  output$interventionTable <- DT::renderDataTable({
+  # ## 2.6 FE interventions table----
+  # output$interventionTable <- DT::renderDataTable({
+  #   DT::datatable(
+  #     I_InterventionTable,
+  #     escape = FALSE,
+  #     options = list(dom = "t"),
+  #     rownames = FALSE
+  #   )
+  # })
+  
+  ## 2.6 FE tools table----
+  output$toolsTable <- DT::renderDataTable({
     DT::datatable(
-      I_InterventionTable,
+      I_ToolsTable,
       escape = FALSE,
       options = list(dom = "t"),
       rownames = FALSE
@@ -2426,6 +2436,8 @@ server <- function(input, output, session) {
       rownames = FALSE
     )
   })
+  
+  
 
   # 3.Stop app -----
   session$onSessionEnded(function() {

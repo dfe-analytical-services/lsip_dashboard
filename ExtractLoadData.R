@@ -118,7 +118,9 @@ I_InterventionTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.
 
 ## Load Fe sources table ----
 folder <- "18_FeSources"
-sheetNum <- 1
+sheetNum <- "Tools"
+I_ToolsTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+sheetNum <- "Sources"
 I_SourcesTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 ### Skill by age gender ------------

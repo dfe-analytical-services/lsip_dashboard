@@ -869,9 +869,21 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           12,
           h1("FE data sources"),
           p(
-            "In the below table you can find a list of other data sources which cover Further Education and local skills."
+            "Other data sources which cover Further Education and local skills."
           ),
           DT::dataTableOutput("sourcesTable"),
+          br()
+        )
+      ),
+      
+      fluidRow(
+        column(
+          12,
+          h1("FE data tools"),
+          p(
+            "Publicly available online tools relevant to local skills."
+          ),
+          DT::dataTableOutput("toolsTable"),
           br()
         )
       ),

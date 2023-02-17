@@ -842,6 +842,8 @@ write.csv(I_InterventionTable, file = "Data\\AppData\\I_InterventionTable.csv", 
 # Tidy up sources table
 names(I_SourcesTable) <- gsub(".", " ", names(I_SourcesTable), fixed = TRUE)
 write.csv(I_SourcesTable, file = "Data\\AppData\\I_SourcesTable.csv", row.names = FALSE)
+names(I_ToolsTable) <- gsub(".", " ", names(I_ToolsTable), fixed = TRUE)
+write.csv(I_ToolsTable, file = "Data\\AppData\\I_ToolsTable.csv", row.names = FALSE)
 
 #### Qualification level by age and gender ####
 format.qual.APS <- function(x) {
