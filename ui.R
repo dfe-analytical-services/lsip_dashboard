@@ -307,64 +307,77 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     well = FALSE,
     selected = "Local skills",
 
-    ## 2.1 Homepage ----
+    ## 2.1 User guide ----
 
     tabPanel(
-      "Homepage",
+      "User guide",
       ### 2.1.1 Intro ----
       fluidRow(column(
         12,
         h1("Local Skills Dashboard"),
         p(
-          "This dashboard brings together published statistics on local employment and skills in England, to support local skills planning and delivery."
-        ),
+          "The Local Skills dashboard is an R shiny dashboard displaying published local data from a variety of sources in an easy to navigate format. To support local skills planning, the dashboard covers topics such as employment, qualifications, and education outcomes across England."
+          ),
         p(
-          "It includes a subset of employment and skills statistics that can be viewed for three geographic areas: Local Enterprise Partnership (LEP), Local Skills Improvement Plan (LSIP) and Mayoral Combined Authority (MCA) areas. The underlying data can be downloaded using the links on each page or directly from the downloads page and contains breakdowns by Local Authority (LA) and region."
-        ),
+          "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, local enterprise partnership (LEP), Mayoral Combined Authority (MCA), regional and national."
+          ),
+        # p(
+        #   "This dashboard brings together published statistics on local employment and skills in England, to support local skills planning and delivery."
+        # ),
+        # p(
+        #   "It includes a subset of employment and skills statistics that can be viewed for three geographic areas: Local Enterprise Partnership (LEP), Local Skills Improvement Plan (LSIP) and Mayoral Combined Authority (MCA) areas. The underlying data can be downloaded using the links on each page or directly from the downloads page and contains breakdowns by Local Authority (LA) and region."
+        # ),
+        # p(
+        #   "The dashboard currently uses data published by the Office for National Statistics (ONS) and the Department for Education (DfE). The sources currently included in the dashboard will be added to alongside additional functionality in response to user feedback and new sources being published."
+        # ),
         p(
-          "The dashboard currently uses data published by the Office for National Statistics (ONS) and the Department for Education (DfE). The sources currently included in the dashboard will be added to alongside additional functionality in response to user feedback and new sources being published."
-        ),
-        p(
-          "To access the additional dashboards developed to help users further understand the labour market outcomes of training use the links below, or from the ",
+          "This dashboard is produced by the ", 
+          # "To access the additional dashboards developed to help users further understand the labour market outcomes of training use the links below, or from the ",
           a(
             href = "https://www.gov.uk/government/groups/unit-for-future-skills",
             "Unit for Future Skills",
             .noWS = c("after")
           ),
-          " webpage."
-        ),
-        tags$ul(
-          tags$li(
-            "Graduate outcomes (",
-            a(
-              href = "https://explore-education-statistics.service.gov.uk/find-statistics/graduate-outcomes-leo",
-              "official statistics",
-              .noWS = c("after", "before")
-            ),
-            ")(",
-            a(
-              href = "https://department-for-education.shinyapps.io/leo-graduate-industry-dashboard",
-              "dashboard",
-              .noWS = c("after", "before")
-            ),
-            ")"
+          ", an analytical and research unit within the Department for Education. For more information on the Unit's aims and to access additional dashboards and data to help users further understand the labour market outcomes of training visit our",
+          a(
+            href = "https://www.gov.uk/government/groups/unit-for-future-skills",
+            "webpage.",
+            .noWS = c("after")
           ),
-          tags$li(
-            "Outcome based success measures (",
-            a(
-              href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-outcome-based-success-measures",
-              "official statistics",
-              .noWS = c("after", "before")
-            ),
-            ")(",
-            a(
-              href = "https://app.powerbi.com/view?r=eyJrIjoiOGYxYmU5ODktN2U1NC00ZjU4LWIwMTgtZDAzMDljMzVlNTE0IiwidCI6ImZhZDI3N2M5LWM2MGEtNGRhMS1iNWYzLWIzYjhiMzRhODJmOSIsImMiOjh9&pageName=ReportSection836f307d5071a434f3a2",
-              "dashboard",
-              .noWS = c("after", "before")
-            ),
-            ")"
-          )
+          # " webpage."
         )
+        # tags$ul(
+        #   tags$li(
+        #     "Graduate outcomes (",
+        #     a(
+        #       href = "https://explore-education-statistics.service.gov.uk/find-statistics/graduate-outcomes-leo",
+        #       "official statistics",
+        #       .noWS = c("after", "before")
+        #     ),
+        #     ")(",
+        #     a(
+        #       href = "https://department-for-education.shinyapps.io/leo-graduate-industry-dashboard",
+        #       "dashboard",
+        #       .noWS = c("after", "before")
+        #     ),
+        #     ")"
+        #   ),
+        #   tags$li(
+        #     "Outcome based success measures (",
+        #     a(
+        #       href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-outcome-based-success-measures",
+        #       "official statistics",
+        #       .noWS = c("after", "before")
+        #     ),
+        #     ")(",
+        #     a(
+        #       href = "https://app.powerbi.com/view?r=eyJrIjoiOGYxYmU5ODktN2U1NC00ZjU4LWIwMTgtZDAzMDljMzVlNTE0IiwidCI6ImZhZDI3N2M5LWM2MGEtNGRhMS1iNWYzLWIzYjhiMzRhODJmOSIsImMiOjh9&pageName=ReportSection836f307d5071a434f3a2",
+        #       "dashboard",
+        #       .noWS = c("after", "before")
+        #     ),
+        #     ")"
+        #   )
+        # )
       )),
       # end intro text row
 
@@ -376,14 +389,25 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-heading",
             style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-            h2("User Guide")
+            h2("How to use this dashboard")
           ),
           div(
             class = "panel-body",
-            h2("Dashboard pages"),
-            p(
-              "The tabs along the top of Local Skills page focus on different parts of the jobs and skills market. Each page includes options to download all of the indicators shown, either just for the selected geographic area or for all available geographies."
+            p("Use the navigation bar on the left to select the tab you want to view."),
+            h2("Dashboard structure"),
+            tags$ul(
+              tags$li(actionLink("link_to_tabpanel_overview", "Overview")," - this tab provides a time series summary of employment, qualifications, and further education outcomes for the selected geographic area. Metrics are divided into two columns: Labour market and Skills. Labour market includes employment, online job adverts (experimental), and micro business count (0-9 employees). Skills covers education and training ahcievements, apprenticehsip achievements, highest qualification level, and Key Stage 5 positive destinations."),
+              tags$li(actionLink("link_to_tabpanel_localskills", "Local skills")," - the Local Skills tab provides additional metrics and breakdowns for the selected geographic area."),
+              tags$li(actionLink("link_to_tabpanel_data", "Data information and download"),"- includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
+              tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of local labour market and education system."),
+              tags$li(actionLink("link_to_tabpanel_accessibility", "Accessibility"), "- provides the Local Skills dashboard accessibility statement, compliance requirmeents, limitations and opportunity to feedback on accessibility of the dashboard."),
+              tags$li(actionLink("link_to_tab_panel_supportandfeedback","Support and feedback"), " - provides links to the Unit for Future Skills and Department for Education Statistics Development inboxes for feedback and if you hve any questions about the dashboard or the data it contains. There is also a link to the GitHub repository if you wish to view the dashboard source code.")
             ),
+            h2("Local skills metrics"),
+            # h2("Dashboard pages"),
+            # p(
+            #   "The tabs along the top of Local Skills page focus on different parts of the jobs and skills market. Each page includes options to download all of the indicators shown, either just for the selected geographic area or for all available geographies."
+            # ),
             p(
               "Where published figures are not available, area totals for LEP, LSIP or MCA are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
             ),
@@ -396,58 +420,74 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               ),
               "."
             ),
-            h3(actionLink("link_to_tabpanel_overview", "Overview")),
+            # h3(actionLink("link_to_tabpanel_overview", "Overview")),
+            # p(
+            #   "This tab provides a time series summary of employment, qualifications, and further education outcomes for the selected geographic area. Metrics are divided into two columns: Labour market and Skills. Labour market includes employment, online job adverts (experimental), and micro business count (0-9 employees). Skills covers education and training ahcievements, apprenticehsip achievements, highest qualification level, and Key Stage 5 positive destinations."
+            # ),
+            # p(
+            #   "This tab provides a summary of labour market and skills information for the selected geographic area. It includes a time series of data on employment, online job adverts, and further education and skills achievements."
+            # ),
+            h3(actionLink(
+              "link_to_tabpanel_localskills","Local skills"
+            )),
             p(
-              "This tab provides a summary of labour market and skills information for the selected geographic area. It includes a time series of data on employment, online job adverts, and further education and skills achievements."
+              "The Local skills tab provides additional metrics and breakdowns for the selected geographic area. Using the various filters you can select the metric of interest, primary area from the England map, and multiple comparison areas alongside the default England comparator. The chart in the bottom left provides additional breakdowns specific to the metric, for example:"
             ),
+            tags$ul(
+              tags$li("Occupation and industry for employment volumes"),
+              tags$li("Size and industry for business count"),
+              tags$li("Learner age, level, provision and sector subject area for further education achievement rates")
+            ),
+            p(""
+              ),
             h3(actionLink(
               "link_to_tabpanel_employment", "Employment"
             )),
             p(
-              "This tab provides information on employment for the selected geographic area including data on employment rates over time, the share of employment by occupation, and the share of employment by industry. There is an option to compare against another area in England at the same geographic level."
+              "This group of metrics provide information on employment, self-employment and inactivity for the selected geographic area including data on employment rates over time, the share of employment by occupation, and the share of employment by industry"
             ),
             p(
-              "SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues."
+              "SOC2020 data for occupations is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues."
             ),
             h3(
-              actionLink("link_to_tabpanel_vacancies", "Online job adverts")
+              actionLink("link_to_tabpanel_vacancies", "Jobs")
             ),
             p(
-              "This tab provides experimental online job advert data, split by profession, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "
+              "This is an experimental metric of online job advert data, split by profession, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "
             ),
             h3(actionLink(
-              "link_to_tabpanel_enterprise", "Enterprises"
+              "link_to_tabpanel_enterprise", "Businesses"
             )),
             p(
-              "This tab provides data on the count of new and no longer trading enterprises and count of enterprises by employment size and industry for the selected geographic area, and the option to compare against another area in England at the same geographic level."
+              "This group of metrics provide data on the count of new and no longer trading enterprises and count of enterprises by employment size and industry for the selected geographic area, and the option to compare against another area in England at the same geographic level."
             ),
             h3(actionLink("link_to_tabpanel_FE", "Skills")),
             p(
-              "This tab provides information on training activity for the selected geographic area including data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period. There is an option to compare against another area in England at the same geographic level."
+              "This group of metrics provide information on training activity for the selected geographic area including data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period."
             ),
             p(
               "LEP, LSIP and MCA area totals are calculated by aggregating the relevant local authorities."
             ),
-            h3(
-              actionLink("link_to_tabpanel_qualification", "Qualification level")
-            ),
-            p(
-              "This page includes information on the highest qualification level for working age individuals (16-64) for the selected geographic area, and the option to compare against another area.
-                It includes data on qualification level, with breakdowns by age band and gender."
-            ),
+            # h3(
+            #   actionLink("link_to_tabpanel_qualification", "Destinations")
+            # ),
+            # p(
+            #   "This page includes information on the highest qualification level for working age individuals (16-64) for the selected geographic area, and the option to compare against another area.
+            #     It includes data on qualification level, with breakdowns by age band and gender."
+            # ),
             h3(actionLink(
               "link_to_tabpanel_destinations", "Destinations"
             )),
             p(
-              "This page includes information on the destinations of young people after KS4 and KS5 education for the selected geographic area, and the option to compare against another area.
+              "These two metrics provide information on the destinations of young people after Key Stage 4 and Key Stage 5 education for the selected geographic area, and the option to compare against another area.
                 It includes data on destinations, with breakdowns by level and key stage group."
-            ),
-            h2("Data download page"),
-            p(
-              "The",
-              actionLink("link_to_tabpanel_data", "data download page"),
-              " includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."
-            ),
+            )
+            # h2("Data download page"),
+            # p(
+            #   "The",
+            #   actionLink("link_to_tabpanel_data", "data download page"),
+            #   " includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."
+            # ),
           )
         )
       )),
@@ -511,10 +551,9 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             ),
             h2("Future development"),
             p(
-              "The dashboard will be kept up to date with the latest data shortly after it is released – check the data downloads page for dates when new data is published."
-            ),
-            p(
-              "We will be regularly adding more data and visualisations to the dashboard based on the user feedback we have received.  If there are further data or dashboard features that you would find useful please contact us at ",
+              "The dashboard will be kept up to date with the latest data shortly after it is released – check the data downloads page for dates when new data is published. If there are further data or dashboard features that you would find useful please contact us at ",
+            # p(
+            #   "We will be regularly adding more data and visualisations to the dashboard based on the user feedback we have received.  If there are further data or dashboard features that you would find useful please contact us at ",
               a(
                 href = "mailto:ufs.contact@education.gov.uk",
                 "ufs.contact@education.gov.uk",
@@ -621,7 +660,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 
     ## 2.4 Data info and download hub ----
     tabPanel(
-      "Data info and download",
+      "Data information and download",
       fluidRow(column(
         12,
         h1("Data download"),
@@ -820,7 +859,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
 
     ## 2.6 FE interventions and sources ----
     tabPanel(
-      "FE sources and interventions",
+      "Further resources",
       fluidRow(
         column(
           12,
