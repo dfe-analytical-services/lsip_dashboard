@@ -12,8 +12,8 @@ D_EmpOcc_APS1721 <- read.csv(file = "./Data/AppData/D_EmpOcc_APS1721.csv", check
 # data for download
 D_EmpRate_APS1822 <- read.csv(file = "./Data/AppData/D_EmpRate_APS1822.csv", check.names = FALSE)
 # data for dashboard
-C_EmpRate_APS1822 <- read.csv(file = "./Data/AppData/C_EmpRate_APS1822.csv", check.names = FALSE)
-C_EmpRate_APS1822_max_min <- read.csv(file = "./Data/AppData/C_EmpRate_APS1822_max_min.csv", check.names = FALSE)
+#C_EmpRate_APS1822 <- read.csv(file = "./Data/AppData/C_EmpRate_APS1822.csv", check.names = FALSE)
+#C_EmpRate_APS1822_max_min <- read.csv(file = "./Data/AppData/C_EmpRate_APS1822_max_min.csv", check.names = FALSE)
 
 ## FE achievements ----
 # data for download
@@ -72,7 +72,7 @@ C_breakdown <- read.csv(file = "./Data/AppData/C_breakdown.csv", check.names = F
 C_datahub <- read.csv(file = "./Data/AppData/C_datahub.csv", check.names = FALSE)
 D_OnsProfTime <- read.csv(file = "./Data/AppData/D_OnsProfTime.csv", check.names = FALSE)
 D_OnsProfDetail <- read.csv(file = "./Data/AppData/D_OnsProfDetail.csv", check.names = FALSE)
-C_OnsProfTime <- read.csv(file = "./Data/AppData/C_OnsProfTime.csv", check.names = FALSE)
+#C_OnsProfTime <- read.csv(file = "./Data/AppData/C_OnsProfTime.csv", check.names = FALSE)
 
 ## Intervention table ----
 I_InterventionTable <- read.csv(file = "./Data/AppData/I_InterventionTable.csv", check.names = FALSE)
