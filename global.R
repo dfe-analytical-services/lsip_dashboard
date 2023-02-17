@@ -56,7 +56,7 @@ metricChoices <- list(
     "Business birth rate" = "birthRate",
     "Business death rate" = "deathRate"
   ),
-  "FE and skills" = list(
+  "Skills" = list(
     "FE achievement rate" = "achievements_rate_per_100000_population",
     "FE participation rate" = "participation_rate_per_100000_population",
     # "FE start rate" = "starts_rate_per_100000_population",
