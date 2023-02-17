@@ -1844,8 +1844,12 @@ C_Geog <- neatGeog %>%
     C_destinations %>% filter(time_period == "202021", subgroups == "Total", metric == "sustainedPositiveDestinationKS5Rate") %>% select(area, geographic_level, sustainedPositiveDestinationKS5Rate = value),
     by = c("areaName" = "area", "geog" = "geographic_level")
   ) %>%
-  rename_all(~ str_replace_all(., "\\s+", ""))
-
+  rename_all(~ str_replace_all(., "\\s+", ""))%>%
+  mutate(geogConcat = paste0(areaName, " ", geog)) %>%
+  mutate(geogConcat = case_when(
+    geogConcat == "England COUNTRY" ~ "England",
+    TRUE ~ geogConcat
+  ))
 
 save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 
