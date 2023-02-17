@@ -28,6 +28,7 @@ shhh(library(leaflet))
 shhh(library(lubridate))
 shhh(library(sf))
 shhh(library(capture))
+shhh(library(shinyalert))
 
 # renv::snapshot()
 

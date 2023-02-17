@@ -9,24 +9,25 @@ panel_overview <- function() {
         div(
           class = "filterRow",
           fluidRow(
+            # column(
+            #   width = 4,
+            #   selectInput("GeoType", "Choose geography",
+            #     choices = c(
+            #       "Local Enterprise Partnership (LEP)" = "LEP",
+            #       "Local Skills Improvement Plan (LSIP)" = "LSIP",
+            #       "Mayoral Combined Authority (MCA)" = "MCA"
+            #     ),
+            #     selected = "LEP"
+            #   )
+            # ),
             column(
-              width = 4,
-              selectInput("GeoType", "Choose geography",
-                choices = c(
-                  "Local Enterprise Partnership (LEP)" = "LEP",
-                  "Local Skills Improvement Plan (LSIP)" = "LSIP",
-                  "Mayoral Combined Authority (MCA)" = "MCA"
-                ),
-                selected = "LEP"
-              )
+              width = 5,
+              h3("Choose an area of interest"),
+              uiOutput("geoChoiceOver")
             ),
+            column(5),
             column(
-              width = 4,
-              uiOutput("lep1_geo"),
-            ),
-            column(1),
-            column(
-              3,
+              2,
               uiOutput("screenshotOverview")
             )
           )
@@ -50,7 +51,7 @@ panel_overview <- function() {
             width = 4,
             div( # need a div to add hover over title
               title = "Source: APS. Oct-Sep 2022",
-              uiOutput("locland.emplcnt0"),
+              uiOutput("overviewEmpCntKPI"),
             )
           ),
           column(
@@ -64,7 +65,7 @@ panel_overview <- function() {
             width = 4,
             div(
               title = "Source: APS. Oct-Sep 2022",
-              uiOutput("locland.emplrate0"),
+              uiOutput("overviewEmpRateKPI"),
             )
           ),
           column(
@@ -84,12 +85,12 @@ panel_overview <- function() {
             width = 4,
             div(
               title = "Source: ONS (Textkernel). Oct 2022. Online job adverts.",
-              uiOutput("jobad.units"),
+              uiOutput("overviewJobKPI"),
             )
           ),
           column(
             width = 8,
-            plotlyOutput("VacLineChart", height = 81)
+            plotlyOutput("jobLineChart", height = 81)
           )
         ),
         fluidRow(
