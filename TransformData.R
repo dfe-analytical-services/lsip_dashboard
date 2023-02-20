@@ -2150,6 +2150,25 @@ C_datahub <- bind_rows(
   ))
 write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
 
+#Find top ten for each breakdown (these are chosen in the filter)
+detailLookup <- D_OnsProfDetail %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)
+topTenEachBreakdown <- bind_rows(
+  C_breakdown %>%
+    filter(geographic_level!="LADU")%>%
+    group_by(metric, breakdown, geogConcat) %>%
+    arrange(desc(value)) %>%
+    slice(1:10) %>%
+    mutate(`Summary Profession Category` = "All"),
+  C_breakdown %>%
+    filter(breakdown == "Detailed Profession Category",geographic_level!="LADU") %>%
+    left_join(detailLookup, by = c("subgroups" = "Detailed Profession Category")) %>%
+    group_by(metric, breakdown, area, geographic_level, `Summary Profession Category`) %>%
+    arrange(desc(value)) %>%
+    slice(1:10)
+)%>%
+  select(metric, breakdown, geogConcat,subgroups,`Summary Profession Category`)
+write.csv(topTenEachBreakdown, file = "Data\\AppData\\topTenEachBreakdown.csv", row.names = FALSE)
+
 # Tidy up data text table
 names(I_DataText) <- gsub(".", " ", names(I_DataText), fixed = TRUE)
 write.csv(I_DataText, file = "Data\\AppData\\I_DataText.csv", row.names = FALSE)
