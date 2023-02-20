@@ -1640,7 +1640,7 @@ server <- function(input, output, session) {
     LaHighLow <- C_Geog %>%
       filter(
         geog == "LADU",
-        eval(parse(text = input$splashGeoType)) == sub(" LEP| LSIP| MCA", "", input$geoChoice)
+        eval(parse(text = gsub(" ", "",str_sub(input$geoChoice,-4,-1)))) == sub(" LEP| LSIP| MCA", "", input$geoChoice)
       ) %>%
       mutate(ranking = rank(desc(eval(
         parse(text = input$splashMetric)
