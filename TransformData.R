@@ -1767,7 +1767,11 @@ neatLA <- I_mapLA %>%
   # add on lsip, lep and mca groupings
   left_join(I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by = c("areaCode" = "LAD21CD")) %>%
   left_join(C_mcalookup %>% select(LAD21CD, MCA = CAUTH21NM), by = c("areaCode" = "LAD21CD")) %>%
-  filter(is.na(LSIP) == FALSE) # remove non England
+  filter(is.na(LSIP) == FALSE) %>% # remove non England
+  mutate(LSIP = case_when(
+    LSIP == "Buckinghamshire " ~ "Buckinghamshire",
+    TRUE ~ LSIP
+  ))
 
 neatMCA <- I_mapMCA %>%
   mutate(geog = "MCA") %>% # add geog type
@@ -1795,8 +1799,11 @@ LSIPmap <- bind_cols(LSIPgeojson, C_LEP2020 %>% filter(geographic_level == "LSIP
 # neaten
 neatLSIP <- LSIPmap %>%
   rename(areaName = Area, geog = geographic_level) %>%
-  mutate(areaCode = paste0("LSIP", row_number()))
-
+  mutate(areaCode = paste0("LSIP", row_number())) %>%
+  mutate(
+    LONG = map_dbl(geometry, ~ st_centroid(.x)[[1]]),
+    LAT = map_dbl(geometry, ~ st_centroid(.x)[[2]])
+  )
 
 neatGeog <- bind_rows(neatMCA, neatLEP, addEngland, neatLA, neatLSIP)
 # add on data
@@ -1846,7 +1853,7 @@ C_Geog <- neatGeog %>%
     C_destinations %>% filter(time_period == "202021", subgroups == "Total", metric == "sustainedPositiveDestinationKS5Rate") %>% select(area, geographic_level, sustainedPositiveDestinationKS5Rate = value),
     by = c("areaName" = "area", "geog" = "geographic_level")
   ) %>%
-  rename_all(~ str_replace_all(., "\\s+", ""))%>%
+  rename_all(~ str_replace_all(., "\\s+", "")) %>%
   mutate(geogConcat = paste0(areaName, " ", geog)) %>%
   mutate(geogConcat = case_when(
     geogConcat == "England COUNTRY" ~ "England",
@@ -2133,6 +2140,7 @@ C_datahub <- bind_rows(
     metric == "level3AndAboveRate" ~ "Qualified at Level 3 or above",
     metric == "sustainedPositiveDestinationKS4Rate" ~ "KS4 completers sustained positive detination rate",
     metric == "sustainedPositiveDestinationKS5Rate" ~ "KS4 completers sustained positive detination rate",
+    metric == "vacancies" ~ "Online job adverts",
     TRUE ~ metric
   )) %>%
   mutate(breakdown = case_when(
