@@ -663,99 +663,9 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       br()
     ),
 
-    ## 2.4 Data info and download hub ----
+    ## 2.5 Data infomation ----
     tabPanel(
-      "Data information and download",
-      fluidRow(column(
-        12,
-        h1("Data download"),
-        p(
-          "Use the filters to create a bespoke dataset. * fields are mandatory. Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want."
-        )
-      )),
-      fluidRow(column(
-        12,
-        p("If you have a query code, enter it here:"),
-        textInput("hubCode", label = NULL),
-      )),
-      ### 2.4.1 Datahub filters ----
-      fluidRow(column(12, h2("Geography"))),
-      fluidRow(
-        column(
-          4,
-          selectizeInput(
-            "hubGeog",
-            choices = c("LEP", "LSIP", "MCA", "LA"),
-            multiple = TRUE,
-            label = NULL,
-            options = list(placeholder = "Choose geographies*")
-          )
-        ),
-        column(
-          4,
-          uiOutput("hubAreaInput")
-        )
-      ),
-      fluidRow(
-        column(
-          4,
-          selectizeInput(
-            "hubLA",
-            choices = c("Yes", "No"),
-            label = NULL,
-            multiple = TRUE,
-            options = list(maxItems = 1, placeholder = "Include LA level data?")
-          )
-        ),
-        column(
-          4,
-          selectizeInput(
-            "hubComparators",
-            label = NULL,
-            choices = c("National", "Regional (to come)"),
-            multiple = TRUE,
-            options = list(placeholder = "Include national/regional data?")
-          )
-        )
-      ),
-      fluidRow(column(12, h2("Data"))),
-      fluidRow(
-        column(
-          4,
-          uiOutput("hubMetricInput")
-        ),
-        column(
-          4,
-          uiOutput("hubBreakdownInput")
-        ),
-        column(
-          4,
-          uiOutput("hubYearInput")
-        )
-      ),
-      fluidRow(column(12, h2("Output"))),
-      fluidRow(column(
-        12,
-        p("If you want to reuse this query, use this code:"),
-        p(uiOutput("uniqueCode")),
-      )),
-      fluidRow(column(
-        3,
-        downloadButton(
-          outputId = "hubDownload",
-          label = "Download this data",
-          icon = shiny::icon("download"),
-          class = "downloadButton"
-        )
-      )),
-      br(),
-      ### 2.4.2 Datahub table ----
-      fluidRow(column(
-        12,
-        dataTableOutput("hubTable")
-      )),
-      br(),
-      ## 2.5 Data infomation ----
+      "Data sources",
       ### 2.5.1 Data sources table ----
       fluidRow(column(
         12,
@@ -861,6 +771,99 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
         )
       )
     ),
+    ## 2.4 Download hub ----
+    tabPanel(
+      "Data download (experimental)",
+      fluidRow(column(
+        12,
+        h1("Data download"),
+        p(
+          "Use the filters to create a bespoke dataset. * fields are mandatory. Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want."
+        )
+      )),
+      fluidRow(column(
+        12,
+        p("If you have a query code, enter it here:"),
+        textInput("hubCode", label = NULL),
+      )),
+      ### 2.4.1 Datahub filters ----
+      fluidRow(column(12, h2("Geography"))),
+      fluidRow(
+        column(
+          4,
+          selectizeInput(
+            "hubGeog",
+            choices = c("LEP", "LSIP", "MCA", "LA"),
+            multiple = TRUE,
+            label = NULL,
+            options = list(placeholder = "Choose geographies*")
+          )
+        ),
+        column(
+          4,
+          uiOutput("hubAreaInput")
+        )
+      ),
+      fluidRow(
+        column(
+          4,
+          selectizeInput(
+            "hubLA",
+            choices = c("Yes", "No"),
+            label = NULL,
+            multiple = TRUE,
+            options = list(maxItems = 1, placeholder = "Include LA level data?")
+          )
+        ),
+        column(
+          4,
+          selectizeInput(
+            "hubComparators",
+            label = NULL,
+            choices = c("National", "Regional (to come)"),
+            multiple = TRUE,
+            options = list(placeholder = "Include national/regional data?")
+          )
+        )
+      ),
+      fluidRow(column(12, h2("Data"))),
+      fluidRow(
+        column(
+          4,
+          uiOutput("hubMetricInput")
+        ),
+        column(
+          4,
+          uiOutput("hubBreakdownInput")
+        ),
+        column(
+          4,
+          uiOutput("hubYearInput")
+        )
+      ),
+      fluidRow(column(12, h2("Output"))),
+      fluidRow(column(
+        12,
+        p("If you want to reuse this query, use this code:"),
+        p(uiOutput("uniqueCode")),
+      )),
+      fluidRow(column(
+        3,
+        downloadButton(
+          outputId = "hubDownload",
+          label = "Download this data",
+          icon = shiny::icon("download"),
+          class = "downloadButton"
+        )
+      )),
+      br(),
+      ### 2.4.2 Datahub table ----
+      fluidRow(column(
+        12,
+        dataTableOutput("hubTable")
+      )),
+      br()
+      ),
 
     ## 2.6 FE interventions and sources ----
     tabPanel(
