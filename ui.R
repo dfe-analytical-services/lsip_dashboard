@@ -619,7 +619,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             choices = c("LEP", "LSIP", "MCA")
           ),
           p(uiOutput("commentMap")),
-          leafletOutput("map"),
+          withSpinner(leafletOutput("map")),
           p(uiOutput("mapFoot"))
         ),
         column(
@@ -627,7 +627,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           h3(uiOutput("titleTime")),
           p(uiOutput("commentTime")),
           uiOutput("geoComp"),
-          plotlyOutput("Splash_time")
+          withSpinner(plotlyOutput("Splash_time"))
         )
       ),
       br(),
@@ -640,14 +640,14 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           uiOutput("professionFilter"),
           uiOutput("subgroupFilter"),
           p(uiOutput("commentBreakdown")),
-          plotlyOutput("Splash_pc"),
+          withSpinner(plotlyOutput("Splash_pc")),
           p(uiOutput("breakdownFoot"))
         ),
         column(
           6,
           h3(uiOutput("titleLaMap")),
           p(uiOutput("commentLA")),
-          leafletOutput("mapLA"),
+          withSpinner(leafletOutput("mapLA")),
           p(uiOutput("mapLaFoot"))
         )
       ),
