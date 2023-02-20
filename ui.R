@@ -863,7 +863,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
         dataTableOutput("hubTable")
       )),
       br()
-      ),
+    ),
 
     ## 2.6 FE interventions and sources ----
     tabPanel(

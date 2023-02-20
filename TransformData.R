@@ -1947,7 +1947,7 @@ write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
 
 # create neat breakdown file
 # geographic_level,area,time_period,breakdown,subgroups,metric,value,
-C_breakdown <- bind_rows(
+D_breakdown <- bind_rows(
   # employment data
   C_EmpRate_APS1822 %>%
     rename(time_period = year) %>%
@@ -2108,12 +2108,11 @@ C_breakdown <- bind_rows(
     geogConcat == "England COUNTRY" ~ "England",
     TRUE ~ geogConcat
   ))
-write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
 
 # Create dataHub dataset
 C_datahub <- bind_rows(
   C_time %>% select(-chart_year) %>% mutate(breakdown = "Total", subgroups = "Total"),
-  C_breakdown %>% mutate(time_period = as.character(time_period))
+  D_breakdown %>% mutate(time_period = as.character(time_period))
 ) %>%
   # rename some of the elements so they make sense here
   mutate(metric = case_when(
@@ -2149,6 +2148,37 @@ C_datahub <- bind_rows(
     TRUE ~ breakdown
   ))
 write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
+
+# Find top ten for each breakdown (these are chosen in the filter)
+detailLookup <- D_OnsProfDetail %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)
+topTenEachBreakdown <- bind_rows(
+  D_breakdown %>%
+    filter(geographic_level != "LADU") %>%
+    group_by(metric, breakdown, geogConcat) %>%
+    arrange(desc(value)) %>%
+    slice(1:10) %>%
+    mutate(`Summary Profession Category` = "All"),
+  D_breakdown %>%
+    filter(breakdown == "Detailed Profession Category", geographic_level != "LADU") %>%
+    left_join(detailLookup, by = c("subgroups" = "Detailed Profession Category")) %>%
+    group_by(metric, breakdown, area, geographic_level, `Summary Profession Category`) %>%
+    arrange(desc(value)) %>%
+    slice(1:10)
+) %>%
+  select(metric, breakdown, geogConcat, subgroups, `Summary Profession Category`)
+write.csv(topTenEachBreakdown, file = "Data\\AppData\\topTenEachBreakdown.csv", row.names = FALSE)
+
+# Limit to just those with breakdowns, but keep category
+C_breakdown <- bind_rows(
+  D_breakdown %>%
+    filter(breakdown != "No breakdowns available"),
+  D_breakdown %>%
+    filter(breakdown == "No breakdowns available") %>%
+    distinct(metric, breakdown, subgroups)
+) %>%
+  select(-geographic_level, -area, -time_period, -Total)
+
+write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
 
 # Tidy up data text table
 names(I_DataText) <- gsub(".", " ", names(I_DataText), fixed = TRUE)
