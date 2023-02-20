@@ -43,27 +43,27 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_overview, {
     updateTabsetPanel(session, "navbar", "Overview")
   })
-  
+
   # Create link to local skills tab
   observeEvent(input$link_to_tabpanel_localskills, {
     updateTabsetPanel(session, "navbar", "Local skills")
   })
-  
+
   # Create link to further resources tab
   observeEvent(input$link_to_tabpanel_furtherresources, {
     updateTabsetPanel(session, "navbar", "Further resources")
   })
-  
+
   # Create link to accessibility tab
   observeEvent(input$link_to_tabpanel_accessibility, {
     updateTabsetPanel(session, "navbar", "Accessibility")
   })
-  
+
   # Create link to support and feedback tab
   observeEvent(input$link_to_tabpanel_supportandfeedback, {
     updateTabsetPanel(session, "navbar", "Support and feedback")
   })
-  
+
   # Create link to employment data
   observeEvent(input$link_to_tabpanel_employment, {
     updateTabsetPanel(session, "navbar", "Local skills")
@@ -268,7 +268,7 @@ server <- function(input, output, session) {
   })
   observeEvent(input$geoChoice, {
     updateSelectInput(session, "geoChoiceOver",
-                         selected = input$geoChoice
+      selected = input$geoChoice
     )
   })
   # output$lep1_geo <- renderUI({
@@ -350,55 +350,55 @@ server <- function(input, output, session) {
     list(
       "1a.Emp by occupation" = filter(
         D_EmpOcc_APS1721,
-        geogConcat==input$geoChoiceOver
+        geogConcat == input$geoChoiceOver
       ),
       "1b.Emp rate" = filter(
         D_EmpRate_APS1822,
-        geogConcat==input$geoChoiceOver
+        geogConcat == input$geoChoiceOver
       ),
       "2a.Adverts over time" = filter(
         D_OnsProfTime,
-        geogConcat==input$geoChoiceOver
+        geogConcat == input$geoChoiceOver
       ),
       "2b.Adverts by detailed profession" = filter(
         D_OnsProfDetail,
-        geogConcat==input$geoChoiceOver
+        geogConcat == input$geoChoiceOver
       ),
       "3a.FE achievements SSA" = filter(
         D_Achieve_ILR21,
-        geogConcat==input$geoChoiceOver
+        geogConcat == input$geoChoiceOver
       ),
       "3b.FE achievements" = filter(
         D_Achieve_ILR1621,
-        geogConcat==input$geoChoiceOver
+        geogConcat == input$geoChoiceOver
       ),
       "4a.Ent by emp size band" = filter(
         D_empent_UBC1822,
-        geogConcat==input$geoChoiceOver
+        geogConcat == input$geoChoiceOver
       ),
       "5a.Key Stage 5 destinations" = filter(
         D_KS5destin_1721,
-        geogConcat==input$geoChoiceOver
+        geogConcat == input$geoChoiceOver
       ),
       "6a.Qual by age and gender" = filter(
         D_qual_APS1721,
-        geogConcat==input$geoChoiceOver
+        geogConcat == input$geoChoiceOver
       ),
       "7a.Ent by emp size & industry" = filter(
         D_empentind_UBC1822,
-        geogConcat==input$geoChoiceOver
+        geogConcat == input$geoChoiceOver
       ),
       "8a.Enterprise demography" = filter(
         D_enterprise_demo1621,
-        geogConcat==input$geoChoiceOver
+        geogConcat == input$geoChoiceOver
       ),
       "9a.Key Stage 4 destinations" = filter(
         D_KS4destin_1521,
-        geogConcat==input$geoChoiceOver
+        geogConcat == input$geoChoiceOver
       ),
       "10a.Key Stage 5 destinations" = filter(
         D_KS5destin_1721,
-        geogConcat==input$geoChoiceOver
+        geogConcat == input$geoChoiceOver
       )
     )
   })
@@ -416,19 +416,19 @@ server <- function(input, output, session) {
   #   C_time%>%
   #   filter(area == input$lep1, geographic_level == input$GeoType)
   # })
-  
+
   currentGeogData <- eventReactive(input$geoChoiceOver, {
     C_time %>%
-      filter(geogConcat==input$geoChoiceOver)
+      filter(geogConcat == input$geoChoiceOver)
   })
   englandData <- C_time %>%
-    filter(geogConcat=="England")
+    filter(geogConcat == "England")
 
   #### 2.2.3.1 Employment count ----
   # Employment count
   output$overviewEmpCntKPI <- renderUI({
-    latest <- (currentGeogData()%>%filter(time_period==2022,metric=="Employment"))$value
-    change <- latest - (currentGeogData()%>%filter(time_period==2021,metric=="Employment"))$value
+    latest <- (currentGeogData() %>% filter(time_period == 2022, metric == "Employment"))$value
+    change <- latest - (currentGeogData() %>% filter(time_period == 2021, metric == "Employment"))$value
 
     # print with formatting
     h4(
@@ -448,10 +448,11 @@ server <- function(input, output, session) {
 
   # Emp chart
   empLineChart <- eventReactive(input$geoChoiceOver, {
-    change <- (currentGeogData()%>%filter(time_period==2022,metric=="Employment"))$value-
-    (currentGeogData()%>%filter(time_period==2021,metric=="Employment"))$value
-    line <- currentGeogData()%>%filter(metric=="Employment")%>%
-      mutate(Year=as.numeric(str_sub(time_period,-2,-1))) 
+    change <- (currentGeogData() %>% filter(time_period == 2022, metric == "Employment"))$value -
+      (currentGeogData() %>% filter(time_period == 2021, metric == "Employment"))$value
+    line <- currentGeogData() %>%
+      filter(metric == "Employment") %>%
+      mutate(Year = as.numeric(str_sub(time_period, -2, -1)))
 
     ggplot(
       line,
@@ -489,8 +490,8 @@ server <- function(input, output, session) {
         plot.background = element_rect(fill = "#f3f2f1")
       ) +
       scale_y_continuous(
-        labels = label_number_si(accuracy = 1)
-        ,breaks = c(min(line$value), max(line$value))
+        labels = label_number_si(accuracy = 1),
+        breaks = c(min(line$value), max(line$value))
       )
   })
   # set margins
@@ -519,9 +520,9 @@ server <- function(input, output, session) {
 
   #### 2.2.3.2 Employment rate ----
   output$overviewEmpRateKPI <- renderUI({
-    latest <- (currentGeogData()%>%filter(time_period==2022,metric=="empRate"))$value
-    change <- latest - (currentGeogData()%>%filter(time_period==2021,metric=="empRate"))$value
-    
+    latest <- (currentGeogData() %>% filter(time_period == 2022, metric == "empRate"))$value
+    change <- latest - (currentGeogData() %>% filter(time_period == 2021, metric == "empRate"))$value
+
     # print with formatting
     h4(
       span("Oct-Sep 2022", style = "font-size: 16px;font-weight:normal;"),
@@ -529,7 +530,7 @@ server <- function(input, output, session) {
       paste0(format(100 * latest, digit = 2), "%"),
       br(),
       span(
-        paste0(sprintf("%+.0f", 100 * change), "ppts"), 
+        paste0(sprintf("%+.0f", 100 * change), "ppts"),
         style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
         .noWS = c("before", "after") # remove whitespace
       ),
@@ -537,20 +538,23 @@ server <- function(input, output, session) {
       style = "font-size: 21px"
     )
   })
-  
+
   # Emp chart
   # find emp chart y axis min and max
-  EmpRateMin <- C_time %>%filter(metric=="empRate",geographic_level !="LADU")%>%
+  EmpRateMin <- C_time %>%
+    filter(metric == "empRate", geographic_level != "LADU") %>%
     summarise(min(value, na.rm = T), .groups = "drop")
-  EmpRateMax <- C_time %>%filter(metric=="empRate",geographic_level !="LADU")%>%
+  EmpRateMax <- C_time %>%
+    filter(metric == "empRate", geographic_level != "LADU") %>%
     summarise(max(value, na.rm = T), .groups = "drop")
-  
+
   empRateLineChart <- eventReactive(input$geoChoiceOver, {
-    change <- (currentGeogData()%>%filter(time_period==2022,metric=="empRate"))$value-
-    (currentGeogData()%>%filter(time_period==2021,metric=="empRate"))$value
-    line <- bind_rows(currentGeogData(),englandData)%>%filter(metric=="empRate")%>%
-      mutate(Year=as.numeric(str_sub(time_period,-2,-1))) 
-    
+    change <- (currentGeogData() %>% filter(time_period == 2022, metric == "empRate"))$value -
+      (currentGeogData() %>% filter(time_period == 2021, metric == "empRate"))$value
+    line <- bind_rows(currentGeogData(), englandData) %>%
+      filter(metric == "empRate") %>%
+      mutate(Year = as.numeric(str_sub(time_period, -2, -1)))
+
     ggplot(
       line,
       aes(
@@ -567,19 +571,19 @@ server <- function(input, output, session) {
         )
       )
     ) +
-      geom_line(data = line %>% filter(Year <= 21,geogConcat==input$geoChoiceOver)) +
-          geom_line(
-            data = line %>% filter(geogConcat == "England"),
-            alpha = 0.5
-          ) +
+      geom_line(data = line %>% filter(Year <= 21, geogConcat == input$geoChoiceOver)) +
+      geom_line(
+        data = line %>% filter(geogConcat == "England"),
+        alpha = 0.5
+      ) +
       geom_ribbon(
-        data = line %>% filter(Year >= 21,geogConcat==input$geoChoiceOver),
+        data = line %>% filter(Year >= 21, geogConcat == input$geoChoiceOver),
         aes(ymin = min(value), ymax = value),
         fill = ifelse(change > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = line %>% filter(Year >= 21,geogConcat==input$geoChoiceOver),
+        data = line %>% filter(Year >= 21, geogConcat == input$geoChoiceOver),
         color = ifelse(change > 0, "#00703c", "#d4351c")
       ) +
       theme_classic() +
@@ -621,9 +625,9 @@ server <- function(input, output, session) {
   #### 2.2.3.3 Job adverts ----
   # Vacancy kpi
   output$overviewJobKPI <- renderUI({
-    latest <- (currentGeogData()%>%filter(time_period=="2022-12-01",metric=="vacancies"))$value
-    change <- latest - (currentGeogData()%>%filter(time_period=="2021-12-01",metric=="vacancies"))$value
-    
+    latest <- (currentGeogData() %>% filter(time_period == "2022-12-01", metric == "vacancies"))$value
+    change <- latest - (currentGeogData() %>% filter(time_period == "2021-12-01", metric == "vacancies"))$value
+
     # print with formatting
     h4(
       span("Dec 2022", style = "font-size: 16px;font-weight:normal;"),
@@ -642,11 +646,12 @@ server <- function(input, output, session) {
 
   # Vacancy chart
   jobLineChart <- eventReactive(input$geoChoiceOver, {
-    change <- (currentGeogData()%>%filter(time_period=="2022-12-01",metric=="vacancies"))$value- 
-    (currentGeogData()%>%filter(time_period=="2021-12-01",metric=="vacancies"))$value
-    line <- currentGeogData()%>%filter(metric=="vacancies")%>%
-      mutate(Year=as.numeric(str_sub(time_period,-2,-1))) 
-    
+    change <- (currentGeogData() %>% filter(time_period == "2022-12-01", metric == "vacancies"))$value -
+      (currentGeogData() %>% filter(time_period == "2021-12-01", metric == "vacancies"))$value
+    line <- currentGeogData() %>%
+      filter(metric == "vacancies") %>%
+      mutate(Year = as.numeric(str_sub(time_period, -2, -1)))
+
     ggplot(
       line,
       aes(
@@ -683,16 +688,16 @@ server <- function(input, output, session) {
         plot.background = element_rect(fill = "#f3f2f1")
       ) +
       scale_y_continuous(
-        labels = label_number_si(accuracy = 1)
-        ,breaks = c(min(line$value), max(line$value))
-      )+
+        labels = label_number_si(accuracy = 1),
+        breaks = c(min(line$value), max(line$value))
+      ) +
       scale_x_date(
         name = "My date axis title",
         date_breaks = "1 years",
         date_labels = "%y"
       )
-  })  
-  
+  })
+
   output$jobLineChart <- renderPlotly({
     ggplotly(jobLineChart(),
       tooltip = "text",
@@ -719,8 +724,9 @@ server <- function(input, output, session) {
   # get EandT data for current area
   EtLEP <- eventReactive(input$geoChoiceOver, {
     C_Achieve_ILR1621 %>%
-      mutate(geogConcat=paste0(area," ",geographic_level))%>%
-      filter(geogConcat == input$geoChoiceOver,
+      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
         level_or_type == "Education and training: Total",
         age_group == "Total"
       )
@@ -759,18 +765,19 @@ server <- function(input, output, session) {
       style = "font-size: 21px"
     )
   })
-  
-  
+
+
 
   # e and t chart
   etLineChart <- eventReactive(input$geoChoiceOver, {
     etLine <- EtLEP()
     etCntChange <- EtLatest()$achievements - EtLast()$achievements
-    EtMinMax <- C_Achieve_ILR1621_max_min %>% 
-      mutate(geogConcat=paste0(area," ",geographic_level))%>%
-      filter(geogConcat == input$geoChoiceOver,
-      level_or_type == "Education and training: Total"
-    )
+    EtMinMax <- C_Achieve_ILR1621_max_min %>%
+      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        level_or_type == "Education and training: Total"
+      )
 
     ggplot(
       etLine,
@@ -814,7 +821,7 @@ server <- function(input, output, session) {
         breaks = c(EtMinMax$minAch, EtMinMax$maxAch)
       )
   })
-  
+
   output$etLineChart <- renderPlotly({
     ggplotly(etLineChart(),
       tooltip = "text",
@@ -831,9 +838,10 @@ server <- function(input, output, session) {
   #### 2.2.3.5 FE app achieve ----
   # get App data for current area
   AppLEP <- eventReactive(input$geoChoiceOver, {
-    C_Achieve_ILR1621 %>% 
-      mutate(geogConcat=paste0(area," ",geographic_level))%>%
-      filter(geogConcat == input$geoChoiceOver,
+    C_Achieve_ILR1621 %>%
+      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
         level_or_type == "Apprenticeships: Total",
         age_group == "Total"
       )
@@ -878,11 +886,12 @@ server <- function(input, output, session) {
     AppLine <- AppLEP()
     AppCntChange <-
       AppLatest()$achievements - AppLast()$achievements
-    AppMinMax <- C_Achieve_ILR1621_max_min %>%  
-      mutate(geogConcat=paste0(area," ",geographic_level))%>%
-      filter(geogConcat == input$geoChoiceOver,
-      level_or_type == "Apprenticeships: Total"
-    )
+    AppMinMax <- C_Achieve_ILR1621_max_min %>%
+      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        level_or_type == "Apprenticeships: Total"
+      )
 
 
     ggplot(
@@ -954,8 +963,9 @@ server <- function(input, output, session) {
   # get dest data for current area
   KS5geo <- eventReactive(input$geoChoiceOver, {
     C_KS4_KS5eduempapp %>%
-      mutate(geogConcat=paste0(area," ",geographic_level))%>%
-      filter(geogConcat == input$geoChoiceOver,
+      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
         `Cohort Group` == "Total",
         `Key Stage` == "Key Stage 5"
       )
@@ -995,13 +1005,14 @@ server <- function(input, output, session) {
 
   # KS5 destinations chart
   KS5LineChart <- eventReactive(input$geoChoiceOver, {
-    KS5Line <- C_KS4_KS5eduempapp %>%  
-      mutate(geogConcat=paste0(area," ",geographic_level))%>%
-      filter((geogConcat == input$geoChoiceOver |
-        geogConcat == "England COUNTRY"),
-      `Cohort Group` == "Total",
-      `Key Stage` == "Key Stage 5"
-    )
+    KS5Line <- C_KS4_KS5eduempapp %>%
+      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
+      filter(
+        (geogConcat == input$geoChoiceOver |
+          geogConcat == "England COUNTRY"),
+        `Cohort Group` == "Total",
+        `Key Stage` == "Key Stage 5"
+      )
     KS5sustChange <- KS5Latest()$rate - KS5Last()$rate
     KS5MinMax <- C_KS5_eduempapp_max_min
 
@@ -1078,8 +1089,9 @@ server <- function(input, output, session) {
   # get Enterprise data for current area
   Entgeo <- eventReactive(input$geoChoiceOver, {
     C_empentind3_UBC1822 %>%
-      mutate(geogConcat=paste0(area," ",geographic_level))%>%
-      filter(geogConcat == input$geoChoiceOver,
+      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
         variable == "Micro 0 to 9",
         industry == "Total"
       )
@@ -1119,13 +1131,14 @@ server <- function(input, output, session) {
 
   # micro enterprise chart
   UBCLineChart <- eventReactive(input$geoChoiceOver, {
-    EntLine <- C_empentind3_UBC1822 %>%   
-      mutate(geogConcat=paste0(area," ",geographic_level))%>%
-      filter((geogConcat == input$geoChoiceOver |
-        geogConcat == "England COUNTRY"),
-      variable == "Micro 0 to 9",
-      industry == "Total"
-    )
+    EntLine <- C_empentind3_UBC1822 %>%
+      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
+      filter(
+        (geogConcat == input$geoChoiceOver |
+          geogConcat == "England COUNTRY"),
+        variable == "Micro 0 to 9",
+        industry == "Total"
+      )
     EntChange <- EntLatest()$rate - EntLast()$rate
     EntMinMax <- C_empentind_max_min
 
@@ -1202,8 +1215,9 @@ server <- function(input, output, session) {
   # get entprise data for current area
   Qualgeo <- eventReactive(input$geoChoiceOver, {
     C_qualevel3plus_APS1721 %>%
-      mutate(geogConcat=paste0(area," ",geographic_level))%>%
-      filter(geogConcat == input$geoChoiceOver,
+      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
         Level == "Level 3 and above",
         age_band == "16-64",
         gender == "Total"
@@ -1244,14 +1258,15 @@ server <- function(input, output, session) {
 
   # qualification chart
   Nvq3plusLineChart <- eventReactive(input$geoChoiceOver, {
-    QualLine <- C_qualevel3plus_APS1721 %>%  
-      mutate(geogConcat=paste0(area," ",geographic_level))%>%
-      filter((geogConcat == input$geoChoiceOver |
-        geogConcat == "England COUNTRY"),
-      Level == "Level 3 and above",
-      age_band == "16-64",
-      gender == "Total"
-    )
+    QualLine <- C_qualevel3plus_APS1721 %>%
+      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
+      filter(
+        (geogConcat == input$geoChoiceOver |
+          geogConcat == "England COUNTRY"),
+        Level == "Level 3 and above",
+        age_band == "16-64",
+        gender == "Total"
+      )
     QualChange <- QualLatest()$rate - QualLast()$rate
     # QualMinMax <- C_qual_max_min
 
@@ -1347,11 +1362,11 @@ server <- function(input, output, session) {
   #   }
   #   C_Geog$areaName[C_Geog$areaCode == event$id]
   # })
-  
+
   # areaClicked <- reactive({
   #   input$lep1
   # })
-  
+
 
 
   # Update overview to match map
@@ -1452,31 +1467,32 @@ server <- function(input, output, session) {
   })
 
   ### 2.3.5 National map ----
-  #### 2.3.5.1 Dropdown area select---- 
+  #### 2.3.5.1 Dropdown area select----
   output$geoChoice <- renderUI({
     selectizeInput(
       "geoChoice",
       multiple = FALSE,
       label = NULL,
-      choices = areaChoices[1:3]
+      choices = areaChoices[1:3],
+      selected = input$geoChoiceOver
     )
   })
-  
+
   observeEvent(input$map_shape_click, {
     updateSelectizeInput(session, "geoChoice",
-                         selected = C_Geog$geogConcat[C_Geog$areaCode == input$map_shape_click$id]
+      selected = C_Geog$geogConcat[C_Geog$areaCode == input$map_shape_click$id]
     )
   })
-  
+
   observeEvent(input$geoChoiceOver, {
     updateSelectizeInput(session, "geoChoice",
-                         selected = input$geoChoiceOver
+      selected = input$geoChoiceOver
     )
   })
-  
+
   observeEvent(input$geoChoice, {
     updateRadioGroupButtons(session, "splashGeoType",
-                         selected = gsub(" ", "",str_sub(input$geoChoice,-4,-1))
+      selected = gsub(" ", "", str_sub(input$geoChoice, -4, -1))
     )
   })
   #### 2.3.5.1 Title ----
@@ -1486,9 +1502,10 @@ server <- function(input, output, session) {
 
   #### 2.3.5.2 Comment ----
   output$commentMap <- renderUI({
+    validate(need("geoChoice" %in% names(input), ""))
     compareNational <-
       if ((C_Geog %>%
-        filter(geogConcat==input$geoChoice))[[input$splashMetric]]
+        filter(geogConcat == input$geoChoice))[[input$splashMetric]]
       >
         (englandGeog)[[input$splashMetric]]) {
         "higher"
@@ -1568,7 +1585,7 @@ server <- function(input, output, session) {
       )
   })
   observe({
-    validate(need("geoChoice" %in% names(input),""))
+    validate(need("geoChoice" %in% names(input), ""))
     mapData <- C_Geog %>% filter(geogConcat == input$geoChoice)
     labels <-
       # if a percentage then format as %, else big number
@@ -1591,17 +1608,19 @@ server <- function(input, output, session) {
     addPopups(
       proxy,
       lng = C_Geog$LONG[C_Geog$geogConcat == input$geoChoice],
-      lat =C_Geog$LAT[C_Geog$geogConcat == input$geoChoice],
+      lat = C_Geog$LAT[C_Geog$geogConcat == input$geoChoice],
       popup = labels,
       layerId = "popup",
-      options  = popupOptions(className = "myspecial-popup",
-                              textsize = "12px",
-                              direction = "auto",
-                              closeOnClick = TRUE,
-                              closeButton = FALSE)
+      options = popupOptions(
+        className = "myspecial-popup",
+        textsize = "12px",
+        direction = "auto",
+        closeOnClick = TRUE,
+        closeButton = FALSE
+      )
     )
   })
-  
+
   #### 2.3.5.4 Map footnote ----
   output$mapFoot <- renderUI({
     paste0(
@@ -1617,10 +1636,11 @@ server <- function(input, output, session) {
   #### 2.3.6.2 Comment----
 
   output$commentLA <- renderUI({
+    validate(need("geoChoice" %in% names(input), ""))
     LaHighLow <- C_Geog %>%
       filter(
         geog == "LADU",
-        eval(parse(text = input$splashGeoType)) == input$geoChoice
+        eval(parse(text = input$splashGeoType)) == sub(" LEP| LSIP| MCA", "", input$geoChoice)
       ) %>%
       mutate(ranking = rank(desc(eval(
         parse(text = input$splashMetric)
@@ -1712,6 +1732,7 @@ server <- function(input, output, session) {
 
   #### 2.3.7.1 Comment ----
   output$commentTime <- renderUI({
+    validate(need("geoChoice" %in% names(input), ""))
     currentArea <- C_time %>%
       filter(
         geogConcat == input$geoChoice,
@@ -1863,6 +1884,7 @@ server <- function(input, output, session) {
     )
 
   output$Splash_time <- renderPlotly({
+    validate(need("geoChoice" %in% names(input), ""))
     ggplotly(Splash_time(), tooltip = "text") %>%
       layout(
         legend = list(
@@ -1944,12 +1966,11 @@ server <- function(input, output, session) {
               if (input$barBreakdown != "Detailed Profession Category") {
                 TRUE
               } else {
-                if (input$summaryProfession == "All") {
-                  TRUE
-                } else {
+                if ("summaryProfession" %in% names(input) && input$summaryProfession != "All") {
                   subgroups %in%
                     (detailLookup %>% filter(`Summary Profession Category` == input$summaryProfession))$`Detailed Profession Category`
-                }
+                } else {
+                  TRUE                }
               }
             )
         ))$subgroups,
@@ -1963,10 +1984,10 @@ server <- function(input, output, session) {
             if (input$barBreakdown != "Detailed Profession Category") {
               TRUE
             } else {
-              if (input$summaryProfession == "All") {
-                `Summary Profession Category` == "All"
-              } else {
+              if ("summaryProfession" %in% names(input) && input$summaryProfession != "All") {
                 `Summary Profession Category` == input$summaryProfession
+              } else {
+                `Summary Profession Category` == "All"
               }
             }
           ) %>%
@@ -2416,7 +2437,7 @@ server <- function(input, output, session) {
   #     rownames = FALSE
   #   )
   # })
-  
+
   ## 2.6 FE tools table----
   output$toolsTable <- DT::renderDataTable({
     DT::datatable(
@@ -2436,8 +2457,8 @@ server <- function(input, output, session) {
       rownames = FALSE
     )
   })
-  
-  
+
+
 
   # 3.Stop app -----
   session$onSessionEnded(function() {
