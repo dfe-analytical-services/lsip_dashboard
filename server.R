@@ -1644,7 +1644,7 @@ server <- function(input, output, session) {
     LaHighLow <- C_Geog %>%
       filter(
         geog == "LADU",
-        eval(parse(text = gsub(" ", "",str_sub(input$geoChoice,-4,-1)))) == sub(" LEP| LSIP| MCA", "", input$geoChoice)
+        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == sub(" LEP| LSIP| MCA", "", input$geoChoice)
       ) %>%
       mutate(ranking = rank(desc(eval(
         parse(text = input$splashMetric)
@@ -1678,7 +1678,7 @@ server <- function(input, output, session) {
     mapData <- C_Geog %>%
       filter(
         geog == "LADU",
-        eval(parse(text = input$splashGeoType)) == sub(" LEP| LSIP| MCA", "", input$geoChoice)
+        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == sub(" LEP| LSIP| MCA", "", input$geoChoice)
       )
     pal <- colorNumeric("Blues", mapData[[input$splashMetric]])
 
@@ -1929,16 +1929,16 @@ server <- function(input, output, session) {
       need(input$barBreakdown != "", ""),
       need(input$barBreakdown == "Detailed Profession Category", "")
     )
-      selectizeInput(
-        inputId = "summaryProfession",
-        label = "Limit to particular summary profession",
-        choices = summaryCategories
-      )
+    selectizeInput(
+      inputId = "summaryProfession",
+      label = "Limit to particular summary profession",
+      choices = summaryCategories
+    )
   })
 
   #### 2.3.8.2 Subgroup filter ----
   detailLookup <- D_OnsProfDetail %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)
-  
+
   output$subgroupFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
@@ -1953,11 +1953,12 @@ server <- function(input, output, session) {
             filter(
               metric == input$splashMetric,
               breakdown == input$barBreakdown,
-                if (input$barBreakdown == "Detailed Profession Category" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
-                  subgroups %in%
-                    (detailLookup %>% filter(`Summary Profession Category` == input$summaryProfession))$`Detailed Profession Category`
-                } else {
-                  TRUE                }
+              if (input$barBreakdown == "Detailed Profession Category" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
+                subgroups %in%
+                  (detailLookup %>% filter(`Summary Profession Category` == input$summaryProfession))$`Detailed Profession Category`
+              } else {
+                TRUE
+              }
             )
         ))$subgroups,
       multiple = TRUE,
@@ -1967,13 +1968,13 @@ server <- function(input, output, session) {
             metric == input$splashMetric,
             breakdown == input$barBreakdown,
             geogConcat == input$geoChoice,
-              if (input$barBreakdown == "Detailed Profession Category" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
-                `Summary Profession Category` == input$summaryProfession
-              } else {
-                `Summary Profession Category` == "All"
-              }
-          ) 
-        ))$subgroups,
+            if (input$barBreakdown == "Detailed Profession Category" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
+              `Summary Profession Category` == input$summaryProfession
+            } else {
+              `Summary Profession Category` == "All"
+            }
+          )
+      ))$subgroups,
       options = list(`actions-box` = TRUE, `live-search` = TRUE)
     )
   })
@@ -1981,19 +1982,20 @@ server <- function(input, output, session) {
   #### 2.3.8.3 Title ----
   output$titleBreakdown <- renderUI({
     validate(need(input$barBreakdown != "", "")) # if area not yet loaded don't try to load ch)
-      paste0(
-        "How does ",
-        currentMetric(),
-        " vary by ",
-        tolower(input$barBreakdown),
-        "?"
-      )
+    paste0(
+      "How does ",
+      currentMetric(),
+      " vary by ",
+      tolower(input$barBreakdown),
+      "?"
+    )
   })
 
   #### 2.3.8.4 Comment ----
   output$commentBreakdown <- renderUI({
     validate(
-      need(input$barBreakdown != "", ""))
+      need(input$barBreakdown != "", "")
+    )
 
     if (input$barBreakdown == "No breakdowns available") {
       paste0(
@@ -2008,62 +2010,62 @@ server <- function(input, output, session) {
           "Unemployed",
           "Inactive"
         )) {
-          "Switch to Employment volume metric for occupation and industry breakdowns."
+          " Switch to Employment volume metric for occupation and industry breakdowns."
         } else {
           ""
         }
       )
     } else {
-    breakdownDiff <- C_breakdown %>%
-      filter(
-        geogConcat == input$geoChoice |
-          geogConcat == "England",
-        breakdown == input$barBreakdown,
-        metric == input$splashMetric
-      ) %>%
-      group_by(subgroups) %>%
-      mutate(change = (value - lag(value, default = 1)) / value) %>%
-      ungroup() %>%
-      filter(geogConcat == input$geoChoice) %>%
-      mutate(ranking = rank(desc(abs(change)), ties.method = c("first"))) %>%
-      filter(ranking == 1)
+      breakdownDiff <- C_breakdown %>%
+        filter(
+          geogConcat == input$geoChoice |
+            geogConcat == "England",
+          breakdown == input$barBreakdown,
+          metric == input$splashMetric
+        ) %>%
+        group_by(subgroups) %>%
+        mutate(change = (value - lag(value, default = 1)) / value) %>%
+        ungroup() %>%
+        filter(geogConcat == input$geoChoice) %>%
+        mutate(ranking = rank(desc(abs(change)), ties.method = c("first"))) %>%
+        filter(ranking == 1)
 
-    breakdownDirection <-
-      if (isTRUE(breakdownDiff$change) && breakdownDiff$change > 0) {
-        "high"
-      } else {
-        "low"
-      }
+      breakdownDirection <-
+        if (isTRUE(breakdownDiff$change) && breakdownDiff$change > 0) {
+          "high"
+        } else {
+          "low"
+        }
 
-    paste0(
-      input$geoChoice,
-      " has a ",
-      breakdownDirection,
-      " ",
-      currentMetric(),
-      " in ",
-      breakdownDiff$subgroups,
-      " than the national average. ",
-      if (nrow(C_breakdown %>%
-        filter(breakdown == input$barBreakdown) %>%
-        distinct(subgroups)) > 10) {
-        "The top 10 subgroups are shown. Use the filter to add or remove subgroups. "
-      } else {
-        ""
-      }
-    )
+      paste0(
+        input$geoChoice,
+        " has a ",
+        breakdownDirection,
+        " ",
+        currentMetric(),
+        " in ",
+        breakdownDiff$subgroups,
+        " than the national average. ",
+        if (nrow(C_breakdown %>%
+          filter(breakdown == input$barBreakdown) %>%
+          distinct(subgroups)) > 10) {
+          "The top 10 subgroups are shown. Use the filter to add or remove subgroups. "
+        } else {
+          ""
+        }
+      )
     }
   })
 
   #### 2.3.8.3 Bar chart ----
   Splash_pc <- eventReactive(
     c(
-     # input$map_shape_click,
+      # input$map_shape_click,
       input$geoChoice,
       input$geoComps,
       # input$barBreakdown,
       input$barSubgroup,
-      #input$mapLA_shape_click,
+      # input$mapLA_shape_click,
       input$splashMetric
     ),
     {
