@@ -56,7 +56,7 @@ panel_overview <- function() {
           ),
           column(
             width = 8,
-            plotlyOutput("empLineChart", height = 81)
+            withSpinner(plotlyOutput("empLineChart", height = 81))
           )
         ),
         h3("Employment rate"),
@@ -70,7 +70,7 @@ panel_overview <- function() {
           ),
           column(
             width = 8,
-            plotlyOutput("empRateLineChart", height = 81)
+            withSpinner(plotlyOutput("empRateLineChart", height = 81))
           )
         ),
         # third row - link to emp tab
@@ -90,7 +90,7 @@ panel_overview <- function() {
           ),
           column(
             width = 8,
-            plotlyOutput("jobLineChart", height = 81)
+            withSpinner(plotlyOutput("jobLineChart", height = 81))
           )
         ),
         fluidRow(
@@ -110,7 +110,7 @@ panel_overview <- function() {
           ),
           column(
             width = 8,
-            plotlyOutput("UBCLineChart", height = 81)
+            withSpinner(plotlyOutput("UBCLineChart", height = 81))
           )
         ),
         fluidRow(
@@ -135,7 +135,7 @@ panel_overview <- function() {
           ),
           column(
             width = 8,
-            plotlyOutput("etLineChart", height = 81)
+            withSpinner(plotlyOutput("etLineChart", height = 81))
           )
         ),
         h3("Apprenticeship achievements"),
@@ -149,7 +149,7 @@ panel_overview <- function() {
           ),
           column(
             width = 8,
-            plotlyOutput("AppLineChart", height = 81)
+            withSpinner(plotlyOutput("AppLineChart", height = 81))
           )
         ),
         fluidRow(
@@ -168,7 +168,7 @@ panel_overview <- function() {
           ),
           column(
             width = 8,
-            plotlyOutput("KS5LineChart", height = 81)
+            withSpinner(plotlyOutput("KS5LineChart", height = 81))
           )
         ),
         fluidRow(
@@ -187,7 +187,7 @@ panel_overview <- function() {
           ),
           column(
             width = 8,
-            plotlyOutput("Nvq3plusLineChart", height = 81)
+            withSpinner(plotlyOutput("Nvq3plusLineChart", height = 81))
           )
         ),
         # third row - link to emp tab
