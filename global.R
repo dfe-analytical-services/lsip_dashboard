@@ -29,6 +29,7 @@ shhh(library(lubridate))
 shhh(library(sf))
 shhh(library(capture))
 shhh(library(shinyalert))
+shhh(library(shinycssloaders))
 
 # renv::snapshot()
 
