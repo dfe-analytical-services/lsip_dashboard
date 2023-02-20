@@ -23,7 +23,9 @@ server <- function(input, output, session) {
       "#801650",
       "#F46A25",
       "#A285D1",
-      "#2073BC"
+      "#3D3D3D",
+      "#2073BC",
+      "#6BACE6"
     )
   # for when no England
   chartColors5 <-
@@ -33,7 +35,9 @@ server <- function(input, output, session) {
       "#801650",
       "#F46A25",
       "#A285D1",
-      "#2073BC"
+      "#3D3D3D",
+      "#2073BC",
+      "#6BACE6"
     )
 
   # 2 Main page ----
@@ -1456,7 +1460,7 @@ server <- function(input, output, session) {
       multiple = TRUE,
       label = NULL,
       choices = areaChoices,
-      options = list(maxItems = 10, placeholder = "Choose comparison areas")
+      options = list(maxItems = 7, placeholder = "Choose comparison areas")
     )
   })
 
@@ -1923,32 +1927,18 @@ server <- function(input, output, session) {
   output$professionFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
-      need(input$barBreakdown != "No breakdowns available", "")
+      need(input$barBreakdown == "Detailed Profession Category", "")
     )
-    if (input$barBreakdown == "Detailed Profession Category") {
       selectizeInput(
         inputId = "summaryProfession",
         label = "Limit to particular summary profession",
         choices = summaryCategories
       )
-    } else {}
   })
 
   #### 2.3.8.2 Subgroup filter ----
   detailLookup <- D_OnsProfDetail %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)
-  topTenEachBreakdown <- bind_rows(
-    C_breakdown %>%
-      group_by(metric, breakdown, geogConcat) %>%
-      arrange(desc(value)) %>%
-      slice(1:10) %>%
-      mutate(`Summary Profession Category` = "All"),
-    C_breakdown %>%
-      filter(breakdown == "Detailed Profession Category") %>%
-      left_join(detailLookup, by = c("subgroups" = "Detailed Profession Category")) %>%
-      group_by(metric, breakdown, area, geographic_level, `Summary Profession Category`) %>%
-      arrange(desc(value)) %>%
-      slice(1:10)
-  )
+  
   output$subgroupFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
@@ -1963,15 +1953,11 @@ server <- function(input, output, session) {
             filter(
               metric == input$splashMetric,
               breakdown == input$barBreakdown,
-              if (input$barBreakdown != "Detailed Profession Category") {
-                TRUE
-              } else {
-                if ("summaryProfession" %in% names(input) && input$summaryProfession != "All") {
+                if (input$barBreakdown == "Detailed Profession Category" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
                   subgroups %in%
                     (detailLookup %>% filter(`Summary Profession Category` == input$summaryProfession))$`Detailed Profession Category`
                 } else {
                   TRUE                }
-              }
             )
         ))$subgroups,
       multiple = TRUE,
@@ -1981,18 +1967,13 @@ server <- function(input, output, session) {
             metric == input$splashMetric,
             breakdown == input$barBreakdown,
             geogConcat == input$geoChoice,
-            if (input$barBreakdown != "Detailed Profession Category") {
-              TRUE
-            } else {
-              if ("summaryProfession" %in% names(input) && input$summaryProfession != "All") {
+              if (input$barBreakdown == "Detailed Profession Category" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
                 `Summary Profession Category` == input$summaryProfession
               } else {
                 `Summary Profession Category` == "All"
               }
-            }
-          ) %>%
-          distinct(subgroups)
-      ))$subgroups,
+          ) 
+        ))$subgroups,
       options = list(`actions-box` = TRUE, `live-search` = TRUE)
     )
   })
@@ -2000,6 +1981,20 @@ server <- function(input, output, session) {
   #### 2.3.8.3 Title ----
   output$titleBreakdown <- renderUI({
     validate(need(input$barBreakdown != "", "")) # if area not yet loaded don't try to load ch)
+      paste0(
+        "How does ",
+        currentMetric(),
+        " vary by ",
+        tolower(input$barBreakdown),
+        "?"
+      )
+  })
+
+  #### 2.3.8.4 Comment ----
+  output$commentBreakdown <- renderUI({
+    validate(
+      need(input$barBreakdown != "", ""))
+
     if (input$barBreakdown == "No breakdowns available") {
       paste0(
         str_to_sentence(currentMetric()),
@@ -2009,33 +2004,16 @@ server <- function(input, output, session) {
           "selfempRate",
           "unempRate",
           "inactiveRate",
-          "  Self Employed ",
-          "  Unemployed ",
-          "  Inactive "
+          "SelfEmployed",
+          "Unemployed",
+          "Inactive"
         )) {
-          " Switch to Employment volume metric for occupation and industry breakdowns."
+          "Switch to Employment volume metric for occupation and industry breakdowns."
         } else {
           ""
         }
       )
     } else {
-      paste0(
-        "How does ",
-        currentMetric(),
-        " vary by ",
-        tolower(input$barBreakdown),
-        "?"
-      )
-    }
-  })
-
-  #### 2.3.8.4 Comment ----
-  output$commentBreakdown <- renderUI({
-    validate(
-      need(input$barBreakdown != "", ""),
-      # if area not yet loaded don't try to load ch
-      need(input$barBreakdown != "No breakdowns available", "")
-    )
     breakdownDiff <- C_breakdown %>%
       filter(
         geogConcat == input$geoChoice |
@@ -2074,22 +2052,23 @@ server <- function(input, output, session) {
         ""
       }
     )
+    }
   })
 
   #### 2.3.8.3 Bar chart ----
   Splash_pc <- eventReactive(
     c(
-      input$map_shape_click,
+     # input$map_shape_click,
+      input$geoChoice,
       input$geoComps,
       # input$barBreakdown,
       input$barSubgroup,
-      input$mapLA_shape_click,
+      #input$mapLA_shape_click,
       input$splashMetric
     ),
     {
       validate(
         need(input$barBreakdown != "", ""),
-        # if area not yet loaded don't try to load ch
         need(input$barSubgroup != "", ""),
         need(input$splashMetric != "", ""),
         need(input$barBreakdown != "No breakdowns available", "")
