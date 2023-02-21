@@ -2184,6 +2184,45 @@ server <- function(input, output, session) {
     )
   })
 
+  ### 2.3.9 Downloads local skills ----
+  # all areas
+  listDownloadV1All <- reactive({
+    list("All areas" = C_datahub %>% filter(metric == input$splashMetric))
+  })
+  nameDownloadV1All <- reactive({
+    paste0(currentMetric(), "-all areas.xlsx")
+  })
+  output$downloadV1All <- downloadHandler(
+    filename = function() {
+      nameDownloadV1All()
+    },
+    content = function(file) {
+      write_xlsx(listDownloadV1All(), path = file)
+    }
+  )
+  # current area
+  listDownloadV1Current <- reactive({
+    list("Current area" = C_datahub %>%
+      filter(
+        metric == input$splashMetric,
+        (geogConcat == input$geoChoice |
+          geogConcat %in% input$geoComps |
+          geogConcat == "England")
+      ) %>%
+      select(-geogConcat))
+  })
+  nameDownloadV1Current <- reactive({
+    paste0(currentMetric(), "-", input$geoChoice, ".xlsx")
+  })
+  output$downloadV1Current <- downloadHandler(
+    filename = function() {
+      nameDownloadV1Current()
+    },
+    content = function(file) {
+      write_xlsx(listDownloadV1Current(), path = file)
+    }
+  )
+
   ## 2.4 DataHub----
   ### 2.4.1 Filters----
   output$hubAreaInput <- renderUI({
@@ -2216,7 +2255,7 @@ server <- function(input, output, session) {
           area %in% input$hubArea
         }
       ) %>%
-        distinct(Metrics = metric),
+        distinct(Metrics = metricNeat),
       multiple = TRUE,
       label = NULL,
       options = list(placeholder = "Choose metrics*")
@@ -2240,7 +2279,7 @@ server <- function(input, output, session) {
         if (is.null(input$hubMetric) == TRUE) {
           TRUE
         } else {
-          metric %in% input$hubMetric
+          metricNeat %in% input$hubMetric
         }
       ) %>% distinct(Breakdowns = breakdown),
       multiple = TRUE,
@@ -2266,7 +2305,7 @@ server <- function(input, output, session) {
         if (is.null(input$hubMetric) == TRUE) {
           TRUE
         } else {
-          metric %in% input$hubMetric
+          metricNeat %in% input$hubMetric
         },
         if (is.null(input$hubBreakdowns) == TRUE) {
           TRUE
@@ -2329,7 +2368,7 @@ server <- function(input, output, session) {
         if (is.null(input$hubMetric) == TRUE) {
           TRUE
         } else {
-          metric %in% input$hubMetric
+          metricNeat %in% input$hubMetric
         },
         (if (is.null(input$hubBreakdowns) == TRUE) {
           TRUE
@@ -2341,7 +2380,7 @@ server <- function(input, output, session) {
         Year = time_period,
         Geography = geographic_level,
         Area = area,
-        Data = metric,
+        Data = metricNeat,
         Breakdown = breakdown,
         Splits = subgroups,
         Value = value
@@ -2377,7 +2416,7 @@ server <- function(input, output, session) {
       Choice = c("National", "Regional (to come)"),
       filterID = "d"
     ),
-    C_datahub %>% distinct(Choice = metric) %>% mutate(filterID = "e"),
+    C_datahub %>% distinct(Choice = metricNeat) %>% mutate(filterID = "e"),
     C_datahub %>% distinct(Choice = breakdown) %>% mutate(filterID = "f"),
     C_datahub %>% distinct(Choice = as.character(time_period)) %>% mutate(filterID = "g")
   ) %>%
