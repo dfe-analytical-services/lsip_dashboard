@@ -651,6 +651,34 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           p(uiOutput("mapLaFoot"))
         )
       ),
+      ### 2.3.3 Downloads ----
+      fluidRow(
+        column(
+          width = 3,
+          downloadButton(
+            outputId = "downloadV1All",
+            label = "All areas   ",
+            icon = shiny::icon("download"),
+            class = "downloadButton"
+          )
+        ),
+        column(
+          width = 9,
+          "Download metric data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
+        )
+      ),
+      fluidRow(
+        column(
+          width = 3,
+          downloadButton(
+            outputId = "downloadV1Current",
+            label = "Current geographic areas",
+            icon = shiny::icon("download"),
+            class = "downloadButton"
+          )
+        ),
+        column(width = 9, "Download metric data for the selected geographic areas")
+      ),
       ### 2.3.3 Data notes ----
       fluidRow(column(
         12,
