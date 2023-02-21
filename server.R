@@ -570,7 +570,7 @@ server <- function(input, output, session) {
           Year,
           "<br>",
           "Employment rate: ",
-          format(100 * value, digit = 2),
+          scales::percent(round(value, 2)),
           "<br>"
         )
       )
@@ -1852,7 +1852,7 @@ server <- function(input, output, session) {
               currentMetric(),
               ": ",
               if (str_sub(input$splashMetric, start = -4) == "Rate") {
-                scales::percent(round(value, 2))
+                scales::percent(round(value, 3))
               } else {
                 format(round(value), big.mark = ",")
               },
@@ -1869,9 +1869,9 @@ server <- function(input, output, session) {
             legend.title = element_blank()
           ) +
           scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate") {
-            scales::percent_format(accuracy = 1)
+            scales::percent
           } else {
-            label_number_si(accuracy = 1)
+            label_number_si()
           }) +
           labs(colour = "") +
           scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) %in% c("Rate", "tion")) {
@@ -2115,7 +2115,7 @@ server <- function(input, output, session) {
                 input$splashMetric == "achievements" |
                 input$splashMetric == "participation" |
                 input$splashMetric == "starts") {
-                scales::percent(round(value, 2))
+                scales::percent(round(value, 3))
               } else {
                 round(value, 0)
               },
