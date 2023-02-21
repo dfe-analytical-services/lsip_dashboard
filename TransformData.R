@@ -2112,10 +2112,10 @@ D_breakdown <- bind_rows(
 # Create dataHub dataset
 C_datahub <- bind_rows(
   C_time %>% select(-chart_year) %>% mutate(breakdown = "Total", subgroups = "Total"),
-  D_breakdown %>% mutate(time_period = as.character(time_period))
+  D_breakdown %>% filter(breakdown != "No breakdowns available") %>% mutate(time_period = as.character(time_period))
 ) %>%
   # rename some of the elements so they make sense here
-  mutate(metric = case_when(
+  mutate(metricNeat = case_when(
     metric == "All " ~ "Population volume",
     metric == "empRate" ~ "Employment rate",
     metric == "selfempRate" ~ "Self-employment rate",
@@ -2146,7 +2146,8 @@ C_datahub <- bind_rows(
     breakdown == "Occupation" ~ "Occupation split over geography",
     breakdown == "Industry" ~ "Industry split over geography",
     TRUE ~ breakdown
-  ))
+  )) %>%
+  select(-Total)
 write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
 
 # Find top ten for each breakdown (these are chosen in the filter)
