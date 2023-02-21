@@ -56,12 +56,12 @@ metricChoices <- list(
     "Business death rate" = "deathRate"
   ),
   "Skills" = list(
-    "FE achievement rate" = "achievements_rate_per_100000_population",
-    "FE participation rate" = "participation_rate_per_100000_population",
-    # "FE start rate" = "starts_rate_per_100000_population",
     "FE achievement volumes" = "achievements",
     "FE participation volumes" = "participation",
     # "FE starts" = "starts",
+    "FE achievement rate per 100,000 population" = "achievements_rate_per_100000_population",
+    "FE participation rate per 100,000 population" = "participation_rate_per_100000_population",
+    # "FE start rate" = "starts_rate_per_100000_population",
     "Qualified at Level 3 or above" = "level3AndAboveRate"
   ),
   "Destinations" = list(
