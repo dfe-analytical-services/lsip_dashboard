@@ -1867,8 +1867,8 @@ save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 C_time <- bind_rows(
   # employment data
   C_EmpRate_APS1822 %>%
-    rename(time_period = year, chart_year = Year) %>%
-    mutate(chart_year = as.Date(ISOdate(time_period, 1, 1))) %>%
+    rename(time_period = year) %>%
+    mutate(chart_year = as.Date(ISOdate(as.numeric(time_period)-1, 1, 1))) %>%#shift to start of year
     # mutate_at(c("time_period"), as.integer) %>%
     pivot_longer(!c("geographic_level", "area", "time_period", "chart_year"),
       names_to = "metric",
@@ -1909,7 +1909,7 @@ C_time <- bind_rows(
     filter(subgroups == "Total") %>% # just get total
     select(-breakdown, -subgroups) %>%
     mutate(
-      chart_year = as.Date(ISOdate(time_period, 1, 1)),
+      chart_year = as.Date(ISOdate(time_period, 3, 1)),
       time_period = as.character(time_period)
     ),
   # add level 3 + rate
