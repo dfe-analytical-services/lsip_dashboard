@@ -1748,7 +1748,7 @@ C_OnsProfTime <- C_OnsProf %>%
   group_by(geographic_level, area, `Summary Profession Category`, time_period) %>%
   summarise(vacancies = sum(vacancies)) %>%
   mutate(time_period = as.Date(paste("01 ", time_period, sep = ""), "%d %b %y"))
-write.csv(C_OnsProfTime, file = "Data\\AppData\\C_OnsProfTime.csv", row.names = FALSE)
+#write.csv(C_OnsProfTime, file = "Data\\AppData\\C_OnsProfTime.csv", row.names = FALSE)
 # make download version
 D_OnsProfTime <- C_OnsProfTime %>%
   mutate(vacancies = as.character(vacancies))
@@ -1765,8 +1765,8 @@ neatLA <- I_mapLA %>%
   mutate(geog = "LADU") %>% # add geog type
   rename(areaCode = LAD22CD, areaName = LAD22NM) %>% # consistent naming
   # add on lsip, lep and mca groupings
-  left_join(I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by = c("areaCode" = "LAD21CD")) %>%
-  left_join(C_mcalookup %>% select(LAD21CD, MCA = CAUTH21NM), by = c("areaCode" = "LAD21CD")) %>%
+  left_join(I_LEP2020 %>%mutate(LEP=paste0(LEP21NM1," LEP"),LEP2=paste0(LEP21NM2," LEP"),LSIP=paste0(LSIP," LSIP"))%>% select(LAD21CD, LSIP, LEP, LEP2), by = c("areaCode" = "LAD21CD")) %>%
+  left_join(C_mcalookup %>% mutate(MCA=paste0(CAUTH21NM," MCA"))%>%select(LAD21CD, MCA), by = c("areaCode" = "LAD21CD")) %>%
   filter(is.na(LSIP) == FALSE) %>% # remove non England
   mutate(LSIP = case_when(
     LSIP == "Buckinghamshire " ~ "Buckinghamshire",
@@ -1812,13 +1812,13 @@ C_Geog <- neatGeog %>%
   left_join(C_EmpRate_APS1822 %>% filter(year == 2022), by = c("areaName" = "area", "geog" = "geographic_level")) %>%
   # add achievment rate
   left_join(
-    C_Achieve_ILR1621 %>% filter(time_period == 202021, level_or_type == "Further education and skills: Total", age_group == "Total") %>%
+    C_Achieve_ILR1621 %>% filter(time_period == 202122, level_or_type == "Further education and skills: Total", age_group == "Total") %>%
       mutate(geographic_level = case_when(geographic_level == "National" ~ "COUNTRY", TRUE ~ geographic_level)) %>%
       mutate(geographic_level = case_when(geographic_level == "Local authority district" ~ "LADU", TRUE ~ geographic_level)),
     by = c("areaName" = "area", "geog" = "geographic_level")
   ) %>%
   left_join(
-    C_OnsProfTime %>% filter(time_period == "2022-10-01") %>%
+    C_OnsProfTime %>% filter(time_period == "2022-12-01") %>%
       group_by(area, geographic_level) %>%
       summarise(vacancies = sum(vacancies)),
     by = c("areaName" = "area", "geog" = "geographic_level")
@@ -1867,8 +1867,8 @@ save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 C_time <- bind_rows(
   # employment data
   C_EmpRate_APS1822 %>%
-    rename(time_period = year, chart_year = Year) %>%
-    mutate(chart_year = as.Date(ISOdate(time_period, 1, 1))) %>%
+    rename(time_period = year) %>%
+    mutate(chart_year = as.Date(ISOdate(as.numeric(time_period)-1, 1, 1))) %>%#shift to start of year
     # mutate_at(c("time_period"), as.integer) %>%
     pivot_longer(!c("geographic_level", "area", "time_period", "chart_year"),
       names_to = "metric",
@@ -1909,7 +1909,7 @@ C_time <- bind_rows(
     filter(subgroups == "Total") %>% # just get total
     select(-breakdown, -subgroups) %>%
     mutate(
-      chart_year = as.Date(ISOdate(time_period, 1, 1)),
+      chart_year = as.Date(ISOdate(time_period, 3, 1)),
       time_period = as.character(time_period)
     ),
   # add level 3 + rate

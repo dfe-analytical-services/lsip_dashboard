@@ -299,6 +299,35 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
                 });
                 });"
   ),
+  tags$script(
+    " $(document).ready(function () {
+                $('#link_to_tabpanel_localskills').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+  ),
+  tags$script(
+    " $(document).ready(function () {
+                $('#link_to_tabpanel_localskills2').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+  ),
+  tags$script(
+    " $(document).ready(function () {
+                $('#link_to_tabpanel_furtherresources').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+  ),
+  tags$script(
+    " $(document).ready(function () {
+                $('#link_to_tabpanel_accessibility').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+  ),
+  
 
   # 2 Main page ----
   navlistPanel(
@@ -401,7 +430,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               tags$li(actionLink("link_to_tabpanel_data", "Data information and download"), "- includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
               tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of local labour market and education system."),
               tags$li(actionLink("link_to_tabpanel_accessibility", "Accessibility"), "- provides the Local Skills dashboard accessibility statement, compliance requirmeents, limitations and opportunity to feedback on accessibility of the dashboard."),
-              tags$li(actionLink("link_to_tab_panel_supportandfeedback", "Support and feedback"), " - provides links to the Unit for Future Skills and Department for Education Statistics Development inboxes for feedback and if you hve any questions about the dashboard or the data it contains. There is also a link to the GitHub repository if you wish to view the dashboard source code.")
+              tags$li(actionLink("link_to_tabpanel_supportandfeedback", "Support and feedback"), " - provides links to the Unit for Future Skills and Department for Education Statistics Development inboxes for feedback and if you hve any questions about the dashboard or the data it contains. There is also a link to the GitHub repository if you wish to view the dashboard source code.")
             ),
             h2("Local skills metrics"),
             # h2("Dashboard pages"),
@@ -428,7 +457,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             #   "This tab provides a summary of labour market and skills information for the selected geographic area. It includes a time series of data on employment, online job adverts, and further education and skills achievements."
             # ),
             h3(actionLink(
-              "link_to_tabpanel_localskills", "Local skills"
+              "link_to_tabpanel_localskills2", "Local skills"
             )),
             p(
               "The Local skills tab provides additional metrics and breakdowns for the selected geographic area. Using the various filters you can select the metric of interest, primary area from the England map, and multiple comparison areas alongside the default England comparator. The chart in the bottom left provides additional breakdowns specific to the metric, for example:"

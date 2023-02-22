@@ -52,6 +52,9 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_localskills, {
     updateTabsetPanel(session, "navbar", "Local skills")
   })
+  observeEvent(input$link_to_tabpanel_localskills2, {
+    updateTabsetPanel(session, "navbar", "Local skills")
+  })
 
   # Create link to further resources tab
   observeEvent(input$link_to_tabpanel_furtherresources, {
@@ -112,7 +115,7 @@ server <- function(input, output, session) {
   })
   # Create link to data tab
   observeEvent(input$link_to_tabpanel_data, {
-    updateTabsetPanel(session, "navbar", "Data information and download")
+    updateTabsetPanel(session, "navbar", "Data sources")
   })
   ## 2.5 Data information ----
   ### 2.5.1 Data table downloads ----
@@ -1644,7 +1647,7 @@ server <- function(input, output, session) {
     LaHighLow <- C_Geog %>%
       filter(
         geog == "LADU",
-        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == sub(" LEP| LSIP| MCA", "", input$geoChoice)
+        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == input$geoChoice
       ) %>%
       mutate(ranking = rank(desc(eval(
         parse(text = input$splashMetric)
@@ -1678,7 +1681,7 @@ server <- function(input, output, session) {
     mapData <- C_Geog %>%
       filter(
         geog == "LADU",
-        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == sub(" LEP| LSIP| MCA", "", input$geoChoice)
+        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == input$geoChoice
       )
     pal <- colorNumeric("Blues", mapData[[input$splashMetric]])
 
@@ -1823,7 +1826,7 @@ server <- function(input, output, session) {
               "\nNone"
             }) |
               # get england for comparison (if a rate)
-              (if (str_sub(input$splashMetric, start = -4) %in% c("Rate", "tion")) {
+              (if (str_sub(input$splashMetric, start = -4) =="Rate"| str_sub(input$splashMetric, start = -10) =="population") {
                 (geogConcat == "England")
               } else {
                 area == "\nNone"
@@ -1874,7 +1877,7 @@ server <- function(input, output, session) {
             label_number_si()
           }) +
           labs(colour = "") +
-          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) %in% c("Rate", "tion")) {
+          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) =="Rate"| str_sub(input$splashMetric, start = -10) =="population") {
             chartColors6
           } else {
             chartColors5
