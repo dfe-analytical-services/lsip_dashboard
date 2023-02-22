@@ -2205,11 +2205,10 @@ server <- function(input, output, session) {
     list("Current area" = C_datahub %>%
       filter(
         metric == input$splashMetric,
-        (geogConcat == input$geoChoice |
-          geogConcat %in% input$geoComps |
-          geogConcat == "England")
-      ) %>%
-      select(-geogConcat))
+        (paste0(area," ",geographic_level) == input$geoChoice |
+           paste0(area," ",geographic_level) %in% input$geoComps |
+           paste0(area," ",geographic_level) == "England")
+      ))
   })
   nameDownloadV1Current <- reactive({
     paste0(currentMetric(), "-", input$geoChoice, ".xlsx")

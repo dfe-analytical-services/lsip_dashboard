@@ -1714,14 +1714,14 @@ D_OnsProf <- bind_rows(
   format.OnsProf(I_OnsProfDetailLep), # remove code since it doesn't exist in other geogs
   format.OnsProf(I_OnsProfDetailLsip),
   format.OnsProf(I_OnsProfDetailMca),
-  format.OnsProf(I_OnsProfDetailLA %>% select(-1)), # remove region code
+  format.OnsProf(I_OnsProfDetailLA %>%rename(region=1)%>%filter(!(region%in%c("Scotland","Wales","Northern Ireland","Unknown")))%>% select(-region)), # remove region code
   format.OnsProf(I_OnsProfDetailEng) %>% filter(area == "England"),
   format.OnsProf(I_OnsProfDetailRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LSIP", area = "Greater London"),
   format.OnsProf(I_OnsProfDetailRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LEP"),
   format.OnsProf(I_OnsProfLep %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
   format.OnsProf(I_OnsProfLsip %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
   format.OnsProf(I_OnsProfMca %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
-  format.OnsProf(I_OnsProfLA %>% select(-1) %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
+  format.OnsProf(I_OnsProfLA %>%rename(region=1)%>%filter(!(region%in%c("Scotland","Wales","Northern Ireland","Unknown")))%>% select(-region) %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
   format.OnsProf(I_OnsProfEng %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "England"),
   format.OnsProf(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "London") %>% mutate(geographic_level = "LSIP", area = "Greater London"),
   format.OnsProf(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "London") %>% mutate(geographic_level = "LEP")
@@ -2110,10 +2110,140 @@ D_breakdown <- bind_rows(
   ))
 
 # Create dataHub dataset
-C_datahub <- bind_rows(
-  C_time %>% select(-chart_year) %>% mutate(breakdown = "Total", subgroups = "Total"),
-  D_breakdown %>% filter(breakdown != "No breakdowns available") %>% mutate(time_period = as.character(time_period))
+# create neat breakdown file for download so keeping symbols
+D_breakdown_datahub <- bind_rows(
+  # employment data
+  D_EmpRate_APS1822 %>%
+    rename(time_period = year) %>%
+    mutate(breakdown = "Total", subgroups = "Total") %>%
+    pivot_longer(!c("geographic_level", "area", "time_period", "breakdown", "subgroups"),
+                 names_to = "metric",
+                 values_to = "value"
+    ),
+  D_EmpOcc_APS1721 %>%
+    rename(time_period = year) %>%
+    pivot_longer(!c("geographic_level", "area", "time_period"),
+                 names_to = "subgroups",
+                 values_to = "value"
+    ) %>%
+    mutate(breakdown = "Occupation", metric = "Employment",time_period=as.character(time_period)),
+  # employment by industry
+  D_EmpInd_APS1822 %>%
+    rename(time_period = year) %>%
+   mutate_at(c("time_period"), as.integer) %>%
+    pivot_longer(!c("geographic_level", "area", "time_period"),
+                 names_to = "subgroups",
+                 values_to = "value"
+    ) %>%
+    mutate(breakdown = "Industry", metric = "Employment",time_period=as.character(time_period)),
+  # ILR rate data
+  D_Achieve_ILR1621 %>%
+    mutate(geographic_level = case_when(
+      geographic_level == "National" ~ "COUNTRY",
+      geographic_level == "Local authority district" ~ "LADU",
+      TRUE ~ geographic_level
+    )) %>%
+    pivot_longer(!c("geographic_level", "area", "time_period", "apprenticeships_or_further_education", "level_or_type", "age_group"),
+                 names_to = "metric",
+                 values_to = "value"
+    ) %>%
+    # get subgroups when the other fields are total
+    mutate(subgroups = case_when(
+      apprenticeships_or_further_education == "Further education and skills" &
+        level_or_type == "Further education and skills: Total" ~ age_group,
+      apprenticeships_or_further_education == "Further education and skills" &
+        age_group == "Total" ~ level_or_type,
+      str_sub(level_or_type, -5, -1) == "Total" &
+        age_group == "Total" ~ apprenticeships_or_further_education,
+      TRUE ~ "NA"
+    )) %>%
+    # get breakdown when other fields are total
+    mutate(breakdown = case_when(
+      apprenticeships_or_further_education == "Further education and skills" &
+        level_or_type == "Further education and skills: Total" ~ "Age",
+      apprenticeships_or_further_education == "Further education and skills" &
+        age_group == "Total" ~ "Level",
+      str_sub(level_or_type, -5, -1) == "Total" &
+        age_group == "Total" ~ "Provision",
+      TRUE ~ "NA"
+    )) %>%
+    filter(breakdown != "NA") %>%
+    select(-apprenticeships_or_further_education, -level_or_type, -age_group) %>%
+    filter(str_sub(metric, -10, -1) == "population")%>%
+    mutate(time_period=as.character(time_period)),
+  #ssa breakdown 
+  D_Achieve_ILR21 %>%
+    filter(notional_nvq_level=="Total",sex=="Total",ssa_t1_desc!="Total")%>%
+    select(-notional_nvq_level,-sex)%>%
+    pivot_longer(!c("geographic_level", "area", "time_period","ssa_t1_desc"),
+                 names_to = "metric",
+                 values_to = "value"
+    )%>%
+    rename(subgroups=ssa_t1_desc)%>%
+    mutate(breakdown="SSAtier1",time_period=as.character(time_period)),
+  #level breakdown 
+  D_Achieve_ILR21 %>%
+    filter(notional_nvq_level!="Total",sex=="Total",ssa_t1_desc=="Total")%>%
+    select(-ssa_t1_desc,-sex)%>%
+    pivot_longer(!c("geographic_level", "area", "time_period","notional_nvq_level"),
+                 names_to = "metric",
+                 values_to = "value"
+    )%>%
+    rename(subgroups=notional_nvq_level)%>%
+    mutate(breakdown="NVQlevel",time_period=as.character(time_period)),
+  #gender breakdown 
+  D_Achieve_ILR21 %>%
+    filter(notional_nvq_level=="Total",sex!="Total",ssa_t1_desc=="Total")%>%
+    select(-notional_nvq_level,-ssa_t1_desc)%>%
+    pivot_longer(!c("geographic_level", "area", "time_period","sex"),
+                 names_to = "metric",
+                 values_to = "value"
+    )%>%
+    rename(subgroups=sex)%>%
+    mutate(breakdown="Sex",time_period=as.character(time_period)),
+  #totals breakdown 
+  D_Achieve_ILR21 %>%
+    filter(notional_nvq_level=="Total",sex=="Total",ssa_t1_desc=="Total")%>%
+    select(-notional_nvq_level,-ssa_t1_desc,-sex)%>%
+    pivot_longer(!c("geographic_level", "area", "time_period"),
+                 names_to = "metric",
+                 values_to = "value"
+    )%>%
+    mutate(breakdown="Total",subgroups="Total",time_period=as.character(time_period)),
+  C_OnsProf %>%#get totals over time
+    filter(`Detailed Profession Category` == "None")%>%
+    group_by(area, geographic_level, time_period) %>%
+    summarise(vacancies = sum(vacancies)) %>%
+    mutate(metric = "vacancies",breakdown="Total",subgroups="Total",vacancies=as.character(vacancies)) %>%
+    rename(value = vacancies),
+  D_OnsProf %>%
+    filter(`Detailed Profession Category` == "None",substr(time_period,1,3)=="Dec",vacancies!="[x]") %>%
+    select(-`Detailed Profession Category`) %>%
+    mutate(breakdown = "Summary Profession Category", metric = "vacancies") %>%
+    rename(subgroups = `Summary Profession Category`,value=vacancies),
+  D_OnsProf %>%
+    filter(`Detailed Profession Category` != "None",substr(time_period,1,3)=="Dec",vacancies!="[x]") %>%
+    select(-`Summary Profession Category`) %>%
+    mutate(breakdown = "Detailed Profession Category", metric = "vacancies") %>%
+    rename(subgroups = `Detailed Profession Category`,value=vacancies),
+  # add enterprise birth and deaths
+  D_enterprise_demo1621 %>%
+    rename(time_period =year)%>%
+    pivot_longer(!c("geographic_level", "area", "time_period"),
+                 names_to = "metric",
+                 values_to = "value"
+    )%>%
+    mutate(breakdown="Total",subgroups="Total"),
+  # add enterprise count
+  C_enterpriseSizeIndustry%>%mutate(time_period=as.character(time_period),value=as.character(value)),
+  # add level 3 + rate
+  C_level3Plus%>%mutate(time_period=as.character(time_period),value=as.character(value)) ,
+  # add ks4 destinations
+  C_destinations%>%mutate(time_period=as.character(time_period),value=as.character(value))
 ) %>%
+  mutate(metric = gsub(" ", "", metric)) 
+
+C_datahub <- D_breakdown_datahub %>%
   # rename some of the elements so they make sense here
   mutate(metricNeat = case_when(
     metric == "All " ~ "Population volume",
@@ -2122,6 +2252,7 @@ C_datahub <- bind_rows(
     metric == "unempRate" ~ "Unemployment rate",
     metric == "inactiveRate" ~ "Inactive rate",
     metric == "Employment" ~ "Employment volume",
+    metric == "InEmployment" ~ "Employment volume",
     metric == "SelfEmployed" ~ "Self-employment volume",
     metric == "Unemployed" ~ "Unemployed volume",
     metric == "Inactive" ~ "Inactive volume",
@@ -2132,9 +2263,11 @@ C_datahub <- bind_rows(
     metric == "starts_rate_per_100000_population" ~ "FE start rate per 100k",
     metric == "achievements" ~ "FE achievements volume",
     metric == "participation" ~ "FE participation volume",
+    metric == "enrolments" ~ "FE enrolled volume",
     metric == "starts" ~ "FE starts volume",
-    metric == "birthRate" ~ "Enterprise birth rate",
-    metric == "deathRate" ~ "Enterprise death rate",
+    metric == "births" ~ "Enterprise births",
+    metric == "deaths" ~ "Enterprise deaths",
+    metric == "active" ~ "Enterprises active",
     metric == "enterpriseCount" ~ "Enterprise count",
     metric == "level3AndAboveRate" ~ "Qualified at Level 3 or above",
     metric == "sustainedPositiveDestinationKS4Rate" ~ "KS4 completers sustained positive detination rate",
