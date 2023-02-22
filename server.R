@@ -52,6 +52,9 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_localskills, {
     updateTabsetPanel(session, "navbar", "Local skills")
   })
+  observeEvent(input$link_to_tabpanel_localskills2, {
+    updateTabsetPanel(session, "navbar", "Local skills")
+  })
 
   # Create link to further resources tab
   observeEvent(input$link_to_tabpanel_furtherresources, {
@@ -112,7 +115,7 @@ server <- function(input, output, session) {
   })
   # Create link to data tab
   observeEvent(input$link_to_tabpanel_data, {
-    updateTabsetPanel(session, "navbar", "Data information and download")
+    updateTabsetPanel(session, "navbar", "Data sources")
   })
   ## 2.5 Data information ----
   ### 2.5.1 Data table downloads ----
