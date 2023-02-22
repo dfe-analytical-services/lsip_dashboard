@@ -1748,7 +1748,7 @@ C_OnsProfTime <- C_OnsProf %>%
   group_by(geographic_level, area, `Summary Profession Category`, time_period) %>%
   summarise(vacancies = sum(vacancies)) %>%
   mutate(time_period = as.Date(paste("01 ", time_period, sep = ""), "%d %b %y"))
-write.csv(C_OnsProfTime, file = "Data\\AppData\\C_OnsProfTime.csv", row.names = FALSE)
+#write.csv(C_OnsProfTime, file = "Data\\AppData\\C_OnsProfTime.csv", row.names = FALSE)
 # make download version
 D_OnsProfTime <- C_OnsProfTime %>%
   mutate(vacancies = as.character(vacancies))
@@ -1812,13 +1812,13 @@ C_Geog <- neatGeog %>%
   left_join(C_EmpRate_APS1822 %>% filter(year == 2022), by = c("areaName" = "area", "geog" = "geographic_level")) %>%
   # add achievment rate
   left_join(
-    C_Achieve_ILR1621 %>% filter(time_period == 202021, level_or_type == "Further education and skills: Total", age_group == "Total") %>%
+    C_Achieve_ILR1621 %>% filter(time_period == 202122, level_or_type == "Further education and skills: Total", age_group == "Total") %>%
       mutate(geographic_level = case_when(geographic_level == "National" ~ "COUNTRY", TRUE ~ geographic_level)) %>%
       mutate(geographic_level = case_when(geographic_level == "Local authority district" ~ "LADU", TRUE ~ geographic_level)),
     by = c("areaName" = "area", "geog" = "geographic_level")
   ) %>%
   left_join(
-    C_OnsProfTime %>% filter(time_period == "2022-10-01") %>%
+    C_OnsProfTime %>% filter(time_period == "2022-12-01") %>%
       group_by(area, geographic_level) %>%
       summarise(vacancies = sum(vacancies)),
     by = c("areaName" = "area", "geog" = "geographic_level")
