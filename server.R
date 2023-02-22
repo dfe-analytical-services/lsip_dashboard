@@ -1647,7 +1647,7 @@ server <- function(input, output, session) {
     LaHighLow <- C_Geog %>%
       filter(
         geog == "LADU",
-        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == sub(" LEP| LSIP| MCA", "", input$geoChoice)
+        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == input$geoChoice
       ) %>%
       mutate(ranking = rank(desc(eval(
         parse(text = input$splashMetric)
@@ -1681,7 +1681,7 @@ server <- function(input, output, session) {
     mapData <- C_Geog %>%
       filter(
         geog == "LADU",
-        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == sub(" LEP| LSIP| MCA", "", input$geoChoice)
+        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == input$geoChoice
       )
     pal <- colorNumeric("Blues", mapData[[input$splashMetric]])
 

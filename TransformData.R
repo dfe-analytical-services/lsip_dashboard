@@ -1765,8 +1765,8 @@ neatLA <- I_mapLA %>%
   mutate(geog = "LADU") %>% # add geog type
   rename(areaCode = LAD22CD, areaName = LAD22NM) %>% # consistent naming
   # add on lsip, lep and mca groupings
-  left_join(I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by = c("areaCode" = "LAD21CD")) %>%
-  left_join(C_mcalookup %>% select(LAD21CD, MCA = CAUTH21NM), by = c("areaCode" = "LAD21CD")) %>%
+  left_join(I_LEP2020 %>%mutate(LEP=paste0(LEP21NM1," LEP"),LEP2=paste0(LEP21NM2," LEP"),LSIP=paste0(LSIP," LSIP"))%>% select(LAD21CD, LSIP, LEP, LEP2), by = c("areaCode" = "LAD21CD")) %>%
+  left_join(C_mcalookup %>% mutate(MCA=paste0(CAUTH21NM," MCA"))%>%select(LAD21CD, MCA), by = c("areaCode" = "LAD21CD")) %>%
   filter(is.na(LSIP) == FALSE) %>% # remove non England
   mutate(LSIP = case_when(
     LSIP == "Buckinghamshire " ~ "Buckinghamshire",
