@@ -2205,11 +2205,10 @@ server <- function(input, output, session) {
     list("Current area" = C_datahub %>%
       filter(
         metric == input$splashMetric,
-        (geogConcat == input$geoChoice |
-          geogConcat %in% input$geoComps |
-          geogConcat == "England")
-      ) %>%
-      select(-geogConcat))
+        (paste0(area," ",geographic_level) == input$geoChoice |
+           paste0(area," ",geographic_level) %in% input$geoComps |
+           paste0(area," ",geographic_level) == "England")
+      ))
   })
   nameDownloadV1Current <- reactive({
     paste0(currentMetric(), "-", input$geoChoice, ".xlsx")
@@ -2405,48 +2404,48 @@ server <- function(input, output, session) {
   )
 
   ### 2.4.3 Unique code----
-  allOptions <- bind_rows(
-    data.frame(
-      Choice = c("LEP", "LSIP", "MCA", "LA"),
-      filterID = "a"
-    ),
-    C_datahub %>% distinct(Choice = area) %>% mutate(filterID = "b"),
-    data.frame(Choice = c("Yes", "No"), filterID = "c"),
-    data.frame(
-      Choice = c("National", "Regional (to come)"),
-      filterID = "d"
-    ),
-    C_datahub %>% distinct(Choice = metricNeat) %>% mutate(filterID = "e"),
-    C_datahub %>% distinct(Choice = breakdown) %>% mutate(filterID = "f"),
-    C_datahub %>% distinct(Choice = as.character(time_period)) %>% mutate(filterID = "g")
-  ) %>%
-    group_by(filterID) %>%
-    mutate(ChoiceNo = row_number()) %>%
-    mutate(ChoiceID = paste0(filterID, ChoiceNo)) %>%
-    ungroup() %>%
-    select(-filterID, -ChoiceNo)
-
-  output$uniqueCode <- renderUI({
-    allOptions %>%
-      mutate(
-        chosen = case_when(
-          Choice %in% input$hubArea ~ 1,
-          Choice %in% input$hubMetric ~ 1,
-          Choice %in% input$hubGeog ~ 1,
-          Choice %in% input$hubComparators ~ 1,
-          Choice %in% input$hubLA ~ 1,
-          Choice %in% input$hubBreakdowns ~ 1,
-          Choice %in% input$hubYears ~ 1,
-          TRUE ~ 0
-        )
-      ) %>%
-      filter(chosen == 1) %>%
-      select(ChoiceID) %>%
-      summarize(
-        strong = str_c(ChoiceID, collapse = ""),
-        .groups = "drop"
-      )
-  })
+  # allOptions <- bind_rows(
+  #   data.frame(
+  #     Choice = c("LEP", "LSIP", "MCA", "LA"),
+  #     filterID = "a"
+  #   ),
+  #   C_datahub %>% distinct(Choice = area) %>% mutate(filterID = "b"),
+  #   data.frame(Choice = c("Yes", "No"), filterID = "c"),
+  #   data.frame(
+  #     Choice = c("National", "Regional (to come)"),
+  #     filterID = "d"
+  #   ),
+  #   C_datahub %>% distinct(Choice = metricNeat) %>% mutate(filterID = "e"),
+  #   C_datahub %>% distinct(Choice = breakdown) %>% mutate(filterID = "f"),
+  #   C_datahub %>% distinct(Choice = as.character(time_period)) %>% mutate(filterID = "g")
+  # ) %>%
+  #   group_by(filterID) %>%
+  #   mutate(ChoiceNo = row_number()) %>%
+  #   mutate(ChoiceID = paste0(filterID, ChoiceNo)) %>%
+  #   ungroup() %>%
+  #   select(-filterID, -ChoiceNo)
+  # 
+  # output$uniqueCode <- renderUI({
+  #   allOptions %>%
+  #     mutate(
+  #       chosen = case_when(
+  #         Choice %in% input$hubArea ~ 1,
+  #         Choice %in% input$hubMetric ~ 1,
+  #         Choice %in% input$hubGeog ~ 1,
+  #         Choice %in% input$hubComparators ~ 1,
+  #         Choice %in% input$hubLA ~ 1,
+  #         Choice %in% input$hubBreakdowns ~ 1,
+  #         Choice %in% input$hubYears ~ 1,
+  #         TRUE ~ 0
+  #       )
+  #     ) %>%
+  #     filter(chosen == 1) %>%
+  #     select(ChoiceID) %>%
+  #     summarize(
+  #       strong = str_c(ChoiceID, collapse = ""),
+  #       .groups = "drop"
+  #     )
+  # })
 
   # ## 2.6 FE interventions table----
   # output$interventionTable <- DT::renderDataTable({

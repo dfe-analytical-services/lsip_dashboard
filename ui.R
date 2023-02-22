@@ -806,14 +806,15 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
         12,
         h1("Data download"),
         p(
-          "Use the filters to create a bespoke dataset. * fields are mandatory. Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want."
+          "Use the filters to create a bespoke dataset. * fields are mandatory." 
+          #Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want."
         )
       )),
-      fluidRow(column(
-        12,
-        p("If you have a query code, enter it here:"),
-        textInput("hubCode", label = NULL),
-      )),
+      # fluidRow(column(
+      #   12,
+      #   p("If you have a query code, enter it here:"),
+      #   textInput("hubCode", label = NULL),
+      # )),
       ### 2.4.1 Datahub filters ----
       fluidRow(column(12, h2("Geography"))),
       fluidRow(
@@ -870,11 +871,11 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
         )
       ),
       fluidRow(column(12, h2("Output"))),
-      fluidRow(column(
-        12,
-        p("If you want to reuse this query, use this code:"),
-        p(uiOutput("uniqueCode")),
-      )),
+      # fluidRow(column(
+      #   12,
+      #   p("If you want to reuse this query, use this code:"),
+      #   p(uiOutput("uniqueCode")),
+      # )),
       fluidRow(column(
         3,
         downloadButton(
