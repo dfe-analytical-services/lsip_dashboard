@@ -1826,7 +1826,7 @@ server <- function(input, output, session) {
               "\nNone"
             }) |
               # get england for comparison (if a rate)
-              (if (str_sub(input$splashMetric, start = -4) %in% c("Rate", "tion")) {
+              (if (str_sub(input$splashMetric, start = -4) =="Rate"| str_sub(input$splashMetric, start = -10) =="population") {
                 (geogConcat == "England")
               } else {
                 area == "\nNone"
@@ -1877,7 +1877,7 @@ server <- function(input, output, session) {
             label_number_si()
           }) +
           labs(colour = "") +
-          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) %in% c("Rate", "tion")) {
+          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) =="Rate"| str_sub(input$splashMetric, start = -10) =="population") {
             chartColors6
           } else {
             chartColors5
