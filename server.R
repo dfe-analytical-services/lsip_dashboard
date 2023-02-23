@@ -2361,8 +2361,7 @@ server <- function(input, output, session) {
   })
 
   output$hubTable <- renderDataTable({
-    DT::datatable(datahubDataset()) %>%
-      formatCurrency("Value", currency = "", interval = 3, mark = ",", digit = 0)
+    DT::datatable(datahubDataset())
   })
 
   # Download button

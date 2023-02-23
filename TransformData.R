@@ -1703,7 +1703,6 @@ format.OnsProf <- function(x) {
       area == "Cambridge and Peterborough" ~ "Cambridgeshire and Peterborough",
       area == "Buckinghamshire " ~ "Buckinghamshire",
       area == "North East*" ~ "North East",
-      area == "Buckinghamshire " ~ "Norfolk and Suffolk",
       area == "Norfolk and Suffolk " ~ "Norfolk and Suffolk",
       TRUE ~ area
     ))
@@ -2286,8 +2285,8 @@ C_datahub <- bind_rows(
     metric == "active" ~ "Enterprises active",
     metric == "enterpriseCount" ~ "Enterprise count",
     metric == "level3AndAboveRate" ~ "Qualified at Level 3 or above",
-    metric == "sustainedPositiveDestinationKS4Rate" ~ "KS4 completers sustained positive detination rate",
-    metric == "sustainedPositiveDestinationKS5Rate" ~ "KS5 completers sustained positive detination rate",
+    metric == "sustainedPositiveDestinationKS4Rate" ~ "KS4 sustained positive detination rate",
+    metric == "sustainedPositiveDestinationKS5Rate" ~ "KS5 sustained positive detination rate",
     metric == "vacancies" ~ "Online job adverts",
     TRUE ~ metric
   )) %>%
