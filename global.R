@@ -65,8 +65,8 @@ metricChoices <- list(
     "Qualified at Level 3 or above" = "level3AndAboveRate"
   ),
   "Destinations" = list(
-    "KS4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
-    "KS5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
+    "KS4 sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
+    "KS5 sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
   )
   # ,
   # "Mismatch" = list("Supply vs demand TO COME" = "mismatch")
