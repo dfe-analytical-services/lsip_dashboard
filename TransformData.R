@@ -2111,7 +2111,7 @@ D_breakdown <- bind_rows(
 
 # Create dataHub dataset
 # create neat breakdown file for download so keeping symbols
-D_breakdown_datahub <- bind_rows(
+C_datahub <- bind_rows(
   # employment data
   D_EmpRate_APS1822 %>%
     rename(time_period = year) %>%
@@ -2170,7 +2170,13 @@ D_breakdown_datahub <- bind_rows(
     filter(breakdown != "NA") %>%
     select(-apprenticeships_or_further_education, -level_or_type, -age_group) %>%
     filter(str_sub(metric, -10, -1) == "population") %>%
-    mutate(time_period = as.character(time_period)),
+    mutate(
+      time_period = as.character(time_period),
+      breakdown = case_when(
+        subgroups == "Total" ~ "Total",
+        TRUE ~ breakdown
+      )
+    ),
   # ssa breakdown
   D_Achieve_ILR21 %>%
     filter(notional_nvq_level == "Total", sex == "Total", ssa_t1_desc != "Total") %>%
@@ -2235,18 +2241,28 @@ D_breakdown_datahub <- bind_rows(
     ) %>%
     mutate(breakdown = "Total", subgroups = "Total"),
   # add enterprise count
-  C_enterpriseSizeIndustry %>% mutate(time_period = as.character(time_period), value = as.character(value)),
+  C_enterpriseSizeIndustry %>% mutate(
+    time_period = as.character(time_period), value = as.character(value),
+    breakdown = case_when(
+      subgroups == "Total" ~ "Total",
+      TRUE ~ breakdown
+    )
+  ),
   # add level 3 + rate
   C_level3Plus %>% mutate(time_period = as.character(time_period), value = as.character(value)),
   # add ks4 destinations
   C_destinations %>% mutate(time_period = as.character(time_period), value = as.character(value))
 ) %>%
-  mutate(metric = gsub(" ", "", metric))
-
-C_datahub <- D_breakdown_datahub %>%
+  mutate(metric = gsub(" ", "", metric)) %>%
+  mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
+  mutate(geogConcat = case_when(
+    geogConcat == "England COUNTRY" ~ "England",
+    TRUE ~ geogConcat
+  )) %>%
+  filter(metric != "starts_rate_per_100000_population") %>% # very bad data coverage
   # rename some of the elements so they make sense here
   mutate(metricNeat = case_when(
-    metric == "All " ~ "Population volume",
+    metric == "All" ~ "Population volume",
     metric == "empRate" ~ "Employment rate",
     metric == "selfempRate" ~ "Self-employment rate",
     metric == "unempRate" ~ "Unemployment rate",
@@ -2260,7 +2276,7 @@ C_datahub <- D_breakdown_datahub %>%
     metric == "Employees" ~ "Employees volume",
     metric == "achievements_rate_per_100000_population" ~ "FE achievement rate per 100,000 population",
     metric == "participation_rate_per_100000_population" ~ "FE participation rate per 100,000 population",
-    metric == "starts_rate_per_100000_population" ~ "FE start rate per 100k",
+    # metric == "starts_rate_per_100000_population" ~ "FE start rate per 100k",
     metric == "achievements" ~ "FE achievements volume",
     metric == "participation" ~ "FE participation volume",
     metric == "enrolments" ~ "FE enrolled volume",
@@ -2271,7 +2287,7 @@ C_datahub <- D_breakdown_datahub %>%
     metric == "enterpriseCount" ~ "Enterprise count",
     metric == "level3AndAboveRate" ~ "Qualified at Level 3 or above",
     metric == "sustainedPositiveDestinationKS4Rate" ~ "KS4 completers sustained positive detination rate",
-    metric == "sustainedPositiveDestinationKS5Rate" ~ "KS4 completers sustained positive detination rate",
+    metric == "sustainedPositiveDestinationKS5Rate" ~ "KS5 completers sustained positive detination rate",
     metric == "vacancies" ~ "Online job adverts",
     TRUE ~ metric
   )) %>%
@@ -2280,7 +2296,7 @@ C_datahub <- D_breakdown_datahub %>%
     breakdown == "Industry" ~ "Industry split over geography",
     TRUE ~ breakdown
   )) %>%
-  select(-Total)
+  select(-Total, -area, -geographic_level)
 write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
 
 # Find top ten for each breakdown (these are chosen in the filter)

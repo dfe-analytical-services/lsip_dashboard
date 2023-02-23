@@ -849,20 +849,8 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       fluidRow(
         column(
           4,
-          selectizeInput(
-            "hubGeog",
-            choices = c("LEP", "LSIP", "MCA", "LA"),
-            multiple = TRUE,
-            label = NULL,
-            options = list(placeholder = "Choose geographies*")
-          )
-        ),
-        column(
-          4,
           uiOutput("hubAreaInput")
-        )
-      ),
-      fluidRow(
+        ),
         column(
           4,
           selectizeInput(
