@@ -41,10 +41,10 @@ metricChoices <- list(
     "Self-employment rate" = "selfempRate",
     "Unemployment rate" = "unempRate",
     "Inactive rate" = "inactiveRate",
-    "Employment volume" = "Employment",
-    "Self-employment volume" = "SelfEmployed",
-    "Unemployed volume" = "Unemployed",
-    "Inactive volume" = "Inactive"
+    "Employment" = "Employment",
+    "Self-employment" = "SelfEmployed",
+    "Unemployed" = "Unemployed",
+    "Inactive" = "Inactive"
   ),
   "Jobs" = list(
     "Online job adverts" = "vacancies",
@@ -56,17 +56,17 @@ metricChoices <- list(
     "Business death rate" = "deathRate"
   ),
   "Skills" = list(
-    "FE achievement volumes" = "achievements",
-    "FE participation volumes" = "participation",
+    "FE achievement" = "achievements",
+    "FE participation" = "participation",
     # "FE starts" = "starts",
-    "FE achievement rate per 100,000 population" = "achievements_rate_per_100000_population",
-    "FE participation rate per 100,000 population" = "participation_rate_per_100000_population",
+    "FE achievement rate per 100,000" = "achievements_rate_per_100000_population",
+    "FE participation rate per 100,000" = "participation_rate_per_100000_population",
     # "FE start rate" = "starts_rate_per_100000_population",
     "Qualified at Level 3 or above" = "level3AndAboveRate"
   ),
   "Destinations" = list(
-    "Key stage 4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
-    "Key stage 5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
+    "KS4 completers sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
+    "KS5 completers sustained positive destination rate" = "sustainedPositiveDestinationKS5Rate"
   )
   # ,
   # "Mismatch" = list("Supply vs demand TO COME" = "mismatch")
