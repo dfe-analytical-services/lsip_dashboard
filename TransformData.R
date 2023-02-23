@@ -1714,14 +1714,14 @@ D_OnsProf <- bind_rows(
   format.OnsProf(I_OnsProfDetailLep), # remove code since it doesn't exist in other geogs
   format.OnsProf(I_OnsProfDetailLsip),
   format.OnsProf(I_OnsProfDetailMca),
-  format.OnsProf(I_OnsProfDetailLA %>%rename(region=1)%>%filter(!(region%in%c("Scotland","Wales","Northern Ireland","Unknown")))%>% select(-region)), # remove region code
+  format.OnsProf(I_OnsProfDetailLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown"))) %>% select(-region)), # remove region code
   format.OnsProf(I_OnsProfDetailEng) %>% filter(area == "England"),
   format.OnsProf(I_OnsProfDetailRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LSIP", area = "Greater London"),
   format.OnsProf(I_OnsProfDetailRegion) %>% filter(area == "London") %>% mutate(geographic_level = "LEP"),
   format.OnsProf(I_OnsProfLep %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
   format.OnsProf(I_OnsProfLsip %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
   format.OnsProf(I_OnsProfMca %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
-  format.OnsProf(I_OnsProfLA %>%rename(region=1)%>%filter(!(region%in%c("Scotland","Wales","Northern Ireland","Unknown")))%>% select(-region) %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
+  format.OnsProf(I_OnsProfLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown"))) %>% select(-region) %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
   format.OnsProf(I_OnsProfEng %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "England"),
   format.OnsProf(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "London") %>% mutate(geographic_level = "LSIP", area = "Greater London"),
   format.OnsProf(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "London") %>% mutate(geographic_level = "LEP")
@@ -1748,7 +1748,7 @@ C_OnsProfTime <- C_OnsProf %>%
   group_by(geographic_level, area, `Summary Profession Category`, time_period) %>%
   summarise(vacancies = sum(vacancies)) %>%
   mutate(time_period = as.Date(paste("01 ", time_period, sep = ""), "%d %b %y"))
-#write.csv(C_OnsProfTime, file = "Data\\AppData\\C_OnsProfTime.csv", row.names = FALSE)
+# write.csv(C_OnsProfTime, file = "Data\\AppData\\C_OnsProfTime.csv", row.names = FALSE)
 # make download version
 D_OnsProfTime <- C_OnsProfTime %>%
   mutate(vacancies = as.character(vacancies))
@@ -1765,8 +1765,8 @@ neatLA <- I_mapLA %>%
   mutate(geog = "LADU") %>% # add geog type
   rename(areaCode = LAD22CD, areaName = LAD22NM) %>% # consistent naming
   # add on lsip, lep and mca groupings
-  left_join(I_LEP2020 %>%mutate(LEP=paste0(LEP21NM1," LEP"),LEP2=paste0(LEP21NM2," LEP"),LSIP=paste0(LSIP," LSIP"))%>% select(LAD21CD, LSIP, LEP, LEP2), by = c("areaCode" = "LAD21CD")) %>%
-  left_join(C_mcalookup %>% mutate(MCA=paste0(CAUTH21NM," MCA"))%>%select(LAD21CD, MCA), by = c("areaCode" = "LAD21CD")) %>%
+  left_join(I_LEP2020 %>% mutate(LEP = paste0(LEP21NM1, " LEP"), LEP2 = paste0(LEP21NM2, " LEP"), LSIP = paste0(LSIP, " LSIP")) %>% select(LAD21CD, LSIP, LEP, LEP2), by = c("areaCode" = "LAD21CD")) %>%
+  left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH21NM, " MCA")) %>% select(LAD21CD, MCA), by = c("areaCode" = "LAD21CD")) %>%
   filter(is.na(LSIP) == FALSE) %>% # remove non England
   mutate(LSIP = case_when(
     LSIP == "Buckinghamshire " ~ "Buckinghamshire",
@@ -1868,7 +1868,7 @@ C_time <- bind_rows(
   # employment data
   C_EmpRate_APS1822 %>%
     rename(time_period = year) %>%
-    mutate(chart_year = as.Date(ISOdate(as.numeric(time_period)-1, 1, 1))) %>%#shift to start of year
+    mutate(chart_year = as.Date(ISOdate(as.numeric(time_period) - 1, 1, 1))) %>% # shift to start of year
     # mutate_at(c("time_period"), as.integer) %>%
     pivot_longer(!c("geographic_level", "area", "time_period", "chart_year"),
       names_to = "metric",
@@ -2117,25 +2117,25 @@ D_breakdown_datahub <- bind_rows(
     rename(time_period = year) %>%
     mutate(breakdown = "Total", subgroups = "Total") %>%
     pivot_longer(!c("geographic_level", "area", "time_period", "breakdown", "subgroups"),
-                 names_to = "metric",
-                 values_to = "value"
+      names_to = "metric",
+      values_to = "value"
     ),
   D_EmpOcc_APS1721 %>%
     rename(time_period = year) %>%
     pivot_longer(!c("geographic_level", "area", "time_period"),
-                 names_to = "subgroups",
-                 values_to = "value"
+      names_to = "subgroups",
+      values_to = "value"
     ) %>%
-    mutate(breakdown = "Occupation", metric = "Employment",time_period=as.character(time_period)),
+    mutate(breakdown = "Occupation", metric = "Employment", time_period = as.character(time_period)),
   # employment by industry
   D_EmpInd_APS1822 %>%
     rename(time_period = year) %>%
-   mutate_at(c("time_period"), as.integer) %>%
+    mutate_at(c("time_period"), as.integer) %>%
     pivot_longer(!c("geographic_level", "area", "time_period"),
-                 names_to = "subgroups",
-                 values_to = "value"
+      names_to = "subgroups",
+      values_to = "value"
     ) %>%
-    mutate(breakdown = "Industry", metric = "Employment",time_period=as.character(time_period)),
+    mutate(breakdown = "Industry", metric = "Employment", time_period = as.character(time_period)),
   # ILR rate data
   D_Achieve_ILR1621 %>%
     mutate(geographic_level = case_when(
@@ -2144,8 +2144,8 @@ D_breakdown_datahub <- bind_rows(
       TRUE ~ geographic_level
     )) %>%
     pivot_longer(!c("geographic_level", "area", "time_period", "apprenticeships_or_further_education", "level_or_type", "age_group"),
-                 names_to = "metric",
-                 values_to = "value"
+      names_to = "metric",
+      values_to = "value"
     ) %>%
     # get subgroups when the other fields are total
     mutate(subgroups = case_when(
@@ -2169,79 +2169,79 @@ D_breakdown_datahub <- bind_rows(
     )) %>%
     filter(breakdown != "NA") %>%
     select(-apprenticeships_or_further_education, -level_or_type, -age_group) %>%
-    filter(str_sub(metric, -10, -1) == "population")%>%
-    mutate(time_period=as.character(time_period)),
-  #ssa breakdown 
+    filter(str_sub(metric, -10, -1) == "population") %>%
+    mutate(time_period = as.character(time_period)),
+  # ssa breakdown
   D_Achieve_ILR21 %>%
-    filter(notional_nvq_level=="Total",sex=="Total",ssa_t1_desc!="Total")%>%
-    select(-notional_nvq_level,-sex)%>%
-    pivot_longer(!c("geographic_level", "area", "time_period","ssa_t1_desc"),
-                 names_to = "metric",
-                 values_to = "value"
-    )%>%
-    rename(subgroups=ssa_t1_desc)%>%
-    mutate(breakdown="SSAtier1",time_period=as.character(time_period)),
-  #level breakdown 
+    filter(notional_nvq_level == "Total", sex == "Total", ssa_t1_desc != "Total") %>%
+    select(-notional_nvq_level, -sex) %>%
+    pivot_longer(!c("geographic_level", "area", "time_period", "ssa_t1_desc"),
+      names_to = "metric",
+      values_to = "value"
+    ) %>%
+    rename(subgroups = ssa_t1_desc) %>%
+    mutate(breakdown = "SSAtier1", time_period = as.character(time_period)),
+  # level breakdown
   D_Achieve_ILR21 %>%
-    filter(notional_nvq_level!="Total",sex=="Total",ssa_t1_desc=="Total")%>%
-    select(-ssa_t1_desc,-sex)%>%
-    pivot_longer(!c("geographic_level", "area", "time_period","notional_nvq_level"),
-                 names_to = "metric",
-                 values_to = "value"
-    )%>%
-    rename(subgroups=notional_nvq_level)%>%
-    mutate(breakdown="NVQlevel",time_period=as.character(time_period)),
-  #gender breakdown 
+    filter(notional_nvq_level != "Total", sex == "Total", ssa_t1_desc == "Total") %>%
+    select(-ssa_t1_desc, -sex) %>%
+    pivot_longer(!c("geographic_level", "area", "time_period", "notional_nvq_level"),
+      names_to = "metric",
+      values_to = "value"
+    ) %>%
+    rename(subgroups = notional_nvq_level) %>%
+    mutate(breakdown = "NVQlevel", time_period = as.character(time_period)),
+  # gender breakdown
   D_Achieve_ILR21 %>%
-    filter(notional_nvq_level=="Total",sex!="Total",ssa_t1_desc=="Total")%>%
-    select(-notional_nvq_level,-ssa_t1_desc)%>%
-    pivot_longer(!c("geographic_level", "area", "time_period","sex"),
-                 names_to = "metric",
-                 values_to = "value"
-    )%>%
-    rename(subgroups=sex)%>%
-    mutate(breakdown="Sex",time_period=as.character(time_period)),
-  #totals breakdown 
+    filter(notional_nvq_level == "Total", sex != "Total", ssa_t1_desc == "Total") %>%
+    select(-notional_nvq_level, -ssa_t1_desc) %>%
+    pivot_longer(!c("geographic_level", "area", "time_period", "sex"),
+      names_to = "metric",
+      values_to = "value"
+    ) %>%
+    rename(subgroups = sex) %>%
+    mutate(breakdown = "Sex", time_period = as.character(time_period)),
+  # totals breakdown
   D_Achieve_ILR21 %>%
-    filter(notional_nvq_level=="Total",sex=="Total",ssa_t1_desc=="Total")%>%
-    select(-notional_nvq_level,-ssa_t1_desc,-sex)%>%
+    filter(notional_nvq_level == "Total", sex == "Total", ssa_t1_desc == "Total") %>%
+    select(-notional_nvq_level, -ssa_t1_desc, -sex) %>%
     pivot_longer(!c("geographic_level", "area", "time_period"),
-                 names_to = "metric",
-                 values_to = "value"
-    )%>%
-    mutate(breakdown="Total",subgroups="Total",time_period=as.character(time_period)),
-  C_OnsProf %>%#get totals over time
-    filter(`Detailed Profession Category` == "None")%>%
+      names_to = "metric",
+      values_to = "value"
+    ) %>%
+    mutate(breakdown = "Total", subgroups = "Total", time_period = as.character(time_period)),
+  C_OnsProf %>% # get totals over time
+    filter(`Detailed Profession Category` == "None") %>%
     group_by(area, geographic_level, time_period) %>%
     summarise(vacancies = sum(vacancies)) %>%
-    mutate(metric = "vacancies",breakdown="Total",subgroups="Total",vacancies=as.character(vacancies)) %>%
+    mutate(metric = "vacancies", breakdown = "Total", subgroups = "Total", vacancies = as.character(vacancies)) %>%
     rename(value = vacancies),
   D_OnsProf %>%
-    filter(`Detailed Profession Category` == "None",substr(time_period,1,3)=="Dec",vacancies!="[x]") %>%
+    filter(`Detailed Profession Category` == "None", substr(time_period, 1, 3) == "Dec", vacancies != "[x]") %>%
     select(-`Detailed Profession Category`) %>%
     mutate(breakdown = "Summary Profession Category", metric = "vacancies") %>%
-    rename(subgroups = `Summary Profession Category`,value=vacancies),
+    rename(subgroups = `Summary Profession Category`, value = vacancies),
   D_OnsProf %>%
-    filter(`Detailed Profession Category` != "None",substr(time_period,1,3)=="Dec",vacancies!="[x]") %>%
+    filter(`Detailed Profession Category` != "None", substr(time_period, 1, 3) == "Dec", vacancies != "[x]") %>%
     select(-`Summary Profession Category`) %>%
     mutate(breakdown = "Detailed Profession Category", metric = "vacancies") %>%
-    rename(subgroups = `Detailed Profession Category`,value=vacancies),
+    rename(subgroups = `Detailed Profession Category`, value = vacancies),
   # add enterprise birth and deaths
   D_enterprise_demo1621 %>%
-    rename(time_period =year)%>%
+    rename(time_period = year) %>%
     pivot_longer(!c("geographic_level", "area", "time_period"),
-                 names_to = "metric",
-                 values_to = "value"
-    )%>%
-    mutate(breakdown="Total",subgroups="Total"),
+      names_to = "metric",
+      values_to = "value"
+    ) %>%
+    mutate(breakdown = "Total", subgroups = "Total"),
   # add enterprise count
-  C_enterpriseSizeIndustry%>%mutate(time_period=as.character(time_period),value=as.character(value)),
+  C_enterpriseSizeIndustry %>% mutate(time_period = as.character(time_period), value = as.character(value)),
   # add level 3 + rate
-  C_level3Plus%>%mutate(time_period=as.character(time_period),value=as.character(value)) ,
+  C_level3Plus %>% mutate(time_period = as.character(time_period), value = as.character(value)),
   # add ks4 destinations
-  C_destinations%>%mutate(time_period=as.character(time_period),value=as.character(value))
+  C_destinations %>% mutate(time_period = as.character(time_period), value = as.character(value))
 ) %>%
-  mutate(metric = gsub(" ", "", metric)) 
+  mutate(metric = gsub(" ", "", metric))
 
 C_datahub <- D_breakdown_datahub %>%
   # rename some of the elements so they make sense here

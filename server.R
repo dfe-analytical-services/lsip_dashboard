@@ -625,6 +625,13 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_employment2, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
+      selected = "Employment"
+    )
+  })
+  # Add link to employment rate
+  observeEvent(input$link_to_tabpanel_empRate, {
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateSelectInput(session, "splashMetric",
       selected = "empRate"
     )
   })
@@ -1529,16 +1536,13 @@ server <- function(input, output, session) {
       TRUE ~ "th"
     )
     paste0(
+      (I_DataText %>% filter(metric == input$splashMetric))$mapComment, " in ",
       input$geoChoice,
-      " has a ",
+      " is ",
       compareNational,
-      " ",
-      currentMetric(),
-      " than the national average. It has the ",
+      " than the national average. It is ranked ",
       areaRank,
       suff,
-      " highest ",
-      currentMetric(),
       " of the ",
       groupCount()
     )
@@ -1554,14 +1558,14 @@ server <- function(input, output, session) {
         sprintf(
           "<strong>%s</strong><br/>%s: %s%%",
           mapData$areaName,
-          currentMetric(),
+          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
           round(mapData[[input$splashMetric]] * 100)
         ) %>% lapply(htmltools::HTML)
       } else {
         sprintf(
           "<strong>%s</strong><br/>%s: %s",
           mapData$areaName,
-          currentMetric(),
+          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
           format(round(mapData[[input$splashMetric]]), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
@@ -1600,14 +1604,14 @@ server <- function(input, output, session) {
         sprintf(
           "<strong>%s</strong><br/>%s: %s%%",
           mapData$areaName,
-          currentMetric(),
+          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
           round(mapData[[input$splashMetric]] * 100)
         ) %>% lapply(htmltools::HTML)
       } else {
         sprintf(
           "<strong>%s</strong><br/>%s: %s",
           mapData$areaName,
-          currentMetric(),
+          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
           format(round(mapData[[input$splashMetric]]), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
@@ -1661,8 +1665,8 @@ server <- function(input, output, session) {
       "ONS job adverts in London are not broken down by LA."
     } else {
       paste0(
-        str_to_sentence(currentMetric()),
-        " is highest in ",
+        (I_DataText %>% filter(metric == input$splashMetric))$LaComment,
+        " highest in ",
         LaHigh,
         " and lowest in ",
         LaLow,
@@ -1734,7 +1738,7 @@ server <- function(input, output, session) {
 
   # create time header
   output$titleTime <- renderUI({
-    paste0("How is ", currentMetric(), " changing over time?")
+    paste0("How are ", (I_DataText %>% filter(metric == input$splashMetric))$timeTitle, " changing over time?")
   })
 
   #### 2.3.7.1 Comment ----
@@ -1776,7 +1780,8 @@ server <- function(input, output, session) {
           }
         ))))$value
     paste0(
-      input$geoChoice, "'s ", currentMetric(), " has ",
+      (I_DataText %>% filter(metric == input$splashMetric))$timeComment, " ",
+      input$geoChoice, " has ",
       if (currentChange > 0) {
         "increased "
       } else {
@@ -1826,7 +1831,7 @@ server <- function(input, output, session) {
               "\nNone"
             }) |
               # get england for comparison (if a rate)
-              (if (str_sub(input$splashMetric, start = -4) =="Rate"| str_sub(input$splashMetric, start = -10) =="population") {
+              (if (str_sub(input$splashMetric, start = -4) %in% c("Rate", ",000")) {
                 (geogConcat == "England")
               } else {
                 area == "\nNone"
@@ -1877,7 +1882,7 @@ server <- function(input, output, session) {
             label_number_si()
           }) +
           labs(colour = "") +
-          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) =="Rate"| str_sub(input$splashMetric, start = -10) =="population") {
+          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) %in% c("Rate", ",000")) {
             chartColors6
           } else {
             chartColors5
@@ -1984,10 +1989,13 @@ server <- function(input, output, session) {
 
   #### 2.3.8.3 Title ----
   output$titleBreakdown <- renderUI({
-    validate(need(input$barBreakdown != "", "")) # if area not yet loaded don't try to load ch)
+    validate(
+      need(input$barBreakdown != "", ""),
+      need(input$barBreakdown != "No breakdowns available", "")
+    )
     paste0(
-      "How does ",
-      currentMetric(),
+      "How do ",
+      (I_DataText %>% filter(metric == input$splashMetric))$breakdownTitle,
       " vary by ",
       tolower(input$barBreakdown),
       "?"
@@ -2035,9 +2043,9 @@ server <- function(input, output, session) {
 
       breakdownDirection <-
         if (isTRUE(breakdownDiff$change) && breakdownDiff$change > 0) {
-          "high"
+          "higher"
         } else {
-          "low"
+          "lower"
         }
 
       paste0(
@@ -2045,7 +2053,7 @@ server <- function(input, output, session) {
         " has a ",
         breakdownDirection,
         " ",
-        currentMetric(),
+        (I_DataText %>% filter(metric == input$splashMetric))$breakdownComment,
         " in ",
         breakdownDiff$subgroups,
         " than the national average. ",
@@ -2208,9 +2216,9 @@ server <- function(input, output, session) {
     list("Current area" = C_datahub %>%
       filter(
         metric == input$splashMetric,
-        (paste0(area," ",geographic_level) == input$geoChoice |
-           paste0(area," ",geographic_level) %in% input$geoComps |
-           paste0(area," ",geographic_level) == "England")
+        (paste0(area, " ", geographic_level) == input$geoChoice |
+          paste0(area, " ", geographic_level) %in% input$geoComps |
+          paste0(area, " ", geographic_level) == "England")
       ))
   })
   nameDownloadV1Current <- reactive({
@@ -2427,7 +2435,7 @@ server <- function(input, output, session) {
   #   mutate(ChoiceID = paste0(filterID, ChoiceNo)) %>%
   #   ungroup() %>%
   #   select(-filterID, -ChoiceNo)
-  # 
+  #
   # output$uniqueCode <- renderUI({
   #   allOptions %>%
   #     mutate(
