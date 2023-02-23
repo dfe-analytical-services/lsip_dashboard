@@ -2021,7 +2021,7 @@ server <- function(input, output, session) {
           "Unemployed",
           "Inactive"
         )) {
-          " Switch to Employment volume metric for occupation and industry breakdowns."
+          " Switch to Employment metric for occupation and industry breakdowns."
         } else {
           ""
         }
@@ -2238,31 +2238,21 @@ server <- function(input, output, session) {
   output$hubAreaInput <- renderUI({
     selectizeInput(
       "hubArea",
-      choices = C_datahub %>%
-        filter(if (is.null(input$hubGeog) == TRUE) {
-          TRUE
-        } else {
-          geographic_level %in% input$hubGeog
-        }) %>%
-        distinct(Area = area),
       multiple = TRUE,
       label = NULL,
-      options = list(placeholder = "Choose areas*")
+      options = list(placeholder = "Choose LEP, LSIPs, MCAs, LAs*"),
+      choices = areaChoices
     )
   })
+
   output$hubMetricInput <- renderUI({
     selectizeInput(
       "hubMetric",
       choices = C_datahub %>% filter(
-        if (is.null(input$hubGeog) == TRUE) {
-          TRUE
-        } else {
-          geographic_level %in% input$hubGeog
-        },
         if (is.null(input$hubArea) == TRUE) {
           TRUE
         } else {
-          area %in% input$hubArea
+          geogConcat %in% input$hubArea
         }
       ) %>%
         distinct(Metrics = metricNeat),
@@ -2276,15 +2266,10 @@ server <- function(input, output, session) {
     selectizeInput(
       "hubBreakdowns",
       choices = C_datahub %>% filter(
-        if (is.null(input$hubGeog) == TRUE) {
-          TRUE
-        } else {
-          geographic_level %in% input$hubGeog
-        },
         if (is.null(input$hubArea) == TRUE) {
           TRUE
         } else {
-          area %in% input$hubArea
+          geogConcat %in% input$hubArea
         },
         if (is.null(input$hubMetric) == TRUE) {
           TRUE
@@ -2302,15 +2287,10 @@ server <- function(input, output, session) {
     selectizeInput(
       "hubYears",
       choices = C_datahub %>% filter(
-        if (is.null(input$hubGeog) == TRUE) {
-          TRUE
-        } else {
-          geographic_level %in% input$hubGeog
-        },
         if (is.null(input$hubArea) == TRUE) {
           TRUE
         } else {
-          area %in% input$hubArea
+          geogConcat %in% input$hubArea
         },
         if (is.null(input$hubMetric) == TRUE) {
           TRUE
@@ -2334,40 +2314,24 @@ server <- function(input, output, session) {
   datahubDataset <- reactive({
     C_datahub %>%
       filter(
-        (if (is.null(input$hubGeog) == TRUE) {
-          TRUE
-        } else {
-          {
-            geographic_level %in% input$hubGeog
-          } |
-            (if ("Yes" %in% input$hubLA) {
-              geographic_level == "LADU"
-            } else {
-              geographic_level == "xxx"
-            }) |
-            (if ("National" %in% input$hubComparators) {
-              geographic_level == "COUNTRY"
-            } else {
-              geographic_level == "xxx"
-            })
-        }),
         (if (is.null(input$hubArea) == TRUE) {
           TRUE
         } else {
           {
-            area %in% input$hubArea
+            geogConcat %in% input$hubArea
           } |
             (if ("Yes" %in% input$hubLA) {
-              area %in% (
-                C_Geog %>% filter(geog == "LADU", LEP %in% input$hubArea) %>% distinct(areaName)
-              )$areaName
+              geogConcat %in% (
+                C_Geog %>% filter(geog == "LADU", (LEP %in% input$hubArea | LSIP %in% input$hubArea | MCA %in% input$hubArea))
+                  %>% distinct(geogConcat)
+              )$geogConcat
             } else {
-              geographic_level == "xxx"
+              geogConcat == "xxx"
             }) |
             (if ("National" %in% input$hubComparators) {
-              area == "England"
+              geogConcat == "England"
             } else {
-              geographic_level == "xxx"
+              geogConcat == "xxx"
             })
         }),
         if (is.null(input$hubYears) == TRUE) {
@@ -2388,8 +2352,7 @@ server <- function(input, output, session) {
       ) %>%
       select(
         Year = time_period,
-        Geography = geographic_level,
-        Area = area,
+        Area = geogConcat,
         Data = metricNeat,
         Breakdown = breakdown,
         Splits = subgroups,
@@ -2398,7 +2361,8 @@ server <- function(input, output, session) {
   })
 
   output$hubTable <- renderDataTable({
-    DT::datatable(datahubDataset())
+    DT::datatable(datahubDataset()) %>%
+      formatCurrency("Value", currency = "", interval = 3, mark = ",", digit = 0)
   })
 
   # Download button
