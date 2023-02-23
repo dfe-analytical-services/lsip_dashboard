@@ -22,7 +22,7 @@ panel_overview <- function() {
             # ),
             column(
               width = 4,
-              p("Choose an area of interest"),
+              p("Choose a LEP, LSIP or MCA"),
               uiOutput("geoChoiceOver")
             ),
             column(5),
@@ -59,6 +59,11 @@ panel_overview <- function() {
             withSpinner(plotlyOutput("empLineChart", height = 81))
           )
         ),
+        # third row - link to emp tab
+        fluidRow(
+          class = "rightAlignLinks",
+          actionLink("link_to_tabpanel_employment2", "Find out more about employment volumes")
+        ),
         h3("Employment rate"),
         fluidRow(
           column(
@@ -76,7 +81,7 @@ panel_overview <- function() {
         # third row - link to emp tab
         fluidRow(
           class = "rightAlignLinks",
-          actionLink("link_to_tabpanel_employment2", "Find out more about employment")
+          actionLink("link_to_tabpanel_empRate", "Find out more about employment rates")
         ),
         # fourth row - vacancies
         h3("Online job adverts (experimental)"),
@@ -99,7 +104,7 @@ panel_overview <- function() {
         ),
 
         # sixth row - enterprise
-        h3("Business count: Micro (0-9 employees)"),
+        h3("Share of businesses with 0-9 employees (micro)"),
         fluidRow(
           column(
             width = 4,
@@ -115,7 +120,7 @@ panel_overview <- function() {
         ),
         fluidRow(
           class = "rightAlignLinks",
-          actionLink("link_to_tabpanel_enterprise2", "Find out more about enterprises")
+          actionLink("link_to_tabpanel_enterprise2", "Find out more about businesses")
         ),
         br()
       ),
@@ -176,7 +181,7 @@ panel_overview <- function() {
           actionLink("link_to_tabpanel_destinations2", "Find out more about destinations")
         ),
         # 6th row - link to app data
-        h3("Qualification level: NVQ3 or above"),
+        h3("People with a qualification at level 3 or above"),
         fluidRow(
           column(
             width = 4,

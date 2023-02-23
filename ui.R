@@ -327,7 +327,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
                 });
                 });"
   ),
-  
+
 
   # 2 Main page ----
   navlistPanel(
@@ -606,7 +606,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       fluidRow(
         column(
           4,
-          p("Choose an area of interest"),
+          p("Choose a LEP, LSIP or MCA"),
           uiOutput("geoChoice")
         ),
         column(
@@ -835,8 +835,8 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
         12,
         h1("Data download"),
         p(
-          "Use the filters to create a bespoke dataset. * fields are mandatory." 
-          #Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want."
+          "Use the filters to create a bespoke dataset. * fields are mandatory."
+          # Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want."
         )
       )),
       # fluidRow(column(
