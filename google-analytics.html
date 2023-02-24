@@ -10,59 +10,128 @@
         /*
 Adding tracking for the main downlaod button*/
      $(document).on('click', 'a#hubDownload', function(e) {
-    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    gtag('event', 'DownloadHub', {'event_category' : 'Download button click'
     });
   });
   
           /*
 Adding tracking for the data table downloads button*/
      $(document).on('click', 'a#downloadData1', function(e) {
-    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    gtag('event', 'DownloadTable1EmpRat', {'event_category' : 'Download button click'
     });
   });
     $(document).on('click', 'a#downloadData2', function(e) {
-    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    gtag('event', 'DownloadTable2EmpOcc', {'event_category' : 'Download button click'
     });
   });
     $(document).on('click', 'a#downloadData3', function(e) {
-    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    gtag('event', 'DownloadTable3EmpInd', {'event_category' : 'Download button click'
     });
   });
     $(document).on('click', 'a#downloadData4', function(e) {
-    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    gtag('event', 'DownloadTable4Fe', {'event_category' : 'Download button click'
     });
   });
     $(document).on('click', 'a#downloadData5', function(e) {
-    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    gtag('event', 'DownloadTable5eSsa', {'event_category' : 'Download button click'
     });
   });
     $(document).on('click', 'a#downloadData6', function(e) {
-    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    gtag('event', 'DownloadTable6Qual', {'event_category' : 'Download button click'
     });
   });
     $(document).on('click', 'a#downloadData7', function(e) {
-    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    gtag('event', 'DownloadTable7EntSize', {'event_category' : 'Download button click'
     });
   });
     $(document).on('click', 'a#downloadData8', function(e) {
-    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    gtag('event', 'DownloadTable8EntSizeInd', {'event_category' : 'Download button click'
     });
   });
     $(document).on('click', 'a#downloadData9', function(e) {
-    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    gtag('event', 'DownloadTable9Business', {'event_category' : 'Download button click'
     });
   });
     $(document).on('click', 'a#downloadData10', function(e) {
-    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    gtag('event', 'DownloadTable10Ks4', {'event_category' : 'Download button click'
     });
   });
     $(document).on('click', 'a#downloadData11', function(e) {
-    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    gtag('event', 'DownloadTable11Ks5', {'event_category' : 'Download button click'
     });
   });
     $(document).on('click', 'a#downloadData12', function(e) {
-    gtag('event', 'Download button', {'event_category' : 'Download button click'
+    gtag('event', 'DownloadTable12JobAds', {'event_category' : 'Download button click'
     });
   });
+  
+  /*
+Adding tracking for the overview downloads button*/
+     $(document).on('click', 'a#download_btn0a', function(e) {
+    gtag('event', 'DownloadOverviewAll', {'event_category' : 'Download button click'
+    });
+  });
+       $(document).on('click', 'a#download_btn0b', function(e) {
+    gtag('event', 'DownloadOverviewCurrent', {'event_category' : 'Download button click'
+    });
+  });
+  
+    /*
+Adding tracking for the local skills downloads button*/
+     $(document).on('click', 'a#downloadV1All', function(e) {
+    gtag('event', 'DownloadLSAll', {'event_category' : 'Download button click'
+    });
+  });
+       $(document).on('click', 'a#downloadV1Current', function(e) {
+    gtag('event', 'DownloadLSCurrent', {'event_category' : 'Download button click'
+    });
+  });
+  
+      /*
+Adding tracking for the local skills area filter*/
+    $(document).on('change', 'select#geoChoice', function(e) {
+    gtag('event', 'LsArea', {'event_category' : 'choose Area',
+    'event_label' : document.querySelector('select#geoChoice').value
+    });
+  });
+        /*
+      /*
+Adding tracking for the local skills comparison area filter*/
+    $(document).on('change', 'select#geoComps', function(e) {
+    gtag('event', 'LsCompArea', {'event_category' : 'choose Area',
+    'event_label' : document.querySelector('select#geoComps').value
+    });
+  });
+        /*
+Adding tracking for the overview area filter*/
+    $(document).on('change', 'select#geoChoiceOver', function(e) {
+    gtag('event', 'OverviewArea', {'event_category' : 'choose Area',
+    'event_label' : document.querySelector('select#geoChoiceOver').value
+    });
+  });
+          /*
+Adding tracking for the datahub area filter*/
+    $(document).on('change', 'select#hubArea', function(e) {
+    gtag('event', 'HubArea', {'event_category' : 'choose Area',
+    'event_label' : document.querySelector('select#hubArea').value
+    });
+  });
+  
+            /*
+Adding tracking for the LS metric filter*/
+    $(document).on('change', 'select#splashMetric', function(e) {
+    gtag('event', 'LsMetric', {'event_category' : 'choose Area',
+    'event_label' : document.querySelector('select#splashMetric').value
+    });
+  });
+  
+            /*
+Adding tracking for the hub metric filter*/
+    $(document).on('change', 'select#hubMetricInput', function(e) {
+    gtag('event', 'HubMetric', {'event_category' : 'choose Area',
+    'event_label' : document.querySelector('select#hubMetricInput').value
+    });
+  });
+  
   
     </script>
