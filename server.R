@@ -434,8 +434,8 @@ server <- function(input, output, session) {
   #### 2.2.3.1 Employment count ----
   # Employment count
   output$overviewEmpCntKPI <- renderUI({
-    latest <- (currentGeogData() %>% filter(time_period == 2022, metric == "Employment"))$value
-    change <- latest - (currentGeogData() %>% filter(time_period == 2021, metric == "Employment"))$value
+    latest <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2022", metric == "Employment"))$value
+    change <- latest - (currentGeogData() %>% filter(time_period == "Oct-Sep 2021", metric == "Employment"))$value
 
     # print with formatting
     h4(
@@ -455,8 +455,8 @@ server <- function(input, output, session) {
 
   # Emp chart
   empLineChart <- eventReactive(input$geoChoiceOver, {
-    change <- (currentGeogData() %>% filter(time_period == 2022, metric == "Employment"))$value -
-      (currentGeogData() %>% filter(time_period == 2021, metric == "Employment"))$value
+    change <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2022", metric == "Employment"))$value -
+      (currentGeogData() %>% filter(time_period == "Oct-Sep 2021", metric == "Employment"))$value
     line <- currentGeogData() %>%
       filter(metric == "Employment") %>%
       mutate(Year = as.numeric(str_sub(time_period, -2, -1)))
@@ -527,8 +527,8 @@ server <- function(input, output, session) {
 
   #### 2.2.3.2 Employment rate ----
   output$overviewEmpRateKPI <- renderUI({
-    latest <- (currentGeogData() %>% filter(time_period == 2022, metric == "empRate"))$value
-    change <- latest - (currentGeogData() %>% filter(time_period == 2021, metric == "empRate"))$value
+    latest <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2022", metric == "empRate"))$value
+    change <- latest - (currentGeogData() %>% filter(time_period == "Oct-Sep 2021", metric == "empRate"))$value
 
     # print with formatting
     h4(
@@ -556,8 +556,8 @@ server <- function(input, output, session) {
     summarise(max(value, na.rm = T), .groups = "drop")
 
   empRateLineChart <- eventReactive(input$geoChoiceOver, {
-    change <- (currentGeogData() %>% filter(time_period == 2022, metric == "empRate"))$value -
-      (currentGeogData() %>% filter(time_period == 2021, metric == "empRate"))$value
+    change <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2022", metric == "empRate"))$value -
+      (currentGeogData() %>% filter(time_period == "Oct-Sep 2021", metric == "empRate"))$value
     line <- bind_rows(currentGeogData(), englandData) %>%
       filter(metric == "empRate") %>%
       mutate(Year = as.numeric(str_sub(time_period, -2, -1)))
@@ -639,8 +639,8 @@ server <- function(input, output, session) {
   #### 2.2.3.3 Job adverts ----
   # Vacancy kpi
   output$overviewJobKPI <- renderUI({
-    latest <- (currentGeogData() %>% filter(time_period == "2022-12-01", metric == "vacancies"))$value
-    change <- latest - (currentGeogData() %>% filter(time_period == "2021-12-01", metric == "vacancies"))$value
+    latest <- (currentGeogData() %>% filter(time_period == "Dec 2022", metric == "vacancies"))$value
+    change <- latest - (currentGeogData() %>% filter(time_period == "Dec 2021", metric == "vacancies"))$value
 
     # print with formatting
     h4(
@@ -660,8 +660,8 @@ server <- function(input, output, session) {
 
   # Vacancy chart
   jobLineChart <- eventReactive(input$geoChoiceOver, {
-    change <- (currentGeogData() %>% filter(time_period == "2022-12-01", metric == "vacancies"))$value -
-      (currentGeogData() %>% filter(time_period == "2021-12-01", metric == "vacancies"))$value
+    change <- (currentGeogData() %>% filter(time_period == "Dec 2022", metric == "vacancies"))$value -
+      (currentGeogData() %>% filter(time_period == "Dec 2021", metric == "vacancies"))$value
     line <- currentGeogData() %>%
       filter(metric == "vacancies") %>%
       mutate(Year = as.numeric(str_sub(time_period, -2, -1)))
@@ -669,12 +669,12 @@ server <- function(input, output, session) {
     ggplot(
       line,
       aes(
-        x = as.Date(time_period),
+        x = as.Date(chart_year),
         y = value,
         group = area,
         text = paste0(
           "Period: ",
-          format(as.Date(time_period), "%b %y"),
+          time_period,
           "<br>",
           "Online job adverts: ",
           format(value, big.mark = ","),
@@ -682,15 +682,15 @@ server <- function(input, output, session) {
         )
       )
     ) +
-      geom_line(data = line %>% filter(time_period <= as.Date("2021-12-01"))) +
+      geom_line(data = line %>% filter(as.Date(chart_year) <= as.Date("2021-12-01"))) +
       geom_ribbon(
-        data = line %>% filter(time_period >= as.Date("2021-12-01")),
+        data = line %>% filter(as.Date(chart_year) >= as.Date("2021-12-01")),
         aes(ymin = min(value), ymax = value),
         fill = ifelse(change > 0, "#00703c", "#d4351c"),
         alpha = 0.3
       ) +
       geom_line(
-        data = line %>% filter(time_period >= as.Date("2021-12-01")),
+        data = line %>% filter(as.Date(chart_year) >= as.Date("2021-12-01")),
         color = ifelse(change > 0, "#00703c", "#d4351c")
       ) +
       theme_classic() +
@@ -1856,8 +1856,8 @@ server <- function(input, output, session) {
             color = Areas,
             group = Areas,
             text = paste0(
-              "Year: ",
-              chart_year,
+              "Period: ",
+              time_period,
               "<br>",
               "Area: ",
               Areas,
