@@ -1664,14 +1664,19 @@ server <- function(input, output, session) {
       currentMetric() == "online job adverts") {
       "ONS job adverts in London are not broken down by LA."
     } else {
-      paste0(
-        (I_DataText %>% filter(metric == input$splashMetric))$LaComment,
-        " highest in ",
-        LaHigh,
-        " and lowest in ",
-        LaLow,
-        "."
-      )
+      if (nrow(LaHighLow) == 1) {
+        ""
+      } # Blank if only one LA
+      else {
+        paste0(
+          (I_DataText %>% filter(metric == input$splashMetric))$LaComment,
+          " highest in ",
+          LaHigh,
+          " and lowest in ",
+          LaLow,
+          "."
+        )
+      }
     }
   })
 

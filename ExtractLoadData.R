@@ -214,3 +214,7 @@ I_OnsProfMca <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(p
 folder <- "19_dataText"
 sheetNum <- 1
 I_DataText <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+
+## LA 2011 to 2021 lookup https://geoportal.statistics.gov.uk/datasets/ons::local-authority-district-2011-to-local-authority-district-2021-lookup-for-england-and-wales/explore
+folder <- "20_LaLookup"
+I_LaLookup <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
