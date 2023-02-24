@@ -339,7 +339,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     ## 2.1 User guide ----
 
     tabPanel(
-      "About",
+      "User guide",
       ### 2.1.1 Intro ----
       fluidRow(column(
         12,
@@ -913,7 +913,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
 
     ## 2.6 FE interventions and sources ----
     tabPanel(
-      "FE sources",
+      "Further resources",
       fluidRow(
         column(
           12,

@@ -245,7 +245,7 @@ format.Achieve.ILR <- function(x) {
     )) %>%
     left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup")) %>%
     # addLEPS
-    left_join(select(C_LADLEP2020, -LAD21NM), by = c("lad_code" = "LAD21CD"),multiple = "all") %>%
+    left_join(select(C_LADLEP2020, -LAD21NM), by = c("lad_code" = "LAD21CD")) %>%
     filter(is.na(LEP) == FALSE) %>% # remove non-english
     select(
       -time_identifier, -country_code, -country_name, -region_code, -region_name, -old_la_code,
@@ -910,7 +910,6 @@ format.qual.APS <- function(x) {
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA")) %>%
     rename(gender = group)
 }
-
 
 # format data
 F_qual_APS1721 <- format.qual.APS(I_qual_APS1721) %>%
