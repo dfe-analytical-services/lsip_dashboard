@@ -199,7 +199,7 @@ server <- function(input, output, session) {
   )
   output$downloadData10 <- downloadHandler(
     filename = function() {
-      "Keystage4destinationsIndicators.xlsx"
+      "EnterprisebyemploymentsizeIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list("8a.Key Stage 4 destinations" = D_KS4destin_1521),
@@ -209,7 +209,7 @@ server <- function(input, output, session) {
   )
   output$downloadData11 <- downloadHandler(
     filename = function() {
-      "Keystage5destinationsIndicators.xlsx"
+      "EntbyempsizeandindustryIndicators.xlsx"
     },
     content = function(file) {
       write_xlsx(list("9a.Key Stage 5 destinations" = D_KS5destin_1721),

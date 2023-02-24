@@ -33,6 +33,8 @@ shhh(library(shinycssloaders))
 
 # renv::snapshot()
 
+google_analytics_key <- "MMB6NG2FE1"
+
 area_select <- c("Coast to Capital", "Greater Manchester", "England")
 
 metricChoices <- list(

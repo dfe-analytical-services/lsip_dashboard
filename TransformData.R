@@ -911,7 +911,6 @@ format.qual.APS <- function(x) {
     rename(gender = group)
 }
 
-
 # format data
 F_qual_APS1721 <- format.qual.APS(I_qual_APS1721) %>%
   mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>%
