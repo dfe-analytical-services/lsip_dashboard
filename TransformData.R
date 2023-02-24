@@ -1630,6 +1630,23 @@ C_KS4_KS5eduempapp <- F_KS4destin_1521 %>%
   select(-"Unknown", -"Not Recorded as a sustained destination") %>%
   mutate_at(c(4:7), as.numeric) %>%
   mutate(positive_sust_count = `Sustained Employment` + `Sustained Education` + `Sustained Apprenticeships`) %>%
+  # add on the new la names
+  left_join(I_LaLookup %>% select(LAD11NM, LAD21NM), by = c("area" = "LAD11NM")) %>% # make new LAs
+  mutate(area = case_when(
+    geographic_level == "LADU" & is.na(LAD21NM) == FALSE ~ LAD21NM,
+    TRUE ~ area
+  )) %>%
+  select(-LAD21NM) %>%
+  # summarise for the new LAs
+  group_by(time_period, geographic_level, area, `Cohort Group`, `Key Stage`) %>%
+  summarise(
+    `Sustained Education` = sum(`Sustained Education`),
+    `Sustained Apprenticeships` = sum(`Sustained Apprenticeships`),
+    `Sustained Employment` = sum(`Sustained Employment`),
+    positive_sust_count = sum(positive_sust_count),
+    Total = sum(Total)
+  ) %>%
+  ungroup() %>%
   mutate(rate = positive_sust_count / Total) %>%
   mutate(positive_sust = "Sust edu, emp and app") %>%
   mutate(AY = paste(substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
@@ -1664,6 +1681,7 @@ C_destinations <- bind_rows(
   C_destinationsPreStep1 %>% filter(subgroups == "Total") %>% mutate(breakdown = "Outcome", subgroups = "Sustained apprenticeship") %>% select(-sustEdu, -sustEmp, -value) %>% rename(value = sustApp),
   C_destinationsPreStep1 %>% filter(subgroups == "Total") %>% mutate(breakdown = "Outcome", subgroups = "Sustained employment") %>% select(-sustApp, -sustEdu, -value) %>% rename(value = sustEmp)
 )
+
 # create max and KS5 positive sustained destination  rate by area for use in setting axis
 C_KS5_eduempapp_max_min <- C_KS4_KS5eduempapp %>%
   filter(
@@ -1809,9 +1827,12 @@ neatGeog <- bind_rows(neatMCA, neatLEP, addEngland, neatLA, neatLSIP)
 C_Geog <- neatGeog %>%
   # add employment rate
   left_join(C_EmpRate_APS1822 %>% filter(year == 2022), by = c("areaName" = "area", "geog" = "geographic_level")) %>%
+  select(-Year, -year) %>%
   # add achievment rate
   left_join(
-    C_Achieve_ILR1621 %>% filter(time_period == 202122, level_or_type == "Further education and skills: Total", age_group == "Total") %>%
+    C_Achieve_ILR1621 %>%
+      filter(time_period == 202122, level_or_type == "Further education and skills: Total", age_group == "Total") %>%
+      select(-Year, -AY, -typeNeat, -time_period) %>%
       mutate(geographic_level = case_when(geographic_level == "National" ~ "COUNTRY", TRUE ~ geographic_level)) %>%
       mutate(geographic_level = case_when(geographic_level == "Local authority district" ~ "LADU", TRUE ~ geographic_level)),
     by = c("areaName" = "area", "geog" = "geographic_level")
