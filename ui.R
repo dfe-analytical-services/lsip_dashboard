@@ -683,7 +683,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           uiOutput("professionFilter"),
           uiOutput("subgroupFilter"),
           p(uiOutput("commentBreakdown")),
-          withSpinner(plotlyOutput("Splash_pc")),
+          uiOutput("breadownPlot"),
           p(uiOutput("breakdownFoot"))
         ),
         column(
