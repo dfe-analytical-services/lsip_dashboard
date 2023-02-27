@@ -434,6 +434,7 @@ server <- function(input, output, session) {
   #### 2.2.3.1 Employment count ----
   # Employment count
   output$overviewEmpCntKPI <- renderUI({
+    validate(need(input$geoChoiceOver != "", ""))
     latest <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2022", metric == "Employment"))$value
     change <- latest - (currentGeogData() %>% filter(time_period == "Oct-Sep 2021", metric == "Employment"))$value
 
@@ -527,6 +528,7 @@ server <- function(input, output, session) {
 
   #### 2.2.3.2 Employment rate ----
   output$overviewEmpRateKPI <- renderUI({
+    validate(need(input$geoChoiceOver != "", ""))
     latest <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2022", metric == "empRate"))$value
     change <- latest - (currentGeogData() %>% filter(time_period == "Oct-Sep 2021", metric == "empRate"))$value
 
@@ -609,6 +611,7 @@ server <- function(input, output, session) {
   })
 
   output$empRateLineChart <- renderPlotly({
+    validate(need(input$geoChoiceOver != "", ""))
     ggplotly(empRateLineChart(),
       tooltip = "text",
       height = 81
@@ -639,6 +642,7 @@ server <- function(input, output, session) {
   #### 2.2.3.3 Job adverts ----
   # Vacancy kpi
   output$overviewJobKPI <- renderUI({
+    validate(need(input$geoChoiceOver != "", ""))
     latest <- (currentGeogData() %>% filter(time_period == "Dec 2022", metric == "vacancies"))$value
     change <- latest - (currentGeogData() %>% filter(time_period == "Dec 2021", metric == "vacancies"))$value
 
@@ -713,6 +717,7 @@ server <- function(input, output, session) {
   })
 
   output$jobLineChart <- renderPlotly({
+    validate(need(input$geoChoiceOver != "", ""))
     ggplotly(jobLineChart(),
       tooltip = "text",
       height = 81
@@ -737,6 +742,7 @@ server <- function(input, output, session) {
 
   # get EandT data for current area
   EtLEP <- eventReactive(input$geoChoiceOver, {
+    validate(need(input$geoChoiceOver != "", ""))
     C_Achieve_ILR1621 %>%
       mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
       filter(
@@ -837,6 +843,7 @@ server <- function(input, output, session) {
   })
 
   output$etLineChart <- renderPlotly({
+    validate(need(input$geoChoiceOver != "", ""))
     ggplotly(etLineChart(),
       tooltip = "text",
       height = 81
@@ -852,6 +859,7 @@ server <- function(input, output, session) {
   #### 2.2.3.5 FE app achieve ----
   # get App data for current area
   AppLEP <- eventReactive(input$geoChoiceOver, {
+    validate(need(input$geoChoiceOver != "", ""))
     C_Achieve_ILR1621 %>%
       mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
       filter(
@@ -953,6 +961,7 @@ server <- function(input, output, session) {
   })
 
   output$AppLineChart <- renderPlotly({
+    validate(need(input$geoChoiceOver != "", ""))
     ggplotly(AppLineChart(),
       tooltip = "text",
       height = 81
@@ -997,6 +1006,7 @@ server <- function(input, output, session) {
 
   # destinations overview KPI
   output$dest.ks5over <- renderUI({
+    validate(need(input$geoChoiceOver != "", ""))
     # change in positive sustained rate
     KS5sustChange <- KS5Latest()$rate - KS5Last()$rate
 
@@ -1079,6 +1089,7 @@ server <- function(input, output, session) {
   })
 
   output$KS5LineChart <- renderPlotly({
+    validate(need(input$geoChoiceOver != "", ""))
     ggplotly(KS5LineChart(),
       tooltip = "text",
       height = 81
@@ -1123,6 +1134,7 @@ server <- function(input, output, session) {
 
   # enterprise overview KPI
   output$UBC.micro <- renderUI({
+    validate(need(input$geoChoiceOver != "", ""))
     # change in micro enterprises
     EntChange <- EntLatest()$rate - EntLast()$rate
 
@@ -1205,6 +1217,7 @@ server <- function(input, output, session) {
   })
 
   output$UBCLineChart <- renderPlotly({
+    validate(need(input$geoChoiceOver != "", ""))
     ggplotly(UBCLineChart(),
       tooltip = "text",
       height = 81
@@ -1250,6 +1263,7 @@ server <- function(input, output, session) {
 
   # NVQ3 or above overview KPI
   output$APS.nvq3plus <- renderUI({
+    validate(need(input$geoChoiceOver != "", ""))
     # change in NVQ3 or above
     QualChange <- QualLatest()$rate - QualLast()$rate
 
@@ -1333,6 +1347,7 @@ server <- function(input, output, session) {
   })
 
   output$Nvq3plusLineChart <- renderPlotly({
+    validate(need(input$geoChoiceOver != "", ""))
     ggplotly(Nvq3plusLineChart(),
       tooltip = "text",
       height = 81
