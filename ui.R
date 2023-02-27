@@ -138,7 +138,21 @@ padding-top:15px
 div.myspecial-popup div.leaflet-popup-content-wrapper {
           padding: 0px 0px 1px 0px;
 
+}
+        
+ /* overwrite ccs to keep margin*/       
+@media (min-width:1020px) {
+    .govuk-width-container {
+        margin-right: max(30px, calc(15px + env(safe-area-inset-left)));
+        margin-left: max(30px, calc(15px + env(safe-area-inset-left)))
+    }
+    @supports (margin:max(calc(0px))) {
+        .govuk-width-container {
+            margin-right: max(30px, calc(15px + env(safe-area-inset-left)));
+            margin-left: max(30px, calc(15px + env(safe-area-inset-left)))
         }
+    }
+}
 
 "
       )
