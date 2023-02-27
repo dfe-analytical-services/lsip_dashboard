@@ -1671,7 +1671,7 @@ C_destinationsPreStep1 <- C_KS4_KS5eduempapp %>%
     sustApp = `Sustained Apprenticeships` / Total,
     sustEmp = `Sustained Employment` / Total
   ) %>%
-  select(-positive_sust, -AY, -Year, -positive_sust_count, -`Sustained Education`, -`Sustained Apprenticeships`, -`Sustained Employment`, -`Key Stage`,-Total)
+  select(-positive_sust, -AY, -Year, -positive_sust_count, -`Sustained Education`, -`Sustained Apprenticeships`, -`Sustained Employment`, -`Key Stage`, -Total)
 
 # add in outcome subgrousps
 C_destinations <- bind_rows(
@@ -1888,7 +1888,7 @@ C_time <- bind_rows(
   C_EmpRate_APS1822 %>%
     mutate(time_period = paste0("Oct-Sep ", year)) %>%
     mutate(chart_year = as.Date(ISOdate(as.numeric(year) - 1, 1, 1))) %>% # shift to start of year
-    select(-year)%>%
+    select(-year) %>%
     pivot_longer(!c("geographic_level", "area", "time_period", "chart_year"),
       names_to = "metric",
       values_to = "value"
@@ -1896,10 +1896,10 @@ C_time <- bind_rows(
   # ILR data
   C_Achieve_ILR1621 %>%
     mutate(chart_year = as.Date(ISOdate(str_sub(time_period, 1, 4), 1, 1))) %>%
-    mutate(time_period=paste0("AY",AY))%>%
+    mutate(time_period = paste0("AY", AY)) %>%
     mutate_at(c("time_period"), as.character) %>%
     filter(level_or_type == "Further education and skills: Total", age_group == "Total") %>%
-    select(-apprenticeships_or_further_education, -level_or_type, -age_group, -typeNeat, -AY,-Year) %>%
+    select(-apprenticeships_or_further_education, -level_or_type, -age_group, -typeNeat, -AY, -Year) %>%
     mutate(geographic_level = case_when(
       geographic_level == "National" ~ "COUNTRY",
       geographic_level == "Local authority district" ~ "LADU",
@@ -1912,7 +1912,7 @@ C_time <- bind_rows(
   C_OnsProfTime %>%
     mutate(time_period = format(as.Date(time_period))) %>%
     mutate(chart_year = as.Date(time_period)) %>%
-    mutate(time_period=format(as.POSIXct(time_period),'%b %Y')) %>%
+    mutate(time_period = format(as.POSIXct(time_period), "%b %Y")) %>%
     group_by(area, geographic_level, time_period, chart_year) %>%
     summarise(vacancies = sum(vacancies)) %>%
     mutate(metric = "vacancies") %>%
@@ -1922,7 +1922,7 @@ C_time <- bind_rows(
     select(-breakdown, -subgroups) %>%
     mutate(
       chart_year = as.Date(ISOdate(time_period, 1, 1)),
-      time_period = paste0("Dec ",time_period-1," - Dec ",time_period)
+      time_period = paste0("Dec ", time_period - 1, " - Dec ", time_period)
     ),
   # add enterprise count
   C_enterpriseSizeIndustry %>%
@@ -1930,7 +1930,7 @@ C_time <- bind_rows(
     select(-breakdown, -subgroups) %>%
     mutate(
       chart_year = as.Date(ISOdate(time_period, 3, 1)),
-      time_period = paste0("Mar ",time_period)
+      time_period = paste0("Mar ", time_period)
     ),
   # add level 3 + rate
   C_level3Plus %>%
@@ -1946,7 +1946,7 @@ C_time <- bind_rows(
     select(-breakdown, -subgroups) %>%
     mutate(
       chart_year = as.Date(ISOdate(str_sub(time_period, 1, 4), 1, 1)),
-      time_period = paste0("AY",str_sub(time_period, 3, 4),"/",str_sub(time_period, 5, 6))
+      time_period = paste0("AY", str_sub(time_period, 3, 4), "/", str_sub(time_period, 5, 6))
     ),
   # add ks5 destinations
   C_destinations %>%
@@ -1954,7 +1954,7 @@ C_time <- bind_rows(
     select(-breakdown, -subgroups) %>%
     mutate(
       chart_year = as.Date(ISOdate(str_sub(time_period, 1, 4), 1, 1)),
-      time_period = paste0("AY",str_sub(time_period, 3, 4),"/",str_sub(time_period, 5, 6))
+      time_period = paste0("AY", str_sub(time_period, 3, 4), "/", str_sub(time_period, 5, 6))
     )
 ) %>%
   mutate(metric = gsub(" ", "", metric)) %>%

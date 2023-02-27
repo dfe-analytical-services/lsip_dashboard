@@ -1406,6 +1406,7 @@ server <- function(input, output, session) {
   })
   # ranking for each geog
   geogRank <- reactive({
+    validate(need(input$splashGeoType != "", ""))
     C_Geog %>%
       filter(geog == input$splashGeoType) %>%
       mutate(ranking = rank(desc(eval(
@@ -1414,6 +1415,7 @@ server <- function(input, output, session) {
   })
   # count of areas
   groupCount <- reactive({
+    validate(need(input$splashGeoType != "", ""))
     if (input$splashGeoType == "LEP") {
       "38 LEPs."
     } else {
@@ -1516,7 +1518,10 @@ server <- function(input, output, session) {
 
   #### 2.3.5.2 Comment ----
   output$commentMap <- renderUI({
-    validate(need("geoChoice" %in% names(input), ""))
+    validate(
+      need("geoChoice" %in% names(input), ""),
+      need(input$geoChoice != "", "")
+    )
     compareNational <-
       if ((C_Geog %>%
         filter(geogConcat == input$geoChoice))[[input$splashMetric]]
@@ -1550,6 +1555,10 @@ server <- function(input, output, session) {
 
   #### 2.3.5.3 Map ----
   output$map <- renderLeaflet({
+    validate(
+      need(input$geoChoice != "", ""),
+      need(input$splashGeoType != "", "")
+    )
     mapData <- C_Geog %>% filter(geog == input$splashGeoType)
     pal <- colorNumeric("Blues", mapData[[input$splashMetric]])
     labels <-
@@ -1647,7 +1656,10 @@ server <- function(input, output, session) {
   #### 2.3.6.2 Comment----
 
   output$commentLA <- renderUI({
-    validate(need("geoChoice" %in% names(input), ""))
+    validate(
+      need("geoChoice" %in% names(input), ""),
+      need(input$geoChoice != "", "")
+    )
     LaHighLow <- C_Geog %>%
       filter(
         geog == "LADU",
@@ -1684,7 +1696,8 @@ server <- function(input, output, session) {
   output$mapLA <- renderLeaflet({
     validate(
       need(!(input$geoChoice %in% c("London LEP", "Greater London LSIP") &
-        currentMetric() == "online job adverts"), "")
+        currentMetric() == "online job adverts"), ""),
+      need(input$geoChoice != "", "")
     )
     # Filter to those LAs in that region
     mapData <- C_Geog %>%
@@ -1748,7 +1761,10 @@ server <- function(input, output, session) {
 
   #### 2.3.7.1 Comment ----
   output$commentTime <- renderUI({
-    validate(need("geoChoice" %in% names(input), ""))
+    validate(
+      need("geoChoice" %in% names(input), ""),
+      need(input$geoChoice != "", "")
+    )
     currentArea <- C_time %>%
       filter(
         geogConcat == input$geoChoice,
@@ -1836,7 +1852,7 @@ server <- function(input, output, session) {
               "\nNone"
             }) |
               # get england for comparison (if a rate)
-              (if (str_sub(input$splashMetric, start = -4) %in% c("Rate", ",000")) {
+              (if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population") {
                 (geogConcat == "England")
               } else {
                 area == "\nNone"
@@ -1887,7 +1903,7 @@ server <- function(input, output, session) {
             label_number_si()
           }) +
           labs(colour = "") +
-          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) %in% c("Rate", ",000")) {
+          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population") {
             chartColors6
           } else {
             chartColors5
@@ -1901,7 +1917,10 @@ server <- function(input, output, session) {
     )
 
   output$Splash_time <- renderPlotly({
-    validate(need("geoChoice" %in% names(input), ""))
+    validate(
+      need("geoChoice" %in% names(input), ""),
+      need(input$geoChoice != "", "")
+    )
     ggplotly(Splash_time(), tooltip = "text") %>%
       layout(
         legend = list(
@@ -2010,7 +2029,8 @@ server <- function(input, output, session) {
   #### 2.3.8.4 Comment ----
   output$commentBreakdown <- renderUI({
     validate(
-      need(input$barBreakdown != "", "")
+      need(input$barBreakdown != "", ""),
+      need(input$geoChoice != "", "")
     )
 
     if (input$barBreakdown == "No breakdowns available") {
@@ -2189,6 +2209,13 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
+
+  output$breadownPlot <- renderUI({
+    if ("barBreakdown" %in% names(input) && input$barBreakdown == "No breakdowns available") {} else {
+      withSpinner(plotlyOutput("Splash_pc"))
+    }
+  })
+
   #### 2.3.8.6 Bar footnote ----
   output$breakdownFoot <- renderUI({
     validate(
@@ -2199,6 +2226,8 @@ server <- function(input, output, session) {
       (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, " data."
     )
   })
+
+
 
   ### 2.3.9 Downloads local skills ----
   # all areas
