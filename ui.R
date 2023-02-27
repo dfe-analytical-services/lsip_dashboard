@@ -534,14 +534,28 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("25 Jan 2023 (0.4.2)"),
+            p("28 Feb 2023 (1.0.0)"),
             p(
-              "Updated employment rates and employment by industry figures with Oct-Sep 2022 Annual Population Survey data."
+              "Dashboard redesign including:"
+            ),
+            tags$ul(
+              tags$li("More granular breakdowns within geographic areas"),
+              tags$li("More area comparison options"),
+              tags$li("Bespoke download option including geographies and all published breakdowns"),
+              tags$li("Expanding on role as ‘local skills hub,’ hosting links to local skills sources and tools")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("25 Jan 2023 (0.4.2)"),
+                p(
+                  "Updated employment rates and employment by industry figures with Oct-Sep 2022 Annual Population Survey data."
+                ),
+                p("9 Feb 2023 (0.4.3)"),
+                p("Updated destinations data with the February revision."),
+                p("25 Jan 2023 (0.4.2)"),
+                p("Updated employment rates and employment by industry figures with Oct-Sep 2022 Annual Population Survey data."),
                 p("12 Jan 2023 (0.4.1)"),
                 p("Included ONS-Textkernel online job adverts by profession data."),
                 p("20 Dec 2022 (0.3.1)"),
