@@ -139,8 +139,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           padding: 0px 0px 1px 0px;
 
 }
-        
- /* overwrite ccs to keep margin*/       
+
+ /* overwrite ccs to keep margin*/
 @media (min-width:1020px) {
     .govuk-width-container {
         margin-right: max(30px, calc(15px + env(safe-area-inset-left)));
@@ -945,7 +945,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       fluidRow(
         column(
           12,
-          h1("FE data sources"),
+          h1("Data sources"),
           p(
             "Other data sources which cover Further Education and local skills."
           ),
@@ -956,7 +956,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       fluidRow(
         column(
           12,
-          h1("FE data tools"),
+          h1("Data tools"),
           p(
             "Publicly available online tools relevant to local skills."
           ),

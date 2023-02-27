@@ -216,7 +216,7 @@ format.Achieve.ILR <- function(x) {
     rename(area = lad_name)
 
   popLA <- addLA %>%
-    filter(time_period == 202021) %>%
+    # filter(time_period == 202021) %>%
     filter(level_or_type == "Further education and skills: Total" | (level_or_type == "Apprenticeships: Total" & (age_group == "Under 19" | age_group == "Total"))) %>%
     mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
     mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.numeric) %>% # Convert to numeric
@@ -225,7 +225,7 @@ format.Achieve.ILR <- function(x) {
       apprenticeships_or_further_education == "Apprenticeships" ~ paste(apprenticeships_or_further_education, age_group),
       TRUE ~ age_group
     )) %>%
-    select(area, popGroup, pop)
+    select(area, popGroup, time_period, pop)
 
   addCountry <- x %>%
     filter(geographic_level == "National") %>%
@@ -243,7 +243,7 @@ format.Achieve.ILR <- function(x) {
       apprenticeships_or_further_education == "Apprenticeships" & (age_group == "Total" | age_group == "Under 19") ~ paste(apprenticeships_or_further_education, age_group),
       TRUE ~ age_group
     )) %>%
-    left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup")) %>%
+    left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup", "time_period" = "time_period")) %>%
     # addLEPS
     left_join(select(C_LADLEP2020, -LAD21NM), by = c("lad_code" = "LAD21CD")) %>%
     filter(is.na(LEP) == FALSE) %>% # remove non-english
@@ -276,7 +276,7 @@ format.Achieve.ILR <- function(x) {
       apprenticeships_or_further_education == "Apprenticeships" & (age_group == "Total" | age_group == "Under 19") ~ paste(apprenticeships_or_further_education, age_group),
       TRUE ~ age_group
     )) %>%
-    left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup")) %>%
+    left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup", "time_period" = "time_period")) %>%
     # addLSIPS
     left_join(select(C_LADLSIP2020, -LAD21NM), by = c("lad_code" = "LAD21CD")) %>%
     filter(is.na(LSIP) == FALSE) %>% # remove non-english
@@ -309,7 +309,7 @@ format.Achieve.ILR <- function(x) {
       apprenticeships_or_further_education == "Apprenticeships" & (age_group == "Total" | age_group == "Under 19") ~ paste(apprenticeships_or_further_education, age_group),
       TRUE ~ age_group
     )) %>%
-    left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup")) %>%
+    left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup", "time_period" = "time_period")) %>%
     # addMCA
     left_join(select(C_mcalookup, -CAUTH21CD, -LAD21NM), by = c("lad_code" = "LAD21CD")) %>%
     select(
@@ -1783,11 +1783,7 @@ neatLA <- I_mapLA %>%
   # add on lsip, lep and mca groupings
   left_join(I_LEP2020 %>% mutate(LEP = paste0(LEP21NM1, " LEP"), LEP2 = paste0(LEP21NM2, " LEP"), LSIP = paste0(LSIP, " LSIP")) %>% select(LAD21CD, LSIP, LEP, LEP2), by = c("areaCode" = "LAD21CD")) %>%
   left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH21NM, " MCA")) %>% select(LAD21CD, MCA), by = c("areaCode" = "LAD21CD")) %>%
-  filter(is.na(LSIP) == FALSE) %>% # remove non England
-  mutate(LSIP = case_when(
-    LSIP == "Buckinghamshire " ~ "Buckinghamshire",
-    TRUE ~ LSIP
-  ))
+  filter(is.na(LSIP) == FALSE) # remove non England
 
 neatMCA <- I_mapMCA %>%
   mutate(geog = "MCA") %>% # add geog type
