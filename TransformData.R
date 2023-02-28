@@ -206,141 +206,213 @@ write.csv(C_EmpRate_APS1822_max_min, file = "Data\\AppData\\C_EmpRate_APS1822_ma
 
 # FE data cleaning
 # Clean ILR column names, reorder and reformat
-format.Achieve.ILR <- function(x) {
-  addLA <- x %>%
-    filter(geographic_level == "Local authority district") %>%
-    select(
-      -time_identifier, -country_code, -country_name, -region_code, -region_name, -old_la_code,
-      -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name
-    ) %>% # get rid of ladu area
-    rename(area = lad_name)
+addCountry <- I_Achieve_ILR1621 %>%
+  filter(geographic_level == "National") %>%
+  select(
+    -time_identifier, -country_code, -region_code, -region_name, -old_la_code,
+    -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name, -lad_name
+  ) %>% # get rid of ladu area
+  rename(area = country_name)
 
-  popLA <- addLA %>%
-    # filter(time_period == 202021) %>%
-    filter(level_or_type == "Further education and skills: Total" | (level_or_type == "Apprenticeships: Total" & (age_group == "Under 19" | age_group == "Total"))) %>%
-    mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
-    mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.numeric) %>% # Convert to numeric
-    mutate(pop = 100000 * participation / participation_rate_per_100000_population) %>%
-    mutate(popGroup = case_when(
-      apprenticeships_or_further_education == "Apprenticeships" ~ paste(apprenticeships_or_further_education, age_group),
-      TRUE ~ age_group
-    )) %>%
-    select(area, popGroup, time_period, pop)
+# calculate population for each LA
+popNewLA <- I_Achieve_ILR1621 %>%
+  filter(geographic_level == "Local authority district") %>%
+  select(
+    -time_identifier, -country_code, -country_name, -region_code, -region_name, -old_la_code,
+    -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name
+  ) %>% # get rid of ladu area
+  rename(area = lad_name) %>%
+  # filter(time_period == 202021) %>%
+  filter(level_or_type == "Further education and skills: Total" | (level_or_type == "Apprenticeships: Total" & (age_group == "Under 19" | age_group == "Total"))) %>%
+  mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
+  mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.numeric) %>% # Convert to numeric
+  mutate(pop = 100000 * participation / participation_rate_per_100000_population) %>%
+  mutate(popGroup = case_when(
+    apprenticeships_or_further_education == "Apprenticeships" ~ paste(apprenticeships_or_further_education, age_group),
+    TRUE ~ age_group
+  )) %>%
+  select(area, popGroup, time_period, pop) %>%
+  # Use new LA names
+  left_join(I_LaLookup %>% select(LAD11NM, LAD21NM), by = c("area" = "LAD11NM")) %>% # make new LAs
+  mutate(area = case_when(
+    is.na(LAD21NM) == FALSE ~ LAD21NM,
+    TRUE ~ area
+  )) %>%
+  select(-LAD21NM) %>%
+  group_by(area, popGroup, time_period) %>%
+  summarise(pop = sum(pop))
 
-  addCountry <- x %>%
-    filter(geographic_level == "National") %>%
-    select(
-      -time_identifier, -country_code, -region_code, -region_name, -old_la_code,
-      -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name, -lad_name
-    ) %>% # get rid of ladu area
-    rename(area = country_name)
+# create LA file (have to do this because of the old leps)
+newLA <- I_Achieve_ILR1621 %>%
+  filter(geographic_level == "Local authority district") %>%
+  # Use new LA names
+  left_join(I_LaLookup %>% select(LAD11CD, LAD21NM, LAD21CD), by = c("lad_code" = "LAD11CD")) %>% # make new LAs
+  mutate(
+    area = case_when(
+      is.na(LAD21NM) == FALSE ~ LAD21NM,
+      TRUE ~ lad_name
+    ),
+    areaCode = case_when(
+      is.na(LAD21CD) == FALSE ~ LAD21CD,
+      TRUE ~ lad_code
+    )
+  ) %>%
+  select(-LAD21NM, -LAD21CD) %>%
+  # add population
+  mutate(popGroup = case_when(
+    apprenticeships_or_further_education == "Apprenticeships" & (age_group == "Total" | age_group == "Under 19") ~ paste(apprenticeships_or_further_education, age_group),
+    TRUE ~ age_group
+  ))
 
-  # create lep file
-  addLEP <- x %>%
-    filter(geographic_level == "Local authority district") %>%
-    # add population
-    mutate(popGroup = case_when(
-      apprenticeships_or_further_education == "Apprenticeships" & (age_group == "Total" | age_group == "Under 19") ~ paste(apprenticeships_or_further_education, age_group),
-      TRUE ~ age_group
-    )) %>%
-    left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup", "time_period" = "time_period")) %>%
-    # addLEPS
-    left_join(select(C_LADLEP2020, -LAD21NM), by = c("lad_code" = "LAD21CD")) %>%
-    filter(is.na(LEP) == FALSE) %>% # remove non-english
-    select(
-      -time_identifier, -country_code, -country_name, -region_code, -region_name, -old_la_code,
-      -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name, -lad_name, -starts_rate_per_100000_population, -participation_rate_per_100000_population, -achievements_rate_per_100000_population, -popGroup
-    ) %>% # get rid of ladu area
-    mutate(geographic_level = "LEP") %>% # rename as lsip
-    rename(area = LEP) %>%
-    relocate(area, .before = geographic_level) %>%
-    mutate_at(vars(starts, participation, achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
-    mutate_at(vars(starts, participation, achievements), as.numeric) %>% # Convert to numeric
-    group_by(time_period, area, geographic_level, apprenticeships_or_further_education, level_or_type, age_group) %>% # sum for each LEP
-    summarise(across(everything(), list(sum), na.rm = T)) %>%
-    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    # calc per 100000 values
-    mutate(
-      starts_rate_per_100000_population = 100000 * starts / pop,
-      participation_rate_per_100000_population = 100000 * participation / pop,
-      achievements_rate_per_100000_population = 100000 * achievements / pop
-    ) %>%
-    select(-pop) %>%
-    mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.character) # Convert to string to bind
+addNewLA <- newLA %>%
+  select(
+    -time_identifier, -country_code, -country_name, -region_code, -region_name, -old_la_code,
+    -lad_code, -pcon_code, -pcon_name, -new_la_code,
+    -la_name, -lad_name, -areaCode,
+    -starts_rate_per_100000_population, -participation_rate_per_100000_population, -achievements_rate_per_100000_population
+  ) %>%
+  # mutate(geographic_level = "LADU") %>% # rename as ladu
+  # rename(area = lad_name) %>%
+  relocate(area, .before = geographic_level) %>%
+  mutate_at(vars(starts, participation, achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
+  mutate_at(vars(starts, participation, achievements), as.numeric) %>% # Convert to numeric
+  group_by(time_period, area, geographic_level, apprenticeships_or_further_education, level_or_type, age_group, popGroup) %>% # sum for each LEP
+  summarise(across(everything(), list(sum), na.rm = T)) %>%
+  rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+  left_join(popNewLA, by = c("area" = "area", "popGroup" = "popGroup", "time_period" = "time_period")) %>%
+  select(-popGroup) %>%
+  # calc per 100000 values
+  mutate(
+    starts_rate_per_100000_population = 100000 * starts / pop,
+    participation_rate_per_100000_population = 100000 * participation / pop,
+    achievements_rate_per_100000_population = 100000 * achievements / pop
+  ) %>%
+  select(-pop) %>%
+  mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.character) # Convert to string to bind
 
-  # create lsip file
-  addLSIP <- x %>%
-    filter(geographic_level == "Local authority district") %>%
-    # add population
-    mutate(popGroup = case_when(
-      apprenticeships_or_further_education == "Apprenticeships" & (age_group == "Total" | age_group == "Under 19") ~ paste(apprenticeships_or_further_education, age_group),
-      TRUE ~ age_group
-    )) %>%
-    left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup", "time_period" = "time_period")) %>%
-    # addLSIPS
-    left_join(select(C_LADLSIP2020, -LAD21NM), by = c("lad_code" = "LAD21CD")) %>%
-    filter(is.na(LSIP) == FALSE) %>% # remove non-english
-    select(
-      -time_identifier, -country_code, -country_name, -region_code, -region_name, -old_la_code,
-      -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name, -lad_name, -starts_rate_per_100000_population, -participation_rate_per_100000_population, -achievements_rate_per_100000_population, -popGroup
-    ) %>% # get rid of ladu area
-    mutate(geographic_level = "LSIP") %>% # rename as lsip
-    rename(area = LSIP) %>%
-    relocate(area, .before = geographic_level) %>%
-    mutate_at(vars(starts, participation, achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
-    mutate_at(vars(starts, participation, achievements), as.numeric) %>% # Convert to numeric
-    group_by(time_period, area, geographic_level, apprenticeships_or_further_education, level_or_type, age_group) %>% # sum for each LEP
-    summarise(across(everything(), list(sum), na.rm = T)) %>%
-    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    # calc per 100000 values
-    mutate(
-      starts_rate_per_100000_population = 100000 * starts / pop,
-      participation_rate_per_100000_population = 100000 * participation / pop,
-      achievements_rate_per_100000_population = 100000 * achievements / pop
-    ) %>%
-    select(-pop) %>%
-    mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.character) # Convert to string to bind
+addLA <- I_Achieve_ILR1621 %>%
+  filter(geographic_level == "Local authority district") %>%
+  select(
+    -time_identifier, -country_code, -country_name, -region_code, -region_name, -old_la_code,
+    -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name
+  ) %>% # get rid of ladu area
+  rename(area = lad_name)
 
-  # create lsip file
-  addMCA <- x %>%
-    filter(geographic_level == "Local authority district") %>%
-    # add population
-    mutate(popGroup = case_when(
-      apprenticeships_or_further_education == "Apprenticeships" & (age_group == "Total" | age_group == "Under 19") ~ paste(apprenticeships_or_further_education, age_group),
-      TRUE ~ age_group
-    )) %>%
-    left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup", "time_period" = "time_period")) %>%
-    # addMCA
-    left_join(select(C_mcalookup, -CAUTH21CD, -LAD21NM), by = c("lad_code" = "LAD21CD")) %>%
-    select(
-      -time_identifier, -country_code, -country_name, -region_code, -region_name, -old_la_code,
-      -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name, -lad_name, -starts_rate_per_100000_population,
-      -participation_rate_per_100000_population, -achievements_rate_per_100000_population, -popGroup
-    ) %>% # get rid of ladu area
-    mutate(geographic_level = "MCA") %>% # rename as MCA
-    rename(area = CAUTH21NM) %>%
-    relocate(area, .before = geographic_level) %>%
-    mutate_at(vars(starts, participation, achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
-    mutate_at(vars(starts, participation, achievements), as.numeric) %>% # Convert to numeric
-    group_by(time_period, area, geographic_level, apprenticeships_or_further_education, level_or_type, age_group) %>% # sum for each LEP
-    summarise(across(everything(), list(sum), na.rm = T)) %>%
-    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
-    # calc per 100000 values
-    mutate(
-      starts_rate_per_100000_population = 100000 * starts / pop,
-      participation_rate_per_100000_population = 100000 * participation / pop,
-      achievements_rate_per_100000_population = 100000 * achievements / pop
-    ) %>%
-    select(-pop) %>%
-    mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.character) %>% # Convert to string to bind
-    filter(!is.na(area))
+popLA <- addLA %>%
+  # filter(time_period == 202021) %>%
+  filter(level_or_type == "Further education and skills: Total" | (level_or_type == "Apprenticeships: Total" & (age_group == "Under 19" | age_group == "Total"))) %>%
+  mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
+  mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.numeric) %>% # Convert to numeric
+  mutate(pop = 100000 * participation / participation_rate_per_100000_population) %>%
+  mutate(popGroup = case_when(
+    apprenticeships_or_further_education == "Apprenticeships" ~ paste(apprenticeships_or_further_education, age_group),
+    TRUE ~ age_group
+  )) %>%
+  select(area, popGroup, time_period, pop)
 
-  # join together
-  bind_rows(addLA, addCountry, addLEP, addLSIP, addMCA)
-}
+# create lep file
+# create lep file
+addLEP <- I_Achieve_ILR1621 %>%
+  filter(geographic_level == "Local authority district") %>%
+  # add population
+  mutate(popGroup = case_when(
+    apprenticeships_or_further_education == "Apprenticeships" & (age_group == "Total" | age_group == "Under 19") ~ paste(apprenticeships_or_further_education, age_group),
+    TRUE ~ age_group
+  )) %>%
+  left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup", "time_period" = "time_period")) %>%
+  # addLEPS
+  left_join(select(C_LADLEP2020, -LAD21NM), by = c("lad_code" = "LAD21CD")) %>%
+  filter(is.na(LEP) == FALSE) %>% # remove non-english
+  select(
+    -time_identifier, -country_code, -country_name, -region_code, -region_name, -old_la_code,
+    -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name, -lad_name, -starts_rate_per_100000_population, -participation_rate_per_100000_population, -achievements_rate_per_100000_population, -popGroup
+  ) %>% # get rid of ladu area
+  mutate(geographic_level = "LEP") %>% # rename as lsip
+  rename(area = LEP) %>%
+  relocate(area, .before = geographic_level) %>%
+  mutate_at(vars(starts, participation, achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
+  mutate_at(vars(starts, participation, achievements), as.numeric) %>% # Convert to numeric
+  group_by(time_period, area, geographic_level, apprenticeships_or_further_education, level_or_type, age_group) %>% # sum for each LEP
+  summarise(across(everything(), list(sum), na.rm = T)) %>%
+  rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+  # calc per 100000 values
+  mutate(
+    starts_rate_per_100000_population = 100000 * starts / pop,
+    participation_rate_per_100000_population = 100000 * participation / pop,
+    achievements_rate_per_100000_population = 100000 * achievements / pop
+  ) %>%
+  select(-pop) %>%
+  mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.character) # Convert to string to bind
 
-## format achievements
-F_Achieve_ILR1621 <- format.Achieve.ILR(I_Achieve_ILR1621)
+# create lsip file
+addLSIP <- I_Achieve_ILR1621 %>%
+  filter(geographic_level == "Local authority district") %>%
+  # add population
+  mutate(popGroup = case_when(
+    apprenticeships_or_further_education == "Apprenticeships" & (age_group == "Total" | age_group == "Under 19") ~ paste(apprenticeships_or_further_education, age_group),
+    TRUE ~ age_group
+  )) %>%
+  left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup", "time_period" = "time_period")) %>%
+  # addLSIPS
+  left_join(select(C_LADLSIP2020, -LAD21NM), by = c("lad_code" = "LAD21CD")) %>%
+  filter(is.na(LSIP) == FALSE) %>% # remove non-english
+  select(
+    -time_identifier, -country_code, -country_name, -region_code, -region_name, -old_la_code,
+    -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name, -lad_name, -starts_rate_per_100000_population, -participation_rate_per_100000_population, -achievements_rate_per_100000_population, -popGroup
+  ) %>% # get rid of ladu area
+  mutate(geographic_level = "LSIP") %>% # rename as lsip
+  rename(area = LSIP) %>%
+  relocate(area, .before = geographic_level) %>%
+  mutate_at(vars(starts, participation, achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
+  mutate_at(vars(starts, participation, achievements), as.numeric) %>% # Convert to numeric
+  group_by(time_period, area, geographic_level, apprenticeships_or_further_education, level_or_type, age_group) %>% # sum for each LEP
+  summarise(across(everything(), list(sum), na.rm = T)) %>%
+  rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+  # calc per 100000 values
+  mutate(
+    starts_rate_per_100000_population = 100000 * starts / pop,
+    participation_rate_per_100000_population = 100000 * participation / pop,
+    achievements_rate_per_100000_population = 100000 * achievements / pop
+  ) %>%
+  select(-pop) %>%
+  mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.character) # Convert to string to bind
+
+# create lsip file
+addMCA <- I_Achieve_ILR1621 %>%
+  filter(geographic_level == "Local authority district") %>%
+  # add population
+  mutate(popGroup = case_when(
+    apprenticeships_or_further_education == "Apprenticeships" & (age_group == "Total" | age_group == "Under 19") ~ paste(apprenticeships_or_further_education, age_group),
+    TRUE ~ age_group
+  )) %>%
+  left_join(popLA, by = c("lad_name" = "area", "popGroup" = "popGroup", "time_period" = "time_period")) %>%
+  # addMCA
+  left_join(select(C_mcalookup, -CAUTH21CD, -LAD21NM), by = c("lad_code" = "LAD21CD")) %>%
+  select(
+    -time_identifier, -country_code, -country_name, -region_code, -region_name, -old_la_code,
+    -lad_code, -pcon_code, -pcon_name, -new_la_code, -la_name, -lad_name, -starts_rate_per_100000_population,
+    -participation_rate_per_100000_population, -achievements_rate_per_100000_population, -popGroup
+  ) %>% # get rid of ladu area
+  mutate(geographic_level = "MCA") %>% # rename as MCA
+  rename(area = CAUTH21NM) %>%
+  relocate(area, .before = geographic_level) %>%
+  mutate_at(vars(starts, participation, achievements), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
+  mutate_at(vars(starts, participation, achievements), as.numeric) %>% # Convert to numeric
+  group_by(time_period, area, geographic_level, apprenticeships_or_further_education, level_or_type, age_group) %>% # sum for each LEP
+  summarise(across(everything(), list(sum), na.rm = T)) %>%
+  rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+  # calc per 100000 values
+  mutate(
+    starts_rate_per_100000_population = 100000 * starts / pop,
+    participation_rate_per_100000_population = 100000 * participation / pop,
+    achievements_rate_per_100000_population = 100000 * achievements / pop
+  ) %>%
+  select(-pop) %>%
+  mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.character) %>% # Convert to string to bind
+  filter(!is.na(area))
+# join together
+F_Achieve_ILR1621 <- bind_rows(addNewLA, addCountry, addLEP, addLSIP, addMCA)
+
 # create downloadable version with new suppression rules
 D_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
   mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
@@ -348,6 +420,7 @@ write.csv(D_Achieve_ILR1621, file = "Data\\AppData\\D_Achieve_ILR1621.csv", row.
 
 # create version to use in dashboard
 C_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
+  ungroup() %>%
   filter(geographic_level == "LEP" | geographic_level == "LSIP" | geographic_level == "National" | geographic_level == "MCA" | geographic_level == "Local authority district") %>%
   mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "z" = "", "low" = ""))) %>% # convert to blank to avoid error msg
   mutate_at(vars(starts, participation, achievements, starts_rate_per_100000_population, participation_rate_per_100000_population, achievements_rate_per_100000_population), as.numeric) %>% # Convert to numeric
@@ -1365,10 +1438,22 @@ format.bussdemo.ONS <- function(w, x, y, z) {
     rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
     mutate_at(c(3:8), as.character) # Convert to sring to bind
 
-  addLADU <- addLADU %>%
-    select(-LAD21CD)
+  # get into new LAs
+  addNewLADU <- addLADU %>%
+    # Use new LA names
+    left_join(I_LaLookup %>% select(LAD11CD, LAD21NM, LAD21CD), by = c("LAD21CD" = "LAD11CD")) %>% # make new LAs
+    mutate(area = case_when(
+      is.na(LAD21NM) == FALSE ~ LAD21NM,
+      TRUE ~ area
+    )) %>%
+    select(-LAD21NM, -LAD21CD, -LAD21CD.y) %>%
+    mutate_at(c(3:8), as.numeric) %>%
+    group_by(area, geographic_level) %>%
+    summarise(across(everything(), list(sum), na.rm = T)) %>%
+    rename_with(~ gsub("_1", "", .)) %>% # remove numbers cretaed by the summarise function
+    mutate_at(c(3:8), as.character) # Convert to sring to bind
 
-  combined <- bind_rows(addLADU, addLEP, addLSIP, addMCA, England) %>%
+  combined <- bind_rows(addNewLADU, addLEP, addLSIP, addMCA, England) %>%
     melt(id.vars = c("geographic_level", "area")) %>%
     rename(year = variable) %>%
     filter(!is.na(area)) %>%

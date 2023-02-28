@@ -1735,7 +1735,7 @@ server <- function(input, output, session) {
           "<strong>%s</strong><br/>%s: %s",
           mapData$areaName,
           currentMetric(),
-          format(mapData[[input$splashMetric]], big.mark = ",")
+          format(round(mapData[[input$splashMetric]]), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
 
