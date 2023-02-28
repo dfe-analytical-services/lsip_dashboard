@@ -23,4 +23,3 @@ Shiny.addCustomMessageHandler('analytics-consent', function(msg){
   });
 })
 
-
