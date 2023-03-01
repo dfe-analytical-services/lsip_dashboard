@@ -357,55 +357,68 @@ server <- function(input, output, session) {
     list(
       "1a.Emp by occupation" = filter(
         D_EmpOcc_APS1721,
-        geogConcat == input$geoChoiceOver
+        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
+        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
       ),
       "1b.Emp rate" = filter(
         D_EmpRate_APS1822,
-        geogConcat == input$geoChoiceOver
+        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
+        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
       ),
       "2a.Adverts over time" = filter(
         D_OnsProfTime,
-        geogConcat == input$geoChoiceOver
+        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
+        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
       ),
       "2b.Adverts by detailed profession" = filter(
         D_OnsProfDetail,
-        geogConcat == input$geoChoiceOver
+        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
+        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
       ),
       "3a.FE achievements SSA" = filter(
         D_Achieve_ILR21,
-        geogConcat == input$geoChoiceOver
+        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
+        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
       ),
       "3b.FE achievements" = filter(
         D_Achieve_ILR1621,
-        geogConcat == input$geoChoiceOver
+        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
+        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
       ),
       "4a.Ent by emp size band" = filter(
         D_empent_UBC1822,
-        geogConcat == input$geoChoiceOver
+        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
+        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
       ),
       "5a.Key Stage 5 destinations" = filter(
         D_KS5destin_1721,
-        geogConcat == input$geoChoiceOver
+        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
+        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
       ),
       "6a.Qual by age and gender" = filter(
         D_qual_APS1721,
-        geogConcat == input$geoChoiceOver
+        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
+        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
       ),
       "7a.Ent by emp size & industry" = filter(
         D_empentind_UBC1822,
-        geogConcat == input$geoChoiceOver
+        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
+        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
       ),
       "8a.Enterprise demography" = filter(
         D_enterprise_demo1621,
-        geogConcat == input$geoChoiceOver
+        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
+        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
       ),
       "9a.Key Stage 4 destinations" = filter(
         D_KS4destin_1521,
-        geogConcat == input$geoChoiceOver
+        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
+        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
       ),
       "10a.Key Stage 5 destinations" = filter(
         D_KS5destin_1721,
-        geogConcat == input$geoChoiceOver
+        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
+        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
       )
     )
   })
@@ -2242,12 +2255,13 @@ server <- function(input, output, session) {
     )
   })
 
-
-
   ### 2.3.9 Downloads local skills ----
   # all areas
   listDownloadV1All <- reactive({
-    list("All areas" = C_datahub %>% filter(metric == input$splashMetric))
+    list(
+      "AllArea" = filter(C_time, metric == input$splashMetric),
+      "AllAreaBreakdown" = filter(C_breakdown, metric == input$splashMetric)
+    )
   })
   nameDownloadV1All <- reactive({
     paste0(currentMetric(), "-all areas.xlsx")
@@ -2260,15 +2274,25 @@ server <- function(input, output, session) {
       write_xlsx(listDownloadV1All(), path = file)
     }
   )
+
   # current area
   listDownloadV1Current <- reactive({
-    list("Current area" = C_datahub %>%
-      filter(
+    list(
+      "CurrentArea" = filter(
+        C_time,
         metric == input$splashMetric,
-        (paste0(area, " ", geographic_level) == input$geoChoice |
-          paste0(area, " ", geographic_level) %in% input$geoComps |
-          paste0(area, " ", geographic_level) == "England")
-      ))
+        (geogConcat == input$geoChoice |
+          geogConcat %in% input$geoComps |
+          geogConcat == "England")
+      ),
+      "CurrentAreaBreakdown" = filter(
+        C_breakdown,
+        metric == input$splashMetric,
+        (geogConcat == input$geoChoice |
+          geogConcat %in% input$geoComps |
+          geogConcat == "England")
+      )
+    )
   })
   nameDownloadV1Current <- reactive({
     paste0(currentMetric(), "-", input$geoChoice, ".xlsx")

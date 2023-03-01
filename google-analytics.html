@@ -87,6 +87,17 @@ Adding tracking for the local skills downloads button*/
     });
   });
   
+  /*
+  Adding tracking for the screenshot button*/
+     $(document).on('click', 'a#screenshotOverview', function(e) {
+    gtag('event', 'ScreenshotOverview', {'event_category' : 'Screenshot button click'
+    });
+  });
+       $(document).on('click', 'a#screenshotFile', function(e) {
+    gtag('event', 'ScreenshotLS', {'event_category' : 'Screenshot button click'
+    });
+  });
+  
       /*
 Adding tracking for the local skills area filter*/
     $(document).on('change', 'select#geoChoice', function(e) {
