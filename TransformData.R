@@ -123,17 +123,14 @@ C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
 # select(-allOccs)
 
 ## Employment level and rate ----
-format.EmpRate.APS <- function(x) {
-  reformat <- x %>%
+
+F_EmpRate<- I_EmpRate %>%
     mutate(year = ifelse(str_like(annual.population.survey, "%date%"), substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
     fill(year) %>% # fill time periods for all rows
     row_to_names(row_number = 4) %>% # set col names
     clean_names() %>%
     select(-starts_with("na")) %>% # remove na columns (flags and confidence)
-    mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
-    filter(check == 1) %>%
-    filter(!grepl("nomisweb", area)) %>%
-    select(year = x2018, area, everything(), -check) %>%
+    select(year = x2018, area, everything()) %>%
     mutate(area = gsub(" - from dn81838", "", area)) %>%
     mutate(area2 = gsub(".*-", "", area)) %>%
     mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
@@ -170,7 +167,7 @@ format.EmpRate.APS <- function(x) {
       TRUE ~ geographic_level
     )) %>%
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
-}
+
 
 # format data
 F_EmpRate_APS1822 <- format.EmpRate.APS(I_EmpRate_APS1822)
