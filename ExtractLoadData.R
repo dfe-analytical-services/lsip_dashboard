@@ -36,7 +36,7 @@ I_mcalookup <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(pa
 # Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people
 folder <- "3_APSempOcc"
 sheetNum <- 1
-I_EmpOcc_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+I_empOcc <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 
 ### Employment level and rate ------------
@@ -44,7 +44,7 @@ I_EmpOcc_APS1721 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.fil
 # Cell: T01 Economic activity by age Aged 16-64/ All people
 folder <- "4_APSempRate"
 sheetNum <- 1
-I_EmpRate<- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+I_emp<- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 ## ILR
 ### AY21/22 achievements by SSAt1, LAD, gender, level------------
@@ -109,7 +109,7 @@ I_mapMCA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0(
 # Cell: T13a	Employment by industry (SIC 2007) and flexibility
 folder <- "13_APSempind"
 sheetNum <- 1
-I_empind_APS1822 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+I_empInd <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 ## Load Fe Interventions table ----
 folder <- "17_FeInterventions"

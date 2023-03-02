@@ -61,81 +61,56 @@ C_LADLSIP2020 <- distinct(I_LEP2020, LAD21CD, LAD21NM, LSIP) %>%
 C_mcalookup <- I_mcalookup
 
 
-# Data cleaning functions ----
-## Employment by occupation ----
-format.EmpOcc.APS <- function(x) {
-  reformat <- x %>%
-    mutate(year = ifelse(annual.population.survey == "date", substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
-    fill(year) %>% # fill time periods for all rows
+# Data cleaning ----
+## Cleaning function for nomis data ----
+formatNomis <- function(x) {
+  x%>%
+    #get years
+    mutate(chartPeriod = ifelse(str_like(annual.population.survey, "%date%"), X2, NA)) %>% # tag time periods
+    fill(chartPeriod) %>% # fill time periods for all rows
+    
+    #sort out column names
+    mutate(chartPeriod = ifelse(row_number() == 4, "chartPeriod",chartPeriod)) %>%#set to year so becomes column name
     row_to_names(row_number = 4) %>% # set col names
     clean_names() %>%
+    rename(chartPeriod=chart_period)%>%
     select(-starts_with("na")) %>% # remove na columns (flags and confidence)
-    mutate(check = ifelse(grepl(":", area), 1, 0)) %>% # remove anything but LEP and Country
-    filter(check == 1) %>%
-    filter(!grepl("nomisweb", area)) %>%
-    select(year = x2017, area, everything(), -check) %>% # reorder and remove
-    mutate(area2 = gsub(".*-", "", area)) %>%
-    mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
-    mutate(area = gsub(".*:", "", area)) %>%
-    mutate(area = gsub("-.*", "", area)) %>%
-    mutate(area = case_when(
-      area == "Hull and East Riding" ~ "Hull and East Yorkshire",
-      area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
-      area == "Heart of the South" ~ "Heart of the South-West",
-      area == "Essex, Southend" ~ "Essex, Southend-on-Sea and Thurrock",
-      area == "Stoke" ~ "Stoke-on-Trent and Staffordshire",
-      TRUE ~ area
-    )) %>%
-    mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
-    select(area, everything(), -area2) %>%
-    relocate(geographic_level, year, .after = area) %>%
-    # mutate(year = as.numeric(substr(year, 5, 8))) %>%
+    #emp table cleaning
     rename_with(
-      .fn = ~ str_replace_all(.x, c("t09a_" = "", "_" = " ", "soc2010 all people" = "", "all people" = "")),
-      .cols = starts_with("t09a_")
+      .fn = ~ str_replace_all(.x, c("t01_" = "", "_" = "", "aged1664" = "", "allpeople" = "")),
+      .cols = starts_with("t01_")
     ) %>%
-    rename_with(~ gsub("^[0-9]", "", .)) %>%
-    rename_with(~ gsub("^[0-9]", "", .)) %>%
-    mutate(geographic_level = toupper(geographic_level)) %>%
-    rename_with(str_to_title, c(4:28)) %>% # capitalise column names
-    mutate(geographic_level = toupper(geographic_level)) %>%
-    filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
-}
-# format data
-F_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
-# create downloadable version with new suppression rules
-D_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
-  # select(-allOccs) %>%
-  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x", "9999999" = "x")))
-write.csv(D_EmpOcc_APS1721, file = "Data\\AppData\\D_EmpOcc_APS1721.csv", row.names = FALSE)
-# create version to use in dashboard
-C_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
-  filter(
-    year == "2021",
-    # geographic_level != "LADU" &
-    geographic_level != "GOR" # cleans up for London and South East which is included as lep and gor
-  ) %>%
-  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "", "9999999" = ""))) %>% # convert to blank to avoid error msg
-  mutate_at(c(4:28), as.numeric) # %>% # Convert to numeric
-# mutate(allOccsRemain = allOccs -
-#        rowSums(select(., -allOccs, -year, -area, -geographic_level), na.rm = TRUE)) %>%
-# mutate(allOccsRemain = case_when(allOccsRemain <= 0 ~ 0, TRUE ~ allOccsRemain)) %>%
-# select(-allOccs)
-
-## Employment level and rate ----
-
-F_EmpRate<- I_EmpRate %>%
-    mutate(year = ifelse(str_like(annual.population.survey, "%date%"), substr(X2, nchar(X2) - 4 + 1, nchar(X2)), NA)) %>% # tag time periods
-    fill(year) %>% # fill time periods for all rows
-    row_to_names(row_number = 4) %>% # set col names
-    clean_names() %>%
-    select(-starts_with("na")) %>% # remove na columns (flags and confidence)
-    select(year = x2018, area, everything()) %>%
-    mutate(area = gsub(" - from dn81838", "", area)) %>%
-    mutate(area2 = gsub(".*-", "", area)) %>%
-    mutate(geographic_level = gsub(":.*", "", area)) %>% # Get geog type
-    mutate(area = gsub(".*:", "", area)) %>%
-    mutate(area = gsub("-.*", "", area)) %>%
+    #emp occupation table cleaning
+    rename_with(
+      .fn = ~ str_replace_all(.x, c("t09a_" = "", "_all_people" = "" ,"soc2010"="","_" = " ")),
+      .cols = starts_with("t09")
+    ) %>%
+    #emp industry table cleaning
+    rename_with(
+      .fn = ~ str_replace_all(.x, c("t13a_" = "", "_all_people" = "" ,"soc2010"="","_" = " ")),
+      .cols = starts_with("t13")
+    ) %>%
+    rename_with(~ gsub("[[:digit:]]+", "", .)) %>%
+    
+    #sort out geographic level
+    mutate(area = gsub(" - from dn81838", "", area)) %>%#remove nomis user
+    mutate(geographicLevel1 = gsub(".*-", "", area)) %>% #get geographical level if user defines
+    mutate(geographicLevel2 = gsub(":.*", "", area)) %>% # Get geog type if not user defined
+    mutate(geographicLevel = ifelse(geographicLevel2 == "User Defined Geography", geographicLevel1, geographicLevel2)) %>%
+    mutate(geographicLevel = toupper(geographicLevel)) %>%
+    mutate(geographicLevel = case_when(
+      geographicLevel == "LSI" ~ "LSIP",
+      geographicLevel == "LS" ~ "LSIP",
+      geographicLevel == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP",
+      geographicLevel == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP",
+      geographicLevel == "SEA AND THURROCK" ~ "LSIP",
+      area == "West of England and North Somerset" ~ "LSIP",
+      TRUE ~ geographicLevel
+    )) %>%
+    
+    #sort out area
+    mutate(area = gsub(".*:", "", area)) %>%#clear area of geographic levels
+    mutate(area = gsub("-.*", "", area)) %>%#clear area of geographic levels
     mutate(area = case_when(
       area == "Hull and East Riding" ~ "Hull and East Yorkshire",
       area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
@@ -146,54 +121,57 @@ F_EmpRate<- I_EmpRate %>%
       area == "Enterprise M3 LEP (including all of" ~ "Enterprise M3 LEP (including all of Surrey)",
       TRUE ~ area
     )) %>%
-    mutate(geographic_level = ifelse(geographic_level == "User Defined Geography", area2, geographic_level)) %>%
-    select(area, everything(), -area2) %>%
-    relocate(geographic_level, year, .after = area) %>%
-    # mutate(year = as.numeric(substr(year, 5, 8))) %>%
-    rename_with(
-      .fn = ~ str_replace_all(.x, c("t01_" = "", "_" = " ", "aged 16 64" = "", "all people" = "")),
-      .cols = starts_with("t01_")
-    ) %>%
-    rename_with(~ gsub("[[:digit:]]+", "", .)) %>%
-    rename_with(str_to_title, c(4:10)) %>% # capitalise column names
-    mutate(geographic_level = toupper(geographic_level)) %>%
-    mutate(geographic_level = case_when(
-      geographic_level == "LSI" ~ "LSIP",
-      geographic_level == "LS" ~ "LSIP",
-      geographic_level == "USER DEFINED GEOGRAPHY:BRIGHTON AND HOVE, EAST SUSSEX, WES" ~ "LSIP",
-      geographic_level == "USER DEFINED GEOGRAPHY:ENTERPRISE M3 LEP (INCLUDING ALL OF" ~ "LSIP",
-      geographic_level == "SEA AND THURROCK" ~ "LSIP",
-      area == "West of England and North Somerset" ~ "LSIP",
-      TRUE ~ geographic_level
-    )) %>%
-    filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
+    
+    #remove any blank rows
+    filter(geographicLevel %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))%>%
+    mutate(geogConcat=paste0(area," ",geographicLevel))%>%
+    select(-area,-geographicLevel,-geographicLevel1,-geographicLevel2)%>%
+    #get time period
+    mutate(timePeriod=as.Date(paste("01", substr(chartPeriod,1,8), sep = ""), format = "%d %b %Y"))%>%
+    mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1, TRUE ~ 0))
+}
 
+#convert to data format function
+formatNomisLong <- function(x) {
+  x%>%
+    #make long
+pivot_longer(!c("geogConcat", "timePeriod", "chartPeriod","latest"),
+             names_to = "subgroup",
+             values_to = "valueText"
+)%>%
+    # mutate(topFilter=case_when(str_sub(metric,-4,-1)=="Rate"~"Rate",TRUE ~ "Volume"))%>% #create top filter split
+    #mutate(metric=gsub("Rate", "", metric))%>%
+    mutate(value=as.numeric(valueText))%>% #for caluclations
+    mutate_at(vars(valueText), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))#common supression notation
+}
+## Employment by occupation ----
 
-# format data
-F_EmpRate_APS1822 <- format.EmpRate.APS(I_EmpRate_APS1822)
-# create downloadable version with new suppression rules
-D_EmpRate_APS1822 <- F_EmpRate_APS1822 %>%
-  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
-
-write.csv(D_EmpRate_APS1822, file = "Data\\AppData\\D_EmpRate_APS1822.csv", row.names = FALSE)
-
-# create version to use in dashboard
-C_EmpRate_APS1822 <- F_EmpRate_APS1822 %>%
-  mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>% # convert to blank to avoid error msg
-  mutate_at(c(4:10), as.numeric) %>% # Convert to numeric
+#convert into format used in dashboard   
+C_empOcc<-formatNomisLong(
+  formatNomis(I_empOcc))%>%
+  mutate(subgroup=trimws(str_to_sentence(subgroup),"both"))%>%
+  mutate(breakdown="Occupation",metric="inemployment")
+ 
+  ## Employment level and rate ----
+#convert into format used in dashboard
+C_emp<-formatNomis(I_emp)%>%
+  #calculate rates
   mutate(
-    empRate = `  In Employment ` / `  All `,
-    selfempRate = `  Self Employed ` / `  All `,
-    unempRate = `  Unemployed ` / `  All `,
-    inactiveRate = `  Inactive ` / `  All `
-  ) %>%
-  filter(
-    # geographic_level != "LADU" # not needed for the dashboard currently
-    geographic_level != "GOR"
-  ) %>%
-  mutate(Year = as.numeric(substr(year, 3, 4))) %>% # for use in charts
-  rename(Employment = `  In Employment `) # for use in charts
-write.csv(C_EmpRate_APS1822, file = "Data\\AppData\\C_EmpRate_APS1822.csv", row.names = FALSE)
+    inemploymentRate = as.character(as.numeric(inemployment) / as.numeric(all)),
+    selfemployedRate = as.character(as.numeric(selfemployed) / as.numeric(all)),
+    unemployedRate = as.character(as.numeric(unemployed) / as.numeric(all)),
+    inactiveRate =as.character(as.numeric(inactive) / as.numeric(all)),
+  )%>%
+  #make long
+  pivot_longer(!c("geogConcat", "timePeriod", "chartPeriod","latest"),
+               names_to = "metric",
+               values_to = "valueText"
+  )%>%
+  mutate(breakdown="Total",subgroup="Total")%>%
+ # mutate(topFilter=case_when(str_sub(metric,-4,-1)=="Rate"~"Rate",TRUE ~ "Volume"))%>% #create top filter split
+  #mutate(metric=gsub("Rate", "", metric))%>%
+  mutate(value=as.numeric(valueText))%>% #for caluclations
+  mutate_at(vars(valueText), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))#common supression notation
 
 # create max and min emp count and rate by LEP for use in setting axis
 C_EmpRate_APS1822_max_min <- C_EmpRate_APS1822 %>%
@@ -878,6 +856,7 @@ format.EmpInd.APS <- function(x) {
     filter(geographic_level %in% c("LSIP", "LEP", "LADU", "COUNTRY", "MCA"))
 }
 
+F
 # format data
 F_EmpInd_APS1822 <- format.EmpInd.APS(I_empind_APS1822) %>%
   mutate_at(vars(c(4:12)), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "")))
@@ -1114,6 +1093,21 @@ format.EmpInd.APS <- function(x) {
 }
 
 # format data
+F_empInd<-formatNomis(I_empInd)
+
+
+rename(
+  "Agriculture and Fishing" = " a agricuture fishing ",
+  "Energy and Water" = " b d e energy water ",
+  "Manufacturing" = " c manufacturing ",
+  "Construction" = " f construction ",
+  "Distribution, Hotels and Restaurants" = " g i distribution hotels restaurants ",
+  "Transport and Communication" = " h j transport communication ",
+  "Banking, Finance and Insurance" = " k n banking finance insurance etc ",
+  "Public Administration, Education and Health" = " o q public admin education health ",
+  "Other Services" = " r u other services "
+) %>%
+
 F_EmpInd_APS1822 <- format.EmpInd.APS(I_empind_APS1822) %>%
   mutate_at(vars(c(4:12)), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "")))
 
@@ -1899,12 +1893,16 @@ neatLSIP <- LSIPmap %>%
     LAT = map_dbl(geometry, ~ st_centroid(.x)[[2]])
   )
 
-neatGeog <- bind_rows(neatMCA, neatLEP, addEngland, neatLA, neatLSIP)
+neatGeog <- bind_rows(neatMCA, neatLEP, addEngland, neatLA, neatLSIP)%>%
+  mutate(geogConcat = paste0(areaName, " ", geog))
 # add on data
 C_Geog <- neatGeog %>%
   # add employment rate
-  left_join(C_EmpRate_APS1822 %>% filter(year == 2022), by = c("areaName" = "area", "geog" = "geographic_level")) %>%
-  select(-Year, -year) %>%
+  left_join(C_emp %>% 
+              filter(latest==1,breakdown=="Total",subgroup=="Total")%>%
+              select(-timePeriod,-chartPeriod,-valueText,-breakdown,-subgroup,-latest)%>%
+              pivot_wider(names_from = metric, values_from = value)
+            , by = c("geogConcat" = "geogConcat")) %>%
   # add achievment rate
   left_join(
     C_Achieve_ILR1621 %>%
@@ -1963,14 +1961,9 @@ save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 # geographic_level,area,time_period,metric
 C_time <- bind_rows(
   # employment data
-  C_EmpRate_APS1822 %>%
-    mutate(time_period = paste0("Oct-Sep ", year)) %>%
-    mutate(chart_year = as.Date(ISOdate(as.numeric(year) - 1, 1, 1))) %>% # shift to start of year
-    select(-year) %>%
-    pivot_longer(!c("geographic_level", "area", "time_period", "chart_year"),
-      names_to = "metric",
-      values_to = "value"
-    ),
+  C_emp %>% 
+    filter(breakdown=="Total",subgroup=="Total")%>%
+    select(-valueText,-breakdown,-subgroup,-latest),
   # ILR data
   C_Achieve_ILR1621 %>%
     mutate(chart_year = as.Date(ISOdate(str_sub(time_period, 1, 4), 1, 1))) %>%
@@ -2047,28 +2040,9 @@ write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
 # geographic_level,area,time_period,breakdown,subgroups,metric,value,
 D_breakdown <- bind_rows(
   # employment data
-  C_EmpRate_APS1822 %>%
-    rename(time_period = year) %>%
-    filter(time_period == 2022) %>%
-    mutate_at(c("time_period"), as.integer) %>%
-    select(-Year) %>%
-    mutate(breakdown = "No breakdowns available", subgroups = "Total") %>%
-    pivot_longer(!c("geographic_level", "area", "time_period", "breakdown", "subgroups"),
-      names_to = "metric",
-      values_to = "value"
-    ) %>%
-    filter(metric != "Employment"),
-  C_EmpOcc_APS1721 %>%
-    rename(time_period = year) %>%
-    mutate_at(c("time_period"), as.integer) %>%
-    pivot_longer(!c("geographic_level", "area", "time_period"),
-      names_to = "subgroups",
-      values_to = "value"
-    ) %>%
-    mutate(breakdown = "Occupation", metric = "Employment") %>%
-    mutate_all(~ replace(., is.na(.), 0)) %>%
-    group_by(across(c(-value, -subgroups))) %>%
-    mutate(across(value, ~ round(prop.table(.), 3))),
+  C_empOcc%>%
+    filter(latest==1)%>%
+    select(metric,breakdown,subgroup,value,valueText),
   # employment by industry
   C_EmpInd2_APS1822 %>%
     filter(year == "2022") %>%
