@@ -450,7 +450,7 @@ server <- function(input, output, session) {
     validate(need(input$geoChoiceOver != "", ""))
     latest <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2022", metric == "Employment"))$value
     previous <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2021", metric == "Employment"))$value
-    change <- round_half_up((((latest - previous)/latest)*100),0) 
+    change <- (latest - previous)/previous
      
 
     # print with formatting
@@ -460,7 +460,7 @@ server <- function(input, output, session) {
       format(latest, big.mark = ","),
       br(),
       span(
-        format_pm(change), # plus-minus and comma sep formatting
+        paste0(format(100 * change, digit = 2), "%"), #% formatting
         style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
         .noWS = c("before", "after") # remove whitespace
       ),
