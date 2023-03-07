@@ -50,7 +50,7 @@ metricChoices <- list(
   ),
   "Jobs" = list(
     "Online job adverts" = "vacancies",
-    "Job projections (Skills imperative 2035) - TO COME" = "workingFutures"
+    "Employment projections (Skills imperative 2035)" = "wfEmployment"
   ),
   "Businesses" = list(
     "Business count" = "enterpriseCount",

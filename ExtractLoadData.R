@@ -9,6 +9,7 @@
 
 # Load libraries ----
 library(openxlsx)
+library(tidyverse)
 # library(geojsonio)
 
 ## Load list of LEPs 2020 and LA-LSIP lookup ----
@@ -218,3 +219,29 @@ I_DataText <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(pat
 ## LA 2011 to 2021 lookup https://geoportal.statistics.gov.uk/datasets/ons::local-authority-district-2011-to-local-authority-district-2021-lookup-for-england-and-wales/explore
 folder <- "20_LaLookup"
 I_LaLookup <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+
+# Working futures data
+
+dir_path <- "./Data/21_workingFutures/"
+
+read_dir <- function(dir_path, file_name, sheet_name, row_nos) {
+  read.xlsx(paste0(dir_path, file_name), sheet = sheet_name, skipEmptyRows = T, rows = row_nos) %>%
+    mutate(file_name = file_name)
+}
+# Industry future
+I_wfIndF2 <-
+  list.files(dir_path) %>%
+  map_df(~ read_dir(dir_path, ., "Ind F2", 4:38))
+# Occupation future
+I_wfOccF2 <-
+  list.files(dir_path) %>%
+  map_df(~ read_dir(dir_path, ., "Occ F2", 4:49))
+# Qualification future
+I_wfQualF1 <-
+  list.files(dir_path) %>%
+  map_df(~ read_dir(dir_path, ., "Qual F1", 4:14))
+# Area names
+I_wfAreaName <-
+  list.files(dir_path) %>%
+  map_df(~ read_dir(dir_path, ., "Info", 2:5)) %>%
+  filter(grepl("name", Scenario, fixed = TRUE))

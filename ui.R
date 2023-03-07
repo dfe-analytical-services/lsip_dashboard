@@ -744,7 +744,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       br()
     ),
 
-    ## 2.5 Data infomation ----
+    ## 2.5 Data information ----
     tabPanel(
       "Data sources",
       ### 2.5.1 Data sources table ----

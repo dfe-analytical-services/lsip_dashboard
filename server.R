@@ -1700,9 +1700,9 @@ server <- function(input, output, session) {
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <-
       (LaHighLow %>% filter(ranking == max(ranking)))$areaName
-    if (input$geoChoice %in% c("London LEP", "Greater London LSIP") &
-      currentMetric() == "online job adverts") {
-      "ONS job adverts in London are not broken down by LA."
+    if ((input$geoChoice %in% c("London LEP", "Greater London LSIP") &
+      currentMetric() == "online job adverts") | (input$splashMetric == "wfEmployment")) {
+      "Data is not available at LA level."
     } else {
       if (nrow(LaHighLow) == 1) {
         ""
@@ -1723,8 +1723,8 @@ server <- function(input, output, session) {
   #### 2.3.6.3 Map----
   output$mapLA <- renderLeaflet({
     validate(
-      need(!(input$geoChoice %in% c("London LEP", "Greater London LSIP") &
-        currentMetric() == "online job adverts"), ""),
+      need(!((input$geoChoice %in% c("London LEP", "Greater London LSIP") &
+        currentMetric() == "online job adverts") | (input$splashMetric == "wfEmployment")), ""),
       need(input$geoChoice != "", "")
     )
     # Filter to those LAs in that region
@@ -1800,34 +1800,17 @@ server <- function(input, output, session) {
       )
     englandArea <- C_time %>%
       filter(
-        geographic_level == "COUNTRY",
-        area == "England",
+        geogConcat == "England",
         metric == input$splashMetric
       )
     currentChange <- (currentArea %>%
       filter(chart_year == max(chart_year)))$value -
       (currentArea %>%
-        filter(chart_year == (ymd(
-          max(chart_year)
-        ) - years( # ks5 only has the data fr the last 4 years
-          if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
-            3
-          } else {
-            4
-          }
-        ))))$value
+        filter(chart_year == min(chart_year)))$value
     englandChange <- (englandArea %>%
       filter(chart_year == max(chart_year)))$value -
       (englandArea %>%
-        filter(chart_year == (ymd(
-          max(chart_year)
-        ) - years( # ks5 only has the data fr the last 4 years
-          if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
-            3
-          } else {
-            4
-          }
-        ))))$value
+        filter(chart_year == min(chart_year)))$value
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$timeComment, " ",
       input$geoChoice, " has ",
@@ -1880,7 +1863,7 @@ server <- function(input, output, session) {
               "\nNone"
             }) |
               # get england for comparison (if a rate)
-              (if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population") {
+              (if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "wfEmployment") {
                 (geogConcat == "England")
               } else {
                 area == "\nNone"
@@ -1908,7 +1891,7 @@ server <- function(input, output, session) {
               "<br>",
               currentMetric(),
               ": ",
-              if (str_sub(input$splashMetric, start = -4) == "Rate") {
+              if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "wfEmployment") {
                 scales::percent(round(value, 3))
               } else {
                 format(round(value), big.mark = ",")
@@ -1925,13 +1908,13 @@ server <- function(input, output, session) {
             legend.position = "bottom",
             legend.title = element_blank()
           ) +
-          scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate") {
+          scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "wfEmployment") {
             scales::percent
           } else {
             label_number_si()
           }) +
           labs(colour = "") +
-          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population") {
+          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "wfEmployment") {
             chartColors6
           } else {
             chartColors5
@@ -2178,6 +2161,7 @@ server <- function(input, output, session) {
                 input$splashMetric == "enterpriseCount" |
                 input$splashMetric == "achievements" |
                 input$splashMetric == "participation" |
+                input$splashMetric == "wfEmployment" |
                 input$splashMetric == "starts") {
                 scales::percent(round(value, 3))
               } else {
@@ -2194,6 +2178,7 @@ server <- function(input, output, session) {
             input$splashMetric == "enterpriseCount" |
             input$splashMetric == "achievements" |
             input$splashMetric == "participation" |
+            input$splashMetric == "wfEmployment" |
             input$splashMetric == "starts") {
             scales::percent
           } else {
@@ -2318,6 +2303,7 @@ server <- function(input, output, session) {
     )
   })
 
+  C_datahub <- bind_rows(C_datahubPt1, C_datahubPt2 %>% mutate(value = as.character(value))) # bind files because they are too big to go on github
   output$hubMetricInput <- renderUI({
     selectizeInput(
       "hubMetric",
