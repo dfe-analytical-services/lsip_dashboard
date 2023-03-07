@@ -659,7 +659,8 @@ server <- function(input, output, session) {
   output$overviewJobKPI <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
     latest <- (currentGeogData() %>% filter(time_period == "Dec 2022", metric == "vacancies"))$value
-    change <- latest - (currentGeogData() %>% filter(time_period == "Dec 2021", metric == "vacancies"))$value
+    previous <- (currentGeogData() %>% filter(time_period == "Dec 2021", metric == "vacancies"))$value
+    change <- (latest - previous)/previous
 
     # print with formatting
     h4(
@@ -668,7 +669,7 @@ server <- function(input, output, session) {
       format(latest, big.mark = ","),
       br(),
       span(
-        format_pm(change), # plus-minus and comma sep formatting
+        paste0(format(100 * change, digit = 2), "%"), #% formatting
         style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
         .noWS = c("before", "after") # remove whitespace
       ),
@@ -781,7 +782,7 @@ server <- function(input, output, session) {
     ETach <- EtLatest()$achievements
 
     # E&T achievements change
-    ETachChange <- EtLatest()$achievements - EtLast()$achievements
+    ETachChange <- (EtLatest()$achievements - EtLast()$achievements)/EtLast()$achievements
 
     # print with formatting
     h4(
@@ -790,8 +791,8 @@ server <- function(input, output, session) {
       format(ETach, big.mark = ","),
       br(),
       span(
-        format_pm(ETachChange) # plus-minus and comma sep formatting
-        ,
+        paste0(format(100 * ETachChange, digit = 2), "%"), # % formatting
+        
         style = paste0("font-size: 16px;color:", cond_color(ETachChange > 0)) # colour formating
         ,
         .noWS = c("before", "after") # remove whitespace
@@ -898,7 +899,7 @@ server <- function(input, output, session) {
 
     # E&T achievements change
     AppachChange <-
-      AppLatest()$achievements - AppLast()$achievements
+      (AppLatest()$achievements - AppLast()$achievements)/AppLast()$achievements
 
     # print with formatting
     h4(
@@ -907,8 +908,8 @@ server <- function(input, output, session) {
       format(Appach, big.mark = ","),
       br(),
       span(
-        format_pm(AppachChange) # plus-minus and comma sep formatting
-        ,
+        paste0(format(100 * AppachChange, digit = 2), "%"), # % formatting
+        
         style = paste0("font-size: 16px;color:", cond_color(AppachChange > 0)) # colour formating
         ,
         .noWS = c("before", "after") # remove whitespace
