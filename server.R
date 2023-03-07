@@ -449,7 +449,9 @@ server <- function(input, output, session) {
   output$overviewEmpCntKPI <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
     latest <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2022", metric == "Employment"))$value
-    change <- latest - (currentGeogData() %>% filter(time_period == "Oct-Sep 2021", metric == "Employment"))$value
+    previous <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2021", metric == "Employment"))$value
+    change <- round_half_up((((latest - previous)/latest)*100),0) 
+     
 
     # print with formatting
     h4(
