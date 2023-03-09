@@ -1591,7 +1591,7 @@ server <- function(input, output, session) {
     pal <- colorNumeric("Blues", mapData[[input$splashMetric]])
     labels <-
       # if a percentage then format as %, else big number
-      if (str_sub(input$splashMetric, start = -4) == "Rate") {
+      if (str_sub(input$splashMetric, start = -4) == "Rate"|input$splashMetric=="wfEmployment") {
         sprintf(
           "<strong>%s</strong><br/>%s: %s%%",
           mapData$areaName,
@@ -1637,7 +1637,7 @@ server <- function(input, output, session) {
     mapData <- C_Geog %>% filter(geogConcat == input$geoChoice)
     labels <-
       # if a percentage then format as %, else big number
-      if (str_sub(input$splashMetric, start = -4) == "Rate") {
+      if (str_sub(input$splashMetric, start = -4) == "Rate"|input$splashMetric=="wfEmployment") {
         sprintf(
           "<strong>%s</strong><br/>%s: %s%%",
           mapData$areaName,
@@ -1672,7 +1672,7 @@ server <- function(input, output, session) {
   #### 2.3.5.4 Map footnote ----
   output$mapFoot <- renderUI({
     paste0(
-      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, " data. Click an area to update dashboard."
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ". Click an area to update dashboard."
     )
   })
 
@@ -1775,16 +1775,23 @@ server <- function(input, output, session) {
 
   #### 2.3.6.4 Map footnote ----
   output$mapLaFoot <- renderUI({
-    paste0(
-      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, " data. Click an area to update other charts with LA data."
+    validate(
+      need("geoChoice" %in% names(input), ""),
+      need(input$geoChoice != "", "")
     )
+    if ((input$geoChoice %in% c("London LEP", "Greater London LSIP") &
+         currentMetric() == "online job adverts") | (input$splashMetric == "wfEmployment")) {""}else{
+    paste0(
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ". Click an area to update other charts with LA data."
+    )
+         }
   })
 
   ### 2.3.7 Time chart ----
 
   # create time header
   output$titleTime <- renderUI({
-    paste0("How are ", (I_DataText %>% filter(metric == input$splashMetric))$timeTitle, " changing over time?")
+    paste0("How ", (I_DataText %>% filter(metric == input$splashMetric))$timeTitle, " over time?")
   })
 
   #### 2.3.7.1 Comment ----
@@ -1813,12 +1820,12 @@ server <- function(input, output, session) {
         filter(chart_year == min(chart_year)))$value
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$timeComment, " ",
-      input$geoChoice, " has ",
+      input$geoChoice, if(input$splashMetric=="wfEmployment"){" is projected to increase "}else{
       if (currentChange > 0) {
-        "increased "
+        " has increased "
       } else {
-        "decreased "
-      },
+        " has decreased "
+      }},
       if (sign(currentChange) == sign(englandChange)) {
         if (abs(currentChange) > abs(englandChange)) {
           "faster than the national average"
@@ -1836,7 +1843,7 @@ server <- function(input, output, session) {
       if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
         " in the last four years."
       } else {
-        " in the last five years."
+        if(input$splashMetric=="wfEmployment"){" to 2035."}else{" in the last five years."}
       }
       # ,"It has the "
       # , areaRank, suff, " fastest growing ", currentMetric(), " of the ", groupCount)

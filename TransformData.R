@@ -1930,13 +1930,6 @@ C_wf <-
     geogConcat == "Essex Southend-on-Sea and Thurrock LSIP" ~ "Essex, Southend-on-Sea and Thurrock LSIP",
     TRUE ~ geogConcat
   )) # correct different spellings
-# #caluclate national picture
-# ,C_wf%>%
-#   filter(str_sub(geogConcat,-4,-1)=="LSIP")%>%
-#   group_by(subgroup,metric,breakdown,timePeriod)%>%
-#   summarise(value=sum(value))%>%
-#   mutate(geogConcat="England")
-# )
 
 # correct the missing summaries of a few major groups
 correctedSubgroups <- C_wf %>%
@@ -2059,7 +2052,14 @@ C_Geog <- neatGeog %>%
     geogConcat == "England COUNTRY" ~ "England",
     TRUE ~ geogConcat
   )) %>%
-  left_join(C_wf %>% filter(timePeriod == 2035, breakdown == "Total") %>% select(geogConcat, wfEmployment = value))
+  left_join(C_wf %>% filter(timePeriod %in% c(2023,2035), breakdown == "Total") %>% 
+              select(geogConcat, timePeriod,value)%>%
+              # get growth
+              arrange(timePeriod) %>%
+              group_by(geogConcat) %>%
+              mutate(value = (value - lag(value)) / lag(value)) %>%
+              filter(timePeriod != 2023)%>%
+              select(geogConcat, wfEmployment = value))
 
 save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 
@@ -2328,11 +2328,14 @@ D_breakdown <- bind_rows(
   )) %>%
   # add working futires
   bind_rows(
-    C_wf %>% filter(breakdown != "Total", timePeriod == 2035) %>%
+    C_wf %>% filter(breakdown != "Total",timePeriod %in% c(2023,2035)) %>%
       mutate(area = "none", geographic_level = "none", timePeriod = as.integer(timePeriod)) %>%
-      rename(subgroups = subgroup, time_period = timePeriod) %>%
-      group_by(across(c(-value, -subgroups))) %>%
-      mutate(across(value, ~ round(prop.table(.), 3)))
+      # get growth
+      arrange(timePeriod,) %>%
+      group_by(geogConcat,subgroup,metric,breakdown) %>%
+      mutate(value = (value - lag(value)) / lag(value)) %>%
+      filter(timePeriod != 2023)%>%
+      rename(subgroups = subgroup, time_period = timePeriod) 
   )
 
 # Create dataHub dataset
