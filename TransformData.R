@@ -1861,6 +1861,100 @@ D_OnsProfDetail <- D_OnsProf %>%
   filter(time_period == "Dec 22", `Detailed Profession Category` != "None")
 write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.names = FALSE)
 
+# Working future data ----
+C_wf <-
+  # bind_rows(
+  bind_rows(
+    I_wfIndF2 %>%
+      select(-"0") %>% # get rid of row caused by formula error in spreadsheet
+      rename(subgroup = X1) %>%
+      mutate(
+        metric = "wfEmployment",
+        breakdown = case_when(
+          subgroup %in% c("Primary sector and utilities", "Manufacturing", "Construction", "Trade, accomod. and transport", "Business and other services", "Non-marketed services") ~ "Broad sector",
+          subgroup == "All industries" ~ "Total",
+          TRUE ~ "Industry"
+        ),
+        subgroup = case_when(
+          subgroup == "All industries" ~ "Total",
+          TRUE ~ subgroup
+        )
+      ) %>%
+      mutate_at(vars(`2010`:`2035`),
+        .funs = funs(. * 1000)
+      ), # put in unit numbers
+    I_wfOccF2 %>%
+      rename(subgroup = thousands) %>%
+      mutate(
+        metric = "wfEmployment",
+        breakdown = case_when(
+          grepl("[0-9]", subgroup) == TRUE ~ "Occupation (SOC2020 submajor)",
+          subgroup == "All occupations" ~ "Total",
+          TRUE ~ "Occupation (SOC2020 major)"
+        ),
+        subgroup = case_when(
+          subgroup == "All occupations" ~ "Total",
+          grepl("[0-9]", subgroup) == TRUE ~ gsub("^[0-9]", "", subgroup),
+          TRUE ~ subgroup
+        )
+      ) %>%
+      mutate_at(vars(`2010`:`2035`),
+        .funs = funs(. * 1000)
+      ) %>% # put in unit numbers
+      filter(breakdown != "Total"), # remove this total since we already have it fro industry
+    I_wfQualF1 %>%
+      mutate(metric = "wfEmployment", breakdown = "Qualification") %>%
+      rename(subgroup = X1) %>%
+      mutate_at(vars(`2010`:`2035`),
+        .funs = funs(. * 1000)
+      ), # put in unit numbers
+  ) %>%
+  left_join(I_wfAreaName) %>%
+  mutate(geogConcat = paste0(trimws(`.Main`, "both"), " ", sub(" name", "", Scenario))) %>% # get name
+  mutate(geogConcat = case_when(
+    #   file_name == "BH_LSIP_MainTables.Main.xlsm" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
+    trimws(`.Main`, "both") == "England" ~ "England",
+    TRUE ~ geogConcat
+  )) %>% # correct error in file calling this a LEP instead of LSIP and getting name wrong
+  select(-`.Main`, -Scenario, -file_name) %>%
+  pivot_longer(!c("geogConcat", "breakdown", "subgroup", "metric"),
+    names_to = "timePeriod",
+    values_to = "value"
+  ) %>%
+  mutate(geogConcat = case_when(
+    geogConcat == "Buckinghamshire Thames Valley LEP" ~ "Buckinghamshire LEP",
+    geogConcat == "Cambridge and Peterborough MCA" ~ "Cambridgeshire and Peterborough MCA",
+    geogConcat == "London Enterprise Panel LEP" ~ "London LEP",
+    geogConcat == "York, North Yorkshire and East Riding LEP" ~ "York and North Yorkshire LEP",
+    geogConcat == "Humber LEP" ~ "Hull and East Yorkshire LEP",
+    geogConcat == "Essex Southend-on-Sea and Thurrock LSIP" ~ "Essex, Southend-on-Sea and Thurrock LSIP",
+    geogConcat == "Brighton and Hove East Sussex West Sussex LSIP" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
+    TRUE ~ geogConcat
+  )) %>% # correct different spellings
+  mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) # remove numbers from soc codes for presentation
+
+
+# # correct the missing summaries of a few major groups
+# correctedSubgroups <- C_wf %>%
+#   # filter(subgroup%in%c("Sales and customer service occupations","Process, plant and machine operatives","Elementary occupations")%>%
+#   mutate(majorGroup = case_when(
+#     subgroup %in% c("71 Sales occupations", "72 Customer service occupations") ~ "Sales and customer service occupations",
+#     subgroup %in% c("81 Process, plant and machine operatives", "82 Transport and mobile machine drivers and operatives") ~ "Process, plant and machine operatives",
+#     subgroup %in% c("91 Elementary trades and related occupations", "92 Elementary administration and service occupations") ~ "Elementary occupations",
+#     TRUE ~ "Ignore"
+#   )) %>%
+#   filter(majorGroup != "Ignore") %>%
+#   group_by(majorGroup, metric, geogConcat, timePeriod) %>%
+#   summarise(value = sum(value)) %>%
+#   rename(subgroup = majorGroup) %>%
+#   mutate(breakdown = "Occupation (SOC2020 major)")
+#
+# # add back on
+# C_wf <- bind_rows(
+#   C_wf %>%
+#     filter(!subgroup %in% c("Sales and customer service occupations", "Process, plant and machine operatives", "Elementary occupations")),
+#   correctedSubgroups
+# )
 # Neaten geog files
 neatLA <- I_mapLA %>%
   mutate(geog = "LADU") %>% # add geog type
@@ -1958,7 +2052,15 @@ C_Geog <- neatGeog %>%
   mutate(geogConcat = case_when(
     geogConcat == "England COUNTRY" ~ "England",
     TRUE ~ geogConcat
-  ))
+  )) %>%
+  left_join(C_wf %>% filter(timePeriod %in% c(2023, 2035), breakdown == "Total") %>%
+    select(geogConcat, timePeriod, value) %>%
+    # get growth
+    arrange(timePeriod) %>%
+    group_by(geogConcat) %>%
+    mutate(value = (value - lag(value)) / lag(value)) %>%
+    filter(timePeriod != 2023) %>%
+    select(geogConcat, wfEmployment = value))
 
 save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 
@@ -2043,7 +2145,23 @@ C_time <- bind_rows(
   mutate(geogConcat = case_when(
     geogConcat == "England COUNTRY" ~ "England",
     TRUE ~ geogConcat
-  ))
+  )) %>%
+  bind_rows(
+    # add working futires
+    test <- C_wf %>%
+      filter(breakdown == "Total", timePeriod >= 2022) %>%
+      mutate(
+        chart_year = as.Date(ISOdate(timePeriod, 1, 1)),
+        time_period = timePeriod
+      ) %>%
+      select(geogConcat, value, chart_year, time_period, metric) %>%
+      # get growth
+      arrange(chart_year, time_period) %>%
+      group_by(geogConcat, metric) %>%
+      mutate(value = (value - lag(value)) / lag(value)) %>%
+      filter(time_period != 2022)
+  )
+
 write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
 
 # create neat breakdown file
@@ -2208,7 +2326,18 @@ D_breakdown <- bind_rows(
   mutate(geogConcat = case_when(
     geogConcat == "England COUNTRY" ~ "England",
     TRUE ~ geogConcat
-  ))
+  )) %>%
+  # add working futires
+  bind_rows(
+    C_wf %>% filter(breakdown != "Total", timePeriod %in% c(2023, 2035)) %>%
+      mutate(area = "none", geographic_level = "none", timePeriod = as.integer(timePeriod)) %>%
+      # get growth
+      arrange(timePeriod, ) %>%
+      group_by(geogConcat, subgroup, metric, breakdown) %>%
+      mutate(value = (value - lag(value)) / lag(value)) %>%
+      filter(timePeriod != 2023) %>%
+      rename(subgroups = subgroup, time_period = timePeriod)
+  )
 
 # Create dataHub dataset
 # create neat breakdown file for download so keeping symbols
@@ -2216,7 +2345,7 @@ C_datahub <- bind_rows(
   # employment data
   D_EmpRate_APS1822 %>%
     rename(time_period = year) %>%
-    mutate(breakdown = "Total", subgroups = "Total") %>%
+    mutate(breakdown = "Total", subgroups = "Total", time_period = as.character(time_period)) %>%
     pivot_longer(!c("geographic_level", "area", "time_period", "breakdown", "subgroups"),
       names_to = "metric",
       values_to = "value"
@@ -2340,7 +2469,7 @@ C_datahub <- bind_rows(
       names_to = "metric",
       values_to = "value"
     ) %>%
-    mutate(breakdown = "Total", subgroups = "Total"),
+    mutate(breakdown = "Total", subgroups = "Total", time_period = as.character(time_period), value = as.character(value)),
   # add enterprise count
   C_enterpriseSizeIndustry %>% mutate(
     time_period = as.character(time_period), value = as.character(value),
@@ -2360,6 +2489,13 @@ C_datahub <- bind_rows(
     geogConcat == "England COUNTRY" ~ "England",
     TRUE ~ geogConcat
   )) %>%
+  # add working futires
+  bind_rows(
+    C_wf %>%
+      mutate(time_period = as.character(timePeriod), value = as.character(value)) %>%
+      select(-timePeriod) %>%
+      rename(subgroups = subgroup)
+  ) %>%
   filter(metric != "starts_rate_per_100000_population") %>% # very bad data coverage
   # rename some of the elements so they make sense here
   mutate(metricNeat = case_when(
@@ -2390,6 +2526,7 @@ C_datahub <- bind_rows(
     metric == "sustainedPositiveDestinationKS4Rate" ~ "KS4 sustained positive detination rate",
     metric == "sustainedPositiveDestinationKS5Rate" ~ "KS5 sustained positive detination rate",
     metric == "vacancies" ~ "Online job adverts",
+    metric == "wfEmployment" ~ "Employment projections (Skills imperative 2035)",
     TRUE ~ metric
   )) %>%
   mutate(breakdown = case_when(
@@ -2398,7 +2535,12 @@ C_datahub <- bind_rows(
     TRUE ~ breakdown
   )) %>%
   select(-area, -geographic_level)
-write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
+# split in two because too big
+index <- seq.int(nrow(C_datahub) / 2)
+C_datahubPt1 <- C_datahub[index, ]
+C_datahubPt2 <- C_datahub[-index, ]
+write.csv(C_datahubPt1, file = "Data\\AppData\\C_datahubPt1.csv", row.names = FALSE)
+write.csv(C_datahubPt2, file = "Data\\AppData\\C_datahubPt2.csv", row.names = FALSE)
 
 # Find top ten for each breakdown (these are chosen in the filter)
 detailLookup <- D_OnsProfDetail %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)

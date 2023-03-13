@@ -352,7 +352,20 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
                 });
                 });"
   ),
-
+  tags$script(
+    " $(document).ready(function () {
+                $('#link_to_tabpanel_wf').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+  ),
+  tags$script(
+    " $(document).ready(function () {
+                $('#link_to_tabpanel_wf1').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+  ),
 
   # 2 Main page ----
   navlistPanel(
@@ -755,7 +768,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       br()
     ),
 
-    ## 2.5 Data infomation ----
+    ## 2.5 Data information ----
     tabPanel(
       "Data sources",
       ### 2.5.1 Data sources table ----
