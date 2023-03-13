@@ -1694,9 +1694,14 @@ server <- function(input, output, session) {
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$mapComment, " in ",
       input$geoChoice,
-      " is ",
-      compareNational,
-      " than the national average. It is ranked ",
+      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "wfEmployment" | str_sub(input$splashMetric, start = -10) == "population") {
+        paste0(
+          " is ",
+          compareNational,
+          " than the national average. It"
+        )
+      } else {},
+      " is ranked ",
       areaRank,
       suff,
       " of the ",
