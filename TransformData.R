@@ -1912,7 +1912,7 @@ C_wf <-
   left_join(I_wfAreaName) %>%
   mutate(geogConcat = paste0(trimws(`.Main`, "both"), " ", sub(" name", "", Scenario))) %>% # get name
   mutate(geogConcat = case_when(
-    file_name == "BH_LSIP_MainTables.Main.xlsm" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
+    #   file_name == "BH_LSIP_MainTables.Main.xlsm" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
     trimws(`.Main`, "both") == "England" ~ "England",
     TRUE ~ geogConcat
   )) %>% # correct error in file calling this a LEP instead of LSIP and getting name wrong
@@ -1928,32 +1928,33 @@ C_wf <-
     geogConcat == "York, North Yorkshire and East Riding LEP" ~ "York and North Yorkshire LEP",
     geogConcat == "Humber LEP" ~ "Hull and East Yorkshire LEP",
     geogConcat == "Essex Southend-on-Sea and Thurrock LSIP" ~ "Essex, Southend-on-Sea and Thurrock LSIP",
+    geogConcat == "Brighton and Hove East Sussex West Sussex LSIP" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
     TRUE ~ geogConcat
-  )) # correct different spellings
-
-# correct the missing summaries of a few major groups
-correctedSubgroups <- C_wf %>%
-  # filter(subgroup%in%c("Sales and customer service occupations","Process, plant and machine operatives","Elementary occupations")%>%
-  mutate(majorGroup = case_when(
-    subgroup %in% c("71 Sales occupations", "72 Customer service occupations") ~ "Sales and customer service occupations",
-    subgroup %in% c("81 Process, plant and machine operatives", "82 Transport and mobile machine drivers and operatives") ~ "Process, plant and machine operatives",
-    subgroup %in% c("91 Elementary trades and related occupations", "92 Elementary administration and service occupations") ~ "Elementary occupations",
-    TRUE ~ "Ignore"
-  )) %>%
-  filter(majorGroup != "Ignore") %>%
-  group_by(majorGroup, metric, geogConcat, timePeriod) %>%
-  summarise(value = sum(value)) %>%
-  rename(subgroup = majorGroup) %>%
-  mutate(breakdown = "Occupation (SOC2020 major)")
-
-# add back on
-C_wf <- bind_rows(
-  C_wf %>%
-    filter(!subgroup %in% c("Sales and customer service occupations", "Process, plant and machine operatives", "Elementary occupations")),
-  correctedSubgroups
-) %>%
+  )) %>% # correct different spellings
   mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) # remove numbers from soc codes for presentation
 
+
+# # correct the missing summaries of a few major groups
+# correctedSubgroups <- C_wf %>%
+#   # filter(subgroup%in%c("Sales and customer service occupations","Process, plant and machine operatives","Elementary occupations")%>%
+#   mutate(majorGroup = case_when(
+#     subgroup %in% c("71 Sales occupations", "72 Customer service occupations") ~ "Sales and customer service occupations",
+#     subgroup %in% c("81 Process, plant and machine operatives", "82 Transport and mobile machine drivers and operatives") ~ "Process, plant and machine operatives",
+#     subgroup %in% c("91 Elementary trades and related occupations", "92 Elementary administration and service occupations") ~ "Elementary occupations",
+#     TRUE ~ "Ignore"
+#   )) %>%
+#   filter(majorGroup != "Ignore") %>%
+#   group_by(majorGroup, metric, geogConcat, timePeriod) %>%
+#   summarise(value = sum(value)) %>%
+#   rename(subgroup = majorGroup) %>%
+#   mutate(breakdown = "Occupation (SOC2020 major)")
+#
+# # add back on
+# C_wf <- bind_rows(
+#   C_wf %>%
+#     filter(!subgroup %in% c("Sales and customer service occupations", "Process, plant and machine operatives", "Elementary occupations")),
+#   correctedSubgroups
+# )
 # Neaten geog files
 neatLA <- I_mapLA %>%
   mutate(geog = "LADU") %>% # add geog type
@@ -2052,14 +2053,14 @@ C_Geog <- neatGeog %>%
     geogConcat == "England COUNTRY" ~ "England",
     TRUE ~ geogConcat
   )) %>%
-  left_join(C_wf %>% filter(timePeriod %in% c(2023,2035), breakdown == "Total") %>% 
-              select(geogConcat, timePeriod,value)%>%
-              # get growth
-              arrange(timePeriod) %>%
-              group_by(geogConcat) %>%
-              mutate(value = (value - lag(value)) / lag(value)) %>%
-              filter(timePeriod != 2023)%>%
-              select(geogConcat, wfEmployment = value))
+  left_join(C_wf %>% filter(timePeriod %in% c(2023, 2035), breakdown == "Total") %>%
+    select(geogConcat, timePeriod, value) %>%
+    # get growth
+    arrange(timePeriod) %>%
+    group_by(geogConcat) %>%
+    mutate(value = (value - lag(value)) / lag(value)) %>%
+    filter(timePeriod != 2023) %>%
+    select(geogConcat, wfEmployment = value))
 
 save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 
@@ -2328,14 +2329,14 @@ D_breakdown <- bind_rows(
   )) %>%
   # add working futires
   bind_rows(
-    C_wf %>% filter(breakdown != "Total",timePeriod %in% c(2023,2035)) %>%
+    C_wf %>% filter(breakdown != "Total", timePeriod %in% c(2023, 2035)) %>%
       mutate(area = "none", geographic_level = "none", timePeriod = as.integer(timePeriod)) %>%
       # get growth
-      arrange(timePeriod,) %>%
-      group_by(geogConcat,subgroup,metric,breakdown) %>%
+      arrange(timePeriod, ) %>%
+      group_by(geogConcat, subgroup, metric, breakdown) %>%
       mutate(value = (value - lag(value)) / lag(value)) %>%
-      filter(timePeriod != 2023)%>%
-      rename(subgroups = subgroup, time_period = timePeriod) 
+      filter(timePeriod != 2023) %>%
+      rename(subgroups = subgroup, time_period = timePeriod)
   )
 
 # Create dataHub dataset
