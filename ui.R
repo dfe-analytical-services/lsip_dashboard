@@ -545,8 +545,14 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               "link_to_tabpanel_destinations", "Destinations"
             )),
             p(
-              "These two metrics provide information on the destinations of young people after Key Stage 4 and Key Stage 5 education for the selected geographic area, and the option to compare against another area.
+              "These two metrics provide information on the destinations of young people after Key Stage 4 and Key Stage 5 education for the selected geographic area.
                 It includes data on destinations, with breakdowns by level and key stage group."
+            ),
+            h3(actionLink(
+              "link_to_tabpanel_wf1", "Employment projections"
+            )),
+            p(
+              "Projected employment growth until 2035. Sector, industry, occupation and qualification projected growths are available. LA level data is not available for this dataset."
             )
             # h2("Data download page"),
             # p(
@@ -871,6 +877,15 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           p(
             "LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."
+          ),
+          h3("Skills Imperative 2035 employment projections"),
+          p(
+            "Skills Imperative 2035 projects the future size and shape of the labour market by considering employment prospects by industry, occupation, qualification level. 
+            The dashboard shows the year on year growth of employment as well as the long term growth from 2023 to 2035. 
+            The employment volumes are available in the data downloads. 
+            "),
+            p("The projections are calculated from a number of different data sources, and as such precise margin errors have not been assigned. 
+            Care should be taken when using projections with small volumes of individuals (see Skills Imperative 2035 datasets for more detail). "
           ),
           br()
         )
