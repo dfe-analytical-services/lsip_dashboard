@@ -40,6 +40,9 @@ server <- function(input, output, session) {
       "#6BACE6"
     )
 
+  ## 1.3 Combine datahub files ----
+  C_datahub <- bind_rows(C_datahubPt1, C_datahubPt2 %>% mutate(value = as.character(value))) # bind files because they are too big to go on github
+
   # 2 Main page ----
   ## 2.1 Homepage ----
   ### 2.1.1 Make links ----
@@ -238,9 +241,25 @@ server <- function(input, output, session) {
       )
     }
   )
+  output$downloadData13 <- downloadHandler(
+    filename = function() {
+      "EmploymentProjectionIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(
+        list(
+          "ProjectedEmployment" = C_datahub %>%
+            filter(metric == "wfEmployment") %>%
+            select(-apprenticeships_or_further_education, -level_or_type, -age_group, -metric, -metricNeat) %>%
+            rename(Employment = value, Area = geogConcat)
+        ),
+        path = file
+      )
+    }
+  )
 
   ### 2.5.2 Create download links ----
-  output$hidden_downloads <- renderUI(lapply(1:12, function(i) {
+  output$hidden_downloads <- renderUI(lapply(1:13, function(i) {
     downloadLink(paste0("downloadData", i), "download", class = "hiddenLink")
   }))
   ### 2.5.3 Data table ----
@@ -348,7 +367,11 @@ server <- function(input, output, session) {
     "7a.Ent by emp size & industry" = D_empentind_UBC1822,
     "8a.Enterprise demography" = D_enterprise_demo1621,
     "9a.Key Stage 4 destinations" = D_KS4destin_1521,
-    "10a.Key Stage 5 destinations" = D_KS5destin_1721
+    "10a.Key Stage 5 destinations" = D_KS5destin_1721,
+    "11.ProjectedEmployment" = C_datahub %>%
+      filter(metric == "wfEmployment") %>%
+      select(-apprenticeships_or_further_education, -level_or_type, -age_group, -metric, -metricNeat) %>%
+      rename(Employment = value, Area = geogConcat)
   )
   output$download_btn0a <- downloadHandler(
     filename = function() {
@@ -426,7 +449,11 @@ server <- function(input, output, session) {
         D_KS5destin_1721,
         area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
         geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      )
+      ),
+      "11.ProjectedEmployment" = C_datahub %>%
+        filter(metric == "wfEmployment", geogConcat == input$geoChoiceOver) %>%
+        select(-apprenticeships_or_further_education, -level_or_type, -age_group, -metric, -metricNeat) %>%
+        rename(Employment = value, Area = geogConcat)
     )
   })
   output$download_btn0b <- downloadHandler(
@@ -2379,11 +2406,13 @@ server <- function(input, output, session) {
       need(input$barBreakdown != "", ""),
       need(input$barBreakdown != "No breakdowns available", "")
     )
-    if(input$splashMetric=="Employment" & input$barBreakdown=="Occupation"){"Jan 2021-Dec 2021 data."}#Occupation data is older because of the SOC issue
-    else{
-    paste0(
-      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, "."
-    )
+    if (input$splashMetric == "Employment" & input$barBreakdown == "Occupation") {
+      "Jan 2021-Dec 2021 data."
+    } # Occupation data is older because of the SOC issue
+    else {
+      paste0(
+        (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, "."
+      )
     }
   })
 
@@ -2391,8 +2420,13 @@ server <- function(input, output, session) {
   # all areas
   listDownloadV1All <- reactive({
     list(
-      "AllArea" = filter(C_time, metric == input$splashMetric),
-      "AllAreaBreakdown" = filter(C_breakdown, metric == input$splashMetric)
+      "AllArea" = filter(C_time, metric == input$splashMetric) %>%
+        mutate(metric = case_when(metric == "wfEmployment" ~ "ProjectedYearOnYearEmploymentGrowth", TRUE ~ metric)) %>%
+        select(-area, -geographic_level, -chart_year) %>%
+        rename(Area = geogConcat),
+      "AllAreaBreakdown" = filter(C_breakdown, metric == input$splashMetric) %>%
+        mutate(metric = case_when(metric == "wfEmployment" ~ "ProjectedEmploymentGrowthTo2035", TRUE ~ metric)) %>%
+        rename(Area = geogConcat)
     )
   })
   nameDownloadV1All <- reactive({
@@ -2416,14 +2450,19 @@ server <- function(input, output, session) {
         (geogConcat == input$geoChoice |
           geogConcat %in% input$geoComps |
           geogConcat == "England")
-      ),
+      ) %>%
+        mutate(metric = case_when(metric == "wfEmployment" ~ "ProjectedYearOnYearEmploymentGrowth", TRUE ~ metric)) %>%
+        select(-area, -geographic_level, -chart_year) %>%
+        rename(Area = geogConcat),
       "CurrentAreaBreakdown" = filter(
         C_breakdown,
         metric == input$splashMetric,
         (geogConcat == input$geoChoice |
           geogConcat %in% input$geoComps |
           geogConcat == "England")
-      )
+      ) %>%
+        mutate(metric = case_when(metric == "wfEmployment" ~ "ProjectedEmploymentGrowthTo2035", TRUE ~ metric)) %>%
+        rename(Area = geogConcat)
     )
   })
   nameDownloadV1Current <- reactive({
@@ -2450,7 +2489,6 @@ server <- function(input, output, session) {
     )
   })
 
-  C_datahub <- bind_rows(C_datahubPt1, C_datahubPt2 %>% mutate(value = as.character(value))) # bind files because they are too big to go on github
   output$hubMetricInput <- renderUI({
     selectizeInput(
       "hubMetric",
