@@ -880,13 +880,13 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           ),
           h3("Skills Imperative 2035 employment projections"),
           p(
-            "Skills Imperative 2035 projects the future size and shape of the labour market by considering employment prospects by industry, occupation, qualification level. 
-            The dashboard shows the year on year growth of employment as well as the long term growth from 2023 to 2035. 
-            The employment volumes are available in the data downloads. 
-            "),
-            p("The projections are calculated from a number of different data sources, and as such precise margin errors have not been assigned. 
-            Care should be taken when using projections with small volumes of individuals (see Skills Imperative 2035 datasets for more detail). "
+            "Skills Imperative 2035 projects the future size and shape of the labour market by considering employment prospects by industry, occupation, qualification level.
+            The dashboard shows the year on year growth of employment as well as the long term growth from 2023 to 2035.
+            The employment volumes are available in the data downloads.
+            "
           ),
+          p("The projections are calculated from a number of different data sources, and as such precise margin errors have not been assigned.
+            Care should be taken when using projections with small volumes of individuals (see Skills Imperative 2035 datasets for more detail). "),
           br()
         )
       )
