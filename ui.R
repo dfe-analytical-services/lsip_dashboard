@@ -578,20 +578,23 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("28 Feb 2023 (1.1.1)"),
+            p("21 Mar 2023 (1.2.1)"),
             p(
-              "Dashboard redesign including:"
-            ),
-            tags$ul(
-              tags$li("More granular breakdowns within geographic areas"),
-              tags$li("More area comparison options"),
-              tags$li("Bespoke download option including geographies and all published breakdowns"),
-              tags$li("Expanding on role as ‘local skills hub,’ hosting links to local skills sources and tools")
+              "Added Skills Imperative 2035 data to the dashboard. This projects employment to 2035 with sector, industry, qualification and occupation splits."
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
-              p(
+              p(p("28 Feb 2023 (1.1.1)"),
+                p(
+                  "Dashboard redesign including:"
+                ),
+                tags$ul(
+                  tags$li("More granular breakdowns within geographic areas"),
+                  tags$li("More area comparison options"),
+                  tags$li("Bespoke download option including geographies and all published breakdowns"),
+                  tags$li("Expanding on role as ‘local skills hub,’ hosting links to local skills sources and tools")
+                ),
                 p("9 Feb 2023 (0.4.3)"),
                 p("Updated destinations data with the February revision."),
                 p("25 Jan 2023 (0.4.2)"),

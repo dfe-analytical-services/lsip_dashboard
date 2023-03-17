@@ -124,7 +124,7 @@ panel_overview <- function() {
         ),
 
         # 7th row - working futures
-        h3("Year on year employment growth"),
+        h3("Year on year projected employment growth"),
         fluidRow(
           column(
             width = 4,
