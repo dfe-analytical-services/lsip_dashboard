@@ -585,7 +585,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
-              p(p("28 Feb 2023 (1.1.1)"),
+              p(
+                p("28 Feb 2023 (1.1.1)"),
                 p(
                   "Dashboard redesign including:"
                 ),
