@@ -387,6 +387,7 @@
 201516,"LSIP","Worcestershire","Total","Key Stage 4",4842,291,208,5341,5583,0.956654128604693,"Sust edu, emp and app","15/16",15
 201516,"LSIP","York and North Yorkshire","Total","Key Stage 4",7020,477,238,7735,8063,0.959320352226218,"Sust edu, emp and app","15/16",15
 201516,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 4",6883,318,257,7458,7883,0.946086515286059,"Sust edu, emp and app","15/16",15
+201516,"MCA","Greater London Authority","Total","Key Stage 4",67183,1614,1086,69883,74150,0.942454484153742,"Sust edu, emp and app","15/16",15
 201516,"MCA","Greater Manchester","Total","Key Stage 4",23965,1485,957,26407,28529,0.925619545024361,"Sust edu, emp and app","15/16",15
 201516,"MCA","Liverpool City Region","Total","Key Stage 4",13275,789,470,14534,15585,0.932563362207251,"Sust edu, emp and app","15/16",15
 201516,"MCA","North East","Total","Key Stage 4",9356,805,386,10547,11360,0.928433098591549,"Sust edu, emp and app","15/16",15
@@ -784,6 +785,7 @@
 201617,"LSIP","Worcestershire","Total","Key Stage 4",4734,299,177,5210,5467,0.952990671300531,"Sust edu, emp and app","16/17",16
 201617,"LSIP","York and North Yorkshire","Total","Key Stage 4",6696,447,208,7351,7674,0.957909825384415,"Sust edu, emp and app","16/17",16
 201617,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 4",6828,319,266,7413,7829,0.946864222761528,"Sust edu, emp and app","16/17",16
+201617,"MCA","Greater London Authority","Total","Key Stage 4",68082,1535,1220,70837,75141,0.942721017819832,"Sust edu, emp and app","16/17",16
 201617,"MCA","Greater Manchester","Total","Key Stage 4",23559,1363,1044,25966,27921,0.929981017871853,"Sust edu, emp and app","16/17",16
 201617,"MCA","Liverpool City Region","Total","Key Stage 4",12718,682,517,13917,15011,0.927120111917927,"Sust edu, emp and app","16/17",16
 201617,"MCA","North East","Total","Key Stage 4",9118,757,354,10229,10917,0.936979023541266,"Sust edu, emp and app","16/17",16
@@ -2717,6 +2719,11 @@
 201718,"MCA","Cambridgeshire and Peterborough","Level 3","Key Stage 5",2851,314,1743,4908,5538,0.886240520043337,"Sust edu, emp and app","17/18",17
 201718,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 4",6767,273,248,7288,7693,0.947354738073573,"Sust edu, emp and app","17/18",17
 201718,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 5",3428,613,2582,6623,8063,0.821406424407789,"Sust edu, emp and app","17/18",17
+201718,"MCA","Greater London Authority","All other qualifications","Key Stage 5",2488,874,2044,5406,10482,0.515741270749857,"Sust edu, emp and app","17/18",17
+201718,"MCA","Greater London Authority","Level 2","Key Stage 5",3006,859,1913,5778,8299,0.696228461260393,"Sust edu, emp and app","17/18",17
+201718,"MCA","Greater London Authority","Level 3","Key Stage 5",38602,2225,8589,49416,56852,0.86920424963062,"Sust edu, emp and app","17/18",17
+201718,"MCA","Greater London Authority","Total","Key Stage 4",67557,1202,1222,69981,74064,0.944872002592353,"Sust edu, emp and app","17/18",17
+201718,"MCA","Greater London Authority","Total","Key Stage 5",44096,3958,12546,60600,75633,0.8012375550355,"Sust edu, emp and app","17/18",17
 201718,"MCA","Greater Manchester","All other qualifications","Key Stage 5",753,632,956,2341,4262,0.549272641952135,"Sust edu, emp and app","17/18",17
 201718,"MCA","Greater Manchester","Level 2","Key Stage 5",1135,685,1329,3149,4337,0.726077934055799,"Sust edu, emp and app","17/18",17
 201718,"MCA","Greater Manchester","Level 3","Key Stage 5",11460,1554,4069,17083,19501,0.876006358648274,"Sust edu, emp and app","17/18",17
@@ -4688,6 +4695,11 @@
 201819,"MCA","Cambridgeshire and Peterborough","Level 3","Key Stage 5",2809,310,1591,4710,5337,0.882518268690275,"Sust edu, emp and app","18/19",18
 201819,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 4",6591,293,276,7160,7619,0.939755873474209,"Sust edu, emp and app","18/19",18
 201819,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 5",3280,676,2598,6554,8080,0.811138613861386,"Sust edu, emp and app","18/19",18
+201819,"MCA","Greater London Authority","All other qualifications","Key Stage 5",2550,794,2144,5488,10507,0.522318454363757,"Sust edu, emp and app","18/19",18
+201819,"MCA","Greater London Authority","Level 2","Key Stage 5",4953,888,2504,8345,11536,0.723387656033287,"Sust edu, emp and app","18/19",18
+201819,"MCA","Greater London Authority","Level 3","Key Stage 5",37613,1988,8521,48122,55181,0.872075533245139,"Sust edu, emp and app","18/19",18
+201819,"MCA","Greater London Authority","Total","Key Stage 4",68437,1068,1136,70641,74676,0.945966575606621,"Sust edu, emp and app","18/19",18
+201819,"MCA","Greater London Authority","Total","Key Stage 5",45116,3670,13169,61955,77224,0.802276494354087,"Sust edu, emp and app","18/19",18
 201819,"MCA","Greater Manchester","All other qualifications","Key Stage 5",879,595,969,2443,4326,0.564724919093851,"Sust edu, emp and app","18/19",18
 201819,"MCA","Greater Manchester","Level 2","Key Stage 5",2258,695,1698,4651,6211,0.748832716148768,"Sust edu, emp and app","18/19",18
 201819,"MCA","Greater Manchester","Level 3","Key Stage 5",11104,1392,3589,16085,18187,0.884422939462253,"Sust edu, emp and app","18/19",18
@@ -6647,6 +6659,11 @@
 201920,"MCA","Cambridgeshire and Peterborough","Level 3","Key Stage 5",3060,266,1739,5065,5745,0.881636205395997,"Sust edu, emp and app","19/20",19
 201920,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 4",6963,251,244,7458,7874,0.947167894335789,"Sust edu, emp and app","19/20",19
 201920,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 5",3569,548,2618,6735,8190,0.822344322344322,"Sust edu, emp and app","19/20",19
+201920,"MCA","Greater London Authority","All other qualifications","Key Stage 5",2752,711,2141,5604,10681,0.524669974721468,"Sust edu, emp and app","19/20",19
+201920,"MCA","Greater London Authority","Level 2","Key Stage 5",2923,681,1757,5361,7938,0.67535903250189,"Sust edu, emp and app","19/20",19
+201920,"MCA","Greater London Authority","Level 3","Key Stage 5",39970,1752,8957,50679,58122,0.871941777640136,"Sust edu, emp and app","19/20",19
+201920,"MCA","Greater London Authority","Total","Key Stage 4",71757,1022,1109,73888,78085,0.946250880450791,"Sust edu, emp and app","19/20",19
+201920,"MCA","Greater London Authority","Total","Key Stage 5",45645,3144,12855,61644,76741,0.803273348014751,"Sust edu, emp and app","19/20",19
 201920,"MCA","Greater Manchester","All other qualifications","Key Stage 5",806,573,1001,2380,4338,0.548639926233287,"Sust edu, emp and app","19/20",19
 201920,"MCA","Greater Manchester","Level 2","Key Stage 5",1085,533,1075,2693,3857,0.698211044853513,"Sust edu, emp and app","19/20",19
 201920,"MCA","Greater Manchester","Level 3","Key Stage 5",11639,1253,3871,16763,19255,0.870579070371332,"Sust edu, emp and app","19/20",19
@@ -8603,6 +8620,11 @@
 202021,"MCA","Cambridgeshire and Peterborough","Level 3","Key Stage 5",3380,192,1427,4999,5808,0.860709366391185,"Sust edu, emp and app","20/21",20
 202021,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 4",7358,157,200,7715,8170,0.944308445532436,"Sust edu, emp and app","20/21",20
 202021,"MCA","Cambridgeshire and Peterborough","Total","Key Stage 5",4019,421,2157,6597,8148,0.809646539027982,"Sust edu, emp and app","20/21",20
+202021,"MCA","Greater London Authority","All other qualifications","Key Stage 5",3647,685,1975,6307,11419,0.552325072248008,"Sust edu, emp and app","20/21",20
+202021,"MCA","Greater London Authority","Level 2","Key Stage 5",5377,499,1523,7399,10117,0.73134328358209,"Sust edu, emp and app","20/21",20
+202021,"MCA","Greater London Authority","Level 3","Key Stage 5",42491,1150,6075,49716,58786,0.845711563977818,"Sust edu, emp and app","20/21",20
+202021,"MCA","Greater London Authority","Total","Key Stage 4",76130,545,687,77362,81466,0.949623155672305,"Sust edu, emp and app","20/21",20
+202021,"MCA","Greater London Authority","Total","Key Stage 5",51515,2334,9573,63422,80322,0.789596872587834,"Sust edu, emp and app","20/21",20
 202021,"MCA","Greater Manchester","All other qualifications","Key Stage 5",1513,561,989,3063,5276,0.580553449583017,"Sust edu, emp and app","20/21",20
 202021,"MCA","Greater Manchester","Level 2","Key Stage 5",2652,505,1060,4217,5666,0.744264031062478,"Sust edu, emp and app","20/21",20
 202021,"MCA","Greater Manchester","Level 3","Key Stage 5",12441,833,3236,16510,19619,0.841531168764973,"Sust edu, emp and app","20/21",20

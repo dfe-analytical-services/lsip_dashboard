@@ -1598,7 +1598,7 @@ server <- function(input, output, session) {
       "38 LEPs."
     } else {
       if (input$splashGeoType == "MCA") {
-        "10 MCAs."
+        "11 MCAs."
       } else {
         "38 LSIPs."
       }
@@ -1855,7 +1855,7 @@ server <- function(input, output, session) {
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <-
       (LaHighLow %>% filter(ranking == max(ranking)))$areaName
-    if ((input$geoChoice %in% c("London LEP", "Greater London LSIP") &
+    if ((input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
       currentMetric() == "online job adverts") | (input$splashMetric == "wfEmployment")) {
       "Data is not available at LA level."
     } else {
@@ -1878,7 +1878,7 @@ server <- function(input, output, session) {
   #### 2.3.6.3 Map----
   output$mapLA <- renderLeaflet({
     validate(
-      need(!((input$geoChoice %in% c("London LEP", "Greater London LSIP") &
+      need(!((input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
         currentMetric() == "online job adverts") | (input$splashMetric == "wfEmployment")), ""),
       need(input$geoChoice != "", "")
     )
@@ -1934,7 +1934,7 @@ server <- function(input, output, session) {
       need("geoChoice" %in% names(input), ""),
       need(input$geoChoice != "", "")
     )
-    if ((input$geoChoice %in% c("London LEP", "Greater London LSIP") &
+    if ((input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
       currentMetric() == "online job adverts") | (input$splashMetric == "wfEmployment")) {
       ""
     } else {

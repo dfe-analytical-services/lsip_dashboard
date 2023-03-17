@@ -2244,6 +2244,11 @@
 "2022","LEP","Greater Lincolnshire","Agriculture and Fishing",6500,494000,0.0131578947368421
 "2022","LEP","Hull and East Yorkshire","Agriculture and Fishing",3900,263900,0.0147783251231527
 "2022","LEP","Leeds City Region","Agriculture and Fishing",2800,1115300,0.00251053528198691
+"2018","MCA","Greater London Authority","Agriculture and Fishing",5000,4579800,0.00109175073147299
+"2019","MCA","Greater London Authority","Agriculture and Fishing",4000,4623300,0.000865182878030844
+"2020","MCA","Greater London Authority","Agriculture and Fishing",4100,4709400,0.000870599227077759
+"2021","MCA","Greater London Authority","Agriculture and Fishing",6800,4688900,0.0014502335302523
+"2022","MCA","Greater London Authority","Agriculture and Fishing",10500,4790000,0.00219206680584551
 "2018","COUNTRY","England","Energy and Water",393500,27063500,0.0145398784340532
 "2018","LSIP","Brighton and Hove, East Sussex, West Sussex","Energy and Water",14800,817700,0.0180995475113122
 "2018","LSIP","Buckinghamshire","Energy and Water",2800,271200,0.0103244837758112
@@ -4489,6 +4494,11 @@
 "2022","LEP","Greater Lincolnshire","Energy and Water",11800,494000,0.0238866396761134
 "2022","LEP","Hull and East Yorkshire","Energy and Water",5300,263900,0.0200833649109511
 "2022","LEP","Leeds City Region","Energy and Water",23500,1115300,0.0210705639738187
+"2018","MCA","Greater London Authority","Energy and Water",39500,4579800,0.00862483077863662
+"2019","MCA","Greater London Authority","Energy and Water",31200,4623300,0.00674842644864058
+"2020","MCA","Greater London Authority","Energy and Water",31800,4709400,0.00675245254172506
+"2021","MCA","Greater London Authority","Energy and Water",31700,4688900,0.00676064748661733
+"2022","MCA","Greater London Authority","Energy and Water",33500,4790000,0.0069937369519833
 "2018","COUNTRY","England","Manufacturing",2452000,27063500,0.0906017329613686
 "2018","LSIP","Brighton and Hove, East Sussex, West Sussex","Manufacturing",55300,817700,0.0676287146875382
 "2018","LSIP","Buckinghamshire","Manufacturing",31300,271200,0.115412979351032
@@ -6734,6 +6744,11 @@
 "2022","LEP","Greater Lincolnshire","Manufacturing",61100,494000,0.123684210526316
 "2022","LEP","Hull and East Yorkshire","Manufacturing",37200,263900,0.140962485790072
 "2022","LEP","Leeds City Region","Manufacturing",102100,1115300,0.0915448758181655
+"2018","MCA","Greater London Authority","Manufacturing",146600,4579800,0.0320101314467881
+"2019","MCA","Greater London Authority","Manufacturing",152300,4623300,0.0329418380810244
+"2020","MCA","Greater London Authority","Manufacturing",162900,4709400,0.0345903936807237
+"2021","MCA","Greater London Authority","Manufacturing",158000,4688900,0.0336966026146857
+"2022","MCA","Greater London Authority","Manufacturing",151600,4790000,0.0316492693110647
 "2018","COUNTRY","England","Construction",1972600,27063500,0.0728878378628041
 "2018","LSIP","Brighton and Hove, East Sussex, West Sussex","Construction",60500,817700,0.0739880151644857
 "2018","LSIP","Buckinghamshire","Construction",21600,271200,0.079646017699115
@@ -8979,6 +8994,11 @@
 "2022","LEP","Greater Lincolnshire","Construction",34900,494000,0.0706477732793522
 "2022","LEP","Hull and East Yorkshire","Construction",14700,263900,0.0557029177718833
 "2022","LEP","Leeds City Region","Construction",75000,1115300,0.0672464807675065
+"2018","MCA","Greater London Authority","Construction",308700,4579800,0.0674046901611424
+"2019","MCA","Greater London Authority","Construction",323300,4623300,0.069928406116843
+"2020","MCA","Greater London Authority","Construction",266500,4709400,0.0565889497600544
+"2021","MCA","Greater London Authority","Construction",246000,4688900,0.0524643306532449
+"2022","MCA","Greater London Authority","Construction",277600,4790000,0.0579540709812109
 "2018","COUNTRY","England","Distribution, Hotels and Restaurants",4980800,27063500,0.184041236351544
 "2018","LSIP","Brighton and Hove, East Sussex, West Sussex","Distribution, Hotels and Restaurants",150900,817700,0.18454200807142
 "2018","LSIP","Buckinghamshire","Distribution, Hotels and Restaurants",37200,271200,0.13716814159292
@@ -11224,6 +11244,11 @@
 "2022","LEP","Greater Lincolnshire","Distribution, Hotels and Restaurants",109800,494000,0.222267206477733
 "2022","LEP","Hull and East Yorkshire","Distribution, Hotels and Restaurants",52200,263900,0.197802197802198
 "2022","LEP","Leeds City Region","Distribution, Hotels and Restaurants",207000,1115300,0.185600286918318
+"2018","MCA","Greater London Authority","Distribution, Hotels and Restaurants",735800,4579800,0.160662037643565
+"2019","MCA","Greater London Authority","Distribution, Hotels and Restaurants",677700,4623300,0.146583609110376
+"2020","MCA","Greater London Authority","Distribution, Hotels and Restaurants",713900,4709400,0.151590436148979
+"2021","MCA","Greater London Authority","Distribution, Hotels and Restaurants",600400,4688900,0.128047089935806
+"2022","MCA","Greater London Authority","Distribution, Hotels and Restaurants",655000,4790000,0.136743215031315
 "2018","COUNTRY","England","Transport and Communication",2567000,27063500,0.0948509985774198
 "2018","LSIP","Brighton and Hove, East Sussex, West Sussex","Transport and Communication",75400,817700,0.0922098569157393
 "2018","LSIP","Buckinghamshire","Transport and Communication",31900,271200,0.117625368731563
@@ -13469,6 +13494,11 @@
 "2022","LEP","Greater Lincolnshire","Transport and Communication",39700,494000,0.0803643724696356
 "2022","LEP","Hull and East Yorkshire","Transport and Communication",18000,263900,0.068207654414551
 "2022","LEP","Leeds City Region","Transport and Communication",108900,1115300,0.0976418900744194
+"2018","MCA","Greater London Authority","Transport and Communication",554400,4579800,0.121053321105725
+"2019","MCA","Greater London Authority","Transport and Communication",584500,4623300,0.126424848052257
+"2020","MCA","Greater London Authority","Transport and Communication",564500,4709400,0.119866649679365
+"2021","MCA","Greater London Authority","Transport and Communication",655600,4688900,0.139819573887266
+"2022","MCA","Greater London Authority","Transport and Communication",619400,4790000,0.129311064718163
 "2018","COUNTRY","England","Banking, Finance and Insurance",4840300,27063500,0.178849742272803
 "2018","LSIP","Brighton and Hove, East Sussex, West Sussex","Banking, Finance and Insurance",149200,817700,0.182463005992418
 "2018","LSIP","Buckinghamshire","Banking, Finance and Insurance",57700,271200,0.212758112094395
@@ -15714,6 +15744,11 @@
 "2022","LEP","Greater Lincolnshire","Banking, Finance and Insurance",55900,494000,0.113157894736842
 "2022","LEP","Hull and East Yorkshire","Banking, Finance and Insurance",32700,263900,0.123910572186434
 "2022","LEP","Leeds City Region","Banking, Finance and Insurance",194900,1115300,0.17475118802116
+"2018","MCA","Greater London Authority","Banking, Finance and Insurance",1224500,4579800,0.267369754137735
+"2019","MCA","Greater London Authority","Banking, Finance and Insurance",1268100,4623300,0.274284601907728
+"2020","MCA","Greater London Authority","Banking, Finance and Insurance",1256100,4709400,0.26672187539814
+"2021","MCA","Greater London Authority","Banking, Finance and Insurance",1296200,4688900,0.276440103222504
+"2022","MCA","Greater London Authority","Banking, Finance and Insurance",1321300,4790000,0.275845511482255
 "2018","COUNTRY","England","Public Administration, Education and Health",8000100,27063500,0.295604781347571
 "2018","LSIP","Brighton and Hove, East Sussex, West Sussex","Public Administration, Education and Health",250800,817700,0.306713953772777
 "2018","LSIP","Buckinghamshire","Public Administration, Education and Health",74100,271200,0.273230088495575
@@ -17959,6 +17994,11 @@
 "2022","LEP","Greater Lincolnshire","Public Administration, Education and Health",144100,494000,0.2917004048583
 "2022","LEP","Hull and East Yorkshire","Public Administration, Education and Health",89000,263900,0.337248957938613
 "2022","LEP","Leeds City Region","Public Administration, Education and Health",347300,1115300,0.311396036940733
+"2018","MCA","Greater London Authority","Public Administration, Education and Health",1220500,4579800,0.266496353552557
+"2019","MCA","Greater London Authority","Public Administration, Education and Health",1249000,4623300,0.270153353665131
+"2020","MCA","Greater London Authority","Public Administration, Education and Health",1385200,4709400,0.294135133987344
+"2021","MCA","Greater London Authority","Public Administration, Education and Health",1368900,4688900,0.291944805817996
+"2022","MCA","Greater London Authority","Public Administration, Education and Health",1378600,4790000,0.287807933194154
 "2018","COUNTRY","England","Other Services",1617100,27063500,0.0597520645888374
 "2018","LSIP","Brighton and Hove, East Sussex, West Sussex","Other Services",52800,817700,0.0645713586890058
 "2018","LSIP","Buckinghamshire","Other Services",13600,271200,0.0501474926253687
@@ -20204,3 +20244,8 @@
 "2022","LEP","Greater Lincolnshire","Other Services",30200,494000,0.0611336032388664
 "2022","LEP","Hull and East Yorkshire","Other Services",10900,263900,0.0413035240621447
 "2022","LEP","Leeds City Region","Other Services",53800,1115300,0.0482381422038913
+"2018","MCA","Greater London Authority","Other Services",344800,4579800,0.0752871304423774
+"2019","MCA","Greater London Authority","Other Services",333200,4623300,0.0720697337399693
+"2020","MCA","Greater London Authority","Other Services",324400,4709400,0.0688835095765915
+"2021","MCA","Greater London Authority","Other Services",325300,4688900,0.0693766128516283
+"2022","MCA","Greater London Authority","Other Services",342500,4790000,0.0715031315240083
