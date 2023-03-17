@@ -382,12 +382,6 @@ feWithAreas<-addGeogs(addPopulation)
     mutate(value=as.numeric(valueText))
 
   
-## min max ----
-# create max and min emp count and rate by LEP for use in setting axis
-C_EmpRate_APS1822_max_min <- C_EmpRate_APS1822 %>%
-  group_by(area) %>%
-  summarise(minEmp = min(Employment), maxEmp = max(Employment))
-write.csv(C_EmpRate_APS1822_max_min, file = "Data\\AppData\\C_EmpRate_APS1822_max_min.csv", row.names = FALSE)
 
 # 3.Combine datsets ----
 C_localSkillsDataset<-bind_rows(
@@ -406,7 +400,12 @@ C_Achieve_ILR1621_max_min <- C_Achieve_ILR1621 %>%
   summarise(minAch = min(achievements), maxAch = max(achievements), .groups = "drop")
 write.csv(C_Achieve_ILR1621_max_min, file = "Data\\AppData\\C_Achieve_ILR1621_max_min.csv", row.names = FALSE)
 
-
+## min max ----
+# create max and min emp count and rate by LEP for use in setting axis
+C_EmpRate_APS1822_max_min <- C_EmpRate_APS1822 %>%
+  group_by(area) %>%
+  summarise(minEmp = min(Employment), maxEmp = max(Employment))
+write.csv(C_EmpRate_APS1822_max_min, file = "Data\\AppData\\C_EmpRate_APS1822_max_min.csv", row.names = FALSE)
 
 
 
