@@ -943,7 +943,6 @@ C_EmpInd2_APS1822 <- F_EmpInd_APS1822 %>%
 names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
 write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
 
-
 # Tidy up intervention table
 names(I_InterventionTable) <- gsub(".", " ", names(I_InterventionTable), fixed = TRUE)
 write.csv(I_InterventionTable, file = "Data\\AppData\\I_InterventionTable.csv", row.names = FALSE)
