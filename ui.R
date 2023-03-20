@@ -811,8 +811,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             ". SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues."
           ),
           p(
-            "Each estimate from the Annual Population Survey carries a margin of error. 
-            These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. 
+            "Each estimate from the Annual Population Survey carries a margin of error.
+            These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents.
             Therefore, please take caution when interpreting data from small subgroups."
           ),
           h3("ONS-Textkernel online job adverts"),
