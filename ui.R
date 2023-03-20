@@ -714,7 +714,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           h3(uiOutput("titleTime")),
           p(uiOutput("commentTime")),
           uiOutput("geoComp"),
-          withSpinner(plotlyOutput("Splash_time"))
+          withSpinner(plotlyOutput("Splash_time")),
+          p("NB non-zero axis.")
         )
       ),
       br(),

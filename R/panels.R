@@ -37,7 +37,7 @@ panel_overview <- function() {
     ), # end of filters row
 
     h1(uiOutput("page0title")),
-    p("Change metrics are measured against the same period in the previous year."),
+    p("Change metrics are measured against the same period in the previous year. NB non-zero axes."),
     fluidRow(
       style = "padding-left: 15px;padding-right: 15px;", # indent slightly so box aligns
       # left column
