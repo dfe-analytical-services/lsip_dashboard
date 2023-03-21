@@ -50,7 +50,7 @@ metricChoices <- list(
   ),
   "Jobs" = list(
     "Online job adverts" = "vacancies",
-    "Job projections (Skills imperative 2035) - TO COME" = "workingFutures"
+    "Employment projections (Skills imperative 2035)" = "wfEmployment"
   ),
   "Businesses" = list(
     "Business count" = "enterpriseCount",
@@ -157,6 +157,7 @@ areaChoices <- list(
   ),
   "Mayoral combined authority" = list(
     "Cambridgeshire and Peterborough" = "Cambridgeshire and Peterborough MCA",
+    "Greater London Authority" = "Greater London Authority MCA",
     "Greater Manchester" = "Greater Manchester MCA",
     "Liverpool City Region" = "Liverpool City Region MCA",
     "North East" = "North East MCA",

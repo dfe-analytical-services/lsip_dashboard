@@ -103,6 +103,11 @@ format.EmpOcc.APS <- function(x) {
 }
 # format data
 F_EmpOcc_APS1721 <- format.EmpOcc.APS(I_EmpOcc_APS1721)
+# add in gla as mca
+F_EmpOcc_APS1721 <- bind_rows(
+  F_EmpOcc_APS1721,
+  F_EmpOcc_APS1721 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 # create downloadable version with new suppression rules
 D_EmpOcc_APS1721 <- F_EmpOcc_APS1721 %>%
   # select(-allOccs) %>%
@@ -174,6 +179,11 @@ format.EmpRate.APS <- function(x) {
 
 # format data
 F_EmpRate_APS1822 <- format.EmpRate.APS(I_EmpRate_APS1822)
+# add in gla as mca
+F_EmpRate_APS1822 <- bind_rows(
+  F_EmpRate_APS1822,
+  F_EmpRate_APS1822 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 # create downloadable version with new suppression rules
 D_EmpRate_APS1822 <- F_EmpRate_APS1822 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
@@ -412,6 +422,11 @@ addMCA <- I_Achieve_ILR1621 %>%
   filter(!is.na(area))
 # join together
 F_Achieve_ILR1621 <- bind_rows(addNewLA, addCountry, addLEP, addLSIP, addMCA)
+# add in gla as mca
+F_Achieve_ILR1621 <- bind_rows(
+  F_Achieve_ILR1621,
+  F_Achieve_ILR1621 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 
 # create downloadable version with new suppression rules
 D_Achieve_ILR1621 <- F_Achieve_ILR1621 %>%
@@ -504,6 +519,11 @@ format.AchieveSSA.ILR <- function(x) {
 }
 
 F_Achieve_ILR21 <- format.AchieveSSA.ILR(I_Achieve_ILR21)
+# add in gla as mca
+F_Achieve_ILR21 <- bind_rows(
+  F_Achieve_ILR21,
+  F_Achieve_ILR21 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 # create downloadable version with new suppression rules
 D_Achieve_ILR21 <- F_Achieve_ILR21 %>%
   mutate_at(vars(achievements), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
@@ -654,7 +674,11 @@ format.empent.UBC <- function(x) {
 
 ## format UBC
 F_empent_UBC1822 <- format.empent.UBC(I_EmpEnt_APS1822)
-
+# add in gla as mca
+F_empent_UBC1822 <- bind_rows(
+  F_empent_UBC1822,
+  F_empent_UBC1822 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 # Downloadable version
 D_empent_UBC1822 <- F_empent_UBC1822 %>%
   mutate_at(vars(-year, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
@@ -738,7 +762,11 @@ format.ks4 <- function(x) {
 
 ## format KS4
 F_KS4destin_1521 <- format.ks4(I_KS4destin_1521)
-
+# add in gla as mca
+F_KS4destin_1521 <- bind_rows(
+  F_KS4destin_1521,
+  F_KS4destin_1521 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 # Downloadable data
 D_KS4destin_1521 <- F_KS4destin_1521 %>%
   mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
@@ -826,7 +854,11 @@ format.ks5 <- function(x) {
 
 ## format KS5
 F_KS5destin_1721 <- format.ks5(I_KS5destin_1721)
-
+# add in gla as mca
+F_KS5destin_1721 <- bind_rows(
+  F_KS5destin_1721,
+  F_KS5destin_1721 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 # downloadable version
 D_KS5destin_1721 <- F_KS5destin_1721 %>%
   mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
@@ -884,7 +916,11 @@ format.EmpInd.APS <- function(x) {
 # format data
 F_EmpInd_APS1822 <- format.EmpInd.APS(I_empind_APS1822) %>%
   mutate_at(vars(c(4:12)), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "")))
-
+# add in gla as mca
+F_EmpInd_APS1822 <- bind_rows(
+  F_EmpInd_APS1822,
+  F_EmpInd_APS1822 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 # dashboard data
 C_EmpInd_APS1822 <- F_EmpInd_APS1822 %>%
   mutate_at(c(4:12), as.numeric) %>%
@@ -906,7 +942,6 @@ C_EmpInd2_APS1822 <- F_EmpInd_APS1822 %>%
 # Tidy up data table
 names(I_DataTable) <- gsub(".", " ", names(I_DataTable), fixed = TRUE)
 write.csv(I_DataTable, file = "Data\\AppData\\I_DataTable.csv", row.names = FALSE)
-
 
 # Tidy up intervention table
 names(I_InterventionTable) <- gsub(".", " ", names(I_InterventionTable), fixed = TRUE)
@@ -989,6 +1024,11 @@ F_qual_APS1721 <- format.qual.APS(I_qual_APS1721) %>%
   mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = ""))) %>%
   mutate_at(c(4:4), as.numeric) %>%
   mutate(value = ifelse(is.na(value), 0, value))
+# add in gla as mca
+F_qual_APS1721 <- bind_rows(
+  F_qual_APS1721,
+  F_qual_APS1721 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 
 # dashboard data formatting
 C_qual_APS1721 <- F_qual_APS1721 %>%
@@ -1119,7 +1159,11 @@ format.EmpInd.APS <- function(x) {
 # format data
 F_EmpInd_APS1822 <- format.EmpInd.APS(I_empind_APS1822) %>%
   mutate_at(vars(c(4:12)), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "")))
-
+# add in gla as mca
+F_EmpInd_APS1822 <- bind_rows(
+  F_EmpInd_APS1822,
+  F_EmpInd_APS1822 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 # dashboard data
 C_EmpInd_APS1822 <- F_EmpInd_APS1822 %>%
   mutate_at(c(4:12), as.numeric) %>%
@@ -1188,7 +1232,11 @@ format.empent.UBC <- function(x) {
 
 ## format UBC
 F_empent_UBC1822 <- format.empent.UBC(I_EmpEnt_APS1822)
-
+# add in gla as mca
+F_empent_UBC1822 <- bind_rows(
+  F_empent_UBC1822,
+  F_empent_UBC1822 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 # dashboard version to combine witn industry total
 # get total by enterprise size
 C_empent_UBC1822 <- F_empent_UBC1822 %>%
@@ -1272,7 +1320,11 @@ format.empentind.UBC <- function(x) {
 # format data
 F_empentind_UBC1822 <- format.empentind.UBC(I_EmpEntind_APS1822) %>%
   mutate_at(vars(value), function(x) str_replace_all(x, c("!" = "", "\\*" = "", "~" = "", "-" = "")))
-
+# add in gla as mca
+F_empentind_UBC1822 <- bind_rows(
+  F_empentind_UBC1822,
+  F_empentind_UBC1822 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 # dashboard data
 # merge totals from enterprise by emp size - C_empent_UCC1822
 C_empentind_UBC1822 <- F_empentind_UBC1822 %>%
@@ -1464,13 +1516,28 @@ format.bussdemo.ONS <- function(w, x, y, z) {
 # format data
 F_births_ONS1621 <- format.bussdemo.ONS(I_births_ONS1618, I_births_ONS19, I_births_ONS20, I_births_ONS21) %>%
   rename(births = value)
+# add in gla as mca
+F_births_ONS1621 <- bind_rows(
+  F_births_ONS1621,
+  F_births_ONS1621 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 F_deaths_ONS1621 <- format.bussdemo.ONS(I_deaths_ONS1618, I_deaths_ONS19, I_deaths_ONS20, I_deaths_ONS21) %>%
   rename(deaths = value)
+# add in gla as mca
+F_deaths_ONS1621 <- bind_rows(
+  F_deaths_ONS1621,
+  F_deaths_ONS1621 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 F_active_ONS1621 <- format.bussdemo.ONS(I_active_ONS1618, I_active_ONS19, I_active_ONS20, I_active_ONS21) %>%
   rename(active = value)
-
+# add in gla as mca
+F_active_ONS1621 <- bind_rows(
+  F_active_ONS1621,
+  F_active_ONS1621 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 # combine dataframes
 df_list <- list(F_births_ONS1621, F_deaths_ONS1621, F_active_ONS1621)
+
 
 D_enterprise_demo1621 <- df_list %>%
   reduce(full_join, by = c("year", "area", "geographic_level"))
@@ -1592,6 +1659,11 @@ format.ks4 <- function(x) {
 
 ## format KS4
 F_KS4destin_1521 <- format.ks4(I_KS4destin_1521)
+# add in gla as mca
+F_KS4destin_1521 <- bind_rows(
+  F_KS4destin_1521,
+  F_KS4destin_1521 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 
 # Downloadable data
 D_KS4destin_1521 <- F_KS4destin_1521 %>%
@@ -1693,7 +1765,11 @@ format.ks5 <- function(x) {
 
 ## format KS5
 F_KS5destin_1721 <- format.ks5(I_KS5destin_1721)
-
+# add in gla as mca
+F_KS5destin_1721 <- bind_rows(
+  F_KS5destin_1721,
+  F_KS5destin_1721 %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 # downloadable version
 D_KS5destin_1721 <- F_KS5destin_1721 %>%
   mutate_at(vars(-time_period, -area, -geographic_level), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x")))
@@ -1836,6 +1912,11 @@ D_OnsProf <- bind_rows(
     TRUE ~ geographic_level
   )) %>%
   mutate(geographic_level = toupper(geographic_level))
+# add in gla as mca
+D_OnsProf <- bind_rows(
+  D_OnsProf,
+  D_OnsProf %>% filter(geographic_level == "LEP", area == "London") %>% mutate(geographic_level = "MCA", area = "Greater London Authority")
+)
 
 # make suppressed data zero to use in dashboard
 C_OnsProf <- D_OnsProf %>%
@@ -1861,6 +1942,105 @@ D_OnsProfDetail <- D_OnsProf %>%
   filter(time_period == "Dec 22", `Detailed Profession Category` != "None")
 write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.names = FALSE)
 
+# Working future data ----
+C_wf <-
+  # bind_rows(
+  bind_rows(
+    I_wfIndF2 %>%
+      select(-"0") %>% # get rid of row caused by formula error in spreadsheet
+      rename(subgroup = X1) %>%
+      mutate(
+        metric = "wfEmployment",
+        breakdown = case_when(
+          subgroup %in% c("Primary sector and utilities", "Manufacturing", "Construction", "Trade, accomod. and transport", "Business and other services", "Non-marketed services") ~ "Broad sector",
+          subgroup == "All industries" ~ "Total",
+          TRUE ~ "Industry"
+        ),
+        subgroup = case_when(
+          subgroup == "All industries" ~ "Total",
+          TRUE ~ subgroup
+        )
+      ) %>%
+      mutate_at(vars(`2010`:`2035`),
+        .funs = funs(. * 1000)
+      ), # put in unit numbers
+    I_wfOccF2 %>%
+      rename(subgroup = thousands) %>%
+      mutate(
+        metric = "wfEmployment",
+        breakdown = case_when(
+          grepl("[0-9]", subgroup) == TRUE ~ "Occupation (SOC2020 submajor)",
+          subgroup == "All occupations" ~ "Total",
+          TRUE ~ "Occupation (SOC2020 major)"
+        ),
+        subgroup = case_when(
+          subgroup == "All occupations" ~ "Total",
+          grepl("[0-9]", subgroup) == TRUE ~ gsub("^[0-9]", "", subgroup),
+          TRUE ~ subgroup
+        )
+      ) %>%
+      mutate_at(vars(`2010`:`2035`),
+        .funs = funs(. * 1000)
+      ) %>% # put in unit numbers
+      filter(breakdown != "Total"), # remove this total since we already have it fro industry
+    I_wfQualF1 %>%
+      mutate(metric = "wfEmployment", breakdown = "Qualification") %>%
+      rename(subgroup = X1) %>%
+      mutate_at(vars(`2010`:`2035`),
+        .funs = funs(. * 1000)
+      ), # put in unit numbers
+  ) %>%
+  left_join(I_wfAreaName) %>%
+  mutate(geogConcat = paste0(trimws(`.Main`, "both"), " ", sub(" name", "", Scenario))) %>% # get name
+  mutate(geogConcat = case_when(
+    #   file_name == "BH_LSIP_MainTables.Main.xlsm" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
+    trimws(`.Main`, "both") == "England" ~ "England",
+    TRUE ~ geogConcat
+  )) %>% # correct error in file calling this a LEP instead of LSIP and getting name wrong
+  select(-`.Main`, -Scenario, -file_name) %>%
+  pivot_longer(!c("geogConcat", "breakdown", "subgroup", "metric"),
+    names_to = "timePeriod",
+    values_to = "value"
+  ) %>%
+  mutate(geogConcat = case_when(
+    geogConcat == "Buckinghamshire Thames Valley LEP" ~ "Buckinghamshire LEP",
+    geogConcat == "Cambridge and Peterborough MCA" ~ "Cambridgeshire and Peterborough MCA",
+    geogConcat == "London Enterprise Panel LEP" ~ "London LEP",
+    geogConcat == "York, North Yorkshire and East Riding LEP" ~ "York and North Yorkshire LEP",
+    geogConcat == "Humber LEP" ~ "Hull and East Yorkshire LEP",
+    geogConcat == "Essex Southend-on-Sea and Thurrock LSIP" ~ "Essex, Southend-on-Sea and Thurrock LSIP",
+    geogConcat == "Brighton and Hove East Sussex West Sussex LSIP" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
+    TRUE ~ geogConcat
+  )) %>% # correct different spellings
+  mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) # remove numbers from soc codes for presentation
+
+# add in gla as mca
+C_wf <- bind_rows(
+  C_wf,
+  C_wf %>% filter(geogConcat == "London LEP") %>% mutate(geogConcat = "Greater London Authority MCA")
+)
+
+# # correct the missing summaries of a few major groups
+# correctedSubgroups <- C_wf %>%
+#   # filter(subgroup%in%c("Sales and customer service occupations","Process, plant and machine operatives","Elementary occupations")%>%
+#   mutate(majorGroup = case_when(
+#     subgroup %in% c("71 Sales occupations", "72 Customer service occupations") ~ "Sales and customer service occupations",
+#     subgroup %in% c("81 Process, plant and machine operatives", "82 Transport and mobile machine drivers and operatives") ~ "Process, plant and machine operatives",
+#     subgroup %in% c("91 Elementary trades and related occupations", "92 Elementary administration and service occupations") ~ "Elementary occupations",
+#     TRUE ~ "Ignore"
+#   )) %>%
+#   filter(majorGroup != "Ignore") %>%
+#   group_by(majorGroup, metric, geogConcat, timePeriod) %>%
+#   summarise(value = sum(value)) %>%
+#   rename(subgroup = majorGroup) %>%
+#   mutate(breakdown = "Occupation (SOC2020 major)")
+#
+# # add back on
+# C_wf <- bind_rows(
+#   C_wf %>%
+#     filter(!subgroup %in% c("Sales and customer service occupations", "Process, plant and machine operatives", "Elementary occupations")),
+#   correctedSubgroups
+# )
 # Neaten geog files
 neatLA <- I_mapLA %>%
   mutate(geog = "LADU") %>% # add geog type
@@ -1868,7 +2048,8 @@ neatLA <- I_mapLA %>%
   # add on lsip, lep and mca groupings
   left_join(I_LEP2020 %>% mutate(LEP = paste0(LEP21NM1, " LEP"), LEP2 = paste0(LEP21NM2, " LEP"), LSIP = paste0(LSIP, " LSIP")) %>% select(LAD21CD, LSIP, LEP, LEP2), by = c("areaCode" = "LAD21CD")) %>%
   left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH21NM, " MCA")) %>% select(LAD21CD, MCA), by = c("areaCode" = "LAD21CD")) %>%
-  filter(is.na(LSIP) == FALSE) # remove non England
+  filter(is.na(LSIP) == FALSE) %>% # remove non England
+  mutate(MCA = case_when(LEP == "London LEP" ~ "Greater London Authority MCA", TRUE ~ MCA)) # add on gla as mca
 
 neatMCA <- I_mapMCA %>%
   mutate(geog = "MCA") %>% # add geog type
@@ -1902,7 +2083,13 @@ neatLSIP <- LSIPmap %>%
     LAT = map_dbl(geometry, ~ st_centroid(.x)[[2]])
   )
 
-neatGeog <- bind_rows(neatMCA, neatLEP, addEngland, neatLA, neatLSIP)
+neatGeog <- bind_rows(
+  neatMCA, neatLEP, addEngland, neatLA, neatLSIP,
+  # add on gla as mca
+  neatLEP %>%
+    filter(geog == "LEP", areaName == "London") %>%
+    mutate(geog = "MCA", areaName = "Greater London Authority")
+)
 # add on data
 C_Geog <- neatGeog %>%
   # add employment rate
@@ -1958,7 +2145,15 @@ C_Geog <- neatGeog %>%
   mutate(geogConcat = case_when(
     geogConcat == "England COUNTRY" ~ "England",
     TRUE ~ geogConcat
-  ))
+  )) %>%
+  left_join(C_wf %>% filter(timePeriod %in% c(2023, 2035), breakdown == "Total") %>%
+    select(geogConcat, timePeriod, value) %>%
+    # get growth
+    arrange(timePeriod) %>%
+    group_by(geogConcat) %>%
+    mutate(value = (value - lag(value)) / lag(value)) %>%
+    filter(timePeriod != 2023) %>%
+    select(geogConcat, wfEmployment = value))
 
 save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 
@@ -2043,7 +2238,23 @@ C_time <- bind_rows(
   mutate(geogConcat = case_when(
     geogConcat == "England COUNTRY" ~ "England",
     TRUE ~ geogConcat
-  ))
+  )) %>%
+  bind_rows(
+    # add working futires
+    test <- C_wf %>%
+      filter(breakdown == "Total", timePeriod >= 2022) %>%
+      mutate(
+        chart_year = as.Date(ISOdate(timePeriod, 1, 1)),
+        time_period = timePeriod
+      ) %>%
+      select(geogConcat, value, chart_year, time_period, metric) %>%
+      # get growth
+      arrange(chart_year, time_period) %>%
+      group_by(geogConcat, metric) %>%
+      mutate(value = (value - lag(value)) / lag(value)) %>%
+      filter(time_period != 2022)
+  )
+
 write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
 
 # create neat breakdown file
@@ -2208,7 +2419,18 @@ D_breakdown <- bind_rows(
   mutate(geogConcat = case_when(
     geogConcat == "England COUNTRY" ~ "England",
     TRUE ~ geogConcat
-  ))
+  )) %>%
+  # add working futires
+  bind_rows(
+    C_wf %>% filter(breakdown != "Total", timePeriod %in% c(2023, 2035)) %>%
+      mutate(area = "none", geographic_level = "none", timePeriod = as.integer(timePeriod)) %>%
+      # get growth
+      arrange(timePeriod, ) %>%
+      group_by(geogConcat, subgroup, metric, breakdown) %>%
+      mutate(value = (value - lag(value)) / lag(value)) %>%
+      filter(timePeriod != 2023) %>%
+      rename(subgroups = subgroup, time_period = timePeriod)
+  )
 
 # Create dataHub dataset
 # create neat breakdown file for download so keeping symbols
@@ -2216,7 +2438,7 @@ C_datahub <- bind_rows(
   # employment data
   D_EmpRate_APS1822 %>%
     rename(time_period = year) %>%
-    mutate(breakdown = "Total", subgroups = "Total") %>%
+    mutate(breakdown = "Total", subgroups = "Total", time_period = as.character(time_period)) %>%
     pivot_longer(!c("geographic_level", "area", "time_period", "breakdown", "subgroups"),
       names_to = "metric",
       values_to = "value"
@@ -2340,7 +2562,7 @@ C_datahub <- bind_rows(
       names_to = "metric",
       values_to = "value"
     ) %>%
-    mutate(breakdown = "Total", subgroups = "Total"),
+    mutate(breakdown = "Total", subgroups = "Total", time_period = as.character(time_period), value = as.character(value)),
   # add enterprise count
   C_enterpriseSizeIndustry %>% mutate(
     time_period = as.character(time_period), value = as.character(value),
@@ -2360,6 +2582,13 @@ C_datahub <- bind_rows(
     geogConcat == "England COUNTRY" ~ "England",
     TRUE ~ geogConcat
   )) %>%
+  # add working futires
+  bind_rows(
+    C_wf %>%
+      mutate(time_period = as.character(timePeriod), value = as.character(value)) %>%
+      select(-timePeriod) %>%
+      rename(subgroups = subgroup)
+  ) %>%
   filter(metric != "starts_rate_per_100000_population") %>% # very bad data coverage
   # rename some of the elements so they make sense here
   mutate(metricNeat = case_when(
@@ -2390,6 +2619,7 @@ C_datahub <- bind_rows(
     metric == "sustainedPositiveDestinationKS4Rate" ~ "KS4 sustained positive detination rate",
     metric == "sustainedPositiveDestinationKS5Rate" ~ "KS5 sustained positive detination rate",
     metric == "vacancies" ~ "Online job adverts",
+    metric == "wfEmployment" ~ "Employment projections (Skills imperative 2035)",
     TRUE ~ metric
   )) %>%
   mutate(breakdown = case_when(
@@ -2398,7 +2628,12 @@ C_datahub <- bind_rows(
     TRUE ~ breakdown
   )) %>%
   select(-area, -geographic_level)
-write.csv(C_datahub, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
+# split in two because too big
+index <- seq.int(nrow(C_datahub) / 2)
+C_datahubPt1 <- C_datahub[index, ]
+C_datahubPt2 <- C_datahub[-index, ]
+write.csv(C_datahubPt1, file = "Data\\AppData\\C_datahubPt1.csv", row.names = FALSE)
+write.csv(C_datahubPt2, file = "Data\\AppData\\C_datahubPt2.csv", row.names = FALSE)
 
 # Find top ten for each breakdown (these are chosen in the filter)
 detailLookup <- D_OnsProfDetail %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)

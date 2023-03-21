@@ -40,6 +40,10 @@ server <- function(input, output, session) {
       "#6BACE6"
     )
 
+
+  ## 1.3 Combine datahub files ----
+  C_datahub <- bind_rows(C_datahubPt1, C_datahubPt2 %>% mutate(value = as.character(value))) # bind files because they are too big to go on github
+
   ## 1.3 Set up cookies
   # output if cookie is unspecified
   observeEvent(input$cookies, {
@@ -196,6 +200,13 @@ server <- function(input, output, session) {
       selected = "sustainedPositiveDestinationKS4Rate"
     )
   })
+  # Create link to working futures
+  observeEvent(input$link_to_tabpanel_wf1, {
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateSelectInput(session, "splashMetric",
+      selected = "wfEmployment"
+    )
+  })
   # Create link to data tab
   observeEvent(input$link_to_tabpanel_data, {
     updateTabsetPanel(session, "navbar", "Data sources")
@@ -314,9 +325,25 @@ server <- function(input, output, session) {
       )
     }
   )
+  output$downloadData13 <- downloadHandler(
+    filename = function() {
+      "EmploymentProjectionIndicators.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(
+        list(
+          "ProjectedEmployment" = C_datahub %>%
+            filter(metric == "wfEmployment") %>%
+            select(-apprenticeships_or_further_education, -level_or_type, -age_group, -metric, -metricNeat) %>%
+            rename(Employment = value, Area = geogConcat)
+        ),
+        path = file
+      )
+    }
+  )
 
   ### 2.5.2 Create download links ----
-  output$hidden_downloads <- renderUI(lapply(1:12, function(i) {
+  output$hidden_downloads <- renderUI(lapply(1:13, function(i) {
     downloadLink(paste0("downloadData", i), "download", class = "hiddenLink")
   }))
   ### 2.5.3 Data table ----
@@ -424,7 +451,11 @@ server <- function(input, output, session) {
     "7a.Ent by emp size & industry" = D_empentind_UBC1822,
     "8a.Enterprise demography" = D_enterprise_demo1621,
     "9a.Key Stage 4 destinations" = D_KS4destin_1521,
-    "10a.Key Stage 5 destinations" = D_KS5destin_1721
+    "10a.Key Stage 5 destinations" = D_KS5destin_1721,
+    "11.ProjectedEmployment" = C_datahub %>%
+      filter(metric == "wfEmployment") %>%
+      select(-apprenticeships_or_further_education, -level_or_type, -age_group, -metric, -metricNeat) %>%
+      rename(Employment = value, Area = geogConcat)
   )
   output$download_btn0a <- downloadHandler(
     filename = function() {
@@ -502,7 +533,11 @@ server <- function(input, output, session) {
         D_KS5destin_1721,
         area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
         geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      )
+      ),
+      "11.ProjectedEmployment" = C_datahub %>%
+        filter(metric == "wfEmployment", geogConcat == input$geoChoiceOver) %>%
+        select(-apprenticeships_or_further_education, -level_or_type, -age_group, -metric, -metricNeat) %>%
+        rename(Employment = value, Area = geogConcat)
     )
   })
   output$download_btn0b <- downloadHandler(
@@ -1464,6 +1499,122 @@ server <- function(input, output, session) {
     )
   })
 
+  #### 2.2.3.9 Working futures ----
+
+  # working futres KPI
+  output$wfOverviewKpi <- renderUI({
+    validate(need(input$geoChoiceOver != "", ""))
+
+    change <- (C_Geog %>%
+      filter(
+        geogConcat == input$geoChoiceOver
+      ))$wfEmployment
+
+    # print with formatting
+    h4(
+      # span("Growth to 2035", style = "font-size: 16px;font-weight:normal;"),
+      # br(),
+      paste0(format(100 * change, digit = 1), "%"),
+      br(),
+      span(
+        # paste0(sprintf("%+.1f", 100 * change), "ppts"),
+        "growth 2023 to 2035",
+        style = paste0("font-size: 16px;color:", cond_color(change > 0)) # colour formating
+        ,
+        .noWS = c("before", "after") # remove whitespace
+      ),
+      br(),
+      style = "font-size: 21px"
+    )
+  })
+  # get min and max
+  wfMin <- min((C_time %>%
+    filter(metric == "wfEmployment"))$value)
+  wfMax <- max((C_time %>%
+    filter(metric == "wfEmployment"))$value)
+
+  # qualification chart
+  wfLineChart <- eventReactive(input$geoChoiceOver, {
+    wfgeo <- C_time %>%
+      filter(
+        (geogConcat == input$geoChoiceOver | geogConcat == "England"),
+        metric == "wfEmployment"
+      )
+
+    change <- (wfgeo %>% filter(time_period == "2035"))$value -
+      (wfgeo %>% filter(time_period == "2023"))$value
+
+    ggplot(wfgeo, aes(
+      x = substr(time_period, 3, 4),
+      y = value,
+      group = area,
+      text = paste0(
+        "Year: ",
+        time_period,
+        "<br>",
+        "Area: ",
+        geogConcat,
+        "<br>",
+        "Year on year growth: ",
+        scales::percent(round(value, 3)),
+        "<br>"
+      )
+    )) +
+      geom_line(data = wfgeo %>% filter(geogConcat == input$geoChoiceOver)) +
+      geom_line(
+        data = wfgeo %>% filter(geogConcat == "England"),
+        alpha = 0.5
+      ) +
+      # geom_ribbon(
+      #   data = wfgeo() %>% filter(Year >= 20, geogConcat == input$geoChoiceOver),
+      #   aes(ymin = min(rate), ymax = rate),
+      #   fill = ifelse(change > 0, "#00703c", "#d4351c"),
+      #   alpha = 0.3
+      # ) +
+      # geom_line(
+      #   data = wfgeo() %>% filter(Year >= 20, geogConcat == input$geoChoiceOver),
+      #   color = ifelse(change > 0, "#00703c", "#d4351c")
+      # ) +
+      theme_classic() +
+      theme(
+        axis.line = element_blank(),
+        # axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        panel.background = element_rect(fill = "#f3f2f1"),
+        plot.background = element_rect(fill = "#f3f2f1")
+      ) +
+      scale_y_continuous(
+        labels = scales::percent_format(accuracy = 2),
+        breaks = c(wfMin, wfMax),
+        limits = c(wfMin, wfMax)
+      ) +
+      scale_x_discrete(breaks = c("23", "25", "27", "29", "31", "33", "35"))
+  })
+
+  output$wfOverviewChart <- renderPlotly({
+    validate(need(input$geoChoiceOver != "", ""))
+    ggplotly(wfLineChart(),
+      tooltip = "text",
+      height = 81
+    ) %>%
+      layout(
+        margin = m,
+        xaxis = list(fixedrange = TRUE),
+        yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+
+  # add link to qualification level
+  observeEvent(input$link_to_tabpanel_wf, {
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateSelectInput(session, "splashMetric",
+      selected = "wfEmployment"
+    )
+  })
+
+
   ## 2.3 Local skills----
 
   ### 2.3.2 Reusable variables----
@@ -1531,7 +1682,7 @@ server <- function(input, output, session) {
       "38 LEPs."
     } else {
       if (input$splashGeoType == "MCA") {
-        "10 MCAs."
+        "11 MCAs."
       } else {
         "38 LSIPs."
       }
@@ -1654,9 +1805,14 @@ server <- function(input, output, session) {
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$mapComment, " in ",
       input$geoChoice,
-      " is ",
-      compareNational,
-      " than the national average. It is ranked ",
+      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "wfEmployment" | str_sub(input$splashMetric, start = -10) == "population") {
+        paste0(
+          " is ",
+          compareNational,
+          " than the national average. It"
+        )
+      } else {},
+      " is ranked ",
       areaRank,
       suff,
       " of the ",
@@ -1674,7 +1830,7 @@ server <- function(input, output, session) {
     pal <- colorNumeric("Blues", mapData[[input$splashMetric]])
     labels <-
       # if a percentage then format as %, else big number
-      if (str_sub(input$splashMetric, start = -4) == "Rate") {
+      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "wfEmployment") {
         sprintf(
           "<strong>%s</strong><br/>%s: %s%%",
           mapData$areaName,
@@ -1720,7 +1876,7 @@ server <- function(input, output, session) {
     mapData <- C_Geog %>% filter(geogConcat == input$geoChoice)
     labels <-
       # if a percentage then format as %, else big number
-      if (str_sub(input$splashMetric, start = -4) == "Rate") {
+      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "wfEmployment") {
         sprintf(
           "<strong>%s</strong><br/>%s: %s%%",
           mapData$areaName,
@@ -1755,7 +1911,7 @@ server <- function(input, output, session) {
   #### 2.3.5.4 Map footnote ----
   output$mapFoot <- renderUI({
     paste0(
-      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, " data. Click an area to update dashboard."
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ". Click an area to update dashboard."
     )
   })
 
@@ -1783,9 +1939,9 @@ server <- function(input, output, session) {
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <-
       (LaHighLow %>% filter(ranking == max(ranking)))$areaName
-    if (input$geoChoice %in% c("London LEP", "Greater London LSIP") &
-      currentMetric() == "online job adverts") {
-      "ONS job adverts in London are not broken down by LA."
+    if ((input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
+      currentMetric() == "online job adverts") | (input$splashMetric == "wfEmployment")) {
+      "Data is not available at LA level."
     } else {
       if (nrow(LaHighLow) == 1) {
         ""
@@ -1806,8 +1962,8 @@ server <- function(input, output, session) {
   #### 2.3.6.3 Map----
   output$mapLA <- renderLeaflet({
     validate(
-      need(!(input$geoChoice %in% c("London LEP", "Greater London LSIP") &
-        currentMetric() == "online job adverts"), ""),
+      need(!((input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
+        currentMetric() == "online job adverts") | (input$splashMetric == "wfEmployment")), ""),
       need(input$geoChoice != "", "")
     )
     # Filter to those LAs in that region
@@ -1858,16 +2014,25 @@ server <- function(input, output, session) {
 
   #### 2.3.6.4 Map footnote ----
   output$mapLaFoot <- renderUI({
-    paste0(
-      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, " data. Click an area to update other charts with LA data."
+    validate(
+      need("geoChoice" %in% names(input), ""),
+      need(input$geoChoice != "", "")
     )
+    if ((input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
+      currentMetric() == "online job adverts") | (input$splashMetric == "wfEmployment")) {
+      ""
+    } else {
+      paste0(
+        (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ". Click an area to update other charts with LA data."
+      )
+    }
   })
 
   ### 2.3.7 Time chart ----
 
   # create time header
   output$titleTime <- renderUI({
-    paste0("How are ", (I_DataText %>% filter(metric == input$splashMetric))$timeTitle, " changing over time?")
+    paste0("How ", (I_DataText %>% filter(metric == input$splashMetric))$timeTitle, " over time?")
   })
 
   #### 2.3.7.1 Comment ----
@@ -1883,41 +2048,27 @@ server <- function(input, output, session) {
       )
     englandArea <- C_time %>%
       filter(
-        geographic_level == "COUNTRY",
-        area == "England",
+        geogConcat == "England",
         metric == input$splashMetric
       )
     currentChange <- (currentArea %>%
       filter(chart_year == max(chart_year)))$value -
       (currentArea %>%
-        filter(chart_year == (ymd(
-          max(chart_year)
-        ) - years( # ks5 only has the data fr the last 4 years
-          if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
-            3
-          } else {
-            4
-          }
-        ))))$value
+        filter(chart_year == min(chart_year)))$value
     englandChange <- (englandArea %>%
       filter(chart_year == max(chart_year)))$value -
       (englandArea %>%
-        filter(chart_year == (ymd(
-          max(chart_year)
-        ) - years( # ks5 only has the data fr the last 4 years
-          if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
-            3
-          } else {
-            4
-          }
-        ))))$value
+        filter(chart_year == min(chart_year)))$value
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$timeComment, " ",
-      input$geoChoice, " has ",
-      if (currentChange > 0) {
-        "increased "
+      input$geoChoice, if (input$splashMetric == "wfEmployment") {
+        " is projected to increase "
       } else {
-        "decreased "
+        if (currentChange > 0) {
+          " has increased "
+        } else {
+          " has decreased "
+        }
       },
       if (sign(currentChange) == sign(englandChange)) {
         if (abs(currentChange) > abs(englandChange)) {
@@ -1936,7 +2087,11 @@ server <- function(input, output, session) {
       if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
         " in the last four years."
       } else {
-        " in the last five years."
+        if (input$splashMetric == "wfEmployment") {
+          " to 2035."
+        } else {
+          " in the last five years."
+        }
       }
       # ,"It has the "
       # , areaRank, suff, " fastest growing ", currentMetric(), " of the ", groupCount)
@@ -1963,7 +2118,7 @@ server <- function(input, output, session) {
               "\nNone"
             }) |
               # get england for comparison (if a rate)
-              (if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population") {
+              (if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "wfEmployment") {
                 (geogConcat == "England")
               } else {
                 area == "\nNone"
@@ -1991,7 +2146,7 @@ server <- function(input, output, session) {
               "<br>",
               currentMetric(),
               ": ",
-              if (str_sub(input$splashMetric, start = -4) == "Rate") {
+              if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "wfEmployment") {
                 scales::percent(round(value, 3))
               } else {
                 format(round(value), big.mark = ",")
@@ -2008,13 +2163,13 @@ server <- function(input, output, session) {
             legend.position = "bottom",
             legend.title = element_blank()
           ) +
-          scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate") {
+          scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "wfEmployment") {
             scales::percent
           } else {
             label_number_si()
           }) +
           labs(colour = "") +
-          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population") {
+          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "wfEmployment") {
             chartColors6
           } else {
             chartColors5
@@ -2261,6 +2416,7 @@ server <- function(input, output, session) {
                 input$splashMetric == "enterpriseCount" |
                 input$splashMetric == "achievements" |
                 input$splashMetric == "participation" |
+                input$splashMetric == "wfEmployment" |
                 input$splashMetric == "starts") {
                 scales::percent(round(value, 3))
               } else {
@@ -2277,6 +2433,7 @@ server <- function(input, output, session) {
             input$splashMetric == "enterpriseCount" |
             input$splashMetric == "achievements" |
             input$splashMetric == "participation" |
+            input$splashMetric == "wfEmployment" |
             input$splashMetric == "starts") {
             scales::percent
           } else {
@@ -2333,17 +2490,27 @@ server <- function(input, output, session) {
       need(input$barBreakdown != "", ""),
       need(input$barBreakdown != "No breakdowns available", "")
     )
-    paste0(
-      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, " data."
-    )
+    if (input$splashMetric == "Employment" & input$barBreakdown == "Occupation") {
+      "Jan 2021-Dec 2021 data."
+    } # Occupation data is older because of the SOC issue
+    else {
+      paste0(
+        (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, "."
+      )
+    }
   })
 
   ### 2.3.9 Downloads local skills ----
   # all areas
   listDownloadV1All <- reactive({
     list(
-      "AllArea" = filter(C_time, metric == input$splashMetric),
-      "AllAreaBreakdown" = filter(C_breakdown, metric == input$splashMetric)
+      "AllArea" = filter(C_time, metric == input$splashMetric) %>%
+        mutate(metric = case_when(metric == "wfEmployment" ~ "ProjectedYearOnYearEmploymentGrowth", TRUE ~ metric)) %>%
+        select(-area, -geographic_level, -chart_year) %>%
+        rename(Area = geogConcat),
+      "AllAreaBreakdown" = filter(C_breakdown, metric == input$splashMetric) %>%
+        mutate(metric = case_when(metric == "wfEmployment" ~ "ProjectedEmploymentGrowthTo2035", TRUE ~ metric)) %>%
+        rename(Area = geogConcat)
     )
   })
   nameDownloadV1All <- reactive({
@@ -2367,14 +2534,19 @@ server <- function(input, output, session) {
         (geogConcat == input$geoChoice |
           geogConcat %in% input$geoComps |
           geogConcat == "England")
-      ),
+      ) %>%
+        mutate(metric = case_when(metric == "wfEmployment" ~ "ProjectedYearOnYearEmploymentGrowth", TRUE ~ metric)) %>%
+        select(-area, -geographic_level, -chart_year) %>%
+        rename(Area = geogConcat),
       "CurrentAreaBreakdown" = filter(
         C_breakdown,
         metric == input$splashMetric,
         (geogConcat == input$geoChoice |
           geogConcat %in% input$geoComps |
           geogConcat == "England")
-      )
+      ) %>%
+        mutate(metric = case_when(metric == "wfEmployment" ~ "ProjectedEmploymentGrowthTo2035", TRUE ~ metric)) %>%
+        rename(Area = geogConcat)
     )
   })
   nameDownloadV1Current <- reactive({

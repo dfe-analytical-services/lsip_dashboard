@@ -7,6 +7,17 @@ fluidPage(
   )),
   shinyjs::useShinyjs(),
   useShinydashboard(),
+  # Setting up cookie consent based on a cookie recording the consent:
+  # https://book.javascript-for-r.com/shiny-cookies.html
+  tags$head(
+    tags$script(
+      src = paste0(
+        "https://cdn.jsdelivr.net/npm/js-cookie@rc/",
+        "dist/js.cookie.min.js"
+      )
+    ),
+    tags$script(src = "cookie-consent.js")
+  ),
   tags$head(
     tags$link(
       rel = "stylesheet",
@@ -350,7 +361,20 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
                 });
                 });"
   ),
-
+  tags$script(
+    " $(document).ready(function () {
+                $('#link_to_tabpanel_wf').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+  ),
+  tags$script(
+    " $(document).ready(function () {
+                $('#link_to_tabpanel_wf1').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+  ),
 
   # 2 Main page ----
   navlistPanel(
@@ -530,8 +554,14 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               "link_to_tabpanel_destinations", "Destinations"
             )),
             p(
-              "These two metrics provide information on the destinations of young people after Key Stage 4 and Key Stage 5 education for the selected geographic area, and the option to compare against another area.
+              "These two metrics provide information on the destinations of young people after Key Stage 4 and Key Stage 5 education for the selected geographic area.
                 It includes data on destinations, with breakdowns by level and key stage group."
+            ),
+            h3(actionLink(
+              "link_to_tabpanel_wf1", "Employment projections"
+            )),
+            p(
+              "Projected employment growth until 2035. Sector, industry, occupation and qualification projected growths are available. LA level data is not available for this dataset."
             )
             # h2("Data download page"),
             # p(
@@ -557,20 +587,24 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("28 Feb 2023 (1.1.1)"),
+            p("21 Mar 2023 (1.2.1)"),
             p(
-              "Dashboard redesign including:"
-            ),
-            tags$ul(
-              tags$li("More granular breakdowns within geographic areas"),
-              tags$li("More area comparison options"),
-              tags$li("Bespoke download option including geographies and all published breakdowns"),
-              tags$li("Expanding on role as ‘local skills hub,’ hosting links to local skills sources and tools")
+              "Added Skills Imperative 2035 data to the dashboard. This projects employment to 2035 with sector, industry, qualification and occupation splits."
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("28 Feb 2023 (1.1.1)"),
+                p(
+                  "Dashboard redesign including:"
+                ),
+                tags$ul(
+                  tags$li("More granular breakdowns within geographic areas"),
+                  tags$li("More area comparison options"),
+                  tags$li("Bespoke download option including geographies and all published breakdowns"),
+                  tags$li("Expanding on role as ‘local skills hub,’ hosting links to local skills sources and tools")
+                ),
                 p("9 Feb 2023 (0.4.3)"),
                 p("Updated destinations data with the February revision."),
                 p("25 Jan 2023 (0.4.2)"),
@@ -689,7 +723,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           h3(uiOutput("titleTime")),
           p(uiOutput("commentTime")),
           uiOutput("geoComp"),
-          withSpinner(plotlyOutput("Splash_time"))
+          withSpinner(plotlyOutput("Splash_time")),
+          p("NB non-zero axis.")
         )
       ),
       br(),
@@ -753,7 +788,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       br()
     ),
 
-    ## 2.5 Data infomation ----
+    ## 2.5 Data information ----
     tabPanel(
       "Data sources",
       ### 2.5.1 Data sources table ----
@@ -782,10 +817,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               "article",
               .noWS = c("after")
             ),
-            "."
+            ". SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues."
           ),
           p(
-            "SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues."
+            "Each estimate from the Annual Population Survey carries a margin of error.
+            These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents.
+            Therefore, please take caution when interpreting data from small subgroups."
           ),
           h3("ONS-Textkernel online job adverts"),
           p(
@@ -857,6 +894,15 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
             "LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."
           ),
+          h3("Skills Imperative 2035 employment projections"),
+          p(
+            "Skills Imperative 2035 projects the future size and shape of the labour market by considering employment prospects by industry, occupation, qualification level.
+            The dashboard shows the year on year growth of employment as well as the long term growth from 2023 to 2035.
+            The employment volumes are available in the data downloads.
+            "
+          ),
+          p("The projections are calculated from a number of different data sources, and as such precise margin errors have not been assigned.
+            Care should be taken when using projections with small volumes of individuals (see Skills Imperative 2035 datasets for more detail). "),
           br()
         )
       )
