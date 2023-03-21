@@ -41,6 +41,14 @@
         "promises"
       ]
     },
+    "KernSmooth": {
+      "Package": "KernSmooth",
+      "Version": "2.23-20",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "8dcfa99b14c296bc9f1fd64d52fd3ce7",
+      "Requirements": []
+    },
     "MASS": {
       "Package": "MASS",
       "Version": "7.3-58.2",
@@ -353,6 +361,7 @@
       "Repository": "CRAN",
       "Hash": "298fa500d773db0845935cd73bfd9c2e",
       "Requirements": [
+        "KernSmooth",
         "class",
         "e1071"
       ]
@@ -1536,16 +1545,6 @@
         "Rcpp",
         "plyr",
         "stringr"
-      ]
-    },
-    "rgdal": {
-      "Package": "rgdal",
-      "Version": "1.6-4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "92183bff0bac3a711fde35a22c1bf45b",
-      "Requirements": [
-        "sp"
       ]
     },
     "rgeos": {
