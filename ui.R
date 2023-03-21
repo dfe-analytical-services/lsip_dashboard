@@ -37,9 +37,18 @@ fluidPage(
 
   # Set title for search engines
   HTML("<title>Local Skills Dashboard</title>"),
-  tags$head(includeHTML((
-    "google-analytics.html"
-  ))),
+  # Setting up cookie consent based on a cookie recording the consent:
+  # https://book.javascript-for-r.com/shiny-cookies.html
+  tags$head(
+    tags$script(
+      src = paste0(
+        "https://cdn.jsdelivr.net/npm/js-cookie@rc/",
+        "dist/js.cookie.min.js"
+      )
+    ),
+    tags$script(src = "cookie-consent.js")
+  ),
+  tags$head(includeHTML(("google-analytics.html"))),
 
   ## 1.2. Internal CSS ----
   tags$head(
