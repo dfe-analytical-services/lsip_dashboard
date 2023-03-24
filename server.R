@@ -388,42 +388,6 @@ server <- function(input, output, session) {
       selected = input$geoChoice
     )
   })
-  # output$lep1_geo <- renderUI({
-  #   if (input$GeoType == "LEP") {
-  #     selectInput(
-  #       "lep1",
-  #       "Choose primary LEP area",
-  #       choices = C_LEP2020 %>% filter(geographic_level == "LEP") %>% select(Area),
-  #       selected = input$lep1
-  #     )
-  #   } else if (input$GeoType == "LSIP") {
-  #     selectInput(
-  #       "lep1",
-  #       "Choose primary LSIP area",
-  #       choices = C_LEP2020 %>% filter(geographic_level == "LSIP") %>% select(Area),
-  #       selected = input$lep1
-  #     )
-  #   } else {
-  #     selectInput(
-  #       "lep1",
-  #       "Choose primary MCA area",
-  #       choices = C_LEP2020 %>% filter(geographic_level == "MCA") %>% select(Area),
-  #       selected = input$lep1
-  #     )
-  #   }
-  # })
-  # observeEvent(input$geoChoice, {
-  #   print(sub(" LEP| LSIP| MCA", "", input$geoChoice))
-  #   updateSelectInput(session, "lep1",
-  #                        selected = sub(" LEP| LSIP| MCA", "", input$geoChoice)
-  #   )
-  # })
-  # observeEvent(input$geoChoice, {
-  #   print(gsub(" ", "",str_sub(input$geoChoice,-4,-1)))
-  #   updateSelectInput(session, "GeoType",
-  #                        selected = gsub(" ", "",str_sub(input$geoChoice,-4,-1))
-  #   )
-  # })
 
   ### 2.2.2 Screenshot----
   output$screenshotOverview <- renderUI({
@@ -550,28 +514,23 @@ server <- function(input, output, session) {
   )
 
   ### 2.2.3 KPIs and charts----
-  # currentOverview<-eventReactive(input$lep1,input$GeoType {
-  #   C_time%>%
-  #   filter(area == input$lep1, geographic_level == input$GeoType)
-  # })
-
-  currentGeogData <- eventReactive(input$geoChoiceOver, {
+  currentGeogTime <- eventReactive(input$geoChoiceOver, {
     C_time %>%
       filter(geogConcat == input$geoChoiceOver)
   })
-  englandData <- C_time %>%
+  englandTime <- C_time %>%
     filter(geogConcat == "England")
-
-  #### 2.2.3.1 Employment count ----
-  # Employment count
-  output$overviewEmpCntKPI <- renderUI({
-    validate(need(input$geoChoiceOver != "", ""))
-    latest <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2022", metric == "Employment"))$value
-    change <- latest - (currentGeogData() %>% filter(time_period == "Oct-Sep 2021", metric == "Employment"))$value
-
+  
+#create a function to build the overview KPIs
+  createOverviewKPI <- function(metricName) {
+    #set metric
+    currentGeogTimeMetric<-currentGeogTime()%>% filter(metric == metricName)
+    latest <- (currentGeogTimeMetric %>% filter(latest=1))$value
+    change <- latest - (currentGeogTimeMetric %>% filter(latest=-1))$value
+    
     # print with formatting
     h4(
-      span("Oct-Sep 2022", style = "font-size: 16px;font-weight:normal;"),
+      span((currentGeogTimeMetric %>% filter(latest=1))$chartPeriod, style = "font-size: 16px;font-weight:normal;"),
       br(),
       format(latest, big.mark = ","),
       br(),
@@ -583,55 +542,64 @@ server <- function(input, output, session) {
       br(),
       style = "font-size: 21px"
     )
+  }
+
+  #create a function to build the overview charts
+  createOverviewChart <- function(metricName) { 
+    #set metric
+    currentGeogTimeMetric<-currentGeogTime()%>% filter(metric == metricName)
+    change <- (currentGeogTimeMetric %>% filter(latest=1))$value - 
+      (currentGeogTimeMetric %>% filter(latest=-1))$value
+  
+  ggplot(
+    currentGeogTimeMetric,
+    aes(
+      x = timePeriod,
+      y = value,
+      group = geogConcat,
+      text = paste0(
+        chartPeriod,
+        "<br>",
+        metricName,
+        format(value, big.mark = ","),
+        "<br>"
+      )
+    )
+  ) +
+    geom_line(data = currentGeogTimeMetric %>% filter(latest != 1)) +
+    geom_ribbon(
+      data = currentGeogTimeMetric %>% filter(Year !=0),
+      aes(ymin = min(value), ymax = value),
+      fill = ifelse(change > 0, "#00703c", "#d4351c"),
+      alpha = 0.3
+    ) +
+    geom_line(
+      data = currentGeogTimeMetric %>% filter(Year !=0),
+      color = ifelse(change > 0, "#00703c", "#d4351c")
+    ) +
+    theme_classic() +
+    theme(
+      axis.line = element_blank(),
+      axis.ticks = element_blank(),
+      axis.title = element_blank(),
+      panel.background = element_rect(fill = "#f3f2f1"),
+      plot.background = element_rect(fill = "#f3f2f1")
+    ) +
+    scale_y_continuous(
+      labels = label_number_si(accuracy = 1),
+      breaks = c(min(currentGeogTimeMetric$value), max(currentGeogTimeMetric$value))
+    )
+
+  #### 2.2.3.1 Employment count ----
+  # Employment count
+  output$overviewEmpCntKPI <- renderUI({
+    validate(need(input$geoChoiceOver != "", ""))
+    createOverviewKPI("inemployment")
   })
 
   # Emp chart
   empLineChart <- eventReactive(input$geoChoiceOver, {
-    change <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2022", metric == "Employment"))$value -
-      (currentGeogData() %>% filter(time_period == "Oct-Sep 2021", metric == "Employment"))$value
-    line <- currentGeogData() %>%
-      filter(metric == "Employment") %>%
-      mutate(Year = as.numeric(str_sub(time_period, -2, -1)))
-
-    ggplot(
-      line,
-      aes(
-        x = Year - 1,
-        y = value,
-        group = area,
-        text = paste0(
-          "Year: Oct-Sep ",
-          Year,
-          "<br>",
-          "Employment: ",
-          format(value, big.mark = ","),
-          "<br>"
-        )
-      )
-    ) +
-      geom_line(data = line %>% filter(Year <= 21)) +
-      geom_ribbon(
-        data = line %>% filter(Year >= 21),
-        aes(ymin = min(value), ymax = value),
-        fill = ifelse(change > 0, "#00703c", "#d4351c"),
-        alpha = 0.3
-      ) +
-      geom_line(
-        data = line %>% filter(Year >= 21),
-        color = ifelse(change > 0, "#00703c", "#d4351c")
-      ) +
-      theme_classic() +
-      theme(
-        axis.line = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title = element_blank(),
-        panel.background = element_rect(fill = "#f3f2f1"),
-        plot.background = element_rect(fill = "#f3f2f1")
-      ) +
-      scale_y_continuous(
-        labels = label_number_si(accuracy = 1),
-        breaks = c(min(line$value), max(line$value))
-      )
+    createOverviewChart("inemployment")
   })
   # set margins
   m <- list(
