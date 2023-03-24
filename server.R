@@ -162,7 +162,7 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_employment, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-      selected = "empRate"
+      selected = "inemploymentRate"
     )
   })
   # Create link to job advert
@@ -522,20 +522,26 @@ server <- function(input, output, session) {
     filter(geogConcat == "England")
   
 #create a function to build the overview KPIs
-  createOverviewKPI <- function(metricName) {
+  createOverviewKPI <- function(metricName,format) {
+    #"format" can either be "percent" or "number"
     #set metric
     currentGeogTimeMetric<-currentGeogTime()%>% filter(metric == metricName)
-    latest <- (currentGeogTimeMetric %>% filter(latest=1))$value
-    change <- latest - (currentGeogTimeMetric %>% filter(latest=-1))$value
+    latest <- (currentGeogTimeMetric %>% filter(latest==1))$value
+    change <- latest - (currentGeogTimeMetric %>% filter(latest==-1))$value
     
     # print with formatting
     h4(
-      span((currentGeogTimeMetric %>% filter(latest=1))$chartPeriod, style = "font-size: 16px;font-weight:normal;"),
+      span((currentGeogTimeMetric %>% filter(latest==1))$chartPeriod, style = "font-size: 16px;font-weight:normal;"),
       br(),
-      format(latest, big.mark = ","),
+      if(format=="percent"){ 
+        paste0(format(100 * latest, digit = 2), "%")}
+      else{format(latest, big.mark = ",")},
       br(),
       span(
-        format_pm(change), # plus-minus and comma sep formatting
+        if(format=="percent"){ 
+          paste0(sprintf("%+.0f", 100 * change), "ppts")
+        }
+         else{format_pm(change)} , # plus-minus and comma sep formatting
         style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
         .noWS = c("before", "after") # remove whitespace
       ),
@@ -545,36 +551,42 @@ server <- function(input, output, session) {
   }
 
   #create a function to build the overview charts
-  createOverviewChart <- function(metricName) { 
+  createOverviewChart <- function(metricName,format) { 
     #set metric
     currentGeogTimeMetric<-currentGeogTime()%>% filter(metric == metricName)
-    change <- (currentGeogTimeMetric %>% filter(latest=1))$value - 
-      (currentGeogTimeMetric %>% filter(latest=-1))$value
+    change <- (currentGeogTimeMetric %>% filter(latest==1))$value - 
+      (currentGeogTimeMetric %>% filter(latest==-1))$value
+    line<-if(format=="percent"){ bind_rows(currentGeogTimeMetric,
+                    englandTime%>% filter(metric == metricName))}
+    else{currentGeogTimeMetric}
+    timeChop<-(currentGeogTimeMetric%>% filter(latest==-1))$timePeriod#The point at which to apply the red/green colouring
   
   ggplot(
-    currentGeogTimeMetric,
+    line,
     aes(
-      x = timePeriod,
+      x = as.Date(timePeriod),
       y = value,
       group = geogConcat,
       text = paste0(
-        chartPeriod,
-        "<br>",
-        metricName,
-        format(value, big.mark = ","),
+        geogConcat,"<br>",
+        chartPeriod,"<br>",
+        metricName,": ",
+        if(format=="percent"){ 
+          paste0(format(100 * value, digit = 2), "%")}
+        else{format(value, big.mark = ",")},
         "<br>"
       )
     )
   ) +
-    geom_line(data = currentGeogTimeMetric %>% filter(latest != 1)) +
+    geom_line(data = line %>% filter(timePeriod<=timeChop,geogConcat == input$geoChoiceOver)) +
     geom_ribbon(
-      data = currentGeogTimeMetric %>% filter(Year !=0),
+      data = line %>% filter(timePeriod>=timeChop,geogConcat == input$geoChoiceOver),
       aes(ymin = min(value), ymax = value),
       fill = ifelse(change > 0, "#00703c", "#d4351c"),
       alpha = 0.3
     ) +
     geom_line(
-      data = currentGeogTimeMetric %>% filter(Year !=0),
+      data = line %>% filter(timePeriod>=timeChop,geogConcat == input$geoChoiceOver),
       color = ifelse(change > 0, "#00703c", "#d4351c")
     ) +
     theme_classic() +
@@ -586,155 +598,92 @@ server <- function(input, output, session) {
       plot.background = element_rect(fill = "#f3f2f1")
     ) +
     scale_y_continuous(
-      labels = label_number_si(accuracy = 1),
-      breaks = c(min(currentGeogTimeMetric$value), max(currentGeogTimeMetric$value))
-    )
+      labels = 
+        if(format=="percent"){ 
+      scales::percent_format(accuracy = 1)}else{
+        label_number_si(accuracy = 1)
+      }
+      ,
+      breaks = 
+        if(format=="percent"){ 
+          c((C_axisMinMax%>%filter(metric==metricName))$minAxis,(C_axisMinMax%>%filter(metric==metricName))$maxAxis)}else{
+        c(min(line$value), max(line$value))}
+      ,
+      limits = 
+        if(format=="percent"){ 
+          c((C_axisMinMax%>%filter(metric==metricName))$minAxis-0.001,(C_axisMinMax%>%filter(metric==metricName))$maxAxis)}else{
+            c(min(line$value), max(line$value))}
+    )+
+    scale_x_date(
+      name = "My date axis title",
+      date_breaks = "1 years",
+      date_labels = "%Y"
+    )+
+    if(format=="percent"){
+      geom_line(
+        data = line %>% filter(geogConcat == "England"),
+        alpha = 0.5
+      ) }else{}
+  }
+  
+  #create a function to render the overview charts
+  renderOverviewChart <- function(chartData) { 
+  ggplotly(chartData(),
+           tooltip = "text",
+           height = 81
+  ) %>%
+    layout(
+      margin = list(
+        l = 0,
+        r = 4,
+        # increase this margin a bit to prevent the last lable dissapearing
+        b = 0,
+        t = 0,
+        pad = 0
+      ),
+      xaxis = list(fixedrange = TRUE),
+      yaxis = list(fixedrange = TRUE)
+    ) %>% # disable zooming because it's awful on mobile
+    config(displayModeBar = FALSE)
+  }
 
   #### 2.2.3.1 Employment count ----
-  # Employment count
+  # Employment count KPI
   output$overviewEmpCntKPI <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("inemployment")
+    createOverviewKPI("inemployment","number")
   })
 
-  # Emp chart
+  # create Emp chart
   empLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("inemployment")
+    createOverviewChart("inemployment","number")
   })
-  # set margins
-  m <- list(
-    l = 0,
-    r = 4,
-    # increase this margin a bit to prevent the last lable dissapearing
-    b = 0,
-    t = 0,
-    pad = 0
-  )
-
+  
+#render empchart
   output$empLineChart <- renderPlotly({
-    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load ch)
-    ggplotly(empLineChart(),
-      tooltip = "text",
-      height = 81
-    ) %>%
-      layout(
-        margin = m,
-        xaxis = list(fixedrange = TRUE),
-        yaxis = list(fixedrange = TRUE)
-      ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load 
+    renderOverviewChart(empLineChart)
   })
 
   #### 2.2.3.2 Employment rate ----
   output$overviewEmpRateKPI <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    latest <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2022", metric == "empRate"))$value
-    change <- latest - (currentGeogData() %>% filter(time_period == "Oct-Sep 2021", metric == "empRate"))$value
-
-    # print with formatting
-    h4(
-      span("Oct-Sep 2022", style = "font-size: 16px;font-weight:normal;"),
-      br(),
-      paste0(format(100 * latest, digit = 2), "%"),
-      br(),
-      span(
-        paste0(sprintf("%+.0f", 100 * change), "ppts"),
-        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
-        .noWS = c("before", "after") # remove whitespace
-      ),
-      br(),
-      style = "font-size: 21px"
-    )
+    createOverviewKPI("inemploymentRate","percent")
   })
 
-  # Emp chart
-  # find emp chart y axis min and max
-  EmpRateMin <- C_time %>%
-    filter(metric == "empRate", geographic_level != "LADU") %>%
-    summarise(min(value, na.rm = T), .groups = "drop")
-  EmpRateMax <- C_time %>%
-    filter(metric == "empRate", geographic_level != "LADU") %>%
-    summarise(max(value, na.rm = T), .groups = "drop")
-
   empRateLineChart <- eventReactive(input$geoChoiceOver, {
-    change <- (currentGeogData() %>% filter(time_period == "Oct-Sep 2022", metric == "empRate"))$value -
-      (currentGeogData() %>% filter(time_period == "Oct-Sep 2021", metric == "empRate"))$value
-    line <- bind_rows(currentGeogData(), englandData) %>%
-      filter(metric == "empRate") %>%
-      mutate(Year = as.numeric(str_sub(time_period, -2, -1)))
-
-    ggplot(
-      line,
-      aes(
-        x = Year - 1,
-        y = value,
-        group = area,
-        text = paste0(
-          "Year: Oct-Sep ",
-          Year,
-          "<br>",
-          "Employment rate: ",
-          scales::percent(round(value, 2)),
-          "<br>"
-        )
-      )
-    ) +
-      geom_line(data = line %>% filter(Year <= 21, geogConcat == input$geoChoiceOver)) +
-      geom_line(
-        data = line %>% filter(geogConcat == "England"),
-        alpha = 0.5
-      ) +
-      geom_ribbon(
-        data = line %>% filter(Year >= 21, geogConcat == input$geoChoiceOver),
-        aes(ymin = min(value), ymax = value),
-        fill = ifelse(change > 0, "#00703c", "#d4351c"),
-        alpha = 0.3
-      ) +
-      geom_line(
-        data = line %>% filter(Year >= 21, geogConcat == input$geoChoiceOver),
-        color = ifelse(change > 0, "#00703c", "#d4351c")
-      ) +
-      theme_classic() +
-      theme(
-        axis.line = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title = element_blank(),
-        panel.background = element_rect(fill = "#f3f2f1"),
-        plot.background = element_rect(fill = "#f3f2f1")
-      ) +
-      scale_y_continuous(
-        labels = scales::percent_format(accuracy = 1),
-        breaks = c(EmpRateMin[1, 1], EmpRateMax[1, 1]),
-        limits = c(EmpRateMin[1, 1], EmpRateMax[1, 1])
-      )
+    createOverviewChart("inemploymentRate","percent")
   })
 
   output$empRateLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    ggplotly(empRateLineChart(),
-      tooltip = "text",
-      height = 81
-    ) %>%
-      layout(
-        margin = m,
-        xaxis = list(fixedrange = TRUE),
-        yaxis = list(fixedrange = TRUE)
-      ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
-  })
-
-  # Add link to employment data
-  observeEvent(input$link_to_tabpanel_employment2, {
-    updateTabsetPanel(session, "navbar", "Local skills")
-    updateSelectInput(session, "splashMetric",
-      selected = "Employment"
-    )
+    renderOverviewChart(empRateLineChart)
   })
   # Add link to employment rate
   observeEvent(input$link_to_tabpanel_empRate, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-      selected = "empRate"
+      selected = "inemploymentRate"
     )
   })
 
@@ -742,91 +691,17 @@ server <- function(input, output, session) {
   # Vacancy kpi
   output$overviewJobKPI <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    latest <- (currentGeogData() %>% filter(time_period == "Dec 2022", metric == "vacancies"))$value
-    change <- latest - (currentGeogData() %>% filter(time_period == "Dec 2021", metric == "vacancies"))$value
-
-    # print with formatting
-    h4(
-      span("Dec 2022", style = "font-size: 16px;font-weight:normal;"),
-      br(),
-      format(latest, big.mark = ","),
-      br(),
-      span(
-        format_pm(change), # plus-minus and comma sep formatting
-        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
-        .noWS = c("before", "after") # remove whitespace
-      ),
-      br(),
-      style = "font-size: 21px"
-    )
+    createOverviewKPI("vacancies","number")
   })
 
   # Vacancy chart
   jobLineChart <- eventReactive(input$geoChoiceOver, {
-    change <- (currentGeogData() %>% filter(time_period == "Dec 2022", metric == "vacancies"))$value -
-      (currentGeogData() %>% filter(time_period == "Dec 2021", metric == "vacancies"))$value
-    line <- currentGeogData() %>%
-      filter(metric == "vacancies") %>%
-      mutate(Year = as.numeric(str_sub(time_period, -2, -1)))
-
-    ggplot(
-      line,
-      aes(
-        x = as.Date(chart_year),
-        y = value,
-        group = area,
-        text = paste0(
-          "Period: ",
-          time_period,
-          "<br>",
-          "Online job adverts: ",
-          format(value, big.mark = ","),
-          "<br>"
-        )
-      )
-    ) +
-      geom_line(data = line %>% filter(as.Date(chart_year) <= as.Date("2021-12-01"))) +
-      geom_ribbon(
-        data = line %>% filter(as.Date(chart_year) >= as.Date("2021-12-01")),
-        aes(ymin = min(value), ymax = value),
-        fill = ifelse(change > 0, "#00703c", "#d4351c"),
-        alpha = 0.3
-      ) +
-      geom_line(
-        data = line %>% filter(as.Date(chart_year) >= as.Date("2021-12-01")),
-        color = ifelse(change > 0, "#00703c", "#d4351c")
-      ) +
-      theme_classic() +
-      theme(
-        axis.line = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title = element_blank(),
-        panel.background = element_rect(fill = "#f3f2f1"),
-        plot.background = element_rect(fill = "#f3f2f1")
-      ) +
-      scale_y_continuous(
-        labels = label_number_si(accuracy = 1),
-        breaks = c(min(line$value), max(line$value))
-      ) +
-      scale_x_date(
-        name = "My date axis title",
-        date_breaks = "1 years",
-        date_labels = "%y"
-      )
+    createOverviewChart("vacancies","number")
   })
 
   output$jobLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    ggplotly(jobLineChart(),
-      tooltip = "text",
-      height = 81
-    ) %>%
-      layout(
-        margin = m,
-        xaxis = list(fixedrange = TRUE),
-        yaxis = list(fixedrange = TRUE)
-      ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+    renderOverviewChart(jobLineChart)
   })
 
   # Add link to vacancy data
@@ -840,237 +715,44 @@ server <- function(input, output, session) {
   #### 2.2.3.4 FE achieve ----
 
   # get EandT data for current area
-  EtLEP <- eventReactive(input$geoChoiceOver, {
-    validate(need(input$geoChoiceOver != "", ""))
-    C_Achieve_ILR1621 %>%
-      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        level_or_type == "Education and training: Total",
-        age_group == "Total"
-      )
-  })
-  # get 21/22 values
-  EtLatest <- reactive({
-    EtLEP() %>%
-      filter(time_period == "202122")
-  })
-  # get 20/21 values
-  EtLast <- reactive({
-    EtLEP() %>%
-      filter(time_period == "202021")
-  })
-
   output$skisup.ETach <- renderUI({
-    ETach <- EtLatest()$achievements
+    validate(need(input$geoChoiceOver != "", ""))
+    createOverviewKPI("achievements","number")
 
-    # E&T achievements change
-    ETachChange <- EtLatest()$achievements - EtLast()$achievements
+  #       level_or_type == "Education and training: Total",
+  #       age_group == "Total"
 
-    # print with formatting
-    h4(
-      span("2021/22", style = "font-size: 16px;font-weight:normal;"),
-      br(),
-      format(ETach, big.mark = ","),
-      br(),
-      span(
-        format_pm(ETachChange) # plus-minus and comma sep formatting
-        ,
-        style = paste0("font-size: 16px;color:", cond_color(ETachChange > 0)) # colour formating
-        ,
-        .noWS = c("before", "after") # remove whitespace
-      ),
-      br(),
-      style = "font-size: 21px"
-    )
   })
-
-
 
   # e and t chart
   etLineChart <- eventReactive(input$geoChoiceOver, {
-    etLine <- EtLEP()
-    etCntChange <- EtLatest()$achievements - EtLast()$achievements
-    EtMinMax <- C_Achieve_ILR1621_max_min %>%
-      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        level_or_type == "Education and training: Total"
-      )
-
-    ggplot(
-      etLine,
-      aes(
-        x = Year,
-        y = achievements,
-        group = area,
-        text = paste0(
-          "Academic year: ",
-          time_period,
-          "<br>",
-          "Achievements: ",
-          format(achievements, big.mark = ","),
-          "<br>"
-        )
-      )
-    ) +
-      geom_line(data = etLine %>% filter(Year <= 20 & Year >= 17)) +
-      geom_ribbon(
-        data = etLine %>% filter(Year >= 20),
-        aes(ymin = min(achievements), ymax = achievements),
-        fill = ifelse(etCntChange > 0, "#00703c", "#d4351c"),
-        alpha = 0.3
-      ) +
-      geom_line(
-        data = etLine %>% filter(Year >= 20),
-        color = ifelse(etCntChange > 0, "#00703c", "#d4351c")
-      ) +
-      # add a blank line for the formatted tooltip
-      theme_classic() +
-      theme(
-        axis.line = element_blank(),
-        # axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title = element_blank(),
-        panel.background = element_rect(fill = "#f3f2f1"),
-        plot.background = element_rect(fill = "#f3f2f1")
-      ) +
-      scale_y_continuous(
-        labels = label_number_si(accuracy = 1),
-        breaks = c(EtMinMax$minAch, EtMinMax$maxAch)
-      )
+    createOverviewChart("achievements","number")
   })
 
   output$etLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    ggplotly(etLineChart(),
-      tooltip = "text",
-      height = 81
-    ) %>%
-      layout(
-        margin = m,
-        xaxis = list(fixedrange = TRUE),
-        yaxis = list(fixedrange = TRUE)
-      ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+    renderOverviewChart(etLineChart)
   })
 
   #### 2.2.3.5 FE app achieve ----
   # get App data for current area
-  AppLEP <- eventReactive(input$geoChoiceOver, {
-    validate(need(input$geoChoiceOver != "", ""))
-    C_Achieve_ILR1621 %>%
-      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        level_or_type == "Apprenticeships: Total",
-        age_group == "Total"
-      )
-  })
-  # get 21/22 values
-  AppLatest <- reactive({
-    AppLEP() %>%
-      filter(time_period == "202122")
-  })
-  # get 20/21 values
-  AppLast <- reactive({
-    AppLEP() %>%
-      filter(time_period == "202021")
-  })
   output$skisup.APPach <- renderUI({
-    Appach <- AppLatest()$achievements
+    validate(need(input$geoChoiceOver != "", ""))
+    createOverviewKPI("achievements","number")
 
-    # E&T achievements change
-    AppachChange <-
-      AppLatest()$achievements - AppLast()$achievements
+  #       level_or_type == "Apprenticeships: Total",
+  #       age_group == "Total"
 
-    # print with formatting
-    h4(
-      span("2021/22", style = "font-size: 16px;font-weight:normal;"),
-      br(),
-      format(Appach, big.mark = ","),
-      br(),
-      span(
-        format_pm(AppachChange) # plus-minus and comma sep formatting
-        ,
-        style = paste0("font-size: 16px;color:", cond_color(AppachChange > 0)) # colour formating
-        ,
-        .noWS = c("before", "after") # remove whitespace
-      ),
-      br(),
-      style = "font-size: 21px"
-    )
   })
 
   # app chart
   AppLineChart <- eventReactive(input$geoChoiceOver, {
-    AppLine <- AppLEP()
-    AppCntChange <-
-      AppLatest()$achievements - AppLast()$achievements
-    AppMinMax <- C_Achieve_ILR1621_max_min %>%
-      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        level_or_type == "Apprenticeships: Total"
-      )
-
-
-    ggplot(
-      AppLine,
-      aes(
-        x = Year,
-        y = achievements,
-        group = area,
-        text = paste0(
-          "Academic year: ",
-          time_period,
-          "<br>",
-          "Achievements: ",
-          format(achievements, big.mark = ","),
-          "<br>"
-        )
-      )
-    ) +
-      geom_line(data = AppLine %>% filter(Year <= 20 &
-        Year >= 17)) +
-      geom_ribbon(
-        data = AppLine %>% filter(Year >= 20),
-        aes(ymin = min(achievements), ymax = achievements),
-        fill = ifelse(AppCntChange > 0, "#00703c", "#d4351c"),
-        alpha = 0.3
-      ) +
-      geom_line(
-        data = AppLine %>% filter(Year >= 20),
-        color = ifelse(AppCntChange > 0, "#00703c", "#d4351c")
-      ) +
-      # add a blank line for the formatted tooltip
-      theme_classic() +
-      theme(
-        axis.line = element_blank(),
-        # axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title = element_blank(),
-        panel.background = element_rect(fill = "#f3f2f1"),
-        plot.background = element_rect(fill = "#f3f2f1")
-      ) +
-      scale_y_continuous(
-        labels = label_number_si(accuracy = 1),
-        breaks = c(AppMinMax$minAch, AppMinMax$maxAch)
-      )
+    createOverviewChart("achievements","number")
   })
 
   output$AppLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    ggplotly(AppLineChart(),
-      tooltip = "text",
-      height = 81
-    ) %>%
-      layout(
-        margin = m,
-        xaxis = list(fixedrange = TRUE),
-        yaxis = list(fixedrange = TRUE)
-      ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+    renderOverviewChart(AppLineChart)
   })
 
   # Add link to skills data
@@ -1082,123 +764,20 @@ server <- function(input, output, session) {
   })
 
   #### 2.2.3.6 KS5 sustained positive destination rate ----
-  # get dest data for current area
-  KS5geo <- eventReactive(input$geoChoiceOver, {
-    C_KS4_KS5eduempapp %>%
-      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        `Cohort Group` == "Total",
-        `Key Stage` == "Key Stage 5"
-      )
-  })
-  # get 21/22 values
-  KS5Latest <- reactive({
-    KS5geo() %>%
-      filter(time_period == "202021")
-  })
-  # get 20/21 values
-  KS5Last <- reactive({
-    KS5geo() %>%
-      filter(time_period == "201920")
-  })
-
-  # destinations overview KPI
+   # destinations overview KPI
   output$dest.ks5over <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    # change in positive sustained rate
-    KS5sustChange <- KS5Latest()$rate - KS5Last()$rate
-
-    # print with formatting
-    h4(
-      span("2020/21", style = "font-size: 16px;font-weight:normal;"),
-      br(),
-      paste0(format(100 * KS5Latest()$rate, digit = 2), "%"),
-      br(),
-      span(
-        paste0(sprintf("%+.1f", 100 * KS5sustChange), "ppts"),
-        style = paste0("font-size: 16px;color:", cond_color(KS5sustChange > 0)) # colour formating
-        ,
-        .noWS = c("before", "after") # remove whitespace
-      ),
-      br(),
-      style = "font-size: 21px"
-    )
+    createOverviewKPI("sustainedPositiveDestinationKS5Rate","percent")
   })
 
   # KS5 destinations chart
   KS5LineChart <- eventReactive(input$geoChoiceOver, {
-    KS5Line <- C_KS4_KS5eduempapp %>%
-      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
-      filter(
-        (geogConcat == input$geoChoiceOver |
-          geogConcat == "England COUNTRY"),
-        `Cohort Group` == "Total",
-        `Key Stage` == "Key Stage 5"
-      )
-    KS5sustChange <- KS5Latest()$rate - KS5Last()$rate
-    KS5MinMax <- C_KS5_eduempapp_max_min
-
-    ggplot(KS5Line, aes(
-      x = Year,
-      y = rate,
-      group = area,
-      text = paste0(
-        "Academic year: ",
-        time_period,
-        "<br>",
-        "Area: ",
-        area,
-        "<br>",
-        "Sustained positive destination rate: ",
-        scales::percent(round(rate, 2)),
-        "<br>"
-      )
-    )) +
-      geom_line(data = KS5Line %>% filter(Year <= 19, geogConcat == input$geoChoiceOver)) +
-      geom_line(
-        data = KS5Line %>% filter(geogConcat == "England COUNTRY"),
-        alpha = 0.5
-      ) +
-      geom_ribbon(
-        data = KS5Line %>% filter(Year >= 19, geogConcat == input$geoChoiceOver),
-        aes(ymin = min(rate), ymax = rate),
-        fill = ifelse(KS5sustChange > 0, "#00703c", "#d4351c"),
-        alpha = 0.3
-      ) +
-      geom_line(
-        data = KS5Line %>% filter(Year >= 19, geogConcat == input$geoChoiceOver),
-        color = ifelse(KS5sustChange > 0, "#00703c", "#d4351c")
-      ) +
-      # add a blank line for the formatted tooltip
-      theme_classic() +
-      theme(
-        axis.line = element_blank(),
-        # axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title = element_blank(),
-        panel.background = element_rect(fill = "#f3f2f1"),
-        plot.background = element_rect(fill = "#f3f2f1")
-      ) +
-      scale_y_continuous(
-        labels = scales::percent_format(accuracy = 1),
-        breaks = c(KS5MinMax$minks5, KS5MinMax$maxks5),
-        limits = c(KS5MinMax$minks5, KS5MinMax$maxks5)
-      )
+    createOverviewChart("sustainedPositiveDestinationKS5Rate","percent")
   })
 
   output$KS5LineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    ggplotly(KS5LineChart(),
-      tooltip = "text",
-      height = 81
-    ) %>%
-      layout(
-        margin = m,
-        xaxis = list(fixedrange = TRUE),
-        yaxis = list(fixedrange = TRUE)
-      ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+    renderOverviewChart(KS5LineChart)
   })
 
   # add link to destinations
@@ -1210,123 +789,25 @@ server <- function(input, output, session) {
   })
 
   #### 2.2.3.7 Micro enterprise ----
-  # get Enterprise data for current area
-  Entgeo <- eventReactive(input$geoChoiceOver, {
-    C_empentind3_UBC1822 %>%
-      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        variable == "Micro 0 to 9",
-        industry == "Total"
-      )
-  })
-  # get 21/22 values
-  EntLatest <- reactive({
-    Entgeo() %>%
-      filter(year == "2022")
-  })
-  # get 20/21 values
-  EntLast <- reactive({
-    Entgeo() %>%
-      filter(year == "2021")
-  })
-
   # enterprise overview KPI
   output$UBC.micro <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    # change in micro enterprises
-    EntChange <- EntLatest()$rate - EntLast()$rate
-
-    # print with formatting
-    h4(
-      span("Mar 2022", style = "font-size: 16px;font-weight:normal;"),
-      br(),
-      paste0(format(100 * EntLatest()$rate, digit = 2), "%"),
-      br(),
-      span(
-        paste0(sprintf("%+.1f", 100 * EntChange), "ppts"),
-        style = paste0("font-size: 16px;color:", cond_color(EntChange > 0)) # colour formating
-        ,
-        .noWS = c("before", "after") # remove whitespace
-      ),
-      br(),
-      style = "font-size: 21px"
-    )
+    createOverviewKPI("enterpriseCount","number")
+    
+    #       geogConcat == input$geoChoiceOver,
+    #       variable == "Micro 0 to 9",
+    #       industry == "Total"
+    
   })
 
   # micro enterprise chart
   UBCLineChart <- eventReactive(input$geoChoiceOver, {
-    EntLine <- C_empentind3_UBC1822 %>%
-      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
-      filter(
-        (geogConcat == input$geoChoiceOver |
-          geogConcat == "England COUNTRY"),
-        variable == "Micro 0 to 9",
-        industry == "Total"
-      )
-    EntChange <- EntLatest()$rate - EntLast()$rate
-    EntMinMax <- C_empentind_max_min
-
-    ggplot(EntLine, aes(
-      x = Year - 1,
-      y = rate,
-      group = area,
-      text = paste0(
-        "March: ",
-        year,
-        "<br>",
-        "Area: ",
-        area,
-        "<br>",
-        "Percentage: ",
-        scales::percent(round(rate, 2)),
-        "<br>"
-      )
-    )) +
-      geom_line(data = EntLine %>% filter(Year <= 21, geogConcat == input$geoChoiceOver)) +
-      geom_line(
-        data = EntLine %>% filter(geogConcat == "England COUNTRY"),
-        alpha = 0.5
-      ) +
-      geom_ribbon(
-        data = EntLine %>% filter(Year >= 21, geogConcat == input$geoChoiceOver),
-        aes(ymin = min(rate), ymax = rate),
-        fill = ifelse(EntChange > 0, "#00703c", "#d4351c"),
-        alpha = 0.3
-      ) +
-      geom_line(
-        data = EntLine %>% filter(Year >= 21, geogConcat == input$geoChoiceOver),
-        color = ifelse(EntChange > 0, "#00703c", "#d4351c")
-      ) +
-      # add a blank line for the formatted tooltip
-      theme_classic() +
-      theme(
-        axis.line = element_blank(),
-        # axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title = element_blank(),
-        panel.background = element_rect(fill = "#f3f2f1"),
-        plot.background = element_rect(fill = "#f3f2f1")
-      ) +
-      scale_y_continuous(
-        labels = scales::percent_format(accuracy = 1),
-        breaks = c(EntMinMax$minmic, EntMinMax$maxmic),
-        limits = c(EntMinMax$minmic, EntMinMax$maxmic)
-      )
+    createOverviewChart("enterpriseCount","number")
   })
 
   output$UBCLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    ggplotly(UBCLineChart(),
-      tooltip = "text",
-      height = 81
-    ) %>%
-      layout(
-        margin = m,
-        xaxis = list(fixedrange = TRUE),
-        yaxis = list(fixedrange = TRUE)
-      ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+    renderOverviewChart(UBCLineChart)
   })
 
   # add link to enterprise
@@ -1338,125 +819,20 @@ server <- function(input, output, session) {
   })
 
   #### 2.2.3.8 Qualifications NVQ ----
-  # get entprise data for current area
-  Qualgeo <- eventReactive(input$geoChoiceOver, {
-    C_qualevel3plus_APS1721 %>%
-      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        Level == "Level 3 and above",
-        age_band == "16-64",
-        gender == "Total"
-      )
-  })
-  # get 21/22 values
-  QualLatest <- reactive({
-    Qualgeo() %>%
-      filter(year == "2021")
-  })
-  # get 20/21 values
-  QualLast <- reactive({
-    Qualgeo() %>%
-      filter(year == "2020")
-  })
-
-  # NVQ3 or above overview KPI
+ # NVQ3 or above overview KPI
   output$APS.nvq3plus <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    # change in NVQ3 or above
-    QualChange <- QualLatest()$rate - QualLast()$rate
-
-    # print with formatting
-    h4(
-      span("Jan-Dec 2021", style = "font-size: 16px;font-weight:normal;"),
-      br(),
-      paste0(format(100 * QualLatest()$rate, digit = 2), "%"),
-      br(),
-      span(
-        paste0(sprintf("%+.1f", 100 * QualChange), "ppts"),
-        style = paste0("font-size: 16px;color:", cond_color(QualChange > 0)) # colour formating
-        ,
-        .noWS = c("before", "after") # remove whitespace
-      ),
-      br(),
-      style = "font-size: 21px"
-    )
+    createOverviewKPI("L3PlusPerc","percent")
   })
 
   # qualification chart
   Nvq3plusLineChart <- eventReactive(input$geoChoiceOver, {
-    QualLine <- C_qualevel3plus_APS1721 %>%
-      mutate(geogConcat = paste0(area, " ", geographic_level)) %>%
-      filter(
-        (geogConcat == input$geoChoiceOver |
-          geogConcat == "England COUNTRY"),
-        Level == "Level 3 and above",
-        age_band == "16-64",
-        gender == "Total"
-      )
-    QualChange <- QualLatest()$rate - QualLast()$rate
-    # QualMinMax <- C_qual_max_min
-
-    ggplot(QualLine, aes(
-      x = Year,
-      y = rate,
-      group = area,
-      text = paste0(
-        "Jan-Dec: ",
-        year,
-        "<br>",
-        "Area: ",
-        area,
-        "<br>",
-        "Percentage: ",
-        scales::percent(round(rate, 2)),
-        "<br>"
-      )
-    )) +
-      geom_line(data = QualLine %>% filter(Year <= 20, geogConcat == input$geoChoiceOver)) +
-      geom_line(
-        data = QualLine %>% filter(geogConcat == "England COUNTRY"),
-        alpha = 0.5
-      ) +
-      geom_ribbon(
-        data = QualLine %>% filter(Year >= 20, geogConcat == input$geoChoiceOver),
-        aes(ymin = min(rate), ymax = rate),
-        fill = ifelse(QualChange > 0, "#00703c", "#d4351c"),
-        alpha = 0.3
-      ) +
-      geom_line(
-        data = QualLine %>% filter(Year >= 20, geogConcat == input$geoChoiceOver),
-        color = ifelse(QualChange > 0, "#00703c", "#d4351c")
-      ) +
-      # add a blank line for the formatted tooltip
-      theme_classic() +
-      theme(
-        axis.line = element_blank(),
-        # axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title = element_blank(),
-        panel.background = element_rect(fill = "#f3f2f1"),
-        plot.background = element_rect(fill = "#f3f2f1")
-      ) +
-      scale_y_continuous(
-        labels = scales::percent_format(accuracy = 1),
-        breaks = c(.39, .72),
-        limits = c(.39, .72)
-      )
+    createOverviewChart("L3PlusPerc","percent")
   })
 
   output$Nvq3plusLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    ggplotly(Nvq3plusLineChart(),
-      tooltip = "text",
-      height = 81
-    ) %>%
-      layout(
-        margin = m,
-        xaxis = list(fixedrange = TRUE),
-        yaxis = list(fixedrange = TRUE)
-      ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+    renderOverviewChart(Nvq3plusLineChart)
   })
 
   # add link to qualification level
@@ -1472,7 +848,7 @@ server <- function(input, output, session) {
   # working futres KPI
   output$wfOverviewKpi <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-
+    createOverviewKPI("wfEmployment","percent")
     change <- (C_Geog %>%
       filter(
         geogConcat == input$geoChoiceOver
@@ -2020,13 +1396,13 @@ server <- function(input, output, session) {
         metric == input$splashMetric
       )
     currentChange <- (currentArea %>%
-      filter(chart_year == max(chart_year)))$value -
+      filter(latest==1)$value -
       (currentArea %>%
-        filter(chart_year == min(chart_year)))$value
+        filter(chart_year == min(timePeriod))))$value
     englandChange <- (englandArea %>%
-      filter(chart_year == max(chart_year)))$value -
+      filter(latest==1))$value -
       (englandArea %>%
-        filter(chart_year == min(chart_year)))$value
+        filter(chart_year == min(timePeriod)))$value
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$timeComment, " ",
       input$geoChoice, if (input$splashMetric == "wfEmployment") {
@@ -2089,7 +1465,7 @@ server <- function(input, output, session) {
               (if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "wfEmployment") {
                 (geogConcat == "England")
               } else {
-                area == "\nNone"
+                geogConcat == "\nNone"
               }),
             metric == input$splashMetric
           )
@@ -2101,13 +1477,13 @@ server <- function(input, output, session) {
         ggplot(
           SplashTime,
           aes(
-            x = as.Date(chart_year),
+            x = as.Date(timePeriod),
             y = value,
             color = Areas,
             group = Areas,
             text = paste0(
               "Period: ",
-              time_period,
+              chartPeriod,
               "<br>",
               "Area: ",
               Areas,
@@ -2171,7 +1547,7 @@ server <- function(input, output, session) {
   ### 2.3.8 Breakdown chart ----
   #### 2.3.8.1 Breakdown filter ----
   distinctSubgroups <- C_breakdown %>%
-    distinct(metric, breakdown, subgroups)
+    distinct(metric, breakdown, subgroup)
   distinctBreakdowns <- C_breakdown %>%
     distinct(metric, breakdown)
   output$breakdownFilter <- renderUI({
@@ -2189,7 +1565,7 @@ server <- function(input, output, session) {
   summaryCategories <- c("All", (as.vector(
     distinctSubgroups %>%
       filter(breakdown == "Summary Profession Category")
-  ))$subgroups)
+  ))$subgroup)
   output$professionFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
@@ -2220,13 +1596,13 @@ server <- function(input, output, session) {
               metric == input$splashMetric,
               breakdown == input$barBreakdown,
               if (input$barBreakdown == "Detailed Profession Category" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
-                subgroups %in%
+                subgroup %in%
                   (detailLookup %>% filter(`Summary Profession Category` == input$summaryProfession))$`Detailed Profession Category`
               } else {
                 TRUE
               }
             )
-        ))$subgroups,
+        ))$subgroup,
       multiple = TRUE,
       selected = (as.vector(
         topTenEachBreakdown %>%
@@ -2240,7 +1616,7 @@ server <- function(input, output, session) {
               `Summary Profession Category` == "All"
             }
           )
-      ))$subgroups,
+      ))$subgroup,
       options = list(`actions-box` = TRUE, `live-search` = TRUE)
     )
   })
@@ -2272,7 +1648,7 @@ server <- function(input, output, session) {
         str_to_sentence(currentMetric()),
         " currently has no breakdowns.",
         if (input$splashMetric %in% c(
-          "empRate",
+          "inemploymentRate",
           "selfempRate",
           "unempRate",
           "inactiveRate",
@@ -2293,7 +1669,7 @@ server <- function(input, output, session) {
           breakdown == input$barBreakdown,
           metric == input$splashMetric
         ) %>%
-        group_by(subgroups) %>%
+        group_by(subgroup) %>%
         mutate(change = (value - lag(value, default = 1)) / value) %>%
         ungroup() %>%
         filter(geogConcat == input$geoChoice) %>%
@@ -2314,11 +1690,11 @@ server <- function(input, output, session) {
         " ",
         (I_DataText %>% filter(metric == input$splashMetric))$breakdownComment,
         " in ",
-        breakdownDiff$subgroups,
+        breakdownDiff$subgroup,
         " than the national average. ",
         if (nrow(C_breakdown %>%
           filter(breakdown == input$barBreakdown) %>%
-          distinct(subgroups)) > 10) {
+          distinct(subgroup)) > 10) {
           "The top 10 subgroups are shown. Use the filter to add or remove subgroups. "
         } else {
           ""
@@ -2347,7 +1723,7 @@ server <- function(input, output, session) {
       )
       Splash_21 <- C_breakdown %>% filter(
         breakdown == input$barBreakdown,
-        subgroups %in% input$barSubgroup,
+        subgroup %in% input$barSubgroup,
         metric == input$splashMetric,
         # get lep/lsip/mca areas
         (geogConcat == input$geoChoice | geogConcat %in% if ("geoComps" %in% names(input)) {
@@ -2369,7 +1745,7 @@ server <- function(input, output, session) {
         ggplot(
           Splash_21,
           aes(
-            x = reorder(subgroups, value, mean),
+            x = reorder(subgroup, value, mean),
             y = value,
             fill = Area,
             text = paste0(
@@ -2379,7 +1755,7 @@ server <- function(input, output, session) {
               currentMetric(),
               ": ",
               if (str_sub(input$splashMetric, start = -4) == "Rate" |
-                input$splashMetric == "Employment" |
+                input$splashMetric == "inemployment" |
                 input$splashMetric == "vacancies" |
                 input$splashMetric == "enterpriseCount" |
                 input$splashMetric == "achievements" |
@@ -2396,7 +1772,7 @@ server <- function(input, output, session) {
         ) +
           geom_col(position = "dodge") +
           scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" |
-            input$splashMetric == "Employment" |
+            input$splashMetric == "inemployment" |
             input$splashMetric == "vacancies" |
             input$splashMetric == "enterpriseCount" |
             input$splashMetric == "achievements" |
@@ -2458,7 +1834,7 @@ server <- function(input, output, session) {
       need(input$barBreakdown != "", ""),
       need(input$barBreakdown != "No breakdowns available", "")
     )
-    if (input$splashMetric == "Employment" & input$barBreakdown == "Occupation") {
+    if (input$splashMetric == "inemployment" & input$barBreakdown == "Occupation") {
       "Jan 2021-Dec 2021 data."
     } # Occupation data is older because of the SOC issue
     else {
@@ -2474,7 +1850,7 @@ server <- function(input, output, session) {
     list(
       "AllArea" = filter(C_time, metric == input$splashMetric) %>%
         mutate(metric = case_when(metric == "wfEmployment" ~ "ProjectedYearOnYearEmploymentGrowth", TRUE ~ metric)) %>%
-        select(-area, -geographic_level, -chart_year) %>%
+        #select(-area, -geographic_level, -chart_year) %>%
         rename(Area = geogConcat),
       "AllAreaBreakdown" = filter(C_breakdown, metric == input$splashMetric) %>%
         mutate(metric = case_when(metric == "wfEmployment" ~ "ProjectedEmploymentGrowthTo2035", TRUE ~ metric)) %>%
@@ -2504,7 +1880,7 @@ server <- function(input, output, session) {
           geogConcat == "England")
       ) %>%
         mutate(metric = case_when(metric == "wfEmployment" ~ "ProjectedYearOnYearEmploymentGrowth", TRUE ~ metric)) %>%
-        select(-area, -geographic_level, -chart_year) %>%
+        #select(-area, -geographic_level, -chart_year) %>%
         rename(Area = geogConcat),
       "CurrentAreaBreakdown" = filter(
         C_breakdown,
@@ -2651,7 +2027,7 @@ server <- function(input, output, session) {
         Area = geogConcat,
         Data = metricNeat,
         Breakdown = breakdown,
-        Splits = subgroups,
+        Splits = subgroup,
         Value = value
       )
   })

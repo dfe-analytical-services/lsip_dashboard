@@ -122,28 +122,28 @@ panel_overview <- function() {
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_enterprise2", "Find out more about businesses")
         ),
-
-        # 7th row - working futures
-        h3("Year on year projected employment growth"),
-        fluidRow(
-          column(
-            width = 4,
-            div(
-              title = "Source: Skills Imperative 2035.",
-              uiOutput("wfOverviewKpi"),
-            )
-          ),
-          column(
-            width = 8,
-            withSpinner(plotlyOutput("wfOverviewChart", height = 81))
-          )
-        ),
-        fluidRow(
-          class = "rightAlignLinks",
-          actionLink("link_to_tabpanel_wf", "Find out more about employment projections")
-        ),
-        br()
-      ),
+    # 
+    #     # 7th row - working futures
+    #     h3("Year on year projected employment growth"),
+    #     fluidRow(
+    #       column(
+    #         width = 4,
+    #         div(
+    #           title = "Source: Skills Imperative 2035.",
+    #           uiOutput("wfOverviewKpi"),
+    #         )
+    #       ),
+    #       column(
+    #         width = 8,
+    #         withSpinner(plotlyOutput("wfOverviewChart", height = 81))
+    #       )
+    #     ),
+    #     fluidRow(
+    #       class = "rightAlignLinks",
+    #       actionLink("link_to_tabpanel_wf", "Find out more about employment projections")
+    #     ),
+    #     br()
+       ),
       # right column
       column(
         width = 6,
@@ -221,37 +221,37 @@ panel_overview <- function() {
           actionLink("link_to_tabpanel_qualification2", "Find out more about qualification level")
         ),
         br()
-      ) # end of right column
-    ), # end of data row
+       ) # end of right column
+     ), # end of data row
     ### Downloads-------------
     br(),
-    fluidRow(
-      column(
-        width = 3,
-        downloadButton(
-          outputId = "download_btn0a",
-          label = "All data   ",
-          icon = shiny::icon("download"),
-          class = "downloadButton"
-        )
-      ),
-      column(
-        width = 9,
-        "Download all data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
-      )
-    ),
-    fluidRow(
-      column(
-        width = 3,
-        downloadButton(
-          outputId = "download_btn0b",
-          label = "Current geographic area",
-          icon = shiny::icon("download"),
-          class = "downloadButton"
-        )
-      ),
-      column(width = 9, "Download all data for the selected geographic area")
-    ),
-    column(width = 12, br(""))
+    # fluidRow(
+    #   column(
+    #     width = 3,
+    #     downloadButton(
+    #       outputId = "download_btn0a",
+    #       label = "All data   ",
+    #       icon = shiny::icon("download"),
+    #       class = "downloadButton"
+    #     )
+    #   ),
+    #   column(
+    #     width = 9,
+    #     "Download all data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
+    #   )
+    # ),
+    # fluidRow(
+    #   column(
+    #     width = 3,
+    #     downloadButton(
+    #       outputId = "download_btn0b",
+    #       label = "Current geographic area",
+    #       icon = shiny::icon("download"),
+    #       class = "downloadButton"
+    #     )
+    #   ),
+    #   column(width = 9, "Download all data for the selected geographic area")
+    # ),
+    # column(width = 12, br(""))
   )
 }

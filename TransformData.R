@@ -23,6 +23,7 @@ library(leaflet)
 library(rgdal)
 library(rgeos)
 library(sf)
+library(lubridate)
 
 
 # 1 Geographical data ----
@@ -180,7 +181,7 @@ C_emp<-formatNomis(I_emp)%>%
   #get time period
   mutate(timePeriod=as.Date(paste("01", substr(chartPeriod,1,8), sep = ""), format = "%d %b %Y"))%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1,
-                          timePeriod==(max(timePeriod)-366) ~ -1, 
+                          timePeriod==(max(timePeriod)-years(1)) ~ -1, 
                           TRUE ~ 0))%>%
   #calculate rates
   mutate(
@@ -200,7 +201,7 @@ C_empOcc<-formatNomis(I_empOcc)%>%
   #get time period
   mutate(timePeriod=as.Date(paste("01", substr(chartPeriod,1,8), sep = ""), format = "%d %b %Y"))%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1,
-                          timePeriod==(max(timePeriod)-366) ~ -1, 
+                          timePeriod==(max(timePeriod)-years(1)) ~ -1, 
                           TRUE ~ 0))%>%
   formatLong()%>%
   mutate(subgroup=trimws(str_to_sentence(subgroup),"both"))%>%
@@ -222,7 +223,7 @@ C_empInd <- formatNomis(I_empInd)%>%
   #get time period
   mutate(timePeriod=as.Date(paste("01", substr(chartPeriod,1,8), sep = ""), format = "%d %b %Y"))%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1,
-                          timePeriod==(max(timePeriod)-366) ~ -1, 
+                          timePeriod==(max(timePeriod)-years(1)) ~ -1, 
                           TRUE ~ 0))%>%
   formatLong()%>%
   mutate(metric="inemployment",breakdown="Industry")
@@ -232,7 +233,7 @@ C_entSize <- formatNomis(I_entSize)%>%
   #get time period
   mutate(timePeriod=as.Date(paste("01", "Jan",chartPeriod, sep = " "), format = "%d %b %Y"))%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1, 
-                          timePeriod==(max(timePeriod)-366) ~ -1, 
+                          timePeriod==(max(timePeriod)-years(1)) ~ -1, 
                           TRUE ~ 0))%>%
   formatLong()%>%
   mutate(metric="enterpriseCount"
@@ -245,7 +246,7 @@ qualAgeGender <- formatNomis(I_qualAgeGender)%>%
   #get time period
   mutate(timePeriod=as.Date(paste("01", substr(chartPeriod,1,8), sep = ""), format = "%d %b %Y"))%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1,
-                          timePeriod==(max(timePeriod)-366) ~ -1, 
+                          timePeriod==(max(timePeriod)-years(1)) ~ -1,  
                           TRUE ~ 0))%>%
   formatLong()%>%
   mutate(metric= case_when(
@@ -290,7 +291,7 @@ F_FeProvLevelAge<-I_FeProvLevelAge%>%
   mutate(chartPeriod=paste("AY",substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = ""))%>%
   mutate(timePeriod=as.Date(paste("01 Aug", substr(time_period,1,4), sep = ""), format = "%d %b %Y"))%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1,
-                          timePeriod==(max(timePeriod)-366) ~ -1, 
+                          timePeriod==(max(timePeriod)-years(1)) ~ -1, 
                           TRUE ~ 0))%>%
   select(-time_identifier,-time_period, -country_code,-country_name, -region_code, -region_name,-new_la_code, -old_la_code,-la_name, -pcon_code, -pcon_name, -lad_code, -lad_name)%>%
   #find populations at the grouping level so we use the highest volume of population (ie nopt calculate the pop for every small group using small data volumes)
@@ -402,7 +403,7 @@ feSsaWithAreas<-I_FeSsa%>%
   mutate(chartPeriod=paste("AY",substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = ""))%>%
   mutate(timePeriod=as.Date(paste("01 Aug", substr(time_period,1,4), sep = ""), format = "%d %b %Y"))%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1,
-                          timePeriod==(max(timePeriod)-366) ~ -1, 
+                          timePeriod==(max(timePeriod)-years(1)) ~ -1,  
                           TRUE ~ 0))%>%
   select(-time_period)%>%
   addGeogs()
@@ -504,7 +505,7 @@ C_skillsImperative <-
   rename(chartPeriod=timePeriod)%>%
 mutate(timePeriod=as.Date(paste("01", "Jan",chartPeriod, sep = " "), format = "%d %b %Y"))%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1,
-                          timePeriod==(max(timePeriod)-366) ~ -1, 
+                          timePeriod==(max(timePeriod)-years(1)) ~ -1, 
                           TRUE ~ 0))%>%
   mutate(valueText=as.character(value))
 
@@ -520,9 +521,15 @@ destinationsWithAreas<-
   mutate(chartPeriod=paste("AY",substr(timePeriod, 3, 4), "/", substr(timePeriod, 5, 6), sep = ""))%>%
   mutate(timePeriod=as.Date(paste("01 Aug", substr(timePeriod,1,4), sep = ""), format = "%d %b %Y"))%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1, 
-                          timePeriod==(max(timePeriod)-366) ~ -1, 
+                          timePeriod==(max(timePeriod)-years(1)) ~ -1, 
                           TRUE ~ 0))%>%
   addGeogs()
+  
+#For destinations we need to also sum up for the whole country, so we take all LEPs again and relabel country ahead of the sum
+destinationsWithAreas<-destinationsWithAreas%>%
+  filter(str_sub(geogConcat,-3,-1)=="LEP")%>%
+  mutate(geogConcat="England")%>%
+  bind_rows(destinationsWithAreas)
 
 groupedStats<-destinationsWithAreas %>%
   filter(newArea==1)%>%#no need to group national or LAs that haven't changed
@@ -615,7 +622,7 @@ F_adverts <- bind_rows(
     mutate(timePeriod = as.Date(paste("01 ", time_period, sep = ""), "%d %b %y"))%>%
     rename(chartPeriod=time_period)%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1,
-                          timePeriod==(max(timePeriod)-366) ~ -1, 
+                          timePeriod==(max(timePeriod)-years(1)) ~ -1, 
                           TRUE ~ 0))%>%
     select(-area,-geographic_level)%>%
 # make suppressed data zero to use in dashboard
@@ -677,7 +684,7 @@ businessesWithAreas<-
   #add dates
   mutate(timePeriod=as.Date(paste("01", "Jan",chartPeriod, sep = " "), format = "%d %b %Y"))%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1, 
-                          timePeriod==(max(timePeriod)-366) ~ -1, 
+                          timePeriod==(max(timePeriod)-years(1)) ~ -1,  
                           TRUE ~ 0))%>% 
   addGeogs()
 
@@ -772,8 +779,9 @@ write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALS
 
 ### 4.3.1 Find top ten for each breakdown ----
 # (these are chosen in the filter)
-detailLookup <- D_OnsProfDetail %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)
-topTenEachBreakdown <- bind_rows(
+#detailLookup <- D_OnsProfDetail %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)
+topTenEachBreakdown <- 
+  #bind_rows(
   C_breakdown %>%
     filter(str_sub(geogConcat,-4,-1)!="LADU") %>%
     group_by(metric, breakdown, geogConcat) %>%
@@ -781,15 +789,15 @@ topTenEachBreakdown <- bind_rows(
     slice(1:10) 
   #%>%
    # mutate(`Summary Profession Category` = "All")
-  ,
-  C_breakdown %>%
-    filter(breakdown == "Detailed Profession Category", geographic_level != "LADU") %>%
-    left_join(detailLookup, by = c("subgroups" = "Detailed Profession Category")) %>%
-    group_by(metric, breakdown, area, geographic_level, `Summary Profession Category`) %>%
-    arrange(desc(value)) %>%
-    slice(1:10)
-) %>%
-  select(metric, breakdown, geogConcat, subgroups, `Summary Profession Category`)
+#   ,
+#   C_breakdown %>%
+#     filter(breakdown == "Detailed Profession Category", geographic_level != "LADU") %>%
+#     left_join(detailLookup, by = c("subgroups" = "Detailed Profession Category")) %>%
+#     group_by(metric, breakdown, area, geographic_level, `Summary Profession Category`) %>%
+#     arrange(desc(value)) %>%
+#     slice(1:10)
+# ) %>%
+#   select(metric, breakdown, geogConcat, subgroups, `Summary Profession Category`)
 write.csv(topTenEachBreakdown, file = "Data\\AppData\\topTenEachBreakdown.csv", row.names = FALSE)
 
 ## 4.4 C_dataHub ----

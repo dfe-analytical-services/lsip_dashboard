@@ -39,11 +39,11 @@ area_select <- c("Coast to Capital", "Greater Manchester", "England")
 
 metricChoices <- list(
   "Employment" = list(
-    "Employment rate" = "empRate",
+    "Employment rate" = "inemploymentRate",
     "Self-employment rate" = "selfempRate",
     "Unemployment rate" = "unempRate",
     "Inactive rate" = "inactiveRate",
-    "Employment" = "Employment",
+    "Employment" = "inemployment",
     "Self-employment" = "SelfEmployed",
     "Unemployed" = "Unemployed",
     "Inactive" = "Inactive"
@@ -64,7 +64,7 @@ metricChoices <- list(
     "FE achievement rate per 100,000" = "achievements_rate_per_100000_population",
     "FE participation rate per 100,000" = "participation_rate_per_100000_population",
     # "FE start rate" = "starts_rate_per_100000_population",
-    "Qualified at Level 3 or above" = "level3AndAboveRate"
+    "Qualified at Level 3 or above" = "L3PlusPerc"
   ),
   "Destinations" = list(
     "KS4 sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",
