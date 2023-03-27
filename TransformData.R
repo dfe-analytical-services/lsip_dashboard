@@ -1942,7 +1942,7 @@ D_OnsProfDetail <- D_OnsProf %>%
   filter(time_period == "Dec 22", `Detailed Profession Category` != "None")
 write.csv(D_OnsProfDetail, file = "Data\\AppData\\D_OnsProfDetail.csv", row.names = FALSE)
 
-# Working future data ----
+# 4.Working future data ----
 C_wf <-
   # bind_rows(
   bind_rows(
@@ -2019,6 +2019,34 @@ C_wf <- bind_rows(
   C_wf,
   C_wf %>% filter(geogConcat == "London LEP") %>% mutate(geogConcat = "Greater London Authority MCA")
 )
+
+## 4.1 Replacement demand data ----
+D_wfRDF1 <- T_wfRDF1 %>% 
+  filter(is.na(X1), !is.na(X2)) %>%  #only keep rows with occupations 
+  select(-c(X1, Total.Requirement)) %>%  #remove empty row
+  rename(subgroup = X2, 
+         value = Net.Change) %>% 
+  mutate(metric = "wfReplacement", 
+         breakdown = case_when(
+           grepl("[0-9]", subgroup) == TRUE ~ "Occupation (SOC2020 submajor)",
+           subgroup == "All occupations" ~ "Total",
+           TRUE ~ "Occupation (SOC2020 major)"
+         ), 
+         chartPeriod = 2035, 
+         latest = 1, 
+         valueText = as.character(value), 
+         value = as.numeric(value))  %>% 
+  mutate(timePeriod = as.Date(ISOdate(as.numeric(chartPeriod), 1, 1))) %>% # shift to start of year
+left_join(I_wfAreaName) %>%
+  mutate(geogConcat = paste0(trimws(`.Main`, "both"), " ", sub(" name", "", Scenario))) %>% # get area name
+  mutate(geogConcat = case_when(
+    #   file_name == "BH_LSIP_MainTables.Main.xlsm" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
+    trimws(`.Main`, "both") == "England" ~ "England",
+    TRUE ~ geogConcat
+  )) %>% 
+mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) %>% 
+  select(subgroup, metric, breakdown, geogConcat, chartPeriod, value, timePeriod, latest, valueText)# remove numbers from soc codes for presentation
+
 
 # # correct the missing summaries of a few major groups
 # correctedSubgroups <- C_wf %>%
