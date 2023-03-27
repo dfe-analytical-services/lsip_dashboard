@@ -435,14 +435,14 @@ C_FeSsa<-bind_rows(groupedStats,
   mutate(value=as.numeric(valueText))
 
 ## 2.8 Skills imperative 2035 ----
-C_skillsImperative <-
+employmentProjections <-
   # bind_rows(
   bind_rows(
     I_wfIndF2 %>%
       select(-"0") %>% # get rid of row caused by formula error in spreadsheet
       rename(subgroup = X1) %>%
       mutate(
-        metric = "wfEmployment",
+        metric = "employmentProjection",
         breakdown = case_when(
           subgroup %in% c("Primary sector and utilities", "Manufacturing", "Construction", "Trade, accomod. and transport", "Business and other services", "Non-marketed services") ~ "Broad sector",
           subgroup == "All industries" ~ "Total",
@@ -459,7 +459,7 @@ C_skillsImperative <-
     I_wfOccF2 %>%
       rename(subgroup = thousands) %>%
       mutate(
-        metric = "wfEmployment",
+        metric = "employmentProjection",
         breakdown = case_when(
           grepl("[0-9]", subgroup) == TRUE ~ "Occupation (SOC2020 submajor)",
           subgroup == "All occupations" ~ "Total",
@@ -476,7 +476,7 @@ C_skillsImperative <-
       ) %>% # put in unit numbers
       filter(breakdown != "Total"), # remove this total since we already have it fro industry
     I_wfQualF1 %>%
-      mutate(metric = "wfEmployment", breakdown = "Qualification") %>%
+      mutate(metric = "employmentProjection", breakdown = "Qualification") %>%
       rename(subgroup = X1) %>%
       mutate_at(vars(`2010`:`2035`),
                 .funs = funs(. * 1000)
@@ -510,7 +510,34 @@ C_skillsImperative <-
 mutate(timePeriod=as.Date(paste("01", "Jan",chartPeriod, sep = " "), format = "%d %b %Y"))%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1,
                           timePeriod==(max(timePeriod)-years(1)) ~ -1, 
-                          TRUE ~ 0))%>%
+                          TRUE ~ 0))
+
+#Get future year on year growth metric
+empGrowth<-employmentProjections %>%
+  filter(chartPeriod >= 2022) %>%
+  # get growth
+  arrange(chartPeriod, timePeriod,latest) %>%
+  group_by(geogConcat, metric,breakdown, subgroup) %>%
+  mutate(value = (value - lag(value)) / lag(value)) %>%
+  filter(chartPeriod != 2022)%>%
+  mutate(metric="employmentProjectionAnnualGrowth")
+
+#Get 2023 to 2035 growth metric
+empGrowth2023_2035<-employmentProjections %>%
+  filter(chartPeriod %in% c(2023, 2035)) %>%
+  # get growth
+  arrange(chartPeriod, timePeriod,latest) %>%
+  group_by(geogConcat, metric,breakdown, subgroup) %>%
+  mutate(value = (value - lag(value)) / lag(value)) %>%
+  filter(chartPeriod != 2023)%>%
+  mutate(metric="employmentProjectionGrowth2023to2035")
+
+#combine all skills imperative  metrics
+C_skillsImperative<-bind_rows(
+  employmentProjections,
+  empGrowth,
+  empGrowth2023_2035
+)%>%
   mutate(valueText=as.character(value))
 
 ## 2.9 Destinations ----
@@ -772,22 +799,30 @@ C_localSkillsDataset<-bind_rows(
 C_Geog <- neatGeog %>%
 left_join(
   (C_localSkillsDataset%>%
-  filter(breakdown=="Total",latest==1)%>%
+  filter(breakdown=="Total",latest==1
+     , !metric %in% c("employmentProjection","employmentProjectionAnnualGrowth","all","economicallyactive","employees","starts_rate_per_100000_population","starts","active","births","deaths"))%>% #remove metrics not used
   select(value,metric,geogConcat)%>%
-  pivot_wider(names_from = metric, values_from = value)),by= c("geogConcat" = "geogConcat"))
+  pivot_wider(names_from = metric, values_from = value)),by= c("geogConcat" = "geogConcat"))%>%
+  rename(employmentProjection=employmentProjectionGrowth2023to2035)#for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
 save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 
 ## 4.2 C_time ----
 # This is used in the line charts and KPIs. It contains historic data for each metric and area.
 C_time<-  C_localSkillsDataset%>%
-  filter(breakdown=="Total")%>%
-  select(geogConcat,metric,timePeriod,chartPeriod,latest,value,valueText)
+  filter(breakdown=="Total",
+         !metric %in% c("employmentProjection","employmentProjectionGrowth2023to2035","all","economicallyactive","employees","starts_rate_per_100000_population","starts","active","births","deaths"))%>%#remove metrics not used
+  select(geogConcat,metric,timePeriod,chartPeriod,latest,value,valueText)%>%
+  mutate(metric=case_when(metric=="employmentProjectionAnnualGrowth" ~ "employmentProjection",
+                          TRUE ~ metric)) #for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
 write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
 
 ### 4.2.1 Axis min and max ----
 #Create max and min for each metric used in setting axis on the overview page
 C_axisMinMax<-C_localSkillsDataset%>%
-  filter(breakdown=="Total",subgroup=="Total",str_sub(geogConcat,-4,-1)!="LADU")%>%
+  filter(breakdown=="Total",subgroup=="Total",str_sub(geogConcat,-4,-1)!="LADU",
+         !metric %in% c("employmentProjection","employmentProjectionGrowth2023to2035","all","economicallyactive","employees","starts_rate_per_100000_population","starts","active","births","deaths"))%>%#remove metrics not used
+  mutate(metric=case_when(metric=="employmentProjectionAnnualGrowth" ~ "employmentProjection",
+                          TRUE ~ metric))%>% #for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
   group_by(metric)%>%
   summarise(minAxis=min(value),maxAxis=max(value))#, .groups = "drop"
 write.csv(C_axisMinMax, file = "Data\\AppData\\C_axisMinMax.csv", row.names = FALSE)
@@ -808,8 +843,11 @@ C_breakdown <- bind_rows(
     filter(breakdown!="Total",subgroup!="Total",latest==1
            ,!metric %in% c("inemployment","vacancies","enterpriseCount","achievements","participation","starts","sustainedPositiveDestinationKS4Rate","sustainedPositiveDestinationKS5Rate"))%>%
     select(geogConcat,metric,breakdown,subgroup,value,valueText)
-)
-write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
+)%>%
+  filter(!metric %in% c("employmentProjection","employmentProjectionAnnualGrowth","all","economicallyactive","employees","starts_rate_per_100000_population","starts","active","births","deaths"))%>%#remove metrics not used
+  mutate(metric=case_when(metric=="employmentProjectionGrowth2023to2035" ~ "employmentProjection",
+                          TRUE ~ metric)) #for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
+  write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
 
 ### 4.3.1 Find top ten for each breakdown ----
 # (these are chosen in the filter)

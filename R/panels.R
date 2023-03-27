@@ -122,27 +122,27 @@ panel_overview <- function() {
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_enterprise2", "Find out more about businesses")
         ),
-    # 
-    #     # 7th row - working futures
-    #     h3("Year on year projected employment growth"),
-    #     fluidRow(
-    #       column(
-    #         width = 4,
-    #         div(
-    #           title = "Source: Skills Imperative 2035.",
-    #           uiOutput("wfOverviewKpi"),
-    #         )
-    #       ),
-    #       column(
-    #         width = 8,
-    #         withSpinner(plotlyOutput("wfOverviewChart", height = 81))
-    #       )
-    #     ),
-    #     fluidRow(
-    #       class = "rightAlignLinks",
-    #       actionLink("link_to_tabpanel_wf", "Find out more about employment projections")
-    #     ),
-    #     br()
+
+        # 7th row - working futures
+        h3("Year on year projected employment growth"),
+        fluidRow(
+          column(
+            width = 4,
+            div(
+              title = "Source: Skills Imperative 2035.",
+              uiOutput("wfOverviewKpi"),
+            )
+          ),
+          column(
+            width = 8,
+            withSpinner(plotlyOutput("wfOverviewChart", height = 81))
+          )
+        ),
+        fluidRow(
+          class = "rightAlignLinks",
+          actionLink("link_to_tabpanel_wf", "Find out more about employment projections")
+        ),
+        br()
        ),
       # right column
       column(

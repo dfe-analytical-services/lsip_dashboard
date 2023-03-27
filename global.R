@@ -40,17 +40,17 @@ area_select <- c("Coast to Capital", "Greater Manchester", "England")
 metricChoices <- list(
   "Employment" = list(
     "Employment rate" = "inemploymentRate",
-    "Self-employment rate" = "selfempRate",
-    "Unemployment rate" = "unempRate",
+    "Self-employment rate" = "selfemployedRate",
+    "Unemployment rate" = "unemployedRate",
     "Inactive rate" = "inactiveRate",
     "Employment" = "inemployment",
-    "Self-employment" = "SelfEmployed",
-    "Unemployed" = "Unemployed",
-    "Inactive" = "Inactive"
+    "Self-employment" = "selfemployed",
+    "Unemployed" = "unemployed",
+    "Inactive" = "inactive"
   ),
   "Jobs" = list(
     "Online job adverts" = "vacancies",
-    "Employment projections (Skills imperative 2035)" = "wfEmployment"
+    "Employment projections (Skills imperative 2035)" = "employmentProjection"
   ),
   "Businesses" = list(
     "Business count" = "enterpriseCount",
