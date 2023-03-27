@@ -221,7 +221,7 @@ folder <- "20_LaLookup"
 I_LaLookup <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 # Working futures data
-dir_path <- "//educationgovuk.sharepoint.com/sites/UnitforFutureSkills/Shared Documents/Research Projects/Working Futures extensions/Projections/Skills Imperative 2035 National_Regional_Subregional workbooks/LocalSkillsData/"
+dir_path <- "Data\\LocalSkillsData\\"
 read_dir <- function(dir_path, file_name, sheet_name, row_nos) {
   read.xlsx(paste0(dir_path, file_name), sheet = sheet_name, skipEmptyRows = T, rows = row_nos) %>%
     mutate(file_name = file_name)
@@ -244,3 +244,8 @@ I_wfAreaName <-
   list.files(dir_path) %>%
   map_df(~ read_dir(dir_path, ., "Info", 2:5)) %>%
   filter(grepl("name", Scenario, fixed = TRUE))
+
+# Replacement data 
+T_wfRDF1 <- 
+  list.files(dir_path) %>%
+  map_df(~ read_dir(dir_path,., "RD F1", 5:64))
