@@ -2123,8 +2123,6 @@ server <- function(input, output, session) {
     )
   })
 
-
-
   # 3.Stop app -----
   session$onSessionEnded(function() {
     stopApp()

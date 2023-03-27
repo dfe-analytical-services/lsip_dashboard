@@ -1,9 +1,5 @@
 # load app data
 
-## LEP data ----
-# list of LEPS
-C_LEP2020 <- read.csv(file = "./Data/AppData/C_LEP2020.csv", check.names = FALSE)
-
 ## Employment by occupation ----
 # data for download
 D_EmpOcc_APS1721 <- read.csv(file = "./Data/AppData/D_EmpOcc_APS1721.csv", check.names = FALSE)
@@ -11,16 +7,10 @@ D_EmpOcc_APS1721 <- read.csv(file = "./Data/AppData/D_EmpOcc_APS1721.csv", check
 ## Employment level and rate ----
 # data for download
 D_EmpRate_APS1822 <- read.csv(file = "./Data/AppData/D_EmpRate_APS1822.csv", check.names = FALSE)
-# data for dashboard
-# C_EmpRate_APS1822 <- read.csv(file = "./Data/AppData/C_EmpRate_APS1822.csv", check.names = FALSE)
-# C_EmpRate_APS1822_max_min <- read.csv(file = "./Data/AppData/C_EmpRate_APS1822_max_min.csv", check.names = FALSE)
 
 ## FE achievements ----
 # data for download
 D_Achieve_ILR1621 <- read.csv(file = "./Data/AppData/D_Achieve_ILR1621.csv", check.names = FALSE)
-# data for dashboard
-C_Achieve_ILR1621 <- read.csv(file = "./Data/AppData/C_Achieve_ILR1621.csv", check.names = FALSE)
-C_Achieve_ILR1621_max_min <- read.csv(file = "./Data/AppData/C_Achieve_ILR1621_max_min.csv", check.names = FALSE)
 
 ## FE achievements by SSA----
 # data for download
@@ -53,28 +43,17 @@ D_empentind_UBC1822 <- read.csv(file = "./Data/AppData/D_empentind_UBC1822.csv",
 # data for download
 D_enterprise_demo1621 <- read.csv(file = "./Data/AppData/D_enterprise_demo1621.csv", check.names = FALSE)
 
-## Data table ----
-I_DataTable <- read.csv(file = "./Data/AppData/I_DataTable.csv", check.names = FALSE)
-
-C_qualevel3plus_APS1721 <- read.csv(file = "./Data/AppData/C_qualevel3plus_APS1721.csv", check.names = FALSE)
-C_empentind3_UBC1822 <- read.csv(file = "./Data/AppData/C_empentind3_UBC1822.csv", check.names = FALSE)
-C_KS4_KS5eduempapp <- read.csv(file = "./Data/AppData/C_KS4_KS5eduempapp.csv", check.names = FALSE)
-C_KS5_eduempapp_max_min <- read.csv(file = "./Data/AppData/C_KS5_eduempapp_max_min.csv", check.names = FALSE)
-C_empentind_max_min <- read.csv(file = "./Data/AppData/C_empentind_max_min.csv", check.names = FALSE)
-
-
-# map tables
-load(file = "./Data/AppData/C_Geog.rdata")
+D_OnsProfTime <- read.csv(file = "./Data/AppData/D_OnsProfTime.csv", check.names = FALSE)
+D_OnsProfDetail <- read.csv(file = "./Data/AppData/D_OnsProfDetail.csv", check.names = FALSE)
 
 # v1 files
+load(file = "./Data/AppData/C_Geog.rdata")
 C_time <- read.csv(file = "./Data/AppData/C_time.csv", check.names = FALSE)
 C_breakdown <- read.csv(file = "./Data/AppData/C_breakdown.csv", check.names = FALSE)
 topTenEachBreakdown <- read.csv(file = "./Data/AppData/topTenEachBreakdown.csv", check.names = FALSE)
 C_datahubPt1 <- read.csv(file = "./Data/AppData/C_datahubPt1.csv", check.names = FALSE)
 C_datahubPt2 <- read.csv(file = "./Data/AppData/C_datahubPt2.csv", check.names = FALSE)
-D_OnsProfTime <- read.csv(file = "./Data/AppData/D_OnsProfTime.csv", check.names = FALSE)
-D_OnsProfDetail <- read.csv(file = "./Data/AppData/D_OnsProfDetail.csv", check.names = FALSE)
-# C_OnsProfTime <- read.csv(file = "./Data/AppData/C_OnsProfTime.csv", check.names = FALSE)
+C_axisMinMax <- read.csv(file = "./Data/AppData/C_axisMinMax.csv", check.names = FALSE)
 
 ## Intervention table ----
 # I_InterventionTable <- read.csv(file = "./Data/AppData/I_InterventionTable.csv", check.names = FALSE)
@@ -85,3 +64,6 @@ I_ToolsTable <- read.csv(file = "./Data/AppData/I_ToolsTable.csv", check.names =
 
 ## data text table ----
 I_DataText <- read.csv(file = "./Data/AppData/I_DataText.csv", check.names = FALSE)
+
+## Data table ----
+I_DataTable <- read.csv(file = "./Data/AppData/I_DataTable.csv", check.names = FALSE)
