@@ -820,11 +820,18 @@ save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 # This is used in the line charts and KPIs. It contains historic data for each metric and area.
 C_time<-  C_localSkillsDataset%>%
   filter(breakdown=="Total"|
-           #We also have a few overview charts that are subgroups-E&T acheivements, app achievments, micro businesses
-           (metric=="achievements"&subgroup %in% c("Apprenticeships","Education and training"))#|
-          # (metric=="achievements",subgroup=="")
-           ,
-         !metric %in% c("employmentProjection","employmentProjectionGrowth2023to2035","all","economicallyactive","employees","starts_rate_per_100000_population","starts","active","births","deaths"))%>%#remove metrics not used
+           #We also have a few overview charts that are subgroups-E&T acheivements, app achievments
+           (metric=="achievements"&subgroup %in% c("Apprenticeships","Education and training")))%>%
+#and also micro businesses
+  bind_rows(
+C_localSkillsDataset%>%
+  filter(metric=="enterpriseCount",subgroup %in% c("Total","Micro 0 to 9"))%>%
+  select(-valueText,-breakdown)%>%
+  arrange(geogConcat, chartPeriod,timePeriod,latest,metric,subgroup) %>%
+  mutate(value = lag(value)/ value) %>%#get % micro of total
+  filter(subgroup == "Total")%>%
+  mutate(metric="enterprisePctMicro", breakdown="Total",valueText=as.character(value)))%>%
+         filter(!metric %in% c("employmentProjection","employmentProjectionGrowth2023to2035","all","economicallyactive","employees","starts_rate_per_100000_population","starts","active","births","deaths"))%>%#remove metrics not used
   mutate(metric=case_when(breakdown!="Total" ~ paste(metric,subgroup),
                           TRUE ~ metric))%>%#set metric name to subgroup when we want subgroup data
   select(geogConcat,metric,timePeriod,chartPeriod,latest,value,valueText)%>%
@@ -834,12 +841,9 @@ write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
 
 ### 4.2.1 Axis min and max ----
 #Create max and min for each metric used in setting axis on the overview page
-C_axisMinMax<-C_localSkillsDataset%>%
-  filter(breakdown=="Total",subgroup=="Total",str_sub(geogConcat,-4,-1)!="LADU",
-         !metric %in% c("employmentProjection","employmentProjectionGrowth2023to2035","all","economicallyactive","employees","starts_rate_per_100000_population","starts","active","births","deaths"))%>%#remove metrics not used
-  mutate(metric=case_when(metric=="employmentProjectionAnnualGrowth" ~ "employmentProjection",
-                          TRUE ~ metric))%>% #for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
-  group_by(metric)%>%
+C_axisMinMax<-C_time%>%
+  filter(str_sub(geogConcat,-4,-1)!="LADU")%>%
+        group_by(metric)%>%
   summarise(minAxis=min(value),maxAxis=max(value))#, .groups = "drop"
 write.csv(C_axisMinMax, file = "Data\\AppData\\C_axisMinMax.csv", row.names = FALSE)
 

@@ -551,7 +551,7 @@ server <- function(input, output, session) {
   }
 
   #create a function to build the overview charts
-  createOverviewChart <- function(metricName,format) { 
+  createOverviewChart <- function(metricName,format,chartLabel) { 
     #set metric
     currentGeogTimeMetric<-currentGeogTime()%>% filter(metric == metricName)
     change <- (currentGeogTimeMetric %>% filter(latest==1))$value - 
@@ -570,7 +570,7 @@ server <- function(input, output, session) {
       text = paste0(
         geogConcat,"<br>",
         chartPeriod,"<br>",
-        metricName,": ",
+        chartLabel,": ",
         if(format=="percent"){ 
           paste0(format(100 * value, digit = 2), "%")}
         else{format(value, big.mark = ",")},
@@ -656,7 +656,7 @@ server <- function(input, output, session) {
 
   # create Emp chart
   empLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("inemployment","number")
+    createOverviewChart("inemployment","number","In employment")
   })
   
 #render empchart
@@ -672,7 +672,7 @@ server <- function(input, output, session) {
   })
 
   empRateLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("inemploymentRate","percent")
+    createOverviewChart("inemploymentRate","percent","Employment rate")
   })
 
   output$empRateLineChart <- renderPlotly({
@@ -696,7 +696,7 @@ server <- function(input, output, session) {
 
   # Vacancy chart
   jobLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("vacancies","number")
+    createOverviewChart("vacancies","number","Online job adverts")
   })
 
   output$jobLineChart <- renderPlotly({
@@ -722,7 +722,7 @@ server <- function(input, output, session) {
 
   # e and t chart
   etLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("achievements Education and training","number")
+    createOverviewChart("achievements Education and training","number","Education and training achievements")
   })
 
   output$etLineChart <- renderPlotly({
@@ -739,7 +739,7 @@ server <- function(input, output, session) {
 
   # app chart
   AppLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("achievements Apprenticeships","number")
+    createOverviewChart("achievements Apprenticeships","number","Apprenticeship achievements")
   })
 
   output$AppLineChart <- renderPlotly({
@@ -764,7 +764,7 @@ server <- function(input, output, session) {
 
   # KS5 destinations chart
   KS5LineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("sustainedPositiveDestinationKS5Rate","percent")
+    createOverviewChart("sustainedPositiveDestinationKS5Rate","percent","KS5 sustained positive destination rate")
   })
 
   output$KS5LineChart <- renderPlotly({
@@ -784,17 +784,12 @@ server <- function(input, output, session) {
   # enterprise overview KPI
   output$UBC.micro <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("enterpriseCount","number")
-    
-    #       geogConcat == input$geoChoiceOver,
-    #       variable == "Micro 0 to 9",
-    #       industry == "Total"
-    
+    createOverviewKPI("enterprisePctMicro","percent")
   })
 
   # micro enterprise chart
   UBCLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("enterpriseCount","number")
+    createOverviewChart("enterprisePctMicro","percent","Share of businesses with 0-9 employees (micro)")
   })
 
   output$UBCLineChart <- renderPlotly({
@@ -819,7 +814,7 @@ server <- function(input, output, session) {
 
   # qualification chart
   Nvq3plusLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("L3PlusRate","percent")
+    createOverviewChart("L3PlusRate","percent","People with a qualification at level 3 or above" )
   })
 
   output$Nvq3plusLineChart <- renderPlotly({
