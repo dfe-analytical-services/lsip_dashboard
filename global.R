@@ -64,7 +64,7 @@ metricChoices <- list(
     "FE achievement rate per 100,000" = "achievements_rate_per_100000_population",
     "FE participation rate per 100,000" = "participation_rate_per_100000_population",
     # "FE start rate" = "starts_rate_per_100000_population",
-    "Qualified at Level 3 or above" = "L3PlusPerc"
+    "Qualified at Level 3 or above" = "L3PlusRate"
   ),
   "Destinations" = list(
     "KS4 sustained positive destination rate" = "sustainedPositiveDestinationKS4Rate",

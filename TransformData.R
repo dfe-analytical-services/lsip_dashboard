@@ -2,29 +2,19 @@
 # Title: LSIP dashboard data transform
 # Author: Hannah Cox/Paul James
 # Date: 18th May 2022
-# Last updated: 30th Aug 2022
-# Transforms the raw data into the dataframes used in the dashboard.
-# The dataframes are then saved as .csv in ./Data/AppData to be read by the dashboard app
+# Last updated: 28th March 2023
+# Use: Transforms/format the raw data into the dataframes used in the dashboard.
+# The dataframes are then saved as .csv in ./Data/AppData to be read by the dashboard app.
+# Sources: The files created by running ExtractLoadData.R
+# Running time: ~20mins
 ###
 
 # Load libraries ----
-library(dplyr)
-library(data.table)
-library(tidyverse)
-library(stringr)
-library(eeptools)
-library(odbc)
-library(janitor)
-library(openxlsx)
-library(reshape2)
-library(broom)
-library(mapproj)
-library(leaflet)
-library(rgdal)
-library(rgeos)
-library(sf)
-library(lubridate)
-
+library(tidyverse)  #mostly dplyr
+library(janitor)    #use clean_names()
+library(rgeos)      #use gUnaryUnion
+library(sf)         #use st_as_sf
+library(lubridate)  #use years
 
 # 1 Geographical data ----
 # Create LAD-LEP lookup table
@@ -63,7 +53,7 @@ addEngland <- data.frame(
 )
 
 # add on LSIPs to LA file
-LasLsip <- merge(LAs, I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by.x = "LAD22CD", by.y = "LAD21CD")
+LasLsip <- merge(I_mapLAspatial, I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by.x = "LAD22CD", by.y = "LAD21CD")
 # dissolve the LSIP LAs
 LSIPsh <- gUnaryUnion(LasLsip, id = LasLsip@data$LSIP)
 # turn into GoeJson
@@ -91,13 +81,15 @@ neatGeog <- bind_rows(neatMCA, neatLEP, addEngland, neatLA, neatLSIP)%>%
 ## 2.0 cleaning functions ----
 # Cleaning function for nomis data 
 formatNomis <- function(x) {
- x%>%
+  x%>%
     #get years
     mutate(chartPeriod = ifelse(str_like(.[[1]], "%date%"), X2, NA)) %>% # tag time periods
-    fill(chartPeriod) %>% # fill time periods for all rows
+    mutate(Industry = ifelse(str_like(.[[1]], "%industry%"), X2, NA)) %>% # tag time periods
+    fill(chartPeriod,Industry) %>% # fill time periods for all rows
     
     #sort out column names
-    mutate(chartPeriod = ifelse(row_number() == which(grepl("Area", x[[1]]))[1], "chartPeriod",chartPeriod)) %>%#set to year so becomes column name
+    mutate(chartPeriod = ifelse(row_number() == which(grepl("Area", x[[1]]))[1], "chartPeriod",chartPeriod)) %>%#set to chartPeriod so becomes column name
+    mutate(Industry = ifelse(row_number() == which(grepl("Area", x[[1]]))[1], "Industry",Industry)) %>%#set to Industry so becomes column name
     row_to_names(row_number = which(grepl("Area", x[[1]]))[1]) %>% # set col names
     clean_names() %>%
     rename(chartPeriod=chart_period)%>%
@@ -181,6 +173,7 @@ formatLong <- function(x) {
 ## 2.1 Employment volumes ----
 #convert into format used in dashboard
 C_emp<-formatNomis(I_emp)%>%
+  select(-industry)%>%#remove NA industry column
   rename_with(~ gsub("[[:digit:]]+", "", .)) %>%#take out codes
   #get time period
   mutate(timePeriod=as.Date(paste("01", substr(chartPeriod,1,8), sep = ""), format = "%d %b %Y"))%>%
@@ -201,6 +194,7 @@ C_emp<-formatNomis(I_emp)%>%
 ## 2.2 Employment by occupation ----
 #convert into format used in dashboard   
 C_empOcc<-formatNomis(I_empOcc)%>%
+  select(-industry)%>%#remove NA industry column
   rename_with(~ gsub("[[:digit:]]+", "", .)) %>%#take out codes
   #get time period
   mutate(timePeriod=as.Date(paste("01", substr(chartPeriod,1,8), sep = ""), format = "%d %b %Y"))%>%
@@ -213,6 +207,7 @@ C_empOcc<-formatNomis(I_empOcc)%>%
 
 ## 2.3 Employment by industry ----
 C_empInd <- formatNomis(I_empInd)%>%
+  select(-industry)%>%#remove NA industry column
   rename(
     "Agriculture and Fishing" = "1 a agricuture fishing sic 2007",
     "Energy and Water" = "4 b d e energy water sic 2007",
@@ -232,8 +227,9 @@ C_empInd <- formatNomis(I_empInd)%>%
   formatLong()%>%
   mutate(metric="inemployment",breakdown="Industry")
 
-## 2.4 Enterprise by employment size ----
+## 2.4.1 Enterprise by employment size ----
 C_entSize <- formatNomis(I_entSize)%>%
+  select(-industry)%>%#remove NA industry column
   #get time period
   mutate(timePeriod=as.Date(paste("01", "Jan",chartPeriod, sep = " "), format = "%d %b %Y"))%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1, 
@@ -243,6 +239,19 @@ C_entSize <- formatNomis(I_entSize)%>%
   mutate(metric="enterpriseCount"
          ,subgroup=str_to_sentence(gsub("_"," ",subgroup))
          ,breakdown=case_when(subgroup=="Total" ~ "Total", TRUE ~ "Size"))
+
+## 2.4.2 Enterprise by industry ----
+C_entInd<- formatNomis(I_entInd)%>%
+  select(geogConcat,chartPeriod,subgroup=industry,valueText=total)%>%
+#get time period
+mutate(timePeriod=as.Date(paste("01", "Jan",chartPeriod, sep = " "), format = "%d %b %Y"))%>%
+  mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1, 
+                          timePeriod==(max(timePeriod)-years(1)) ~ -1, 
+                          TRUE ~ 0))%>%
+  mutate(subgroup=gsub('[[:digit:]]+', '', subgroup))%>%#remove numbers
+  mutate(subgroup=gsub(' : ', '', subgroup))%>%#remove colons
+  mutate(subgroup=gsub("\\s*\\([^\\)]+\\)","",subgroup))%>%#remove code and brackets
+  mutate(breakdown="Industry",value=as.numeric(valueText),metric="enterpriseCount")
 
 ## 2.5 Qualification level by age and gender ----
 qualAgeGender <- formatNomis(I_qualAgeGender)%>%
@@ -278,7 +287,7 @@ C_qualL3PlusAgeGender<-qualAgeGender%>%
   group_by(chartPeriod,timePeriod,geogConcat,breakdown,subgroup,latest)%>%
   summarise(qualL3Plus=sum(value,na.rm = T))%>%
   left_join(qualSum)%>%
-  mutate(metric="L3PlusPerc",value=qualL3Plus/allQuals)%>%
+  mutate(metric="L3PlusRate",value=qualL3Plus/allQuals)%>%
   select(-qualL3Plus,-allQuals)%>%
   mutate(valueText=case_when(value==0 ~ "c", TRUE ~ as.character(value)))
 
@@ -287,7 +296,7 @@ C_qualL3PlusAgeGender<-qualAgeGender%>%
 F_FeProvLevelAge<-I_FeProvLevelAge%>%
   #filter uneeded columns and rows
   filter(geographic_level %in% c("Local authority district","National"),#just keep area used
-         (level_or_type=="Further education and skills: Total" | age_group=="Total"))%>% #keep only the combinations shown in dashboard
+         (((apprenticeships_or_further_education=="Further education and skills" |str_sub(level_or_type,-5,-1)=="Total")&age_group=="Total")|level_or_type=="Further education and skills: Total"))%>% #keep only the combinations shown in dashboard
   mutate(area=case_when(geographic_level=="National" ~ country_name,
                         geographic_level=="Local authority district" ~ lad_name))%>%
   mutate(areaCode=case_when(geographic_level=="Local authority district" ~ lad_code,TRUE ~ ""))%>%
@@ -396,7 +405,6 @@ C_FeProvLevelAge<-bind_rows(groupedStats,
   mutate(value=as.numeric(valueText))
 
 ## 2.7 FE enrolments/achievements by ssa  ----
-
 feSsaWithAreas<-I_FeSsa%>%
   filter(notional_nvq_level=="Total",sex=="Total",ethnicity_group=="Total",ssa_t1_desc!="Total")%>%
   select(-notional_nvq_level,-sex,-ethnicity_group)%>%
@@ -719,10 +727,10 @@ formatBusiness <- function(x,y) {
   colnames(x)[1] <- "areaCode" 
   colnames(x)[2] <- "area" 
   x%>%pivot_longer(!c("areaCode","area"),names_to = "chartPeriod", values_to = "value")%>%
+    mutate(areaCode=trimws(areaCode))%>%#2021 file has spaces in the code
     filter(substr(areaCode,1,2)=="E0"|areaCode=="E92000001")%>%
     mutate(metric=y,geographic_level=case_when(areaCode=="E92000001"~"National",TRUE ~ "LADU")
-           ,area=case_when(areaCode=="E92000001"~"England",TRUE ~ trimws(area)),
-           areaCode=trimws(areaCode))
+           ,area=case_when(areaCode=="E92000001"~"England",TRUE ~ trimws(area)))
   }
 
 ##Business rate fomrat
@@ -744,6 +752,7 @@ businessesWithAreas<-
   )%>%
   #add dates
   mutate(timePeriod=as.Date(paste("01", "Jan",chartPeriod, sep = " "), format = "%d %b %Y"))%>%
+  mutate(chartPeriod = paste0("Dec ", as.numeric(chartPeriod) - 1, " - Dec ", chartPeriod))%>%
   mutate(latest=case_when(timePeriod==max(timePeriod) ~ 1, 
                           timePeriod==(max(timePeriod)-years(1)) ~ -1,  
                           TRUE ~ 0))%>% 
@@ -776,6 +785,7 @@ C_localSkillsDataset<-bind_rows(
   C_empOcc,
   C_empInd,
   C_entSize,
+  C_entInd,
   C_qualL3PlusAgeGender,
   C_FeProvLevelAge,
   C_FeSsa,
@@ -809,8 +819,14 @@ save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 ## 4.2 C_time ----
 # This is used in the line charts and KPIs. It contains historic data for each metric and area.
 C_time<-  C_localSkillsDataset%>%
-  filter(breakdown=="Total",
+  filter(breakdown=="Total"|
+           #We also have a few overview charts that are subgroups-E&T acheivements, app achievments, micro businesses
+           (metric=="achievements"&subgroup %in% c("Apprenticeships","Education and training"))#|
+          # (metric=="achievements",subgroup=="")
+           ,
          !metric %in% c("employmentProjection","employmentProjectionGrowth2023to2035","all","economicallyactive","employees","starts_rate_per_100000_population","starts","active","births","deaths"))%>%#remove metrics not used
+  mutate(metric=case_when(breakdown!="Total" ~ paste(metric,subgroup),
+                          TRUE ~ metric))%>%#set metric name to subgroup when we want subgroup data
   select(geogConcat,metric,timePeriod,chartPeriod,latest,value,valueText)%>%
   mutate(metric=case_when(metric=="employmentProjectionAnnualGrowth" ~ "employmentProjection",
                           TRUE ~ metric)) #for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
@@ -833,15 +849,16 @@ C_breakdown <- bind_rows(
   #Metric where the proportion needs to be calculated
   C_localSkillsDataset%>%
   filter(breakdown!="Total",subgroup!="Total",latest==1
-         ,metric %in% c("inemployment","vacancies","enterpriseCount","achievements","participation","starts","sustainedPositiveDestinationKS4Rate","sustainedPositiveDestinationKS5Rate"))%>%
-    select(geogConcat,metric,breakdown,subgroup,value,valueText)       %>% 
+         ,metric %in% c("inemployment","vacancies","enterpriseCount","achievements","participation","starts"))%>%
+    select(geogConcat,metric,breakdown,subgroup,value)       %>% 
     mutate_all(~ replace(., is.na(.), 0)) %>%
         group_by(across(c(-value, -subgroup))) %>%
-        mutate(across(value, ~ round(prop.table(.), 3))),
+        mutate(across(value, ~ round(prop.table(.), 3)))%>%
+    mutate(valueText=as.character(value)),
   #Metric where value is used as it is
   C_localSkillsDataset%>%
     filter(breakdown!="Total",subgroup!="Total",latest==1
-           ,!metric %in% c("inemployment","vacancies","enterpriseCount","achievements","participation","starts","sustainedPositiveDestinationKS4Rate","sustainedPositiveDestinationKS5Rate"))%>%
+           ,!metric %in% c("inemployment","vacancies","enterpriseCount","achievements","participation","starts"))%>%
     select(geogConcat,metric,breakdown,subgroup,value,valueText)
 )%>%
   filter(!metric %in% c("employmentProjection","employmentProjectionAnnualGrowth","all","economicallyactive","employees","starts_rate_per_100000_population","starts","active","births","deaths"))%>%#remove metrics not used
@@ -851,61 +868,64 @@ C_breakdown <- bind_rows(
 
 ### 4.3.1 Find top ten for each breakdown ----
 # (these are chosen in the filter)
-#detailLookup <- D_OnsProfDetail %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)
-topTenEachBreakdown <- 
-  #bind_rows(
+  #get a list of summary and detailed professions
+C_detailLookup <- advertsWithAreas %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)
+  write.csv(C_detailLookup, file = "Data\\AppData\\C_detailLookup.csv", row.names = FALSE)
+  
+  C_topTenEachBreakdown <- 
+  bind_rows(
   C_breakdown %>%
     filter(str_sub(geogConcat,-4,-1)!="LADU") %>%
     group_by(metric, breakdown, geogConcat) %>%
     arrange(desc(value)) %>%
     slice(1:10) 
-  #%>%
-   # mutate(`Summary Profession Category` = "All")
-#   ,
-#   C_breakdown %>%
-#     filter(breakdown == "Detailed Profession Category", geographic_level != "LADU") %>%
-#     left_join(detailLookup, by = c("subgroups" = "Detailed Profession Category")) %>%
-#     group_by(metric, breakdown, area, geographic_level, `Summary Profession Category`) %>%
-#     arrange(desc(value)) %>%
-#     slice(1:10)
-# ) %>%
-#   select(metric, breakdown, geogConcat, subgroups, `Summary Profession Category`)
-write.csv(topTenEachBreakdown, file = "Data\\AppData\\topTenEachBreakdown.csv", row.names = FALSE)
+  %>%
+    mutate(`Summary Profession Category` = "All")
+  ,
+  C_breakdown %>%
+    filter(breakdown == "Detailed Profession Category", str_sub(geogConcat,-4,-1)!="LADU") %>%
+    left_join(C_detailLookup, by = c("subgroup" = "Detailed Profession Category")) %>%
+    group_by(geogConcat,metric, breakdown, `Summary Profession Category`) %>%
+    arrange(desc(value)) %>%
+    slice(1:10)
+) %>%
+  select(metric, breakdown, geogConcat, subgroup, `Summary Profession Category`)
+write.csv(C_topTenEachBreakdown, file = "Data\\AppData\\C_topTenEachBreakdown.csv", row.names = FALSE)
 
 ## 4.4 C_dataHub ----
 #This is used in the data explorer page
 C_datahub <- C_localSkillsDataset%>%
   select(geogConcat,metric,breakdown,subgroup,chartPeriod,valueText)%>%
-  filter(metric != "starts_rate_per_100000_population") %>% # very bad data coverage
+  filter(!metric %in% c("all","starts_rate_per_100000_population")) %>% # very bad data coverage
   # rename some of the elements so they make sense here
   mutate(metricNeat = case_when(
-    metric == "All" ~ "Population volume",
-    metric == "empRate" ~ "Employment rate",
-    metric == "selfempRate" ~ "Self-employment rate",
-    metric == "unempRate" ~ "Unemployment rate",
+   # metric == "All" ~ "Population volume",
+    metric == "inemploymentRate" ~ "Employment rate",
+    metric == "selfemployedRate" ~ "Self-employment rate",
+    metric == "unemployedRate" ~ "Unemployment rate",
     metric == "inactiveRate" ~ "Inactive rate",
-    metric == "Employment" ~ "Employment volume",
-    metric == "InEmployment" ~ "Employment volume",
-    metric == "SelfEmployed" ~ "Self-employment volume",
-    metric == "Unemployed" ~ "Unemployed volume",
-    metric == "Inactive" ~ "Inactive volume",
-    metric == "EconomicallyActive" ~ "Economically active volume",
-    metric == "Employees" ~ "Employees volume",
+    metric == "inemployment" ~ "Employment volume",
+    metric == "selfemployed" ~ "Self-employment volume",
+    metric == "unemployed" ~ "Unemployed volume",
+    metric == "inactive" ~ "Inactive volume",
+    #metric == "economicallyactive" ~ "Economically active volume",
+    #metric == "employees" ~ "Employees volume",
     metric == "achievements_rate_per_100000_population" ~ "FE achievement rate per 100,000 population",
     metric == "participation_rate_per_100000_population" ~ "FE participation rate per 100,000 population",
     # metric == "starts_rate_per_100000_population" ~ "FE start rate per 100k",
     metric == "achievements" ~ "FE achievements volume",
     metric == "participation" ~ "FE participation volume",
     metric == "enrolments" ~ "FE enrolled volume",
-    metric == "starts" ~ "FE starts volume",
+   # metric == "starts" ~ "FE starts volume",
     metric == "births" ~ "Enterprise births",
     metric == "deaths" ~ "Enterprise deaths",
     metric == "active" ~ "Enterprises active",
     metric == "enterpriseCount" ~ "Enterprise count",
-    metric == "level3AndAboveRate" ~ "Qualified at Level 3 or above",
+    metric == "L3PlusRate" ~ "Qualified at Level 3 or above",
     metric == "sustainedPositiveDestinationKS4Rate" ~ "KS4 sustained positive detination rate",
     metric == "sustainedPositiveDestinationKS5Rate" ~ "KS5 sustained positive detination rate",
     metric == "vacancies" ~ "Online job adverts",
+   metric == "employmentProjection" ~ "Employment projections (Skills imperative 2035)",
     TRUE ~ metric
   )) %>%
   mutate(breakdown = case_when(

@@ -713,20 +713,16 @@ server <- function(input, output, session) {
   })
 
   #### 2.2.3.4 FE achieve ----
-
   # get EandT data for current area
   output$skisup.ETach <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("achievements","number")
-
-  #       level_or_type == "Education and training: Total",
-  #       age_group == "Total"
+    createOverviewKPI("achievements Education and training","number")
 
   })
 
   # e and t chart
   etLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("achievements","number")
+    createOverviewChart("achievements Education and training","number")
   })
 
   output$etLineChart <- renderPlotly({
@@ -738,16 +734,12 @@ server <- function(input, output, session) {
   # get App data for current area
   output$skisup.APPach <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("achievements","number")
-
-  #       level_or_type == "Apprenticeships: Total",
-  #       age_group == "Total"
-
+    createOverviewKPI("achievements Apprenticeships","number")
   })
 
   # app chart
   AppLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("achievements","number")
+    createOverviewChart("achievements Apprenticeships","number")
   })
 
   output$AppLineChart <- renderPlotly({
@@ -822,12 +814,12 @@ server <- function(input, output, session) {
  # NVQ3 or above overview KPI
   output$APS.nvq3plus <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("L3PlusPerc","percent")
+    createOverviewKPI("L3PlusRate","percent")
   })
 
   # qualification chart
   Nvq3plusLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("L3PlusPerc","percent")
+    createOverviewChart("L3PlusRate","percent")
   })
 
   output$Nvq3plusLineChart <- renderPlotly({
@@ -1365,13 +1357,13 @@ server <- function(input, output, session) {
         metric == input$splashMetric
       )
     currentChange <- (currentArea %>%
-      filter(latest==1)$value -
+      filter(latest==1))$value -
       (currentArea %>%
-        filter(chart_year == min(timePeriod))))$value
+        filter(timePeriod == min(timePeriod)))$value
     englandChange <- (englandArea %>%
       filter(latest==1))$value -
       (englandArea %>%
-        filter(chart_year == min(timePeriod)))$value
+        filter(timePeriod == min(timePeriod)))$value
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$timeComment, " ",
       input$geoChoice, if (input$splashMetric == "employmentProjection") {
@@ -1520,6 +1512,8 @@ server <- function(input, output, session) {
   distinctBreakdowns <- C_breakdown %>%
     distinct(metric, breakdown)
   output$breakdownFilter <- renderUI({
+    validate(
+      need(input$splashMetric %in% distinctBreakdowns$metric, ""))
     selectizeInput(
       inputId = "barBreakdown",
       label = NULL,
@@ -1538,7 +1532,8 @@ server <- function(input, output, session) {
   output$professionFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
-      need(input$barBreakdown == "Detailed Profession Category", "")
+      need(input$barBreakdown == "Detailed Profession Category", ""),
+        need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     selectizeInput(
       inputId = "summaryProfession",
@@ -1548,12 +1543,10 @@ server <- function(input, output, session) {
   })
 
   #### 2.3.8.2 Subgroup filter ----
-  detailLookup <- D_OnsProfDetail %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)
-
   output$subgroupFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
-      need(input$barBreakdown != "No breakdowns available", "")
+        need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     pickerInput(
       inputId = "barSubgroup",
@@ -1566,7 +1559,7 @@ server <- function(input, output, session) {
               breakdown == input$barBreakdown,
               if (input$barBreakdown == "Detailed Profession Category" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
                 subgroup %in%
-                  (detailLookup %>% filter(`Summary Profession Category` == input$summaryProfession))$`Detailed Profession Category`
+                  (C_detailLookup %>% filter(`Summary Profession Category` == input$summaryProfession))$`Detailed Profession Category`
               } else {
                 TRUE
               }
@@ -1574,7 +1567,7 @@ server <- function(input, output, session) {
         ))$subgroup,
       multiple = TRUE,
       selected = (as.vector(
-        topTenEachBreakdown %>%
+        C_topTenEachBreakdown %>%
           filter(
             metric == input$splashMetric,
             breakdown == input$barBreakdown,
@@ -1594,7 +1587,7 @@ server <- function(input, output, session) {
   output$titleBreakdown <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
-      need(input$barBreakdown != "No breakdowns available", "")
+        need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     paste0(
       "How do ",
@@ -1608,21 +1601,21 @@ server <- function(input, output, session) {
   #### 2.3.8.4 Comment ----
   output$commentBreakdown <- renderUI({
     validate(
-      need(input$barBreakdown != "", ""),
+      need("barBreakdown" %in% names(input)|!input$splashMetric %in% distinctBreakdowns$metric, ""),
       need(input$geoChoice != "", "")
     )
 
-    if (input$barBreakdown == "No breakdowns available") {
+    if (!input$splashMetric %in% distinctBreakdowns$metric) {
       paste0(
         str_to_sentence(currentMetric()),
         " currently has no breakdowns.",
         if (input$splashMetric %in% c(
           "inemploymentRate",
-          "selfempRate",
-          "unempRate",
+          "selfemployedRate",
+          "unemployedRate",
           "inactiveRate",
-          "SelfEmployed",
-          "Unemployed",
+          "selfemployed",
+          "unemployed",
           "Inactive"
         )) {
           " Switch to Employment metric for occupation and industry breakdowns."
@@ -1669,7 +1662,7 @@ server <- function(input, output, session) {
           ""
         }
       )
-    }
+      }
   })
 
   #### 2.3.8.3 Bar chart ----
