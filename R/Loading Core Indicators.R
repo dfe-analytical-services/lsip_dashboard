@@ -1,59 +1,11 @@
 # load app data
 
-## Employment by occupation ----
-# data for download
-D_EmpOcc_APS1721 <- read.csv(file = "./Data/AppData/D_EmpOcc_APS1721.csv", check.names = FALSE)
-
-## Employment level and rate ----
-# data for download
-D_EmpRate_APS1822 <- read.csv(file = "./Data/AppData/D_EmpRate_APS1822.csv", check.names = FALSE)
-
-## FE achievements ----
-# data for download
-D_Achieve_ILR1621 <- read.csv(file = "./Data/AppData/D_Achieve_ILR1621.csv", check.names = FALSE)
-
-## FE achievements by SSA----
-# data for download
-D_Achieve_ILR21 <- read.csv(file = "./Data/AppData/D_Achieve_ILR21.csv", check.names = FALSE)
-
-## Enterprise by employment size ----
-# data for download
-D_empent_UBC1822 <- read.csv(file = "./Data/AppData/D_empent_UBC1822.csv", check.names = FALSE)
-
-## KS4 destinations ----
-# data for download
-D_KS4destin_1521 <- read.csv(file = "./Data/AppData/D_KS4destin_1521.csv", check.names = FALSE)
-
-## KS5 destinations ----
-# data for download
-D_KS5destin_1721 <- read.csv(file = "./Data/AppData/D_KS5destin_1721.csv", check.names = FALSE)
-
-## 2.3 employment by industry ----
-D_EmpInd_APS1822 <- read.csv(file = "./Data/AppData/D_EmpInd_APS1822.csv", check.names = FALSE)
-
-## 2.4 qualification level by age and gender ----
-# data for download
-D_qual_APS1721 <- read.csv(file = "./Data/AppData/D_qual_APS1721.csv", check.names = FALSE)
-
-## 4.2 Enterprise by employment size and industry----
-# data for download
-D_empentind_UBC1822 <- read.csv(file = "./Data/AppData/D_empentind_UBC1822.csv", check.names = FALSE)
-
-# 5. Enterprise births, deaths and active ----
-# data for download
-D_enterprise_demo1621 <- read.csv(file = "./Data/AppData/D_enterprise_demo1621.csv", check.names = FALSE)
-
-D_OnsProfTime <- read.csv(file = "./Data/AppData/D_OnsProfTime.csv", check.names = FALSE)
-D_OnsProfDetail <- read.csv(file = "./Data/AppData/D_OnsProfDetail.csv", check.names = FALSE)
-
-# v1 files
 load(file = "./Data/AppData/C_Geog.rdata")
 C_time <- read.csv(file = "./Data/AppData/C_time.csv", check.names = FALSE)
 C_breakdown <- read.csv(file = "./Data/AppData/C_breakdown.csv", check.names = FALSE)
 C_detailLookup <- read.csv(file = "./Data/AppData/C_detailLookup.csv", check.names = FALSE)
 C_topTenEachBreakdown <- read.csv(file = "./Data/AppData/C_topTenEachBreakdown.csv", check.names = FALSE)
-C_datahubPt1 <- read.csv(file = "./Data/AppData/C_datahubPt1.csv", check.names = FALSE)
-C_datahubPt2 <- read.csv(file = "./Data/AppData/C_datahubPt2.csv", check.names = FALSE)
+C_datahub <- read.csv(file = "./Data/AppData/C_datahub.csv", check.names = FALSE)
 C_axisMinMax <- read.csv(file = "./Data/AppData/C_axisMinMax.csv", check.names = FALSE)
 
 ## Intervention table ----

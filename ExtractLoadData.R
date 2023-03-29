@@ -64,14 +64,14 @@ I_mapMCA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0(
 # Geography: England, LEPs, regions, LADs (as of April 2021)
 # Date: 12 months to Dec 2017-2021
 # Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people
-folder <- "3_APSempOcc"
+folder <- "2-1_APSempOcc"
 sheetNum <- 1
 I_empOcc <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 ### 2.1.2 Employment level and rate ------------
 # Geog and date as above
 # Cell: T01 Economic activity by age Aged 16-64/ All people
-folder <- "4_APSempRate"
+folder <- "2-2_APSempRate"
 sheetNum <- 1
 I_emp<- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
@@ -81,53 +81,53 @@ I_emp<- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = pa
 # Geography: England, LEPs, regions, LADs (as of April 2022)
 # Date: 12 months to Dec 2018-2022
 # Cell: UK Business Counts - enterprises by industry and employment size band
-folder <- "9_UBCempent"
+folder <- "2-3_UBCempent"
 sheetNum <- 1
 I_entSize <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 # Enterprise by employment size and industry
-folder <- "15_UBCempentind"
+folder <- "2-4_UBCempentind"
 sheetNum <- 1
 I_entInd <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 ### 2.1.4 Skill by age gender ------------
 # Geog and date as above
 # Cell: T19	Qualification by age and gender - NVQ. All people aged 16-64. Only data up to Dec 21 available
-folder <- "14_APSqualagegen"
+folder <- "2-5_APSqualagegen"
 sheetNum <- 1
 I_qualAgeGender <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 ### 2.1.5 Employment by industry------------
 # Geog and date as above
 # Cell: T13a	Employment by industry (SIC 2007) and flexibility
-folder <- "13_APSempind"
+folder <- "2-6_APSempind"
 sheetNum <- 1
 I_empInd <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 ## 2.2 EES datasets----
 ### 2.2.1 Achievements by SSAt1, LAD, gender, level------------
-folder <- "5_ILRachSSA"
+folder <- "2-7_ILRachSSA"
 I_FeSsa <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 ### 2.2.2 Achievements/starts/part by LAD and provision, level and age------------
 ## Download "Further education and skills geography - detailed summary " from https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22
-folder <- "6_ILRach"
+folder <- "2-8_ILRach"
 I_FeProvLevelAge <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 ### 2.2.3 KS4 destinations----
 # National pupil database
-folder <- "10_KS4destin"
+folder <- "2-9_KS4destin"
 I_KS4 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 ### 2.2.4 KS5 destinations----
-folder <- "11_KS5destin"
+folder <- "2-10_KS5destin"
 I_KS5 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 ## 2.3 ONS datasets ----
 ### 2.3.1 Business demography, UK ----
 # Number of enterprise births, deaths and active
 # Geography: England and LADS (as of April 2021)
-folder <- "16_bussdemo"
+folder <- "2-11_bussdemo"
 firstRow <- 4
 
 # births
@@ -161,7 +161,7 @@ sheet <- "Table 3.1d"
 I_active_ONS21 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 
 ### 2.3.2 ONS job adverts by profession ----
-folder <- "17_OnsProf"
+folder <- "2-12_OnsProf"
 sheet <- "Table 10"
 I_OnsProfDetailEng <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 sheet <- "Table 11"
@@ -190,7 +190,7 @@ I_OnsProfMca <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(p
 
 ## 2.4 Skills imperative----
 # These take a long time to run ~20mins
-folder <- "21_skillsImperative2035"
+folder <- "2-13_skillsImperative2035"
 dir_path <- paste0("./Data/", folder, "/")
 skillsImpFileList<-list.files(dir_path)
 
@@ -219,22 +219,22 @@ I_wfAreaName <-
 
 # 3 Dashboard text----
 ## 3.1 Data sources ----
-folder <- "8_DataTable"
+folder <- "3-1_DataTable"
 sheetNum <- 1
 I_DataTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 ## 3.2 Data notes and caveats ----
-folder <- "19_dataText"
+folder <- "3-2_dataText"
 sheetNum <- 1
 I_DataText <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 # ## 3.3 FE Interventions table (not currently used)----
-# folder <- "17_FeInterventions"
+# folder <- "3-3_FeInterventions"
 # sheetNum <- 1
 # I_InterventionTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 ## 3.4 Load FE sources and tools tables ----
-folder <- "18_FeSources"
+folder <- "3-4_FeSources"
 sheetNum <- "Tools"
 I_ToolsTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 sheetNum <- "Sources"

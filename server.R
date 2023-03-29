@@ -40,10 +40,6 @@ server <- function(input, output, session) {
       "#6BACE6"
     )
 
-
-  ## 1.3 Combine datahub files ----
-  C_datahub <- bind_rows(C_datahubPt1, C_datahubPt2 %>% mutate(value = as.character(value))) # bind files because they are too big to go on github
-
   ## 1.3 Set up cookies
   # output if cookie is unspecified
   observeEvent(input$cookies, {
@@ -218,7 +214,10 @@ server <- function(input, output, session) {
       "EmploymentRateIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("1b.Emp rate" = D_EmpRate_APS1822), path = file)
+      write_xlsx(list("1b.Emp rate" = C_datahub %>%
+                        filter(metric %in% c("all","inemployment","selfemployed","unemployed","inactive"),Breakdown!="Occupation",Breakdown!="Industry") %>%
+                        select(-metric,-Breakdown,-Subgroup) %>%
+                        rename("Count" = valueText,Metric=metricNeat)), path = file)
     }
   )
   output$downloadData2 <- downloadHandler(
@@ -226,7 +225,10 @@ server <- function(input, output, session) {
       "EmploymentByOccupationIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("1a.Emp by occupation" = D_EmpOcc_APS1721), path = file)
+      write_xlsx(list("1a.Emp by occupation" = C_datahub %>%
+                        filter(metric =="inemployment",Breakdown=="Occupation") %>%
+                        select(-metric,-metricNeat) %>%
+                        rename("Employment volume" = valueText)), path = file)
     }
   )
   output$downloadData3 <- downloadHandler(
@@ -234,7 +236,10 @@ server <- function(input, output, session) {
       "EmpbyindustryIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("1c.Emp by industry" = D_EmpInd_APS1822), path = file)
+      write_xlsx(list("1c.Emp by industry" = C_datahub %>%
+                        filter(metric =="inemployment",Breakdown=="Industry") %>%
+                        select(-metric,-metricNeat) %>%
+                        rename("Employment volume" = valueText)), path = file)
     }
   )
   output$downloadData4 <- downloadHandler(
@@ -242,7 +247,10 @@ server <- function(input, output, session) {
       "AchievementIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("3b.FE achievements" = D_Achieve_ILR1621), path = file)
+      write_xlsx(list("3b.FE achievements" = C_datahub %>%
+                        filter(metric %in% c("achievements","participation"),Breakdown!="SSA") %>%
+                        select(-metric) %>%
+                        rename(Count = valueText,Metric=metricNeat)), path = file)
     }
   )
   output$downloadData5 <- downloadHandler(
@@ -250,7 +258,10 @@ server <- function(input, output, session) {
       "AchievementBySSAIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("3a.FE achievements SSA" = D_Achieve_ILR21), path = file)
+      write_xlsx(list("3a.FE achievements SSA" = C_datahub %>%
+                        filter(metric == "achievements",Breakdown=="SSA") %>%
+                        select(-metric, -metricNeat) %>%
+                        rename(Achievements = valueText)), path = file)
     }
   )
   output$downloadData6 <- downloadHandler(
@@ -258,7 +269,10 @@ server <- function(input, output, session) {
       "Qualificationbyageandgendernvq.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("4a.Qualification by age and gender" = D_qual_APS1721),
+      write_xlsx(list("4.Qualification by age and gender" =  C_datahub %>%
+                        filter(metric %in% c("qualNone","qualL1","qualL2","qualApp","qualL3","qualL4","qualOther")) %>%
+                        select(-metric) %>%
+                        rename("16-64 year olds" = valueText,"Highest qualification"=metricNeat)),
         path = file
       )
     }
@@ -268,15 +282,21 @@ server <- function(input, output, session) {
       "EnterprisebyemploymentsizeIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("5a.Enterprise by emp size" = D_empent_UBC1822), path = file)
+      write_xlsx(list("5a.Enterprise by emp size" = C_datahub %>%
+                        filter(metric == "enterpriseCount",Breakdown!="Industry") %>%
+                        select(-metric, -metricNeat) %>%
+                        rename("Enterprise count" = valueText)), path = file)
     }
   )
   output$downloadData8 <- downloadHandler(
     filename = function() {
-      "EntbyempsizeandindustryIndicators.xlsx"
+      "EntbyIndustryIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("6a.Ent by emp size and ind" = D_empentind_UBC1822),
+      write_xlsx(list("5b.Ent by emp ind" = C_datahub %>%
+                        filter(metric == "enterpriseCount",Breakdown!="Size") %>%
+                        select(-metric, -metricNeat) %>%
+                        rename("Enterprise count" = valueText)),
         path = file
       )
     }
@@ -286,27 +306,36 @@ server <- function(input, output, session) {
       "Enterprisedemography.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("7a.Enterprise demography" = D_enterprise_demo1621),
+      write_xlsx(list("5c.Enterprise demography" = C_datahub %>%
+                        filter(metric %in% c("births","deaths","active")) %>%
+                        select(-metric) %>%
+                        rename("Enterprise count" = valueText, Metric=metricNeat)),
         path = file
       )
     }
   )
   output$downloadData10 <- downloadHandler(
     filename = function() {
-      "EnterprisebyemploymentsizeIndicators.xlsx"
+      "KS4DestinationsIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("8a.Key Stage 4 destinations" = D_KS4destin_1521),
+      write_xlsx(list("6a.Key Stage 4 destinations" = C_datahub %>%
+                        filter(metric == "sustainedPositiveDestinationKS4Rate") %>%
+                        select(-metric, -metricNeat) %>%
+                        rename("KS4 sustained positive destination rate" = valueText)),
         path = file
       )
     }
   )
   output$downloadData11 <- downloadHandler(
     filename = function() {
-      "EntbyempsizeandindustryIndicators.xlsx"
+      "KS5DestinationsIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("9a.Key Stage 5 destinations" = D_KS5destin_1721),
+      write_xlsx(list("6b.Key Stage 5 destinations" = C_datahub %>%
+                        filter(metric == "sustainedPositiveDestinationKS5Rate") %>%
+                        select(-metric, -metricNeat) %>%
+                        rename("KS5 sustained positive destination rate" = valueText)),
         path = file
       )
     }
@@ -318,8 +347,14 @@ server <- function(input, output, session) {
     content = function(file) {
       write_xlsx(
         list(
-          "2a.Adverts over time" = D_OnsProfTime,
-          "2b.Adverts by detailed profession" = D_OnsProfDetail
+          "2a.Adverts over time" = C_datahub %>%
+            filter(metric == "vacancies",Breakdown=="Total") %>%
+            select(-metric, -metricNeat,-Breakdown,-Subgroup) %>%
+            rename("Job adverts" = valueText),
+          "2b.Adverts by detailed profession" = C_datahub %>%
+            filter(metric == "vacancies",Breakdown!="Total") %>%
+            select(-metric, -metricNeat) %>%
+            rename("Job adverts" = valueText)
         ),
         path = file
       )
@@ -332,10 +367,10 @@ server <- function(input, output, session) {
     content = function(file) {
       write_xlsx(
         list(
-          "ProjectedEmployment" = C_datahub %>%
+          "7.ProjectedEmployment" = C_datahub %>%
             filter(metric == "employmentProjection") %>%
-            select(-apprenticeships_or_further_education, -level_or_type, -age_group, -metric, -metricNeat) %>%
-            rename(Employment = value, Area = geogConcat)
+            select(-metric, -metricNeat) %>%
+            rename(Employment = valueText)
         ),
         path = file
       )
@@ -402,24 +437,62 @@ server <- function(input, output, session) {
   ###  2.2.3 Downloads ----
   # download all indicators
   list_of_datasets0 <- list(
-    "1a.Emp by occupation" = D_EmpOcc_APS1721,
-    "1b.Emp rate" = D_EmpRate_APS1822,
-    "1c.Emp by industry" = D_EmpInd_APS1822,
-    "2a.Adverts over time" = D_OnsProfTime,
-    "2b.Adverts by detailed profession" = D_OnsProfDetail,
-    "3a.FE achievements SSA" = D_Achieve_ILR21,
-    "3b.FE achievements" = D_Achieve_ILR1621,
-    "4a.FE achievements" = D_qual_APS1721,
-    "5a.Qual by age and gender" = D_qual_APS1721,
-    "6a.Ent by emp size band" = D_empent_UBC1822,
-    "7a.Ent by emp size & industry" = D_empentind_UBC1822,
-    "8a.Enterprise demography" = D_enterprise_demo1621,
-    "9a.Key Stage 4 destinations" = D_KS4destin_1521,
-    "10a.Key Stage 5 destinations" = D_KS5destin_1721,
-    "11.ProjectedEmployment" = C_datahub %>%
+    "1a.Emp by occupation" = C_datahub %>%
+      filter(metric =="inemployment",Breakdown=="Occupation") %>%
+      select(-metric,-metricNeat) %>%
+      rename("Employment volume" = valueText),
+    "1b.Emp rate" = C_datahub %>%
+      filter(metric %in% c("all","inemployment","selfemployed","unemployed","inactive"),Breakdown!="Occupation",Breakdown!="Industry") %>%
+      select(-metric,-Breakdown,-Subgroup) %>%
+      rename("Count" = valueText,Metric=metricNeat),
+    "1c.Emp by industry" = C_datahub %>%
+      filter(metric =="inemployment",Breakdown=="Industry") %>%
+      select(-metric,-metricNeat) %>%
+      rename("Employment volume" = valueText),
+    "2a.Adverts over time" = C_datahub %>%
+      filter(metric == "vacancies",Breakdown=="Total") %>%
+      select(-metric, -metricNeat,-Breakdown,-Subgroup) %>%
+      rename("Job adverts" = valueText),
+    "2b.Adverts by detailed profession" = C_datahub %>%
+      filter(metric == "vacancies",Breakdown!="Total") %>%
+      select(-metric, -metricNeat) %>%
+      rename("Job adverts" = valueText),
+    "3a.FE achievements SSA" = C_datahub %>%
+      filter(metric == "vacancies",Breakdown!="Total") %>%
+      select(-metric, -metricNeat) %>%
+      rename("Job adverts" = valueText),
+    "3b.FE achievements" = C_datahub %>%
+      filter(metric %in% c("achievements","participation"),Breakdown!="SSA") %>%
+      select(-metric) %>%
+      rename(Count = valueText,Metric=metricNeat),
+    "4.Qual by age and gender" = C_datahub %>%
+      filter(metric %in% c("qualNone","qualL1","qualL2","qualApp","qualL3","qualL4","qualOther")) %>%
+      select(-metric) %>%
+      rename("16-64 year olds" = valueText,"Highest qualification"=metricNeat),
+    "5a.Ent by emp size band" = C_datahub %>%
+      filter(metric == "enterpriseCount",Breakdown!="Industry") %>%
+      select(-metric, -metricNeat) %>%
+      rename("Enterprise count" = valueText),
+    "5b.Ent by emp industry" = C_datahub %>%
+      filter(metric == "enterpriseCount",Breakdown!="Size") %>%
+      select(-metric, -metricNeat) %>%
+      rename("Enterprise count" = valueText),
+    "5c.Enterprise demography" = C_datahub %>%
+      filter(metric %in% c("births","deaths","active")) %>%
+      select(-metric) %>%
+      rename("Enterprise count" = valueText, Metric=metricNeat),
+    "6a.Key Stage 4 destinations" = C_datahub %>%
+      filter(metric == "sustainedPositiveDestinationKS4Rate") %>%
+      select(-metric, -metricNeat) %>%
+      rename("KS4 sustained positive destination rate" = valueText),
+    "6b.Key Stage 5 destinations" = C_datahub %>%
+      filter(metric == "sustainedPositiveDestinationKS5Rate") %>%
+      select(-metric, -metricNeat) %>%
+      rename("KS5 sustained positive destination rate" = valueText),
+    "7.ProjectedEmployment" = C_datahub %>%
       filter(metric == "employmentProjection") %>%
-      select(-apprenticeships_or_further_education, -level_or_type, -age_group, -metric, -metricNeat) %>%
-      rename(Employment = value, Area = geogConcat)
+      select(-metric, -metricNeat) %>%
+      rename(Employment = valueText)
   )
   output$download_btn0a <- downloadHandler(
     filename = function() {
@@ -432,76 +505,65 @@ server <- function(input, output, session) {
 
   # Download current area indicators
   filtered_data0 <- reactive({
+    currentGeogconcat<-C_datahub %>%
+      filter(geogConcat==input$geoChoiceOver)
     list(
-      "1a.Emp by occupation" = filter(
-        D_EmpOcc_APS1721,
-        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
-        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      ),
-      "1b.Emp rate" = filter(
-        D_EmpRate_APS1822,
-        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
-        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      ),
-      "2a.Adverts over time" = filter(
-        D_OnsProfTime,
-        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
-        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      ),
-      "2b.Adverts by detailed profession" = filter(
-        D_OnsProfDetail,
-        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
-        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      ),
-      "3a.FE achievements SSA" = filter(
-        D_Achieve_ILR21,
-        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
-        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      ),
-      "3b.FE achievements" = filter(
-        D_Achieve_ILR1621,
-        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
-        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      ),
-      "4a.Ent by emp size band" = filter(
-        D_empent_UBC1822,
-        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
-        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      ),
-      "5a.Key Stage 5 destinations" = filter(
-        D_KS5destin_1721,
-        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
-        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      ),
-      "6a.Qual by age and gender" = filter(
-        D_qual_APS1721,
-        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
-        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      ),
-      "7a.Ent by emp size & industry" = filter(
-        D_empentind_UBC1822,
-        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
-        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      ),
-      "8a.Enterprise demography" = filter(
-        D_enterprise_demo1621,
-        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
-        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      ),
-      "9a.Key Stage 4 destinations" = filter(
-        D_KS4destin_1521,
-        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
-        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      ),
-      "10a.Key Stage 5 destinations" = filter(
-        D_KS5destin_1721,
-        area == trimws(str_sub(input$geoChoiceOver, 1, -5), "r"),
-        geographic_level == gsub(" ", "", str_sub(input$geoChoiceOver, -4, -1))
-      ),
-      "11.ProjectedEmployment" = C_datahub %>%
-        filter(metric == "employmentProjection", geogConcat == input$geoChoiceOver) %>%
-        select(-apprenticeships_or_further_education, -level_or_type, -age_group, -metric, -metricNeat) %>%
-        rename(Employment = value, Area = geogConcat)
+      "1a.Emp by occupation" = currentGeogconcat %>%
+        filter(metric =="inemployment",Breakdown=="Occupation") %>%
+        select(-metric,-metricNeat) %>%
+        rename("Employment volume" = valueText),
+      "1b.Emp rate" = currentGeogconcat %>%
+        filter(metric %in% c("all","inemployment","selfemployed","unemployed","inactive"),Breakdown!="Occupation",Breakdown!="Industry") %>%
+        select(-metric,-Breakdown,-Subgroup) %>%
+        rename("Count" = valueText,Metric=metricNeat),
+      "1c.Emp by industry" = currentGeogconcat %>%
+        filter(metric =="inemployment",Breakdown=="Industry") %>%
+        select(-metric,-metricNeat) %>%
+        rename("Employment volume" = valueText),
+      "2a.Adverts over time" = currentGeogconcat %>%
+        filter(metric == "vacancies",Breakdown=="Total") %>%
+        select(-metric, -metricNeat,-Breakdown,-Subgroup) %>%
+        rename("Job adverts" = valueText),
+      "2b.Adverts by detailed profession" = currentGeogconcat %>%
+        filter(metric == "vacancies",Breakdown!="Total") %>%
+        select(-metric, -metricNeat) %>%
+        rename("Job adverts" = valueText),
+      "3a.FE achievements SSA" = currentGeogconcat %>%
+        filter(metric == "vacancies",Breakdown!="Total") %>%
+        select(-metric, -metricNeat) %>%
+        rename("Job adverts" = valueText),
+      "3b.FE achievements" = currentGeogconcat %>%
+        filter(metric %in% c("achievements","participation"),Breakdown!="SSA") %>%
+        select(-metric) %>%
+        rename(Count = valueText,Metric=metricNeat),
+      "4.Qual by age and gender" = currentGeogconcat %>%
+        filter(metric %in% c("qualNone","qualL1","qualL2","qualApp","qualL3","qualL4","qualOther")) %>%
+        select(-metric) %>%
+        rename("16-64 year olds" = valueText,"Highest qualification"=metricNeat),
+      "5a.Ent by emp size band" = currentGeogconcat %>%
+        filter(metric == "enterpriseCount",Breakdown!="Industry") %>%
+        select(-metric, -metricNeat) %>%
+        rename("Enterprise count" = valueText),
+      "5b.Ent by emp industry" = currentGeogconcat %>%
+        filter(metric == "enterpriseCount",Breakdown!="Size") %>%
+        select(-metric, -metricNeat) %>%
+        rename("Enterprise count" = valueText),
+      "5c.Enterprise demography" = currentGeogconcat %>%
+        filter(metric %in% c("births","deaths","active")) %>%
+        select(-metric) %>%
+        rename("Enterprise count" = valueText, Metric=metricNeat),
+      "6a.Key Stage 4 destinations" = currentGeogconcat %>%
+        filter(metric == "sustainedPositiveDestinationKS4Rate") %>%
+        select(-metric, -metricNeat) %>%
+        rename("KS4 sustained positive destination rate" = valueText),
+      "6b.Key Stage 5 destinations" = currentGeogconcat %>%
+        filter(metric == "sustainedPositiveDestinationKS5Rate") %>%
+        select(-metric, -metricNeat) %>%
+        rename("KS5 sustained positive destination rate" = valueText),
+      "7.ProjectedEmployment" = currentGeogconcat %>%
+        filter(metric == "employmentProjection") %>%
+        select(-metric, -metricNeat) %>%
+        rename(Employment = valueText)
     )
   })
   output$download_btn0b <- downloadHandler(
