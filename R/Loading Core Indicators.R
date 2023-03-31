@@ -85,3 +85,6 @@ I_ToolsTable <- read.csv(file = "./Data/AppData/I_ToolsTable.csv", check.names =
 
 ## data text table ----
 I_DataText <- read.csv(file = "./Data/AppData/I_DataText.csv", check.names = FALSE)
+
+#Load the replacemnet demand data
+D_wfRDF1 <- read.csv(file = "./Data/AppData/D_wfRDF1.csv", check.names = FALSE)

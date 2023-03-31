@@ -2057,7 +2057,7 @@ left_join(I_wfAreaName) %>%
   )) %>% #fixing spellings
 mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) %>% 
   select(subgroup, metric, breakdown, geogConcat, chartPeriod, value, timePeriod, latest, valueText)# remove numbers from soc codes for presentation
-
+write.csv(D_wfRDF1, file = "Data\\AppData\\D_wfRDF1.csv", row.names = FALSE)
 
 # # correct the missing summaries of a few major groups
 # correctedSubgroups <- C_wf %>%
