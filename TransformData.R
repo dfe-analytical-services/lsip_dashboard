@@ -2055,15 +2055,10 @@ left_join(I_wfAreaName) %>%
     geogConcat == "Brighton and Hove East Sussex West Sussex LSIP" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
     TRUE ~ geogConcat
   )) %>% #fixing spellings
-<<<<<<< HEAD
 mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) %>% 
   select(subgroup, metric, breakdown, geogConcat, chartPeriod, value, timePeriod, latest, valueText)# remove numbers from soc codes for presentation
 write.csv(D_wfRDF1, file = "Data\\AppData\\D_wfRDF1.csv", row.names = FALSE)
-=======
-mutate(subgroups = trimws(gsub("[[:digit:]]+", "", subgroups))) %>% 
-  select(subgroups, metric, breakdown, geogConcat, chartPeriod, value, timePeriod, latest, valueText)# remove numbers from soc codes for presentation
 
->>>>>>> 557718b33ef8e527ffe46f278d1c54e858c52d22
 
 # # correct the missing summaries of a few major groups
 # correctedSubgroups <- C_wf %>%
