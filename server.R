@@ -2577,7 +2577,7 @@ server <- function(input, output, session) {
       validate(
         need(input$barBreakdown != "", ""),
         need(input$barSubgroup != "", ""),
-        need(input$splashMetric == "workingFutures"),
+        need(input$splashMetric == "wfEmployment",""),
         need(input$barBreakdown != "No breakdowns available", "")
       )
       Splash_2020 <- D_wfRDF1 %>% filter(
@@ -2605,7 +2605,7 @@ server <- function(input, output, session) {
         ggplot(
           Splash_2020,
           aes(
-            x = reorder(subgroups, value, mean),
+            x = reorder(subgroup, value, mean),
             y = value,
            fill = Area,
             text = paste0(
