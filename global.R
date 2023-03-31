@@ -15,21 +15,16 @@ shhh(library(shinytest))
 shhh(library(shinydashboard))
 shhh(library(shinyWidgets))
 shhh(library(shinyGovstyle))
-shhh(library(dplyr))
-shhh(library(data.table))
-shhh(library(tidyverse))
-shhh(library(plotly))
-shhh(library(openxlsx))
-shhh(library(janitor))
-shhh(library(DT))
-shhh(library(writexl))
-shhh(library(scales)) # for comma 1,000s
-shhh(library(leaflet))
-shhh(library(lubridate))
-shhh(library(sf))
-shhh(library(capture))
-shhh(library(shinyalert))
-shhh(library(shinycssloaders))
+shhh(library(tidyverse))#various data manipulation
+shhh(library(scales))#formatting numbers
+shhh(library(plotly))#interactive plots
+shhh(library(DT))#create datatables
+shhh(library(writexl))#write data to xls for download
+shhh(library(leaflet))#create maps
+shhh(library(sf))#load map data
+shhh(library(capture))#screenshots
+shhh(library(shinyalert))#cookie pop up
+shhh(library(shinycssloaders))#spinners
 
 # renv::snapshot()
 
