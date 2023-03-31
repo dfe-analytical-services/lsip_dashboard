@@ -2045,6 +2045,16 @@ left_join(I_wfAreaName) %>%
     trimws(`.Main`, "both") == "England" ~ "England",
     TRUE ~ geogConcat
   )) %>% 
+  mutate(geogConcat = case_when(
+    geogConcat == "Buckinghamshire Thames Valley LEP" ~ "Buckinghamshire LEP",
+    geogConcat == "Cambridge and Peterborough MCA" ~ "Cambridgeshire and Peterborough MCA",
+    geogConcat == "London Enterprise Panel LEP" ~ "London LEP",
+    geogConcat == "York, North Yorkshire and East Riding LEP" ~ "York and North Yorkshire LEP",
+    geogConcat == "Humber LEP" ~ "Hull and East Yorkshire LEP",
+    geogConcat == "Essex Southend-on-Sea and Thurrock LSIP" ~ "Essex, Southend-on-Sea and Thurrock LSIP",
+    geogConcat == "Brighton and Hove East Sussex West Sussex LSIP" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
+    TRUE ~ geogConcat
+  )) %>% #fixing spellings
 mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) %>% 
   select(subgroup, metric, breakdown, geogConcat, chartPeriod, value, timePeriod, latest, valueText)# remove numbers from soc codes for presentation
 
