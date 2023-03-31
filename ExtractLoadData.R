@@ -11,10 +11,10 @@
 ###
 
 # Load libraries ----
-library(openxlsx)   #use read.xlsx, read.csv
-library(sf)         #use st_read
-library(rgdal)  #use readOGR
-library(tidyverse) #use map_df, mutate
+library(openxlsx) # use read.xlsx, read.csv
+library(sf) # use st_read
+library(rgdal) # use readOGR
+library(tidyverse) # use map_df, mutate
 
 # 1.Geography and mapping tables ----
 ## 1.1 LEPs 2020 and LA-LSIP lookup ----
@@ -23,7 +23,7 @@ sheetNum <- "LAD21 - LSIP - LEP21"
 I_LEP2020 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 ## 1.2 Missing LAD-LEP lookup----
-#This happens because we have some old LADs in the ILR (and other) data that have since been made inactive. These do not feature in the most recent LAD-LEP matching. We have manually mapped these LADs to the latest LEPS (2021)
+# This happens because we have some old LADs in the ILR (and other) data that have since been made inactive. These do not feature in the most recent LAD-LEP matching. We have manually mapped these LADs to the latest LEPS (2021)
 folder <- "1-2_LEPmissing"
 sheetNum <- 2
 I_missingLAD <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
@@ -40,21 +40,21 @@ I_LaLookup <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = p
 ## 1.5 LEP boundary----
 folder <- "1-5_LEPBoundary"
 I_mapLEP <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
-                        stringsAsFactors = F
+  stringsAsFactors = F
 )
 
 ## 1.6 LA boundary----
 folder <- "1-6_LABoundary"
 I_mapLA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
-                       stringsAsFactors = F
+  stringsAsFactors = F
 )
-#import as spatial vector to build LSIP map
+# import as spatial vector to build LSIP map
 I_mapLAspatial <- readOGR(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 ## 1.7 MCA boundary----
 folder <- "1-7_MCABoundary"
 I_mapMCA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
-                        stringsAsFactors = F
+  stringsAsFactors = F
 )
 
 # 2. Datasets ----
@@ -73,7 +73,7 @@ I_empOcc <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path 
 # Cell: T01 Economic activity by age Aged 16-64/ All people
 folder <- "2-2_APSempRate"
 sheetNum <- 1
-I_emp<- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+I_emp <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 ### 2.1.3 UK Business Count----
 # Enterprise by employment size
@@ -192,7 +192,7 @@ I_OnsProfMca <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(p
 # These take a long time to run ~20mins
 folder <- "2-13_skillsImperative2035"
 dir_path <- paste0("./Data/", folder, "/")
-skillsImpFileList<-list.files(dir_path)
+skillsImpFileList <- list.files(dir_path)
 
 read_dir <- function(dir_path, file_name, sheet_name, row_nos) {
   read.xlsx(paste0(dir_path, file_name), sheet = sheet_name, skipEmptyRows = T, rows = row_nos) %>%
@@ -205,7 +205,7 @@ I_wfIndF2 <-
   map_df(~ read_dir(dir_path, .x, "Ind F2", 4:38))
 # Occupation future
 I_wfOccF2 <-
-  skillsImpFileList%>%
+  skillsImpFileList %>%
   map_df(~ read_dir(dir_path, .x, "Occ F2", 4:49))
 # Qualification future
 I_wfQualF1 <-
@@ -228,7 +228,7 @@ folder <- "3-2_dataText"
 sheetNum <- 1
 I_DataText <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
-# ## 3.3 FE Interventions table (not currently used)----
+## 3.3 FE Interventions table (not currently used)----
 # folder <- "3-3_FeInterventions"
 # sheetNum <- 1
 # I_InterventionTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
@@ -239,4 +239,3 @@ sheetNum <- "Tools"
 I_ToolsTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 sheetNum <- "Sources"
 I_SourcesTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
-

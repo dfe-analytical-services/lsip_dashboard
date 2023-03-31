@@ -11,10 +11,7 @@ server <- function(input, output, session) {
 
   ## 1.2 Load chart colours ----
   # https://analysisfunction.civilservice.gov.uk/policy-store/data-visualisation-colours-in-charts/
-  # England, geo1, geo2
-  chartColors3 <- c("#BFBFBF", "#12436D", "#28A197")
-  # geo1, geo2
-  chartColors2 <- c("#12436D", "#28A197")
+  # England, geo1, geo2, then any others
   chartColors6 <-
     c(
       "#BFBFBF",
@@ -79,7 +76,7 @@ server <- function(input, output, session) {
       }
     }
   })
-  
+
   observeEvent(input$cookie_consent, {
     msg <- list(
       name = "dfe_analytics",
@@ -102,11 +99,11 @@ server <- function(input, output, session) {
     session$sendCustomMessage("cookie-remove", msg)
     session$sendCustomMessage("analytics-consent", msg)
   })
-  
+
   cookies_data <- reactive({
     input$cookies
   })
-  
+
   output$cookie_status <- renderText({
     cookie_text_stem <- "To better understand the reach of our dashboard tools, this site uses cookies to identify numbers of unique users as part of Google Analytics. You have chosen to"
     cookie_text_tail <- "the use of cookies on this website."
@@ -122,7 +119,7 @@ server <- function(input, output, session) {
       paste("Cookies consent has not been confirmed.")
     }
   })
-  
+
   # 2 Main page ----
   ## 2.1 Homepage ----
   ### 2.1.1 Make links ----
@@ -211,150 +208,155 @@ server <- function(input, output, session) {
   ### 2.5.1 Data table downloads ----
   output$downloadData1 <- downloadHandler(
     filename = function() {
-      "EmploymentRateIndicators.xlsx"
+      "EmploymentVolumes.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("1b.Emp rate" = C_datahub %>%
-                        filter(metric %in% c("all","inemployment","selfemployed","unemployed","inactive"),Breakdown!="Occupation",Breakdown!="Industry") %>%
-                        select(-metric,-Breakdown,-Subgroup) %>%
-                        rename("Count" = valueText,Metric=metricNeat)), path = file)
+      write_xlsx(list("1b.Employment volumes" = C_datahub %>%
+        filter(metric %in% c("all", "inemployment", "selfemployed", "unemployed", "inactive"), Breakdown != "Occupation", Breakdown != "Industry") %>%
+        select(-metric, -Breakdown, -Subgroup) %>%
+        rename("Volume" = valueText, Metric = metricNeat)), path = file)
     }
   )
   output$downloadData2 <- downloadHandler(
     filename = function() {
-      "EmploymentByOccupationIndicators.xlsx"
+      "EmploymentByOccupation.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("1a.Emp by occupation" = C_datahub %>%
-                        filter(metric =="inemployment",Breakdown=="Occupation") %>%
-                        select(-metric,-metricNeat) %>%
-                        rename("Employment volume" = valueText)), path = file)
+      write_xlsx(list("1a.Employment by occupation" = C_datahub %>%
+        filter(metric == "inemployment", Breakdown == "Occupation") %>%
+        select(-metric, -metricNeat, -Breakdown) %>%
+        rename("Employment volume" = valueText, Occupation = Subgroup)), path = file)
     }
   )
   output$downloadData3 <- downloadHandler(
     filename = function() {
-      "EmpbyindustryIndicators.xlsx"
+      "EmploymentByIndustry.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("1c.Emp by industry" = C_datahub %>%
-                        filter(metric =="inemployment",Breakdown=="Industry") %>%
-                        select(-metric,-metricNeat) %>%
-                        rename("Employment volume" = valueText)), path = file)
+      write_xlsx(list("1c.Employment by industry" = C_datahub %>%
+        filter(metric == "inemployment", Breakdown == "Industry") %>%
+        select(-metric, -metricNeat, -Breakdown, Industry = Subgroup) %>%
+        rename("Employment volume" = valueText)), path = file)
     }
   )
   output$downloadData4 <- downloadHandler(
     filename = function() {
-      "AchievementIndicators.xlsx"
+      "FeAchievementParticipation.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("3b.FE achievements" = C_datahub %>%
-                        filter(metric %in% c("achievements","participation"),Breakdown!="SSA") %>%
-                        select(-metric) %>%
-                        rename(Count = valueText,Metric=metricNeat)), path = file)
+      write_xlsx(list("3b.FE achievement&participation" = C_datahub %>%
+        filter(metric %in% c("achievements", "participation"), Breakdown != "SSA") %>%
+        select(-metric) %>%
+        rename(Volume = valueText, Metric = metricNeat)), path = file)
     }
   )
   output$downloadData5 <- downloadHandler(
     filename = function() {
-      "AchievementBySSAIndicators.xlsx"
+      "FeAchievementBySSA.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("3a.FE achievements SSA" = C_datahub %>%
-                        filter(metric == "achievements",Breakdown=="SSA") %>%
-                        select(-metric, -metricNeat) %>%
-                        rename(Achievements = valueText)), path = file)
+      write_xlsx(list("3a.FE achievements by SSA" = C_datahub %>%
+        filter(metric == "achievements", Breakdown == "SSA") %>%
+        select(-metric, -metricNeat, -Breakdown) %>%
+        rename(Achievements = valueText, "Sector subject area tier 1" = Subgroup)), path = file)
     }
   )
   output$downloadData6 <- downloadHandler(
     filename = function() {
-      "Qualificationbyageandgendernvq.xlsx"
+      "HighestQualification.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("4.Qualification by age and gender" =  C_datahub %>%
-                        filter(metric %in% c("qualNone","qualL1","qualL2","qualApp","qualL3","qualL4","qualOther")) %>%
-                        select(-metric) %>%
-                        rename("16-64 year olds" = valueText,"Highest qualification"=metricNeat)),
+      write_xlsx(
+        list("4.Highest qualification" = C_datahub %>%
+          filter(metric %in% c("qualNone", "qualL1", "qualL2", "qualApp", "qualL3", "qualL4", "qualOther")) %>%
+          select(-metric) %>%
+          rename("16-64 year olds" = valueText, "Highest qualification" = metricNeat)),
         path = file
       )
     }
   )
   output$downloadData7 <- downloadHandler(
     filename = function() {
-      "EnterprisebyemploymentsizeIndicators.xlsx"
+      "EnterpriseBySize.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("5a.Enterprise by emp size" = C_datahub %>%
-                        filter(metric == "enterpriseCount",Breakdown!="Industry") %>%
-                        select(-metric, -metricNeat) %>%
-                        rename("Enterprise count" = valueText)), path = file)
+      write_xlsx(list("5a.Enterprises by size" = C_datahub %>%
+        filter(metric == "enterpriseCount", Breakdown != "Industry") %>%
+        select(-metric, -metricNeat, -Breakdown) %>%
+        rename("Enterprise count" = valueText, "Size band" = Subgroup)), path = file)
     }
   )
   output$downloadData8 <- downloadHandler(
     filename = function() {
-      "EntbyIndustryIndicators.xlsx"
+      "EnterpriseByIndustry.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("5b.Ent by emp ind" = C_datahub %>%
-                        filter(metric == "enterpriseCount",Breakdown!="Size") %>%
-                        select(-metric, -metricNeat) %>%
-                        rename("Enterprise count" = valueText)),
+      write_xlsx(
+        list("5b.Enterprises by industry" = C_datahub %>%
+          filter(metric == "enterpriseCount", Breakdown != "Size") %>%
+          select(-metric, -metricNeat, -Breakdown) %>%
+          rename("Enterprise count" = valueText, Industry = Subgroup)),
         path = file
       )
     }
   )
   output$downloadData9 <- downloadHandler(
     filename = function() {
-      "Enterprisedemography.xlsx"
+      "EnterpriseDemography.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("5c.Enterprise demography" = C_datahub %>%
-                        filter(metric %in% c("births","deaths","active")) %>%
-                        select(-metric) %>%
-                        rename("Enterprise count" = valueText, Metric=metricNeat)),
+      write_xlsx(
+        list("5c.Enterprise demography" = C_datahub %>%
+          filter(metric %in% c("births", "deaths", "active")) %>%
+          select(-metric, -Breakdown, -Subgroup) %>%
+          rename("Enterprise count" = valueText, Metric = metricNeat)),
         path = file
       )
     }
   )
   output$downloadData10 <- downloadHandler(
     filename = function() {
-      "KS4DestinationsIndicators.xlsx"
+      "KS4Destinations.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("6a.Key Stage 4 destinations" = C_datahub %>%
-                        filter(metric == "sustainedPositiveDestinationKS4Rate") %>%
-                        select(-metric, -metricNeat) %>%
-                        rename("KS4 sustained positive destination rate" = valueText)),
+      write_xlsx(
+        list("6a.Key Stage 4 destinations" = C_datahub %>%
+          filter(metric == "sustainedPositiveDestinationKS4Rate") %>%
+          select(-metric, -metricNeat, -Breakdown) %>%
+          rename("KS4 sustained positive destination rate" = valueText, Outcome = Subgroup)),
         path = file
       )
     }
   )
   output$downloadData11 <- downloadHandler(
     filename = function() {
-      "KS5DestinationsIndicators.xlsx"
+      "KS5Destinations.xlsx"
     },
     content = function(file) {
-      write_xlsx(list("6b.Key Stage 5 destinations" = C_datahub %>%
-                        filter(metric == "sustainedPositiveDestinationKS5Rate") %>%
-                        select(-metric, -metricNeat) %>%
-                        rename("KS5 sustained positive destination rate" = valueText)),
+      write_xlsx(
+        list("6b.Key Stage 5 destinations" = C_datahub %>%
+          filter(metric == "sustainedPositiveDestinationKS5Rate") %>%
+          select(-metric, -metricNeat) %>%
+          rename("KS5 sustained positive destination rate" = valueText)),
         path = file
       )
     }
   )
   output$downloadData12 <- downloadHandler(
     filename = function() {
-      "JobAdvertIndicators.xlsx"
+      "OnlineJobAdverts.xlsx"
     },
     content = function(file) {
       write_xlsx(
         list(
-          "2a.Adverts over time" = C_datahub %>%
-            filter(metric == "vacancies",Breakdown=="Total") %>%
-            select(-metric, -metricNeat,-Breakdown,-Subgroup) %>%
-            rename("Job adverts" = valueText),
-          "2b.Adverts by detailed profession" = C_datahub %>%
-            filter(metric == "vacancies",Breakdown!="Total") %>%
+          "2a.Job adverts" = C_datahub %>%
+            filter(metric == "vacancies", Breakdown == "Total") %>%
+            select(-metric, -metricNeat, -Breakdown, -Subgroup) %>%
+            rename("Online job adverts" = valueText),
+          "2b.Job adverts by profession" = C_datahub %>%
+            filter(metric == "vacancies", Breakdown != "Total") %>%
             select(-metric, -metricNeat) %>%
-            rename("Job adverts" = valueText)
+            rename("Online job adverts" = valueText, "Detailed/Summary" = Breakdown, Profession = Subgroup)
         ),
         path = file
       )
@@ -362,15 +364,15 @@ server <- function(input, output, session) {
   )
   output$downloadData13 <- downloadHandler(
     filename = function() {
-      "EmploymentProjectionIndicators.xlsx"
+      "EmploymentProjection.xlsx"
     },
     content = function(file) {
       write_xlsx(
         list(
-          "7.ProjectedEmployment" = C_datahub %>%
+          "7.Projected employment" = C_datahub %>%
             filter(metric == "employmentProjection") %>%
             select(-metric, -metricNeat) %>%
-            rename(Employment = valueText)
+            rename("Projected employment" = valueText)
         ),
         path = file
       )
@@ -436,139 +438,81 @@ server <- function(input, output, session) {
 
   ###  2.2.3 Downloads ----
   # download all indicators
-  list_of_datasets0 <- list(
-    "1a.Emp by occupation" = C_datahub %>%
-      filter(metric =="inemployment",Breakdown=="Occupation") %>%
-      select(-metric,-metricNeat) %>%
-      rename("Employment volume" = valueText),
-    "1b.Emp rate" = C_datahub %>%
-      filter(metric %in% c("all","inemployment","selfemployed","unemployed","inactive"),Breakdown!="Occupation",Breakdown!="Industry") %>%
-      select(-metric,-Breakdown,-Subgroup) %>%
-      rename("Count" = valueText,Metric=metricNeat),
-    "1c.Emp by industry" = C_datahub %>%
-      filter(metric =="inemployment",Breakdown=="Industry") %>%
-      select(-metric,-metricNeat) %>%
-      rename("Employment volume" = valueText),
-    "2a.Adverts over time" = C_datahub %>%
-      filter(metric == "vacancies",Breakdown=="Total") %>%
-      select(-metric, -metricNeat,-Breakdown,-Subgroup) %>%
-      rename("Job adverts" = valueText),
-    "2b.Adverts by detailed profession" = C_datahub %>%
-      filter(metric == "vacancies",Breakdown!="Total") %>%
-      select(-metric, -metricNeat) %>%
-      rename("Job adverts" = valueText),
-    "3a.FE achievements SSA" = C_datahub %>%
-      filter(metric == "vacancies",Breakdown!="Total") %>%
-      select(-metric, -metricNeat) %>%
-      rename("Job adverts" = valueText),
-    "3b.FE achievements" = C_datahub %>%
-      filter(metric %in% c("achievements","participation"),Breakdown!="SSA") %>%
-      select(-metric) %>%
-      rename(Count = valueText,Metric=metricNeat),
-    "4.Qual by age and gender" = C_datahub %>%
-      filter(metric %in% c("qualNone","qualL1","qualL2","qualApp","qualL3","qualL4","qualOther")) %>%
-      select(-metric) %>%
-      rename("16-64 year olds" = valueText,"Highest qualification"=metricNeat),
-    "5a.Ent by emp size band" = C_datahub %>%
-      filter(metric == "enterpriseCount",Breakdown!="Industry") %>%
-      select(-metric, -metricNeat) %>%
-      rename("Enterprise count" = valueText),
-    "5b.Ent by emp industry" = C_datahub %>%
-      filter(metric == "enterpriseCount",Breakdown!="Size") %>%
-      select(-metric, -metricNeat) %>%
-      rename("Enterprise count" = valueText),
-    "5c.Enterprise demography" = C_datahub %>%
-      filter(metric %in% c("births","deaths","active")) %>%
-      select(-metric) %>%
-      rename("Enterprise count" = valueText, Metric=metricNeat),
-    "6a.Key Stage 4 destinations" = C_datahub %>%
-      filter(metric == "sustainedPositiveDestinationKS4Rate") %>%
-      select(-metric, -metricNeat) %>%
-      rename("KS4 sustained positive destination rate" = valueText),
-    "6b.Key Stage 5 destinations" = C_datahub %>%
-      filter(metric == "sustainedPositiveDestinationKS5Rate") %>%
-      select(-metric, -metricNeat) %>%
-      rename("KS5 sustained positive destination rate" = valueText),
-    "7.ProjectedEmployment" = C_datahub %>%
-      filter(metric == "employmentProjection") %>%
-      select(-metric, -metricNeat) %>%
-      rename(Employment = valueText)
-  )
   output$download_btn0a <- downloadHandler(
     filename = function() {
-      "CoreIndicators.xlsx"
+      "AllAreasIndicators.xlsx"
     },
     content = function(file) {
-      write_xlsx(list_of_datasets0, path = file)
+      file.copy("Data/AppData/CoreIndicators.xlsx", file)
     }
   )
 
   # Download current area indicators
   filtered_data0 <- reactive({
-    currentGeogconcat<-C_datahub %>%
-      filter(geogConcat==input$geoChoiceOver)
+    currentGeogconcat <- C_datahub %>%
+      filter(Area == input$geoChoiceOver)
     list(
-      "1a.Emp by occupation" = currentGeogconcat %>%
-        filter(metric =="inemployment",Breakdown=="Occupation") %>%
-        select(-metric,-metricNeat) %>%
+      "1a.Employment by occupation" = currentGeogconcat %>%
+        filter(metric == "inemployment", Breakdown == "Occupation") %>%
+        select(-metric, -metricNeat, -Breakdown) %>%
+        rename("Employment volume" = valueText, Occupation = Subgroup),
+      "1b.Employment volumes" = currentGeogconcat %>%
+        filter(metric %in% c("all", "inemployment", "selfemployed", "unemployed", "inactive"), Breakdown != "Occupation", Breakdown != "Industry") %>%
+        select(-metric, -Breakdown, -Subgroup) %>%
+        rename("Volume" = valueText, Metric = metricNeat),
+      "1c.Employment by industry" = currentGeogconcat %>%
+        filter(metric == "inemployment", Breakdown == "Industry") %>%
+        select(-metric, -metricNeat, -Breakdown, Industry = Subgroup) %>%
         rename("Employment volume" = valueText),
-      "1b.Emp rate" = currentGeogconcat %>%
-        filter(metric %in% c("all","inemployment","selfemployed","unemployed","inactive"),Breakdown!="Occupation",Breakdown!="Industry") %>%
-        select(-metric,-Breakdown,-Subgroup) %>%
-        rename("Count" = valueText,Metric=metricNeat),
-      "1c.Emp by industry" = currentGeogconcat %>%
-        filter(metric =="inemployment",Breakdown=="Industry") %>%
-        select(-metric,-metricNeat) %>%
-        rename("Employment volume" = valueText),
-      "2a.Adverts over time" = currentGeogconcat %>%
-        filter(metric == "vacancies",Breakdown=="Total") %>%
-        select(-metric, -metricNeat,-Breakdown,-Subgroup) %>%
-        rename("Job adverts" = valueText),
-      "2b.Adverts by detailed profession" = currentGeogconcat %>%
-        filter(metric == "vacancies",Breakdown!="Total") %>%
+      "2a.Job adverts" = currentGeogconcat %>%
+        filter(metric == "vacancies", Breakdown == "Total") %>%
+        select(-metric, -metricNeat, -Breakdown, -Subgroup) %>%
+        rename("Online job adverts" = valueText),
+      "2b.Job adverts by profession" = currentGeogconcat %>%
+        filter(metric == "vacancies", Breakdown != "Total") %>%
         select(-metric, -metricNeat) %>%
-        rename("Job adverts" = valueText),
-      "3a.FE achievements SSA" = currentGeogconcat %>%
-        filter(metric == "vacancies",Breakdown!="Total") %>%
-        select(-metric, -metricNeat) %>%
-        rename("Job adverts" = valueText),
-      "3b.FE achievements" = currentGeogconcat %>%
-        filter(metric %in% c("achievements","participation"),Breakdown!="SSA") %>%
+        rename("Online job adverts" = valueText, "Detailed/Summary" = Breakdown, Profession = Subgroup),
+      "3a.FE achievements by SSA" = currentGeogconcat %>%
+        filter(metric == "achievements", Breakdown == "SSA") %>%
+        select(-metric, -metricNeat, -Breakdown) %>%
+        rename(Achievements = valueText, "Sector subject area tier 1" = Subgroup),
+      "3b.FE achievement&participation" = currentGeogconcat %>%
+        filter(metric %in% c("achievements", "participation"), Breakdown != "SSA") %>%
         select(-metric) %>%
-        rename(Count = valueText,Metric=metricNeat),
-      "4.Qual by age and gender" = currentGeogconcat %>%
-        filter(metric %in% c("qualNone","qualL1","qualL2","qualApp","qualL3","qualL4","qualOther")) %>%
+        rename(Volume = valueText, Metric = metricNeat),
+      "4.Highest qualification" = currentGeogconcat %>%
+        filter(metric %in% c("qualNone", "qualL1", "qualL2", "qualApp", "qualL3", "qualL4", "qualOther")) %>%
         select(-metric) %>%
-        rename("16-64 year olds" = valueText,"Highest qualification"=metricNeat),
-      "5a.Ent by emp size band" = currentGeogconcat %>%
-        filter(metric == "enterpriseCount",Breakdown!="Industry") %>%
-        select(-metric, -metricNeat) %>%
-        rename("Enterprise count" = valueText),
-      "5b.Ent by emp industry" = currentGeogconcat %>%
-        filter(metric == "enterpriseCount",Breakdown!="Size") %>%
-        select(-metric, -metricNeat) %>%
-        rename("Enterprise count" = valueText),
+        rename("16-64 year olds" = valueText, "Highest qualification" = metricNeat),
+      "5a.Enterprises by size" = currentGeogconcat %>%
+        filter(metric == "enterpriseCount", Breakdown != "Industry") %>%
+        select(-metric, -metricNeat, -Breakdown) %>%
+        rename("Enterprise count" = valueText, "Size band" = Subgroup),
+      "5b.Enterprises by industry" = currentGeogconcat %>%
+        filter(metric == "enterpriseCount", Breakdown != "Size") %>%
+        select(-metric, -metricNeat, -Breakdown) %>%
+        rename("Enterprise count" = valueText, Industry = Subgroup),
       "5c.Enterprise demography" = currentGeogconcat %>%
-        filter(metric %in% c("births","deaths","active")) %>%
-        select(-metric) %>%
-        rename("Enterprise count" = valueText, Metric=metricNeat),
+        filter(metric %in% c("births", "deaths", "active")) %>%
+        select(-metric, -Breakdown, -Subgroup) %>%
+        rename("Enterprise count" = valueText, Metric = metricNeat),
       "6a.Key Stage 4 destinations" = currentGeogconcat %>%
         filter(metric == "sustainedPositiveDestinationKS4Rate") %>%
-        select(-metric, -metricNeat) %>%
-        rename("KS4 sustained positive destination rate" = valueText),
+        select(-metric, -metricNeat, -Breakdown) %>%
+        rename("KS4 sustained positive destination rate" = valueText, Outcome = Subgroup),
       "6b.Key Stage 5 destinations" = currentGeogconcat %>%
         filter(metric == "sustainedPositiveDestinationKS5Rate") %>%
         select(-metric, -metricNeat) %>%
         rename("KS5 sustained positive destination rate" = valueText),
-      "7.ProjectedEmployment" = currentGeogconcat %>%
+      "7.Projected employment" = currentGeogconcat %>%
         filter(metric == "employmentProjection") %>%
         select(-metric, -metricNeat) %>%
-        rename(Employment = valueText)
+        rename("Projected employment" = valueText)
     )
   })
   output$download_btn0b <- downloadHandler(
     filename = function() {
-      "CurrentIndicators.xlsx"
+      paste0(input$geoChoiceOver, " Indicators.xlsx")
     },
     content = function(file) {
       write_xlsx(filtered_data0(), path = file)
@@ -582,28 +526,31 @@ server <- function(input, output, session) {
   })
   englandTime <- C_time %>%
     filter(geogConcat == "England")
-  
-#create a function to build the overview KPIs
-  createOverviewKPI <- function(metricName,format) {
-    #"format" can either be "percent" or "number"
-    #set metric
-    currentGeogTimeMetric<-currentGeogTime()%>% filter(metric == metricName)
-    latest <- (currentGeogTimeMetric %>% filter(latest==1))$value
-    change <- latest - (currentGeogTimeMetric %>% filter(latest==-1))$value
-    
+
+  # create a function to build the overview KPIs
+  createOverviewKPI <- function(metricName, format) {
+    # "format" can either be "percent" or "number"
+    # set metric
+    currentGeogTimeMetric <- currentGeogTime() %>% filter(metric == metricName)
+    latest <- (currentGeogTimeMetric %>% filter(latest == 1))$value
+    change <- latest - (currentGeogTimeMetric %>% filter(latest == -1))$value
+
     # print with formatting
     h4(
-      span((currentGeogTimeMetric %>% filter(latest==1))$chartPeriod, style = "font-size: 16px;font-weight:normal;"),
+      span((currentGeogTimeMetric %>% filter(latest == 1))$chartPeriod, style = "font-size: 16px;font-weight:normal;"),
       br(),
-      if(format=="percent"){ 
-        paste0(format(100 * latest, digit = 2), "%")}
-      else{format(latest, big.mark = ",")},
+      if (format == "percent") {
+        paste0(format(100 * latest, digit = 2), "%")
+      } else {
+        format(latest, big.mark = ",")
+      },
       br(),
       span(
-        if(format=="percent"){ 
+        if (format == "percent") {
           paste0(sprintf("%+.0f", 100 * change), "ppts")
-        }
-         else{format_pm(change)} , # plus-minus and comma sep formatting
+        } else {
+          format_pm(change)
+        }, # plus-minus and comma sep formatting
         style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
         .noWS = c("before", "after") # remove whitespace
       ),
@@ -612,129 +559,140 @@ server <- function(input, output, session) {
     )
   }
 
-  #create a function to build the overview charts
-  createOverviewChart <- function(metricName,format,chartLabel) { 
-    #set metric
-    currentGeogTimeMetric<-currentGeogTime()%>% filter(metric == metricName)
-    change <- (currentGeogTimeMetric %>% filter(latest==1))$value - 
-      (currentGeogTimeMetric %>% filter(latest==-1))$value
-    line<-if(format=="percent"){ bind_rows(currentGeogTimeMetric,
-                    englandTime%>% filter(metric == metricName))}
-    else{currentGeogTimeMetric}
-    timeChop<-(currentGeogTimeMetric%>% filter(latest==-1))$timePeriod#The point at which to apply the red/green colouring
-  
-  ggplot(
-    line,
-    aes(
-      x = as.Date(timePeriod),
-      y = value,
-      group = geogConcat,
-      text = paste0(
-        geogConcat,"<br>",
-        chartPeriod,"<br>",
-        chartLabel,": ",
-        if(format=="percent"){ 
-          paste0(format(100 * value, digit = 2), "%")}
-        else{format(value, big.mark = ",")},
-        "<br>"
+  # create a function to build the overview charts
+  createOverviewChart <- function(metricName, format, chartLabel) {
+    # set metric
+    currentGeogTimeMetric <- currentGeogTime() %>% filter(metric == metricName)
+    change <- (currentGeogTimeMetric %>% filter(latest == 1))$value -
+      (currentGeogTimeMetric %>% filter(latest == -1))$value
+    line <- if (format == "percent") {
+      bind_rows(
+        currentGeogTimeMetric,
+        englandTime %>% filter(metric == metricName)
       )
-    )
-  ) +
-    geom_line(data = line %>% filter(timePeriod<=timeChop,geogConcat == input$geoChoiceOver)) +
-    geom_ribbon(
-      data = line %>% filter(timePeriod>=timeChop,geogConcat == input$geoChoiceOver),
-      aes(ymin = min(value), ymax = value),
-      fill = ifelse(change > 0, "#00703c", "#d4351c"),
-      alpha = 0.3
+    } else {
+      currentGeogTimeMetric
+    }
+    timeChop <- (currentGeogTimeMetric %>% filter(latest == -1))$timePeriod # The point at which to apply the red/green colouring
+
+    ggplot(
+      line,
+      aes(
+        x = as.Date(timePeriod),
+        y = value,
+        group = geogConcat,
+        text = paste0(
+          geogConcat, "<br>",
+          chartPeriod, "<br>",
+          chartLabel, ": ",
+          if (format == "percent") {
+            paste0(format(100 * value, digit = 2), "%")
+          } else {
+            format(value, big.mark = ",")
+          },
+          "<br>"
+        )
+      )
     ) +
-    geom_line(
-      data = line %>% filter(timePeriod>=timeChop,geogConcat == input$geoChoiceOver),
-      color = ifelse(change > 0, "#00703c", "#d4351c")
-    ) +
-    theme_classic() +
-    theme(
-      axis.line = element_blank(),
-      axis.ticks = element_blank(),
-      axis.title = element_blank(),
-      panel.background = element_rect(fill = "#f3f2f1"),
-      plot.background = element_rect(fill = "#f3f2f1")
-    ) +
-    scale_y_continuous(
-      labels = 
-        if(format=="percent"){ 
-      scales::percent_format(accuracy = 1)}else{
-        label_number_si(accuracy = 1)
-      }
-      ,
-      breaks = 
-        if(format=="percent"){ 
-          c((C_axisMinMax%>%filter(metric==metricName))$minAxis,(C_axisMinMax%>%filter(metric==metricName))$maxAxis)}else{
-        c(min(line$value), max(line$value))}
-      ,
-      limits = 
-        if(format=="percent"){ 
-          c((C_axisMinMax%>%filter(metric==metricName))$minAxis-0.001,(C_axisMinMax%>%filter(metric==metricName))$maxAxis)}else{
-            c(min(line$value), max(line$value))}
-    )+
-    scale_x_date(
-      name = "My date axis title",
-      date_breaks = "1 years",
-      date_labels = "%Y"
-    )+
-    if(format=="percent"){
+      geom_line(data = line %>% filter(timePeriod <= timeChop, geogConcat == input$geoChoiceOver)) +
+      geom_ribbon(
+        data = line %>% filter(timePeriod >= timeChop, geogConcat == input$geoChoiceOver),
+        aes(ymin = min(value), ymax = value),
+        fill = ifelse(change > 0, "#00703c", "#d4351c"),
+        alpha = 0.3
+      ) +
       geom_line(
-        data = line %>% filter(geogConcat == "England"),
-        alpha = 0.5
-      ) }else{}
+        data = line %>% filter(timePeriod >= timeChop, geogConcat == input$geoChoiceOver),
+        color = ifelse(change > 0, "#00703c", "#d4351c")
+      ) +
+      theme_classic() +
+      theme(
+        axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank(),
+        panel.background = element_rect(fill = "#f3f2f1"),
+        plot.background = element_rect(fill = "#f3f2f1")
+      ) +
+      scale_y_continuous(
+        labels =
+          if (format == "percent") {
+            scales::percent_format(accuracy = 1)
+          } else {
+            label_number_si(accuracy = 1)
+          },
+        breaks =
+          if (format == "percent") {
+            c((C_axisMinMax %>% filter(metric == metricName))$minAxis, (C_axisMinMax %>% filter(metric == metricName))$maxAxis)
+          } else {
+            c(min(line$value), max(line$value))
+          },
+        limits =
+          if (format == "percent") {
+            c((C_axisMinMax %>% filter(metric == metricName))$minAxis - 0.001, (C_axisMinMax %>% filter(metric == metricName))$maxAxis)
+          } else {
+            c(min(line$value), max(line$value))
+          }
+      ) +
+      scale_x_date(
+        name = "My date axis title",
+        date_breaks = "1 years",
+        date_labels = "%Y"
+      ) +
+      if (format == "percent") {
+        geom_line(
+          data = line %>% filter(geogConcat == "England"),
+          alpha = 0.5
+        )
+      } else {}
   }
-  
-  #create a function to render the overview charts
-  renderOverviewChart <- function(chartData) { 
-  ggplotly(chartData(),
-           tooltip = "text",
-           height = 81
-  ) %>%
-    layout(
-      margin = list(
-        l = 0,
-        r = 4,
-        # increase this margin a bit to prevent the last lable dissapearing
-        b = 0,
-        t = 0,
-        pad = 0
-      ),
-      xaxis = list(fixedrange = TRUE),
-      yaxis = list(fixedrange = TRUE)
-    ) %>% # disable zooming because it's awful on mobile
-    config(displayModeBar = FALSE)
+
+  # create a function to render the overview charts
+  renderOverviewChart <- function(chartData) {
+    ggplotly(chartData(),
+      tooltip = "text",
+      height = 81
+    ) %>%
+      layout(
+        margin = list(
+          l = 0,
+          r = 4,
+          # increase this margin a bit to prevent the last lable dissapearing
+          b = 0,
+          t = 0,
+          pad = 0
+        ),
+        xaxis = list(fixedrange = TRUE),
+        yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
   }
 
   #### 2.2.3.1 Employment count ----
   # Employment count KPI
   output$overviewEmpCntKPI <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("inemployment","number")
+    createOverviewKPI("inemployment", "number")
   })
 
   # create Emp chart
   empLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("inemployment","number","In employment")
+    createOverviewChart("inemployment", "number", "In employment")
   })
-  
-#render empchart
+
+  # render empchart
   output$empLineChart <- renderPlotly({
-    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load 
+    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
     renderOverviewChart(empLineChart)
   })
 
   #### 2.2.3.2 Employment rate ----
   output$overviewEmpRateKPI <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("inemploymentRate","percent")
+    createOverviewKPI("inemploymentRate", "percent")
   })
 
   empRateLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("inemploymentRate","percent","Employment rate")
+    createOverviewChart("inemploymentRate", "percent", "Employment rate")
   })
 
   output$empRateLineChart <- renderPlotly({
@@ -753,12 +711,12 @@ server <- function(input, output, session) {
   # Vacancy kpi
   output$overviewJobKPI <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("vacancies","number")
+    createOverviewKPI("vacancies", "number")
   })
 
   # Vacancy chart
   jobLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("vacancies","number","Online job adverts")
+    createOverviewChart("vacancies", "number", "Online job adverts")
   })
 
   output$jobLineChart <- renderPlotly({
@@ -778,13 +736,12 @@ server <- function(input, output, session) {
   # get EandT data for current area
   output$skisup.ETach <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("achievements Education and training","number")
-
+    createOverviewKPI("achievements Education and training", "number")
   })
 
   # e and t chart
   etLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("achievements Education and training","number","Education and training achievements")
+    createOverviewChart("achievements Education and training", "number", "Education and training achievements")
   })
 
   output$etLineChart <- renderPlotly({
@@ -796,12 +753,12 @@ server <- function(input, output, session) {
   # get App data for current area
   output$skisup.APPach <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("achievements Apprenticeships","number")
+    createOverviewKPI("achievements Apprenticeships", "number")
   })
 
   # app chart
   AppLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("achievements Apprenticeships","number","Apprenticeship achievements")
+    createOverviewChart("achievements Apprenticeships", "number", "Apprenticeship achievements")
   })
 
   output$AppLineChart <- renderPlotly({
@@ -818,15 +775,15 @@ server <- function(input, output, session) {
   })
 
   #### 2.2.3.6 KS5 sustained positive destination rate ----
-   # destinations overview KPI
+  # destinations overview KPI
   output$dest.ks5over <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("sustainedPositiveDestinationKS5Rate","percent")
+    createOverviewKPI("sustainedPositiveDestinationKS5Rate", "percent")
   })
 
   # KS5 destinations chart
   KS5LineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("sustainedPositiveDestinationKS5Rate","percent","KS5 sustained positive destination rate")
+    createOverviewChart("sustainedPositiveDestinationKS5Rate", "percent", "KS5 sustained positive destination rate")
   })
 
   output$KS5LineChart <- renderPlotly({
@@ -846,12 +803,12 @@ server <- function(input, output, session) {
   # enterprise overview KPI
   output$UBC.micro <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("enterprisePctMicro","percent")
+    createOverviewKPI("enterprisePctMicro", "percent")
   })
 
   # micro enterprise chart
   UBCLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("enterprisePctMicro","percent","Share of businesses with 0-9 employees (micro)")
+    createOverviewChart("enterprisePctMicro", "percent", "Share of businesses with 0-9 employees (micro)")
   })
 
   output$UBCLineChart <- renderPlotly({
@@ -868,15 +825,15 @@ server <- function(input, output, session) {
   })
 
   #### 2.2.3.8 Qualifications NVQ ----
- # NVQ3 or above overview KPI
+  # NVQ3 or above overview KPI
   output$APS.nvq3plus <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("L3PlusRate","percent")
+    createOverviewKPI("L3PlusRate", "percent")
   })
 
   # qualification chart
   Nvq3plusLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("L3PlusRate","percent","People with a qualification at level 3 or above" )
+    createOverviewChart("L3PlusRate", "percent", "People with a qualification at level 3 or above")
   })
 
   output$Nvq3plusLineChart <- renderPlotly({
@@ -893,8 +850,7 @@ server <- function(input, output, session) {
   })
 
   #### 2.2.3.9 Working futures ----
-
-  # working futres KPI
+  # This is in a slightly different format so the functions aren't used
   output$wfOverviewKpi <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
     change <- (C_Geog %>%
@@ -957,8 +913,8 @@ server <- function(input, output, session) {
       ) +
       scale_y_continuous(
         labels = scales::percent_format(accuracy = 2),
-        breaks = c((C_axisMinMax%>%filter(metric=="employmentProjection"))$minAxis,(C_axisMinMax%>%filter(metric=="employmentProjection"))$maxAxis),
-        limits =c((C_axisMinMax%>%filter(metric=="employmentProjection"))$minAxis-0.001,(C_axisMinMax%>%filter(metric=="employmentProjection"))$maxAxis)
+        breaks = c((C_axisMinMax %>% filter(metric == "employmentProjection"))$minAxis, (C_axisMinMax %>% filter(metric == "employmentProjection"))$maxAxis),
+        limits = c((C_axisMinMax %>% filter(metric == "employmentProjection"))$minAxis - 0.001, (C_axisMinMax %>% filter(metric == "employmentProjection"))$maxAxis)
       ) +
       scale_x_discrete(breaks = c("23", "25", "27", "29", "31", "33", "35"))
   })
@@ -976,7 +932,6 @@ server <- function(input, output, session) {
     )
   })
 
-
   ## 2.3 Local skills----
 
   ### 2.3.2 Reusable variables----
@@ -986,42 +941,6 @@ server <- function(input, output, session) {
       unlist(metricChoices)[unlist(metricChoices) == input$splashMetric]
     ))))
   })
-  # get current area name
-  # areaClicked <- reactive({
-  #   if ("map_shape_click" %in% names(input) &&
-  #     (nrow(C_LEP2020 %>%
-  #       filter(
-  #         geographic_level == input$splashGeoType,
-  #         Area == C_Geog$areaName[C_Geog$areaCode == input$map_shape_click$id]
-  #       ))) != 0) {
-  #     event <- input$map_shape_click
-  #   } else {
-  #     event <- data.frame(id = c("E37000025"))
-  #   }
-  #   C_Geog$areaName[C_Geog$areaCode == event$id]
-  # })
-
-  # areaClicked <- reactive({
-  #   input$lep1
-  # })
-
-
-
-  # Update overview to match map
-  # observe({
-  #   updateSelectInput(session, "lep1",
-  #     selected = areaClicked()
-  #   )
-  #   updateSelectInput(session, "GeoType",
-  #     selected = input$splashGeoType
-  #   )
-  # })
-  # observeEvent(input$lep1, {
-  #   print(input$lep1)
-  #   print(areaClicked())
-  #   if(is.null(areaClicked())==FALSE){
-  #   areaClicked()<-input$lep1}else{}
-  # })
 
   # get current LA
   laClicked <- reactive({
@@ -1086,10 +1005,6 @@ server <- function(input, output, session) {
   })
 
   ### 2.3.5 Comparison filter----
-  # geogLookup <- C_Geog %>%
-  #   st_drop_geometry() %>%
-  #   distinct(areaName, geog) %>%
-  #   mutate(concatGeog = paste0(areaName, geog))
   output$geoComp <- renderUI({
     selectizeInput(
       "geoComps",
@@ -1283,7 +1198,6 @@ server <- function(input, output, session) {
     paste0("What is the variation within ", input$geoChoice, "?")
   })
   #### 2.3.6.2 Comment----
-
   output$commentLA <- renderUI({
     validate(
       need("geoChoice" %in% names(input), ""),
@@ -1414,11 +1328,11 @@ server <- function(input, output, session) {
         metric == input$splashMetric
       )
     currentChange <- (currentArea %>%
-      filter(latest==1))$value -
+      filter(latest == 1))$value -
       (currentArea %>%
         filter(timePeriod == min(timePeriod)))$value
     englandChange <- (englandArea %>%
-      filter(latest==1))$value -
+      filter(latest == 1))$value -
       (englandArea %>%
         filter(timePeriod == min(timePeriod)))$value
     paste0(
@@ -1570,7 +1484,8 @@ server <- function(input, output, session) {
     distinct(metric, breakdown)
   output$breakdownFilter <- renderUI({
     validate(
-      need(input$splashMetric %in% distinctBreakdowns$metric, ""))
+      need(input$splashMetric %in% distinctBreakdowns$metric, "")
+    )
     selectizeInput(
       inputId = "barBreakdown",
       label = NULL,
@@ -1590,7 +1505,7 @@ server <- function(input, output, session) {
     validate(
       need(input$barBreakdown != "", ""),
       need(input$barBreakdown == "Detailed Profession Category", ""),
-        need(input$splashMetric %in% distinctBreakdowns$metric, "")
+      need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     selectizeInput(
       inputId = "summaryProfession",
@@ -1603,7 +1518,7 @@ server <- function(input, output, session) {
   output$subgroupFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
-        need(input$splashMetric %in% distinctBreakdowns$metric, "")
+      need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     pickerInput(
       inputId = "barSubgroup",
@@ -1644,7 +1559,7 @@ server <- function(input, output, session) {
   output$titleBreakdown <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
-        need(input$splashMetric %in% distinctBreakdowns$metric, "")
+      need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     paste0(
       "How do ",
@@ -1658,7 +1573,7 @@ server <- function(input, output, session) {
   #### 2.3.8.4 Comment ----
   output$commentBreakdown <- renderUI({
     validate(
-      need("barBreakdown" %in% names(input)|!input$splashMetric %in% distinctBreakdowns$metric, ""),
+      need("barBreakdown" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric, ""),
       need(input$geoChoice != "", "")
     )
 
@@ -1719,7 +1634,7 @@ server <- function(input, output, session) {
           ""
         }
       )
-      }
+    }
   })
 
   #### 2.3.8.3 Bar chart ----
@@ -1869,11 +1784,12 @@ server <- function(input, output, session) {
     list(
       "AllArea" = filter(C_time, metric == input$splashMetric) %>%
         mutate(metric = case_when(metric == "employmentProjection" ~ "ProjectedYearOnYearEmploymentGrowth", TRUE ~ metric)) %>%
-        #select(-area, -geographic_level, -chart_year) %>%
-        rename(Area = geogConcat),
+        select(-latest, -valueText, -timePeriod) %>%
+        rename(Area = geogConcat, Period = chartPeriod, Metric = metric, Value = value),
       "AllAreaBreakdown" = filter(C_breakdown, metric == input$splashMetric) %>%
         mutate(metric = case_when(metric == "employmentProjection" ~ "ProjectedEmploymentGrowthTo2035", TRUE ~ metric)) %>%
-        rename(Area = geogConcat)
+        select(-valueText) %>%
+        rename(Area = geogConcat, Metric = metric, Value = value, Breakdown = breakdown, Subgroup = subgroup)
     )
   })
   nameDownloadV1All <- reactive({
@@ -1899,8 +1815,8 @@ server <- function(input, output, session) {
           geogConcat == "England")
       ) %>%
         mutate(metric = case_when(metric == "employmentProjection" ~ "ProjectedYearOnYearEmploymentGrowth", TRUE ~ metric)) %>%
-        #select(-area, -geographic_level, -chart_year) %>%
-        rename(Area = geogConcat),
+        select(-latest, -valueText, -timePeriod) %>%
+        rename(Area = geogConcat, Period = chartPeriod, Metric = metric, Value = value),
       "CurrentAreaBreakdown" = filter(
         C_breakdown,
         metric == input$splashMetric,
@@ -1909,7 +1825,8 @@ server <- function(input, output, session) {
           geogConcat == "England")
       ) %>%
         mutate(metric = case_when(metric == "employmentProjection" ~ "ProjectedEmploymentGrowthTo2035", TRUE ~ metric)) %>%
-        rename(Area = geogConcat)
+        select(-valueText) %>%
+        rename(Area = geogConcat, Metric = metric, Value = value, Breakdown = breakdown, Subgroup = subgroup)
     )
   })
   nameDownloadV1Current <- reactive({
@@ -1943,7 +1860,7 @@ server <- function(input, output, session) {
         if (is.null(input$hubArea) == TRUE) {
           TRUE
         } else {
-          geogConcat %in% input$hubArea
+          Area %in% input$hubArea
         }
       ) %>%
         distinct(Metrics = metricNeat),
@@ -1960,14 +1877,14 @@ server <- function(input, output, session) {
         if (is.null(input$hubArea) == TRUE) {
           TRUE
         } else {
-          geogConcat %in% input$hubArea
+          Area %in% input$hubArea
         },
         if (is.null(input$hubMetric) == TRUE) {
           TRUE
         } else {
           metricNeat %in% input$hubMetric
         }
-      ) %>% distinct(Breakdowns = breakdown),
+      ) %>% distinct(Breakdown),
       multiple = TRUE,
       label = NULL,
       options = list(placeholder = "Choose breakdowns")
@@ -1981,7 +1898,7 @@ server <- function(input, output, session) {
         if (is.null(input$hubArea) == TRUE) {
           TRUE
         } else {
-          geogConcat %in% input$hubArea
+          Area %in% input$hubArea
         },
         if (is.null(input$hubMetric) == TRUE) {
           TRUE
@@ -1991,13 +1908,13 @@ server <- function(input, output, session) {
         if (is.null(input$hubBreakdowns) == TRUE) {
           TRUE
         } else {
-          breakdown %in% input$hubBreakdowns
+          Breakdown %in% input$hubBreakdowns
         }
       ) %>%
-        distinct("Time period" = time_period),
+        distinct("Time period" = Period),
       multiple = TRUE,
       label = NULL,
-      options = list(placeholder = "Choose years*")
+      options = list(placeholder = "Choose period*")
     )
   })
 
@@ -2009,26 +1926,26 @@ server <- function(input, output, session) {
           TRUE
         } else {
           {
-            geogConcat %in% input$hubArea
+            Area %in% input$hubArea
           } |
             (if ("Yes" %in% input$hubLA) {
-              geogConcat %in% (
+              Area %in% (
                 C_Geog %>% filter(geog == "LADU", (LEP %in% input$hubArea | LSIP %in% input$hubArea | MCA %in% input$hubArea))
                   %>% distinct(geogConcat)
               )$geogConcat
             } else {
-              geogConcat == "xxx"
+              Area == "xxx"
             }) |
             (if ("National" %in% input$hubComparators) {
-              geogConcat == "England"
+              Area == "England"
             } else {
-              geogConcat == "xxx"
+              Area == "xxx"
             })
         }),
         if (is.null(input$hubYears) == TRUE) {
           TRUE
         } else {
-          time_period %in% input$hubYears
+          Period %in% input$hubYears
         },
         if (is.null(input$hubMetric) == TRUE) {
           TRUE
@@ -2038,16 +1955,16 @@ server <- function(input, output, session) {
         (if (is.null(input$hubBreakdowns) == TRUE) {
           TRUE
         } else {
-          breakdown %in% input$hubBreakdowns
+          Breakdown %in% input$hubBreakdowns
         })
       ) %>%
       select(
-        Year = time_period,
-        Area = geogConcat,
+        Period = Period,
+        Area,
         Data = metricNeat,
-        Breakdown = breakdown,
-        Splits = subgroup,
-        Value = value
+        Breakdown,
+        Subgroup,
+        Value = valueText
       )
   })
 
@@ -2061,7 +1978,7 @@ server <- function(input, output, session) {
   })
   output$hubDownload <- downloadHandler(
     filename = function() {
-      "LocalSkillsV1Dataset.xlsx"
+      "LocalSkillsDataset.xlsx"
     },
     content = function(file) {
       write_xlsx(filtered_data1(), path = file)
