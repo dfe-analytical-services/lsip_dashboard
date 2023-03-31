@@ -2660,10 +2660,13 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
   
+
   output$rdPlot <- renderUI({
-    if ("barBreakdown" %in% names(input) && input$barBreakdown == "No breakdowns available") {} else {
-      withSpinner(plotlyOutput("Splash_rd"))
-    }
+ if (input$splashMetric == "wfEmployment") {
+    withSpinner(plotlyOutput("Splash_rd"))
+  }  else {
+    withSpinner(leafletOutput("mapLA"))
+  }
   })
   
   ## 2.4 DataHub----
