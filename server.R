@@ -1614,6 +1614,7 @@ server <- function(input, output, session) {
     )
   })
 
+  
 
   ## 2.3 Local skills----
 
@@ -2561,6 +2562,110 @@ server <- function(input, output, session) {
     }
   )
 
+  ### 2.3.10 Wf RD bar chart----
+  Splash_rd <- eventReactive(
+    c(
+      # input$map_shape_click,
+      input$geoChoice,
+      input$geoComps,
+      # input$barBreakdown,
+      input$barSubgroup,
+      # input$mapLA_shape_click,
+      input$splashMetric
+    ),
+    {
+      validate(
+        need(input$barBreakdown != "", ""),
+        need(input$barSubgroup != "", ""),
+        need(input$splashMetric == "workingFutures"),
+        need(input$barBreakdown != "No breakdowns available", "")
+      )
+      Splash_2020 <- D_wfRDF1 %>% filter(
+        breakdown == input$barBreakdown,
+        subgroup %in% input$barSubgroup,
+  
+        # get lep/lsip/mca areas
+        (geogConcat == input$geoChoice | geogConcat %in% if ("geoComps" %in% names(input)) {
+          input$geoComps
+        } else {
+          "\nNone"
+        }) |
+          # get england for comparison
+          (geogConcat == "England")
+  
+      )
+      # if no rows (because of filter lag) then don't plot
+      if (nrow(Splash_2020) == 0) {
+        "x"
+      } else {
+        # add an extra column so the colours work in ggplot when sorting alphabetically
+        Splash_2020$Area <- factor(Splash_2020$geogConcat,
+                                 levels = c("England", input$geoChoice, input$geoComps) # paste0(laClicked()," LADU"),
+        )
+        ggplot(
+          Splash_2020,
+          aes(
+            x = reorder(subgroups, value, mean),
+            y = value,
+           fill = Area,
+            text = paste0(
+              "Area: ",
+              Area,
+              "<br>",
+              currentMetric(),
+              ": ",
+                scales::percent(round(value, 3)),
+             "<br>"
+            )
+          )
+        ) +
+          geom_col(position = "dodge") +
+          scale_y_continuous(labels = scales::percent) +
+          scale_x_discrete(
+            labels = function(x) {
+              str_wrap(x, width = 26)
+            }
+          ) +
+          coord_flip() +
+          theme_minimal() +
+          labs(fill = "") +
+          theme(
+            legend.position = "none",
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.text.y = element_text(size = 7),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank()
+          ) +
+          scale_fill_manual(values = chartColors6)
+      }
+    }
+  )
+  
+  output$Splash_rd <- renderPlotly({
+    # check it exists
+    validate(need(Splash_rd() != "x", ""))
+    ggplotly(Splash_rd(),
+             tooltip = c("text")
+    ) %>%
+      layout(
+        legend = list(
+          orientation = "h",
+          x = 0,
+          y = -0.1
+        ),
+        xaxis = list(fixedrange = TRUE),
+        yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+  
+  output$rdPlot <- renderUI({
+    if ("barBreakdown" %in% names(input) && input$barBreakdown == "No breakdowns available") {} else {
+      withSpinner(plotlyOutput("Splash_rd"))
+    }
+  })
+  
   ## 2.4 DataHub----
   ### 2.4.1 Filters----
   output$hubAreaInput <- renderUI({

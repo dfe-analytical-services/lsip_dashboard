@@ -24,6 +24,7 @@ library(rgdal)
 library(rgeos)
 library(sf)
 
+sTime <- Sys.time() #for initial time
 # list leps and LSIPs for dropdowns
 C_LEP2020 <- I_LEP2020 %>%
   distinct(Area = LEP21NM1) %>%
@@ -2697,3 +2698,7 @@ write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALS
 # Tidy up data text table
 names(I_DataText) <- gsub(".", " ", names(I_DataText), fixed = TRUE)
 write.csv(I_DataText, file = "Data\\AppData\\I_DataText.csv", row.names = FALSE)
+
+
+eTime <- Sys.time()
+message(" TransformData run. \n Time taken: ", (td <- eTime-sTime)," ", units(td),"\n")
