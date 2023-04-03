@@ -2032,12 +2032,14 @@ D_wfRDF1 <- T_wfRDF1 %>%
            grepl("[0-9]", subgroups) == TRUE ~ "Occupation (SOC2020 submajor)",
            subgroups == "All occupations" ~ "Total",
            TRUE ~ "Occupation (SOC2020 major)"
+  
          ), 
          chartPeriod = 2035, 
          latest = 1, 
          valueText = as.character(value), 
          value = as.numeric(value))  %>% 
-  mutate(timePeriod = as.Date(ISOdate(as.numeric(chartPeriod), 1, 1))) %>% # shift to start of year
+  mutate(timePeriod = as.Date(ISOdate(as.numeric(chartPeriod), 1, 1)), 
+         value = value*1000) %>% # shift to start of year
 left_join(I_wfAreaName) %>%
   mutate(geogConcat = paste0(trimws(`.Main`, "both"), " ", sub(" name", "", Scenario))) %>% # get area name
   mutate(geogConcat = case_when(
@@ -2055,8 +2057,8 @@ left_join(I_wfAreaName) %>%
     geogConcat == "Brighton and Hove East Sussex West Sussex LSIP" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
     TRUE ~ geogConcat
   )) %>% #fixing spellings
-mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) %>% 
-  select(subgroup, metric, breakdown, geogConcat, chartPeriod, value, timePeriod, latest, valueText)# remove numbers from soc codes for presentation
+mutate(subgroups = trimws(gsub("[[:digit:]]+", "", subgroups))) %>% 
+  select(subgroups, metric, breakdown, geogConcat, chartPeriod, value, timePeriod, latest, valueText)# remove numbers from soc codes for presentation
 write.csv(D_wfRDF1, file = "Data\\AppData\\D_wfRDF1.csv", row.names = FALSE)
 
 
