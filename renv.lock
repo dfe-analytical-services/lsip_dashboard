@@ -1593,22 +1593,6 @@
       ],
       "Hash": "d66fe009d4c20b7ab1927eb405db9ee2"
     },
-    "rgdal": {
-      "Package": "rgdal",
-      "Version": "1.6-4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Requirements": [
-        "R",
-        "grDevices",
-        "graphics",
-        "methods",
-        "sp",
-        "stats",
-        "utils"
-      ],
-      "Hash": "92183bff0bac3a711fde35a22c1bf45b"
-    },
     "rgeos": {
       "Package": "rgeos",
       "Version": "0.6-1",
