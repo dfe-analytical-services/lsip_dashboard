@@ -13,7 +13,6 @@
 # Load libraries ----
 library(openxlsx) # use read.xlsx, read.csv
 library(sf) # use st_read
-library(rgdal) # use readOGR
 library(tidyverse) # use map_df, mutate
 
 # 1.Geography and mapping tables ----
@@ -48,8 +47,6 @@ folder <- "1-6_LABoundary"
 I_mapLA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
   stringsAsFactors = F
 )
-# import as spatial vector to build LSIP map
-I_mapLAspatial <- readOGR(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 ## 1.7 MCA boundary----
 folder <- "1-7_MCABoundary"

@@ -12,8 +12,7 @@
 # Load libraries ----
 library(tidyverse) # mostly dplyr
 library(janitor) # use clean_names()
-library(rgeos) # use gUnaryUnion
-library(sf) # use st_as_sf
+library(sf) # use st_as_sf st_union sf_use_s2
 library(lubridate) # use years
 
 # 1 Geographical data ----
@@ -54,11 +53,15 @@ addEngland <- data.frame(
 )
 
 # add on LSIPs to LA file
-LasLsip <- merge(I_mapLAspatial, I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by.x = "LAD22CD", by.y = "LAD21CD")
+LasLsip <- merge(I_mapLA, I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by.x = "LAD22CD", by.y = "LAD21CD")
 # dissolve the LSIP LAs
-LSIPsh <- gUnaryUnion(LasLsip, id = LasLsip@data$LSIP)
+sf_use_s2(F) # to avoid overlapping error
+LSIPsh <- LasLsip %>% 
+  group_by(LSIP) %>% 
+  summarize(geometry = st_union(geometry))
 # turn into GoeJson
 LSIPgeojson <- st_as_sf(LSIPsh)
+
 # add on LSIP names
 LSIPmap <- bind_cols(LSIPgeojson, I_LEP2020 %>%
   distinct(Area = LSIP) %>%
