@@ -15,6 +15,8 @@ shhh(library(shinytest))
 shhh(library(shinydashboard))
 shhh(library(shinyWidgets))
 shhh(library(shinyGovstyle))
+shhh(library(janitor))
+shhh(library(openxlsx))
 shhh(library(tidyverse))#various data manipulation
 shhh(library(scales))#formatting numbers
 shhh(library(plotly))#interactive plots
@@ -25,6 +27,7 @@ shhh(library(sf))#load map data
 shhh(library(capture))#screenshots
 shhh(library(shinyalert))#cookie pop up
 shhh(library(shinycssloaders))#spinners
+shhh(library(RColorBrewer))#map colours
 
 # renv::snapshot()
 
