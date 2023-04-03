@@ -28,6 +28,7 @@ shhh(library(capture))#screenshots
 shhh(library(shinyalert))#cookie pop up
 shhh(library(shinycssloaders))#spinners
 shhh(library(RColorBrewer))#map colours
+shhh(library(rgdal))#mapping
 
 # renv::snapshot()
 
