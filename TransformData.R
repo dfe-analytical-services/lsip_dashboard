@@ -872,9 +872,9 @@ C_localSkillsDataset <- bind_rows(
   C_destinations,
   C_adverts,
   C_businesses
-) %>%
-  ## add in GLA as an MCA
-  C_localSkillsDataset() <- bind_rows(
+)
+## add in GLA as an MCA
+C_localSkillsDataset <- bind_rows(
   C_localSkillsDataset,
   C_localSkillsDataset %>%
     filter(geogConcat == "London LEP") %>%
@@ -1073,7 +1073,7 @@ list_of_datasets0 <- list(
     select(-metric, -metricNeat, -Breakdown, -Subgroup) %>%
     rename("Online job adverts" = valueText),
   "2b.Job adverts by profession" = C_datahub %>%
-    filter(metric == "vacancies", Breakdown != "Total") %>%
+    filter(metric == "vacancies", Breakdown != "Total", latest == 1) %>%
     select(-metric, -metricNeat) %>%
     rename("Online job adverts" = valueText, "Detailed/Summary" = Breakdown, Profession = Subgroup),
   "3a.FE achievements by SSA" = C_datahub %>%
