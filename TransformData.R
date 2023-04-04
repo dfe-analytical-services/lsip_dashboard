@@ -56,8 +56,8 @@ addEngland <- data.frame(
 LasLsip <- merge(I_mapLA, I_LEP2020 %>% select(LAD21CD, LSIP, LEP = LEP21NM1, LEP2 = LEP21NM2), by.x = "LAD22CD", by.y = "LAD21CD")
 # dissolve the LSIP LAs
 sf_use_s2(F) # to avoid overlapping error
-LSIPsh <- LasLsip %>% 
-  group_by(LSIP) %>% 
+LSIPsh <- LasLsip %>%
+  group_by(LSIP) %>%
   summarize(geometry = st_union(geometry))
 # turn into GoeJson
 LSIPgeojson <- st_as_sf(LSIPsh)
@@ -857,7 +857,7 @@ C_businesses <- bind_rows(
   pivot_longer(!c("chartPeriod", "timePeriod", "latest", "geogConcat"), names_to = "metric", values_to = "value") %>%
   mutate(valueText = as.character(value), breakdown = "Total", subgroup = "Total")
 
-# 3. Combine datsets ----
+# 3. Combine datasets ----
 C_localSkillsDataset <- bind_rows(
   C_emp,
   C_empOcc,
@@ -872,10 +872,9 @@ C_localSkillsDataset <- bind_rows(
   C_destinations,
   C_adverts,
   C_businesses
-)
-
-## add in GLA as an MCA
-C_localSkillsDataset <- bind_rows(
+) %>%
+  ## add in GLA as an MCA
+  C_localSkillsDataset() <- bind_rows(
   C_localSkillsDataset,
   C_localSkillsDataset %>%
     filter(geogConcat == "London LEP") %>%
@@ -883,15 +882,20 @@ C_localSkillsDataset <- bind_rows(
 )
 
 # 4. Create datasets used by the app----
-## 4.1 C_Geog ----
+## 4.1 Unused metrics ----
+# We do not use all the metrics we capture in the data in the dashboard. here we list those we want to ignore
+dashboardMetricIgnore <- c("all", "economicallyactive", "employees", "starts_rate_per_100000_population", "starts", "active", "births", "deaths", "qualNone", "qualL1", "qualL2", "qualApp", "qualL3", "qualL4", "qualOther", "employmentProjection")
+
+## 4.2 C_Geog ----
 # This is used in the maps. It contains only the latest total data for each metric and area.
 C_Geog <- neatGeog %>%
   left_join(
     (C_localSkillsDataset %>%
       filter(
         breakdown == "Total", latest == 1,
-        !metric %in% c("employmentProjection", "employmentProjectionAnnualGrowth", "all", "economicallyactive", "employees", "starts_rate_per_100000_population", "starts", "active", "births", "deaths", "qualNone", "qualL1", "qualL2", "qualApp", "qualL3", "qualL4", "qualOther")
-      ) %>% # remove metrics not used
+        metric != "employmentProjectionAnnualGrowth", # the maps use the employmentProjectionGrowth2023to2035 metric
+        !metric %in% dashboardMetricIgnore # remove metrics not used
+      ) %>%
       select(value, metric, geogConcat) %>%
       pivot_wider(names_from = metric, values_from = value)),
     by = c("geogConcat" = "geogConcat")
@@ -915,8 +919,10 @@ C_time <- C_localSkillsDataset %>%
       filter(subgroup == "Total") %>%
       mutate(metric = "enterprisePctMicro", breakdown = "Total", valueText = as.character(value))
   ) %>%
-  # remove metrics not used
-  filter(!metric %in% c("employmentProjection", "employmentProjectionGrowth2023to2035", "all", "economicallyactive", "employees", "starts_rate_per_100000_population", "starts", "active", "births", "deaths", "qualNone", "qualL1", "qualL2", "qualApp", "qualL3", "qualL4", "qualOther")) %>%
+  filter(
+    metric != "employmentProjectionGrowth2023to2035", # time charts only use employmentProjectionAnnualGrowth metric
+    !metric %in% dashboardMetricIgnore # remove metrics not used
+  ) %>%
   mutate(metric = case_when(
     breakdown != "Total" ~ paste(metric, subgroup),
     TRUE ~ metric
@@ -958,7 +964,10 @@ C_breakdown <- bind_rows(
     ) %>%
     select(geogConcat, metric, breakdown, subgroup, value, valueText)
 ) %>%
-  filter(!metric %in% c("employmentProjection", "employmentProjectionAnnualGrowth", "all", "economicallyactive", "employees", "starts_rate_per_100000_population", "starts", "active", "births", "deaths", "qualNone", "qualL1", "qualL2", "qualApp", "qualL3", "qualL4", "qualOther")) %>% # remove metrics not used
+  filter(
+    metric != "employmentProjectionAnnualGrowth", # breakdown chart only uses employmentProjectionGrowth2023to2035 metric
+    !metric %in% dashboardMetricIgnore # remove metrics not used
+  ) %>%
   mutate(metric = case_when(
     metric == "employmentProjectionGrowth2023to2035" ~ "employmentProjection",
     TRUE ~ metric
