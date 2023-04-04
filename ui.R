@@ -392,7 +392,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         12,
         h1("Local Skills Dashboard"),
         p(
-          "The Local Skills dashboard is an R shiny dashboard displaying published local data from a variety of sources in an easy to navigate format. To support local skills planning, the dashboard covers topics such as employment, qualifications, and education outcomes across England."
+          "The Local Skills dashboard provides published local data from a variety of sources in an easy to navigate format. To support local skills planning, the dashboard covers topics such as employment, qualifications, and education outcomes across England."
         ),
         p(
           "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, local enterprise partnership (LEP), Mayoral Combined Authority (MCA), regional and national."
