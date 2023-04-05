@@ -213,6 +213,10 @@ I_wfAreaName <-
   skillsImpFileList %>%
   map_df(~ read_dir(dir_path, .x, "Info", 2:5)) %>%
   filter(grepl("name", Scenario, fixed = TRUE))
+# Replacement demand 
+T_wfRDF1 <- 
+  list.files(dir_path) %>%
+  map_df(~ read_dir(dir_path,., "RD F1", 5:64))
 
 # 3 Dashboard text----
 ## 3.1 Data sources ----

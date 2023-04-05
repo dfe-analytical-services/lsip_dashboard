@@ -14,6 +14,7 @@ library(tidyverse) # mostly dplyr
 library(janitor) # use clean_names()
 library(sf) # use st_as_sf st_union sf_use_s2
 library(lubridate) # use years
+library(writexl) # use write_xlsx
 
 # 1 Geographical data ----
 # Create LAD-LEP lookup table
@@ -542,19 +543,33 @@ employmentProjections <-
       mutate_at(vars(`2010`:`2035`),
         .funs = funs(. * 1000)
       ), # put in unit numbers
+    #replacement demand
+    T_wfRDF1 %>% 
+      filter(is.na(X1), !is.na(X2)) %>%  #only keep rows with occupations 
+      select(-c(X1, Total.Requirement)) %>%  #remove empty row
+      rename(subgroup = X2, 
+             "2035" = Net.Change) %>% 
+      mutate(metric = "replacementDemand", 
+             breakdown = case_when(
+               grepl("[0-9]", subgroup) == TRUE ~ "Occupation (SOC2020 submajor)",
+               subgroup == "All occupations" ~ "Total",
+               TRUE ~ "Occupation (SOC2020 major)"
+             ), 
+             `2035`=as.numeric(`2035`)*1000
+      )
   ) %>%
-  left_join(I_wfAreaName) %>%
+  left_join(I_wfAreaName) %>%#add on area names
   mutate(geogConcat = paste0(trimws(`.Main`, "both"), " ", sub(" name", "", Scenario))) %>% # get name
   mutate(geogConcat = case_when(
-    #   file_name == "BH_LSIP_MainTables.Main.xlsm" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
     trimws(`.Main`, "both") == "England" ~ "England",
     TRUE ~ geogConcat
-  )) %>% # correct error in file calling this a LEP instead of LSIP and getting name wrong
+  )) %>%
   select(-`.Main`, -Scenario, -file_name) %>%
   pivot_longer(!c("geogConcat", "breakdown", "subgroup", "metric"),
     names_to = "timePeriod",
     values_to = "value"
   ) %>%
+  filter(!(metric=="replacementDemand"&timePeriod!=2035))%>%#This keeps only the valid replacement demand data
   mutate(geogConcat = case_when(
     geogConcat == "Buckinghamshire Thames Valley LEP" ~ "Buckinghamshire LEP",
     geogConcat == "Cambridge and Peterborough MCA" ~ "Cambridgeshire and Peterborough MCA",
@@ -577,7 +592,7 @@ employmentProjections <-
 
 # Get future year on year growth metric
 empGrowth <- employmentProjections %>%
-  filter(chartPeriod >= 2022) %>%
+  filter(chartPeriod >= 2022,metric=="employmentProjection") %>%
   # get growth
   arrange(chartPeriod, timePeriod, latest) %>%
   group_by(geogConcat, metric, breakdown, subgroup) %>%
@@ -587,7 +602,7 @@ empGrowth <- employmentProjections %>%
 
 # Get 2023 to 2035 growth metric
 empGrowth2023_2035 <- employmentProjections %>%
-  filter(chartPeriod %in% c(2023, 2035)) %>%
+  filter(chartPeriod %in% c(2023, 2035),metric=="employmentProjection") %>%
   # get growth
   arrange(chartPeriod, timePeriod, latest) %>%
   group_by(geogConcat, metric, breakdown, subgroup) %>%
@@ -884,7 +899,7 @@ C_localSkillsDataset <- bind_rows(
 # 4. Create datasets used by the app----
 ## 4.1 Unused metrics ----
 # We do not use all the metrics we capture in the data in the dashboard. here we list those we want to ignore
-dashboardMetricIgnore <- c("all", "economicallyactive", "employees", "starts_rate_per_100000_population", "starts", "active", "births", "deaths", "qualNone", "qualL1", "qualL2", "qualApp", "qualL3", "qualL4", "qualOther", "employmentProjection")
+dashboardMetricIgnore <- c("all", "economicallyactive", "employees", "starts_rate_per_100000_population", "starts", "active", "births", "deaths", "qualNone", "qualL1", "qualL2", "qualApp", "qualL3", "qualL4", "qualOther", "employmentProjection","replacementDemand")
 
 ## 4.2 C_Geog ----
 # This is used in the maps. It contains only the latest total data for each metric and area.
@@ -1033,6 +1048,7 @@ C_datahub <- C_localSkillsDataset %>%
     metric == "sustainedPositiveDestinationKS5Rate" ~ "KS5 sustained positive detination rate",
     metric == "vacancies" ~ "Online job adverts",
     metric == "employmentProjection" ~ "Employment projections",
+    metric == "replacementDemand" ~ "Replacement demand projection",
     metric == "qualNone" ~ "None",
     metric == "qualL1" ~ "NVQ1",
     metric == "qualL2" ~ "NVQ2",
@@ -1114,6 +1130,12 @@ list_of_datasets0 <- list(
     rename("Projected employment" = valueText)
 )
 write_xlsx(list_of_datasets0, "Data\\AppData\\CoreIndicators.xlsx")
+
+## 4.6 Replacement demand data ----
+# For the Skills imperative data we have an extra chart to replace the missing LA chart (skills imperative has no LA level data)
+C_replaceDemand<-C_localSkillsDataset%>%
+  filter(metric=="replacementDemand")
+write.csv(C_replaceDemand, file = "Data\\AppData\\C_replaceDemand.csv", row.names = FALSE)
 
 # 5 Tidy up the app text ----
 # Tidy up data table

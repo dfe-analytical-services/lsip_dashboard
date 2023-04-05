@@ -744,7 +744,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           6,
           h3(uiOutput("titleLaMap")),
           p(uiOutput("commentLA")),
-          withSpinner(leafletOutput("mapLA")),
+          uiOutput("LaMapOrReplacementDemand"),  
           p(uiOutput("mapLaFoot"))
         )
       ),

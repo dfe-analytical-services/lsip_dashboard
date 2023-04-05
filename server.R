@@ -1652,8 +1652,7 @@ server <- function(input, output, session) {
       validate(
         need(input$barBreakdown != "", ""),
         need(input$barSubgroup != "", ""),
-        need(input$splashMetric != "", ""),
-        need(input$barBreakdown != "No breakdowns available", "")
+        need(input$splashMetric != "", "")
       )
       Splash_21 <- C_breakdown %>% filter(
         breakdown == input$barBreakdown,
@@ -1775,6 +1774,109 @@ server <- function(input, output, session) {
       paste0(
         (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, "."
       )
+    }
+  })
+  
+  ### 2.3.9 Replacement demand chart----
+  replacementDemandPlot <- eventReactive(
+    c(
+      input$geoChoice,
+      input$geoComps,
+      input$barSubgroup,
+      input$splashMetric
+    ),
+    {
+      validate(
+        need(input$barBreakdown != "", ""),
+        need(input$barSubgroup != "", ""),
+        need(input$splashMetric == "employmentProjection","")
+      )
+      replacementDemandLatest <- C_replaceDemand %>% filter(
+        breakdown == input$barBreakdown,
+        subgroup %in% input$barSubgroup,
+        
+        # get lep/lsip/mca areas
+        (geogConcat == input$geoChoice | geogConcat %in% if ("geoComps" %in% names(input)) {
+          input$geoComps
+        } else {
+          "\nNone"
+        }) |
+          # get england for comparison
+          (geogConcat == "England")
+        
+      )
+      # if no rows (because of filter lag) then don't plot
+      if (nrow(replacementDemandLatest) == 0) {
+        "x"
+      } else {
+        # add an extra column so the colours work in ggplot when sorting alphabetically
+        replacementDemandLatest$Area <- factor(replacementDemandLatest$geogConcat,
+                                   levels = c("England", input$geoChoice, input$geoComps) # paste0(laClicked()," LADU"),
+        )
+        ggplot(
+          replacementDemandLatest,
+          aes(
+            x = reorder(subgroup, value, mean),
+            y = value,
+            fill = Area,
+            text = paste0(
+              "Area: ",
+              Area,
+              "<br>",
+              currentMetric(),
+              ": ",
+              scales::percent(round(value, 3)),
+              "<br>"
+            )
+          )
+        ) +
+          geom_col(position = "dodge") +
+          scale_y_continuous(labels = scales::percent) +
+          scale_x_discrete(
+            labels = function(x) {
+              str_wrap(x, width = 26)
+            }
+          ) +
+          coord_flip() +
+          theme_minimal() +
+          labs(fill = "") +
+          theme(
+            legend.position = "none",
+            axis.title.x = element_blank(),
+            axis.title.y = element_blank(),
+            axis.text.y = element_text(size = 7),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank()
+          ) +
+          scale_fill_manual(values = chartColors6)
+      }
+    }
+  )
+  
+  output$replacementDemandPlot <- renderPlotly({
+    # check it exists
+    validate(need(replacementDemandPlot() != "x", ""))
+    ggplotly(replacementDemandPlot(),
+             tooltip = c("text")
+    ) %>%
+      layout(
+        legend = list(
+          orientation = "h",
+          x = 0,
+          y = -0.1
+        ),
+        xaxis = list(fixedrange = TRUE),
+        yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+  
+#Output replacement demand if available otherwise LA map
+  output$LaMapOrReplacementDemand <- renderUI({
+    if (input$splashMetric == "employmentProjection") {
+      withSpinner(plotlyOutput("replacementDemandPlot"))
+    }  else {
+      withSpinner(leafletOutput("mapLA"))
     }
   })
 
