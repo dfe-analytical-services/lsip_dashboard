@@ -1215,10 +1215,14 @@ server <- function(input, output, session) {
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <-
       (LaHighLow %>% filter(ranking == max(ranking)))$areaName
-    if ((input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
-      currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")) {
-      "Data is not available at LA level."
+    if (input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
+      currentMetric() == "online job adverts") {
+      "Job advert data is not available at LA level for London. Textkernel’s default method when assigning adverts to local authority with limited location information was to assign to the centroid of the region. This was most prevalent in London, where Westminster reported much higher counts than the surrounding local authorities as it is the centroid of the region of London. For this release, all local authorities of London have been grouped into the same region. "
     } else {
+      if (input$splashMetric == "employmentProjection"){
+        "Skills Imperative 2035 data is not available at LA level. Here we present the replacement demand for the area. Please use the breakdown and subgroup filters to the left to update."
+      }
+     else {
       if (nrow(LaHighLow) == 1) {
         ""
       } # Blank if only one LA
@@ -1232,6 +1236,7 @@ server <- function(input, output, session) {
           "."
         )
       }
+     }
     }
   })
 
