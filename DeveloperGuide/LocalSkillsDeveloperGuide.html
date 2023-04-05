@@ -109,6 +109,98 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="i-want-to-update-a-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="i-want-to-update-a-dataset">I want to update a dataset</h2>
+<p>The Data Sources tab of the dashboard has a list of all the datasets and their next release date.</p>
+<p><strong>Update schedule</strong></p>
+<ul>
+<li><p><em>Annual population survey</em> is released four times a year: 1) Jan 2) Apr 3) Jul/Aug/Sept 4) Oct.&nbsp;We update employment volumes and split by industry at every release. However:</p>
+<ul>
+<li><p>Highest qualification is only updated in the APS once a year in the Apr release.</p></li>
+<li><p>We are not currently updating Employment by Occupation until the SOC issue is sorted.</p></li>
+</ul></li>
+<li><p><em>Individualised learner record</em> is updated quarterly but we only update with the final data, usually release in November (the in year data is provisional and subject to lag).</p></li>
+<li><p><em>UK business count</em>&nbsp;is released and updated in the dashboard once a year in Sept/Oct.</p></li>
+<li><p><em>Business demography</em>&nbsp;is released and updated in the dashboard once a year in Nov.</p></li>
+<li><p><em>Destination measures</em> are released and updated in the dashboard once a year in Oct.</p></li>
+<li><p><em>Job adverts</em>&nbsp;were released for the first time in Feb 23. No release schedule has been announced.</p></li>
+<li><p><em>Skills Imperative 2035</em> was released in Mar 23. No release schedule has been announced.</p></li>
+</ul>
+<table class="table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 13%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 13%">
+<col style="width: 4%">
+<col style="width: 10%">
+<col style="width: 13%">
+<col style="width: 4%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Jan</th>
+<th>F</th>
+<th>M</th>
+<th>Apr</th>
+<th>M</th>
+<th>J</th>
+<th>Jun</th>
+<th>A</th>
+<th>Sep</th>
+<th>Oct</th>
+<th>Nov</th>
+<th>D</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>APS emp vols</td>
+<td></td>
+<td></td>
+<td>APS emp vols</td>
+<td></td>
+<td></td>
+<td>APS emp vols</td>
+<td></td>
+<td>Bus count</td>
+<td>APS emp vols</td>
+<td>ILR</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>APS emp ind</td>
+<td></td>
+<td></td>
+<td>APS emp ind</td>
+<td></td>
+<td></td>
+<td>APS emp ind</td>
+<td></td>
+<td></td>
+<td>APS emp ind</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td>APS emp qual</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>Destinations</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Update process</strong></p>
 <ol type="1">
 <li><p>Make yourself a new github branch off (probably) the latest public version, so off Main. Pull and run <code>renv::restore()</code> to align packages with the dashboard.</p></li>
 <li><p>Download the latest version of the dataset. If you need help finding the dataset source, have a look at the “Data Sources” tab in the dashboard - this gives info and links to data sources.</p></li>
@@ -202,16 +294,16 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <table class="table">
 <colgroup>
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
-<col style="width: 10%">
+<col style="width: 2%">
+<col style="width: 4%">
+<col style="width: 3%">
+<col style="width: 19%">
+<col style="width: 12%">
+<col style="width: 9%">
+<col style="width: 5%">
+<col style="width: 15%">
+<col style="width: 13%">
+<col style="width: 12%">
 </colgroup>
 <thead>
 <tr class="header">

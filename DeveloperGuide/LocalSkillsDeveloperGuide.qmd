@@ -43,6 +43,36 @@ There may be times when you want to look at the dashboard in a browser (checking
 
 ## I want to update a dataset
 
+The Data Sources tab of the dashboard has a list of all the datasets and their next release date.
+
+**Update schedule**
+
+-   *Annual population survey* is released four times a year: 1) Jan 2) Apr 3) Jul/Aug/Sept 4) Oct. We update employment volumes and split by industry at every release. However:
+
+    -   Highest qualification is only updated in the APS once a year in the Apr release.
+
+    -   We are not currently updating Employment by Occupation until the SOC issue is sorted.
+
+-   *Individualised learner record* is updated quarterly but we only update with the final data, usually release in November (the in year data is provisional and subject to lag).
+
+-   *UK business count* is released and updated in the dashboard once a year in Sept/Oct.
+
+-   *Business demography* is released and updated in the dashboard once a year in Nov.
+
+-   *Destination measures* are released and updated in the dashboard once a year in Oct.
+
+-   *Job adverts* were released for the first time in Feb 23. No release schedule has been announced.
+
+-   *Skills Imperative 2035* was released in Mar 23. No release schedule has been announced.
+
+| Jan          | F   | M   | Apr          | M   | J   | Jun          | A   | Sep       | Oct          | Nov | D   |
+|--------------|-----|-----|--------------|-----|-----|--------------|-----|-----------|--------------|-----|-----|
+| APS emp vols |     |     | APS emp vols |     |     | APS emp vols |     | Bus count | APS emp vols | ILR |     |
+| APS emp ind  |     |     | APS emp ind  |     |     | APS emp ind  |     |           | APS emp ind  |     |     |
+|              |     |     | APS emp qual |     |     |              |     |           | Destinations |     |     |
+
+**Update process**
+
 1.  Make yourself a new github branch off (probably) the latest public version, so off Main. Pull and run `renv::restore()` to align packages with the dashboard.
 
 2.  Download the latest version of the dataset. If you need help finding the dataset source, have a look at the "Data Sources" tab in the dashboard - this gives info and links to data sources.
