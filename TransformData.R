@@ -14,6 +14,7 @@ library(tidyverse) # mostly dplyr
 library(janitor) # use clean_names()
 library(sf) # use st_as_sf st_union sf_use_s2
 library(lubridate) # use years
+library(writexl) # use write_xlsx
 
 # 1 Geographical data ----
 # Create LAD-LEP lookup table

@@ -47,6 +47,8 @@ The Data Sources tab of the dashboard has a list of all the datasets and their n
 
 **Update schedule**
 
+These are the common release points, however be aware that there may be revisions to any of the datasets throughout the year.
+
 -   *Annual population survey* is released four times a year: 1) Jan 2) Apr 3) Jul/Aug/Sept 4) Oct. We update employment volumes and split by industry at every release. However:
 
     -   Highest qualification is only updated in the APS once a year in the Apr release.
@@ -65,11 +67,20 @@ The Data Sources tab of the dashboard has a list of all the datasets and their n
 
 -   *Skills Imperative 2035* was released in Mar 23. No release schedule has been announced.
 
-| Jan          | F   | M   | Apr          | M   | J   | Jun          | A   | Sep       | Oct          | Nov | D   |
-|--------------|-----|-----|--------------|-----|-----|--------------|-----|-----------|--------------|-----|-----|
-| APS emp vols |     |     | APS emp vols |     |     | APS emp vols |     | Bus count | APS emp vols | ILR |     |
-| APS emp ind  |     |     | APS emp ind  |     |     | APS emp ind  |     |           | APS emp ind  |     |     |
-|              |     |     | APS emp qual |     |     |              |     |           | Destinations |     |     |
+| Month | Release        |             |              |
+|-------|----------------|-------------|--------------|
+| Jan   | APS emp vols   | APS emp ind |              |
+| Feb   |                |             |              |
+| Mar   |                |             |              |
+| Apr   | APS emp vols   | APS emp ind | APS emp qual |
+| May   |                |             |              |
+| Jun   |                |             |              |
+| Jul   | APS emp vols   | APS emp ind |              |
+| Aug   |                |             |              |
+| Sep   | Business count |             |              |
+| Oct   | APS emp vols   | APS emp ind | Destinations |
+| Nov   | ILR            |             |              |
+| Dec   |                |             |              |
 
 **Update process**
 
@@ -196,11 +207,17 @@ To add one of these into the dashboard:
 
     c\. You then need to manipulate your now clean data into the following form:
 
-| *Headings*    | geogConcat              | metric               | breakdown                                                                                                              | subgroup                                                                     | chartPeriod                                            | timePeriod                    | latest                                                                                        | valueText                                                                         | value                                                                        |
-|---------------|-------------------------|----------------------|------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|--------------------------------------------------------|-------------------------------|-----------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|------------------------------------------------------------------------------|
-| *Description* | Area name and geography | Variable of interest | *If* the dataset has a breakdown they are listed here. Every metric **must** have a "Total" as well as any breakdowns. | Any subgroups of the breakdown. If breakdown is "Total" this is also "Total" | The period which the data relates to in plain English. | The start date of the period. | 1 if this is the most recent period in the data. -1 is one year before that. 0 for any other. | The value of the metric in this subgroup. Includes any supression from the source | The value of the metric in this subgroup in numeric terms. NA if suppressed. |
-| *Format*      | character               | character            | character                                                                                                              | character                                                                    | character                                              | date                          | numeric                                                                                       | character                                                                         | numeric                                                                      |
-| *Example*     | Black Country LEP       | inemployment         | Age                                                                                                                    | 19-24                                                                        | AY20/21                                                | 01/08/2020                    | -1                                                                                            | 5000                                                                              | 5000                                                                         |
+| Column name | Description                                                                                                            | Format    | Example           |
+|------------|-------------------------------------|---------|--------------|
+| geogConcat  | Area name and geography                                                                                                | character | Black Country LEP |
+| metric      | Variable of interest                                                                                                   | character | inemployment      |
+| breakdown   | *If* the dataset has a breakdown they are listed here. Every metric **must** have a "Total" as well as any breakdowns. | character | Age               |
+| subgroup    | Any subgroups of the breakdown. If breakdown is "Total" this is also "Total"                                           | character | 19-24             |
+| chartPeriod | The period which the data relates to in plain English.                                                                 | character | AY20/21           |
+| timePeriod  | The start date of the period.                                                                                          | character | 01/08/2020        |
+| latest      | 1 if this is the most recent period in the data. -1 is one year before that. 0 for any other.                          | numeric   | -1                |
+| valueText   | The value of the metric in this subgroup. Includes any supression from the source.                                     | character | 5000              |
+| value       | The value of the metric in this subgroup in numeric terms. NA if suppressed.                                           | numeric   | 5000              |
 
 7.  Give the now clean and formatted dataset a name like C_dataName and add into TransformData.R/3. Combine datasets.
 
