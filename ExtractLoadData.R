@@ -14,6 +14,7 @@
 library(openxlsx) # use read.xlsx, read.csv
 library(sf) # use st_read
 library(tidyverse) # use map_df, mutate
+library(nomisr) #use nomis api
 
 # 1.Geography and mapping tables ----
 ## 1.1 LEPs 2020 and LA-LSIP lookup ----
@@ -56,21 +57,53 @@ I_mapMCA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0(
 
 # 2. Datasets ----
 ## 2.1 Nomis datasets ----
+#list of all the geogs we need (excluding the user defined which we add later)
+geogUseAps <- nomis_get_metadata(id = "NM_17_1", concept = "geography",type="type")%>%
+  filter(description.en %in% c("local enterprise partnerships (as of April 2021)","local authorities: district / unitary (as of April 2021)","countries"))
+
+#Get data and filter function
+extractNomis <- function(tableID,dates,cells) { 
+  bind_rows(
+    #user defined pt 1 (do in two parts as falls over all together)
+    nomis_get_data(id = tableID, date = dates, geography = 
+                     'MAKE|Brighton%20and%20Hove%2C%20East%20Sussex%2C%20West%20Sussex-LSIP|1811939621;1811939622;1811939560;1811939623;1811939624;1811939576;1811939577;1811939625;1811939578;1811939626;1811939579;1811939580;1811939627,MAKE|Buckinghamshire-LSIP|1811939575,MAKE|Cambridgeshire%20and%20Peterborough-LSIP|1811939479;1811939480;1811939481;1811939482;1811939476;1811939483,MAKE|Cambridgeshire%20and%20Peterborough-MCA|1811939479;1811939480;1811939481;1811939482;1811939476;1811939483,MAKE|Cheshire%20and%20Warrington-LSIP|1811939345;1811939346;1811939348,MAKE|Cornwall%20and%20the%20Isles%20of%20Scilly-LSIP|1811939631;1811939632,MAKE|Cumbria-LSIP|1811939349;1811939350;1811939351;1811939352;1811939353;1811939354,MAKE|Derbyshire%20and%20Nottinghamshire-LSIP|1811939407;1811939436;1811939437;1811939408;1811939438;1811939409;1811939403;1811939410;1811939411;1811939439;1811939412;1811939440;1811939441;1811939413;1811939405;1811939442;1811939414,MAKE|Dorset-LSIP|1811939649;1811939655;1811939581;1811939582;1811939586;1811939589;1811939590;1811939591,MAKE|Enterprise%20M3%20LEP%20(including%20all%20of%20Surrey)-LSIP|1811939610;1811939611;1811939612;1811939613;1811939614;1811939615;1811939616;1811939617;1811939618;1811939619;1811939620,MAKE|Essex%2C%20Southend-on-Sea%20and%20Thurrock-LSIP|1811939484;1811939485;1811939486;1811939487;1811939488;1811939489;1811939490;1811939491;1811939492;1811939493;1811939477;1811939494;1811939478;1811939495,MAKE|Gloucestershire-LSIP|1811939656;1811939657;1811939658;1811939659;1811939660;1811939661,MAKE|Greater%20Lincolnshire-LSIP|1811939422;1811939423;1811939424;1811939425;1811939406;1811939426;1811939427;1811939428;1811939384;1811939385,MAKE|Greater%20London-LSIP|1811939540;1811939541;1811939542;1811939543;1811939544;1811939526;1811939527;1811939545;1811939546;1811939547;1811939548;1811939528;1811939529;1811939530;1811939549;1811939550;1811939551;1811939552;1811939531;1811939532;1811939553;1811939533;1811939534;1811939554;1811939535;1811939555;1811939556;1811939536;1811939557;1811939537;1811939558;1811939538;1811939539,MAKE|Greater%20Manchester-LSIP|1811939355;1811939356;1811939357;1811939358;1811939359;1811939360;1811939361;1811939362;1811939363;1811939364,MAKE|Greater%20Manchester-MCA|1811939355;1811939356;1811939357;1811939358;1811939359;1811939360;1811939361;1811939362;1811939363;1811939364,MAKE|Heart%20of%20the%20South-West-LSIP|1811939640;1811939641;1811939662;1811939642;1811939643;1811939634;1811939663;1811939667;1811939644;1811939664;1811939645;1811939638;1811939646;1811939647,MAKE|Hertfordshire-LSIP|1811939496;1811939497;1811939499;1811939500;1811939501;1811939503;1811939505;1811939506;1811939507;1811939509,MAKE|Hull%20and%20East%20Yorkshire-LSIP|1811939382;1811939383,MAKE|Kent%20and%20Medway-LSIP|1811939592;1811939593;1811939594;1811939595;1811939599;1811939596;1811939597;1811939562;1811939598;1811939601;1811939602;1811939603;1811939604,MAKE|Lancashire-LSIP|1811939343;1811939344;1811939365;1811939366;1811939367;1811939368;1811939369;1811939370;1811939371;1811939372;1811939373;1811939374;1811939375;1811939376,MAKE|Leicester%20and%20Leicestershire-LSIP|1811939415;1811939416;1811939417;1811939418;1811939404;1811939419;1811939420;1811939421,MAKE|Liverpool%20City%20Region-LSIP|1811939347;1811939377;1811939378;1811939379;1811939380;1811939381,MAKE|Liverpool%20City%20Region-MCA|1811939347;1811939377;1811939378;1811939379;1811939380;1811939381,MAKE|Norfolk%20and%20Suffolk-LSIP|1811939517;1811939510;1811939511;1811939524;1811939512;1811939519;1811939513;1811939520;1811939514;1811939515;1811939516;1811939525'
+                   ,cell = cells)%>%
+      select(DATE_NAME,GEOGRAPHY_NAME,GEOGRAPHY_CODE,GEOGRAPHY_TYPE,CELL_NAME,OBS_VALUE,MEASURES_NAME)
+    ,
+    #user defined pt 2
+    nomis_get_data(id = tableID, date = dates, geography = 
+                     'MAKE|North%20East-LSIP|1811939330;1811939338;1811939341;1811939342,MAKE|North%20East-MCA|1811939330;1811939338;1811939341;1811939342,MAKE|North%20of%20Tyne-LSIP|1811939339;1811939340;1811939334,MAKE|North%20of%20Tyne-MCA|1811939339;1811939340;1811939334,MAKE|Oxfordshire-LSIP|1811939605;1811939606;1811939607;1811939608;1811939609,MAKE|Solent-LSIP|1811939583;1811939584;1811939585;1811939587;1811939561;1811939588;1811939564;1811939567,MAKE|South%20East%20Midlands-LSIP|1811939473;1811939474;1811939475;1811939768;1811939769;1811939563,MAKE|South%20Yorkshire-LSIP|1811939394;1811939395;1811939396;1811939397,MAKE|South%20Yorkshire-MCA|1811939394;1811939395;1811939396;1811939397,MAKE|Stoke-on-Trent%20and%20Staffordshire-LSIP|1811939447;1811939448;1811939449;1811939450;1811939451;1811939452;1811939453;1811939445;1811939454,MAKE|Swindon%20and%20Wiltshire-LSIP|1811939637;1811939639,MAKE|Tees%20Valley-LSIP|1811939329;1811939331;1811939332;1811939335;1811939336,MAKE|Tees%20Valley-MCA|1811939329;1811939331;1811939332;1811939335;1811939336,MAKE|Thames%20Valley%20Berkshire-LSIP|1811939559;1811939565;1811939566;1811939568;1811939569;1811939570,MAKE|The%20Marches-LSIP|1811939443;1811939444;1811939446,MAKE|West%20Midlands%20and%20Warwickshire-LSIP|1811939460;1811939461;1811939462;1811939455;1811939456;1811939457;1811939463;1811939464;1811939458;1811939465;1811939459;1811939466,MAKE|West%20Midlands-MCA|1811939460;1811939461;1811939462;1811939463;1811939464;1811939465;1811939466,MAKE|West%20of%20England%20and%20North%20Somerset-LSIP|1811939628;1811939630;1811939633;1811939636,MAKE|West%20of%20England-MCA|1811939628;1811939630;1811939636,MAKE|West%20Yorkshire-LSIP|1811939398;1811939399;1811939400;1811939401;1811939402,MAKE|West%20Yorkshire-MCA|1811939398;1811939399;1811939400;1811939401;1811939402,MAKE|Worcestershire-LSIP|1811939467;1811939468;1811939469;1811939470;1811939471;1811939472,MAKE|York%20and%20North%20Yorkshire-LSIP|1811939387;1811939388;1811939389;1811939390;1811939391;1811939392;1811939393;1811939386'
+                   ,cell = cells)%>%
+      select(DATE_NAME,GEOGRAPHY_NAME,GEOGRAPHY_CODE,GEOGRAPHY_TYPE,CELL_NAME,OBS_VALUE,MEASURES_NAME),
+    #other geogs
+    nomis_get_data(id = tableID, date = dates, geography = geogUseAps$id
+                   ,cell = cells)%>%
+      select(DATE_NAME,GEOGRAPHY_NAME,GEOGRAPHY_CODE,GEOGRAPHY_TYPE,CELL_NAME,OBS_VALUE,MEASURES_NAME)
+  )%>%
+    filter(MEASURES_NAME=="Value")%>%
+    select(-MEASURES_NAME)
+}
+
+#list all the APS cells available
+cellsListAps<-nomis_get_metadata(id = "NM_17_1", concept = "CELL")
+
 ### 2.1.1 Employment by occupation ----
 # Query data
 # Geography: England, LEPs, regions, LADs (as of April 2021)
-# Date: 12 months to Dec 2017-2021
+# Date: 12 months to Dec 2017-2021. The latest data is not available so use the last 5 Jan-Decs
 # Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people
-folder <- "2-1_APSempOcc"
-sheetNum <- 1
-I_empOcc <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+#find cells we want
+cellsUseAps<- cellsListAps%>% filter(description.en %like% "T09a:"&description.en %like% "All people - ")
+#get data
+I_empOcc <- extractNomis("NM_17_1","2017-12,2018-12,2019-12,2020-12,2021-12", cellsUseAps$id)
 
 ### 2.1.2 Employment level and rate ------------
 # Geog and date as above
 # Cell: T01 Economic activity by age Aged 16-64/ All people
-folder <- "2-2_APSempRate"
-sheetNum <- 1
-I_emp <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+#find cells we want
+cellsUseAps<- cellsListAps%>% filter(description.en %like% "T01:"&description.en %like% "Aged 16-64"&description.en %like% "All People")
+#get data
+I_emp <- extractNomis("NM_17_1","latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps$id)
 
 ### 2.1.3 UK Business Count----
 # Enterprise by employment size
@@ -89,17 +122,19 @@ I_entInd <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path 
 
 ### 2.1.4 Skill by age gender ------------
 # Geog and date as above
-# Cell: T19	Qualification by age and gender - NVQ. All people aged 16-64. Only data up to Dec 21 available
-folder <- "2-5_APSqualagegen"
-sheetNum <- 1
-I_qualAgeGender <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+# Cell: T19	Qualification by age and gender - NVQ. All people aged 16-64. only updated every Jan-Dec
+#find cells we want
+cellsUseAps<- cellsListAps%>% filter(description.en %like% "T19:"&description.en %like% "Total")
+#get data
+I_qualAgeGender <- extractNomis("NM_17_1","2017-12,2018-12,2019-12,2020-12,2021-12", cellsUseAps$id)
 
 ### 2.1.5 Employment by industry------------
 # Geog and date as above
 # Cell: T13a	Employment by industry (SIC 2007) and flexibility
-folder <- "2-6_APSempind"
-sheetNum <- 1
-I_empInd <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+#find cells we want
+cellsUseAps<- cellsListAps%>% filter(description.en %like% "T13a:"&description.en %like% "All people")
+#get data
+I_empInd <- extractNomis("NM_17_1","latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps$id)
 
 ## 2.2 EES datasets----
 ### 2.2.1 Achievements by SSAt1, LAD, gender, level------------
