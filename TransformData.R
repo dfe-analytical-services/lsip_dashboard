@@ -497,6 +497,68 @@ C_FeSsa <- bind_rows(
   mutate(value = as.numeric(valueText))
 
 ## 2.8 Skills imperative 2035 ----
+#getting actual names from look up in Excel 
+I_wfRD <- bind_rows (
+  I_wfRD_mca %>% 
+  left_join(., (I_wfRD_lookup %>% filter(variable == "mca")), by = c("mca" = "value")) %>% 
+  select(-mca), 
+  I_wfRD_lsip %>% 
+    left_join(., (I_wfRD_lookup %>% filter(variable == "lsip")), by = c("lsip" = "value")) %>% 
+    select(-lsip),
+  I_wfRD_lep %>% 
+    left_join(., (I_wfRD_lookup %>% filter(variable == "lep")), by = c("lep" = "value")) %>% 
+    select(-lep)
+) %>% 
+  left_join(., (I_wfRD_lookup %>% filter(variable == "ind22")), by = c("ind22" = "value")) %>% 
+  select(-ind22) %>% 
+  left_join(., (I_wfRD_lookup %>% filter(variable == "ind_sector")), by = c("ind_sector" = "value")) %>% 
+  select(-ind_sector) %>% 
+left_join(., (I_wfRD_lookup %>% filter(variable == "occ2dig")), by = c("occ2dig" = "value")) %>% 
+  select(-occ2dig) %>% 
+  left_join(., (I_wfRD_lookup %>% filter(variable == "occ1dig")), by = c("occ1dig" = "value")) %>% 
+  select(-occ1dig) %>% 
+  left_join(., (I_wfRD_lookup %>% filter(variable == "qualification")), by = c("qual" = "value")) %>% 
+  select(-qual) %>% 
+  select(-variable.y, -variable.y.y, -variable.y.y.y, -variable.x.x.x, -variable.x.x)
+
+#Calculating RD estimate
+C_wfRd <- bind_rows (
+  I_wfRD %>% filter(variable.x == "mca") %>% 
+  group_by(variable.x, name.x, name.y) %>% 
+  summarise(sum_emp2020 = sum(emp_2020), 
+            sum_rd = sum(rdlevel_2020_35)) %>% 
+    rename(breakdown = name.y), 
+   
+   I_wfRD %>% filter(variable.x == "mca") %>% 
+      group_by(variable.x,name.x, name.y.y) %>% 
+      summarise(sum_emp2020 = sum(emp_2020), 
+                sum_rd = sum(rdlevel_2020_35)) %>% 
+      rename(breakdown = name.y.y), 
+  
+  I_wfRD %>% filter(variable.x == "mca") %>% 
+    group_by(variable.x,name.x, name.y.y.y) %>% 
+    summarise(sum_emp2020 = sum(emp_2020), 
+              sum_rd = sum(rdlevel_2020_35)) %>% 
+    rename(breakdown = name.y.y.y), 
+  
+  I_wfRD %>% filter(variable.x == "mca") %>% 
+    group_by(variable.x,name.x, name.x.x) %>% 
+    summarise(sum_emp2020 = sum(emp_2020), 
+              sum_rd = sum(rdlevel_2020_35)) %>% 
+    rename(breakdown = name.x.x), 
+  
+  I_wfRD %>% filter(variable.x == "mca") %>% 
+    group_by(variable.x,name.x, name.x.x.x) %>% 
+    summarise(sum_emp2020 = sum(emp_2020), 
+              sum_rd = sum(rdlevel_2020_35)) %>% 
+    rename(breakdown = name.x.x.x)
+) %>% 
+  mutate(RD_estimate = case_when(
+    sum_emp2020 > 0 ~ (((1+(sum_rd/sum_emp2020)))^(1/15)) -1, #formula supplied by wfdata team
+    TRUE ~0
+    
+  ))
+
 employmentProjections <-
   # bind_rows(
   bind_rows(

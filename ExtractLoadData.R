@@ -214,16 +214,16 @@ I_wfAreaName <-
   map_df(~ read_dir(dir_path, .x, "Info", 2:5)) %>%
   filter(grepl("name", Scenario, fixed = TRUE))
 # Replacement demand 
-T_wfRD_mca <- 
+I_wfRD_mca <- 
  read.xlsx(xlsxFile =  paste0("./Data/", folder, "/", "RD_estimates.xlsx"), sheet = "mca", skipEmptyRows = T)
 
-T_wfRD_lsip <- 
+I_wfRD_lsip <- 
   read.xlsx(xlsxFile =  paste0("./Data/", folder, "/", "RD_estimates.xlsx"), sheet = "lsip", skipEmptyRows = T)
 
-T_wfRD_lep <- 
+I_wfRD_lep <- 
   read.xlsx(xlsxFile =  paste0("./Data/", folder, "/", "RD_estimates.xlsx"), sheet = "lep", skipEmptyRows = T)
 
-T_wfRD_lookup <- 
+I_wfRD_lookup <- 
   read.xlsx(xlsxFile =  paste0("./Data/", folder, "/", "RD_estimates.xlsx"), sheet = "values", skipEmptyRows =T)
 
               # 3 Dashboard text----
