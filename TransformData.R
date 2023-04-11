@@ -523,31 +523,31 @@ left_join(., (I_wfRD_lookup %>% filter(variable == "occ2dig")), by = c("occ2dig"
 
 #Calculating RD estimate
 C_wfRd <- bind_rows (
-  I_wfRD %>% filter(variable.x == "mca") %>% 
+  I_wfRD %>%  
   group_by(variable.x, name.x, name.y) %>% 
   summarise(sum_emp2020 = sum(emp_2020), 
             sum_rd = sum(rdlevel_2020_35)) %>% 
     rename(breakdown = name.y), 
    
-   I_wfRD %>% filter(variable.x == "mca") %>% 
+   I_wfRD %>% 
       group_by(variable.x,name.x, name.y.y) %>% 
       summarise(sum_emp2020 = sum(emp_2020), 
                 sum_rd = sum(rdlevel_2020_35)) %>% 
       rename(breakdown = name.y.y), 
   
-  I_wfRD %>% filter(variable.x == "mca") %>% 
+  I_wfRD %>% 
     group_by(variable.x,name.x, name.y.y.y) %>% 
     summarise(sum_emp2020 = sum(emp_2020), 
               sum_rd = sum(rdlevel_2020_35)) %>% 
     rename(breakdown = name.y.y.y), 
   
-  I_wfRD %>% filter(variable.x == "mca") %>% 
+  I_wfRD %>% 
     group_by(variable.x,name.x, name.x.x) %>% 
     summarise(sum_emp2020 = sum(emp_2020), 
               sum_rd = sum(rdlevel_2020_35)) %>% 
     rename(breakdown = name.x.x), 
   
-  I_wfRD %>% filter(variable.x == "mca") %>% 
+  I_wfRD %>% 
     group_by(variable.x,name.x, name.x.x.x) %>% 
     summarise(sum_emp2020 = sum(emp_2020), 
               sum_rd = sum(rdlevel_2020_35)) %>% 
