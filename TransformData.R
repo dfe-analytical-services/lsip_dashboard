@@ -501,7 +501,7 @@ C_FeSsa <- bind_rows(
 I_wfRD <- bind_rows (
   I_wfRD_mca %>% 
   left_join(., (I_wfRD_lookup %>% filter(variable == "mca")), by = c("mca" = "value")) %>% 
-  select(-mca), 
+  select(-mca) , 
   I_wfRD_lsip %>% 
     left_join(., (I_wfRD_lookup %>% filter(variable == "lsip")), by = c("lsip" = "value")) %>% 
     select(-lsip),
@@ -510,16 +510,16 @@ I_wfRD <- bind_rows (
     select(-lep)
 ) %>% 
   left_join(., (I_wfRD_lookup %>% filter(variable == "ind22")), by = c("ind22" = "value")) %>% 
-  select(-ind22) %>% 
+ select(-ind22) %>% 
   left_join(., (I_wfRD_lookup %>% filter(variable == "ind_sector")), by = c("ind_sector" = "value")) %>% 
   select(-ind_sector) %>% 
 left_join(., (I_wfRD_lookup %>% filter(variable == "occ2dig")), by = c("occ2dig" = "value")) %>% 
-  select(-occ2dig) %>% 
+select(-occ2dig) %>% 
   left_join(., (I_wfRD_lookup %>% filter(variable == "occ1dig")), by = c("occ1dig" = "value")) %>% 
-  select(-occ1dig) %>% 
+ select(-occ1dig) %>% 
   left_join(., (I_wfRD_lookup %>% filter(variable == "qualification")), by = c("qual" = "value")) %>% 
-  select(-qual) %>% 
-  select(-variable.y, -variable.y.y, -variable.y.y.y, -variable.x.x.x, -variable.x.x)
+ select(-qual)# %>% 
+  #select(-variable.y, -variable.y.y, -variable.y.y.y, -variable.x.x.x, -variable.x.x)
 
 #Calculating RD estimate
 C_wfRd <- bind_rows (
@@ -527,37 +527,43 @@ C_wfRd <- bind_rows (
   group_by(variable.x, name.x, name.y) %>% 
   summarise(sum_emp2020 = sum(emp_2020), 
             sum_rd = sum(rdlevel_2020_35)) %>% 
-    rename(breakdown = name.y), 
+    rename(subgroup = name.y) %>% 
+    mutate(breakdown = "Industry"), 
    
    I_wfRD %>% 
       group_by(variable.x,name.x, name.y.y) %>% 
       summarise(sum_emp2020 = sum(emp_2020), 
                 sum_rd = sum(rdlevel_2020_35)) %>% 
-      rename(breakdown = name.y.y), 
+      rename(subgroup = name.y.y) %>% 
+    mutate(breakdown = "Occupation (SOC2020 submajor)"), 
   
   I_wfRD %>% 
     group_by(variable.x,name.x, name.y.y.y) %>% 
     summarise(sum_emp2020 = sum(emp_2020), 
               sum_rd = sum(rdlevel_2020_35)) %>% 
-    rename(breakdown = name.y.y.y), 
+    rename(subgroup = name.y.y.y) %>% 
+    mutate(breakdown = "Qualification"), 
   
   I_wfRD %>% 
     group_by(variable.x,name.x, name.x.x) %>% 
     summarise(sum_emp2020 = sum(emp_2020), 
               sum_rd = sum(rdlevel_2020_35)) %>% 
-    rename(breakdown = name.x.x), 
+    rename(subgroup = name.x.x) %>% 
+    mutate(breakdown = "Broad sector"), 
   
   I_wfRD %>% 
     group_by(variable.x,name.x, name.x.x.x) %>% 
     summarise(sum_emp2020 = sum(emp_2020), 
               sum_rd = sum(rdlevel_2020_35)) %>% 
-    rename(breakdown = name.x.x.x)
+    rename(subgroup = name.x.x.x) %>% 
+    mutate(breakdown = "Occupation (SOC2020 major)")
 ) %>% 
   mutate(RD_estimate = case_when(
     sum_emp2020 > 0 ~ (((1+(sum_rd/sum_emp2020)))^(1/15)) -1, #formula supplied by wfdata team
     TRUE ~0
     
-  ))
+  )) %>% 
+  select(-sum_emp2020, -sum_rd)
 
 employmentProjections <-
   # bind_rows(
@@ -606,32 +612,16 @@ employmentProjections <-
         .funs = funs(. * 1000)
       ), # put in unit numbers
     #replacement demand
-    T_wfRDF1 %>% 
-      filter(is.na(X1), !is.na(X2)) %>%  #only keep rows with occupations 
-      select(-c(X1, Total.Requirement)) %>%  #remove empty row
-      rename(subgroup = X2, 
-             "2035" = Net.Change) %>% 
-      mutate(metric = "replacementDemand", 
-             breakdown = case_when(
-               grepl("[0-9]", subgroup) == TRUE ~ "Occupation (SOC2020 submajor)",
-               subgroup == "All occupations" ~ "Total",
-               TRUE ~ "Occupation (SOC2020 major)"
-             ), 
-             `2035`=as.numeric(`2035`)*1000
-      )
-  ) %>%
-  left_join(I_wfAreaName) %>%#add on area names
-  mutate(geogConcat = paste0(trimws(`.Main`, "both"), " ", sub(" name", "", Scenario))) %>% # get name
-  mutate(geogConcat = case_when(
-    trimws(`.Main`, "both") == "England" ~ "England",
-    TRUE ~ geogConcat
-  )) %>%
-  select(-`.Main`, -Scenario, -file_name) %>%
-  pivot_longer(!c("geogConcat", "breakdown", "subgroup", "metric"),
-    names_to = "timePeriod",
-    values_to = "value"
-  ) %>%
-  filter(!(metric=="replacementDemand"&timePeriod!=2035))%>%#This keeps only the valid replacement demand data
+   C_wfRd %>%
+      mutate(geogConcat = paste0(name.x, toupper(variable.x)), 
+        metric = "replacementDemand", 
+      #  chartPeriod = "2020 to 2035", 
+        timePeriod = 2020, 
+        latest = 1, 
+        value = RD_estimate) %>% 
+     mutate(valueText = as.character(value))%>%
+     select(geogConcat, metric, breakdown, subgroup, timePeriod, latest, valueText, value)
+  ) %>% 
   mutate(geogConcat = case_when(
     geogConcat == "Buckinghamshire Thames Valley LEP" ~ "Buckinghamshire LEP",
     geogConcat == "Cambridge and Peterborough MCA" ~ "Cambridgeshire and Peterborough MCA",

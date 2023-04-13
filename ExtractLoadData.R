@@ -214,6 +214,7 @@ I_wfAreaName <-
   map_df(~ read_dir(dir_path, .x, "Info", 2:5)) %>%
   filter(grepl("name", Scenario, fixed = TRUE))
 # Replacement demand 
+folder <- "2-14_replacementDemand"
 I_wfRD_mca <- 
  read.xlsx(xlsxFile =  paste0("./Data/", folder, "/", "RD_estimates.xlsx"), sheet = "mca", skipEmptyRows = T)
 
