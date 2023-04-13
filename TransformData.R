@@ -563,7 +563,25 @@ C_wfRd <- bind_rows (
     TRUE ~0
     
   )) %>% 
-  select(-sum_emp2020, -sum_rd)
+  select(-sum_emp2020, -sum_rd) %>% 
+  mutate(geogConcat = paste0(name.x, " ", toupper(variable.x)), 
+         metric = "replacementDemand", 
+         chartPeriod  = "2020", 
+         latest = 1, 
+         value = RD_estimate) %>% 
+  mutate(valueText = as.character(value))%>%
+    mutate(timePeriod = as.Date(paste("01", "Jan", chartPeriod, sep = " "), format = "%d %b %Y")) %>% 
+  select(geogConcat, metric, breakdown, subgroup, chartPeriod, timePeriod, latest, valueText, value) %>% 
+  mutate(geogConcat = case_when(
+    geogConcat == "Buckinghamshire Thames Valley LEP" ~ "Buckinghamshire LEP",
+    geogConcat == "Cambridge and Peterborough MCA" ~ "Cambridgeshire and Peterborough MCA",
+    geogConcat == "London Enterprise Panel LEP" ~ "London LEP",
+    geogConcat == "York, North Yorkshire and East Riding LEP" ~ "York and North Yorkshire LEP",
+    geogConcat == "Humber LEP" ~ "Hull and East Yorkshire LEP",
+    geogConcat == "Essex Southend-on-Sea and Thurrock LSIP" ~ "Essex, Southend-on-Sea and Thurrock LSIP",
+    geogConcat == "Brighton and Hove East Sussex West Sussex LSIP" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
+    TRUE ~ geogConcat
+  ))
 
 employmentProjections <-
   # bind_rows(
@@ -610,19 +628,21 @@ employmentProjections <-
       rename(subgroup = X1) %>%
       mutate_at(vars(`2010`:`2035`),
         .funs = funs(. * 1000)
-      ), # put in unit numbers
-    #replacement demand
-   C_wfRd %>%
-      mutate(geogConcat = paste0(name.x, toupper(variable.x)), 
-        metric = "replacementDemand", 
-      #  chartPeriod = "2020 to 2035", 
-        timePeriod = 2020, 
-        latest = 1, 
-        value = RD_estimate) %>% 
-     mutate(valueText = as.character(value))%>%
-     select(geogConcat, metric, breakdown, subgroup, timePeriod, latest, valueText, value)
-  ) %>% 
+      )
+    )%>% # put in unit numbers
+  left_join(I_wfAreaName) %>%#add on area names
+  mutate(geogConcat = paste0(trimws(`.Main`, "both"), " ", sub(" name", "", Scenario))) %>% # get name
   mutate(geogConcat = case_when(
+    trimws(`.Main`, "both") == "England" ~ "England",
+    TRUE ~ geogConcat
+  )) %>%
+  select(-`.Main`, -Scenario, -file_name) %>%
+  pivot_longer(!c("geogConcat", "breakdown", "subgroup", "metric"),
+               names_to = "timePeriod",
+               values_to = "value"
+  ) %>%
+  filter(!(metric=="replacementDemand"&timePeriod!=2035))%>%
+ mutate(geogConcat = case_when(
     geogConcat == "Buckinghamshire Thames Valley LEP" ~ "Buckinghamshire LEP",
     geogConcat == "Cambridge and Peterborough MCA" ~ "Cambridgeshire and Peterborough MCA",
     geogConcat == "London Enterprise Panel LEP" ~ "London LEP",
