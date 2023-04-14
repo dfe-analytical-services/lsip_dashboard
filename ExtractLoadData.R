@@ -224,6 +224,9 @@ I_wfRD_lsip <-
 I_wfRD_lep <- 
   read.xlsx(xlsxFile =  paste0("./Data/", folder, "/", "RD_estimates.xlsx"), sheet = "lep", skipEmptyRows = T)
 
+I_wfRD_region <- 
+  read.xlsx(xlsxFile =  paste0("./Data/", folder, "/", "RD_estimates.xlsx"), sheet = "reg_nat", skipEmptyRows = T)
+
 I_wfRD_lookup <- 
   read.xlsx(xlsxFile =  paste0("./Data/", folder, "/", "RD_estimates.xlsx"), sheet = "values", skipEmptyRows =T)
 
