@@ -1,5 +1,4 @@
 "geogConcat","metric","breakdown","subgroup","chartPeriod","timePeriod","latest","valueText","value"
-"England","replacementDemand","Industry",NA,"2020",2020-01-01,1,"0.0275991904114776",0.0275991904114776
 "Black Country LEP","replacementDemand","Industry","Accommodation and food","2020",2020-01-01,1,"0.0299953423389234",0.0299953423389234
 "Black Country LEP","replacementDemand","Industry","Agriculture","2020",2020-01-01,1,"0.0296004150913047",0.0296004150913047
 "Black Country LEP","replacementDemand","Industry","Arts and entertainment","2020",2020-01-01,1,"0.0260745583801352",0.0260745583801352
@@ -4154,7 +4153,6 @@
 "West Yorkshire MCA","replacementDemand","Occupation (SOC2020 submajor)","Teaching And Other Educational Professionals","2020",2020-01-01,1,"0.0281921377149217",0.0281921377149217
 "West Yorkshire MCA","replacementDemand","Occupation (SOC2020 submajor)","Textiles, Printing And Other Skilled Trades","2020",2020-01-01,1,"0.023605562854728",0.023605562854728
 "West Yorkshire MCA","replacementDemand","Occupation (SOC2020 submajor)","Transport And Mobile Machine Drivers And Operatives","2020",2020-01-01,1,"0.0282972310836358",0.0282972310836358
-"England","replacementDemand","Qualification",NA,"2020",2020-01-01,1,"0.0275991904114776",0.0275991904114776
 "Black Country LEP","replacementDemand","Qualification","No Qualification","2020",2020-01-01,1,"0.0120229828946365",0.0120229828946365
 "Black Country LEP","replacementDemand","Qualification","RQF1 GCSE(below grade C) & equivalent","2020",2020-01-01,1,"0.018081294259755",0.018081294259755
 "Black Country LEP","replacementDemand","Qualification","RQF2 GCSE(A-C) & equivalent","2020",2020-01-01,1,"0.0262318931060199",0.0262318931060199
@@ -6234,75 +6232,3 @@
 "West Yorkshire MCA","replacementDemand","Occupation (SOC2020 major)","Professional occupations","2020",2020-01-01,1,"0.0279679549534118",0.0279679549534118
 "West Yorkshire MCA","replacementDemand","Occupation (SOC2020 major)","Sales and customer service occupations","2020",2020-01-01,1,"0.0253501474236277",0.0253501474236277
 "West Yorkshire MCA","replacementDemand","Occupation (SOC2020 major)","Skilled trades occupations","2020",2020-01-01,1,"0.0225739627131141",0.0225739627131141
-"Greater London Authority MCA","replacementDemand","Industry","Accommodation and food","2020",2020-01-01,1,"0.0303925132913576",0.0303925132913576
-"Greater London Authority MCA","replacementDemand","Industry","Agriculture","2020",2020-01-01,1,"0.0265025147093418",0.0265025147093418
-"Greater London Authority MCA","replacementDemand","Industry","Arts and entertainment","2020",2020-01-01,1,"0.0303951885312006",0.0303951885312006
-"Greater London Authority MCA","replacementDemand","Industry","Construction","2020",2020-01-01,1,"0.0269026915105912",0.0269026915105912
-"Greater London Authority MCA","replacementDemand","Industry","Education","2020",2020-01-01,1,"0.0280566070900259",0.0280566070900259
-"Greater London Authority MCA","replacementDemand","Industry","Electricity and gas","2020",2020-01-01,1,"0.0239490735786767",0.0239490735786767
-"Greater London Authority MCA","replacementDemand","Industry","Engineering","2020",2020-01-01,1,"0.0296849823173964",0.0296849823173964
-"Greater London Authority MCA","replacementDemand","Industry","Finance and insurance","2020",2020-01-01,1,"0.0268897481509052",0.0268897481509052
-"Greater London Authority MCA","replacementDemand","Industry","Food drink and tobacco","2020",2020-01-01,1,"0.0257022947500445",0.0257022947500445
-"Greater London Authority MCA","replacementDemand","Industry","Health and social work","2020",2020-01-01,1,"0.0302767987874115",0.0302767987874115
-"Greater London Authority MCA","replacementDemand","Industry","Information technology","2020",2020-01-01,1,"0.0268553678753842",0.0268553678753842
-"Greater London Authority MCA","replacementDemand","Industry","Media","2020",2020-01-01,1,"0.0275587611378347",0.0275587611378347
-"Greater London Authority MCA","replacementDemand","Industry","Mining and quarrying","2020",2020-01-01,1,"0.0191358982041021",0.0191358982041021
-"Greater London Authority MCA","replacementDemand","Industry","Other services","2020",2020-01-01,1,"0.0302610284703941",0.0302610284703941
-"Greater London Authority MCA","replacementDemand","Industry","Professional services","2020",2020-01-01,1,"0.0286492564643843",0.0286492564643843
-"Greater London Authority MCA","replacementDemand","Industry","Public admin","2020",2020-01-01,1,"0.0270497962043761",0.0270497962043761
-"Greater London Authority MCA","replacementDemand","Industry","Real estate","2020",2020-01-01,1,"0.0264063350839943",0.0264063350839943
-"Greater London Authority MCA","replacementDemand","Industry","Rest of manufacturing","2020",2020-01-01,1,"0.0226238574826869",0.0226238574826869
-"Greater London Authority MCA","replacementDemand","Industry","Support services","2020",2020-01-01,1,"0.0274428170920979",0.0274428170920979
-"Greater London Authority MCA","replacementDemand","Industry","Transport and storage","2020",2020-01-01,1,"0.0274057160479033",0.0274057160479033
-"Greater London Authority MCA","replacementDemand","Industry","Water and sewerage","2020",2020-01-01,1,"0.0273705461569289",0.0273705461569289
-"Greater London Authority MCA","replacementDemand","Industry","Wholesale and retail trade","2020",2020-01-01,1,"0.0254839038840811",0.0254839038840811
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Administrative Occupations","2020",2020-01-01,1,"0.0281829081341516",0.0281829081341516
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Business And Public Service Associate Professionals","2020",2020-01-01,1,"0.0267274076753088",0.0267274076753088
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Business, Media And Public Service Professionals","2020",2020-01-01,1,"0.0285524638436425",0.0285524638436425
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Caring Personal Service Occupations","2020",2020-01-01,1,"0.0309189502897511",0.0309189502897511
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Community And Civil Enforcement Occupations","2020",2020-01-01,1,"0.0241287616425203",0.0241287616425203
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Corporate Managers And Directors","2020",2020-01-01,1,"0.0271531407074845",0.0271531407074845
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Culture, Media And Sports Occupations","2020",2020-01-01,1,"0.0256093047948074",0.0256093047948074
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Customer Service Occupations","2020",2020-01-01,1,"0.0279791196365633",0.0279791196365633
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Elementary Administration And Service Occupations","2020",2020-01-01,1,"0.0259905849756035",0.0259905849756035
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Elementary Trades And Related Occupations","2020",2020-01-01,1,"0.0440853317140577",0.0440853317140577
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Health And Social Care Associate Professionals","2020",2020-01-01,1,"0.0435064296107155",0.0435064296107155
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Health Professionals","2020",2020-01-01,1,"0.0280072498974897",0.0280072498974897
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Leisure, Travel And Related Personal Service Occupations","2020",2020-01-01,1,"0.0282010607269947",0.0282010607269947
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Other Managers And Proprietors","2020",2020-01-01,1,"0.0322720142737252",0.0322720142737252
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Process, Plant And Machine Operatives","2020",2020-01-01,1,"0.0258735988689478",0.0258735988689478
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Protective Service Occupations","2020",2020-01-01,1,"0.0176095634229476",0.0176095634229476
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Sales Occupations","2020",2020-01-01,1,"0.0247956957522473",0.0247956957522473
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Science, Engineering And Technology Associate Professionals","2020",2020-01-01,1,"0.0240731947942108",0.0240731947942108
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Science, Research, Engineering And Technology Professionals","2020",2020-01-01,1,"0.0280597129545122",0.0280597129545122
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Secretarial And Related Occupations","2020",2020-01-01,1,"0.0264727126884969",0.0264727126884969
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Skilled Agricultural And Related Trades","2020",2020-01-01,1,"0.0368502466137717",0.0368502466137717
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Skilled Construction And Building Trades","2020",2020-01-01,1,"0.0260551151950621",0.0260551151950621
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Skilled Metal, Electrical And Electronic Trades","2020",2020-01-01,1,"0.0228450183135844",0.0228450183135844
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Teaching And Other Educational Professionals","2020",2020-01-01,1,"0.0278769880791232",0.0278769880791232
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Textiles, Printing And Other Skilled Trades","2020",2020-01-01,1,"0.0260603732014419",0.0260603732014419
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 submajor)","Transport And Mobile Machine Drivers And Operatives","2020",2020-01-01,1,"0.030134880271762",0.030134880271762
-"Greater London Authority MCA","replacementDemand","Qualification","No Qualification","2020",2020-01-01,1,"0.0126960153082678",0.0126960153082678
-"Greater London Authority MCA","replacementDemand","Qualification","RQF1 GCSE(below grade C) & equivalent","2020",2020-01-01,1,"0.0162050984325706",0.0162050984325706
-"Greater London Authority MCA","replacementDemand","Qualification","RQF2 GCSE(A-C) & equivalent","2020",2020-01-01,1,"0.0195538667331592",0.0195538667331592
-"Greater London Authority MCA","replacementDemand","Qualification","RQF3 A level & equivalent","2020",2020-01-01,1,"0.0206152034547917",0.0206152034547917
-"Greater London Authority MCA","replacementDemand","Qualification","RQF4 HE below degree level","2020",2020-01-01,1,"0.0287662900960197",0.0287662900960197
-"Greater London Authority MCA","replacementDemand","Qualification","RQF5 Foundation degree;Nursing;Teaching","2020",2020-01-01,1,"0.0277832135853269",0.0277832135853269
-"Greater London Authority MCA","replacementDemand","Qualification","RQF6 First degree","2020",2020-01-01,1,"0.0282568616037513",0.0282568616037513
-"Greater London Authority MCA","replacementDemand","Qualification","RQF7 Other higher degree","2020",2020-01-01,1,"0.0390334989409358",0.0390334989409358
-"Greater London Authority MCA","replacementDemand","Qualification","RQF8 Doctorate","2020",2020-01-01,1,"0.0380399917381924",0.0380399917381924
-"Greater London Authority MCA","replacementDemand","Broad sector","Business and other services","2020",2020-01-01,1,"0.0279655925828755",0.0279655925828755
-"Greater London Authority MCA","replacementDemand","Broad sector","Construction","2020",2020-01-01,1,"0.0269026915105912",0.0269026915105912
-"Greater London Authority MCA","replacementDemand","Broad sector","Manufacturing","2020",2020-01-01,1,"0.0242600828772699",0.0242600828772699
-"Greater London Authority MCA","replacementDemand","Broad sector","Non-marketed services","2020",2020-01-01,1,"0.0288832910473913",0.0288832910473913
-"Greater London Authority MCA","replacementDemand","Broad sector","Primary sector and utilities","2020",2020-01-01,1,"0.025414381909131",0.025414381909131
-"Greater London Authority MCA","replacementDemand","Broad sector","Trade, accomod. and transport","2020",2020-01-01,1,"0.0274728731610985",0.0274728731610985
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 major)","Administrative and secretarial occupations","2020",2020-01-01,1,"0.027877578489206",0.027877578489206
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 major)","Associate professional occupations","2020",2020-01-01,1,"0.0275166004385479",0.0275166004385479
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 major)","Caring, leisure and other service occupations","2020",2020-01-01,1,"0.0300488672452586",0.0300488672452586
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 major)","Elementary occupations","2020",2020-01-01,1,"0.027375409537959",0.027375409537959
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 major)","Managers, directors and senior officials","2020",2020-01-01,1,"0.0285871906891497",0.0285871906891497
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 major)","Process, plant and machine operatives","2020",2020-01-01,1,"0.0295296226969051",0.0295296226969051
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 major)","Professional occupations","2020",2020-01-01,1,"0.0282129478932454",0.0282129478932454
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 major)","Sales and customer service occupations","2020",2020-01-01,1,"0.0255512910733073",0.0255512910733073
-"Greater London Authority MCA","replacementDemand","Occupation (SOC2020 major)","Skilled trades occupations","2020",2020-01-01,1,"0.0259097581920551",0.0259097581920551

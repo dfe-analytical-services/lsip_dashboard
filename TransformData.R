@@ -543,7 +543,7 @@ C_wfRd <- bind_rows (
                 sum_rd = sum(rdlevel_2020_35)) %>% 
       rename(subgroup = name.y.y) %>% 
     mutate(breakdown = "Occupation (SOC2020 submajor)"), 
-  
+                       
   I_wfRD %>% 
     group_by(variable.x,name.x, name.y.y.y) %>% 
     summarise(sum_emp2020 = sum(emp_2020), 
@@ -590,7 +590,8 @@ C_wfRd <- bind_rows (
     geogConcat == "Brighton and Hove East Sussex West Sussex LSIP" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
     geogConcat == "England " ~ "England",
     TRUE ~ geogConcat
-  ))
+  )) %>% 
+  filter(!is.na(subgroup)) #removing industry for England
 
 employmentProjections <-
   # bind_rows(
