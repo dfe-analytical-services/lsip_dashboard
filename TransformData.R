@@ -507,7 +507,14 @@ I_wfRD <- bind_rows (
     select(-lsip),
   I_wfRD_lep %>% 
     left_join(., (I_wfRD_lookup %>% filter(variable == "lep")), by = c("lep" = "value")) %>% 
-    select(-lep)
+    select(-lep),
+  I_wfRD_region %>% 
+    filter(!geography %in% c(10, 11, 12)) %>% #removing non english regions
+    group_by(ind75, ind_sector, occ2dig, occ1dig) %>% 
+    summarise(emp_2020 = sum(emp_2020), 
+              rdlevel_2020_35 = sum(rdlevel_2020_35)) %>% 
+    mutate(name = "England", 
+           variable = "")
 ) %>% 
   left_join(., (I_wfRD_lookup %>% filter(variable == "ind22")), by = c("ind22" = "value")) %>% 
  select(-ind22) %>% 
@@ -518,7 +525,7 @@ select(-occ2dig) %>%
   left_join(., (I_wfRD_lookup %>% filter(variable == "occ1dig")), by = c("occ1dig" = "value")) %>% 
  select(-occ1dig) %>% 
   left_join(., (I_wfRD_lookup %>% filter(variable == "qualification")), by = c("qual" = "value")) %>% 
- select(-qual)# %>% 
+ select(-qual) 
   #select(-variable.y, -variable.y.y, -variable.y.y.y, -variable.x.x.x, -variable.x.x)
 
 #Calculating RD estimate
@@ -581,6 +588,7 @@ C_wfRd <- bind_rows (
     geogConcat == "Humber LEP" ~ "Hull and East Yorkshire LEP",
     geogConcat == "Essex Southend-on-Sea and Thurrock LSIP" ~ "Essex, Southend-on-Sea and Thurrock LSIP",
     geogConcat == "Brighton and Hove East Sussex West Sussex LSIP" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
+    geogConcat == "England " ~ "England",
     TRUE ~ geogConcat
   ))
 
@@ -948,14 +956,14 @@ C_businesses <- bind_rows(
 
 # 3. Combine datasets ----
 C_localSkillsDataset <- bind_rows(
-  C_emp,
-  C_empOcc,
-  C_empInd,
+C_emp,
+ C_empOcc,
+ C_empInd,
   C_entSize,
   C_entInd,
   C_qualAgeGender,
   C_qualL3PlusAgeGender,
-  C_FeProvLevelAge,
+C_FeProvLevelAge,
   C_FeSsa,
   C_skillsImperative,
   C_destinations,
