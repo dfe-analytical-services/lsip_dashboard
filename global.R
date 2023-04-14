@@ -24,7 +24,7 @@ shhh(library(DT)) # create datatables
 shhh(library(writexl)) # write data to xls for download
 shhh(library(leaflet)) # create maps
 shhh(library(sf)) # load map data
-shhh(library(capture)) # screenshots
+#shhh(library(capture)) # screenshots
 shhh(library(shinyalert)) # cookie pop up
 shhh(library(shinycssloaders)) # spinners
 shhh(library(RColorBrewer)) # map colours

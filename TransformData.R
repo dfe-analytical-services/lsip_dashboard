@@ -571,6 +571,7 @@ C_wfRd <- bind_rows (
          value = RD_estimate) %>% 
   mutate(valueText = as.character(value))%>%
     mutate(timePeriod = as.Date(paste("01", "Jan", chartPeriod, sep = " "), format = "%d %b %Y")) %>% 
+  ungroup() %>% 
   select(geogConcat, metric, breakdown, subgroup, chartPeriod, timePeriod, latest, valueText, value) %>% 
   mutate(geogConcat = case_when(
     geogConcat == "Buckinghamshire Thames Valley LEP" ~ "Buckinghamshire LEP",
@@ -686,7 +687,8 @@ empGrowth2023_2035 <- employmentProjections %>%
 C_skillsImperative <- bind_rows(
   employmentProjections,
   empGrowth,
-  empGrowth2023_2035
+  empGrowth2023_2035,
+  C_wfRd 
 ) %>%
   mutate(valueText = as.character(value))
 
