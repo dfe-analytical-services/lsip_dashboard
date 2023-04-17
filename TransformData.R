@@ -510,7 +510,7 @@ I_wfRD <- bind_rows (
     select(-lep),
   I_wfRD_region %>% 
     filter(!geography %in% c(10, 11, 12)) %>% #removing non english regions
-    group_by(ind75, ind_sector, occ2dig, occ1dig) %>% 
+    group_by(ind75, ind_sector, occ2dig, occ1dig, qual) %>% 
     summarise(emp_2020 = sum(emp_2020), 
               rdlevel_2020_35 = sum(rdlevel_2020_35)) %>% 
     mutate(name = "England", 
@@ -591,7 +591,14 @@ C_wfRd <- bind_rows (
     geogConcat == "England " ~ "England",
     TRUE ~ geogConcat
   )) %>% 
-  filter(!is.na(subgroup)) #removing industry for England
+  filter(!is.na(subgroup)) %>% #removing industry for England 
+mutate(subgroup = gsub("RQF\\d+", "RQF", subgroup)) %>%  #removing numbers 
+  mutate(subgroup = gsub("&", "&amp;", subgroup)) %>% 
+  mutate(subgroup = case_when(
+    breakdown == "Occupation (SOC2020 submajor)" ~ 
+      paste0(toupper(substring(subgroup, 1,1)), tolower(substring(subgroup,2)), sep =""),
+    TRUE ~subgroup
+  ))
 
 employmentProjections <-
   # bind_rows(
