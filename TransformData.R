@@ -589,9 +589,11 @@ C_wfRd <- bind_rows (
     geogConcat == "Essex Southend-on-Sea and Thurrock LSIP" ~ "Essex, Southend-on-Sea and Thurrock LSIP",
     geogConcat == "Brighton and Hove East Sussex West Sussex LSIP" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
     geogConcat == "England " ~ "England",
+    geogConcat == "Buckinghamshire  LSIP" ~ "Buckinghamshire LSIP",
+    geogConcat == "Norfolk and Suffolk  LSIP" ~ "Norfolk and Suffolk LSIP",
     TRUE ~ geogConcat
   )) %>% 
-  filter(!is.na(subgroup)) %>% #removing industry for England 
+filter(!is.na(subgroup)) %>% #removing industry for England 
 mutate(subgroup = gsub("RQF\\d+", "RQF", subgroup)) %>%  #removing numbers 
   mutate(subgroup = gsub("&", "&amp;", subgroup)) %>% 
   mutate(subgroup = case_when(
@@ -599,6 +601,14 @@ mutate(subgroup = gsub("RQF\\d+", "RQF", subgroup)) %>%  #removing numbers
       paste0(toupper(substring(subgroup, 1,1)), tolower(substring(subgroup,2)), sep =""),
     TRUE ~subgroup
   ))
+
+#adding mca gla
+C_wfRd <- bind_rows(
+  C_wfRd, 
+  C_wfRd %>%  
+    filter(geogConcat == "London LEP") %>% 
+    mutate(geogConcat = "Greater London Authority MCA")
+)
 
 employmentProjections <-
   # bind_rows(
