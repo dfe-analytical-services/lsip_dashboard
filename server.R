@@ -1221,7 +1221,7 @@ server <- function(input, output, session) {
       "Job advert data is not available at LA level for London. Textkernel’s default method when assigning adverts to local authority with limited location information was to assign to the centroid of the region. This was most prevalent in London, where Westminster reported much higher counts than the surrounding local authorities as it is the centroid of the region of London. For this release, all local authorities of London have been grouped into the same region. "
     } else {
       if (input$splashMetric == "employmentProjection"){
-        "Here we present the replacement demand for the area. The estimates of replacement demand captures the need to replace workers leaving the workforce between 2020 and 2035. This includes reasons other than old age retirement, such as mortality or family formation. It does not include general withdrawls from the workforce as people change jobs.
+        "The estimates of replacement demand captures the need to replace workers leaving the workforce between 2020 and 2035. This includes reasons other than old age retirement, such as mortality or family formation. It does not include general withdrawls from the workforce as people change jobs.
         Please use the breakdown and subgroup filters to the left to update."
       }
      else {
