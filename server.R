@@ -1816,8 +1816,10 @@ server <- function(input, output, session) {
       } else {
         # add an extra column so the colours work in ggplot when sorting alphabetically
         replacementDemandLatest$Area <- factor(replacementDemandLatest$geogConcat,
-                                   levels = c("England", input$geoChoice, input$geoComps) # paste0(laClicked()," LADU"),
-        )
+                    levels = c("England", input$geoChoice, input$geoComps) # paste0(laClicked()," LADU"),
+                    
+                              
+      )
         ggplot(
           replacementDemandLatest,
           aes(
@@ -1853,7 +1855,7 @@ server <- function(input, output, session) {
             panel.grid.major = element_blank(),
             panel.grid.minor = element_blank()
           ) +
-          scale_fill_manual(values = chartColors6)
+          scale_fill_manual(values = ifelse(replacementDemandLatest$breakdown == "Industry","#12436D", chartColors6))
       }
     }
   )
