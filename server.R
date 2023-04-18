@@ -1195,7 +1195,8 @@ server <- function(input, output, session) {
   ### 2.3.6 LA map ----
   #### 2.3.6.1 Title ----
   output$titleLaMap <- renderUI({
-    paste0("What is the variation within ", input$geoChoice, "?")
+    ifelse(input$splashMetric == "employmentProjection", paste0("What is the replacement demand rate by ", tolower(input$barBreakdown), "?"),
+           paste0("What is the variation within ", input$geoChoice, "?"))
   })
   #### 2.3.6.2 Comment----
   output$commentLA <- renderUI({
@@ -1220,7 +1221,8 @@ server <- function(input, output, session) {
       "Job advert data is not available at LA level for London. Textkernel’s default method when assigning adverts to local authority with limited location information was to assign to the centroid of the region. This was most prevalent in London, where Westminster reported much higher counts than the surrounding local authorities as it is the centroid of the region of London. For this release, all local authorities of London have been grouped into the same region. "
     } else {
       if (input$splashMetric == "employmentProjection"){
-        "Skills Imperative 2035 data is not available at LA level. Here we present the replacement demand for the area. Please use the breakdown and subgroup filters to the left to update."
+        "Here we present the replacement demand for the area. The estimates of replacement demand captures the need to replace workers leaving the workforce between 2020 and 2035. This includes reasons other than old age retirement, such as mortality or family formation. It does not include general withdrawls from the workforce as people change jobs.
+        Please use the breakdown and subgroup filters to the left to update."
       }
      else {
       if (nrow(LaHighLow) == 1) {
