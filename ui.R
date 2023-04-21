@@ -895,8 +895,13 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."
           ),
           h3("Skills Imperative 2035 employment projections"),
-          p(
-            "Skills Imperative 2035 projects the future size and shape of the labour market by considering employment prospects by industry, occupation, qualification level.
+          p("The occupation projections are based on ONS survey data that has been impacted by a coding error, so should be used with caution.  For more information on the miscoding of occupation data see this ", 
+            a(
+              href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
+              "ONS article",
+              .noWS = c("after"))
+            ),
+          p("Skills Imperative 2035 projects the future size and shape of the labour market by considering employment prospects by industry, occupation, qualification level.
             The dashboard shows the year on year growth of employment as well as the long term growth from 2023 to 2035.
             The employment volumes are available in the data downloads.
             "
