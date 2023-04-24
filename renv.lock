@@ -170,6 +170,18 @@
       ],
       "Hash": "e749cae40fa9ef469b6050959517453c"
     },
+    "XML": {
+      "Package": "XML",
+      "Version": "3.99-0.14",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "methods",
+        "utils"
+      ],
+      "Hash": "e5c8af79df616c135b21eaeb1dc6bc5c"
+    },
     "anytime": {
       "Package": "anytime",
       "Version": "0.3.9",
@@ -1255,6 +1267,24 @@
       ],
       "Hash": "b49e163093c0ef46fbbfc40bcb87916c"
     },
+    "nomisr": {
+      "Package": "nomisr",
+      "Version": "0.4.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "dplyr",
+        "httr",
+        "jsonlite",
+        "rlang",
+        "rsdmx",
+        "snakecase",
+        "tibble",
+        "utils"
+      ],
+      "Hash": "f98a0b6e5ceca65552eb51c3036592ac"
+    },
     "openssl": {
       "Package": "openssl",
       "Version": "2.0.5",
@@ -1378,6 +1408,17 @@
         "viridisLite"
       ],
       "Hash": "3781cf6971c6467fa842a63725bbee9e"
+    },
+    "plyr": {
+      "Package": "plyr",
+      "Version": "1.8.8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp"
+      ],
+      "Hash": "d744387aef9047b0b48be2933d78e862"
     },
     "png": {
       "Package": "png",
@@ -1637,6 +1678,22 @@
         "R"
       ],
       "Hash": "1de7ab598047a87bba48434ba35d497d"
+    },
+    "rsdmx": {
+      "Package": "rsdmx",
+      "Version": "0.6-2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R6",
+        "XML",
+        "httr",
+        "methods",
+        "plyr",
+        "utils"
+      ],
+      "Hash": "110b71aa6631b282e8a57f11d3ce3bdf"
     },
     "rstudioapi": {
       "Package": "rstudioapi",

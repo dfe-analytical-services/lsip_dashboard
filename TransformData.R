@@ -178,71 +178,69 @@ formatLong <- function(x) {
     mutate_at(vars(valueText), function(x) str_replace_all(x, c("!" = "c", "\\*" = "u", "~" = "low", "-" = "x"))) # common supression notation
 }
 
+
+
+formatNomis <- function(x) {
+  x%>%
+    filter(!(GEOGRAPHY_TYPE=="countries"&GEOGRAPHY_NAME!="England"))%>%
+    mutate(metric=gsub(" : All People )","",CELL_NAME))%>%
+    mutate(metric=gsub(" \\(SIC 2007\\) : All people \\)","",metric))%>%
+    mutate(metric=gsub(" \\(SOC2010\\) : All people \\)","",metric))%>%
+    mutate(metric=gsub("T09a:","",metric))%>%
+    mutate(metric=gsub("T13a:","",metric))%>%   
+    mutate(metric=gsub(" \\(All people - ","",metric))%>%
+    mutate(metric=gsub("[[:digit:]]+","",metric))%>%
+    mutate(metric=gsub("T: \\(Aged - - ","",metric))%>%
+    mutate(metric=gsub(" \\(","",metric))%>%  
+    mutate(metric=gsub("&","and",metric))%>%  
+    # get time period
+    mutate(timePeriod = as.Date(paste("01", substr(DATE_NAME, 1, 8), sep = ""), format = "%d %b %Y")) %>%
+    mutate(latest = case_when(
+      timePeriod == max(timePeriod) ~ 1,
+      timePeriod == (max(timePeriod) - years(1)) ~ -1,
+      TRUE ~ 0
+    )) %>%
+    mutate(geogConcat = case_when(
+      GEOGRAPHY_TYPE == "local authorities: district / unitary (as of April 2021)" ~ paste0(GEOGRAPHY_NAME, " LADU"),
+      GEOGRAPHY_TYPE == "local enterprise partnerships (as of April 2021)" ~ paste0(GEOGRAPHY_NAME, " LEP"),
+      TRUE ~ GEOGRAPHY_NAME)
+    ) %>%
+    select(-CELL_NAME,-GEOGRAPHY_TYPE,-GEOGRAPHY_NAME,-GEOGRAPHY_CODE)%>%
+    rename(chartPeriod=DATE_NAME,value=OBS_VALUE)
+}
+
 ## 2.1 Employment volumes ----
 # convert into format used in dashboard
-C_emp <- formatNomis(I_emp) %>%
-  select(-industry) %>% # remove NA industry column
-  rename_with(~ gsub("[[:digit:]]+", "", .)) %>% # take out codes
-  # get time period
-  mutate(timePeriod = as.Date(paste("01", substr(chartPeriod, 1, 8), sep = ""), format = "%d %b %Y")) %>%
-  mutate(latest = case_when(
-    timePeriod == max(timePeriod) ~ 1,
-    timePeriod == (max(timePeriod) - years(1)) ~ -1,
-    TRUE ~ 0
-  )) %>%
-  # calculate rates
-  mutate(
-    inemploymentRate = as.character(as.numeric(inemployment) / as.numeric(all)),
-    selfemployedRate = as.character(as.numeric(selfemployed) / as.numeric(all)),
-    unemployedRate = as.character(as.numeric(unemployed) / as.numeric(all)),
-    inactiveRate = as.character(as.numeric(inactive) / as.numeric(all)),
-  ) %>%
-  formatLong() %>% # make long and format supression
-  rename(metric = subgroup) %>%
+F_emp <- formatNomis(I_emp) %>%
+  mutate(metric=gsub(" ","",tolower(metric)))%>%
   mutate(breakdown = "Total", subgroup = "Total")
+#add rates
+C_emp<-bind_rows(
+F_emp%>%
+  left_join(F_emp%>%filter(metric=="all")%>%rename(all=value)%>%select(-metric))%>%
+  mutate(value=value/all,metric=paste0(metric,"Rate"))%>%
+  filter(metric!="allRate")%>%
+  select(-all),
+#original data
+F_emp
+)%>%
+  mutate(valueText=as.character(value))
 
 ## 2.2 Employment by occupation ----
 # convert into format used in dashboard
-C_empOcc <- formatNomis(I_empOcc) %>%
-  select(-industry) %>% # remove NA industry column
-  rename_with(~ gsub("[[:digit:]]+", "", .)) %>% # take out codes
-  # get time period
-  mutate(timePeriod = as.Date(paste("01", substr(chartPeriod, 1, 8), sep = ""), format = "%d %b %Y")) %>%
-  mutate(latest = case_when(
-    timePeriod == max(timePeriod) ~ 1,
-    timePeriod == (max(timePeriod) - years(1)) ~ -1,
-    TRUE ~ 0
-  )) %>%
-  formatLong() %>%
-  mutate(subgroup = trimws(str_to_sentence(subgroup), "both")) %>%
+C_empOcc <- formatNomis(I_empOcc)%>%
+  mutate(valueText=as.character(value)) %>%
+  rename(subgroup="metric")%>%
   mutate(breakdown = "Occupation", metric = "inemployment")
 
 ## 2.3 Employment by industry ----
 C_empInd <- formatNomis(I_empInd) %>%
-  select(-industry) %>% # remove NA industry column
-  rename(
-    "Agriculture and Fishing" = "1 a agricuture fishing sic 2007",
-    "Energy and Water" = "4 b d e energy water sic 2007",
-    "Manufacturing" = "7 c manufacturing sic 2007",
-    "Construction" = "10 f construction sic 2007",
-    "Distribution, Hotels and Restaurants" = "13 g i distribution hotels restaurants sic 2007",
-    "Transport and Communication" = "16 h j transport communication sic 2007",
-    "Banking, Finance and Insurance" = "19 k n banking finance insurance etc sic 2007",
-    "Public Administration, Education and Health" = "22 o q public admin education health sic 2007",
-    "Other Services" = "25 r u other services sic 2007"
-  ) %>%
-  # get time period
-  mutate(timePeriod = as.Date(paste("01", substr(chartPeriod, 1, 8), sep = ""), format = "%d %b %Y")) %>%
-  mutate(latest = case_when(
-    timePeriod == max(timePeriod) ~ 1,
-    timePeriod == (max(timePeriod) - years(1)) ~ -1,
-    TRUE ~ 0
-  )) %>%
-  formatLong() %>%
-  mutate(metric = "inemployment", breakdown = "Industry")
+  mutate(subgroup=gsub("^\\S* ","",metric))%>%
+  mutate(valueText=as.character(value)) %>%
+  mutate(breakdown = "Industry", metric = "inemployment")
 
 ## 2.4.1 Enterprise by employment size ----
-C_entSize <- formatNomis(I_entSize) %>%
+C_entSize <- formatNomis(I_entSize%>%rename(CELL_NAME=EMPLOYMENT_SIZEBAND_NAME)%>%select(-INDUSTRY_NAME)) %>%
   select(-industry) %>% # remove NA industry column
   # get time period
   mutate(timePeriod = as.Date(paste("01", "Jan", chartPeriod, sep = " "), format = "%d %b %Y")) %>%
