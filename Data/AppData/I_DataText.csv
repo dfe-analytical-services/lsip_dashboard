@@ -1,25 +1,25 @@
 "metric","LatestPeriod","subheading","sourceText","dataText","caveatText","mapComment","timeTitle","timeComment","mapPop","breakdownTitle","breakdownComment","LaComment"
-"inemploymentRate","Oct-Sep 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+"inemploymentRate","Jan-Dec 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
   <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","The employment rate","are employment rates changing","The employment rate in ","Employment rate","employment rates","N/A","Employment rates are "
-"selfemployedRate","Oct-Sep 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+"selfemployedRate","Jan-Dec 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
   <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","The self-employment rate","are self-employment rates changing","The self-employment rate in ","Self-employment rate","self-employment rates","N/A","Self-employment rates are "
-"unemployedRate","Oct-Sep 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+"unemployedRate","Jan-Dec 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
   <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","The unemployment rate","are unemployment rates changing","The employment rate in ","Unemployment rate","unemployment rates","N/A","Unemployment rates are "
-"inactiveRate","Oct-Sep 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+"inactiveRate","Jan-Dec 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
   <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","The inactivity rate","are inactivity rates changing","The inactivity rate in ","Inactivity rate","inactivity rates","N/A","Inactivity rates are "
-"inemployment","Oct-Sep 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+"inemployment","Jan-Dec 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
   <li>Employment volumes are for 16-64 year olds.</li>
 <li>Industry split volumes are for all ages. </li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
@@ -27,17 +27,17 @@
 <li>Standard Occupational Classification 2010 (SOC2010). The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see the data tab.</li>
 <li>Industry groups are Standard Industrial Classification: SIC 2007.</li>
 </ol>","Employment","are employment volumes changing","Employment in","Employment","employment volumes","employment volume","Employment is"
-"selfemployed","Oct-Sep 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+"selfemployed","Jan-Dec 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
   <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","Self-employment","are self-employment volumes changing","Self-employment in","Self-employment","self-employment volumes","self-employment volume","Self-employment is"
-"unemployed","Oct-Sep 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+"unemployed","Jan-Dec 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
   <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","Unemployment","are unemployment volumes changing","Unemployment in","Unemployment","unemployment volumes","unemployment volume","Unemployment is"
-"inactive","Oct-Sep 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+"inactive","Jan-Dec 2022 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
   <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
@@ -107,7 +107,7 @@ Achievements are the number of learners who successfully complete an individual 
  <li>Years shown represent academic years.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","The FE participation rate per 100,000","are FE participation rates per 100,000 changing","The FE participation rate per 100,000","FE participation rate per 100,000","FE participation rates per 100,000","FE participation rate per 100,000","The FE participation rate per 100,000 is"
-"L3PlusRate","2021 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
+"L3PlusRate","Jan-Dec 2021 data","Qualification estimates for the Jan 2022-Dec2022 survey period are temporarily suspended. The coding of qualifications has been changed to reflect an updated qualification framework. ONS have temporarily suspended the publication of these series while they update their datasets to reflect this change. They will reinstate qualification outputs as soon as they have made this update.","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
   <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
@@ -137,8 +137,9 @@ Unknown (activity not captured): The student was not found to have any participa
  <li>If a student is registered as being in education and an apprenticeship, it is recorded as a sustained education and if a student is registered in employment along with an apprenticeship or in education, it is recorded as sustained employment.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","The sustained positive destination rate after study at Key Stage 5 in ","are key stage 5 sustained positive destination rates changing","The sustained positive destination rate after study at Key Stage 5 in ","Key stage 5 sustained positive destination rate","key stage 5 destinations","key stage 5 sustained positive destination rate","The sustained positive destination rate after study at Key Stage 5 is"
-"employmentProjection","Growth from 2023 to 2035","Projections are from Skills Imperative 2035. ","<a href = 'https://www.gov.uk/government/publications/labour-market-and-skills-projections-2020-to-2035'>Skills Imperative 2035</a>","Data presented is the baseline projection. Alternative scenarios are available from NFER. ","<ol>
+"employmentProjection","Growth from 2023 to 2035","Projections are from Skills Imperative 2035. The occupation projections are based on ONS survey data that has been impacted by a coding error, so should be used with caution.  ","<a href = 'https://www.gov.uk/government/publications/labour-market-and-skills-projections-2020-to-2035'>Skills Imperative 2035</a>","Data presented is the baseline projection. Alternative scenarios are available from NFER.  The occupation projections are based on ONS survey data that has been impacted by a coding error, so should be used with caution.  For more information on the miscoding of occupation data see this  <a href = 'https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26'>ONS article</a>.","<ol>
   <li>The projections presented in this Workbook are calculated from a number of different data sources, using a variety of econometric and statistical techniques. As a result, precise margins of error cannot be assigned to the estimates. For further details, see the Technical Report. </li>
+<li>The occupation projections are based on ONS survey data that has been impacted by a coding error, so should be used with caution.  For more information on the miscoding of occupation data see this  <a href = 'https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26'>ONS article</a>.</li>
  <li>Industries are based on SIC 2007 codes. </li>
  <li>Time series of the breakdowns can be downloaded in the data download section or in the publication. </li>
  <li>Further breakdowns are available in the published data eg gender, full-time/part-time, as well combined breakdowns. Replacement demand is also available. </li>
