@@ -876,10 +876,16 @@ C_localSkillsDataset <- bind_rows(
 )
 ## add in GLA as an MCA
 C_localSkillsDataset <- bind_rows(
-  C_localSkillsDataset,
+   C_localSkillsDataset#%>%
+  #   filter(geogConcat != "Dorset LSIP") 
+  ,
   C_localSkillsDataset %>%
     filter(geogConcat == "London LEP") %>%
-    mutate(geogConcat = "Greater London Authority MCA")
+    mutate(geogConcat = "Greater London Authority MCA")#,
+  # ##add in Dorset LSIP to match Dorset LEP
+  # C_localSkillsDataset %>%
+  #   filter(geogConcat == "Dorset LEP") %>%
+  #   mutate(geogConcat = "Dorset LSIP")
 )
 
 # 4. Create datasets used by the app----
