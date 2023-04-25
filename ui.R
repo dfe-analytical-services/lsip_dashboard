@@ -587,14 +587,21 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("21 Mar 2023 (1.2.1)"),
-            p(
-              "Added Skills Imperative 2035 data to the dashboard. This projects employment to 2035 with sector, industry, qualification and occupation splits."
+            p("26 Apr 2023 (1.2.2)"),
+            tags$ul(
+              tags$li("Updated Nomis employment rates and employment by industry data to the latest quarter."),
+              tags$li("Updated ILR data with the latest revision (time period covered has stayed the same)"),
+              tags$li("Corrections to Dorset LSIP and Enterprise M3 LEP (including all of Surrey) LSIP. In the case of of the Enterprise M3 LEP (including all of Surrey) LSIP we have used a temporary fix where we compile the Skills Imperative and job advert data from other LEPs and LSIPs. There may therefore be some rounding issues with this LSIP. We are working on republishing that data with the correction. All other data is accurate."),
+              tags$li("Corrections to include data for some LAs which used dicontinued LA naming."),
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("21 Mar 2023 (1.2.1)"),
+                p(
+                  "Added Skills Imperative 2035 data to the dashboard. This projects employment to 2035 with sector, industry, qualification and occupation splits."
+                ),
                 p("28 Feb 2023 (1.1.1)"),
                 p(
                   "Dashboard redesign including:"
@@ -824,6 +831,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents.
             Therefore, please take caution when interpreting data from small subgroups."
           ),
+          p("Qualification estimates for the Jan 2022-Dec2022 survey period are temporarily suspended. The coding of qualifications has been changed to reflect an updated qualification framework. ONS have temporarily suspended the publication of these series while they update their datasets to reflect this change. They will reinstate qualification outputs as soon as they have made this update. "),
           h3("ONS-Textkernel online job adverts"),
           p(
             "These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.
@@ -846,6 +854,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               "When job location information is limited, the centroid of the region is used. This may lead to clustering of job counts."
             ),
           ),
+          p("There are errors in the published data for two LSIPs: Dorset LSIP and Enterprise M3 LEP (including all of Surrey) LSIP. This is due to the incorrect mapping of LAs. In the dashboard we have corrected the Dorset LSIP (by using the values for the Dorset LEP which has the same geography) so this is accurate in the dashboard but will not match the published data. For the Enterprise M3 LEP (including all of Surrey) LSIP we have estimated the value by combining a few other LEPs and LSIPs. This will come with some rounding issues. We are working to get the published data corrected."),
           h3("Individualised Learner Record"),
           p(
             "The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
@@ -896,6 +905,15 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           ),
           h3("Skills Imperative 2035 employment projections"),
           p(
+            "The occupation projections are based on ONS survey data that has been impacted by a coding error, so should be used with caution.  For more information on the miscoding of occupation data see this ",
+            a(
+              href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
+              "ONS article",
+              .noWS = c("after")
+            ),
+            "."
+          ),
+          p(
             "Skills Imperative 2035 projects the future size and shape of the labour market by considering employment prospects by industry, occupation, qualification level.
             The dashboard shows the year on year growth of employment as well as the long term growth from 2023 to 2035.
             The employment volumes are available in the data downloads.
@@ -903,6 +921,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           ),
           p("The projections are calculated from a number of different data sources, and as such precise margin errors have not been assigned.
             Care should be taken when using projections with small volumes of individuals (see Skills Imperative 2035 datasets for more detail). "),
+          p("There are errors in the published data for two LSIPs: Dorset LSIP and Enterprise M3 LEP (including all of Surrey) LSIP. This is due to the incorrect mapping of LAs. In the dashboard we have corrected the Dorset LSIP (by using the values for the Dorset LEP which has the same geography) so this is accurate in the dashboard but will not match the published data. For the Enterprise M3 LEP (including all of Surrey) LSIP we have estimated the value by combining a few other LEPs and LSIPs. This will come with some rounding issues. We are working to get the published data corrected."),
           br()
         )
       )

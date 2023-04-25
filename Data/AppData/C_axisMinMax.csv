@@ -1,8 +1,8 @@
 "metric","minAxis","maxAxis"
-"achievements",3590,1578910
-"achievements Apprenticeships",760,277790
+"achievements",3590,1574420
+"achievements Apprenticeships",770,276160
 "achievements Education and training",2110,897990
-"achievements_rate_per_100000_population",2158.36079761723,8737.18761575499
+"achievements_rate_per_100000_population",2135.41981627999,8577.02385436459
 "birthRate",0.0736774469907903,0.20441301643423
 "deathRate",0.0591997376188914,0.175498461126723
 "employmentProjection",0.00179630444983303,0.0138260340186448
@@ -13,8 +13,8 @@
 "inemployment",215600,26537400
 "inemploymentRate",0.682400613295367,0.833888624464541
 "L3PlusRate",0.392793288405996,0.717678100263852
-"participation",5300,2236790
-"participation_rate_per_100000_population",3530.95586456301,11781.8495010705
+"participation",5300,2179070
+"participation_rate_per_100000_population",3530.95586456301,11250.8122713716
 "selfemployed",25800,3880900
 "selfemployedRate",0.0625453791100508,0.164471669218989
 "sustainedPositiveDestinationKS4Rate",0.916381490849576,0.97070596797671
