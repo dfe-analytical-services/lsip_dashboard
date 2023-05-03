@@ -587,12 +587,13 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("26 Apr 2023 (1.2.2)"),
+            p("3 May 2023 (1.2.2)"),
             tags$ul(
               tags$li("Updated Nomis employment rates and employment by industry data to the latest quarter."),
               tags$li("Updated ILR data with the latest revision (time period covered has stayed the same)"),
               tags$li("Corrections to Dorset LSIP and Enterprise M3 LEP (including all of Surrey) LSIP. In the case of of the Enterprise M3 LEP (including all of Surrey) LSIP we have used a temporary fix where we compile the Skills Imperative and job advert data from other LEPs and LSIPs. There may therefore be some rounding issues with this LSIP. We are working on republishing that data with the correction. All other data is accurate."),
-              tags$li("Corrections to include data for some LAs which used dicontinued LA naming."),
+              tags$li("Correction to include data for some LAs which used discontinued LA naming."),
+              tags$li("Code refresh and tidy."),
             ),
             details(
               label = "Previous updates",
