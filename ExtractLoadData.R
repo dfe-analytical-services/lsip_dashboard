@@ -8,6 +8,7 @@
 # Sources: See the dashboard page Data sources for links to the datasets
 # Notes: Ensure there is *only* the file(s) that will be used in each of the numbered folders in ./Data/
 # Running time: ~20mins
+# NB 2.2.2 has a clause to ignore the latest partial year of data (since we only work with full years). You may need to amend this.
 ###
 
 # Load libraries ----
