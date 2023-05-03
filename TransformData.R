@@ -397,9 +397,15 @@ addGeogs <- function(x) {
       filter(is.na(LEP) == FALSE) %>%
       mutate(geogConcat = paste0(LEP, " LEP"), newArea = 1),
     withAreas %>%
+      # group by and slice to remove those LAs that are in multiple LEPs
+      group_by(across(c(-LAD21NM, -area, -LEP, -LSIP, -CAUTH21NM, -geographic_level, -LAD21NM2))) %>%
+      slice(1)%>%
       filter(is.na(LSIP) == FALSE) %>%
       mutate(geogConcat = paste0(LSIP, " LSIP"), newArea = 1),
     withAreas %>%
+      # group by and slice to remove those LAs that are in multiple LEPs
+      group_by(across(c(-LAD21NM, -area, -LEP, -LSIP, -CAUTH21NM, -geographic_level, -LAD21NM2))) %>%
+      slice(1)%>%
       filter(is.na(CAUTH21NM) == FALSE) %>%
       mutate(geogConcat = paste0(CAUTH21NM, " MCA"), newArea = 1)
   ) %>%
