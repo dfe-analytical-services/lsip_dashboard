@@ -587,11 +587,11 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("3 May 2023 (1.2.2)"),
+            p("5 May 2023 (1.2.2)"),
             tags$ul(
               tags$li("Updated Nomis employment rates and employment by industry data to the latest quarter."),
               tags$li("Updated ILR data with the latest revision (time period covered has stayed the same)"),
-              tags$li("Corrections to Dorset LSIP and Enterprise M3 LEP (including all of Surrey) LSIP. In the case of of the Enterprise M3 LEP (including all of Surrey) LSIP we have used a temporary fix where we compile the Skills Imperative and job advert data from other LEPs and LSIPs. There may therefore be some rounding issues with this LSIP. We are working on republishing that data with the correction. All other data is accurate."),
+              tags$li("Corrections to Dorset LSIP, Enterprise M3 LEP (including all of Surrey) LSIP, Stoke-on-Trent and Staffordshire LEP, and Worcestershire LEP. In the case of of the Enterprise M3 LEP (including all of Surrey) LSIP we have used a temporary fix where we compile the Skills Imperative and job advert data from other LEPs and LSIPs. There may therefore be some rounding issues with this LSIP. We are working on republishing that data with the correction. All other data shown in the dashboard is accurate."),
               tags$li("Correction to include data for some LAs which used discontinued LA naming."),
               tags$li("Code refresh and tidy."),
             ),
@@ -855,7 +855,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               "When job location information is limited, the centroid of the region is used. This may lead to clustering of job counts."
             ),
           ),
-          p("There are errors in the published data for two LSIPs: Dorset LSIP and Enterprise M3 LEP (including all of Surrey) LSIP. This is due to the incorrect mapping of LAs. In the dashboard we have corrected the Dorset LSIP (by using the values for the Dorset LEP which has the same geography) so this is accurate in the dashboard but will not match the published data. For the Enterprise M3 LEP (including all of Surrey) LSIP we have estimated the value by looking the broader region and calculating the value of the Enterprise LSIP having removed other LSIPs in the region. This will come with some rounding issues. We are working to get the published data corrected."),
+          p("There are errors in the published data for four areas: Dorset LSIP, Enterprise M3 LEP (including all of Surrey) LSIP, Stoke-on-Trent and Staffordshire LEP, and Worcestershire LEP. This is due to the incorrect mapping of LAs. In the dashboard we have corrected Dorset LSIP, Stoke-on-Trent and Staffordshire LEP, and Worcestershire LEP (by using the values for the Dorset LEP, Stoke-on-Trent and Staffordshire LSIP, and Worcestershire LSIP which have the same geographies) so these are accurate in the dashboard but will not match the published data. For the Enterprise M3 LEP (including all of Surrey) LSIP we have estimated the value by looking the broader region and calculating the value of the Enterprise LSIP having removed other LSIPs in the region. This will come with some rounding issues. We are working to get the published data corrected."),
           h3("Individualised Learner Record"),
           p(
             "The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
@@ -922,7 +922,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           ),
           p("The projections are calculated from a number of different data sources, and as such precise margin errors have not been assigned.
             Care should be taken when using projections with small volumes of individuals (see Skills Imperative 2035 datasets for more detail). "),
-          p("There are errors in the published data for two LSIPs: Dorset LSIP and Enterprise M3 LEP (including all of Surrey) LSIP. This is due to the incorrect mapping of LAs. In the dashboard we have corrected the Dorset LSIP (by using the values for the Dorset LEP which has the same geography) so this is accurate in the dashboard but will not match the published data. For the Enterprise M3 LEP (including all of Surrey) LSIP we have estimated the value by looking the broader region and calculating the value of the Enterprise LSIP having removed other LSIPs in the region. This will come with some rounding issues. We are working to get the published data corrected."),
+          p("There are errors in the published data for four areas: Dorset LSIP, Enterprise M3 LEP (including all of Surrey) LSIP, Stoke-on-Trent and Staffordshire LEP, and Worcestershire LEP. This is due to the incorrect mapping of LAs. In the dashboard we have corrected Dorset LSIP, Stoke-on-Trent and Staffordshire LEP, and Worcestershire LEP (by using the values for the Dorset LEP, Stoke-on-Trent and Staffordshire LSIP, and Worcestershire LSIP which have the same geographies) so these are accurate in the dashboard but will not match the published data. For the Enterprise M3 LEP (including all of Surrey) LSIP we have estimated the value by looking the broader region and calculating the value of the Enterprise LSIP having removed other LSIPs in the region. This will come with some rounding issues. We are working to get the published data corrected."),
           br()
         )
       )
