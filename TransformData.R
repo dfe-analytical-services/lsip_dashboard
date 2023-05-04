@@ -399,13 +399,13 @@ addGeogs <- function(x) {
     withAreas %>%
       # group by and slice to remove those LAs that are in multiple LEPs
       group_by(across(c(-LAD21NM, -area, -LEP, -LSIP, -CAUTH21NM, -geographic_level, -LAD21NM2))) %>%
-      slice(1)%>%
+      slice(1) %>%
       filter(is.na(LSIP) == FALSE) %>%
       mutate(geogConcat = paste0(LSIP, " LSIP"), newArea = 1),
     withAreas %>%
       # group by and slice to remove those LAs that are in multiple LEPs
       group_by(across(c(-LAD21NM, -area, -LEP, -LSIP, -CAUTH21NM, -geographic_level, -LAD21NM2))) %>%
-      slice(1)%>%
+      slice(1) %>%
       filter(is.na(CAUTH21NM) == FALSE) %>%
       mutate(geogConcat = paste0(CAUTH21NM, " MCA"), newArea = 1)
   ) %>%
@@ -583,9 +583,15 @@ employmentProjections <-
   ))
 
 # use dorset lep for dorset lsip because dorset lsip has the wrong LAs and it is the same as dorset LEP anyway
-employmentProjectionsDorsetLsip <- employmentProjections %>%
-  filter(geogConcat == "Dorset LEP") %>%
-  mutate(geogConcat = "Dorset LSIP") # add in dorset lep as lsip
+# use Worchestershire lsip for Worchestershire lep because Worchestershire lep is missing some LAs and it is the same as Worchestershire lsip anyway
+employmentProjectionsCorrections <- employmentProjections %>%
+  filter(geogConcat %in% c("Dorset LEP", "Worcestershire LSIP", "Stoke-on-Trent and Staffordshire LSIP")) %>%
+  mutate(geogConcat = case_when(
+    geogConcat == "Dorset LEP" ~ "Dorset LSIP",
+    geogConcat == "Worcestershire LSIP" ~ "Worcestershire LEP",
+    geogConcat == "Stoke-on-Trent and Staffordshire LSIP" ~ "Stoke-on-Trent and Staffordshire LEP",
+    TRUE ~ "NA"
+  ))
 
 # calculate enterprise M3 LSIP from a combination of LEP areas that include Enterprise LSIP area, and then minus off the areas in that larger area that are not Enterprise Lsip
 # Enterprise LSIP=(Enterprise LEP + C2C LEP + South east LEP)-(Brighton LSIP + Essex LSIP + Kent LSIP)
@@ -602,8 +608,8 @@ employmentProjectionsEntM3Lsip <- employmentProjections %>%
 
 # combine them all
 employmentProjections <- bind_rows(
-  employmentProjections %>% filter(geogConcat != "Dorset LSIP", geogConcat != "Enterprise M3 LEP (including all of Surrey) LSIP"), # remove incorrect dorset and Enterprise LSIPs
-  employmentProjectionsDorsetLsip,
+  employmentProjections %>% filter(!geogConcat %in% c("Dorset LSIP", "Enterprise M3 LEP (including all of Surrey) LSIP", "Worcestershire LEP", "Stoke-on-Trent and Staffordshire LEP")), # remove incorrect dorset and Enterprise LSIPs
+  employmentProjectionsCorrections,
   employmentProjectionsEntM3Lsip
 )
 
