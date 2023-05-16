@@ -587,7 +587,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("9 May 2023 (1.2.2)"),
+            p("10 May 2023 (1.2.2)"),
             tags$ul(
               tags$li("Updated Nomis employment rates and employment by industry data to the latest quarter."),
               tags$li("Updated ILR data with the latest revision (time period covered has stayed the same)"),
