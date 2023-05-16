@@ -158,6 +158,15 @@ server <- function(input, output, session) {
       selected = "inemploymentRate"
     )
   })
+  
+  # Create link to employment data
+  observeEvent(input$link_to_tabpanel_employment2, {
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateSelectInput(session, "splashMetric",
+                      selected = "inemployment"
+    )
+  })
+  
   # Create link to job advert
   observeEvent(input$link_to_tabpanel_vacancies, {
     updateTabsetPanel(session, "navbar", "Local skills")
@@ -183,7 +192,7 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_qualification, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-      selected = "level3AndAboveRate"
+      selected = "L3PlusRate"
     )
   })
   # Create link to destinations
@@ -845,7 +854,7 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_qualification2, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-      selected = "level3AndAboveRate"
+      selected = "L3PlusRate"
     )
   })
 
