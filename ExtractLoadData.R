@@ -9,6 +9,7 @@
 # Notes: Ensure there is *only* the file(s) that will be used in each of the numbered folders in ./Data/
 # Running time: ~20mins
 # NB 2.2.2 has a clause to ignore the latest partial year of data (since we only work with full years). You may need to amend this.
+# NB 2.1.1 and 2.1.4 are currently importing the last 4 populated datsets and so are hardcoded (following data issues). check if there is new data and then you can change to LATEST dat format
 ###
 
 # Load libraries ----
