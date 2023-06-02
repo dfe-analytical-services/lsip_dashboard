@@ -587,18 +587,23 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("10 May 2023 (1.2.2)"),
+            p("13 June 2023 (1.2.3)"),
             tags$ul(
               tags$li("Updated Nomis employment rates and employment by industry data to the latest quarter."),
-              tags$li("Updated ILR data with the latest revision (time period covered has stayed the same)"),
-              tags$li("Corrections to Dorset LSIP, Enterprise M3 LEP (including all of Surrey) LSIP, Stoke-on-Trent and Staffordshire LEP, and Worcestershire LEP. In the case of of the Enterprise M3 LEP (including all of Surrey) LSIP we have used a temporary fix where we compile the Skills Imperative and job advert data from other LEPs and LSIPs. There may therefore be some rounding issues with this LSIP. We are working on republishing that data with the correction. All other data shown in the dashboard is accurate."),
-              tags$li("Correction to include data for some LAs which used discontinued LA naming."),
-              tags$li("Code refresh and tidy."),
+              tags$li("Started using the Nomis Api to get data.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("10 May 2023 (1.2.2)"),
+                tags$ul(
+                  tags$li("Updated Nomis employment rates and employment by industry data to the latest quarter."),
+                  tags$li("Updated ILR data with the latest revision (time period covered has stayed the same)"),
+                  tags$li("Corrections to Dorset LSIP, Enterprise M3 LEP (including all of Surrey) LSIP, Stoke-on-Trent and Staffordshire LEP, and Worcestershire LEP. In the case of of the Enterprise M3 LEP (including all of Surrey) LSIP we have used a temporary fix where we compile the Skills Imperative and job advert data from other LEPs and LSIPs. There may therefore be some rounding issues with this LSIP. We are working on republishing that data with the correction. All other data shown in the dashboard is accurate."),
+                  tags$li("Correction to include data for some LAs which used discontinued LA naming."),
+                  tags$li("Code refresh and tidy."),
+                ),
                 p("21 Mar 2023 (1.2.1)"),
                 p(
                   "Added Skills Imperative 2035 data to the dashboard. This projects employment to 2035 with sector, industry, qualification and occupation splits."
