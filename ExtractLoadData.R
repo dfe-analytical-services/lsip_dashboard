@@ -8,6 +8,7 @@
 # Sources: See the dashboard page Data sources for links to the datasets
 # Notes: Ensure there is *only* the file(s) that will be used in each of the numbered folders in ./Data/
 # Running time: ~20mins
+# NB 2.2.2 has a clause to ignore the latest partial year of data (since we only work with full years). You may need to amend this.
 ###
 
 # Load libraries ----
@@ -169,7 +170,8 @@ I_FeSsa <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = past
 ### 2.2.2 Achievements/starts/part by LAD and provision, level and age------------
 ## Download "Further education and skills geography - detailed summary " from https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22
 folder <- "2-8_ILRach"
-I_FeProvLevelAge <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+I_FeProvLevelAge <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder)))) %>%
+  filter(time_period != 202223) # ignore since only a partial year
 
 ### 2.2.3 KS4 destinations----
 # National pupil database

@@ -111,6 +111,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="i-want-to-update-a-dataset">I want to update a dataset</h2>
 <p>The Data Sources tab of the dashboard has a list of all the datasets and their next release date.</p>
 <p><strong>Update schedule</strong></p>
+<p>These are the common release points, however be aware that there may be revisions to any of the datasets throughout the year.</p>
 <ul>
 <li><p><em>Annual population survey</em> is released four times a year: 1) Jan 2) Apr 3) Jul/Aug/Sept 4) Oct.&nbsp;We update employment volumes and split by industry at every release. However:</p>
 <ul>
@@ -125,76 +126,84 @@ ul.task-list li input[type="checkbox"] {
 <li><p><em>Skills Imperative 2035</em> was released in Mar 23. No release schedule has been announced.</p></li>
 </ul>
 <table class="table">
-<colgroup>
-<col style="width: 13%">
-<col style="width: 4%">
-<col style="width: 4%">
-<col style="width: 13%">
-<col style="width: 4%">
-<col style="width: 4%">
-<col style="width: 13%">
-<col style="width: 4%">
-<col style="width: 10%">
-<col style="width: 13%">
-<col style="width: 4%">
-<col style="width: 4%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Jan</th>
-<th>F</th>
-<th>M</th>
-<th>Apr</th>
-<th>M</th>
-<th>J</th>
-<th>Jun</th>
-<th>A</th>
-<th>Sep</th>
-<th>Oct</th>
-<th>Nov</th>
-<th>D</th>
+<th>Month</th>
+<th>Release</th>
+<th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
+<td>Jan</td>
 <td>APS emp vols</td>
-<td></td>
-<td></td>
-<td>APS emp vols</td>
-<td></td>
-<td></td>
-<td>APS emp vols</td>
-<td></td>
-<td>Bus count</td>
-<td>APS emp vols</td>
-<td>ILR</td>
+<td>APS emp ind</td>
 <td></td>
 </tr>
 <tr class="even">
-<td>APS emp ind</td>
+<td>Feb</td>
 <td></td>
-<td></td>
-<td>APS emp ind</td>
-<td></td>
-<td></td>
-<td>APS emp ind</td>
-<td></td>
-<td></td>
-<td>APS emp ind</td>
 <td></td>
 <td></td>
 </tr>
 <tr class="odd">
+<td>Mar</td>
 <td></td>
 <td></td>
 <td></td>
+</tr>
+<tr class="even">
+<td>Apr</td>
+<td>APS emp vols</td>
+<td>APS emp ind</td>
 <td>APS emp qual</td>
+</tr>
+<tr class="odd">
+<td>May</td>
 <td></td>
 <td></td>
 <td></td>
+</tr>
+<tr class="even">
+<td>Jun</td>
 <td></td>
 <td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Jul</td>
+<td>APS emp vols</td>
+<td>APS emp ind</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Aug</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Sep</td>
+<td>Business count</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Oct</td>
+<td>APS emp vols</td>
+<td>APS emp ind</td>
 <td>Destinations</td>
+</tr>
+<tr class="odd">
+<td>Nov</td>
+<td>ILR</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Dec</td>
+<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -294,66 +303,72 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 <table class="table">
 <colgroup>
-<col style="width: 2%">
-<col style="width: 4%">
-<col style="width: 3%">
+<col style="width: 16%">
+<col style="width: 51%">
+<col style="width: 12%">
 <col style="width: 19%">
-<col style="width: 12%">
-<col style="width: 9%">
-<col style="width: 5%">
-<col style="width: 15%">
-<col style="width: 13%">
-<col style="width: 12%">
 </colgroup>
 <thead>
 <tr class="header">
-<th><em>Headings</em></th>
-<th>geogConcat</th>
-<th>metric</th>
-<th>breakdown</th>
-<th>subgroup</th>
-<th>chartPeriod</th>
-<th>timePeriod</th>
-<th>latest</th>
-<th>valueText</th>
-<th>value</th>
+<th>Column name</th>
+<th>Description</th>
+<th>Format</th>
+<th>Example</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td><em>Description</em></td>
+<td>geogConcat</td>
 <td>Area name and geography</td>
-<td>Variable of interest</td>
-<td><em>If</em> the dataset has a breakdown they are listed here. Every metric <strong>must</strong> have a “Total” as well as any breakdowns.</td>
-<td>Any subgroups of the breakdown. If breakdown is “Total” this is also “Total”</td>
-<td>The period which the data relates to in plain English.</td>
-<td>The start date of the period.</td>
-<td>1 if this is the most recent period in the data. -1 is one year before that. 0 for any other.</td>
-<td>The value of the metric in this subgroup. Includes any supression from the source</td>
-<td>The value of the metric in this subgroup in numeric terms. NA if suppressed.</td>
+<td>character</td>
+<td>Black Country LEP</td>
 </tr>
 <tr class="even">
-<td><em>Format</em></td>
+<td>metric</td>
+<td>Variable of interest</td>
 <td>character</td>
-<td>character</td>
-<td>character</td>
-<td>character</td>
-<td>character</td>
-<td>date</td>
-<td>numeric</td>
-<td>character</td>
-<td>numeric</td>
+<td>inemployment</td>
 </tr>
 <tr class="odd">
-<td><em>Example</em></td>
-<td>Black Country LEP</td>
-<td>inemployment</td>
+<td>breakdown</td>
+<td><em>If</em> the dataset has a breakdown they are listed here. Every metric <strong>must</strong> have a “Total” as well as any breakdowns.</td>
+<td>character</td>
 <td>Age</td>
+</tr>
+<tr class="even">
+<td>subgroup</td>
+<td>Any subgroups of the breakdown. If breakdown is “Total” this is also “Total”</td>
+<td>character</td>
 <td>19-24</td>
+</tr>
+<tr class="odd">
+<td>chartPeriod</td>
+<td>The period which the data relates to in plain English.</td>
+<td>character</td>
 <td>AY20/21</td>
+</tr>
+<tr class="even">
+<td>timePeriod</td>
+<td>The start date of the period.</td>
+<td>character</td>
 <td>01/08/2020</td>
+</tr>
+<tr class="odd">
+<td>latest</td>
+<td>1 if this is the most recent period in the data. -1 is one year before that. 0 for any other.</td>
+<td>numeric</td>
 <td>-1</td>
+</tr>
+<tr class="even">
+<td>valueText</td>
+<td>The value of the metric in this subgroup. Includes any supression from the source.</td>
+<td>character</td>
 <td>5000</td>
+</tr>
+<tr class="odd">
+<td>value</td>
+<td>The value of the metric in this subgroup in numeric terms. NA if suppressed.</td>
+<td>numeric</td>
 <td>5000</td>
 </tr>
 </tbody>

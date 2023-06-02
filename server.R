@@ -158,6 +158,15 @@ server <- function(input, output, session) {
       selected = "inemploymentRate"
     )
   })
+  
+  # Create link to employment data
+  observeEvent(input$link_to_tabpanel_employment2, {
+    updateTabsetPanel(session, "navbar", "Local skills")
+    updateSelectInput(session, "splashMetric",
+                      selected = "inemployment"
+    )
+  })
+  
   # Create link to job advert
   observeEvent(input$link_to_tabpanel_vacancies, {
     updateTabsetPanel(session, "navbar", "Local skills")
@@ -183,7 +192,7 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_qualification, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-      selected = "level3AndAboveRate"
+      selected = "L3PlusRate"
     )
   })
   # Create link to destinations
@@ -845,7 +854,7 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_qualification2, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-      selected = "level3AndAboveRate"
+      selected = "L3PlusRate"
     )
   })
 
@@ -985,7 +994,24 @@ server <- function(input, output, session) {
 
   # create subheading
   output$subheading <- renderUI({
-    (I_DataText %>% filter(metric == input$splashMetric))$subheading
+    validate(
+      need("geoChoice" %in% names(input), ""),
+      need(input$geoChoice != "", "")
+    )
+    paste0(
+      (I_DataText %>% filter(metric == input$splashMetric))$subheading,
+      if (input$splashMetric %in% c("vacancies", "employmentProjection")) {
+        if (input$geoChoice == "Dorset LSIP") {
+          " The data presented here for Dorset LSIP is correct, however for the Skills Imperative and Job Advert data, it does not match the published data. We are working to update the published data. "
+        } else if (input$geoChoice == "Enterprise M3 LEP (including all of Surrey) LSIP") {
+          " The published data for Skills Imperative and Job Advert for Enterprise M3 LEP (including all of Surrey) LSIP is incorrect due to the wrong LAs being included in the area. Presented here is an estimate for this LSIP compiled from other LEP and LSIP regions. As such there may be some rounding issues. We are working to update the published data. "
+        } else {
+          ""
+        }
+      } else {
+        ""
+      }
+    )
   })
 
   ### 2.3.4 Data note----
@@ -997,7 +1023,7 @@ server <- function(input, output, session) {
   })
   # create data note
   output$dataNote <- renderUI({
-    (I_DataText %>% filter(metric == input$splashMetric))$dataText
+    HTML((I_DataText %>% filter(metric == input$splashMetric))$dataText)
   })
   # create data caveat
   output$dataCaveat <- renderUI({

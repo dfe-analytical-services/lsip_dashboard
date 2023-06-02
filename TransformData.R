@@ -14,7 +14,7 @@ library(tidyverse) # mostly dplyr
 library(janitor) # use clean_names()
 library(sf) # use st_as_sf st_union sf_use_s2
 library(lubridate) # use years
-library(writexl) # write to excel
+library(writexl) # use write_xlsx
 
 # 1 Geographical data ----
 # Create LAD-LEP lookup table
@@ -307,9 +307,15 @@ addGeogs <- function(x) {
       filter(is.na(LEP) == FALSE) %>%
       mutate(geogConcat = paste0(LEP, " LEP"), newArea = 1),
     withAreas %>%
+      # group by and slice to remove those LAs that are in multiple LEPs
+      group_by(across(c(-LAD21NM, -area, -LEP, -LSIP, -CAUTH21NM, -geographic_level, -LAD21NM2))) %>%
+      slice(1) %>%
       filter(is.na(LSIP) == FALSE) %>%
       mutate(geogConcat = paste0(LSIP, " LSIP"), newArea = 1),
     withAreas %>%
+      # group by and slice to remove those LAs that are in multiple LEPs
+      group_by(across(c(-LAD21NM, -area, -LEP, -LSIP, -CAUTH21NM, -geographic_level, -LAD21NM2))) %>%
+      slice(1) %>%
       filter(is.na(CAUTH21NM) == FALSE) %>%
       mutate(geogConcat = paste0(CAUTH21NM, " MCA"), newArea = 1)
   ) %>%
@@ -485,6 +491,37 @@ employmentProjections <-
     timePeriod == (max(timePeriod) - years(1)) ~ -1,
     TRUE ~ 0
   ))
+
+# use dorset lep for dorset lsip because dorset lsip has the wrong LAs and it is the same as dorset LEP anyway
+# use Worchestershire lsip for Worchestershire lep because Worchestershire lep is missing some LAs and it is the same as Worchestershire lsip anyway
+employmentProjectionsCorrections <- employmentProjections %>%
+  filter(geogConcat %in% c("Dorset LEP", "Worcestershire LSIP", "Stoke-on-Trent and Staffordshire LSIP")) %>%
+  mutate(geogConcat = case_when(
+    geogConcat == "Dorset LEP" ~ "Dorset LSIP",
+    geogConcat == "Worcestershire LSIP" ~ "Worcestershire LEP",
+    geogConcat == "Stoke-on-Trent and Staffordshire LSIP" ~ "Stoke-on-Trent and Staffordshire LEP",
+    TRUE ~ "NA"
+  ))
+
+# calculate enterprise M3 LSIP from a combination of LEP areas that include Enterprise LSIP area, and then minus off the areas in that larger area that are not Enterprise Lsip
+# Enterprise LSIP=(Enterprise LEP + C2C LEP + South east LEP)-(Brighton LSIP + Essex LSIP + Kent LSIP)
+employmentProjectionsEntM3Lsip <- employmentProjections %>%
+  filter(geogConcat %in% c("Enterprise M3 LEP", "Coast to Capital LEP", "South East LEP", "Brighton and Hove, East Sussex, West Sussex LSIP", "Essex, Southend-on-Sea and Thurrock LSIP", "Kent and Medway LSIP")) %>% # get all the relavant areas
+  mutate(value = case_when(
+    geogConcat %in% c("Enterprise M3 LEP", "Coast to Capital LEP", "South East LEP") ~ value,
+    TRUE ~ 0 - value
+  )) %>%
+  select(-geogConcat) %>%
+  group_by(subgroup, metric, breakdown, chartPeriod, timePeriod, latest) %>%
+  summarise(value = sum(value)) %>%
+  mutate(geogConcat = "Enterprise M3 LEP (including all of Surrey) LSIP")
+
+# combine them all
+employmentProjections <- bind_rows(
+  employmentProjections %>% filter(!geogConcat %in% c("Dorset LSIP", "Enterprise M3 LEP (including all of Surrey) LSIP", "Worcestershire LEP", "Stoke-on-Trent and Staffordshire LEP")), # remove incorrect dorset and Enterprise LSIPs
+  employmentProjectionsCorrections,
+  employmentProjectionsEntM3Lsip
+)
 
 # Get future year on year growth metric
 empGrowth <- employmentProjections %>%
@@ -702,6 +739,33 @@ C_adverts <- bind_rows(
   select(-`Summary Profession Category`, -`Detailed Profession Category`) %>%
   mutate(metric = "vacancies")
 
+
+# use dorset lep for dorset lsip because dorset lsip has the wrong LAs and it is the same as dorset LEP anyway
+C_advertsDorsetLsip <- C_adverts %>%
+  filter(geogConcat == "Dorset LEP") %>%
+  mutate(geogConcat = "Dorset LSIP") # add in dorset lep as lsip
+
+# calculate enterprise M3 LSIP from a combination of LEP areas that include Enterprise LSIP area, and then minus off the areas in that larger area that are not Enterprise Lsip
+# Enterprise LSIP=(Enterprise LEP + C2C LEP + South east LEP)-(Brighton LSIP + Essex LSIP + Kent LSIP)
+C_advertsEntM3Lsip <- C_adverts %>%
+  filter(geogConcat %in% c("Enterprise M3 LEP", "Coast to Capital LEP", "South East LEP", "Brighton and Hove, East Sussex, West Sussex LSIP", "Essex, Southend-on-Sea and Thurrock LSIP", "Kent and Medway LSIP")) %>% # get all the relavant areas
+  mutate(value = case_when(
+    geogConcat %in% c("Enterprise M3 LEP", "Coast to Capital LEP", "South East LEP") ~ value,
+    TRUE ~ 0 - value
+  )) %>%
+  select(-geogConcat, -valueText, -newArea) %>%
+  group_by(subgroup, metric, breakdown, chartPeriod, timePeriod, latest) %>%
+  summarise(value = sum(value)) %>%
+  mutate(geogConcat = "Enterprise M3 LEP (including all of Surrey) LSIP")
+
+# combine them all
+C_adverts <- bind_rows(
+  C_adverts %>% filter(geogConcat != "Dorset LSIP", geogConcat != "Enterprise M3 LEP (including all of Surrey) LSIP"), # remove incorrect dorset and Enterprise LSIPs
+  C_advertsDorsetLsip,
+  C_advertsEntM3Lsip
+)
+
+
 ## 2.11 Business births/deaths  ----
 formatBusiness <- function(x, y) {
   colnames(x)[1] <- "areaCode"
@@ -786,10 +850,16 @@ C_localSkillsDataset <- bind_rows(
 )
 ## add in GLA as an MCA
 C_localSkillsDataset <- bind_rows(
-  C_localSkillsDataset,
+  C_localSkillsDataset # %>%
+  #   filter(geogConcat != "Dorset LSIP")
+  ,
   C_localSkillsDataset %>%
     filter(geogConcat == "London LEP") %>%
-    mutate(geogConcat = "Greater London Authority MCA")
+    mutate(geogConcat = "Greater London Authority MCA") # ,
+  # ##add in Dorset LSIP to match Dorset LEP
+  # C_localSkillsDataset %>%
+  #   filter(geogConcat == "Dorset LEP") %>%
+  #   mutate(geogConcat = "Dorset LSIP")
 )
 
 # 4. Create datasets used by the app----
