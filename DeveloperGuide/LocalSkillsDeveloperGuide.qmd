@@ -86,53 +86,59 @@ These are the common release points, however be aware that there may be revision
 
 1.  Make yourself a new github branch off (probably) the latest public version, so off Main. Pull and run `renv::restore()` to align packages with the dashboard.
 
-2.  Download the latest version of the dataset. If you need help finding the dataset source, have a look at the "Data Sources" tab in the dashboard - this gives info and links to data sources.
+*For non-NOMIS datasets:*
 
-3.  Dashboard admin:
+2a. Download the latest version of the dataset. If you need help finding the dataset source, have a look at the "Data Sources" tab in the dashboard - this gives info and links to data sources.
 
-    a.  You need to update the dashboard's Data Sources tab with information about your new data. Open /Data/3-1_DataTable/DataTable.xlsx in Excel. Update the relevant row with new dates, links and information.
+2b. Navigate to /Data folder (either in R Files or in Windows Explorer). All raw datasets are held in /Data. They are the numbered datasets.
 
-    b.  Update the dashboard's Version Log. This is done in ui.R under the "2.1.3 Version control" header. Move the current Latest Version text down into the Previous Version area, and repopulate the Current Version with new details.
+-   1-x are geographical files (look ups and boundary files)
 
-    c.  You may need to update the Latest Period and/or the data caveats in the /Data/3-2_dataText/dataText.xlsx file as well. These are used to populate dynamic text on the dashboard's Local Skills tab.
+-   2-x are the raw local skills data files
 
-4.  Navigate to /Data folder (either in R Files or in Windows Explorer). All raw datasets are held in /Data. They are the numbered datasets.
+-   3-x are excel files which populate tables within the dashboard and a 3-2_dataText helps populates the dynamic text in the Local Skills tab
 
-    -   1-x are geographical files (look ups and boundary files)
+2c. Once you have figured out where the dataset you want to update is currently kept, navigate to that folder
 
-    -   2-x are the raw local skills data files
+2d. Delete the currently held dataset(s) in that folder. The folder should now be empty.
 
-    -   3-x are excel files which populate tables within the dashboard and a 3-2_dataText helps populates the dynamic text in the Local Skills tab
+2e. Paste the new dataset in that folder.
 
-5.  Once you have figured out where the dataset you want to update is currently kept, navigate to that folder
+*For Nomis Datasets:*
 
-6.  Delete the currently held dataset(s) in that folder. The folder should now be empty.
+You should just be able to skip to stage (3) (Run ExtractLoadData.R) - this pulls all the latest Nomis data. However, please take note that some of the datasets currently have hardcoded dates because ONS are not updating Occupation and Qualification data while they fix some problems. Once those problems are fixed the code can be changed to use the LATEST format used in the other Nomis datasets.
 
-7.  Paste the new dataset in that folder.
-
-8.  Run the ExtractLoadData.R script. This goes through all the numbered folders in /Data and loads the datasets in each folder as a R object.
+3.  Run the ExtractLoadData.R script. This goes through all the numbered folders in /Data and loads the datasets in each folder as a R object.
 
 `source("~/RProjects/lsip_dashboard/ExtractLoadData.R", echo=TRUE)`
 
 This takes about 20 mins. You should see your environment is now populated with data, including your new, updated dataset.
 
-9.  We have datasets from a wide range of sources that come in all kinds of formats. We do a lot of data cleaning, manipulating and formatting to get into a format the dashboard can work with. We do this in the TransformData.R script. If your new datset is in the same (or even pretty close) format as the old dataset (as is hopefully the case), you just need run this script:
+4.  We have datasets from a wide range of sources that come in all kinds of formats. We do a lot of data cleaning, manipulating and formatting to get into a format the dashboard can work with. We do this in the TransformData.R script. If your new datset is in the same (or even pretty close) format as the old dataset (as is hopefully the case), you just need run this script:
 
 `source("~/RProjects/lsip_dashboard/TransformData.R", echo=TRUE)`
 
 This takes about 20 mins. You should see your environment is populated with new, clean datasets and your Data/AppData folder has been updated with the updated versions of the files the dashboard uses.
 
-10. Run the dashboard: `runApp()`
+5.  Dashboard admin:
 
-11. QA. Create a new QA log in "Analytical Projects\\Analysis\\S005 LSIP dashboard\\Documentation\\QA". Follow the structure of one already in there. Some checks you may do:
+a.  You need to update the dashboard's Data Sources tab with information about your new data. Open /Data/3-1_DataTable/DataTable.xlsx in Excel. Update the relevant row with new dates, links and information.
 
-    -   Check that your dataset has been updated correctly (by comparing with the version you branched off of and cross checking with the raw data).
-    -   Check the Data Sources table has been updated correctly
-    -   Check the text in the Local Skills tab makes sense for your updated metric.
+b.  Update the dashboard's Version Log. This is done in ui.R under the "2.1.3 Version control" header. Move the current Latest Version text down into the Previous Version area, and repopulate the Current Version with new details.
 
-12. If everything looks ok, commit, push and merge to Development. Wait for that to deploy (can take 15mins or more - you can track this in [Actions · dfe-analytical-services/lsip_dashboard (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)). Again check everything looks ok in the preprod environment: <https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/> 13 If you have done sufficient QA and you are satisfied, merge to Main and wait for that to deploy. Check again everything looks ok in the live environment: <https://department-for-education.shinyapps.io/local-skills-dashboard/>
+c.  You may need to update the Latest Period and/or the data caveats in the /Data/3-2_dataText/dataText.xlsx file as well. These are used to populate dynamic text on the dashboard's Local Skills tab.
 
-13. Consider communicating the change to the wider Team or other stakeholders.
+6.  Run the dashboard: `runApp()`
+
+7.  QA. Create a new QA log in "Analytical Projects\\Analysis\\S005 LSIP dashboard\\Documentation\\QA". Follow the structure of one already in there. Some checks you may do:
+
+-   Check that your dataset has been updated correctly (by comparing with the version you branched off of and cross checking with the raw data).
+-   Check the Data Sources table has been updated correctly
+-   Check the text in the Local Skills tab makes sense for your updated metric.
+
+8.  If everything looks ok, commit, push and merge to Development. Wait for that to deploy (can take 15mins or more - you can track this in [Actions · dfe-analytical-services/lsip_dashboard (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)). Again check everything looks ok in the preprod environment: <https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/> 13 If you have done sufficient QA and you are satisfied, merge to Main and wait for that to deploy. Check again everything looks ok in the live environment: <https://department-for-education.shinyapps.io/local-skills-dashboard/>
+
+9.  Consider communicating the change to the wider Team or other stakeholders.
 
 ## I want to add a metric to the dashboard
 
@@ -208,7 +214,7 @@ To add one of these into the dashboard:
     c\. You then need to manipulate your now clean data into the following form:
 
 | Column name | Description                                                                                                            | Format    | Example           |
-|------------|-------------------------------------|---------|--------------|
+|-----------------|---------------------|-----------------|-----------------|
 | geogConcat  | Area name and geography                                                                                                | character | Black Country LEP |
 | metric      | Variable of interest                                                                                                   | character | inemployment      |
 | breakdown   | *If* the dataset has a breakdown they are listed here. Every metric **must** have a "Total" as well as any breakdowns. | character | Age               |
