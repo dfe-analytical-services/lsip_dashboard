@@ -101,19 +101,19 @@ cellsListAps <- nomis_get_metadata(id = "NM_17_1", concept = "CELL")
 # Date: 12 months to Dec 2017-2021. The latest data is not available so use the last 5 Jan-Decs
 # Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people
 # find cells we want
-cellsUseAps <- cellsListAps %>% filter(description.en %like% "T09a:" & description.en %like% "All people - ")
+cellsUseAps_empOcc <- cellsListAps %>% filter(description.en %like% "T09a:" & description.en %like% "All people - ")
 # get data
 I_empOcc <-
-  extractNomis("NM_17_1", "2017-12,2018-12,2019-12,2020-12,2021-12", cellsUseAps$id) %>%
+  extractNomis("NM_17_1", "2017-12,2018-12,2019-12,2020-12,2021-12", cellsUseAps_empOcc$id) %>%
   filter(str_sub(CELL_NAME, -12, -1) == "All people )") # ignore part time
 
 ### 2.1.2 Employment level and rate ------------
 # Geog and date as above
 # Cell: T01 Economic activity by age Aged 16-64/ All people
 # find cells we want
-cellsUseAps <- cellsListAps %>% filter(description.en %like% "T01:" & description.en %like% "Aged 16-64" & description.en %like% "All People")
+cellsUseAps_emp <- cellsListAps %>% filter(description.en %like% "T01:" & description.en %like% "Aged 16-64" & description.en %like% "All People")
 # get data
-I_emp <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps$id)
+I_emp <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_emp$id)
 
 ### 2.1.3 UK Business Count----
 # Enterprise by employment size and industry
@@ -151,17 +151,17 @@ I_entSize <- I_entIndSize %>% filter(INDUSTRY_NAME == "Total")
 # Geog and date as above
 # Cell: T19	Qualification by age and gender - NVQ. All people aged 16-64. only updated every Jan-Dec
 # find cells we want
-cellsUseAps <- cellsListAps %>% filter(description.en %like% "T19:" & description.en %like% "Total")
+cellsUseAps_qual <- cellsListAps %>% filter(description.en %like% "T19:" & description.en %like% "Total")
 # get data
-I_qualAgeGender <- extractNomis("NM_17_1", "2017-12,2018-12,2019-12,2020-12,2021-12", cellsUseAps$id)
+I_qualAgeGender <- extractNomis("NM_17_1", "2017-12,2018-12,2019-12,2020-12,2021-12", cellsUseAps_qual$id)
 
 ### 2.1.5 Employment by industry------------
 # Geog and date as above
 # Cell: T13a	Employment by industry (SIC 2007) and flexibility
 # find cells we want
-cellsUseAps <- cellsListAps %>% filter(description.en %like% "T13a:" & description.en %like% "All people")
+cellsUseAps_Ind <- cellsListAps %>% filter(description.en %like% "T13a:" & description.en %like% "All people")
 # get data
-I_empInd <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps$id)
+I_empInd <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_Ind$id)
 
 ## 2.2 EES datasets----
 ### 2.2.1 Achievements by SSAt1, LAD, gender, level------------
