@@ -74,8 +74,8 @@ These are the common release points, however be aware that there may be revision
 | Mar   |                |             |              |
 | Apr   | APS emp vols   | APS emp ind | APS emp qual |
 | May   |                |             |              |
-| Jun   |                |             |              |
-| Jul   | APS emp vols   | APS emp ind |              |
+| Jun   | APS emp vols   | APS emp ind |              |
+| Jul   |                |             |              |
 | Aug   |                |             |              |
 | Sep   | Business count |             |              |
 | Oct   | APS emp vols   | APS emp ind | Destinations |
@@ -135,6 +135,7 @@ c.  You may need to update the Latest Period and/or the data caveats in the /Dat
 -   Check that your dataset has been updated correctly (by comparing with the version you branched off of and cross checking with the raw data).
 -   Check the Data Sources table has been updated correctly
 -   Check the text in the Local Skills tab makes sense for your updated metric.
+-   Get sign off Hannah Cox and/or Harris (see [here](https://educationgovuk.sharepoint.com/:w:/r/sites/UnitforFutureSkills/Shared%20Documents/Analytical%20Projects/Analysis/S005%20LSIP%20dashboard/Documentation/Local%20skills%20dashboard%20update%20principles.docx?d=wbd95fecb97144a348a73a34520212d75&csf=1&web=1&e=InX9xM) and [here](https://educationgovuk.sharepoint.com/:w:/r/sites/UnitforFutureSkills/Shared%20Documents/Analytical%20Projects/Analysis/S005%20LSIP%20dashboard/Documentation/QA/QA%20plan_Local%20Skills%20dashboard_UFS.docx?d=wa17c64605c7f4a3fb2b8bf35f4bec670&csf=1&web=1&e=Z66Jas) for process)
 
 8.  If everything looks ok, commit, push and merge to Development. Wait for that to deploy (can take 15mins or more - you can track this in [Actions · dfe-analytical-services/lsip_dashboard (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)). Again check everything looks ok in the preprod environment: <https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/> 13 If you have done sufficient QA and you are satisfied, merge to Main and wait for that to deploy. Check again everything looks ok in the live environment: <https://department-for-education.shinyapps.io/local-skills-dashboard/>
 
@@ -214,7 +215,7 @@ To add one of these into the dashboard:
     c\. You then need to manipulate your now clean data into the following form:
 
 | Column name | Description                                                                                                            | Format    | Example           |
-|-----------------|---------------------|-----------------|-----------------|
+|------------------|--------------------|------------------|------------------|
 | geogConcat  | Area name and geography                                                                                                | character | Black Country LEP |
 | metric      | Variable of interest                                                                                                   | character | inemployment      |
 | breakdown   | *If* the dataset has a breakdown they are listed here. Every metric **must** have a "Total" as well as any breakdowns. | character | Age               |
