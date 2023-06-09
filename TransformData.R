@@ -108,6 +108,9 @@ formatLong <- function(x) {
 formatNomis <- function(x) {
   x %>%
     filter(!(GEOGRAPHY_TYPE == "countries" & GEOGRAPHY_NAME != "England")) %>%
+    #correct Sheffield LEP name
+    mutate(GEOGRAPHY_NAME=case_when(GEOGRAPHY_NAME=="South Yorkshire" ~ "Sheffield City Region",
+           TRUE ~ GEOGRAPHY_NAME))%>%
     # Add dates
     mutate(timePeriod = as.Date(paste("01", substr(DATE_NAME, 1, 8), sep = ""), format = "%d %b %Y")) %>%
     mutate(latest = case_when(
