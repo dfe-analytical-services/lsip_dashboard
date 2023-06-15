@@ -587,9 +587,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("13 June 2023 (1.3.0)"),
+            p("15 June 2023 (1.3.0)"),
             tags$ul(
-              tags$li("Updated Nomis employment rates and employment by industry data to the latest quarter."),
               tags$li("Started using the Nomis API to get NOMIS data. More information on the API ",
                   a(
                      href = "https://www.nomisweb.co.uk/api/v01/help",
