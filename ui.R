@@ -587,7 +587,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("15 June 2023 (1.3.0)"),
+            p("16 June 2023 (1.3.0)"),
             tags$ul(
               tags$li("Started using the Nomis API to get NOMIS data. More information on the API ",
                   a(
