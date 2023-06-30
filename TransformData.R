@@ -80,8 +80,9 @@ neatLSIP <- LSIPmap %>%
 
 neatGeog <- bind_rows(
   neatMCA, neatLEP, addEngland, neatLA, neatLSIP,
-  neatLEP %>% filter(areaName == "London") %>% mutate(areaName = "Greater London Authority", geog = "MCA") # add GLA as an MCA (it isn't officially but people like to find it there)
-) %>%
+  neatLEP %>% filter(areaName == "London") %>% mutate(areaName = "Greater London Authority", geog = "MCA"), # add GLA as an MCA (it isn't officially but people like to find it there)
+  neatLA%>%filter(LEP2!="0 LEP")%>%select(-LEP)%>%rename(LEP=LEP2) #add LAs with more than one LEP
+  ) %>%
   mutate(geogConcat = case_when(
     areaName == "England" ~ "England",
     TRUE ~ paste0(areaName, " ", geog)
