@@ -155,7 +155,7 @@ C_empOcc <- formatNomis(I_empOcc) %>%
   rename(subgroup = CELL_NAME) %>%
   mutate(subgroup = gsub("[[:digit:]]+", "", subgroup)) %>%
   mutate(subgroup = gsub(" \\(SOC\\) : All people \\)", "", subgroup)) %>%
-  mutate(subgroup = gsub("Ta: \\(All people - ", "", subgroup)) %>%
+  mutate(subgroup = gsub("Tb: \\(All people - ", "", subgroup)) %>%
   mutate(valueText = as.character(value)) %>%
   mutate(breakdown = "Occupation", metric = "inemployment")
 

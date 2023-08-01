@@ -1,12 +1,12 @@
-"Data​","Source​"
-"Job quality indicator tables, UK by country, region and local authority","<a href='https://www.beta.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/qualityworkcomponentandcompositetablesuk2018'>Job quality indicator tables, UK - Office for National Statistics (ons.gov.uk)</a>"
-"HE destination","<a href='https://www.ethnicity-facts-figures.service.gov.uk/education-skills-and-training/after-education/destinations-and-earnings-of-graduates-after-higher-education/latest'>Destinations and earnings of graduates after higher education - GOV.UK Ethnicity facts and figures (ethnicity-facts-figures.service.gov.uk)</a>"
-"Region of residence after HE","<a href='https://www.hesa.ac.uk/news/16-06-2022/sb263-higher-education-graduate-outcomes-statistics/salary'>Graduate Outcomes 2019/20: Summary Statistics - Graduate salaries and work locations | HESA</a>"
-"FE destination","<a href='https://explore-education-statistics.service.gov.uk/data-tables/fast-track/b8aabe3c-5f3c-48b5-929c-8615d57d1d98'>EES</a>"
-"Apprenticeship destination","<a href='https://explore-education-statistics.service.gov.uk/data-tables/further-education-outcome-based-success-measures'>EES</a>"
-"Gross value added (GVA) per hour worked ","<a href='https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/labourproductivity/datasets/subregionalproductivitylabourproductivitygvaperhourworkedandgvaperfilledjobindicesbylocalenterprisepartnership'>Subregional productivity: labour productivity indices by economic enterprise region - Office for National Statistics (ons.gov.uk)</a>"
-"Median wage","<a href='https://www.nomisweb.co.uk/datasets/ashe'>ASHE Nomis</a>"
-"Population by age","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>APS Nomis</a>"
-"Data showing the proportions of 16- and 17-year-olds in education and training and an estimate of those not in education, employment or training (NEET).","<a href='https://www.gov.uk/government/publications/neet-and-participation-local-authority-figures'>NEET and participation: local authority figures - GOV.UK (www.gov.uk)</a>"
-"Employer Skills Survey including hard-to-fill and skill-shortage vacancies, employer skills needed in next 12 months, and percent of employers providing training","ESS 2023 - Coming Summer 2023"
-"ONS Vacancies by SOC","Coming soon"
+"Data​","Source​","X3"
+"Job quality indicator tables, UK by country, region and local authority","<a href='https://www.beta.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/qualityworkcomponentandcompositetablesuk2018'>Job quality indicator tables, UK - Office for National Statistics (ons.gov.uk)</a>",NA
+"HE destination","<a href='https://www.ethnicity-facts-figures.service.gov.uk/education-skills-and-training/after-education/destinations-and-earnings-of-graduates-after-higher-education/latest'>Destinations and earnings of graduates after higher education - GOV.UK Ethnicity facts and figures (ethnicity-facts-figures.service.gov.uk)</a>",NA
+"Region of residence after HE","<a href='https://www.hesa.ac.uk/news/16-06-2022/sb263-higher-education-graduate-outcomes-statistics/salary'>Graduate Outcomes 2019/20: Summary Statistics - Graduate salaries and work locations | HESA</a>",NA
+"FE destination","<a href='https://explore-education-statistics.service.gov.uk/data-tables/fast-track/b8aabe3c-5f3c-48b5-929c-8615d57d1d98'>EES</a>",NA
+"Apprenticeship destination","<a href='https://explore-education-statistics.service.gov.uk/data-tables/further-education-outcome-based-success-measures'>EES</a>",NA
+"Gross value added (GVA) per hour worked ","<a href='https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/labourproductivity/datasets/subregionalproductivitylabourproductivitygvaperhourworkedandgvaperfilledjobindicesbylocalenterprisepartnership'>Subregional productivity: labour productivity indices by economic enterprise region - Office for National Statistics (ons.gov.uk)</a>",NA
+"Median wage","<a href='https://www.nomisweb.co.uk/datasets/ashe'>ASHE Nomis</a>",NA
+"Population by age","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>APS Nomis</a>",NA
+"Data showing the proportions of 16- and 17-year-olds in education and training and an estimate of those not in education, employment or training (NEET).","<a href='https://www.gov.uk/government/publications/neet-and-participation-local-authority-figures'>NEET and participation: local authority figures - GOV.UK (www.gov.uk)</a>",NA
+"Employer Skills Survey including hard-to-fill and skill-shortage vacancies, employer skills needed in next 12 months, and percent of employers providing training","ESS 2023 - Coming Summer 2023","Labour Market Profile - Nomis - Official Census and Labour Market Statistics (nomisweb.co.uk)"
+"ONS Vacancies by SOC","Coming soon",NA

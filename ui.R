@@ -521,9 +521,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             p(
               "This group of metrics provide information on employment, self-employment and inactivity for the selected geographic area including data on employment rates over time, the share of employment by occupation, and the share of employment by industry"
             ),
-            p(
-              "SOC2020 data for occupations is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues."
-            ),
             h3(
               actionLink("link_to_tabpanel_vacancies", "Jobs")
             ),
@@ -826,7 +823,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           p(
             "The Annual Population Survey (APS) is a continuous household survey covering the UK.
           Topics included cover employment and unemployment, and education as well as housing, ethnicity and religion.
-            This dashboard currently shows employment volumes and rates for each geographic area and by occupation (SOC2010) and industry (SIC 2007)."
+            This dashboard currently shows employment volumes and rates for each geographic area and by occupation (SOC2020) and industry (SIC 2007)."
           ),
           p(
             "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS  ",
@@ -835,7 +832,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               "article",
               .noWS = c("after")
             ),
-            ". SOC2020 data is available for the latest period via NOMIS but is not included here due to ongoing ONS coding issues."
+            "."
           ),
           p(
             "Each estimate from the Annual Population Survey carries a margin of error.
