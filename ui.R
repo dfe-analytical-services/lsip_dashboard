@@ -584,12 +584,17 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("23 June 2023 (1.3.1)"),
-            p("Corrected the Worcestershire LEP and Stoke-on-Trent and Staffordshire LEP LA level map to include all areas."),
+            p("23 August 2023 (1.3.2)"),
+            tags$ul(
+              tags$li("Updated Nomis employment rates, employment by industry and occupation data to the latest quarter."),
+              tags$li("Started using SOC2020 data (replacing SOC2010 data) following the ONS correction to the data."),
+            ),    
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("23 June 2023 (1.3.1)"),
+                p("Corrected the Worcestershire LEP and Stoke-on-Trent and Staffordshire LEP LA level map to include all areas."),
                 p("16 June 2023 (1.3.0)"),
                   p("Started using the Nomis API to get NOMIS data. More information on the API ",
                           a(
