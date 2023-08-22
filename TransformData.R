@@ -125,7 +125,13 @@ formatNomis <- function(x) {
       TRUE ~ GEOGRAPHY_NAME
     )) %>%
     select(-GEOGRAPHY_TYPE, -GEOGRAPHY_NAME, -GEOGRAPHY_CODE) %>%
-    rename(chartPeriod = DATE_NAME, value = OBS_VALUE)
+    rename(chartPeriod = DATE_NAME, value = OBS_VALUE)%>%
+    mutate(geogConcat=case_when(geogConcat=="The London Economic Action Partnership LEP" ~ "London LEP"
+                                ,geogConcat=="GFirst LEP" ~ "Gloucestershire LEP"
+                                ,geogConcat=="OxLEP LEP" ~ "Oxfordshire LEP"
+                                ,geogConcat=="D2N2 LEP" ~ "Derby, Derbyshire, Nottingham and Nottinghamshire LEP"
+                                ,geogConcat=="The Business Board LEP" ~ "Greater Cambridge and Greater Peterborough LEP"
+                                ,TRUE ~ geogConcat))
 }
 
 ## 2.1 Employment volumes ----

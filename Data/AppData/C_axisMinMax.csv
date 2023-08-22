@@ -1,4 +1,5 @@
 "metric","minAxis","maxAxis"
+"L3PlusRate",0.392793288405996,0.717678100263852
 "achievements",3590,1574420
 "achievements Apprenticeships",770,276160
 "achievements Education and training",2110,897990
@@ -14,7 +15,6 @@
 "inactiveRate",0.145085066162571,0.264788126478813
 "inemployment",217000,26548600
 "inemploymentRate",0.682427492078967,0.83695652173913
-"L3PlusRate",0.392793288405996,0.717678100263852
 "participation",5300,2179070
 "participation_rate_per_100000_population",3530.95586456301,11250.8122713716
 "selfemployed",24700,3856800
