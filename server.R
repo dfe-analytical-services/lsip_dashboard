@@ -1794,14 +1794,9 @@ server <- function(input, output, session) {
       need(input$barBreakdown != "", ""),
       need(input$barBreakdown != "No breakdowns available", "")
     )
-    if (input$splashMetric == "inemployment" & input$barBreakdown == "Occupation") {
-      "Jan 2021-Dec 2021 data."
-    } # Occupation data is older because of the SOC issue
-    else {
       paste0(
         (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, "."
       )
-    }
   })
 
   ### 2.3.9 Downloads local skills ----

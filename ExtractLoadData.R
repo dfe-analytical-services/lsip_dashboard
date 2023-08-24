@@ -101,10 +101,10 @@ cellsListAps <- nomis_get_metadata(id = "NM_17_1", concept = "CELL")
 # Date: 12 months to Dec 2017-2021. The latest data is not available so use the last 5 Jan-Decs
 # Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people
 # find cells we want
-cellsUseAps_empOcc <- cellsListAps %>% filter(description.en %like% "T09a:" & description.en %like% "All people - ")
+cellsUseAps_empOcc <- cellsListAps %>% filter(description.en %like% "T09b:" & description.en %like% "All people - ")
 # get data
 I_empOcc <-
-  extractNomis("NM_17_1", "2017-12,2018-12,2019-12,2020-12,2021-12", cellsUseAps_empOcc$id) %>%
+  extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_empOcc$id) %>%
   filter(str_sub(CELL_NAME, -12, -1) == "All people )") # ignore part time
 
 ### 2.1.2 Employment level and rate ------------

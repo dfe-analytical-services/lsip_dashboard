@@ -125,7 +125,13 @@ formatNomis <- function(x) {
       TRUE ~ GEOGRAPHY_NAME
     )) %>%
     select(-GEOGRAPHY_TYPE, -GEOGRAPHY_NAME, -GEOGRAPHY_CODE) %>%
-    rename(chartPeriod = DATE_NAME, value = OBS_VALUE)
+    rename(chartPeriod = DATE_NAME, value = OBS_VALUE)%>%
+    mutate(geogConcat=case_when(geogConcat=="The London Economic Action Partnership LEP" ~ "London LEP"
+                                ,geogConcat=="GFirst LEP" ~ "Gloucestershire LEP"
+                                ,geogConcat=="OxLEP LEP" ~ "Oxfordshire LEP"
+                                ,geogConcat=="D2N2 LEP" ~ "Derby, Derbyshire, Nottingham and Nottinghamshire LEP"
+                                ,geogConcat=="The Business Board LEP" ~ "Greater Cambridge and Greater Peterborough LEP"
+                                ,TRUE ~ geogConcat))
 }
 
 ## 2.1 Employment volumes ----
@@ -155,7 +161,7 @@ C_empOcc <- formatNomis(I_empOcc) %>%
   rename(subgroup = CELL_NAME) %>%
   mutate(subgroup = gsub("[[:digit:]]+", "", subgroup)) %>%
   mutate(subgroup = gsub(" \\(SOC\\) : All people \\)", "", subgroup)) %>%
-  mutate(subgroup = gsub("Ta: \\(All people - ", "", subgroup)) %>%
+  mutate(subgroup = gsub("Tb: \\(All people - ", "", subgroup)) %>%
   mutate(valueText = as.character(value)) %>%
   mutate(breakdown = "Occupation", metric = "inemployment")
 
