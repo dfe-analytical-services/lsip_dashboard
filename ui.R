@@ -831,9 +831,9 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             This dashboard currently shows employment volumes and rates for each geographic area and by occupation (SOC2020) and industry (SIC 2007)."
           ),
           p(
-            "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS  ",
+            "The ONS previously identified a coding error in the collection of SOC20, although this occupational data has been revised, it is advised to continue to use caution when interpreting these data particularly when looking at year-on-year changes as they may continue to be impacted by this coding issue as well as wider factors such as Covid-19, the UK's exit from the EU, and changes to the economy. For more information see this ONS  ",
             a(
-              href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
+              href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/revisionofmiscodedoccupationaldataintheonslabourforcesurveyuk/january2021toseptember2022",
               "article",
               .noWS = c("after")
             ),
