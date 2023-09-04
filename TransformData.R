@@ -81,8 +81,11 @@ neatLSIP <- LSIPmap %>%
 neatGeog <- bind_rows(
   neatMCA, neatLEP, addEngland, neatLA, neatLSIP,
   neatLEP %>% filter(areaName == "London") %>% mutate(areaName = "Greater London Authority", geog = "MCA"), # add GLA as an MCA (it isn't officially but people like to find it there)
-  neatLA%>%filter(LEP2!="0 LEP")%>%select(-LEP)%>%rename(LEP=LEP2) #add LAs with more than one LEP
-  ) %>%
+  neatLA %>%
+    filter(LEP2 != "0 LEP") %>%
+    select(-LEP) %>%
+    rename(LEP = LEP2) # add LAs with more than one LEP
+) %>%
   mutate(geogConcat = case_when(
     areaName == "England" ~ "England",
     TRUE ~ paste0(areaName, " ", geog)
@@ -109,9 +112,11 @@ formatLong <- function(x) {
 formatNomis <- function(x) {
   x %>%
     filter(!(GEOGRAPHY_TYPE == "countries" & GEOGRAPHY_NAME != "England")) %>%
-    #correct Sheffield LEP name
-    mutate(GEOGRAPHY_NAME=case_when(GEOGRAPHY_NAME=="South Yorkshire" ~ "Sheffield City Region",
-           TRUE ~ GEOGRAPHY_NAME))%>%
+    # correct Sheffield LEP name
+    mutate(GEOGRAPHY_NAME = case_when(
+      GEOGRAPHY_NAME == "South Yorkshire" ~ "Sheffield City Region",
+      TRUE ~ GEOGRAPHY_NAME
+    )) %>%
     # Add dates
     mutate(timePeriod = as.Date(paste("01", substr(DATE_NAME, 1, 8), sep = ""), format = "%d %b %Y")) %>%
     mutate(latest = case_when(
@@ -125,13 +130,15 @@ formatNomis <- function(x) {
       TRUE ~ GEOGRAPHY_NAME
     )) %>%
     select(-GEOGRAPHY_TYPE, -GEOGRAPHY_NAME, -GEOGRAPHY_CODE) %>%
-    rename(chartPeriod = DATE_NAME, value = OBS_VALUE)%>%
-    mutate(geogConcat=case_when(geogConcat=="The London Economic Action Partnership LEP" ~ "London LEP"
-                                ,geogConcat=="GFirst LEP" ~ "Gloucestershire LEP"
-                                ,geogConcat=="OxLEP LEP" ~ "Oxfordshire LEP"
-                                ,geogConcat=="D2N2 LEP" ~ "Derby, Derbyshire, Nottingham and Nottinghamshire LEP"
-                                ,geogConcat=="The Business Board LEP" ~ "Greater Cambridge and Greater Peterborough LEP"
-                                ,TRUE ~ geogConcat))
+    rename(chartPeriod = DATE_NAME, value = OBS_VALUE) %>%
+    mutate(geogConcat = case_when(
+      geogConcat == "The London Economic Action Partnership LEP" ~ "London LEP",
+      geogConcat == "GFirst LEP" ~ "Gloucestershire LEP",
+      geogConcat == "OxLEP LEP" ~ "Oxfordshire LEP",
+      geogConcat == "D2N2 LEP" ~ "Derby, Derbyshire, Nottingham and Nottinghamshire LEP",
+      geogConcat == "The Business Board LEP" ~ "Greater Cambridge and Greater Peterborough LEP",
+      TRUE ~ geogConcat
+    ))
 }
 
 ## 2.1 Employment volumes ----
