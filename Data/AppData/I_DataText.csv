@@ -26,7 +26,7 @@
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 <li>Standard Occupational Classification 2020 (SOC2020).</li>
 <li>Industry groups are Standard Industrial Classification: SIC 2007.</li>
-</ol>","Employment","are employment volumes changing","Employment in","Employment","employment volumes","employment volume","Employment is"
+</ol>","Employment","are employment volumes changing","Employment in","Employment","employment volumes","employment volume share","Employment is"
 "selfemployed","Apr 2022 - Mar 2023 data"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
   <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
@@ -47,12 +47,12 @@
 <li>Duplication of adverts can occur when the same job is posted on multiple job boards, or when multiple recruiters advertise the job at the same time.</li>
 <li>Counts have been rounded to the nearest 5. Totals may not add due to this rounding.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
-</ol>","The number of online job adverts","are online job adverts changing","The number of online job adverts","Online job adverts","online job adverts","number of online job adverts","The number of online job adverts is"
+</ol>","The number of online job adverts","are online job adverts changing","The number of online job adverts","Online job adverts","online job adverts","share of online job adverts","The number of online job adverts is"
 "enterpriseCount","Mar 2022 data","Represented here are enterprises, which can be thought of as the overall business, made up of all the individual sites or workplaces.","<a href='https://www.nomisweb.co.uk/datasets/idbrent'>ONS UK Business Counts</a>","Represented here are enterprises, which can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
   <li>Overall total may not equal the sum of all industries due to rounding and suppression.</li>
  <li>Unregistered businesses that are not large enough to be registered for VAT or PAYE are not included.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
-</ol>","The number of businesses","are the number of businesses changing","The number of businesses in","Businesses","the number of businesses","number of businesses","The number of businesses is"
+</ol>","The number of businesses","are the number of businesses changing","The number of businesses in","Businesses","the number of businesses","share of businesses","The number of businesses is"
 "birthRate","Dec 2020 - Dec 2021 data","Represented here are enterprises, which can be thought of as the overall business, made up of all the individual sites or workplaces.","<a href=' https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable'>ONS Business Demography</a>","Represented here are enterprises, which can be thought of as the overall business, made up of all the individual sites or workplaces.","<ol>
   <li>A birth is identified as a business that was present in year t, but did not exist in year t-1 or t-2. Births are identified by making comparison of annual active population files and identifying those present in the latest file, but not the two previous ones.</li>
  <li>A death is defined as a business that was on the active file in year t, but was no longer present in the active file in t+1 and t+2. In order to provide an early estimate of deaths, an adjustment has been made to the latest two years deaths to allow for reactivations. These figures are provisional and subject to revision.</li>
@@ -74,7 +74,7 @@ Achievements are the number of learners who successfully complete an individual 
  <li>Learners achieving more than one course will appear only once in the grand total.</li>
  <li>Years shown represent academic years.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
-</ol>","FE achievements in","are FE achievement volumes changing","The number of FE achievements","FE achievements","FE achievements","number of FE achievements","FE achievements are"
+</ol>","FE achievements in","are FE achievement volumes changing","The number of FE achievements","FE achievements","FE achievements","share of FE achievements","FE achievements are"
 "participation","AY21/22 data","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
 FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
 Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
@@ -84,7 +84,7 @@ Achievements are the number of learners who successfully complete an individual 
  <li>Learners achieving more than one course will appear only once in the grand total.</li>
  <li>Years shown represent academic years.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
-</ol>","FE participation ","are FE participation volumes changing","FE participation","FE participation","FE participation volumes","FE participation volume","FE participation is"
+</ol>","FE participation ","are FE participation volumes changing","FE participation","FE participation","FE participation volumes","FE participation share","FE participation is"
 "achievements_rate_per_100000_population","AY21/22 data","The rates are the number of achievments in AY21/22 per 100,000 of the population. Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community. 
 ","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
 FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
