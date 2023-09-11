@@ -158,15 +158,15 @@ server <- function(input, output, session) {
       selected = "inemploymentRate"
     )
   })
-  
+
   # Create link to employment data
   observeEvent(input$link_to_tabpanel_employment2, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-                      selected = "inemployment"
+      selected = "inemployment"
     )
   })
-  
+
   # Create link to job advert
   observeEvent(input$link_to_tabpanel_vacancies, {
     updateTabsetPanel(session, "navbar", "Local skills")
@@ -1154,6 +1154,7 @@ server <- function(input, output, session) {
       addPolygons(
         data = mapData,
         fillColor = ~ pal(mapData[[input$splashMetric]]),
+        fillOpacity = 1,
         color = "black",
         layerId = ~areaCode,
         weight = 1,
@@ -1298,6 +1299,7 @@ server <- function(input, output, session) {
       addPolygons(
         data = mapData,
         fillColor = ~ pal(mapData[[input$splashMetric]]),
+        fillOpacity = 1,
         color = "black",
         layerId = ~areaCode,
         weight = 1,
@@ -1629,6 +1631,7 @@ server <- function(input, output, session) {
           breakdown == input$barBreakdown,
           metric == input$splashMetric
         ) %>%
+        arrange(desc(geogConcat == "England")) %>% # force england to the top
         group_by(subgroup) %>%
         mutate(change = (value - lag(value, default = 1)) / value) %>%
         ungroup() %>%
@@ -1637,7 +1640,7 @@ server <- function(input, output, session) {
         filter(ranking == 1)
 
       breakdownDirection <-
-        if (isTRUE(breakdownDiff$change) && breakdownDiff$change > 0) {
+        if (exists("breakdownDiff") == TRUE && breakdownDiff$change > 0) {
           "higher"
         } else {
           "lower"
@@ -1794,9 +1797,9 @@ server <- function(input, output, session) {
       need(input$barBreakdown != "", ""),
       need(input$barBreakdown != "No breakdowns available", "")
     )
-      paste0(
-        (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, "."
-      )
+    paste0(
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, "."
+    )
   })
 
   ### 2.3.9 Downloads local skills ----
@@ -2065,7 +2068,7 @@ server <- function(input, output, session) {
     DT::datatable(
       I_ToolsTable,
       escape = FALSE,
-      options = list(dom = "t"),
+      options = list(dom = "t",pageLength = 50),
       rownames = FALSE
     )
   })
@@ -2075,7 +2078,7 @@ server <- function(input, output, session) {
     DT::datatable(
       I_SourcesTable,
       escape = FALSE,
-      options = list(dom = "t"),
+      options = list(dom = "t",pageLength = 50),
       rownames = FALSE
     )
   })
