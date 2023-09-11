@@ -1154,6 +1154,7 @@ server <- function(input, output, session) {
       addPolygons(
         data = mapData,
         fillColor = ~ pal(mapData[[input$splashMetric]]),
+        fillOpacity = 1,
         color = "black",
         layerId = ~areaCode,
         weight = 1,
@@ -1298,6 +1299,7 @@ server <- function(input, output, session) {
       addPolygons(
         data = mapData,
         fillColor = ~ pal(mapData[[input$splashMetric]]),
+        fillOpacity = 1,
         color = "black",
         layerId = ~areaCode,
         weight = 1,
@@ -2066,7 +2068,7 @@ server <- function(input, output, session) {
     DT::datatable(
       I_ToolsTable,
       escape = FALSE,
-      options = list(dom = "t"),
+      options = list(dom = "t",pageLength = 50),
       rownames = FALSE
     )
   })
@@ -2076,7 +2078,7 @@ server <- function(input, output, session) {
     DT::datatable(
       I_SourcesTable,
       escape = FALSE,
-      options = list(dom = "t"),
+      options = list(dom = "t",pageLength = 50),
       rownames = FALSE
     )
   })
