@@ -2068,7 +2068,7 @@ server <- function(input, output, session) {
     DT::datatable(
       I_ToolsTable,
       escape = FALSE,
-      options = list(dom = "t",pageLength = 50),
+      options = list(dom = "t", pageLength = 50),
       rownames = FALSE
     )
   })
@@ -2078,7 +2078,7 @@ server <- function(input, output, session) {
     DT::datatable(
       I_SourcesTable,
       escape = FALSE,
-      options = list(dom = "t",pageLength = 50),
+      options = list(dom = "t", pageLength = 50),
       rownames = FALSE
     )
   })
