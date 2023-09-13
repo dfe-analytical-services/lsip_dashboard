@@ -27,14 +27,11 @@ jobs:
         run: |
           echo "SHINYAPP_NAME='local-skills-dashboard'">> $GITHUB_ENV
       - name: Install dependencies
-        uses: actions/setup-gdal@main
-        with:
-          gdal-version: 'v3.6.3'
-          rebuild-cache: 'false'
-          base-dir: 'GDAL~'
-          cache-key-prefix: ''
-          use-conda: 'false'
-          extra-packages: ''
+        run: |
+          sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+          sudo apt-get update
+          sudo apt-get install libgdal-dev libgeos-dev libproj-dev 
+          which gdal-config
       - name: deploy
         uses: BDSI-Utwente/shinyapps-deploy-github-action@v1
         with:
