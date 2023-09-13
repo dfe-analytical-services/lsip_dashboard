@@ -37,15 +37,16 @@ jobs:
         run: >
           Rscript
           -e "cat(Sys.getenv('PATH'))"
-          -e "cat(Sys.getenv('GITHUB_PATH'))"
       - name: Add to PATH
         shell: bash
         run: |
-          echo $GITHUB_PATH
           echo $PATH
-          echo "/usr/bin/" >> $GITHUB_PATH    
-          echo $GITHUB_PATH
+          export PATH=$PATH:/usr/bin/
           echo $PATH
+      - name: Check system path 2
+        run: >
+          Rscript
+          -e "cat(Sys.getenv('PATH'))"
       - name: deploy
         uses: BDSI-Utwente/shinyapps-deploy-github-action@v1
         with:
