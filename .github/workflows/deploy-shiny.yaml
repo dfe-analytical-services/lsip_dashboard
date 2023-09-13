@@ -1,38 +1,23 @@
+# Trying marketplace deploy action:
+# https://github.com/marketplace/actions/deploy-to-shinyapps-io
+name: Deploy to shinyapps.io
+
 on:
   push:
     branches:
       - main
       - development
-
-name: deploy-shiny
+  workflow_dispatch:
 
 jobs:
-  deployShiny:
-    runs-on: ${{ matrix.config.os }}
+  deploy:
+    name: Deploy to shinyapps
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
-
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-        # Running on mac as it's quicker to build
-          - {os: macOS-latest, r: '4.3.1'}
-
-    env:
-      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      RSPM: ${{ matrix.config.rspm }}
-      RENV_PATHS_ROOT: ~/.local/share/renv
-      SHINYAPP_NAME: undefined
-
+    # allow skipping deployment for commits containing '[automated]' or '[no-deploy]' in the commit message
+    if: "!contains(github.event.head_commit.message, '[automated]') && !contains(github.event.head_commit.message, '[no-deploy]')"
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: 4.3.1
-          use-public-rspm: true
-
       - name: Set env vars (dev)
         if: endsWith(github.ref, '/development')
         run: |
@@ -41,36 +26,14 @@ jobs:
         if: endsWith(github.ref, '/main')
         run: |
           echo "SHINYAPP_NAME='local-skills-dashboard'">> $GITHUB_ENV
-      - name: Cache R packages
-        if: runner.os != 'Windows'
-        uses: actions/cache@v1
+      - name: deploy
+        uses: BDSI-Utwente/shinyapps-deploy-github-action@v1
         with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          # account and application name (https://<accountName>.shinyapps.io/<appName>)
+          appName: ${{env.SHINYAPP_NAME}}
+          accountName: 'department-for-education'
 
-      - name: Cache renv packages
-        uses: actions/cache@v1
-        with:
-          path: ${{ env.RENV_PATHS_ROOT }}
-          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-renv-
-        
-      - name: Restore renv snapshot
-        shell: Rscript {0}
-        run: |
-          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
-          renv::restore()
-          
-      - name: Install rsconnect
-        shell: Rscript {0}
-        run: |
-          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
-          renv::install("rsconnect")
-          
-      - name: Push to shiny.io
-        run: >
-          Rscript
-          -e "rsconnect::setAccountInfo(name = 'department-for-education', token = '${{secrets.SHINYAPPS_TOKEN}}', secret = '${{secrets.SHINYAPPS_SECRET}}')"
-          -e "rsconnect::deployApp(appName=${{env.SHINYAPP_NAME}}, forceUpdate = TRUE)"
+          # token and secret obtained from https://www.shinyapps.io/admin/#/tokens
+          accountToken: ${{ secrets.SHINYAPPS_TOKEN }}
+          accountSecret: ${{ secrets.SHINYAPPS_SECRET }}
+      
