@@ -29,8 +29,8 @@ jobs:
       - name: install-gdal
         uses: actions/setup-python@v4
         uses: actions/setup-gdal@main
-          with:
-            gdal-version: 'v3.6.3'
+        with:
+          gdal-version: 'v3.6.3'
         run: python -m osgeo_utils.samples.gdalinfo --formats
         run: python -c "from osgeo import gdal; print(gdal.__name__)"
       - name: deploy
