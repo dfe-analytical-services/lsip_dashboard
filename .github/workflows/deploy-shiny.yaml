@@ -36,9 +36,8 @@ jobs:
       - name: Check system path
         shell: Rscript {0}
         run: |
-          renv::install("Sys")
           cat(Sys.getenv('PATH'))
-          Sys.setenv(PATH = paste("/usr/bin/", Sys.getenv("PATH"), sep=";"))
+          Sys.setenv(PATH=paste("/usr/bin/", Sys.getenv("PATH"), sep=";"))
           cat(Sys.getenv('PATH'))
       - name: Check system path 2
         run: >
