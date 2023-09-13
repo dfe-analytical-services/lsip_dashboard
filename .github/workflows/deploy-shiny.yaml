@@ -37,6 +37,7 @@ jobs:
         run: >
           Rscript
           -e "cat(Sys.getenv('PATH'))"
+          -e "Sys.setenv(PATH = paste("/usr/bin/", Sys.getenv("PATH"), sep=";"))"
       - name: Add to PATH
         shell: bash
         run: |
