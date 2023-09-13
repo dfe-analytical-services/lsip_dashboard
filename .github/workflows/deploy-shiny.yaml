@@ -34,16 +34,12 @@ jobs:
           pip install GDAL==3.6.2
           which gdal-config
       - name: Check system path
-        run: >
-          Rscript
-          -e "cat(Sys.getenv('PATH'))"
-          -e "Sys.setenv(PATH = paste("/usr/bin/", Sys.getenv("PATH"), sep=";"))"
-      - name: Add to PATH
-        shell: bash
+        shell: Rscript {0}
         run: |
-          echo $PATH
-          export PATH=$PATH:/usr/bin/
-          echo $PATH
+          renv::install("Sys")
+          cat(Sys.getenv('PATH'))
+          Sys.setenv(PATH = paste("/usr/bin/", Sys.getenv("PATH"), sep=";"))
+          cat(Sys.getenv('PATH'))
       - name: Check system path 2
         run: >
           Rscript
