@@ -584,16 +584,20 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("12 September 2023 (1.3.3)"),
+            p("19 September 2023 (1.3.4)"),
             tags$ul(
-              tags$li("Updated FE souces table."),
-              tags$li("Updated map colours for clarity."),
-              tags$li("Corrected the breakdown table comment text.")
+              tags$li("Update to latest business count data.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("12 September 2023 (1.3.3)"),
+                tags$ul(
+                  tags$li("Updated FE souces table."),
+                  tags$li("Updated map colours for clarity."),
+                  tags$li("Corrected the breakdown table comment text.")
+                ),
                 p("23 August 2023 (1.3.2)"),
                 tags$ul(
                   tags$li("Updated Nomis employment rates, employment by industry and occupation data to the latest quarter."),
