@@ -861,6 +861,15 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents.
             Therefore, please take caution when interpreting data from small subgroups."
           ),
+          p(
+            "The Labour Force Survey (LFS) supplies data for the APS. The ONS have highlighted increased uncertainty around the LFS estimates due to falling response rates. As a result, ONS have begun to offer alternative sources of employment data, but these are yet to be published in the form used in this dashboard. For more information see this  ",
+            a(
+              href = "https://blog.ons.gov.uk/2023/10/24/creating-the-best-picture-of-changes-in-the-labour-market-an-update/",
+              "article",
+              .noWS = c("after")
+            ),
+            "."
+          ),
           p("Qualification estimates for the Jan 2022-Dec2022 survey period are temporarily suspended. The coding of qualifications has been changed to reflect an updated qualification framework. ONS have temporarily suspended the publication of these series while they update their datasets to reflect this change. They will reinstate qualification outputs as soon as they have made this update. "),
           h3("ONS-Textkernel online job adverts"),
           p(
