@@ -586,7 +586,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             h2("Latest update"),
             p("25 September 2023 (1.3.5)"),
             tags$ul(
-              tags$li("Update to latest KS4 and KS5 destinations data.")
+              tags$li("Update to latest KS4 and KS5 destinations data."),
+              tags$li("Update to latest APS employment data.")
             ),
             details(
               label = "Previous updates",
