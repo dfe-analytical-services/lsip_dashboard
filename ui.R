@@ -584,14 +584,18 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("19 September 2023 (1.3.4)"),
+            p("25 September 2023 (1.3.5)"),
             tags$ul(
-              tags$li("Update to latest business count data.")
+              tags$li("Update to latest KS4 and KS5 destinations data.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("19 September 2023 (1.3.4)"),
+                tags$ul(
+                  tags$li("Update to latest business count data.")
+                ),
                 p("12 September 2023 (1.3.3)"),
                 tags$ul(
                   tags$li("Updated FE souces table."),
@@ -756,7 +760,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           p(uiOutput("commentTime")),
           uiOutput("geoComp"),
           withSpinner(plotlyOutput("Splash_time")),
-          p("NB non-zero axis.")
+          p(uiOutput("timeFoot"))
         )
       ),
       br(),
