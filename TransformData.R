@@ -576,7 +576,7 @@ destinationsWithAreas <-
     I_KS4 %>% mutate(metric = "sustainedPositiveDestinationKS4Rate"),
     I_KS5 %>% mutate(metric = "sustainedPositiveDestinationKS5Rate")
   ) %>%
-  select(-data_type, -institution_group, -level_methodology,-old_la_code,-opportunity_area_code,-opportunity_area_name,-new_la_code,-la_name,-pcon_code,-pcon_name,-time_identifier,-country_code,-country_name,-region_code,-region_name,-breakdown_topic,-breakdown,-cohort_level) %>% # remove unused columns
+  select(-data_type, -institution_group, -level_methodology, -old_la_code, -opportunity_area_code, -opportunity_area_name, -new_la_code, -la_name, -pcon_code, -pcon_name, -time_identifier, -country_code, -country_name, -region_code, -region_name, -breakdown_topic, -breakdown, -cohort_level) %>% # remove unused columns
   rename(areaCode = lad_code, area = lad_name, timePeriod = time_period) %>%
   # add dates
   mutate(chartPeriod = paste("AY", substr(timePeriod, 3, 4), "/", substr(timePeriod, 5, 6), sep = "")) %>%
