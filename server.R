@@ -1507,7 +1507,7 @@ server <- function(input, output, session) {
   #### 2.3.7.3 Time footnote ----
   output$timeFoot <- renderUI({
     if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
-      "The way it is decided when a student is at the end of 16 to 18 study has changed this year and comparisons to previous cohorts should be treated with caution. See footnote below. Also NB non-zero axis."
+      "The definition of when a student is at the end of 16 to 18 study has changed this year and comparisons to previous cohorts should be treated with caution. See footnote below. Also NB non-zero axis."
     } else {
       "NB non-zero axis."
     }
