@@ -584,7 +584,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("25 September 2023 (1.3.5)"),
+            p("25 October 2023 (1.3.5)"),
             tags$ul(
               tags$li("Update to latest KS4 and KS5 destinations data."),
               tags$li("Update to latest APS employment data.")
@@ -593,7 +593,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
-                p("19 September 2023 (1.3.4)"),
+                p("19 October 2023 (1.3.4)"),
                 tags$ul(
                   tags$li("Update to latest business count data.")
                 ),
