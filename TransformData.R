@@ -18,36 +18,36 @@ library(writexl) # use write_xlsx
 
 # 1 Geographical data ----
 # Create LAD-LEP lookup table
-C_LADLEP2020 <- distinct(I_LEP2020, LADCD=LAD23CD, LADNM=LAD23NM, LEP = LEP22NM1) %>%
-  bind_rows(I_missingLAD %>% filter(LAD21CD != "z") %>% select(LADCD=LAD21CD, LEP = `LEP21.(manually.mapped)`)) %>%
-  bind_rows(distinct(I_LEP2020 %>% filter(LEP23NM2 != 0), LADCD=LAD23CD, LADNM=LAD23NM, LEP = LEP22NM2))
-
+C_LADLEP2020 <- distinct(I_LEP2020, LAD23CD, LAD23NM, LEP23NM1) %>%#get latest LAD and LEP lookup
+  bind_rows(distinct(I_LEP2020 %>% filter(LEP23NM2 != 0), LAD23CD, LAD23NM, LEP23NM2))#%>%#add on areas which are in the LEP overlaps
+  #bind_rows(I_missingLAD %>% filter(LADCD != "z") %>% select(LADCD, LEP))#add on old lads 
+  
 # Create LAD-LSIP lookup table
-C_LADLSIP2020 <- distinct(I_LEP2020, LADCD=LAD23CD, LADNM=LAD23NM, LSIP=LSIP23NM) %>%
-  bind_rows(I_missingLAD %>% filter(LAD21CD != "z") %>% select(LADCD=LAD21CD, LADNM = area, LSIP = `LSIP21.(manually.mapped)`)) %>%
-  mutate(LSIP = trimws(LSIP, which = c("right")))
+C_LADLSIP2020 <- distinct(I_LEP2020, LAD23CD, LAD23NM, LSIP23NM) #%>%
+  # bind_rows(I_missingLAD %>% filter(LADCD != "z") %>% select(LADCD, LADNM, LSIP)) %>%
+  # mutate(LSIP = trimws(LSIP, which = c("right")))
 
-# create mca lookup
+# create LAD-MCA lookup
 C_mcalookup <- I_mcalookup%>%select(-ObjectId)
 
 # Neaten geog files
-neatLA <- I_mapLA %>%select(-LAD23NMW)%>%#remove extra column
+neatLA <- I_mapLA %>%select(-LAD23NMW)%>%#remove extra welsh column
   mutate(geog = "LADU") %>% # add geog type
-  rename(areaCode = LAD23CD, areaName = LAD23NM, OBJECTID=FID) %>% # consistent naming
+  rename(OBJECTID=FID) %>% # consistent naming
   # add on lsip, lep and mca groupings
-  left_join(I_LEP2020 %>% mutate(LEP = paste0(LEP22NM1, " LEP"), LEP2 = paste0(LEP22NM2, " LEP"), LSIP = paste0(LSIP23NM, " LSIP")) %>% select(LADCD=LAD23CD, LSIP, LEP, LEP2), by = c("areaCode" = "LADCD")) %>%
-  left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH23NM, " MCA")) %>% select(LAD23CD, MCA), by = c("areaCode" = "LAD23CD")) %>%
+  left_join(I_LEP2020 %>% mutate(LEP = paste0(LEP23NM1, " LEP"), LEP2 = paste0(LEP23NM2, " LEP"), LSIP = paste0(LSIP23NM, " LSIP")) %>% select(LAD23CD, LSIP, LEP, LEP2), by = c("LAD23CD" = "LAD23CD")) %>%
+  left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH23NM, " MCA")) %>% select(LAD23CD, MCA), by = c("LAD23CD" = "LAD23CD")) %>%
   filter(is.na(LSIP) == FALSE) %>% # remove non England
   mutate(MCA = case_when(LEP == "London LEP" ~ "Greater London Authority MCA", TRUE ~ MCA)) # add on gla as mca
-neatLA<- neatLA %>% 
-  st_transform(4326)#match to the same projection
+
 neatMCA <- I_mapMCA %>%
   mutate(geog = "MCA") %>% # add geog type
-  rename(areaCode = CAUTH21CD, areaName = CAUTH21NM) # consistent naming
+  rename(areaCode = CAUTH22CD, areaName = CAUTH22NM) # consistent naming
 
 neatLEP <- I_mapLEP %>%
   mutate(geog = "LEP") %>% # add geog type
-  rename(areaCode = LEP21CD, areaName = LEP21NM) # consistent naming
+  rename(areaCode = LEP22CD, areaName = LEP22NM)%>% # consistent naming
+  inner_join(distinct(I_LEP2020, LEP23CD1), by = c("areaCode" = "LEP23CD1"))#remove any areas that are no longer LEPs in 2023 (Black Country and Coventry)
 
 addEngland <- data.frame(
   areaName = "England", areaCode = "x",
@@ -55,7 +55,7 @@ addEngland <- data.frame(
 )
 
 # add on LSIPs to LA file
-LasLsip <- merge(I_mapLA, I_LEP2020 %>% select(LAD23CD, LSIP=LSIP23NM, LEP = LEP22NM1, LEP2 = LEP22NM2), by.x = "LAD23CD", by.y = "LAD23CD")
+LasLsip <- merge(I_mapLA, I_LEP2020 %>% select(LAD23CD, LSIP=LSIP23NM, LEP = LEP23NM1, LEP2 = LEP23NM2), by.x = "LAD23CD", by.y = "LAD23CD")
 # dissolve the LSIP LAs
 sf_use_s2(F) # to avoid overlapping error
 LSIPsh <- LasLsip %>%
@@ -78,12 +78,10 @@ neatLSIP <- LSIPmap %>%
     LONG = map_dbl(geometry, ~ st_centroid(.x)[[1]]),
     LAT = map_dbl(geometry, ~ st_centroid(.x)[[2]])
   )
-neatLSIP<- neatLSIP %>% 
-  st_transform(4326)#match to the same projection
 
 neatGeog <- bind_rows(
   neatMCA, neatLEP, addEngland, neatLA, neatLSIP,
-  neatLEP %>% filter(areaName == "London") %>% mutate(areaName = "Greater London Authority", geog = "MCA"), # add GLA as an MCA (it isn't officially but people like to find it there)
+  neatLEP %>% filter(areaCode == "E37000051") %>% mutate(areaName = "Greater London Authority", geog = "MCA"), # add GLA as an MCA (it isn't officially but people like to find it there)
   neatLA %>%
     filter(LEP2 != "0 LEP") %>%
     select(-LEP) %>%
@@ -133,15 +131,15 @@ formatNomis <- function(x) {
       TRUE ~ GEOGRAPHY_NAME
     )) %>%
     select(-GEOGRAPHY_TYPE, -GEOGRAPHY_NAME, -GEOGRAPHY_CODE) %>%
-    rename(chartPeriod = DATE_NAME, value = OBS_VALUE) %>%
-    mutate(geogConcat = case_when(
-      geogConcat == "The London Economic Action Partnership LEP" ~ "London LEP",
-      geogConcat == "GFirst LEP" ~ "Gloucestershire LEP",
-      geogConcat == "OxLEP LEP" ~ "Oxfordshire LEP",
-      geogConcat == "D2N2 LEP" ~ "Derby, Derbyshire, Nottingham and Nottinghamshire LEP",
-      geogConcat == "The Business Board LEP" ~ "Greater Cambridge and Greater Peterborough LEP",
-      TRUE ~ geogConcat
-    ))
+    rename(chartPeriod = DATE_NAME, value = OBS_VALUE)# %>%
+    # mutate(geogConcat = case_when(
+    #   geogConcat == "The London Economic Action Partnership LEP" ~ "London LEP",
+    #   geogConcat == "GFirst LEP" ~ "Gloucestershire LEP",
+    #   geogConcat == "OxLEP LEP" ~ "Oxfordshire LEP",
+    #   geogConcat == "D2N2 LEP" ~ "Derby, Derbyshire, Nottingham and Nottinghamshire LEP",
+    #   geogConcat == "The Business Board LEP" ~ "Greater Cambridge and Greater Peterborough LEP",
+    #   TRUE ~ geogConcat
+    # ))
 }
 
 ## 2.1 Employment volumes ----
@@ -261,6 +259,8 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
   ) %>% # keep only the combinations shown in dashboard
   mutate(area = case_when(
     geographic_level == "National" ~ country_name,
+    geographic_level == "Local authority district" ~ lad_name,
+    geographic_level == "Local authority district" ~ lad_name,
     geographic_level == "Local authority district" ~ lad_name
   )) %>%
   mutate(areaCode = case_when(geographic_level == "Local authority district" ~ lad_code, TRUE ~ "")) %>%
@@ -272,7 +272,7 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
     timePeriod == (max(timePeriod) - years(1)) ~ -1,
     TRUE ~ 0
   )) %>%
-  select(-time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name) %>%
+  select(-time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name) %>%
   # find populations at the grouping level so we use the highest volume of population (ie nopt calculate the pop for every small group using small data volumes)
   mutate(populationGroup = case_when(
     apprenticeships_or_further_education %in% c("Apprenticeships", "Community Learning") ~ paste("popIncludesUnder19", age_group), # apps and CL include under 19, so the the population used in the per 100k calcs are slightly higher
@@ -290,26 +290,31 @@ addPopulation <- F_FeProvLevelAge %>%
   ) %>%
   select(-populationGroup)
 
-# add on new LADUs/LEP/LSIP/MCA areas
+# add on new LADUs/LEP/LSIP/MCA areas to all LAs
 addGeogs <- function(x) {
-  withAreas <- x %>%
-    # Use new LA names
-    left_join(I_LaLookup %>% select(LAD11CD, LAD21NM), by = c("areaCode" = "LAD11CD")) %>% # make new LAs
-    left_join(distinct(I_LEP2020, LAD23CD, LAD23NM2 = LAD23NM), by = c("areaCode" = "LAD23CD")) %>% # use to get consistent LA names
+  withAreas <- addPopulation%>%
+    # Use new LA names from 2011 areas
+    left_join(I_LaLookup %>% select(LAD11CD, LAD23CD_11=LAD23CD), by = c("areaCode" = "LAD11CD")) %>% # make new LAs
+    # Use new LA names from 2021 areas
+    left_join(I_LaLookup %>% select(LAD21CD, LAD23CD_21=LAD23CD), by = c("areaCode" = "LAD21CD")) %>% # make new LAs
+    #create flag for when the lad code has changed
     mutate(
       newArea = case_when(
-        LAD21NM != area ~ 1, TRUE ~ 0
+        (LAD23CD_11 != areaCode)|(LAD23CD_21 != areaCode) ~ 1, TRUE ~ 0
       ),
-      area = case_when(
-        is.na(LAD21NM) == FALSE ~ LAD21NM,
-        geographic_level == "National" ~ area,
-        TRUE ~ LAD23NM2
+      areaCode = case_when(
+        is.na(LAD23CD_11) == FALSE ~ LAD23CD_11,
+        is.na(LAD23CD_21) == FALSE ~ LAD23CD_21,
+        TRUE ~ areaCode
       )
-    ) %>%
+    )%>%
+    #select new name
+    select(-area,-LAD23CD_11,-LAD23CD_21)%>%
+      left_join(distinct(I_LEP2020, LAD23CD, area = LAD23NM), by = c("areaCode" = "LAD23CD")) %>% # use to get consistent LA names
     # add lep names
-    left_join(select(C_LADLEP2020, -LADNM), by = c("areaCode" = "LADCD")) %>%
+    left_join(select(C_LADLEP2020, -LAD23NM), by = c("areaCode" = "LAD23CD")) %>%
     # addLSIPS
-    left_join(select(C_LADLSIP2020, -LADNM), by = c("areaCode" = "LADCD")) %>%
+    left_join(select(C_LADLSIP2020, -LAD23NM), by = c("areaCode" = "LAD23CD")) %>%
     # addMCA
     left_join(select(C_mcalookup, -CAUTH23CD, -LAD23NM), by = c("areaCode" = "LAD23CD"))
   
@@ -321,7 +326,7 @@ addGeogs <- function(x) {
         TRUE ~ paste0(area, " LADU")
       )) %>%
       # group by and slice to remove those LAs that are in multiple LEPs
-      group_by(across(c(-LAD21NM, -area, -LEP, -LSIP, -CAUTH23NM, -areaCode, -geographic_level, -LAD23NM2))) %>%
+      group_by(across(c(-LAD21NM, -area, -LEP23NM1, -LSIP23NM, -CAUTH23NM, -areaCode, -geographic_level, -LAD23NM2))) %>%
       slice(1),
     withAreas %>%
       filter(is.na(LEP) == FALSE) %>%

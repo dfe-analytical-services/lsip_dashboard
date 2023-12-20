@@ -36,9 +36,10 @@ folder <- "1-3_MCA_lookup"
 sheetNum <- "Local_Authority_District_to_Com"
 I_mcalookup <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
-## 1.4 LA 2011 to 2021 lookup ----
+## 1.4 LA 2011/2021 to 2023 lookup ----
 folder <- "1-4_LaLookup"
-I_LaLookup <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+sheetNum <- "Local_Authority_District_(2011)"
+I_LaLookup <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
 ## 1.5 LEP boundary----
 folder <- "1-5_LEPBoundary"
