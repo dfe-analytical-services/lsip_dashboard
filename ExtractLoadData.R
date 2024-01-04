@@ -82,6 +82,17 @@ extractNomis <- function(tableID, dates, cells) {
       cell = cells
     ) %>%
       select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, CELL_NAME, OBS_VALUE, MEASURES_NAME),
+    # user defined pt 3 new LAs
+    nomis_get_data(
+      id = tableID, date = dates, geography =
+        "MAKE|Westmorland%20and%20Furness|1811939350,1811939353,1811939354,MAKE|Cumberland|1811939349,1811939351,1811939352",
+      cell = cells
+    ) %>%
+      select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, CELL_NAME, OBS_VALUE, MEASURES_NAME)%>%
+      mutate(GEOGRAPHY_TYPE="local authorities: district / unitary (as of April 2021)"
+             ,GEOGRAPHY_CODE=case_when(GEOGRAPHY_NAME=="Cumberland" ~ "E06000063"
+                        ,GEOGRAPHY_NAME=="Westmorland and Furness" ~ "E06000064"
+                        ,TRUE ~ "NA")),
     # other geogs
     nomis_get_data(
       id = tableID, date = dates, geography = geogUseAps$id,
@@ -89,7 +100,9 @@ extractNomis <- function(tableID, dates, cells) {
     ) %>%
       select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, CELL_NAME, OBS_VALUE, MEASURES_NAME)
   ) %>%
-    filter(MEASURES_NAME == "Value") %>%
+    filter(MEASURES_NAME == "Value"
+           ,!GEOGRAPHY_NAME %in% c("Allerdale","Carlisle","Copeland","Barrow-in-Furness","Eden","South Lakeland")#remove old LADUs
+           ) %>%
     select(-MEASURES_NAME)
 }
 
@@ -139,10 +152,23 @@ I_entIndSize <-
                    industry = 37748736, date = "latestMINUS4-latest", employment_sizeband = "0,10,20,30,40", industry = "163577857...163577874", legal_status = "0", measures = "20100"
     ) %>%
       select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, INDUSTRY_NAME, EMPLOYMENT_SIZEBAND_NAME, OBS_VALUE),
+    # user defined pt 3 new LAs
+    nomis_get_data(
+      "NM_142_1", geography =
+        "MAKE|Westmorland%20and%20Furness|1811939350,1811939353,1811939354,MAKE|Cumberland|1811939349,1811939351,1811939352",
+      industry = 37748736, date = "latestMINUS4-latest", employment_sizeband = "0,10,20,30,40", industry = "163577857...163577874", legal_status = "0", measures = "20100"
+    ) %>%
+      select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, INDUSTRY_NAME, EMPLOYMENT_SIZEBAND_NAME, OBS_VALUE)%>%
+      mutate(GEOGRAPHY_TYPE="local authorities: district / unitary (as of April 2021)"
+             ,GEOGRAPHY_CODE=case_when(GEOGRAPHY_NAME=="Cumberland" ~ "E06000063"
+                                       ,GEOGRAPHY_NAME=="Westmorland and Furness" ~ "E06000064"
+                                       ,TRUE ~ "NA")),
     # other geogs
     nomis_get_data("NM_142_1", geography = geogUseAps$id, industry = 37748736, date = "latestMINUS4-latest", employment_sizeband = "0,10,20,30,40", industry = "163577857...163577874", legal_status = "0", measures = "20100") %>%
       select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, INDUSTRY_NAME, EMPLOYMENT_SIZEBAND_NAME, OBS_VALUE),
-  )
+  )%>%
+  filter(!GEOGRAPHY_NAME %in% c("Allerdale","Carlisle","Copeland","Barrow-in-Furness","Eden","South Lakeland")#remove old LADUs
+  ) 
 # Ignore total
 I_entInd <- I_entIndSize %>% filter(INDUSTRY_NAME != "Total")
 # Just by size

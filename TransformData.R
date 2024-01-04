@@ -20,12 +20,12 @@ library(writexl) # use write_xlsx
 # Create LAD-LEP lookup table
 C_LADLEP2020 <- distinct(I_LEP2020, LAD23CD, LAD23NM, LEP23NM1) %>%#get latest LAD and LEP lookup
   bind_rows(distinct(I_LEP2020 %>% filter(LEP23NM2 != 0), LAD23CD, LAD23NM, LEP23NM2))#%>%#add on areas which are in the LEP overlaps
-  #bind_rows(I_missingLAD %>% filter(LADCD != "z") %>% select(LADCD, LEP))#add on old lads 
-  
+#bind_rows(I_missingLAD %>% filter(LADCD != "z") %>% select(LADCD, LEP))#add on old lads 
+
 # Create LAD-LSIP lookup table
 C_LADLSIP2020 <- distinct(I_LEP2020, LAD23CD, LAD23NM, LSIP23NM) #%>%
-  # bind_rows(I_missingLAD %>% filter(LADCD != "z") %>% select(LADCD, LADNM, LSIP)) %>%
-  # mutate(LSIP = trimws(LSIP, which = c("right")))
+# bind_rows(I_missingLAD %>% filter(LADCD != "z") %>% select(LADCD, LADNM, LSIP)) %>%
+# mutate(LSIP = trimws(LSIP, which = c("right")))
 
 # create LAD-MCA lookup
 C_mcalookup <- I_mcalookup%>%select(-ObjectId)
@@ -38,7 +38,8 @@ neatLA <- I_mapLA %>%select(-LAD23NMW)%>%#remove extra welsh column
   left_join(I_LEP2020 %>% mutate(LEP = paste0(LEP23NM1, " LEP"), LEP2 = paste0(LEP23NM2, " LEP"), LSIP = paste0(LSIP23NM, " LSIP")) %>% select(LAD23CD, LSIP, LEP, LEP2), by = c("LAD23CD" = "LAD23CD")) %>%
   left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH23NM, " MCA")) %>% select(LAD23CD, MCA), by = c("LAD23CD" = "LAD23CD")) %>%
   filter(is.na(LSIP) == FALSE) %>% # remove non England
-  mutate(MCA = case_when(LEP == "London LEP" ~ "Greater London Authority MCA", TRUE ~ MCA)) # add on gla as mca
+  mutate(MCA = case_when(LEP == "London LEP" ~ "Greater London Authority MCA", TRUE ~ MCA))%>% # add on gla as mca
+  rename(areaName=LAD23NM,areaCode=LAD23CD)
 
 neatMCA <- I_mapMCA %>%
   mutate(geog = "MCA") %>% # add geog type
@@ -113,11 +114,6 @@ formatLong <- function(x) {
 formatNomis <- function(x) {
   x %>%
     filter(!(GEOGRAPHY_TYPE == "countries" & GEOGRAPHY_NAME != "England")) %>%
-    # correct Sheffield LEP name
-    mutate(GEOGRAPHY_NAME = case_when(
-      GEOGRAPHY_NAME == "South Yorkshire" ~ "Sheffield City Region",
-      TRUE ~ GEOGRAPHY_NAME
-    )) %>%
     # Add dates
     mutate(timePeriod = as.Date(paste("01", substr(DATE_NAME, 1, 8), sep = ""), format = "%d %b %Y")) %>%
     mutate(latest = case_when(
@@ -131,15 +127,7 @@ formatNomis <- function(x) {
       TRUE ~ GEOGRAPHY_NAME
     )) %>%
     select(-GEOGRAPHY_TYPE, -GEOGRAPHY_NAME, -GEOGRAPHY_CODE) %>%
-    rename(chartPeriod = DATE_NAME, value = OBS_VALUE)# %>%
-    # mutate(geogConcat = case_when(
-    #   geogConcat == "The London Economic Action Partnership LEP" ~ "London LEP",
-    #   geogConcat == "GFirst LEP" ~ "Gloucestershire LEP",
-    #   geogConcat == "OxLEP LEP" ~ "Oxfordshire LEP",
-    #   geogConcat == "D2N2 LEP" ~ "Derby, Derbyshire, Nottingham and Nottinghamshire LEP",
-    #   geogConcat == "The Business Board LEP" ~ "Greater Cambridge and Greater Peterborough LEP",
-    #   TRUE ~ geogConcat
-    # ))
+    rename(chartPeriod = DATE_NAME, value = OBS_VALUE)
 }
 
 ## 2.1 Employment volumes ----
@@ -254,16 +242,21 @@ C_qualL3PlusAgeGender <- C_qualAgeGender %>%
 F_FeProvLevelAge <- I_FeProvLevelAge %>%
   # filter uneeded columns and rows
   filter(
-    geographic_level %in% c("Local authority district", "National"), # just keep area used
+    geographic_level %in% c("Local authority district", "National","Local enterprise partnership","Local skills improvement plan area"), # just keep area used
+    # keep only the combinations shown in dashboard
     (((apprenticeships_or_further_education == "Further education and skills" | str_sub(level_or_type, -5, -1) == "Total") & age_group == "Total") | level_or_type == "Further education and skills: Total")
-  ) %>% # keep only the combinations shown in dashboard
+    ,lad_code!="z"#ignore Outside of England and unknown
+  ) %>% 
   mutate(area = case_when(
     geographic_level == "National" ~ country_name,
     geographic_level == "Local authority district" ~ lad_name,
-    geographic_level == "Local authority district" ~ lad_name,
-    geographic_level == "Local authority district" ~ lad_name
+    geographic_level == "Local enterprise partnership" ~ lsip_name,
+    geographic_level == "Local skills improvement plan area" ~ local_enterprise_partnership_name
   )) %>%
-  mutate(areaCode = case_when(geographic_level == "Local authority district" ~ lad_code, TRUE ~ "")) %>%
+  mutate(areaCode = case_when(geographic_level == "Local authority district" ~ lad_code,
+                              geographic_level == "Local enterprise partnership" ~ lsip_code,
+                              geographic_level == "Local skills improvement plan area" ~ local_enterprise_partnership_code
+                              , TRUE ~ "")) %>%
   # add dates
   mutate(chartPeriod = paste("AY", substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
   mutate(timePeriod = as.Date(paste("01 Aug", substr(time_period, 1, 4), sep = ""), format = "%d %b %Y")) %>%
@@ -272,7 +265,8 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
     timePeriod == (max(timePeriod) - years(1)) ~ -1,
     TRUE ~ 0
   )) %>%
-  select(-time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name) %>%
+  select(-time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name,-local_enterprise_partnership_code,-local_enterprise_partnership_name,-lsip_code,-lsip_name
+  ) %>%
   # find populations at the grouping level so we use the highest volume of population (ie nopt calculate the pop for every small group using small data volumes)
   mutate(populationGroup = case_when(
     apprenticeships_or_further_education %in% c("Apprenticeships", "Community Learning") ~ paste("popIncludesUnder19", age_group), # apps and CL include under 19, so the the population used in the per 100k calcs are slightly higher
@@ -292,7 +286,9 @@ addPopulation <- F_FeProvLevelAge %>%
 
 # add on new LADUs/LEP/LSIP/MCA areas to all LAs
 addGeogs <- function(x) {
-  withAreas <- addPopulation%>%
+  withAreas <- x%>%
+    filter(
+      geographic_level %in% c("Local authority district","National"))%>%
     # Use new LA names from 2011 areas
     left_join(I_LaLookup %>% select(LAD11CD, LAD23CD_11=LAD23CD), by = c("areaCode" = "LAD11CD")) %>% # make new LAs
     # Use new LA names from 2021 areas
@@ -310,13 +306,16 @@ addGeogs <- function(x) {
     )%>%
     #select new name
     select(-area,-LAD23CD_11,-LAD23CD_21)%>%
-      left_join(distinct(I_LEP2020, LAD23CD, area = LAD23NM), by = c("areaCode" = "LAD23CD")) %>% # use to get consistent LA names
+    left_join(distinct(I_LEP2020, LAD23CD, area = LAD23NM), by = c("areaCode" = "LAD23CD")) %>% # use to get consistent LA names
     # add lep names
     left_join(select(C_LADLEP2020, -LAD23NM), by = c("areaCode" = "LAD23CD")) %>%
     # addLSIPS
     left_join(select(C_LADLSIP2020, -LAD23NM), by = c("areaCode" = "LAD23CD")) %>%
     # addMCA
-    left_join(select(C_mcalookup, -CAUTH23CD, -LAD23NM), by = c("areaCode" = "LAD23CD"))
+    left_join(select(C_mcalookup, -CAUTH23CD, -LAD23NM), by = c("areaCode" = "LAD23CD"))%>%
+    #add national name
+    mutate(area=case_when(geographic_level == "National" ~ "England"
+                          ,TRUE ~ area))
   
   # make long
   bind_rows(
@@ -326,25 +325,25 @@ addGeogs <- function(x) {
         TRUE ~ paste0(area, " LADU")
       )) %>%
       # group by and slice to remove those LAs that are in multiple LEPs
-      group_by(across(c(-LAD21NM, -area, -LEP23NM1, -LSIP23NM, -CAUTH23NM, -areaCode, -geographic_level, -LAD23NM2))) %>%
+      group_by(across(c(-area, -LEP23NM1, -LSIP23NM, -CAUTH23NM, -areaCode, -geographic_level, -LEP23NM2))) %>%
       slice(1),
     withAreas %>%
-      filter(is.na(LEP) == FALSE) %>%
-      mutate(geogConcat = paste0(LEP, " LEP"), newArea = 1),
+      filter(is.na(LEP23NM1) == FALSE) %>%
+      mutate(geogConcat = paste0(LEP23NM1, " LEP"), newArea = 1),
     withAreas %>%
       # group by and slice to remove those LAs that are in multiple LEPs
-      group_by(across(c(-LAD21NM, -area, -LEP, -LSIP, -CAUTH23NM, -geographic_level, -LAD23NM2))) %>%
+      group_by(across(c(-area, -LEP23NM1, -LSIP23NM, -CAUTH23NM, -geographic_level, -LEP23NM2))) %>%
       slice(1) %>%
-      filter(is.na(LSIP) == FALSE) %>%
-      mutate(geogConcat = paste0(LSIP, " LSIP"), newArea = 1),
+      filter(is.na(LSIP23NM) == FALSE) %>%
+      mutate(geogConcat = paste0(LSIP23NM, " LSIP"), newArea = 1),
     withAreas %>%
       # group by and slice to remove those LAs that are in multiple LEPs
-      group_by(across(c(-LAD21NM, -area, -LEP, -LSIP, -CAUTH23NM, -geographic_level, -LAD23NM2))) %>%
+      group_by(across(c(-area, -LEP23NM1, -LSIP23NM, -CAUTH23NM, -geographic_level, -LEP23NM2))) %>%
       slice(1) %>%
       filter(is.na(CAUTH23NM) == FALSE) %>%
       mutate(geogConcat = paste0(CAUTH23NM, " MCA"), newArea = 1)
   ) %>%
-    select(-LAD21NM, -area, -LEP, -LSIP, -CAUTH23NM, -areaCode, -geographic_level, -LAD23NM2)
+    select( -area, -LEP23NM1, -LSIP23NM, -CAUTH23NM, -areaCode, -geographic_level, -LEP23NM2)
 }
 
 # add on new LADUs/LEP/LSIP/MCA areas
@@ -354,8 +353,7 @@ feWithAreas <- addGeogs(addPopulation)
 groupedStats <- feWithAreas %>%
   filter(newArea == 1) %>% # no need to group national or LAs that haven't changed
   ungroup() %>%
-  select(-newArea, -achievements_rate_per_100000_population, -starts_rate_per_100000_population, -participation_rate_per_100000_population,
-         -english_devolved_area_code, -english_devolved_area_name, -local_enterprise_partnership_code, -local_enterprise_partnership_name, -lsip_code, -lsip_name) %>%
+  select(-newArea, -achievements_rate_per_100000_population, -starts_rate_per_100000_population, -participation_rate_per_100000_population) %>%
   mutate_at(vars(starts, participation, achievements, population_estimate), as.numeric) %>% # Convert to numeric
   group_by(apprenticeships_or_further_education, level_or_type, age_group, chartPeriod, timePeriod, latest, geogConcat) %>% # sum for each LEP
   summarise(across(everything(), list(sum), na.rm = T)) %>%
@@ -373,8 +371,7 @@ C_FeProvLevelAge <- bind_rows(
   feWithAreas %>%
     filter(newArea == 0)
 ) %>%
-  select(-population, -newArea, -english_devolved_area_code, -english_devolved_area_name, -local_enterprise_partnership_code, -local_enterprise_partnership_name, -lsip_code, -lsip_name,
-         -population_estimate) %>%
+  select(-population, -newArea,  -population_estimate) %>%
   # get in new format
   mutate(subgroup = case_when(
     level_or_type == "Further education and skills: Total" & age_group == "Total" ~ "Total",
@@ -438,122 +435,127 @@ C_FeSsa <- bind_rows(
                values_to = "valueText"
   ) %>%
   mutate(value = as.numeric(valueText))
-  
-  ## 2.8 Skills imperative 2035 ----
-  employmentProjections <-
-    # bind_rows(
-    bind_rows(
-      I_wfIndF2 %>%
-        select(-"0") %>% # get rid of row caused by formula error in spreadsheet
-        rename(subgroup = X1) %>%
-        mutate(
-          metric = "employmentProjection",
-          breakdown = case_when(
-            subgroup %in% c("Primary sector and utilities", "Manufacturing", "Construction", "Trade, accomod. and transport", "Business and other services", "Non-marketed services") ~ "Broad sector",
-            subgroup == "All industries" ~ "Total",
-            TRUE ~ "Industry"
-          ),
-          subgroup = case_when(
-            subgroup == "All industries" ~ "Total",
-            TRUE ~ subgroup
-          )
-        ) %>%
-        mutate_at(vars(`2010`:`2035`),
-                  .funs = funs(. * 1000)
-        ), # put in unit numbers
-      I_wfOccF2 %>%
-        rename(subgroup = thousands) %>%
-        mutate(
-          metric = "employmentProjection",
-          breakdown = case_when(
-            grepl("[0-9]", subgroup) == TRUE ~ "Occupation (SOC2020 submajor)",
-            subgroup == "All occupations" ~ "Total",
-            TRUE ~ "Occupation (SOC2020 major)"
-          ),
-          subgroup = case_when(
-            subgroup == "All occupations" ~ "Total",
-            grepl("[0-9]", subgroup) == TRUE ~ gsub("^[0-9]", "", subgroup),
-            TRUE ~ subgroup
-          )
-        ) %>%
-        mutate_at(vars(`2010`:`2035`),
-                  .funs = funs(. * 1000)
-        ) %>% # put in unit numbers
-        filter(breakdown != "Total"), # remove this total since we already have it fro industry
-      I_wfQualF1 %>%
-        mutate(metric = "employmentProjection", breakdown = "Qualification") %>%
-        rename(subgroup = X1) %>%
-        mutate_at(vars(`2010`:`2035`),
-                  .funs = funs(. * 1000)
-        ), # put in unit numbers
-    ) %>%
-    left_join(I_wfAreaName) %>%
-    mutate(geogConcat = paste0(trimws(`.Main`, "both"), " ", sub(" name", "", Scenario))) %>% # get name
-    mutate(geogConcat = case_when(
-      #   file_name == "BH_LSIP_MainTables.Main.xlsm" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
-      trimws(`.Main`, "both") == "England" ~ "England",
-      TRUE ~ geogConcat
-    )) %>% # correct error in file calling this a LEP instead of LSIP and getting name wrong
-    select(-`.Main`, -Scenario, -file_name) %>%
-    pivot_longer(!c("geogConcat", "breakdown", "subgroup", "metric"),
-                 names_to = "timePeriod",
-                 values_to = "value"
-    ) %>%
-    mutate(geogConcat = case_when(
-      geogConcat == "Buckinghamshire Thames Valley LEP" ~ "Buckinghamshire LEP",
-      geogConcat == "Cambridge and Peterborough MCA" ~ "Cambridgeshire and Peterborough MCA",
-      geogConcat == "London Enterprise Panel LEP" ~ "London LEP",
-      geogConcat == "York, North Yorkshire and East Riding LEP" ~ "York and North Yorkshire LEP",
-      geogConcat == "Humber LEP" ~ "Hull and East Yorkshire LEP",
-      geogConcat == "Essex Southend-on-Sea and Thurrock LSIP" ~ "Essex, Southend-on-Sea and Thurrock LSIP",
-      geogConcat == "Brighton and Hove East Sussex West Sussex LSIP" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
-      TRUE ~ geogConcat
-    )) %>% # correct different spellings
-    mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) %>% # remove numbers from soc codes for presentation
-    # get time period
-    rename(chartPeriod = timePeriod) %>%
-    mutate(timePeriod = as.Date(paste("01", "Jan", chartPeriod, sep = " "), format = "%d %b %Y")) %>%
-    mutate(latest = case_when(
-      timePeriod == max(timePeriod) ~ 1,
-      timePeriod == (max(timePeriod) - years(1)) ~ -1,
-      TRUE ~ 0
-    ))
-  
-  # use dorset lep for dorset lsip because dorset lsip has the wrong LAs and it is the same as dorset LEP anyway
-  # use Worchestershire lsip for Worchestershire lep because Worchestershire lep is missing some LAs and it is the same as Worchestershire lsip anyway
-  employmentProjectionsCorrections <- employmentProjections %>%
-    filter(geogConcat %in% c("Dorset LEP", "Worcestershire LSIP", "Stoke-on-Trent and Staffordshire LSIP")) %>%
-    mutate(geogConcat = case_when(
-      geogConcat == "Dorset LEP" ~ "Dorset LSIP",
-      geogConcat == "Worcestershire LSIP" ~ "Worcestershire LEP",
-      geogConcat == "Stoke-on-Trent and Staffordshire LSIP" ~ "Stoke-on-Trent and Staffordshire LEP",
-      TRUE ~ "NA"
-    ))
-  
-  # calculate enterprise M3 LSIP from a combination of LEP areas that include Enterprise LSIP area, and then minus off the areas in that larger area that are not Enterprise Lsip
-  # Enterprise LSIP=(Enterprise LEP + C2C LEP + South east LEP)-(Brighton LSIP + Essex LSIP + Kent LSIP)
-  employmentProjectionsEntM3Lsip <- employmentProjections %>%
-    filter(geogConcat %in% c("Enterprise M3 LEP", "Coast to Capital LEP", "South East LEP", "Brighton and Hove, East Sussex, West Sussex LSIP", "Essex, Southend-on-Sea and Thurrock LSIP", "Kent and Medway LSIP")) %>% # get all the relavant areas
-    mutate(value = case_when(
-      geogConcat %in% c("Enterprise M3 LEP", "Coast to Capital LEP", "South East LEP") ~ value,
-      TRUE ~ 0 - value
-    )) %>%
-    select(-geogConcat) %>%
-    group_by(subgroup, metric, breakdown, chartPeriod, timePeriod, latest) %>%
-    summarise(value = sum(value)) %>%
-    mutate(geogConcat = "Enterprise M3 LEP (including all of Surrey) LSIP")
-  
-  # combine them all
-  employmentProjections <- bind_rows(
-    employmentProjections %>% filter(!geogConcat %in% c("Dorset LSIP", "Enterprise M3 LEP (including all of Surrey) LSIP", "Worcestershire LEP", "Stoke-on-Trent and Staffordshire LEP")), # remove incorrect dorset and Enterprise LSIPs
-    employmentProjectionsCorrections,
-    employmentProjectionsEntM3Lsip
-  )
-  
-  # Get future year on year growth metric
-  empGrowth <- employmentProjections %>%
-    filter(chartPeriod >= 2022) %>%
-    # get growth
+
+## 2.8 Skills imperative 2035 ----
+employmentProjections <-
+  # bind_rows(
+  bind_rows(
+    I_wfIndF2 %>%
+      select(-"0") %>% # get rid of row caused by formula error in spreadsheet
+      rename(subgroup = X1) %>%
+      mutate(
+        metric = "employmentProjection",
+        breakdown = case_when(
+          subgroup %in% c("Primary sector and utilities", "Manufacturing", "Construction", "Trade, accomod. and transport", "Business and other services", "Non-marketed services") ~ "Broad sector",
+          subgroup == "All industries" ~ "Total",
+          TRUE ~ "Industry"
+        ),
+        subgroup = case_when(
+          subgroup == "All industries" ~ "Total",
+          TRUE ~ subgroup
+        )
+      ) %>%
+      mutate_at(vars(`2010`:`2035`),
+                .funs = funs(. * 1000)
+      ), # put in unit numbers
+    I_wfOccF2 %>%
+      rename(subgroup = thousands) %>%
+      mutate(
+        metric = "employmentProjection",
+        breakdown = case_when(
+          grepl("[0-9]", subgroup) == TRUE ~ "Occupation (SOC2020 submajor)",
+          subgroup == "All occupations" ~ "Total",
+          TRUE ~ "Occupation (SOC2020 major)"
+        ),
+        subgroup = case_when(
+          subgroup == "All occupations" ~ "Total",
+          grepl("[0-9]", subgroup) == TRUE ~ gsub("^[0-9]", "", subgroup),
+          TRUE ~ subgroup
+        )
+      ) %>%
+      mutate_at(vars(`2010`:`2035`),
+                .funs = funs(. * 1000)
+      ) %>% # put in unit numbers
+      filter(breakdown != "Total"), # remove this total since we already have it fro industry
+    I_wfQualF1 %>%
+      mutate(metric = "employmentProjection", breakdown = "Qualification") %>%
+      rename(subgroup = X1) %>%
+      mutate_at(vars(`2010`:`2035`),
+                .funs = funs(. * 1000)
+      ), # put in unit numbers
+  ) %>%
+  left_join(I_wfAreaName) %>%
+  mutate(geogConcat = paste0(trimws(`.Main`, "both"), " ", sub(" name", "", Scenario))) %>% # get name
+  mutate(geogConcat = case_when(
+    #   file_name == "BH_LSIP_MainTables.Main.xlsm" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
+    trimws(`.Main`, "both") == "England" ~ "England",
+    TRUE ~ geogConcat
+  )) %>% # correct error in file calling this a LEP instead of LSIP and getting name wrong
+  select(-`.Main`, -Scenario, -file_name) %>%
+  pivot_longer(!c("geogConcat", "breakdown", "subgroup", "metric"),
+               names_to = "timePeriod",
+               values_to = "value"
+  ) %>%
+  mutate(geogConcat = case_when(
+    geogConcat == "Sheffield City Region LEP" ~ "South Yorkshire LEP",
+    geogConcat == "Derby, Derbyshire, Nottingham and Nottinghamshire LEP" ~ "D2N2 LEP",
+    geogConcat == "Oxfordshire LEP" ~ "OxLEP LEP",
+    geogConcat == "Gloucestershire LEP" ~ "GFirst LEP",
+    geogConcat == "Greater Cambridge and Greater Peterborough LEP" ~ "The Business Board LEP",
+    geogConcat == "Buckinghamshire Thames Valley LEP" ~ "Buckinghamshire LEP",
+    geogConcat == "Cambridge and Peterborough MCA" ~ "Cambridgeshire and Peterborough MCA",
+    geogConcat == "London Enterprise Panel LEP" ~ "The London Economic Action Partnership LEP",
+    geogConcat == "York, North Yorkshire and East Riding LEP" ~ "York and North Yorkshire LEP",
+    geogConcat == "Humber LEP" ~ "Hull and East Yorkshire LEP",
+    geogConcat == "Essex Southend-on-Sea and Thurrock LSIP" ~ "Essex, Southend-on-Sea and Thurrock LSIP",
+    geogConcat == "Brighton and Hove East Sussex West Sussex LSIP" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
+    TRUE ~ geogConcat
+  )) %>% # correct different spellings
+  mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) %>% # remove numbers from soc codes for presentation
+  # get time period
+  rename(chartPeriod = timePeriod) %>%
+  mutate(timePeriod = as.Date(paste("01", "Jan", chartPeriod, sep = " "), format = "%d %b %Y")) %>%
+  mutate(latest = case_when(
+    timePeriod == max(timePeriod) ~ 1,
+    timePeriod == (max(timePeriod) - years(1)) ~ -1,
+    TRUE ~ 0
+  ))
+
+# use dorset lep for dorset lsip because dorset lsip has the wrong LAs and it is the same as dorset LEP anyway
+# use Worchestershire lsip for Worchestershire lep because Worchestershire lep is missing some LAs and it is the same as Worchestershire lsip anyway
+employmentProjectionsCorrections <- employmentProjections %>%
+  filter(geogConcat %in% c("Dorset LEP", "Worcestershire LSIP", "Stoke-on-Trent and Staffordshire LSIP")) %>%
+  mutate(geogConcat = case_when(
+    geogConcat == "Dorset LEP" ~ "Dorset LSIP",
+    geogConcat == "Worcestershire LSIP" ~ "Worcestershire LEP",
+    geogConcat == "Stoke-on-Trent and Staffordshire LSIP" ~ "Stoke-on-Trent and Staffordshire LEP",
+    TRUE ~ "NA"
+  ))
+
+# calculate enterprise M3 LSIP from a combination of LEP areas that include Enterprise LSIP area, and then minus off the areas in that larger area that are not Enterprise Lsip
+# Enterprise LSIP=(Enterprise LEP + C2C LEP + South east LEP)-(Brighton LSIP + Essex LSIP + Kent LSIP)
+employmentProjectionsEntM3Lsip <- employmentProjections %>%
+  filter(geogConcat %in% c("Enterprise M3 LEP", "Coast to Capital LEP", "South East LEP", "Brighton and Hove, East Sussex, West Sussex LSIP", "Essex, Southend-on-Sea and Thurrock LSIP", "Kent and Medway LSIP")) %>% # get all the relavant areas
+  mutate(value = case_when(
+    geogConcat %in% c("Enterprise M3 LEP", "Coast to Capital LEP", "South East LEP") ~ value,
+    TRUE ~ 0 - value
+  )) %>%
+  select(-geogConcat) %>%
+  group_by(subgroup, metric, breakdown, chartPeriod, timePeriod, latest) %>%
+  summarise(value = sum(value)) %>%
+  mutate(geogConcat = "Enterprise M3 LEP (including all of Surrey) LSIP")
+
+# combine them all
+employmentProjections <- bind_rows(
+  employmentProjections %>% filter(!geogConcat %in% c("Dorset LSIP", "Enterprise M3 LEP (including all of Surrey) LSIP", "Worcestershire LEP", "Stoke-on-Trent and Staffordshire LEP")), # remove incorrect dorset and Enterprise LSIPs
+  employmentProjectionsCorrections,
+  employmentProjectionsEntM3Lsip
+)
+
+# Get future year on year growth metric
+empGrowth <- employmentProjections %>%
+  filter(chartPeriod >= 2022) %>%
+  # get growth
   arrange(chartPeriod, timePeriod, latest) %>%
   group_by(geogConcat, metric, breakdown, subgroup) %>%
   mutate(value = (value - lag(value)) / lag(value)) %>%
@@ -664,7 +666,12 @@ formatVacancies <- function(x) {
                  names_to = "time_period", values_to = "valueText"
     ) %>%
     mutate(area = case_when(
-      area == "Cambridge and Peterborough" ~ "Cambridgeshire and Peterborough",
+      area == "Sheffield City Region" ~ "South Yorkshire",
+      area == "Derby, Derbyshire, Nottingham and Nottinghamshire" ~ "D2N2",
+      area == "London" ~ "The London Economic Action Partnership",
+      area == "Oxfordshire" ~ "OxLEP",
+      area == "Gloucestershire" ~ "GFirst",
+      area == "Greater Cambridge and Greater Peterborough" ~ "The Business Board",
       area == "Buckinghamshire " ~ "Buckinghamshire",
       area == "North East*" ~ "North East",
       area == "Norfolk and Suffolk " ~ "Norfolk and Suffolk",
@@ -680,25 +687,35 @@ advertsWithAreas <-
   bind_rows(
     formatVacancies(I_OnsProfLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% select(-region) %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
   ) %>%
-  # Use new LA names
-  left_join(I_LaLookup %>% select(LAD11NM, LAD21NM), by = c("area" = "LAD11NM")) %>% # make new LAs
+  # Use new LA names from 2011 areas
+  left_join(I_LaLookup %>% select(LAD11NM,LAD23NM_11=LAD23NM,LAD23CD_11=LAD23CD), by = c("area" = "LAD11NM")) %>% # make new LAs
+  # Use new LA names from 2021 areas
+  left_join(I_LaLookup %>% select(LAD21NM,LAD23NM_21=LAD23NM, LAD23CD_21=LAD23CD), by = c("area" = "LAD21NM")) %>% # make new LAs
+  #create flag for when the lad code has changed
   mutate(
     newArea = case_when(
-      LAD21NM != area ~ 1, TRUE ~ 0
+      (LAD23NM_11 != area)|(LAD23NM_21 != area) ~ 1, TRUE ~ 0
     ),
     area = case_when(
-      is.na(LAD21NM) == FALSE ~ LAD21NM,
+      is.na(LAD23CD_11) == FALSE ~ LAD23NM_11,
+      is.na(LAD23CD_21) == FALSE ~ LAD23NM_21,
       TRUE ~ area
     )
-  ) %>%
-  select(-LAD21NM)
+  )%>%
+  #select new name
+  select(-LAD23CD_11,-LAD23CD_21,-LAD23NM_21,-LAD23NM_11)%>%
+  left_join(distinct(I_LEP2020, areaCode=LAD23CD, LAD23NM), by = c("area" = "LAD23NM")) # use to get consistent LA names
+
 # Group up the new LAs
 groupedStats <- advertsWithAreas %>%
   filter(newArea == 1) %>% # no need to group national or LAs that haven't changed
   ungroup() %>%
   select(-newArea) %>%
   mutate(valueText = as.numeric(valueText)) %>% # so we can sum
-  group_by(geographic_level, area, `Summary Profession Category`, `Detailed Profession Category`, time_period) %>% # sum for each LEP
+  mutate(timePeriod = as.Date(paste("01 ", time_period, sep = ""), "%d %b %y")) %>%
+  filter(timePeriod == max(timePeriod)|`Detailed Profession Category` == "None") %>%#we only show the latest year at this level of detail
+  select(-timePeriod)%>%
+  group_by(geographic_level, area, `Summary Profession Category`, `Detailed Profession Category`, time_period,areaCode) %>% # sum for each LEP
   summarise(across(everything(), list(sum), na.rm = T)) %>%
   rename_with(~ gsub("_1", "", .)) %>%
   mutate(valueText = as.character(valueText)) # so we can merge
@@ -709,14 +726,14 @@ F_adverts <- bind_rows(
   formatVacancies(I_OnsProfDetailLsip),
   formatVacancies(I_OnsProfDetailMca),
   formatVacancies(I_OnsProfDetailEng) %>% filter(area == "England"),
-  formatVacancies(I_OnsProfDetailRegion) %>% filter(area == "London") %>% mutate(geographic_level = "Local Skills Improvement Plan", area = "Greater London"),
-  formatVacancies(I_OnsProfDetailRegion) %>% filter(area == "London") %>% mutate(geographic_level = "Local Enterprise Partnership"),
+  formatVacancies(I_OnsProfDetailRegion) %>% filter(area == "The London Economic Action Partnership") %>% mutate(geographic_level = "Local Skills Improvement Plan", area = "Greater London"),
+  formatVacancies(I_OnsProfDetailRegion) %>% filter(area == "The London Economic Action Partnership") %>% mutate(geographic_level = "Local Enterprise Partnership"),
   formatVacancies(I_OnsProfLep %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
   formatVacancies(I_OnsProfLsip %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
   formatVacancies(I_OnsProfMca %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
   formatVacancies(I_OnsProfEng %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "England"),
-  formatVacancies(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "London") %>% mutate(geographic_level = "Local Skills Improvement Plan", area = "Greater London"),
-  formatVacancies(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "London") %>% mutate(geographic_level = "Local Enterprise Partnership"),
+  formatVacancies(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "The London Economic Action Partnership") %>% mutate(geographic_level = "Local Skills Improvement Plan", area = "Greater London"),
+  formatVacancies(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "The London Economic Action Partnership") %>% mutate(geographic_level = "Local Enterprise Partnership"),
   # add on LAs
   groupedStats,
   advertsWithAreas %>%
@@ -802,7 +819,8 @@ formatBusiness <- function(x, y) {
     mutate(areaCode = trimws(areaCode)) %>% # 2021 file has spaces in the code
     filter(substr(areaCode, 1, 2) == "E0" | areaCode == "E92000001") %>%
     mutate(
-      metric = y, geographic_level = case_when(areaCode == "E92000001" ~ "National", TRUE ~ "LADU"),
+      metric = y, 
+      geographic_level = case_when(areaCode == "E92000001" ~ "National", TRUE ~ "Local authority district"),
       area = case_when(areaCode == "E92000001" ~ "England", TRUE ~ trimws(area))
     )
 }
@@ -881,7 +899,7 @@ C_localSkillsDataset <- bind_rows(
   #   filter(geogConcat != "Dorset LSIP")
   ,
   C_localSkillsDataset %>%
-    filter(geogConcat == "London LEP") %>%
+    filter(geogConcat == "The London Economic Action Partnership LEP") %>%
     mutate(geogConcat = "Greater London Authority MCA") # ,
   # ##add in Dorset LSIP to match Dorset LEP
   # C_localSkillsDataset %>%
@@ -908,7 +926,8 @@ C_Geog <- neatGeog %>%
        pivot_wider(names_from = metric, values_from = value)),
     by = c("geogConcat" = "geogConcat")
   ) %>%
-  rename(employmentProjection = employmentProjectionGrowth2023to2035) # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
+  rename(employmentProjection = employmentProjectionGrowth2023to2035)%>% # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
+  st_transform(4326)#transform to WG84 that leaflet can plot
 save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 
 ## 4.2 C_time ----
