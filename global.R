@@ -12,7 +12,6 @@ shhh(library(shinyjs))
 shhh(library(tools))
 shhh(library(testthat))
 shhh(library(shinytest))
-shhh(library(shinydashboard))
 shhh(library(shinyWidgets))
 shhh(library(shinyGovstyle))
 shhh(library(janitor))
@@ -28,8 +27,7 @@ shhh(library(capture)) # screenshots
 shhh(library(shinyalert)) # cookie pop up
 shhh(library(shinycssloaders)) # spinners
 shhh(library(RColorBrewer)) # map colours
-
-# renv::snapshot()
+shhh(library(dfeshiny)) # map colours
 
 google_analytics_key <- "MMB6NG2FE1"
 
