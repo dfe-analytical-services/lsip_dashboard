@@ -909,9 +909,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset."
           ),
           p(
-            "Further Education data for Aug 2022 – Jul 2023 has been published. 
-            It contains some new data fields and some Local Authority boundaries. 
-            We are working to add these into the dashboard and the update should be published in Jan 2024."),
+            "Further Education data for Aug 2022 – Jul 2023 has been published.
+            It contains some new data fields and some Local Authority boundaries.
+            We are working to add these into the dashboard and the update should be published in Jan 2024."
+          ),
           h3("KS4 and KS5 destinations"),
           p(
             "Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education, employment or an apprenticeship
