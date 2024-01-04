@@ -1,9 +1,24 @@
 {
   "input": {
-    "cookies": {
-      "_ga_MMB6NG2FE1": "GS1.1.1704380800.1.0.1704380800.0.0.0",
-      "_ga": "GA1.1.54761922.1704380801"
+    ".clientValue-default-plotlyCrosstalkOpts": {
+      "on": "plotly_click",
+      "persistent": false,
+      "dynamic": false,
+      "selectize": false,
+      "opacityDim": 0.2,
+      "selected": {
+        "opacity": 1
+      },
+      "debounce": 0,
+      "color": [
+
+      ]
     },
+    "cookies": {
+      "_ga": "GA1.1.216742013.1704384871",
+      "_ga_MMB6NG2FE1": "GS1.1.1704384870.1.0.1704384870.0.0.0"
+    },
+    "geoChoice": "Black Country LEP",
     "geoChoiceOver": "Black Country LEP",
     "hubComparators": null,
     "hubLA": null,
@@ -29,6 +44,8 @@
     "link_to_tabpanel_wf": 0,
     "link_to_tabpanel_wf1": 0,
     "navbar": "Overview",
+    "plotly_afterplot-A": "\"Nvq3plusLineChart\"",
+    "plotly_relayout-A": "{\"width\":232.203125,\"height\":81}",
     "remove": 0,
     "splashMetric": "inemploymentRate"
   },
@@ -1666,27 +1683,6 @@
           "head": null,
           "attachment": null,
           "all_files": false
-        }
-      ]
-    },
-    "geoSelectOver": {
-      "html": "<div class=\"form-group shiny-input-container\">\n  <label class=\"control-label shiny-label-null\" for=\"geoChoiceOver\" id=\"geoChoiceOver-label\"><\/label>\n  <div>\n    <select class=\"shiny-input-select form-control\" id=\"geoChoiceOver\"><optgroup label=\"Local enterprise partnership\">\n<option value=\"Black Country LEP\" selected>Black Country<\/option>\n<option value=\"Buckinghamshire LEP\">Buckinghamshire<\/option>\n<option value=\"Cheshire and Warrington LEP\">Cheshire and Warrington<\/option>\n<option value=\"Coast to Capital LEP\">Coast to Capital<\/option>\n<option value=\"Cornwall and Isles of Scilly LEP\">Cornwall and Isles of Scilly<\/option>\n<option value=\"Coventry and Warwickshire LEP\">Coventry and Warwickshire<\/option>\n<option value=\"Cumbria LEP\">Cumbria<\/option>\n<option value=\"Derby, Derbyshire, Nottingham and Nottinghamshire LEP\">Derby, Derbyshire, Nottingham and Nottinghamshire<\/option>\n<option value=\"Dorset LEP\">Dorset<\/option>\n<option value=\"Enterprise M3 LEP\">Enterprise M3<\/option>\n<option value=\"Gloucestershire LEP\">Gloucestershire<\/option>\n<option value=\"Greater Birmingham and Solihull LEP\">Greater Birmingham and Solihull<\/option>\n<option value=\"Greater Cambridge and Greater Peterborough LEP\">Greater Cambridge and Greater Peterborough<\/option>\n<option value=\"Greater Lincolnshire LEP\">Greater Lincolnshire<\/option>\n<option value=\"Greater Manchester LEP\">Greater Manchester<\/option>\n<option value=\"Heart of the South West LEP\">Heart of the South West<\/option>\n<option value=\"Hertfordshire LEP\">Hertfordshire<\/option>\n<option value=\"Hull and East Yorkshire LEP\">Hull and East Yorkshire<\/option>\n<option value=\"Lancashire LEP\">Lancashire<\/option>\n<option value=\"Leeds City Region LEP\">Leeds City Region<\/option>\n<option value=\"Leicester and Leicestershire LEP\">Leicester and Leicestershire<\/option>\n<option value=\"Liverpool City Region LEP\">Liverpool City Region<\/option>\n<option value=\"London LEP\">London<\/option>\n<option value=\"New Anglia LEP\">New Anglia<\/option>\n<option value=\"North East LEP\">North East<\/option>\n<option value=\"Oxfordshire LEP\">Oxfordshire<\/option>\n<option value=\"Sheffield City Region LEP\">Sheffield City Region<\/option>\n<option value=\"Solent LEP\">Solent<\/option>\n<option value=\"South East LEP\">South East<\/option>\n<option value=\"South East Midlands LEP\">South East Midlands<\/option>\n<option value=\"Stoke-on-Trent and Staffordshire LEP\">Stoke-on-Trent and Staffordshire<\/option>\n<option value=\"Swindon and Wiltshire LEP\">Swindon and Wiltshire<\/option>\n<option value=\"Tees Valley LEP\">Tees Valley<\/option>\n<option value=\"Thames Valley Berkshire LEP\">Thames Valley Berkshire<\/option>\n<option value=\"The Marches LEP\">The Marches<\/option>\n<option value=\"West of England LEP\">West of England<\/option>\n<option value=\"Worcestershire LEP\">Worcestershire<\/option>\n<option value=\"York and North Yorkshire LEP\">York and North Yorkshire<\/option>\n<\/optgroup>\n<optgroup label=\"Local skills partnership area\">\n<option value=\"Brighton and Hove, East Sussex, West Sussex LSIP\">Brighton and Hove, East Sussex, West Sussex<\/option>\n<option value=\"Buckinghamshire LSIP\">Buckinghamshire<\/option>\n<option value=\"Cambridgeshire and Peterborough LSIP\">Cambridgeshire and Peterborough<\/option>\n<option value=\"Cheshire and Warrington LSIP\">Cheshire and Warrington<\/option>\n<option value=\"Cornwall and the Isles of Scilly LSIP\">Cornwall and the Isles of Scilly<\/option>\n<option value=\"Cumbria LSIP\">Cumbria<\/option>\n<option value=\"Derbyshire and Nottinghamshire LSIP\">Derbyshire and Nottinghamshire<\/option>\n<option value=\"Dorset LSIP\">Dorset<\/option>\n<option value=\"Enterprise M3 LEP (including all of Surrey) LSIP\">Enterprise M3 LEP (including all of Surrey)<\/option>\n<option value=\"Essex, Southend-on-Sea and Thurrock LSIP\">Essex, Southend-on-Sea and Thurrock<\/option>\n<option value=\"Gloucestershire LSIP\">Gloucestershire<\/option>\n<option value=\"Greater Lincolnshire LSIP\">Greater Lincolnshire<\/option>\n<option value=\"Greater London LSIP\">Greater London<\/option>\n<option value=\"Greater Manchester LSIP\">Greater Manchester<\/option>\n<option value=\"Heart of the South-West LSIP\">Heart of the South-West<\/option>\n<option value=\"Hertfordshire LSIP\">Hertfordshire<\/option>\n<option value=\"Hull and East Yorkshire LSIP\">Hull and East Yorkshire<\/option>\n<option value=\"Kent and Medway LSIP\">Kent and Medway<\/option>\n<option value=\"Lancashire LSIP\">Lancashire<\/option>\n<option value=\"Leicester and Leicestershire LSIP\">Leicester and Leicestershire<\/option>\n<option value=\"Liverpool City Region LSIP\">Liverpool City Region<\/option>\n<option value=\"Norfolk and Suffolk LSIP\">Norfolk and Suffolk<\/option>\n<option value=\"North East LSIP\">North East<\/option>\n<option value=\"North of Tyne LSIP\">North of Tyne<\/option>\n<option value=\"Oxfordshire LSIP\">Oxfordshire<\/option>\n<option value=\"Solent LSIP\">Solent<\/option>\n<option value=\"South East Midlands LSIP\">South East Midlands<\/option>\n<option value=\"South Yorkshire LSIP\">South Yorkshire<\/option>\n<option value=\"Stoke-on-Trent and Staffordshire LSIP\">Stoke-on-Trent and Staffordshire<\/option>\n<option value=\"Swindon and Wiltshire LSIP\">Swindon and Wiltshire<\/option>\n<option value=\"Tees Valley LSIP\">Tees Valley<\/option>\n<option value=\"Thames Valley Berkshire LSIP\">Thames Valley Berkshire<\/option>\n<option value=\"The Marches LSIP\">The Marches<\/option>\n<option value=\"West Midlands and Warwickshire LSIP\">West Midlands and Warwickshire<\/option>\n<option value=\"West of England and North Somerset LSIP\">West of England and North Somerset<\/option>\n<option value=\"West Yorkshire LSIP\">West Yorkshire<\/option>\n<option value=\"Worcestershire LSIP\">Worcestershire<\/option>\n<option value=\"York and North Yorkshire LSIP\">York and North Yorkshire<\/option>\n<\/optgroup>\n<optgroup label=\"Mayoral combined authority\">\n<option value=\"Cambridgeshire and Peterborough MCA\">Cambridgeshire and Peterborough<\/option>\n<option value=\"Greater London Authority MCA\">Greater London Authority<\/option>\n<option value=\"Greater Manchester MCA\">Greater Manchester<\/option>\n<option value=\"Liverpool City Region MCA\">Liverpool City Region<\/option>\n<option value=\"North East MCA\">North East<\/option>\n<option value=\"North of Tyne MCA\">North of Tyne<\/option>\n<option value=\"South Yorkshire MCA\">South Yorkshire<\/option>\n<option value=\"Tees Valley MCA\">Tees Valley<\/option>\n<option value=\"West Midlands MCA\">West Midlands<\/option>\n<option value=\"West of England MCA\">West of England<\/option>\n<option value=\"West Yorkshire MCA\">West Yorkshire<\/option>\n<\/optgroup><\/select>\n    <script type=\"application/json\" data-for=\"geoChoiceOver\">{\"plugins\":[\"selectize-plugin-a11y\"]}<\/script>\n  <\/div>\n<\/div>",
-      "deps": [
-        {
-          "name": "selectize",
-          "version": "0.12.4",
-          "src": {
-            "href": "selectize-0.12.4"
-          },
-          "meta": null,
-          "script": [
-            "js/selectize.min.js",
-            "accessibility/js/selectize-plugin-a11y.min.js"
-          ],
-          "stylesheet": "css/selectize.bootstrap3.css",
-          "head": null,
-          "attachment": null,
-          "all_files": true
         }
       ]
     },

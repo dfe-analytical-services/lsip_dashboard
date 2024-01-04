@@ -714,7 +714,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         column(
           4,
           p("Choose a LEP, LSIP or MCA"),
-          uiOutput("geoChoice")
+          selectizeInput(
+            "geoChoice",
+            multiple = FALSE,
+            label = NULL,
+            choices = areaChoices[1:3]
+          )
         ),
         column(
           4,

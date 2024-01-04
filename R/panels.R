@@ -23,7 +23,12 @@ panel_overview <- function() {
             column(
               width = 4,
               p("Choose a LEP, LSIP or MCA"),
-              uiOutput("geoChoiceOver")
+              selectizeInput(
+                "geoChoiceOver",
+                multiple = FALSE,
+                label = NULL,
+                choices = areaChoices[1:3]
+              )
             ),
             column(5),
             column(
