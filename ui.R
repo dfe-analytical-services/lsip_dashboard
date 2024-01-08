@@ -584,15 +584,24 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("25 October 2023 (1.3.5)"),
+            p("15 January 2024 (1.3.7)"),
             tags$ul(
-              tags$li("Update to latest KS4 and KS5 destinations data."),
-              tags$li("Update to latest APS employment data.")
+              tags$li("Update to latest ILR FE data data."),
+              tags$li("Update geographies to latest LEPs and LAs.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("19 December 2023 (1.3.6)"),
+                tags$ul(
+                  tags$li("Update to latest business demographies data.")
+                ),
+                p("25 October 2023 (1.3.5)"),
+                tags$ul(
+                  tags$li("Update to latest KS4 and KS5 destinations data."),
+                  tags$li("Update to latest APS employment data.")
+                ),
                 p("19 October 2023 (1.3.4)"),
                 tags$ul(
                   tags$li("Update to latest business count data.")
@@ -900,10 +909,17 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training."
           ),
           p(
-            "LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
-            rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
-Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset."
+            "DfE have published LEP level statistics for the past six years.
+            However, since the geography of the LEP areas has changed over that period we do not have a consistent timeline.
+            In the cases where LEP geography has not changed, we use the published statistics for all historic data points.
+            Where the geography has changed we calculate the statistics by bulking up the LA level data based on the latest mapping of LA to LEP for all years.
+            Therefore the statistics shown will not always match the published statistics."
           ),
+          p("
+            For LSIPs, only the most recent year's data is published. No MCA data is published.
+            We therefore bulk up statistics from LAs for both of these groupings for all years.
+            Rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
+Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset."),
           h3("KS4 and KS5 destinations"),
           p(
             "Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education, employment or an apprenticeship
