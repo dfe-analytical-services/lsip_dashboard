@@ -1186,7 +1186,6 @@ server <- function(input, output, session) {
       mutate(ranking = rank(desc(eval(
         parse(text = input$splashMetric)
       )), ties.method = c("first")))
-
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <-
       (LaHighLow %>% filter(ranking == max(ranking)))$areaName
