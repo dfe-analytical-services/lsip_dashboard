@@ -490,11 +490,14 @@ C_FeProvLevelAge <- F_FeProvLevelAge %>%
 
 ## 2.7 FE enrolments/achievements by ssa ----
 feSsaWithAreas <- I_FeSsa %>%
-  filter(notional_nvq_level == "Total", sex == "Total", ethnicity_group == "Total", ssa_t1_desc != "Total") %>%
-  select(-notional_nvq_level, -sex, -ethnicity_group) %>%
+  filter(notional_nvq_level == "Total", sex == "Total", ethnicity_major == "Total", ssa_t1_desc != "Total") %>%
   mutate(subgroup = ssa_t1_desc, breakdown = "SSA") %>%
-  select(-ssa_t1_desc) %>%
-  rename(areaCode = location_code, area = location) %>%
+  mutate(areaCode = case_when(geographic_level=="Local authority district" ~ lad_code
+                               ,geographic_level=="National" ~ country_code
+                               ,TRUE ~ "NA")
+          ,area = case_when(geographic_level=="Local authority district" ~ lad_name
+                               ,geographic_level=="National" ~ country_name
+                               ,TRUE ~ "NA")) %>%
   # add dates
   mutate(chartPeriod = paste("AY", substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
   mutate(timePeriod = as.Date(paste("01 Aug", substr(time_period, 1, 4), sep = ""), format = "%d %b %Y")) %>%
@@ -503,7 +506,7 @@ feSsaWithAreas <- I_FeSsa %>%
     timePeriod == (max(timePeriod) - years(1)) ~ -1,
     TRUE ~ 0
   )) %>%
-  select(-time_period) %>%
+  select(-time_period,-ssa_t1_desc,-notional_nvq_level,-lad_code,-country_code,-lad_name, -country_name,-sex, -ethnicity_major,-english_devolved_area_code,-english_devolved_area_name,-time_identifier,-region_code,-region_name) %>%
   addGeogs()
 # group up areas
 groupedStats <- feSsaWithAreas %>%
