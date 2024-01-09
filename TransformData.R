@@ -777,7 +777,7 @@ formatVacancies <- function(x) {
       area == "North East*" ~ "North East",
       area == "Norfolk and Suffolk " & geographic_level == "Local Enterprise Partnership" ~ "Norfolk and Suffolk",
       area == "Norfolk and Suffolk " & geographic_level == "Local Skills Improvement Plan" ~ "New Anglia",
-      area == "South East Midlands" ~ "South-East Midlands",
+      area == "South East Midlands" & geographic_level == "Local Skills Improvement Plan" ~ "South-East Midlands",
       area == "Enterprise M3 LEP (including all of Surrey)" ~ "Enterprise M3",
       TRUE ~ area
     ))
@@ -912,7 +912,6 @@ C_adverts <- bind_rows(
   C_advertsDorsetLsip,
   C_advertsEntM3Lsip
 )
-
 
 ## 2.11 Business births/deaths  ----
 formatBusiness <- function(x, y) {

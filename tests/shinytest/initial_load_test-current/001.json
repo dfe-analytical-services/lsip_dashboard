@@ -1,0 +1,4178 @@
+{
+  "input": {
+    ".clientValue-default-plotlyCrosstalkOpts": {
+      "on": "plotly_click",
+      "persistent": false,
+      "dynamic": false,
+      "selectize": false,
+      "opacityDim": 0.2,
+      "selected": {
+        "opacity": 1
+      },
+      "debounce": 0,
+      "color": [
+
+      ]
+    },
+    "cookies": {
+      "_ga": "GA1.1.216742013.1704384871",
+      "_ga_MMB6NG2FE1": "GS1.1.1704384870.1.0.1704384870.0.0.0"
+    },
+    "geoChoice": "Black Country LEP",
+    "geoChoiceOver": "Black Country LEP",
+    "hubComparators": null,
+    "hubLA": null,
+    "link_to_tabpanel_accessibility": 0,
+    "link_to_tabpanel_data": 0,
+    "link_to_tabpanel_destinations": 0,
+    "link_to_tabpanel_destinations2": 0,
+    "link_to_tabpanel_employment": 0,
+    "link_to_tabpanel_employment2": 0,
+    "link_to_tabpanel_empRate": 0,
+    "link_to_tabpanel_enterprise": 0,
+    "link_to_tabpanel_enterprise2": 0,
+    "link_to_tabpanel_FE": 0,
+    "link_to_tabpanel_FE2": 0,
+    "link_to_tabpanel_furtherresources": 0,
+    "link_to_tabpanel_localskills": 0,
+    "link_to_tabpanel_localskills2": 0,
+    "link_to_tabpanel_overview": 0,
+    "link_to_tabpanel_qualification2": 0,
+    "link_to_tabpanel_supportandfeedback": 0,
+    "link_to_tabpanel_vacancies": 0,
+    "link_to_tabpanel_vacancies2": 0,
+    "link_to_tabpanel_wf": 0,
+    "link_to_tabpanel_wf1": 0,
+    "navbar": "Overview",
+    "plotly_afterplot-A": "\"Nvq3plusLineChart\"",
+    "plotly_relayout-A": "{\"width\":232.203125,\"height\":81}",
+    "remove": 0,
+    "splashMetric": "inemploymentRate"
+  },
+  "output": {
+    "AppLineChart": {
+      "x": {
+        "data": [
+          {
+            "x": [
+              17379,
+              17744,
+              18109,
+              18475
+            ],
+            "y": [
+              7810,
+              4790,
+              3820,
+              3970
+            ],
+            "text": [
+              "Black Country LEP<br>AY17/18<br>Apprenticeship achievements: 7,810<br>",
+              "Black Country LEP<br>AY18/19<br>Apprenticeship achievements: 4,790<br>",
+              "Black Country LEP<br>AY19/20<br>Apprenticeship achievements: 3,820<br>",
+              "Black Country LEP<br>AY20/21<br>Apprenticeship achievements: 3,970<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18475,
+              18840,
+              18840,
+              18840,
+              18475,
+              18475
+            ],
+            "y": [
+              3100,
+              3100,
+              3100,
+              3100,
+              3970,
+              3100
+            ],
+            "text": [
+              "Black Country LEP<br>AY20/21<br>Apprenticeship achievements: 3,970<br>",
+              "Black Country LEP<br>AY21/22<br>Apprenticeship achievements: 3,100<br>",
+              "Black Country LEP<br>AY21/22<br>Apprenticeship achievements: 3,100<br>",
+              "Black Country LEP<br>AY21/22<br>Apprenticeship achievements: 3,100<br>",
+              "Black Country LEP<br>AY20/21<br>Apprenticeship achievements: 3,970<br>",
+              "Black Country LEP<br>AY20/21<br>Apprenticeship achievements: 3,970<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "transparent",
+              "dash": "solid"
+            },
+            "fill": "toself",
+            "fillcolor": "rgba(212,53,28,0.3)",
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18475,
+              18840
+            ],
+            "y": [
+              3970,
+              3100
+            ],
+            "text": [
+              "Black Country LEP<br>AY20/21<br>Apprenticeship achievements: 3,970<br>",
+              "Black Country LEP<br>AY21/22<br>Apprenticeship achievements: 3,100<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(212,53,28,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 0,
+            "r": 4,
+            "b": 0,
+            "l": 0,
+            "pad": 0
+          },
+          "plot_bgcolor": "rgba(243,242,241,1)",
+          "paper_bgcolor": "rgba(243,242,241,1)",
+          "font": {
+            "color": "rgba(0,0,0,1)",
+            "family": "",
+            "size": 14.611872146118724
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              17305.950000000001,
+              18913.049999999999
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "2018",
+              "2019",
+              "2020",
+              "2021"
+            ],
+            "tickvals": [
+              17532,
+              17897,
+              18262,
+              18628
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "2018",
+              "2019",
+              "2020",
+              "2021"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              2864.5,
+              8045.5
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "3K",
+              "8K"
+            ],
+            "tickvals": [
+              3100,
+              7810
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "3K",
+              "8K"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": false,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.8897637795275593,
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 11.68949771689498
+            }
+          },
+          "hovermode": "closest",
+          "height": 81,
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "modeBarButtonsToAdd": [
+            "hoverclosest",
+            "hovercompare"
+          ],
+          "showSendToCloud": false,
+          "displayModeBar": false
+        },
+        "source": "A",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.20000000000000001,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-2.11.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-main-2.11.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "APS.nvq3plus": {
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Jan 2021-Dec 2021<\/span>\n  <br/>\n  48%\n  <br/><span style=\"font-size: 16px;color:green\">+2ppts<\/span><br/>\n<\/h4>",
+      "deps": [
+
+      ]
+    },
+    "dest.ks5over": {
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">AY21/22<\/span>\n  <br/>\n  80%\n  <br/><span style=\"font-size: 16px;color:green\">+2ppts<\/span><br/>\n<\/h4>",
+      "deps": [
+
+      ]
+    },
+    "empLineChart": {
+      "x": {
+        "data": [
+          {
+            "x": [
+              17713,
+              18078,
+              18444,
+              18809
+            ],
+            "y": [
+              511200,
+              527800,
+              536500,
+              529200
+            ],
+            "text": [
+              "Black Country LEP<br>Jul 2018-Jun 2019<br>In employment: 511,200<br>",
+              "Black Country LEP<br>Jul 2019-Jun 2020<br>In employment: 527,800<br>",
+              "Black Country LEP<br>Jul 2020-Jun 2021<br>In employment: 536,500<br>",
+              "Black Country LEP<br>Jul 2021-Jun 2022<br>In employment: 529,200<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18809,
+              19174,
+              19174,
+              19174,
+              18809,
+              18809
+            ],
+            "y": [
+              515500,
+              515500,
+              515500,
+              515500,
+              529200,
+              515500
+            ],
+            "text": [
+              "Black Country LEP<br>Jul 2021-Jun 2022<br>In employment: 529,200<br>",
+              "Black Country LEP<br>Jul 2022-Jun 2023<br>In employment: 515,500<br>",
+              "Black Country LEP<br>Jul 2022-Jun 2023<br>In employment: 515,500<br>",
+              "Black Country LEP<br>Jul 2022-Jun 2023<br>In employment: 515,500<br>",
+              "Black Country LEP<br>Jul 2021-Jun 2022<br>In employment: 529,200<br>",
+              "Black Country LEP<br>Jul 2021-Jun 2022<br>In employment: 529,200<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "transparent",
+              "dash": "solid"
+            },
+            "fill": "toself",
+            "fillcolor": "rgba(212,53,28,0.3)",
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18809,
+              19174
+            ],
+            "y": [
+              529200,
+              515500
+            ],
+            "text": [
+              "Black Country LEP<br>Jul 2021-Jun 2022<br>In employment: 529,200<br>",
+              "Black Country LEP<br>Jul 2022-Jun 2023<br>In employment: 515,500<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(212,53,28,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 0,
+            "r": 4,
+            "b": 0,
+            "l": 0,
+            "pad": 0
+          },
+          "plot_bgcolor": "rgba(243,242,241,1)",
+          "paper_bgcolor": "rgba(243,242,241,1)",
+          "font": {
+            "color": "rgba(0,0,0,1)",
+            "family": "",
+            "size": 14.611872146118724
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              17639.950000000001,
+              19247.049999999999
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "2019",
+              "2020",
+              "2021",
+              "2022"
+            ],
+            "tickvals": [
+              17897,
+              18262,
+              18628,
+              18993
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "2019",
+              "2020",
+              "2021",
+              "2022"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              509935,
+              537765
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "511K",
+              "536K"
+            ],
+            "tickvals": [
+              511200,
+              536500
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "511K",
+              "536K"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": false,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.8897637795275593,
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 11.68949771689498
+            }
+          },
+          "hovermode": "closest",
+          "height": 81,
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "modeBarButtonsToAdd": [
+            "hoverclosest",
+            "hovercompare"
+          ],
+          "showSendToCloud": false,
+          "displayModeBar": false
+        },
+        "source": "A",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.20000000000000001,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-2.11.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-main-2.11.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "empRateLineChart": {
+      "x": {
+        "data": [
+          {
+            "x": [
+              17713,
+              18078,
+              18444,
+              18809
+            ],
+            "y": [
+              0.70008216926869304,
+              0.71780225758193905,
+              0.73112564731534502,
+              0.71785132935431395
+            ],
+            "text": [
+              "Black Country LEP<br>Jul 2018-Jun 2019<br>Employment rate: 70%<br>",
+              "Black Country LEP<br>Jul 2019-Jun 2020<br>Employment rate: 72%<br>",
+              "Black Country LEP<br>Jul 2020-Jun 2021<br>Employment rate: 73%<br>",
+              "Black Country LEP<br>Jul 2021-Jun 2022<br>Employment rate: 72%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18809,
+              19174,
+              19174,
+              19174,
+              18809,
+              18809
+            ],
+            "y": [
+              0.69974209311795799,
+              0.69974209311795799,
+              0.69974209311795799,
+              0.69974209311795799,
+              0.71785132935431395,
+              0.69974209311795799
+            ],
+            "text": [
+              "Black Country LEP<br>Jul 2021-Jun 2022<br>Employment rate: 72%<br>",
+              "Black Country LEP<br>Jul 2022-Jun 2023<br>Employment rate: 70%<br>",
+              "Black Country LEP<br>Jul 2022-Jun 2023<br>Employment rate: 70%<br>",
+              "Black Country LEP<br>Jul 2022-Jun 2023<br>Employment rate: 70%<br>",
+              "Black Country LEP<br>Jul 2021-Jun 2022<br>Employment rate: 72%<br>",
+              "Black Country LEP<br>Jul 2021-Jun 2022<br>Employment rate: 72%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "transparent",
+              "dash": "solid"
+            },
+            "fill": "toself",
+            "fillcolor": "rgba(212,53,28,0.3)",
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18809,
+              19174
+            ],
+            "y": [
+              0.71785132935431395,
+              0.69974209311795799
+            ],
+            "text": [
+              "Black Country LEP<br>Jul 2021-Jun 2022<br>Employment rate: 72%<br>",
+              "Black Country LEP<br>Jul 2022-Jun 2023<br>Employment rate: 70%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(212,53,28,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              17713,
+              18078,
+              18444,
+              18809,
+              19174
+            ],
+            "y": [
+              0.75807653039214296,
+              0.76190161845364301,
+              0.74772319827895295,
+              0.75702815268573997,
+              0.75755709344533895
+            ],
+            "text": [
+              "England<br>Jul 2018-Jun 2019<br>Employment rate: 76%<br>",
+              "England<br>Jul 2019-Jun 2020<br>Employment rate: 76%<br>",
+              "England<br>Jul 2020-Jun 2021<br>Employment rate: 75%<br>",
+              "England<br>Jul 2021-Jun 2022<br>Employment rate: 76%<br>",
+              "England<br>Jul 2022-Jun 2023<br>Employment rate: 76%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,0.5)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 0,
+            "r": 4,
+            "b": 0,
+            "l": 0,
+            "pad": 0
+          },
+          "plot_bgcolor": "rgba(243,242,241,1)",
+          "paper_bgcolor": "rgba(243,242,241,1)",
+          "font": {
+            "color": "rgba(0,0,0,1)",
+            "family": "",
+            "size": 14.611872146118724
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              17639.950000000001,
+              19247.049999999999
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "2019",
+              "2020",
+              "2021",
+              "2022"
+            ],
+            "tickvals": [
+              17897,
+              18262,
+              18628,
+              18993
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "2019",
+              "2020",
+              "2021",
+              "2022"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              0.6779832658068774,
+              0.83207499084988157
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "69%",
+              "83%"
+            ],
+            "tickvals": [
+              0.68598743512701399,
+              0.82507082152974498
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "69%",
+              "83%"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": false,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.8897637795275593,
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 11.68949771689498
+            }
+          },
+          "hovermode": "closest",
+          "height": 81,
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "modeBarButtonsToAdd": [
+            "hoverclosest",
+            "hovercompare"
+          ],
+          "showSendToCloud": false,
+          "displayModeBar": false
+        },
+        "source": "A",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.20000000000000001,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-2.11.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-main-2.11.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "etLineChart": {
+      "x": {
+        "data": [
+          {
+            "x": [
+              17379,
+              17744,
+              18109,
+              18475
+            ],
+            "y": [
+              25070,
+              25590,
+              18490,
+              17680
+            ],
+            "text": [
+              "Black Country LEP<br>AY17/18<br>Education and training achievements: 25,070<br>",
+              "Black Country LEP<br>AY18/19<br>Education and training achievements: 25,590<br>",
+              "Black Country LEP<br>AY19/20<br>Education and training achievements: 18,490<br>",
+              "Black Country LEP<br>AY20/21<br>Education and training achievements: 17,680<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18475,
+              18840,
+              18840,
+              18840,
+              18475,
+              18475
+            ],
+            "y": [
+              17680,
+              17680,
+              17680,
+              18870,
+              17680,
+              17680
+            ],
+            "text": [
+              "Black Country LEP<br>AY20/21<br>Education and training achievements: 17,680<br>",
+              "Black Country LEP<br>AY21/22<br>Education and training achievements: 18,870<br>",
+              "Black Country LEP<br>AY21/22<br>Education and training achievements: 18,870<br>",
+              "Black Country LEP<br>AY21/22<br>Education and training achievements: 18,870<br>",
+              "Black Country LEP<br>AY20/21<br>Education and training achievements: 17,680<br>",
+              "Black Country LEP<br>AY20/21<br>Education and training achievements: 17,680<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "transparent",
+              "dash": "solid"
+            },
+            "fill": "toself",
+            "fillcolor": "rgba(0,112,60,0.3)",
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18475,
+              18840
+            ],
+            "y": [
+              17680,
+              18870
+            ],
+            "text": [
+              "Black Country LEP<br>AY20/21<br>Education and training achievements: 17,680<br>",
+              "Black Country LEP<br>AY21/22<br>Education and training achievements: 18,870<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,112,60,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 0,
+            "r": 4,
+            "b": 0,
+            "l": 0,
+            "pad": 0
+          },
+          "plot_bgcolor": "rgba(243,242,241,1)",
+          "paper_bgcolor": "rgba(243,242,241,1)",
+          "font": {
+            "color": "rgba(0,0,0,1)",
+            "family": "",
+            "size": 14.611872146118724
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              17305.950000000001,
+              18913.049999999999
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "2018",
+              "2019",
+              "2020",
+              "2021"
+            ],
+            "tickvals": [
+              17532,
+              17897,
+              18262,
+              18628
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "2018",
+              "2019",
+              "2020",
+              "2021"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              17284.5,
+              25985.5
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "18K",
+              "26K"
+            ],
+            "tickvals": [
+              17680,
+              25590
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "18K",
+              "26K"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": false,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.8897637795275593,
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 11.68949771689498
+            }
+          },
+          "hovermode": "closest",
+          "height": 81,
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "modeBarButtonsToAdd": [
+            "hoverclosest",
+            "hovercompare"
+          ],
+          "showSendToCloud": false,
+          "displayModeBar": false
+        },
+        "source": "A",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.20000000000000001,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-2.11.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-main-2.11.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "jobLineChart": {
+      "x": {
+        "data": [
+          {
+            "x": [
+              17167,
+              17198,
+              17226,
+              17257,
+              17287,
+              17318,
+              17348,
+              17379,
+              17410,
+              17440,
+              17471,
+              17501,
+              17532,
+              17563,
+              17591,
+              17622,
+              17652,
+              17683,
+              17713,
+              17744,
+              17775,
+              17805,
+              17836,
+              17866,
+              17897,
+              17928,
+              17956,
+              17987,
+              18017,
+              18048,
+              18078,
+              18109,
+              18140,
+              18170,
+              18201,
+              18231,
+              18262,
+              18293,
+              18322,
+              18353,
+              18383,
+              18414,
+              18444,
+              18475,
+              18506,
+              18536,
+              18567,
+              18597,
+              18628,
+              18659,
+              18687,
+              18718,
+              18748,
+              18779,
+              18809,
+              18840,
+              18871,
+              18901,
+              18932,
+              18962
+            ],
+            "y": [
+              18390,
+              17970,
+              17490,
+              15845,
+              14915,
+              16080,
+              16720,
+              15820,
+              14990,
+              13490,
+              13505,
+              12840,
+              14850,
+              15480,
+              15220,
+              15655,
+              15370,
+              15895,
+              16455,
+              17000,
+              16775,
+              17445,
+              17585,
+              14780,
+              15050,
+              14990,
+              13745,
+              13505,
+              12715,
+              12855,
+              12855,
+              13685,
+              12590,
+              11600,
+              11230,
+              9965,
+              9035,
+              10065,
+              8740,
+              7095,
+              7935,
+              8525,
+              9170,
+              10015,
+              10795,
+              12230,
+              12710,
+              12785,
+              12150,
+              12865,
+              15580,
+              17115,
+              18970,
+              20140,
+              21555,
+              23025,
+              24085,
+              27390,
+              30700,
+              33840
+            ],
+            "text": [
+              "Black Country LEP<br>Jan 17<br>Online job adverts: 18,390<br>",
+              "Black Country LEP<br>Feb 17<br>Online job adverts: 17,970<br>",
+              "Black Country LEP<br>Mar 17<br>Online job adverts: 17,490<br>",
+              "Black Country LEP<br>Apr 17<br>Online job adverts: 15,845<br>",
+              "Black Country LEP<br>May 17<br>Online job adverts: 14,915<br>",
+              "Black Country LEP<br>Jun 17<br>Online job adverts: 16,080<br>",
+              "Black Country LEP<br>Jul 17<br>Online job adverts: 16,720<br>",
+              "Black Country LEP<br>Aug 17<br>Online job adverts: 15,820<br>",
+              "Black Country LEP<br>Sep 17<br>Online job adverts: 14,990<br>",
+              "Black Country LEP<br>Oct 17<br>Online job adverts: 13,490<br>",
+              "Black Country LEP<br>Nov 17<br>Online job adverts: 13,505<br>",
+              "Black Country LEP<br>Dec 17<br>Online job adverts: 12,840<br>",
+              "Black Country LEP<br>Jan 18<br>Online job adverts: 14,850<br>",
+              "Black Country LEP<br>Feb 18<br>Online job adverts: 15,480<br>",
+              "Black Country LEP<br>Mar 18<br>Online job adverts: 15,220<br>",
+              "Black Country LEP<br>Apr 18<br>Online job adverts: 15,655<br>",
+              "Black Country LEP<br>May 18<br>Online job adverts: 15,370<br>",
+              "Black Country LEP<br>Jun 18<br>Online job adverts: 15,895<br>",
+              "Black Country LEP<br>Jul 18<br>Online job adverts: 16,455<br>",
+              "Black Country LEP<br>Aug 18<br>Online job adverts: 17,000<br>",
+              "Black Country LEP<br>Sep 18<br>Online job adverts: 16,775<br>",
+              "Black Country LEP<br>Oct 18<br>Online job adverts: 17,445<br>",
+              "Black Country LEP<br>Nov 18<br>Online job adverts: 17,585<br>",
+              "Black Country LEP<br>Dec 18<br>Online job adverts: 14,780<br>",
+              "Black Country LEP<br>Jan 19<br>Online job adverts: 15,050<br>",
+              "Black Country LEP<br>Feb 19<br>Online job adverts: 14,990<br>",
+              "Black Country LEP<br>Mar 19<br>Online job adverts: 13,745<br>",
+              "Black Country LEP<br>Apr 19<br>Online job adverts: 13,505<br>",
+              "Black Country LEP<br>May 19<br>Online job adverts: 12,715<br>",
+              "Black Country LEP<br>Jun 19<br>Online job adverts: 12,855<br>",
+              "Black Country LEP<br>Jul 19<br>Online job adverts: 12,855<br>",
+              "Black Country LEP<br>Aug 19<br>Online job adverts: 13,685<br>",
+              "Black Country LEP<br>Sep 19<br>Online job adverts: 12,590<br>",
+              "Black Country LEP<br>Oct 19<br>Online job adverts: 11,600<br>",
+              "Black Country LEP<br>Nov 19<br>Online job adverts: 11,230<br>",
+              "Black Country LEP<br>Dec 19<br>Online job adverts:  9,965<br>",
+              "Black Country LEP<br>Jan 20<br>Online job adverts:  9,035<br>",
+              "Black Country LEP<br>Feb 20<br>Online job adverts: 10,065<br>",
+              "Black Country LEP<br>Mar 20<br>Online job adverts:  8,740<br>",
+              "Black Country LEP<br>Apr 20<br>Online job adverts:  7,095<br>",
+              "Black Country LEP<br>May 20<br>Online job adverts:  7,935<br>",
+              "Black Country LEP<br>Jun 20<br>Online job adverts:  8,525<br>",
+              "Black Country LEP<br>Jul 20<br>Online job adverts:  9,170<br>",
+              "Black Country LEP<br>Aug 20<br>Online job adverts: 10,015<br>",
+              "Black Country LEP<br>Sep 20<br>Online job adverts: 10,795<br>",
+              "Black Country LEP<br>Oct 20<br>Online job adverts: 12,230<br>",
+              "Black Country LEP<br>Nov 20<br>Online job adverts: 12,710<br>",
+              "Black Country LEP<br>Dec 20<br>Online job adverts: 12,785<br>",
+              "Black Country LEP<br>Jan 21<br>Online job adverts: 12,150<br>",
+              "Black Country LEP<br>Feb 21<br>Online job adverts: 12,865<br>",
+              "Black Country LEP<br>Mar 21<br>Online job adverts: 15,580<br>",
+              "Black Country LEP<br>Apr 21<br>Online job adverts: 17,115<br>",
+              "Black Country LEP<br>May 21<br>Online job adverts: 18,970<br>",
+              "Black Country LEP<br>Jun 21<br>Online job adverts: 20,140<br>",
+              "Black Country LEP<br>Jul 21<br>Online job adverts: 21,555<br>",
+              "Black Country LEP<br>Aug 21<br>Online job adverts: 23,025<br>",
+              "Black Country LEP<br>Sep 21<br>Online job adverts: 24,085<br>",
+              "Black Country LEP<br>Oct 21<br>Online job adverts: 27,390<br>",
+              "Black Country LEP<br>Nov 21<br>Online job adverts: 30,700<br>",
+              "Black Country LEP<br>Dec 21<br>Online job adverts: 33,840<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18962,
+              18993,
+              19024,
+              19052,
+              19083,
+              19113,
+              19144,
+              19174,
+              19205,
+              19236,
+              19266,
+              19297,
+              19327,
+              19327,
+              19327,
+              19297,
+              19266,
+              19236,
+              19205,
+              19174,
+              19144,
+              19113,
+              19083,
+              19052,
+              19024,
+              18993,
+              18962,
+              18962
+            ],
+            "y": [
+              15860,
+              15860,
+              15860,
+              15860,
+              15860,
+              15860,
+              15860,
+              15860,
+              15860,
+              15860,
+              15860,
+              15860,
+              15860,
+              15860,
+              15860,
+              18985,
+              19045,
+              19470,
+              19265,
+              18740,
+              19595,
+              21945,
+              21335,
+              21005,
+              26830,
+              30590,
+              33840,
+              15860
+            ],
+            "text": [
+              "Black Country LEP<br>Dec 21<br>Online job adverts: 33,840<br>",
+              "Black Country LEP<br>Jan 22<br>Online job adverts: 30,590<br>",
+              "Black Country LEP<br>Feb 22<br>Online job adverts: 26,830<br>",
+              "Black Country LEP<br>Mar 22<br>Online job adverts: 21,005<br>",
+              "Black Country LEP<br>Apr 22<br>Online job adverts: 21,335<br>",
+              "Black Country LEP<br>May 22<br>Online job adverts: 21,945<br>",
+              "Black Country LEP<br>Jun 22<br>Online job adverts: 19,595<br>",
+              "Black Country LEP<br>Jul 22<br>Online job adverts: 18,740<br>",
+              "Black Country LEP<br>Aug 22<br>Online job adverts: 19,265<br>",
+              "Black Country LEP<br>Sep 22<br>Online job adverts: 19,470<br>",
+              "Black Country LEP<br>Oct 22<br>Online job adverts: 19,045<br>",
+              "Black Country LEP<br>Nov 22<br>Online job adverts: 18,985<br>",
+              "Black Country LEP<br>Dec 22<br>Online job adverts: 15,860<br>",
+              "Black Country LEP<br>Dec 22<br>Online job adverts: 15,860<br>",
+              "Black Country LEP<br>Dec 22<br>Online job adverts: 15,860<br>",
+              "Black Country LEP<br>Nov 22<br>Online job adverts: 18,985<br>",
+              "Black Country LEP<br>Oct 22<br>Online job adverts: 19,045<br>",
+              "Black Country LEP<br>Sep 22<br>Online job adverts: 19,470<br>",
+              "Black Country LEP<br>Aug 22<br>Online job adverts: 19,265<br>",
+              "Black Country LEP<br>Jul 22<br>Online job adverts: 18,740<br>",
+              "Black Country LEP<br>Jun 22<br>Online job adverts: 19,595<br>",
+              "Black Country LEP<br>May 22<br>Online job adverts: 21,945<br>",
+              "Black Country LEP<br>Apr 22<br>Online job adverts: 21,335<br>",
+              "Black Country LEP<br>Mar 22<br>Online job adverts: 21,005<br>",
+              "Black Country LEP<br>Feb 22<br>Online job adverts: 26,830<br>",
+              "Black Country LEP<br>Jan 22<br>Online job adverts: 30,590<br>",
+              "Black Country LEP<br>Dec 21<br>Online job adverts: 33,840<br>",
+              "Black Country LEP<br>Dec 21<br>Online job adverts: 33,840<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "transparent",
+              "dash": "solid"
+            },
+            "fill": "toself",
+            "fillcolor": "rgba(212,53,28,0.3)",
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18962,
+              18993,
+              19024,
+              19052,
+              19083,
+              19113,
+              19144,
+              19174,
+              19205,
+              19236,
+              19266,
+              19297,
+              19327
+            ],
+            "y": [
+              33840,
+              30590,
+              26830,
+              21005,
+              21335,
+              21945,
+              19595,
+              18740,
+              19265,
+              19470,
+              19045,
+              18985,
+              15860
+            ],
+            "text": [
+              "Black Country LEP<br>Dec 21<br>Online job adverts: 33,840<br>",
+              "Black Country LEP<br>Jan 22<br>Online job adverts: 30,590<br>",
+              "Black Country LEP<br>Feb 22<br>Online job adverts: 26,830<br>",
+              "Black Country LEP<br>Mar 22<br>Online job adverts: 21,005<br>",
+              "Black Country LEP<br>Apr 22<br>Online job adverts: 21,335<br>",
+              "Black Country LEP<br>May 22<br>Online job adverts: 21,945<br>",
+              "Black Country LEP<br>Jun 22<br>Online job adverts: 19,595<br>",
+              "Black Country LEP<br>Jul 22<br>Online job adverts: 18,740<br>",
+              "Black Country LEP<br>Aug 22<br>Online job adverts: 19,265<br>",
+              "Black Country LEP<br>Sep 22<br>Online job adverts: 19,470<br>",
+              "Black Country LEP<br>Oct 22<br>Online job adverts: 19,045<br>",
+              "Black Country LEP<br>Nov 22<br>Online job adverts: 18,985<br>",
+              "Black Country LEP<br>Dec 22<br>Online job adverts: 15,860<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(212,53,28,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 0,
+            "r": 4,
+            "b": 0,
+            "l": 0,
+            "pad": 0
+          },
+          "plot_bgcolor": "rgba(243,242,241,1)",
+          "paper_bgcolor": "rgba(243,242,241,1)",
+          "font": {
+            "color": "rgba(0,0,0,1)",
+            "family": "",
+            "size": 14.611872146118724
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              17059,
+              19435
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "2017",
+              "2018",
+              "2019",
+              "2020",
+              "2021",
+              "2022",
+              "2023"
+            ],
+            "tickvals": [
+              17167,
+              17532,
+              17897,
+              18262,
+              18628,
+              18993,
+              19358
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "2017",
+              "2018",
+              "2019",
+              "2020",
+              "2021",
+              "2022",
+              "2023"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              5757.75,
+              35177.25
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "7K",
+              "34K"
+            ],
+            "tickvals": [
+              7095,
+              33840
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "7K",
+              "34K"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": false,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.8897637795275593,
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 11.68949771689498
+            }
+          },
+          "hovermode": "closest",
+          "height": 81,
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "modeBarButtonsToAdd": [
+            "hoverclosest",
+            "hovercompare"
+          ],
+          "showSendToCloud": false,
+          "displayModeBar": false
+        },
+        "source": "A",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.20000000000000001,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-2.11.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-main-2.11.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "KS5LineChart": {
+      "x": {
+        "data": [
+          {
+            "x": [
+              17379,
+              17744,
+              18109,
+              18475
+            ],
+            "y": [
+              0.79265607799968596,
+              0.78625724392263097,
+              0.78079286132241099,
+              0.77213333333333301
+            ],
+            "text": [
+              "Black Country LEP<br>AY17/18<br>KS5 sustained positive destination rate: 79%<br>",
+              "Black Country LEP<br>AY18/19<br>KS5 sustained positive destination rate: 79%<br>",
+              "Black Country LEP<br>AY19/20<br>KS5 sustained positive destination rate: 78%<br>",
+              "Black Country LEP<br>AY20/21<br>KS5 sustained positive destination rate: 77%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18475,
+              18840,
+              18840,
+              18840,
+              18475,
+              18475
+            ],
+            "y": [
+              0.77213333333333301,
+              0.77213333333333301,
+              0.77213333333333301,
+              0.79534601024572404,
+              0.77213333333333301,
+              0.77213333333333301
+            ],
+            "text": [
+              "Black Country LEP<br>AY20/21<br>KS5 sustained positive destination rate: 77%<br>",
+              "Black Country LEP<br>AY21/22<br>KS5 sustained positive destination rate: 80%<br>",
+              "Black Country LEP<br>AY21/22<br>KS5 sustained positive destination rate: 80%<br>",
+              "Black Country LEP<br>AY21/22<br>KS5 sustained positive destination rate: 80%<br>",
+              "Black Country LEP<br>AY20/21<br>KS5 sustained positive destination rate: 77%<br>",
+              "Black Country LEP<br>AY20/21<br>KS5 sustained positive destination rate: 77%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "transparent",
+              "dash": "solid"
+            },
+            "fill": "toself",
+            "fillcolor": "rgba(0,112,60,0.3)",
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18475,
+              18840
+            ],
+            "y": [
+              0.77213333333333301,
+              0.79534601024572404
+            ],
+            "text": [
+              "Black Country LEP<br>AY20/21<br>KS5 sustained positive destination rate: 77%<br>",
+              "Black Country LEP<br>AY21/22<br>KS5 sustained positive destination rate: 80%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,112,60,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              17379,
+              17744,
+              18109,
+              18475,
+              18840
+            ],
+            "y": [
+              0.814115758540785,
+              0.81075440841199797,
+              0.80722422187677001,
+              0.79461641893704005,
+              0.82649491346880799
+            ],
+            "text": [
+              "England<br>AY17/18<br>KS5 sustained positive destination rate: 81%<br>",
+              "England<br>AY18/19<br>KS5 sustained positive destination rate: 81%<br>",
+              "England<br>AY19/20<br>KS5 sustained positive destination rate: 81%<br>",
+              "England<br>AY20/21<br>KS5 sustained positive destination rate: 79%<br>",
+              "England<br>AY21/22<br>KS5 sustained positive destination rate: 83%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,0.5)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 0,
+            "r": 4,
+            "b": 0,
+            "l": 0,
+            "pad": 0
+          },
+          "plot_bgcolor": "rgba(243,242,241,1)",
+          "paper_bgcolor": "rgba(243,242,241,1)",
+          "font": {
+            "color": "rgba(0,0,0,1)",
+            "family": "",
+            "size": 14.611872146118724
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              17305.950000000001,
+              18913.049999999999
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "2018",
+              "2019",
+              "2020",
+              "2021"
+            ],
+            "tickvals": [
+              17532,
+              17897,
+              18262,
+              18628
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "2018",
+              "2019",
+              "2020",
+              "2021"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              0.74272878112980356,
+              0.88166544286203241
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "75%",
+              "88%"
+            ],
+            "tickvals": [
+              0.75004408393581401,
+              0.87535014005602196
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "75%",
+              "88%"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": false,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.8897637795275593,
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 11.68949771689498
+            }
+          },
+          "hovermode": "closest",
+          "height": 81,
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "modeBarButtonsToAdd": [
+            "hoverclosest",
+            "hovercompare"
+          ],
+          "showSendToCloud": false,
+          "displayModeBar": false
+        },
+        "source": "A",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.20000000000000001,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-2.11.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-main-2.11.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "Nvq3plusLineChart": {
+      "x": {
+        "data": [
+          {
+            "x": [
+              17167,
+              17532,
+              17897,
+              18262
+            ],
+            "y": [
+              0.40008314855875798,
+              0.39279328840599598,
+              0.400356604032369,
+              0.45539135194307601
+            ],
+            "text": [
+              "Black Country LEP<br>Jan 2017-Dec 2017<br>People with a qualification at level 3 or above: 40%<br>",
+              "Black Country LEP<br>Jan 2018-Dec 2018<br>People with a qualification at level 3 or above: 39%<br>",
+              "Black Country LEP<br>Jan 2019-Dec 2019<br>People with a qualification at level 3 or above: 40%<br>",
+              "Black Country LEP<br>Jan 2020-Dec 2020<br>People with a qualification at level 3 or above: 46%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18262,
+              18628,
+              18628,
+              18628,
+              18262,
+              18262
+            ],
+            "y": [
+              0.45539135194307601,
+              0.45539135194307601,
+              0.45539135194307601,
+              0.47613868116927299,
+              0.45539135194307601,
+              0.45539135194307601
+            ],
+            "text": [
+              "Black Country LEP<br>Jan 2020-Dec 2020<br>People with a qualification at level 3 or above: 46%<br>",
+              "Black Country LEP<br>Jan 2021-Dec 2021<br>People with a qualification at level 3 or above: 48%<br>",
+              "Black Country LEP<br>Jan 2021-Dec 2021<br>People with a qualification at level 3 or above: 48%<br>",
+              "Black Country LEP<br>Jan 2021-Dec 2021<br>People with a qualification at level 3 or above: 48%<br>",
+              "Black Country LEP<br>Jan 2020-Dec 2020<br>People with a qualification at level 3 or above: 46%<br>",
+              "Black Country LEP<br>Jan 2020-Dec 2020<br>People with a qualification at level 3 or above: 46%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "transparent",
+              "dash": "solid"
+            },
+            "fill": "toself",
+            "fillcolor": "rgba(0,112,60,0.3)",
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              18262,
+              18628
+            ],
+            "y": [
+              0.45539135194307601,
+              0.47613868116927299
+            ],
+            "text": [
+              "Black Country LEP<br>Jan 2020-Dec 2020<br>People with a qualification at level 3 or above: 46%<br>",
+              "Black Country LEP<br>Jan 2021-Dec 2021<br>People with a qualification at level 3 or above: 48%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,112,60,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              17167,
+              17532,
+              17897,
+              18262,
+              18628
+            ],
+            "y": [
+              0.55526806283934704,
+              0.56294534073979996,
+              0.57125745054565302,
+              0.59932215668012001,
+              0.600024715200423
+            ],
+            "text": [
+              "England<br>Jan 2017-Dec 2017<br>People with a qualification at level 3 or above: 56%<br>",
+              "England<br>Jan 2018-Dec 2018<br>People with a qualification at level 3 or above: 56%<br>",
+              "England<br>Jan 2019-Dec 2019<br>People with a qualification at level 3 or above: 57%<br>",
+              "England<br>Jan 2020-Dec 2020<br>People with a qualification at level 3 or above: 60%<br>",
+              "England<br>Jan 2021-Dec 2021<br>People with a qualification at level 3 or above: 60%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,0.5)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 0,
+            "r": 4,
+            "b": 0,
+            "l": 0,
+            "pad": 0
+          },
+          "plot_bgcolor": "rgba(243,242,241,1)",
+          "paper_bgcolor": "rgba(243,242,241,1)",
+          "font": {
+            "color": "rgba(0,0,0,1)",
+            "family": "",
+            "size": 14.611872146118724
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              17093.950000000001,
+              18701.049999999999
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "2017",
+              "2018",
+              "2019",
+              "2020",
+              "2021"
+            ],
+            "tickvals": [
+              17167,
+              17532,
+              17897,
+              18262,
+              18628
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "2017",
+              "2018",
+              "2019",
+              "2020",
+              "2021"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              0.37549904781310317,
+              0.73397234085674479
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "39%",
+              "72%"
+            ],
+            "tickvals": [
+              0.39279328840599598,
+              0.71767810026385204
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "39%",
+              "72%"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": false,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.8897637795275593,
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 11.68949771689498
+            }
+          },
+          "hovermode": "closest",
+          "height": 81,
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "modeBarButtonsToAdd": [
+            "hoverclosest",
+            "hovercompare"
+          ],
+          "showSendToCloud": false,
+          "displayModeBar": false
+        },
+        "source": "A",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.20000000000000001,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-2.11.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-main-2.11.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "overviewEmpCntKPI": {
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Jul 2022-Jun 2023<\/span>\n  <br/>\n  515,500\n  <br/><span style=\"font-size: 16px;color:#e00000\">-13,700<\/span><br/>\n<\/h4>",
+      "deps": [
+
+      ]
+    },
+    "overviewEmpRateKPI": {
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Jul 2022-Jun 2023<\/span>\n  <br/>\n  70%\n  <br/><span style=\"font-size: 16px;color:#e00000\">-2ppts<\/span><br/>\n<\/h4>",
+      "deps": [
+
+      ]
+    },
+    "overviewJobKPI": {
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Dec 22<\/span>\n  <br/>\n  15,860\n  <br/><span style=\"font-size: 16px;color:#e00000\">-17,980<\/span><br/>\n<\/h4>",
+      "deps": [
+
+      ]
+    },
+    "page0title": {
+      "html": "Overview of local landscape in Black Country LEP",
+      "deps": [
+
+      ]
+    },
+    "screenshotOverview": {
+      "html": "<button class=\"btn btn-default btn-capture btn-capture-screenshot\" data-selector=\"body\" data-filename=\"Black Country LEP-overview.png\" data-options=\"{}\">\n  <i class=\"fas fa-camera\" role=\"presentation\" aria-label=\"camera icon\"><\/i>\n  Screenshot\n<\/button>",
+      "deps": [
+        {
+          "name": "font-awesome",
+          "version": "6.4.2",
+          "src": {
+            "href": "font-awesome-6.4.2"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": [
+            "css/all.min.css",
+            "css/v4-shims.min.css"
+          ],
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "capture",
+          "version": "0.1.0",
+          "src": {
+            "href": "capture-0.1.0"
+          },
+          "meta": null,
+          "script": "capture-image.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        }
+      ]
+    },
+    "skisup.APPach": {
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">AY21/22<\/span>\n  <br/>\n  3,100\n  <br/><span style=\"font-size: 16px;color:#e00000\">-870<\/span><br/>\n<\/h4>",
+      "deps": [
+
+      ]
+    },
+    "skisup.ETach": {
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">AY21/22<\/span>\n  <br/>\n  18,870\n  <br/><span style=\"font-size: 16px;color:green\">+1,190<\/span><br/>\n<\/h4>",
+      "deps": [
+
+      ]
+    },
+    "UBC.micro": {
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Mar 2023<\/span>\n  <br/>\n  88%\n  <br/><span style=\"font-size: 16px;color:green\">+0ppts<\/span><br/>\n<\/h4>",
+      "deps": [
+
+      ]
+    },
+    "UBCLineChart": {
+      "x": {
+        "data": [
+          {
+            "x": [
+              17956,
+              18322,
+              18687,
+              19052
+            ],
+            "y": [
+              0.87021308299806299,
+              0.87441792782304995,
+              0.88087905935050403,
+              0.87917498336660005
+            ],
+            "text": [
+              "Black Country LEP<br>Mar 2019<br>Share of businesses with 0-9 employees (micro): 87%<br>",
+              "Black Country LEP<br>Mar 2020<br>Share of businesses with 0-9 employees (micro): 87%<br>",
+              "Black Country LEP<br>Mar 2021<br>Share of businesses with 0-9 employees (micro): 88%<br>",
+              "Black Country LEP<br>Mar 2022<br>Share of businesses with 0-9 employees (micro): 88%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              19052,
+              19417,
+              19417,
+              19417,
+              19052,
+              19052
+            ],
+            "y": [
+              0.87917498336660005,
+              0.87917498336660005,
+              0.87917498336660005,
+              0.88145444714787802,
+              0.87917498336660005,
+              0.87917498336660005
+            ],
+            "text": [
+              "Black Country LEP<br>Mar 2022<br>Share of businesses with 0-9 employees (micro): 88%<br>",
+              "Black Country LEP<br>Mar 2023<br>Share of businesses with 0-9 employees (micro): 88%<br>",
+              "Black Country LEP<br>Mar 2023<br>Share of businesses with 0-9 employees (micro): 88%<br>",
+              "Black Country LEP<br>Mar 2023<br>Share of businesses with 0-9 employees (micro): 88%<br>",
+              "Black Country LEP<br>Mar 2022<br>Share of businesses with 0-9 employees (micro): 88%<br>",
+              "Black Country LEP<br>Mar 2022<br>Share of businesses with 0-9 employees (micro): 88%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "transparent",
+              "dash": "solid"
+            },
+            "fill": "toself",
+            "fillcolor": "rgba(0,112,60,0.3)",
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              19052,
+              19417
+            ],
+            "y": [
+              0.87917498336660005,
+              0.88145444714787802
+            ],
+            "text": [
+              "Black Country LEP<br>Mar 2022<br>Share of businesses with 0-9 employees (micro): 88%<br>",
+              "Black Country LEP<br>Mar 2023<br>Share of businesses with 0-9 employees (micro): 88%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,112,60,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              17956,
+              18322,
+              18687,
+              19052,
+              19417
+            ],
+            "y": [
+              0.89587551571938095,
+              0.89678247740456796,
+              0.89820508610890004,
+              0.89585098254181805,
+              0.89178418859764796
+            ],
+            "text": [
+              "England<br>Mar 2019<br>Share of businesses with 0-9 employees (micro): 90%<br>",
+              "England<br>Mar 2020<br>Share of businesses with 0-9 employees (micro): 90%<br>",
+              "England<br>Mar 2021<br>Share of businesses with 0-9 employees (micro): 90%<br>",
+              "England<br>Mar 2022<br>Share of businesses with 0-9 employees (micro): 90%<br>",
+              "England<br>Mar 2023<br>Share of businesses with 0-9 employees (micro): 89%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,0.5)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 0,
+            "r": 4,
+            "b": 0,
+            "l": 0,
+            "pad": 0
+          },
+          "plot_bgcolor": "rgba(243,242,241,1)",
+          "paper_bgcolor": "rgba(243,242,241,1)",
+          "font": {
+            "color": "rgba(0,0,0,1)",
+            "family": "",
+            "size": 14.611872146118724
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              17882.950000000001,
+              19490.049999999999
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "2019",
+              "2020",
+              "2021",
+              "2022",
+              "2023"
+            ],
+            "tickvals": [
+              17897,
+              18262,
+              18628,
+              18993,
+              19358
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "2019",
+              "2020",
+              "2021",
+              "2022",
+              "2023"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              0.86690167832443676,
+              0.91775258114421421
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "87%",
+              "92%"
+            ],
+            "tickvals": [
+              0.87021308299806299,
+              0.91544117647058798
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "87%",
+              "92%"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": false,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.8897637795275593,
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 11.68949771689498
+            }
+          },
+          "hovermode": "closest",
+          "height": 81,
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "modeBarButtonsToAdd": [
+            "hoverclosest",
+            "hovercompare"
+          ],
+          "showSendToCloud": false,
+          "displayModeBar": false
+        },
+        "source": "A",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.20000000000000001,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-2.11.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-main-2.11.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "wfOverviewChart": {
+      "x": {
+        "data": [
+          {
+            "x": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13
+            ],
+            "y": [
+              0.0037282262614672201,
+              0.0054762249999495303,
+              0.00379687320972209,
+              0.0028280275836000601,
+              0.0023745743918832701,
+              0.0023944006656544501,
+              0.0023906343384169802,
+              0.0027941124893318698,
+              0.0027338649505678999,
+              0.0027787305038344001,
+              0.0028405961773683599,
+              0.0028421845705027802,
+              0.0028860084312944899
+            ],
+            "text": [
+              "Year: 2023<br>Area: Black Country LEP<br>Year on year growth: 0.4%<br>",
+              "Year: 2024<br>Area: Black Country LEP<br>Year on year growth: 0.5%<br>",
+              "Year: 2025<br>Area: Black Country LEP<br>Year on year growth: 0.4%<br>",
+              "Year: 2026<br>Area: Black Country LEP<br>Year on year growth: 0.3%<br>",
+              "Year: 2027<br>Area: Black Country LEP<br>Year on year growth: 0.2%<br>",
+              "Year: 2028<br>Area: Black Country LEP<br>Year on year growth: 0.2%<br>",
+              "Year: 2029<br>Area: Black Country LEP<br>Year on year growth: 0.2%<br>",
+              "Year: 2030<br>Area: Black Country LEP<br>Year on year growth: 0.3%<br>",
+              "Year: 2031<br>Area: Black Country LEP<br>Year on year growth: 0.3%<br>",
+              "Year: 2032<br>Area: Black Country LEP<br>Year on year growth: 0.3%<br>",
+              "Year: 2033<br>Area: Black Country LEP<br>Year on year growth: 0.3%<br>",
+              "Year: 2034<br>Area: Black Country LEP<br>Year on year growth: 0.3%<br>",
+              "Year: 2035<br>Area: Black Country LEP<br>Year on year growth: 0.3%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,1)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          },
+          {
+            "x": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13
+            ],
+            "y": [
+              0.0070472584470631598,
+              0.0076465566418862201,
+              0.0052607387600999804,
+              0.0045013862575475697,
+              0.0040697322680966399,
+              0.0040267689577478801,
+              0.0039816567139399003,
+              0.0043080068507842699,
+              0.0042105848427308103,
+              0.0042105614983908302,
+              0.0042455792570827502,
+              0.0042079776492199,
+              0.0042051244251290103
+            ],
+            "text": [
+              "Year: 2023<br>Area: England<br>Year on year growth: 0.7%<br>",
+              "Year: 2024<br>Area: England<br>Year on year growth: 0.8%<br>",
+              "Year: 2025<br>Area: England<br>Year on year growth: 0.5%<br>",
+              "Year: 2026<br>Area: England<br>Year on year growth: 0.5%<br>",
+              "Year: 2027<br>Area: England<br>Year on year growth: 0.4%<br>",
+              "Year: 2028<br>Area: England<br>Year on year growth: 0.4%<br>",
+              "Year: 2029<br>Area: England<br>Year on year growth: 0.4%<br>",
+              "Year: 2030<br>Area: England<br>Year on year growth: 0.4%<br>",
+              "Year: 2031<br>Area: England<br>Year on year growth: 0.4%<br>",
+              "Year: 2032<br>Area: England<br>Year on year growth: 0.4%<br>",
+              "Year: 2033<br>Area: England<br>Year on year growth: 0.4%<br>",
+              "Year: 2034<br>Area: England<br>Year on year growth: 0.4%<br>",
+              "Year: 2035<br>Area: England<br>Year on year growth: 0.4%<br>"
+            ],
+            "type": "scatter",
+            "mode": "lines",
+            "line": {
+              "width": 1.8897637795275593,
+              "color": "rgba(0,0,0,0.5)",
+              "dash": "solid"
+            },
+            "hoveron": "points",
+            "showlegend": false,
+            "xaxis": "x",
+            "yaxis": "y",
+            "hoverinfo": "text",
+            "frame": null
+          }
+        ],
+        "layout": {
+          "margin": {
+            "t": 0,
+            "r": 4,
+            "b": 0,
+            "l": 0,
+            "pad": 0
+          },
+          "plot_bgcolor": "rgba(243,242,241,1)",
+          "paper_bgcolor": "rgba(243,242,241,1)",
+          "font": {
+            "color": "rgba(0,0,0,1)",
+            "family": "",
+            "size": 14.611872146118724
+          },
+          "xaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              0.40000000000000002,
+              13.6
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "23",
+              "25",
+              "27",
+              "29",
+              "31",
+              "33",
+              "35"
+            ],
+            "tickvals": [
+              1,
+              3,
+              5,
+              7,
+              9,
+              11,
+              13
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "23",
+              "25",
+              "27",
+              "29",
+              "31",
+              "33",
+              "35"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "y",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "yaxis": {
+            "domain": [
+              0,
+              1
+            ],
+            "automargin": true,
+            "type": "linear",
+            "autorange": false,
+            "range": [
+              0.00014481797139244152,
+              0.014477520497085389
+            ],
+            "tickmode": "array",
+            "ticktext": [
+              "0%",
+              "2%"
+            ],
+            "tickvals": [
+              0.0017963044498330301,
+              0.013826034018644798
+            ],
+            "categoryorder": "array",
+            "categoryarray": [
+              "0%",
+              "2%"
+            ],
+            "nticks": null,
+            "ticks": "",
+            "tickcolor": null,
+            "ticklen": 3.6529680365296811,
+            "tickwidth": 0,
+            "showticklabels": true,
+            "tickfont": {
+              "color": "rgba(77,77,77,1)",
+              "family": "",
+              "size": 11.68949771689498
+            },
+            "tickangle": 0,
+            "showline": false,
+            "linecolor": null,
+            "linewidth": 0,
+            "showgrid": false,
+            "gridcolor": null,
+            "gridwidth": 0,
+            "zeroline": false,
+            "anchor": "x",
+            "title": {
+              "text": "",
+              "font": {
+                "color": null,
+                "family": null,
+                "size": 0
+              }
+            },
+            "hoverformat": ".2f",
+            "fixedrange": true
+          },
+          "shapes": [
+            {
+              "type": "rect",
+              "fillcolor": null,
+              "line": {
+                "color": null,
+                "width": 0,
+                "linetype": [
+
+                ]
+              },
+              "yref": "paper",
+              "xref": "paper",
+              "x0": 0,
+              "x1": 1,
+              "y0": 0,
+              "y1": 1
+            }
+          ],
+          "showlegend": false,
+          "legend": {
+            "bgcolor": "rgba(255,255,255,1)",
+            "bordercolor": "transparent",
+            "borderwidth": 1.8897637795275593,
+            "font": {
+              "color": "rgba(0,0,0,1)",
+              "family": "",
+              "size": 11.68949771689498
+            }
+          },
+          "hovermode": "closest",
+          "height": 81,
+          "barmode": "relative"
+        },
+        "config": {
+          "doubleClick": "reset",
+          "modeBarButtonsToAdd": [
+            "hoverclosest",
+            "hovercompare"
+          ],
+          "showSendToCloud": false,
+          "displayModeBar": false
+        },
+        "source": "A",
+        "highlight": {
+          "on": "plotly_click",
+          "persistent": false,
+          "dynamic": false,
+          "selectize": false,
+          "opacityDim": 0.20000000000000001,
+          "selected": {
+            "opacity": 1
+          },
+          "debounce": 0
+        },
+        "shinyEvents": [
+          "plotly_hover",
+          "plotly_click",
+          "plotly_selected",
+          "plotly_relayout",
+          "plotly_brushed",
+          "plotly_brushing",
+          "plotly_clickannotation",
+          "plotly_doubleclick",
+          "plotly_deselect",
+          "plotly_afterplot",
+          "plotly_sunburstclick"
+        ],
+        "base_url": "https://plot.ly"
+      },
+      "evals": [
+
+      ],
+      "jsHooks": [
+
+      ],
+      "deps": [
+        {
+          "name": "setprototypeof",
+          "version": "0.1",
+          "src": {
+            "href": "setprototypeof-0.1"
+          },
+          "meta": null,
+          "script": "setprototypeof.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "typedarray",
+          "version": "0.1",
+          "src": {
+            "href": "typedarray-0.1"
+          },
+          "meta": null,
+          "script": "typedarray.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "jquery",
+          "version": "3.5.1",
+          "src": {
+            "href": "jquery-3.5.1"
+          },
+          "meta": null,
+          "script": "jquery.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "crosstalk",
+          "version": "1.2.0",
+          "src": {
+            "href": "crosstalk-1.2.0"
+          },
+          "meta": null,
+          "script": "js/crosstalk.min.js",
+          "stylesheet": "css/crosstalk.min.css",
+          "head": null,
+          "attachment": null,
+          "all_files": true
+        },
+        {
+          "name": "plotly-htmlwidgets-css",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-htmlwidgets-css-2.11.1"
+          },
+          "meta": null,
+          "script": null,
+          "stylesheet": "plotly-htmlwidgets.css",
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        },
+        {
+          "name": "plotly-main",
+          "version": "2.11.1",
+          "src": {
+            "href": "plotly-main-2.11.1"
+          },
+          "meta": null,
+          "script": "plotly-latest.min.js",
+          "stylesheet": null,
+          "head": null,
+          "attachment": null,
+          "all_files": false
+        }
+      ]
+    },
+    "wfOverviewKpi": {
+      "html": "<h4 style=\"font-size: 21px\">\n  4%\n  <br/><span style=\"font-size: 16px;color:green\">growth 2023 to 2035<\/span><br/>\n<\/h4>",
+      "deps": [
+
+      ]
+    }
+  },
+  "export": {
+
+  }
+}

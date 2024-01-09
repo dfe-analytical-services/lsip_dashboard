@@ -5,7 +5,7 @@ run_set_shinytests <- function(dfinputs, outstring, listrecords) {
   # listrecords: list of input and output variables to record the values of.
   for (i in 1:nrow(dfinputs)) {
     file <- paste0(outstring, "_", i - 1, ".json")
-    cat(paste0(dfinputs$field[i], '="', dfinputs$value[i]), fill = TRUE)
+    message(paste(i, dfinputs$field[i], dfinputs$value[i]))
     eval(parse(text = paste0("app$setInputs(", dfinputs$field[i], '="', dfinputs$value[i], '", timeout_ = 3.6e+4, values_ = FALSE)')))
     app$snapshot(
       #      items = listrecords,
@@ -15,27 +15,24 @@ run_set_shinytests <- function(dfinputs, outstring, listrecords) {
   }
 }
 
-app <- ShinyDriver$new("../../", loadTimeout = 6.e4)
+app <- ShinyDriver$new("../../", loadTimeout = 6.e5)
+
 app$snapshotInit("initial_load_test", screenshot = FALSE)
-app$snapshot(
-  filename = "LoadHome.json"
-)
+
+app$snapshot()
 
 
 dfTestInputs <- data.frame(
   field = c(
-    "navbar",
-    "datatabset", "lep1",
-    "datatabset", "lep1", "lep2",
-    "datatabset", "lep1", "lep2",
-    "datatabset", "lep1", "lep2"
+    "navbar", "geoChoiceOver",
+    "navbar"
   ),
   value = c(
-    "Local skills",
     "Overview", "Cheshire and Warrington",
-    "Employment", "London", "Greater Manchester",
-    "Vacancies", "London", "Greater Manchester",
-    "FE", "London", "Greater Manchester"
+    "User guide"
   )
 )
+
+
+message("Looping through input list")
 run_set_shinytests(dfTestInputs, "localskills", "")

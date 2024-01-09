@@ -6,7 +6,6 @@ fluidPage(
     href = "dfefavicon.png"
   )),
   shinyjs::useShinyjs(),
-  useShinydashboard(),
   # Setting up cookie consent based on a cookie recording the consent:
   # https://book.javascript-for-r.com/shiny-cookies.html
   tags$head(
@@ -720,7 +719,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         column(
           4,
           p("Choose a LEP, LSIP or MCA"),
-          uiOutput("geoChoice")
+          selectizeInput(
+            "geoChoice",
+            multiple = FALSE,
+            label = NULL,
+            choices = areaChoices[1:3]
+          )
         ),
         column(
           4,
