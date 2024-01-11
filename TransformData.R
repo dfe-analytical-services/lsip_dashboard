@@ -364,7 +364,7 @@ addGeogs <- function(x) {
 # add on new LADUs/LEP/LSIP/MCA areas
 feWithAreas <- addGeogs(addPopulation)
 
-# Get new LSIP and LEP groups (ILR now publish at that level). However, because ILR LEP data is published based on the LEP mappings in each year.
+# Get new LSIP and LEP groups (ILR now publish at that level). However, ILR LEP data is published based on the LEP mappings in each year.
 # As these mappings have changed each year, we don't have a consistent time series.
 # Here we get those LEPs which have stayed consistent across the years so we can use the published data throughout
 feLepsLsips <- addPopulation %>%
