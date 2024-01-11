@@ -1176,7 +1176,9 @@ server <- function(input, output, session) {
   output$commentLA <- renderUI({
     validate(
       need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", "")
+      need(input$geoChoice != "", ""),
+      need(!((input$geoChoice %in% c("The London Economic Action Partnership LEP", "Greater London LSIP", "Greater London Authority MCA") &
+        currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), "Data is not available at LA level."),
     )
     LaHighLow <- C_Geog %>%
       filter(
@@ -1189,30 +1191,25 @@ server <- function(input, output, session) {
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <-
       (LaHighLow %>% filter(ranking == max(ranking)))$areaName
-    if ((input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
-      currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")) {
-      "Data is not available at LA level."
-    } else {
-      if (nrow(LaHighLow) == 1) {
-        ""
-      } # Blank if only one LA
-      else {
-        paste0(
-          (I_DataText %>% filter(metric == input$splashMetric))$LaComment,
-          " highest in ",
-          LaHigh,
-          " and lowest in ",
-          LaLow,
-          "."
-        )
-      }
+    if (nrow(LaHighLow) == 1) {
+      ""
+    } # Blank if only one LA
+    else {
+      paste0(
+        (I_DataText %>% filter(metric == input$splashMetric))$LaComment,
+        " highest in ",
+        LaHigh,
+        " and lowest in ",
+        LaLow,
+        "."
+      )
     }
   })
 
   #### 2.3.6.3 Map----
   output$mapLA <- renderLeaflet({
     validate(
-      need(!((input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
+      need(!((input$geoChoice %in% c("The London Economic Action Partnership LEP", "Greater London LSIP", "Greater London Authority MCA") &
         currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), ""),
       need(input$geoChoice != "", "")
     )
@@ -1267,16 +1264,13 @@ server <- function(input, output, session) {
   output$mapLaFoot <- renderUI({
     validate(
       need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", "")
+      need(input$geoChoice != "", ""),
+      need(!((input$geoChoice %in% c("The London Economic Action Partnership LEP", "Greater London LSIP", "Greater London Authority MCA") &
+        currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), ""),
     )
-    if ((input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
-      currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")) {
-      ""
-    } else {
-      paste0(
-        (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ". Click an area to update other charts with LA data."
-      )
-    }
+    paste0(
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ". Click an area to update other charts with LA data."
+    )
   })
 
   ### 2.3.7 Time chart ----
@@ -1572,7 +1566,7 @@ server <- function(input, output, session) {
           "inactiveRate",
           "selfemployed",
           "unemployed",
-          "Inactive"
+          "inactive"
         )) {
           " Switch to Employment metric for occupation and industry breakdowns."
         } else {
@@ -1596,12 +1590,11 @@ server <- function(input, output, session) {
         filter(ranking == 1)
 
       breakdownDirection <-
-        if (exists("breakdownDiff") == TRUE && breakdownDiff$change > 0) {
+        if (exists("breakdownDiff") == TRUE && length(breakdownDiff$change) > 0 && breakdownDiff$change > 0) {
           "higher"
         } else {
           "lower"
         }
-
       paste0(
         input$geoChoice,
         " has a ",
