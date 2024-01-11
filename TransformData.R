@@ -40,7 +40,7 @@ neatLA <- I_mapLA %>%
   left_join(F_LEP2020 %>% mutate(LEP = paste0(LEP23NM1, " LEP"), LEP2 = paste0(LEP23NM2, " LEP"), LSIP = paste0(LSIP23NM, " LSIP")) %>% select(LAD23CD, LSIP, LEP, LEP2), by = c("LAD23CD" = "LAD23CD")) %>%
   left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH23NM, " MCA")) %>% select(LAD23CD, MCA), by = c("LAD23CD" = "LAD23CD")) %>%
   filter(is.na(LSIP) == FALSE) %>% # remove non England
-  mutate(MCA = case_when(LEP == "London LEP" ~ "Greater London Authority MCA", TRUE ~ MCA)) %>% # add on gla as mca
+  mutate(MCA = case_when(LEP == "The London Economic Action Partnership LEP" ~ "Greater London Authority MCA", TRUE ~ MCA)) %>% # add on gla as mca
   rename(areaName = LAD23NM, areaCode = LAD23CD)
 
 neatMCA <- I_mapMCA %>%
@@ -492,12 +492,18 @@ C_FeProvLevelAge <- F_FeProvLevelAge %>%
 feSsaWithAreas <- I_FeSsa %>%
   filter(notional_nvq_level == "Total", sex == "Total", ethnicity_major == "Total", ssa_t1_desc != "Total") %>%
   mutate(subgroup = ssa_t1_desc, breakdown = "SSA") %>%
-  mutate(areaCode = case_when(geographic_level=="Local authority district" ~ lad_code
-                               ,geographic_level=="National" ~ country_code
-                               ,TRUE ~ "NA")
-          ,area = case_when(geographic_level=="Local authority district" ~ lad_name
-                               ,geographic_level=="National" ~ country_name
-                               ,TRUE ~ "NA")) %>%
+  mutate(
+    areaCode = case_when(
+      geographic_level == "Local authority district" ~ lad_code,
+      geographic_level == "National" ~ country_code,
+      TRUE ~ "NA"
+    ),
+    area = case_when(
+      geographic_level == "Local authority district" ~ lad_name,
+      geographic_level == "National" ~ country_name,
+      TRUE ~ "NA"
+    )
+  ) %>%
   # add dates
   mutate(chartPeriod = paste("AY", substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
   mutate(timePeriod = as.Date(paste("01 Aug", substr(time_period, 1, 4), sep = ""), format = "%d %b %Y")) %>%
@@ -506,7 +512,7 @@ feSsaWithAreas <- I_FeSsa %>%
     timePeriod == (max(timePeriod) - years(1)) ~ -1,
     TRUE ~ 0
   )) %>%
-  select(-time_period,-ssa_t1_desc,-notional_nvq_level,-lad_code,-country_code,-lad_name, -country_name,-sex, -ethnicity_major,-english_devolved_area_code,-english_devolved_area_name,-time_identifier,-region_code,-region_name) %>%
+  select(-time_period, -ssa_t1_desc, -notional_nvq_level, -lad_code, -country_code, -lad_name, -country_name, -sex, -ethnicity_major, -english_devolved_area_code, -english_devolved_area_name, -time_identifier, -region_code, -region_name) %>%
   addGeogs()
 # group up areas
 groupedStats <- feSsaWithAreas %>%
