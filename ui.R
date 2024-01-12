@@ -6,7 +6,6 @@ fluidPage(
     href = "dfefavicon.png"
   )),
   shinyjs::useShinyjs(),
-  useShinydashboard(),
   # Setting up cookie consent based on a cookie recording the consent:
   # https://book.javascript-for-r.com/shiny-cookies.html
   tags$head(
@@ -538,7 +537,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               "This group of metrics provide information on training activity for the selected geographic area including data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period."
             ),
             p(
-              "LEP, LSIP and MCA area totals are calculated by aggregating the relevant local authorities."
+              "Where the LEP, LSIP and MCA area totals are not published, area totals are calculated by aggregating the relevant local authorities (see Data sources tab for more information)."
             ),
             # h3(
             #   actionLink("link_to_tabpanel_qualification", "Destinations")
@@ -584,14 +583,19 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("19 December 2023 (1.3.6)"),
+            p("12 January 2024 (1.3.7)"),
             tags$ul(
-              tags$li("Update to latest business demographies data.")
+              tags$li("Update to latest ILR FE data data. This includes using some data now published at LEP and LSIP level."),
+              tags$li("Update geographies to latest LEPs and LAs. This includes the closure of Black Country and Coventry & Warwickshire LEPs.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("19 December 2023 (1.3.6)"),
+                tags$ul(
+                  tags$li("Update to latest business demographies data.")
+                ),
                 p("25 October 2023 (1.3.5)"),
                 tags$ul(
                   tags$li("Update to latest KS4 and KS5 destinations data."),
@@ -715,7 +719,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         column(
           4,
           p("Choose a LEP, LSIP or MCA"),
-          uiOutput("geoChoice")
+          selectizeInput(
+            "geoChoice",
+            multiple = FALSE,
+            label = NULL,
+            choices = areaChoices[1:3]
+          )
         ),
         column(
           4,
@@ -904,14 +913,13 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training."
           ),
           p(
-            "LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
-            rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
-Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset."
+            "DfE have published LEP level statistics for the past six years. However, since the geography of the LEP areas has changed over that period we do not have a consistent timeline. In the cases where LEP geography has not changed, we use the published statistics for all historic data points. Where the geography has changed we calculate the statistics by compiling the LA level data based on the latest mapping of LA to LEP for all years. Therefore the statistics shown will not always match the published statistics."
           ),
-          p(
-            "Further Education data for Aug 2022 – Jul 2023 has been published. 
-            It contains some new data fields and some Local Authority boundaries. 
-            We are working to add these into the dashboard and the update should be published in Jan 2024."),
+          p("
+            For LSIPs, only the most recent year's data is published. We therefore compile the statistics from LAs for all years except the most recent."),
+          p("No MCA level data is published. However, most MCAs match an LSIP in their geography and so we can use the corresponding LSIP published values for the most recent year. Where there is no matching LSIP (West of England MCA and West Midlands MCA) we compile the statistics from the LAs."),
+          p("Rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
+Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset."),
           h3("KS4 and KS5 destinations"),
           p(
             "Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education, employment or an apprenticeship

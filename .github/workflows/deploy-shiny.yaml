@@ -1,23 +1,37 @@
-# Trying marketplace deploy action:
-# https://github.com/marketplace/actions/deploy-to-shinyapps-io
-name: Deploy to shinyapps.io
-
 on:
   push:
     branches:
       - main
       - development
-  workflow_dispatch:
+
+name: deploy-shiny
 
 jobs:
-  deploy:
-    name: Deploy to shinyapps
+  deployShiny:
+    runs-on: ${{ matrix.config.os }}
 
-    # allow skipping deployment for commits containing '[automated]' or '[no-deploy]' in the commit message
-    if: "!contains(github.event.head_commit.message, '[automated]') && !contains(github.event.head_commit.message, '[no-deploy]')"
-    runs-on: ubuntu-latest
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        # Running on mac as it's quicker to build
+          - {os: macOS-latest, r: 'release'}
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      RSPM: ${{ matrix.config.rspm }}
+      RENV_PATHS_ROOT: ~/.local/share/renv
+
     steps:
       - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: 4.2.1
+          use-public-rspm: true
+
       - name: Set env vars (dev)
         if: endsWith(github.ref, '/development')
         run: |
@@ -26,31 +40,41 @@ jobs:
         if: endsWith(github.ref, '/main')
         run: |
           echo "SHINYAPP_NAME='local-skills-dashboard'">> $GITHUB_ENV
-      - name: Install dependencies
-        run: |
-          sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
-          sudo apt-get update
-          sudo apt-get install libgdal-dev libgeos-dev libproj-dev 
-          pip install GDAL==3.6.2
-          which gdal-config
-      - name: Check system path
+
+      - name: Cache R packages
+        if: runner.os != 'Windows'
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+
+      - name: Cache renv packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.RENV_PATHS_ROOT }}
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
+        
+      - name: Restore renv snapshot
         shell: Rscript {0}
         run: |
-          cat(Sys.getenv('PATH'))
-          Sys.setenv(PATH=paste("/usr/bin/", Sys.getenv("PATH"), sep=";"))
-          cat(Sys.getenv('PATH'))
-      - name: Check system path 2
+          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
+          renv::restore()
+          
+      - name: Install rsconnect
+        shell: Rscript {0}
+        run: |
+          if (!requireNamespace("renv", quietly = TRUE)) install.packages("renv")
+          renv::install("rsconnect")
+         
+# Tokens are stored as secrets in GitHub to make sure only DfE analysts can publish apps in our shiny.io area
+# Navigate to Settings > Secrets to add and view secrets. These can also be things like admin login and passwords for SQL databases.
+# Get in touch with the Stats Development team if you need to add the below secrets to publish to shinyapps.io
+          
+      - name: Push to shiny.io
         run: >
           Rscript
-          -e "cat(Sys.getenv('PATH'))"
-      - name: deploy
-        uses: BDSI-Utwente/shinyapps-deploy-github-action@v1
-        with:
-          # account and application name (https://<accountName>.shinyapps.io/<appName>)
-          appName: ${{env.SHINYAPP_NAME}}
-          accountName: 'department-for-education'
-
-          # token and secret obtained from https://www.shinyapps.io/admin/#/tokens
-          accountToken: ${{ secrets.SHINYAPPS_TOKEN }}
-          accountSecret: ${{ secrets.SHINYAPPS_SECRET }}
-      
+          -e "rsconnect::setAccountInfo(name = 'department-for-education', token = '${{secrets.SHINYAPPS_TOKEN}}', secret = '${{secrets.SHINYAPPS_SECRET}}')"
+          -e "rsconnect::deployApp(appName=${{env.SHINYAPP_NAME}}, forceUpdate = TRUE)"

@@ -421,14 +421,6 @@ server <- function(input, output, session) {
 
   ### 2.2.1 Filters ----
   # alter area dropdown depending if lep or lsip
-  output$geoChoiceOver <- renderUI({
-    selectizeInput(
-      "geoChoiceOver",
-      multiple = FALSE,
-      label = NULL,
-      choices = areaChoices[1:3]
-    )
-  })
   observeEvent(input$geoChoice, {
     updateSelectInput(session, "geoChoiceOver",
       selected = input$geoChoice
@@ -657,7 +649,7 @@ server <- function(input, output, session) {
 
   # create a function to render the overview charts
   renderOverviewChart <- function(chartData) {
-    ggplotly(chartData(),
+    ggplotly(chartData,
       tooltip = "text",
       height = 81
     ) %>%
@@ -683,15 +675,10 @@ server <- function(input, output, session) {
     createOverviewKPI("inemployment", "number")
   })
 
-  # create Emp chart
-  empLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("inemployment", "number", "In employment")
-  })
-
   # render empchart
   output$empLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
-    renderOverviewChart(empLineChart)
+    renderOverviewChart(createOverviewChart("inemployment", "number", "In employment"))
   })
 
   #### 2.2.3.2 Employment rate ----
@@ -700,13 +687,9 @@ server <- function(input, output, session) {
     createOverviewKPI("inemploymentRate", "percent")
   })
 
-  empRateLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("inemploymentRate", "percent", "Employment rate")
-  })
-
   output$empRateLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(empRateLineChart)
+    renderOverviewChart(createOverviewChart("inemploymentRate", "percent", "Employment rate"))
   })
   # Add link to employment rate
   observeEvent(input$link_to_tabpanel_empRate, {
@@ -724,13 +707,9 @@ server <- function(input, output, session) {
   })
 
   # Vacancy chart
-  jobLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("vacancies", "number", "Online job adverts")
-  })
-
   output$jobLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(jobLineChart)
+    renderOverviewChart(createOverviewChart("vacancies", "number", "Online job adverts"))
   })
 
   # Add link to vacancy data
@@ -749,13 +728,9 @@ server <- function(input, output, session) {
   })
 
   # e and t chart
-  etLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("achievements Education and training", "number", "Education and training achievements")
-  })
-
   output$etLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(etLineChart)
+    renderOverviewChart(createOverviewChart("achievements Education and training", "number", "Education and training achievements"))
   })
 
   #### 2.2.3.5 FE app achieve ----
@@ -766,13 +741,9 @@ server <- function(input, output, session) {
   })
 
   # app chart
-  AppLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("achievements Apprenticeships", "number", "Apprenticeship achievements")
-  })
-
   output$AppLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(AppLineChart)
+    renderOverviewChart(createOverviewChart("achievements Apprenticeships", "number", "Apprenticeship achievements"))
   })
 
   # Add link to skills data
@@ -790,14 +761,9 @@ server <- function(input, output, session) {
     createOverviewKPI("sustainedPositiveDestinationKS5Rate", "percent")
   })
 
-  # KS5 destinations chart
-  KS5LineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("sustainedPositiveDestinationKS5Rate", "percent", "KS5 sustained positive destination rate")
-  })
-
   output$KS5LineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(KS5LineChart)
+    renderOverviewChart(createOverviewChart("sustainedPositiveDestinationKS5Rate", "percent", "KS5 sustained positive destination rate"))
   })
 
   # add link to destinations
@@ -816,13 +782,9 @@ server <- function(input, output, session) {
   })
 
   # micro enterprise chart
-  UBCLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("enterprisePctMicro", "percent", "Share of businesses with 0-9 employees (micro)")
-  })
-
   output$UBCLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(UBCLineChart)
+    renderOverviewChart(createOverviewChart("enterprisePctMicro", "percent", "Share of businesses with 0-9 employees (micro)"))
   })
 
   # add link to enterprise
@@ -841,13 +803,9 @@ server <- function(input, output, session) {
   })
 
   # qualification chart
-  Nvq3plusLineChart <- eventReactive(input$geoChoiceOver, {
-    createOverviewChart("L3PlusRate", "percent", "People with a qualification at level 3 or above")
-  })
-
   output$Nvq3plusLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(Nvq3plusLineChart)
+    renderOverviewChart(createOverviewChart("L3PlusRate", "percent", "People with a qualification at level 3 or above"))
   })
 
   # add link to qualification level
@@ -930,7 +888,7 @@ server <- function(input, output, session) {
 
   output$wfOverviewChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(wfLineChart)
+    renderOverviewChart(wfLineChart())
   })
 
   # add link to qualification level
@@ -1049,16 +1007,6 @@ server <- function(input, output, session) {
 
   ### 2.3.5 National map ----
   #### 2.3.5.1 Dropdown area select----
-  output$geoChoice <- renderUI({
-    selectizeInput(
-      "geoChoice",
-      multiple = FALSE,
-      label = NULL,
-      choices = areaChoices[1:3],
-      selected = input$geoChoiceOver
-    )
-  })
-
   observeEvent(input$map_shape_click, {
     updateSelectizeInput(session, "geoChoice",
       selected = C_Geog$geogConcat[C_Geog$areaCode == input$map_shape_click$id]
@@ -1228,7 +1176,9 @@ server <- function(input, output, session) {
   output$commentLA <- renderUI({
     validate(
       need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", "")
+      need(input$geoChoice != "", ""),
+      need(!((input$geoChoice %in% c("The London Economic Action Partnership LEP", "Greater London LSIP", "Greater London Authority MCA") &
+        currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), "Data is not available at LA level."),
     )
     LaHighLow <- C_Geog %>%
       filter(
@@ -1238,34 +1188,28 @@ server <- function(input, output, session) {
       mutate(ranking = rank(desc(eval(
         parse(text = input$splashMetric)
       )), ties.method = c("first")))
-
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <-
       (LaHighLow %>% filter(ranking == max(ranking)))$areaName
-    if ((input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
-      currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")) {
-      "Data is not available at LA level."
-    } else {
-      if (nrow(LaHighLow) == 1) {
-        ""
-      } # Blank if only one LA
-      else {
-        paste0(
-          (I_DataText %>% filter(metric == input$splashMetric))$LaComment,
-          " highest in ",
-          LaHigh,
-          " and lowest in ",
-          LaLow,
-          "."
-        )
-      }
+    if (nrow(LaHighLow) == 1) {
+      ""
+    } # Blank if only one LA
+    else {
+      paste0(
+        (I_DataText %>% filter(metric == input$splashMetric))$LaComment,
+        " highest in ",
+        LaHigh,
+        " and lowest in ",
+        LaLow,
+        "."
+      )
     }
   })
 
   #### 2.3.6.3 Map----
   output$mapLA <- renderLeaflet({
     validate(
-      need(!((input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
+      need(!((input$geoChoice %in% c("The London Economic Action Partnership LEP", "Greater London LSIP", "Greater London Authority MCA") &
         currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), ""),
       need(input$geoChoice != "", "")
     )
@@ -1320,16 +1264,13 @@ server <- function(input, output, session) {
   output$mapLaFoot <- renderUI({
     validate(
       need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", "")
+      need(input$geoChoice != "", ""),
+      need(!((input$geoChoice %in% c("The London Economic Action Partnership LEP", "Greater London LSIP", "Greater London Authority MCA") &
+        currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), ""),
     )
-    if ((input$geoChoice %in% c("London LEP", "Greater London LSIP", "Greater London Authority MCA") &
-      currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")) {
-      ""
-    } else {
-      paste0(
-        (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ". Click an area to update other charts with LA data."
-      )
-    }
+    paste0(
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ". Click an area to update other charts with LA data."
+    )
   })
 
   ### 2.3.7 Time chart ----
@@ -1625,7 +1566,7 @@ server <- function(input, output, session) {
           "inactiveRate",
           "selfemployed",
           "unemployed",
-          "Inactive"
+          "inactive"
         )) {
           " Switch to Employment metric for occupation and industry breakdowns."
         } else {
@@ -1649,12 +1590,11 @@ server <- function(input, output, session) {
         filter(ranking == 1)
 
       breakdownDirection <-
-        if (exists("breakdownDiff") == TRUE && breakdownDiff$change > 0) {
+        if (exists("breakdownDiff") == TRUE && length(breakdownDiff$change) > 0 && breakdownDiff$change > 0) {
           "higher"
         } else {
           "lower"
         }
-
       paste0(
         input$geoChoice,
         " has a ",
