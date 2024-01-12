@@ -537,7 +537,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               "This group of metrics provide information on training activity for the selected geographic area including data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period."
             ),
             p(
-              "LEP, LSIP and MCA area totals are calculated by aggregating the relevant local authorities."
+              "Where the LEP, LSIP and MCA area totals are not published, area totals are calculated by aggregating the relevant local authorities (see Data sources tab for more information)."
             ),
             # h3(
             #   actionLink("link_to_tabpanel_qualification", "Destinations")
