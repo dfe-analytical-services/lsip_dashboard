@@ -927,7 +927,7 @@ server <- function(input, output, session) {
   groupCount <- reactive({
     validate(need(input$splashGeoType != "", ""))
     if (input$splashGeoType == "LEP") {
-      "38 LEPs."
+      "36 LEPs."
     } else {
       if (input$splashGeoType == "MCA") {
         "11 MCAs."
