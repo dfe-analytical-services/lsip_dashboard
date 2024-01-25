@@ -583,7 +583,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("19 January 2024 (1.3.8)"),
+            p("25 January 2024 (1.3.8)"),
             tags$ul(
               tags$li("Update to latest APS employment data.")
             ),
