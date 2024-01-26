@@ -41,16 +41,19 @@ neatLA <- I_mapLA %>%
   left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH23NM, " MCA")) %>% select(LAD23CD, MCA), by = c("LAD23CD" = "LAD23CD")) %>%
   filter(is.na(LSIP) == FALSE) %>% # remove non England
   mutate(MCA = case_when(LEP == "The London Economic Action Partnership LEP" ~ "Greater London Authority MCA", TRUE ~ MCA)) %>% # add on gla as mca
-  rename(areaName = LAD23NM, areaCode = LAD23CD)
+  rename(areaName = LAD23NM, areaCode = LAD23CD) %>%
+  st_transform(4326) # transform to WG84 that leaflet can plot
 
 neatMCA <- I_mapMCA %>%
   mutate(geog = "MCA") %>% # add geog type
-  rename(areaCode = CAUTH22CD, areaName = CAUTH22NM) # consistent naming
+  rename(areaCode = CAUTH22CD, areaName = CAUTH22NM) %>% # consistent naming
+  st_transform(4326) # transform to WG84 that leaflet can plot
 
 neatLEP <- I_mapLEP %>%
   mutate(geog = "LEP") %>% # add geog type
   rename(areaCode = LEP22CD, areaName = LEP22NM) %>% # consistent naming
-  inner_join(distinct(F_LEP2020, LEP23CD1), by = c("areaCode" = "LEP23CD1")) # remove any areas that are no longer LEPs in 2023 (Black Country and Coventry)
+  inner_join(distinct(F_LEP2020, LEP23CD1), by = c("areaCode" = "LEP23CD1")) %>% # remove any areas that are no longer LEPs in 2023 (Black Country and Coventry)
+  st_transform(4326) # transform to WG84 that leaflet can plot
 
 addEngland <- data.frame(
   areaName = "England", areaCode = "x",
@@ -77,6 +80,7 @@ LSIPmap <- bind_cols(LSIPgeojson, F_LEP2020 %>%
 neatLSIP <- LSIPmap %>%
   rename(areaName = Area, geog = geographic_level) %>%
   mutate(areaCode = paste0("LSIP", row_number())) %>%
+  st_transform(4326) %>%
   mutate(
     LONG = map_dbl(geometry, ~ st_centroid(.x)[[1]]),
     LAT = map_dbl(geometry, ~ st_centroid(.x)[[2]])
@@ -1038,8 +1042,7 @@ C_Geog <- neatGeog %>%
       pivot_wider(names_from = metric, values_from = value)),
     by = c("geogConcat" = "geogConcat")
   ) %>%
-  rename(employmentProjection = employmentProjectionGrowth2023to2035) %>% # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
-  st_transform(4326) # transform to WG84 that leaflet can plot
+  rename(employmentProjection = employmentProjectionGrowth2023to2035) # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
 save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 
 ## 4.2 C_time ----

@@ -583,15 +583,19 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("12 January 2024 (1.3.7)"),
+            p("25 January 2024 (1.3.8)"),
             tags$ul(
-              tags$li("Update to latest ILR FE data data. This includes using some data now published at LEP and LSIP level."),
-              tags$li("Update geographies to latest LEPs and LAs. This includes the closure of Black Country and Coventry & Warwickshire LEPs.")
+              tags$li("Update to latest APS employment data.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("12 January 2024 (1.3.7)"),
+                tags$ul(
+                  tags$li("Update to latest ILR FE data data. This includes using some data now published at LEP and LSIP level."),
+                  tags$li("Update geographies to latest LEPs and LAs. This includes the closure of Black Country and Coventry & Warwickshire LEPs.")
+                ),
                 p("19 December 2023 (1.3.6)"),
                 tags$ul(
                   tags$li("Update to latest business demographies data.")
