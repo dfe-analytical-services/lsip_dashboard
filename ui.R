@@ -769,6 +769,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             choices = c("LEP", "LSIP", "MCA")
           ),
           p(uiOutput("commentMap")),
+          p(uiOutput("commentMapAi")),
           withSpinner(leafletOutput("map")),
           p(uiOutput("mapFoot"))
         ),
@@ -776,6 +777,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           6,
           h3(uiOutput("titleTime")),
           p(uiOutput("commentTime")),
+          p(uiOutput("commentTimeAi")),
           uiOutput("geoComp"),
           withSpinner(plotlyOutput("Splash_time")),
           p(uiOutput("timeFoot"))

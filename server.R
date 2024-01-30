@@ -426,6 +426,400 @@ server <- function(input, output, session) {
       selected = input$geoChoice
     )
   })
+  
+  ### 2.2.2 LLM guess on geography ----
+  geogText <- renderText({ input$geogGuess })
+  #ask LLM when button pressed
+  output$answerGeog <- eventReactive(input$geogGuessButton, {
+    #Generate the file answer when button pressed
+    answer<-ask_q(paste0("I am going to provide a list of Local Enterprise Partnerships (LEP), Local Skills Improvement Plan areas (LSIP), Mayoral Combined Authorities (MCA) and Local Authority Districts (LADU). Which LEP, LSIP, MCA (there may not be an MCA) and LADU does ",geogText()," fall into? Return in the following format: 1. LEP: ... LEP <br> 2. LSIP: ... LSIP <br> 3. LADU: ... LADU <br> 4. MCA: ... MCA. Use only the names in the list. 
+Greater Manchester MCA
+South Yorkshire MCA
+West Yorkshire MCA
+Liverpool City Region MCA
+Tees Valley MCA
+West Midlands MCA
+Cambridgeshire and Peterborough MCA
+West of England MCA
+North East MCA
+North of Tyne MCA
+Cheshire and Warrington LEP
+Cornwall and Isles of Scilly LEP
+Cumbria LEP
+Dorset LEP
+GFirst LEP
+Greater Birmingham and Solihull LEP
+Greater Manchester LEP
+Heart of the South West LEP
+Lancashire LEP
+Leicester and Leicestershire LEP
+Liverpool City Region LEP
+North East LEP
+Stoke-on-Trent and Staffordshire LEP
+Swindon and Wiltshire LEP
+Tees Valley LEP
+Thames Valley Berkshire LEP
+The Marches LEP
+West of England LEP
+Worcestershire LEP
+Buckinghamshire LEP
+Coast to Capital LEP
+D2N2 LEP
+Enterprise M3 LEP
+Hertfordshire LEP
+The London Economic Action Partnership LEP
+New Anglia LEP
+OxLEP LEP
+South Yorkshire LEP
+Solent LEP
+South East LEP
+South East Midlands LEP
+York and North Yorkshire LEP
+The Business Board LEP
+Greater Lincolnshire LEP
+Hull and East Yorkshire LEP
+Leeds City Region LEP
+England
+Hartlepool LADU
+Middlesbrough LADU
+Redcar and Cleveland LADU
+Stockton-on-Tees LADU
+Darlington LADU
+Halton LADU
+Warrington LADU
+Blackburn with Darwen LADU
+Blackpool LADU
+Kingston upon Hull, City of LADU
+East Riding of Yorkshire LADU
+North East Lincolnshire LADU
+North Lincolnshire LADU
+York LADU
+Derby LADU
+Leicester LADU
+Rutland LADU
+Nottingham LADU
+Herefordshire, County of LADU
+Telford and Wrekin LADU
+Stoke-on-Trent LADU
+Bath and North East Somerset LADU
+Bristol, City of LADU
+North Somerset LADU
+South Gloucestershire LADU
+Plymouth LADU
+Torbay LADU
+Swindon LADU
+Peterborough LADU
+Luton LADU
+Southend-on-Sea LADU
+Thurrock LADU
+Medway LADU
+Bracknell Forest LADU
+West Berkshire LADU
+Reading LADU
+Slough LADU
+Windsor and Maidenhead LADU
+Wokingham LADU
+Milton Keynes LADU
+Brighton and Hove LADU
+Portsmouth LADU
+Southampton LADU
+Isle of Wight LADU
+County Durham LADU
+Cheshire East LADU
+Cheshire West and Chester LADU
+Shropshire LADU
+Cornwall LADU
+Isles of Scilly LADU
+Wiltshire LADU
+Bedford LADU
+Central Bedfordshire LADU
+Northumberland LADU
+Bournemouth, Christchurch and Poole LADU
+Dorset LADU
+Buckinghamshire LADU
+North Northamptonshire LADU
+West Northamptonshire LADU
+Cumberland LADU
+Westmorland and Furness LADU
+North Yorkshire LADU
+Somerset LADU
+Cambridge LADU
+East Cambridgeshire LADU
+Fenland LADU
+Huntingdonshire LADU
+South Cambridgeshire LADU
+Amber Valley LADU
+Bolsover LADU
+Chesterfield LADU
+Derbyshire Dales LADU
+Erewash LADU
+High Peak LADU
+North East Derbyshire LADU
+South Derbyshire LADU
+East Devon LADU
+Exeter LADU
+Mid Devon LADU
+North Devon LADU
+South Hams LADU
+Teignbridge LADU
+Torridge LADU
+West Devon LADU
+Eastbourne LADU
+Hastings LADU
+Lewes LADU
+Rother LADU
+Wealden LADU
+Basildon LADU
+Braintree LADU
+Brentwood LADU
+Castle Point LADU
+Chelmsford LADU
+Colchester LADU
+Epping Forest LADU
+Harlow LADU
+Maldon LADU
+Rochford LADU
+Tendring LADU
+Uttlesford LADU
+Cheltenham LADU
+Cotswold LADU
+Forest of Dean LADU
+Gloucester LADU
+Stroud LADU
+Tewkesbury LADU
+Basingstoke and Deane LADU
+East Hampshire LADU
+Eastleigh LADU
+Fareham LADU
+Gosport LADU
+Hart LADU
+Havant LADU
+New Forest LADU
+Rushmoor LADU
+Test Valley LADU
+Winchester LADU
+Broxbourne LADU
+Dacorum LADU
+Hertsmere LADU
+North Hertfordshire LADU
+Three Rivers LADU
+Watford LADU
+Ashford LADU
+Canterbury LADU
+Dartford LADU
+Dover LADU
+Gravesham LADU
+Maidstone LADU
+Sevenoaks LADU
+Folkestone and Hythe LADU
+Swale LADU
+Thanet LADU
+Tonbridge and Malling LADU
+Tunbridge Wells LADU
+Burnley LADU
+Chorley LADU
+Fylde LADU
+Hyndburn LADU
+Lancaster LADU
+Pendle LADU
+Preston LADU
+Ribble Valley LADU
+Rossendale LADU
+South Ribble LADU
+West Lancashire LADU
+Wyre LADU
+Blaby LADU
+Charnwood LADU
+Harborough LADU
+Hinckley and Bosworth LADU
+Melton LADU
+North West Leicestershire LADU
+Oadby and Wigston LADU
+Boston LADU
+East Lindsey LADU
+Lincoln LADU
+North Kesteven LADU
+South Holland LADU
+South Kesteven LADU
+West Lindsey LADU
+Breckland LADU
+Broadland LADU
+Great Yarmouth LADU
+King's Lynn and West Norfolk LADU
+North Norfolk LADU
+Norwich LADU
+South Norfolk LADU
+Ashfield LADU
+Bassetlaw LADU
+Broxtowe LADU
+Gedling LADU
+Mansfield LADU
+Newark and Sherwood LADU
+Rushcliffe LADU
+Cherwell LADU
+Oxford LADU
+South Oxfordshire LADU
+Vale of White Horse LADU
+West Oxfordshire LADU
+Cannock Chase LADU
+East Staffordshire LADU
+Lichfield LADU
+Newcastle-under-Lyme LADU
+South Staffordshire LADU
+Stafford LADU
+Staffordshire Moorlands LADU
+Tamworth LADU
+Babergh LADU
+Ipswich LADU
+Mid Suffolk LADU
+Elmbridge LADU
+Epsom and Ewell LADU
+Guildford LADU
+Mole Valley LADU
+Reigate and Banstead LADU
+Runnymede LADU
+Spelthorne LADU
+Surrey Heath LADU
+Tandridge LADU
+Waverley LADU
+Woking LADU
+North Warwickshire LADU
+Nuneaton and Bedworth LADU
+Rugby LADU
+Stratford-on-Avon LADU
+Warwick LADU
+Adur LADU
+Arun LADU
+Chichester LADU
+Crawley LADU
+Horsham LADU
+Mid Sussex LADU
+Worthing LADU
+Bromsgrove LADU
+Malvern Hills LADU
+Redditch LADU
+Worcester LADU
+Wychavon LADU
+Wyre Forest LADU
+St Albans LADU
+Welwyn Hatfield LADU
+East Hertfordshire LADU
+Stevenage LADU
+East Suffolk LADU
+West Suffolk LADU
+Bolton LADU
+Bury LADU
+Manchester LADU
+Oldham LADU
+Rochdale LADU
+Salford LADU
+Stockport LADU
+Tameside LADU
+Trafford LADU
+Wigan LADU
+Knowsley LADU
+Liverpool LADU
+St. Helens LADU
+Sefton LADU
+Wirral LADU
+Barnsley LADU
+Doncaster LADU
+Rotherham LADU
+Sheffield LADU
+Newcastle upon Tyne LADU
+North Tyneside LADU
+South Tyneside LADU
+Sunderland LADU
+Birmingham LADU
+Coventry LADU
+Dudley LADU
+Sandwell LADU
+Solihull LADU
+Walsall LADU
+Wolverhampton LADU
+Bradford LADU
+Calderdale LADU
+Kirklees LADU
+Leeds LADU
+Wakefield LADU
+Gateshead LADU
+City of London LADU
+Barking and Dagenham LADU
+Barnet LADU
+Bexley LADU
+Brent LADU
+Bromley LADU
+Camden LADU
+Croydon LADU
+Ealing LADU
+Enfield LADU
+Greenwich LADU
+Hackney LADU
+Hammersmith and Fulham LADU
+Haringey LADU
+Harrow LADU
+Havering LADU
+Hillingdon LADU
+Hounslow LADU
+Islington LADU
+Kensington and Chelsea LADU
+Kingston upon Thames LADU
+Lambeth LADU
+Lewisham LADU
+Merton LADU
+Newham LADU
+Redbridge LADU
+Richmond upon Thames LADU
+Southwark LADU
+Sutton LADU
+Tower Hamlets LADU
+Waltham Forest LADU
+Wandsworth LADU
+Westminster LADU
+Brighton and Hove, East Sussex, West Sussex LSIP
+Buckinghamshire LSIP
+Cambridgeshire and Peterborough LSIP
+Cheshire and Warrington LSIP
+Cornwall and the Isles of Scilly LSIP
+Cumbria LSIP
+Derbyshire and Nottinghamshire LSIP
+Dorset LSIP
+Enterprise M3 LSIP
+Essex, Southend-on-Sea and Thurrock LSIP
+G First (Gloucestershire) LSIP
+Greater Lincolnshire LSIP
+Greater London LSIP
+Greater Manchester LSIP
+Heart of the South-West LSIP
+Hertfordshire LSIP
+Hull and East Yorkshire LSIP
+Kent and Medway LSIP
+Lancashire LSIP
+Leicester and Leicestershire LSIP
+Liverpool City Region LSIP
+New Anglia LSIP
+North East LSIP
+North of Tyne LSIP
+Oxfordshire LSIP
+Solent LSIP
+South Yorkshire LSIP
+South-East Midlands LSIP
+Stoke-on-Trent and Staffordshire LSIP
+Swindon and Wiltshire LSIP
+Tees Valley LSIP
+Thames Valley Berkshire LSIP
+The Marches LSIP
+West Midlands and Warwickshire LSIP
+West Yorkshire LSIP
+West of England and North Somerset LSIP
+Worcestershire LSIP
+York and North Yorkshire LSIP
+Greater London Authority MCA
+"))
+    vector<-str_split_1(answer,"1")#split where 1 is mentioned (answer always returns multiple lists)
+  paste0("1",tail(vector,n=1))
+    })
+  
 
   ### 2.2.2 Screenshot----
   output$screenshotOverview <- renderUI({
@@ -520,6 +914,66 @@ server <- function(input, output, session) {
     }
   )
 
+  ### 2.2.3 generate the LLM answer to the question---- 
+  questionValue <- renderText({ input$question })
+  #Generate the file answer when button pressed
+  output$answerDoc <- eventReactive(input$LLM, {
+    currentArea <-C_time %>%
+      filter(geogConcat==input$geoChoiceOver)%>%
+      mutate(
+        sentenceStyle=paste0("In ",chartPeriod, " the ",metric, " in ", geogConcat," was " ,value,".")
+      )
+    write.table(paste(currentArea$sentenceStyle), file = "Data\\AppData\\QuestionLlm.txt", row.names = FALSE)
+    #Generate the file answer when button pressed
+    load_doc("Data/AppData/QuestionLlm.txt",questionValue())
+  })
+  
+  output$summaryArea <- eventReactive(input$geoChoiceOver,{
+    currentArea <-C_time %>%
+      filter(geogConcat==input$geoChoiceOver
+             ,metric %in% c("inemployment","inemploymentRate","achievements_rate_per_100000_population","employmentProjection","sustainedPositiveDestinationKS5Rate","vacancies","enterprisePctMicro"))%>%
+      mutate(
+        sentenceStyle=paste0("In ",chartPeriod, " the ",metric, " in ", geogConcat," was " ,value,".")
+      )
+    write.table(paste(currentArea$sentenceStyle), file = "Data\\AppData\\SummaryLlm.txt", row.names = FALSE)
+    #Generate the file answer when button pressed
+    load_doc("Data/AppData/SummaryLlm.txt","Summarise the most interesting trends in this data. Use four bullet points only (one per line and no intro). Interpret metric names into plain English. Don't just list datapoints. Use 2sf. Use HTML tags")
+  })
+  
+  ### 2.2.4 LLM guess on metric ----
+  answerMetric <- eventReactive(input$LLM, {
+    #Generate the file answer when button pressed
+    answer<-ask_q(paste0("I am going to provide a list of metrics. Which metric(s) (there may not be an one) does the question '",questionValue(),"' match best? Return in a numbered list (maximum 3). Use only the metric names in the list. 
+inemploymentRate
+inemployment
+selfemployed
+unemployed
+inactive
+enterpriseCount
+L3PlusRate
+achievements_Apprenticeships
+achievements_Education_and_training
+participation_rate_per_100000_population
+achievements_rate_per_100000_population
+participation
+achievements
+employmentProjection
+sustainedPositiveDestinationKS4Rate
+sustainedPositiveDestinationKS5Rate
+vacancies
+birthRate
+deathRate
+enterprisePctMicro
+"))
+    answer<-gsub("\n"," ",answer)
+    metrics<-"economicallyactiveRate inemploymentRate employeesRate selfemployedRate unemployedRate inactiveRate inemployment selfemployed unemployed inactive enterpriseCount L3PlusRate achievements Apprenticeships achievements Education and training participation_rate_per_100000_population achievements_rate_per_100000_population participation achievements employmentProjection sustainedPositiveDestinationKS4Rate sustainedPositiveDestinationKS5Rate vacancies birthRate deathRate enterprisePctMicro"
+    commonWords<-mapply(function(x, y) intersect(x, y), 
+                      strsplit(answer, ' '), strsplit(metrics, ' '))
+    print(commonWords[1:3])#just get first 3
+    #print((C_time %>%distinct(metric) %>%filter(metric %in% commonWords))$metric[1])
+    })
+  
+  
   ### 2.2.3 KPIs and charts----
   currentGeogTime <- eventReactive(input$geoChoiceOver, {
     C_time %>%
@@ -671,7 +1125,9 @@ server <- function(input, output, session) {
   #### 2.2.3.1 Employment count ----
   # Employment count KPI
   output$overviewEmpCntKPI <- renderUI({
-    validate(need(input$geoChoiceOver != "", ""))
+    validate(need(input$geoChoiceOver != "", "")
+             ,need("inemployment" %in% answerMetric(), "")
+             )
     createOverviewKPI("inemployment", "number")
   })
 
@@ -679,6 +1135,34 @@ server <- function(input, output, session) {
   output$empLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
     renderOverviewChart(createOverviewChart("inemployment", "number", "In employment"))
+  })
+  
+  output$employedBox<-renderUI({
+    validate(need(input$geoChoiceOver != "", "")
+             ,need("inemployment" %in% answerMetric(), "")
+    )
+    div(
+      h2("Labour market"),
+    h3("People employed"),
+    fluidRow(
+      column(
+        width = 4,
+        div( # need a div to add hover over title
+          title = "Source: APS. Oct-Sep 2022",
+          uiOutput("overviewEmpCntKPI"),
+        )
+      ),
+      column(
+        width = 8,
+        withSpinner(plotlyOutput("empLineChart", height = 81))
+      )
+    ),
+    # third row - link to emp tab
+    fluidRow(
+      class = "rightAlignLinks",
+      actionLink("link_to_tabpanel_employment2", "Find out more about employment volumes")
+    )
+    )
   })
 
   #### 2.2.3.2 Employment rate ----
@@ -696,6 +1180,33 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
       selected = "inemploymentRate"
+    )
+  })
+  
+  output$inemploymentRateBox<-renderUI({
+    validate(need(input$geoChoiceOver != "", "")
+             ,need("inemploymentRate" %in% answerMetric(), "")
+    )
+    div(
+      h3("Employment rate"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: APS. Oct-Sep 2022",
+            uiOutput("overviewEmpRateKPI"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("empRateLineChart", height = 81))
+        )
+      ),
+      # third row - link to emp tab
+      fluidRow(
+        class = "rightAlignLinks",
+        actionLink("link_to_tabpanel_empRate", "Find out more about employment rates")
+      )
     )
   })
 
@@ -719,6 +1230,32 @@ server <- function(input, output, session) {
       selected = "vacancies"
     )
   })
+  
+  output$vacanciesBox<-renderUI({
+    validate(need(input$geoChoiceOver != "", "")
+             ,need("vacancies" %in% answerMetric(), "")
+    )
+    div(
+      h3("Online job adverts (experimental)"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: ONS (Textkernel). Oct 2022. Online job adverts.",
+            uiOutput("overviewJobKPI"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("jobLineChart", height = 81))
+        )
+      ),
+      fluidRow(
+        class = "rightAlignLinks",
+        actionLink("link_to_tabpanel_vacancies2", "Find out more about online job adverts")
+      ) 
+    )
+  })
 
   #### 2.2.3.4 FE achieve ----
   # get EandT data for current area
@@ -731,6 +1268,29 @@ server <- function(input, output, session) {
   output$etLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
     renderOverviewChart(createOverviewChart("achievements Education and training", "number", "Education and training achievements"))
+  })
+  
+  output$achievements_Education_and_trainingBox<-renderUI({
+    validate(need(input$geoChoiceOver != "", "")
+             ,need("achievements_Education_and_training" %in% answerMetric(), "")
+    )
+    div(
+      h2("Skills"),
+      h3("Education and training achievements"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: ILR AY21/22",
+            uiOutput("skisup.ETach"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("etLineChart", height = 81))
+        )
+      )
+    )
   })
 
   #### 2.2.3.5 FE app achieve ----
@@ -753,6 +1313,32 @@ server <- function(input, output, session) {
       selected = "achievements_rate_per_100000_population"
     )
   })
+  
+  output$achievements_ApprenticeshipsBox<-renderUI({
+    validate(need(input$geoChoiceOver != "", "")
+             ,need("achievements_Apprenticeships" %in% answerMetric(), "")
+    )
+    div(
+      h3("Apprenticeship achievements"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: ILR AY21/22",
+            uiOutput("skisup.APPach"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("AppLineChart", height = 81))
+        )
+      ),
+      fluidRow(
+        class = "rightAlignLinks",
+        actionLink("link_to_tabpanel_FE2", "Find out more about skills")
+      )
+    )
+  })
 
   #### 2.2.3.6 KS5 sustained positive destination rate ----
   # destinations overview KPI
@@ -771,6 +1357,32 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
       selected = "sustainedPositiveDestinationKS4Rate"
+    )
+  })
+  
+  output$sustainedPositiveDestinationKS4RateBox<-renderUI({
+    validate(need(input$geoChoiceOver != "", "")
+             ,need("sustainedPositiveDestinationKS4Rate" %in% answerMetric(), "")
+    )
+    div(
+      h3("Key Stage 5 positive destination rate"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: NPD. 2021 academic year",
+            uiOutput("dest.ks5over"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("KS5LineChart", height = 81))
+        )
+      ),
+      fluidRow(
+        class = "rightAlignLinks",
+        actionLink("link_to_tabpanel_destinations2", "Find out more about destinations")
+      )
     )
   })
 
@@ -794,6 +1406,32 @@ server <- function(input, output, session) {
       selected = "enterpriseCount"
     )
   })
+  
+  output$enterpriseCountBox<-renderUI({
+    validate(need(input$geoChoiceOver != "", "")
+             ,need("enterpriseCount" %in% answerMetric(), "")
+    )
+    div(
+      h3("Share of businesses with 0-9 employees (micro)"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: UBC. 2022 calendar year",
+            uiOutput("UBC.micro"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("UBCLineChart", height = 81))
+        )
+      ),
+      fluidRow(
+        class = "rightAlignLinks",
+        actionLink("link_to_tabpanel_enterprise2", "Find out more about businesses")
+      )
+    )
+  })
 
   #### 2.2.3.8 Qualifications NVQ ----
   # NVQ3 or above overview KPI
@@ -813,6 +1451,33 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
       selected = "L3PlusRate"
+    )
+  })
+  
+  output$L3PlusRateBox<-renderUI({
+    validate(need(input$geoChoiceOver != "", "")
+             ,need("L3PlusRate" %in% answerMetric(), "")
+    )
+    div(
+      h3("People with a qualification at level 3 or above"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: APS. 2021 calendar year",
+            uiOutput("APS.nvq3plus"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("Nvq3plusLineChart", height = 81))
+        )
+      ),
+      # third row - link to emp tab
+      fluidRow(
+        class = "rightAlignLinks",
+        actionLink("link_to_tabpanel_qualification2", "Find out more about qualification level")
+      )
     )
   })
 
@@ -898,7 +1563,122 @@ server <- function(input, output, session) {
       selected = "employmentProjection"
     )
   })
+  
+  output$employmentProjectionBox<-renderUI({
+    validate(need(input$geoChoiceOver != "", "")
+             ,need("employmentProjection" %in% answerMetric(), "")
+    )
+    div(
+      h3("Year on year projected employment growth"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: Skills Imperative 2035.",
+            uiOutput("wfOverviewKpi"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("wfOverviewChart", height = 81))
+        )
+      ),
+      fluidRow(
+        class = "rightAlignLinks",
+        actionLink("link_to_tabpanel_wf", "Find out more about employment projections")
+      ) 
+    )
+  })
 
+  #### 2.2.3.10 best match map----
+  #### 2.3.5.3 Map ----
+  output$mapOverview <- renderLeaflet({
+    validate(
+      need(input$geoChoice != "", ""),
+      need(input$splashGeoType != "", "")
+    )
+    mapData <- C_Geog %>% filter(geog == "LEP")
+    pal <- colorNumeric("Blues", mapData[[answerMetric()[1]]])
+    labels <-
+      # if a percentage then format as %, else big number
+      if (str_sub(answerMetric()[1], start = -4) == "Rate" | answerMetric()[1] == "employmentProjection") {
+        sprintf(
+          "<strong>%s</strong><br/>%s: %s%%",
+          mapData$areaName,
+          (I_DataText %>% filter(metric == answerMetric()[1]))$mapPop,
+          round(mapData[[answerMetric()[1]]] * 100)
+        ) %>% lapply(htmltools::HTML)
+      } else {
+        sprintf(
+          "<strong>%s</strong><br/>%s: %s",
+          mapData$areaName,
+          (I_DataText %>% filter(metric == answerMetric()[1]))$mapPop,
+          format(round(mapData[[answerMetric()[1]]]), big.mark = ",")
+        ) %>% lapply(htmltools::HTML)
+      }
+    
+    leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
+      addProviderTiles(providers$CartoDB.Positron) %>%
+      addPolygons(
+        data = mapData,
+        fillColor = ~ pal(mapData[[answerMetric()[1]]]),
+        fillOpacity = 1,
+        color = "black",
+        layerId = ~areaCode,
+        weight = 1,
+        highlightOptions = highlightOptions(
+          weight = 2,
+          bringToFront = TRUE
+        ),
+        label = labels,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "12px",
+          direction = "auto"
+        )
+      ) %>%
+      setView(
+        lng = -1.6,
+        lat = 52.8,
+        zoom = 5.7
+      )
+  })
+  observe({
+    validate(need("geoChoice" %in% names(input), ""))
+    mapData <- C_Geog %>% filter(geogConcat == input$geoChoice)
+    labels <-
+      # if a percentage then format as %, else big number
+      if (str_sub(answerMetric()[1], start = -4) == "Rate" | answerMetric()[1] == "employmentProjection") {
+        sprintf(
+          "<strong>%s</strong><br/>%s: %s%%",
+          mapData$areaName,
+          (I_DataText %>% filter(metric == answerMetric()[1]))$mapPop,
+          round(mapData[[answerMetric()[1]]] * 100)
+        ) %>% lapply(htmltools::HTML)
+      } else {
+        sprintf(
+          "<strong>%s</strong><br/>%s: %s",
+          mapData$areaName,
+          (I_DataText %>% filter(metric == answerMetric()[1]))$mapPop,
+          format(round(mapData[[answerMetric()[1]]]), big.mark = ",")
+        ) %>% lapply(htmltools::HTML)
+      }
+    proxy <- leafletProxy("map")
+    addPopups(
+      proxy,
+      lng = C_Geog$LONG[C_Geog$geogConcat == input$geoChoice],
+      lat = C_Geog$LAT[C_Geog$geogConcat == input$geoChoice],
+      popup = labels,
+      layerId = "popup",
+      options = popupOptions(
+        className = "myspecial-popup",
+        textsize = "12px",
+        direction = "auto",
+        closeOnClick = TRUE,
+        closeButton = FALSE
+      )
+    )
+  })
   ## 2.3 Local skills----
 
   ### 2.3.2 Reusable variables----
@@ -1070,6 +1850,25 @@ server <- function(input, output, session) {
       groupCount()
     )
   })
+  #### 2.3.5.2 Comment AI----
+  output$commentMapAi <- renderUI({
+    validate(
+      need("geoChoice" %in% names(input), ""),
+      need(input$geoChoice != "", "")
+    )
+
+    currentArea <-C_Geog %>%
+         filter(geog == input$splashGeoType)%>%
+      select(area=geogConcat,input$splashMetric)%>%
+      st_drop_geometry()%>%
+      mutate(#eval(parse(text =input$splashMetric))=signif(input$splashMetric)),3),
+             sentenceStyle=paste0(input$splashMetric, " in ", area," is " ,eval(parse(text =input$splashMetric)),".")
+      )
+    #write.csv(currentArea%>%select(-sentenceStyle), "Data\\AppData\\timeLlm.csv", row.names = FALSE)
+   write.table(paste(currentArea$sentenceStyle), file = "Data\\AppData\\mapLlm.txt", row.names = FALSE)
+    #Generate the file answer when button pressed
+    load_doc("Data/AppData/mapLlm.txt",paste0("How does the data for ",input$geoChoice," compare to England and the areas geographically nearby. In two bullets points and use 2sf"))
+  })
 
   #### 2.3.5.3 Map ----
   output$map <- renderLeaflet({
@@ -1160,6 +1959,7 @@ server <- function(input, output, session) {
     )
   })
 
+  
   #### 2.3.5.4 Map footnote ----
   output$mapFoot <- renderUI({
     paste0(
@@ -1341,6 +2141,26 @@ server <- function(input, output, session) {
       # ,"It has the "
       # , areaRank, suff, " fastest growing ", currentMetric(), " of the ", groupCount)
     )
+  })
+  
+  output$commentTimeAi <- renderUI({
+    validate(
+      need("geoChoice" %in% names(input), ""),
+      need(input$geoChoice != "", "")
+    )
+    currentArea <- C_time %>%
+      filter(
+        geogConcat %in% c(input$geoChoice,"England"),
+        metric == input$splashMetric
+      )%>%
+      select(area=geogConcat,metric,timePeriod,value)%>%
+      mutate(value=signif(value,2)
+             ,sentenceStyle=paste0(metric, " in ", area," in " ,timePeriod, " is " ,value,".")
+      )
+    write.csv(currentArea%>%select(-sentenceStyle), "Data\\AppData\\timeLlm.csv", row.names = FALSE)
+    write.table(paste(currentArea$sentenceStyle), file = "Data\\AppData\\timeLlm.txt", row.names = FALSE)
+    #Generate the file answer when button pressed
+      load_doc("Data/AppData/timeLlm.txt","Summarise the data over time in one sentence (using 2sf)")
   })
 
   #### 2.3.7.2 Chart ----

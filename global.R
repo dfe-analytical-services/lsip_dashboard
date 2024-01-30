@@ -28,6 +28,9 @@ shhh(library(shinyalert)) # cookie pop up
 shhh(library(shinycssloaders)) # spinners
 shhh(library(RColorBrewer)) # map colours
 shhh(library(dfeshiny)) # map colours
+shhh(library(reticulate)) # run python scripts
+
+reticulate::source_python('./R/loadRunLlm.py')
 
 google_analytics_key <- "MMB6NG2FE1"
 
