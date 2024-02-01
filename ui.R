@@ -173,6 +173,11 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     }
 }
 
+ /* text inout width 100%*/
+.shiny-input-container:not(.shiny-input-container-inline) {
+  width: 100%;
+}
+
 "
       )
     ),
@@ -380,7 +385,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     id = "navbar",
     widths = c(2, 10),
     well = FALSE,
-    selected = "Overview",
+    selected = "Ask away",
 
     ## 2.1 User guide ----
 
@@ -712,7 +717,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     # end of homepage Panel
 
     ## 2.2 Overview ----
-    panel_overview(),
+    #panel_overview(),
+    
+    ## 2.2 Overview ----
+    panel_question(),
 
     ## 2.3 Local skills ----
     tabPanel(

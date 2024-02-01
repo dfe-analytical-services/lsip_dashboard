@@ -820,7 +820,24 @@ Greater London Authority MCA
   paste0("1",tail(vector,n=1))
     })
   
-
+  ### 2.2.2 LLM guess on geography ----
+  geogQuestionText <- renderText({ input$questionGuess })
+  #ask LLM when button pressed
+  questionGuessArea <- eventReactive(input$questionButton, {
+    #Generate the file answer when button pressed
+    answer<-ask_q(paste0("There might be a geographical area in this sentence: ",geogQuestionText(), ". Which of the following list of Local Enterprise Partnerships (LEP), Local Skills Improvement Plan areas (LSIP), Mayoral Combined Authorities (MCA) and Local Authority Districts (LADU) does the area best match or fall into. Return only a name from the given list in the given format. "
+                         ,areaList
+))
+    print(answer)
+    answer<-gsub('[.]','',answer)
+    commonWords<-mapply(function(x, y) intersect(x, y), 
+                        strsplit(answer, ' '), strsplit(areaList, '\n'))
+    print(gsub("_"," ",commonWords[1]))#just get first 
+  })
+  
+  questionGuessGeog<-reactive({print(tail(strsplit(questionGuessArea(),split=" ")[[1]],1))})
+  
+output$questionGuessAreaName<-renderText({questionGuessArea()})
   ### 2.2.2 Screenshot----
   output$screenshotOverview <- renderUI({
     capture::capture(
@@ -928,6 +945,19 @@ Greater London Authority MCA
     load_doc("Data/AppData/QuestionLlm.txt",questionValue())
   })
   
+  ### 2.2.3 generate the LLM answer to the main question---- 
+  #Generate the file answer when button pressed
+  output$answerMainQuestion <- eventReactive(questionGuessArea(), {
+    currentArea <-C_time %>%
+      filter(geogConcat==questionGuessArea())%>%
+      mutate(
+        sentenceStyle=paste0("In ",chartPeriod, " the ",metric, " in ", geogConcat," was " ,value,".")
+      )
+    write.table(paste(currentArea$sentenceStyle), file = "Data\\AppData\\MainQuestionLlm.txt", row.names = FALSE)
+    #Generate the file answer when button pressed
+    load_doc("Data/AppData/MainQuestionLlm.txt",paste0(geogQuestionText(),". Use 2sf. Do not just list datapoints."))
+  })
+  
   output$summaryArea <- eventReactive(input$geoChoiceOver,{
     currentArea <-C_time %>%
       filter(geogConcat==input$geoChoiceOver
@@ -943,28 +973,9 @@ Greater London Authority MCA
   ### 2.2.4 LLM guess on metric ----
   answerMetric <- eventReactive(input$LLM, {
     #Generate the file answer when button pressed
-    answer<-ask_q(paste0("I am going to provide a list of metrics. Which metric(s) (there may not be an one) does the question '",questionValue(),"' match best? Return in a numbered list (maximum 3). Use only the metric names in the list. 
-inemploymentRate
-inemployment
-selfemployed
-unemployed
-inactive
-enterpriseCount
-L3PlusRate
-achievements_Apprenticeships
-achievements_Education_and_training
-participation_rate_per_100000_population
-achievements_rate_per_100000_population
-participation
-achievements
-employmentProjection
-sustainedPositiveDestinationKS4Rate
-sustainedPositiveDestinationKS5Rate
-vacancies
-birthRate
-deathRate
-enterprisePctMicro
-"))
+    answer<-ask_q(paste0("I am going to provide a list of metrics. Which metric(s) (there may not be an one) does the question '",questionValue(),"' match best? Return in a numbered list (maximum 3). Use only the metric names in the list. "
+,metricList
+))
     answer<-gsub("\n"," ",answer)
     metrics<-"economicallyactiveRate inemploymentRate employeesRate selfemployedRate unemployedRate inactiveRate inemployment selfemployed unemployed inactive enterpriseCount L3PlusRate achievements Apprenticeships achievements Education and training participation_rate_per_100000_population achievements_rate_per_100000_population participation achievements employmentProjection sustainedPositiveDestinationKS4Rate sustainedPositiveDestinationKS5Rate vacancies birthRate deathRate enterprisePctMicro"
     commonWords<-mapply(function(x, y) intersect(x, y), 
@@ -973,6 +984,30 @@ enterprisePctMicro
     #print((C_time %>%distinct(metric) %>%filter(metric %in% commonWords))$metric[1])
     })
   
+  ### 2.2.4 LLM guess on metric ----
+  questionGuessMetric <- eventReactive(input$questionButton,{
+    #Generate the file answer when button pressed
+    answer<-ask_q(paste0("I am going to provide a list of metrics. Which metric(s) (there may not be an one) does the question '",geogQuestionText(),"' match best? Return in a numbered list (maximum 3). Use only the metric names in the list. "
+                         ,metricListKpi
+    ))
+    answer<-gsub("\n"," ",answer)
+    commonWords<-mapply(function(x, y) intersect(x, y), 
+                        strsplit(answer, ' '), strsplit(metricListKpi, '\n'))
+    print(commonWords[1:3])#just get first 3
+    #print((C_time %>%distinct(metric) %>%filter(metric %in% commonWords))$metric[1])
+  })
+  
+  questionGuessMetricMap <- eventReactive(input$questionButton,{
+    #Generate the file answer when button pressed
+    answer<-ask_q(paste0("I am going to provide a list of metrics. Which metric(s) (there may not be an one) does the question '",geogQuestionText(),"' match best? Return in a numbered list (maximum 3). Use only the metric names in the list. "
+                         ,metricList
+    ))
+    answer<-gsub("\n"," ",answer)
+    commonWords<-mapply(function(x, y) intersect(x, y), 
+                        strsplit(answer, ' '), strsplit(metricList, '\n'))
+    print(commonWords[1:3])#just get first 3
+    #print((C_time %>%distinct(metric) %>%filter(metric %in% commonWords))$metric[1])
+  })
   
   ### 2.2.3 KPIs and charts----
   currentGeogTime <- eventReactive(input$geoChoiceOver, {
@@ -1679,6 +1714,639 @@ enterprisePctMicro
       )
     )
   })
+  
+  #2.2.4 Main question page ----
+  
+  output$questionHeading<-renderText({paste0("Here's some more relevant info to your question on ",questionGuessArea())})
+  ### 2.2.3 KPIs and charts----
+  currentGeogTime2 <- eventReactive(questionGuessArea(), {
+    C_time %>%
+      filter(geogConcat == questionGuessArea())
+  })
+  
+  # create a function to build the overview KPIs
+  createOverviewKPI2 <- function(metricName, format) {
+    # "format" can either be "percent" or "number"
+    # set metric
+    currentGeogTimeMetric <- currentGeogTime2() %>% filter(metric == metricName)
+    latest <- (currentGeogTimeMetric %>% filter(latest == 1))$value
+    change <- latest - (currentGeogTimeMetric %>% filter(latest == -1))$value
+    
+    # print with formatting
+    h4(
+      span((currentGeogTimeMetric %>% filter(latest == 1))$chartPeriod, style = "font-size: 16px;font-weight:normal;"),
+      br(),
+      if (format == "percent") {
+        paste0(format(100 * latest, digit = 2), "%")
+      } else {
+        format(latest, big.mark = ",")
+      },
+      br(),
+      span(
+        if (format == "percent") {
+          paste0(sprintf("%+.0f", 100 * change), "ppts")
+        } else {
+          format_pm(change)
+        }, # plus-minus and comma sep formatting
+        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
+        .noWS = c("before", "after") # remove whitespace
+      ),
+      br(),
+      style = "font-size: 21px"
+    )
+  }
+  
+  # create a function to build the overview charts
+  createOverviewChart2 <- function(metricName, format, chartLabel) {
+    # set metric
+    currentGeogTimeMetric <- currentGeogTime2() %>% filter(metric == metricName)
+    change <- (currentGeogTimeMetric %>% filter(latest == 1))$value -
+      (currentGeogTimeMetric %>% filter(latest == -1))$value
+    line <- if (format == "percent") {
+      bind_rows(
+        currentGeogTimeMetric,
+        englandTime %>% filter(metric == metricName)
+      )
+    } else {
+      currentGeogTimeMetric
+    }
+    timeChop <- (currentGeogTimeMetric %>% filter(latest == -1))$timePeriod # The point at which to apply the red/green colouring
+    
+    ggplot(
+      line,
+      aes(
+        x = as.Date(timePeriod),
+        y = value,
+        group = geogConcat,
+        text = paste0(
+          geogConcat, "<br>",
+          chartPeriod, "<br>",
+          chartLabel, ": ",
+          if (format == "percent") {
+            paste0(format(100 * value, digit = 2), "%")
+          } else {
+            format(value, big.mark = ",")
+          },
+          "<br>"
+        )
+      )
+    ) +
+      geom_line(data = line %>% filter(timePeriod <= timeChop, geogConcat == questionGuessArea())) +
+      geom_ribbon(
+        data = line %>% filter(timePeriod >= timeChop, geogConcat == questionGuessArea()),
+        aes(ymin = min(value), ymax = value),
+        fill = ifelse(change > 0, "#00703c", "#d4351c"),
+        alpha = 0.3
+      ) +
+      geom_line(
+        data = line %>% filter(timePeriod >= timeChop, geogConcat == questionGuessArea()),
+        color = ifelse(change > 0, "#00703c", "#d4351c")
+      ) +
+      theme_classic() +
+      theme(
+        axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank()#,
+        #panel.background = element_rect(fill = "#f3f2f1"),
+        #plot.background = element_rect(fill = "#f3f2f1")
+      ) +
+      scale_y_continuous(
+        labels =
+          if (format == "percent") {
+            scales::percent_format(accuracy = 1)
+          } else {
+            label_number(accuracy = 1, scale_cut = cut_short_scale())
+          },
+        breaks =
+          if (format == "percent") {
+            c((C_axisMinMax %>% filter(metric == metricName))$minAxis, (C_axisMinMax %>% filter(metric == metricName))$maxAxis)
+          } else {
+            c(min(line$value), max(line$value))
+          },
+        limits =
+          if (format == "percent") {
+            c((C_axisMinMax %>% filter(metric == metricName))$minAxis - 0.001, (C_axisMinMax %>% filter(metric == metricName))$maxAxis)
+          } else {
+            c(min(line$value), max(line$value))
+          }
+      ) +
+      scale_x_date(
+        name = "My date axis title",
+        date_breaks = "1 years",
+        date_labels = "%Y"
+      ) +
+      if (format == "percent") {
+        geom_line(
+          data = line %>% filter(geogConcat == "England"),
+          alpha = 0.5
+        )
+      } else {}
+  }
+  
+  #### 2.2.3.1 Employment count ----
+  # Employment count KPI
+  output$overviewEmpCntKPI2 <- renderUI({
+    validate(need(questionGuessArea() != "", "")
+             ,need("inemployment" %in% questionGuessMetric(), "")
+    )
+    createOverviewKPI2("inemployment", "number")
+  })
+  
+  # render empchart
+  output$empLineChart2 <- renderPlotly({
+    validate(need(questionGuessArea() != "", "")) # if area not yet loaded don't try to load
+    renderOverviewChart(createOverviewChart2("inemployment", "number", "In employment"))
+  })
+  
+  output$employedBox2<-renderUI({
+    validate(need(questionGuessArea() != "", "")
+             ,need("inemployment" %in% questionGuessMetric(), "")
+    )
+    div(column(6,
+      #h2("Labour market"),
+      h3("People employed"),
+      fluidRow(
+        column(
+          width = 4,
+          div( # need a div to add hover over title
+            title = "Source: APS. Oct-Sep 2022",
+            uiOutput("overviewEmpCntKPI2"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("empLineChart2", height = 81))
+        )
+      )
+    )
+    )
+  })
+  
+  #### 2.2.3.2 Employment rate ----
+  output$overviewEmpRateKPI2 <- renderUI({
+    validate(need(questionGuessArea() != "", ""))
+    createOverviewKPI2("inemploymentRate", "percent")
+  })
+  
+  output$empRateLineChart2 <- renderPlotly({
+    validate(need(questionGuessArea() != "", ""))
+    renderOverviewChart(createOverviewChart2("inemploymentRate", "percent", "Employment rate"))
+  })
+  
+  output$inemploymentRateBox2<-renderUI({
+    validate(need(questionGuessArea() != "", "")
+             ,need("inemploymentRate" %in% questionGuessMetric(), "")
+    )
+    div(column(6,
+      h3("Employment rate"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: APS. Oct-Sep 2022",
+            uiOutput("overviewEmpRateKPI2"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("empRateLineChart2", height = 81))
+        )
+      )
+    )
+    )
+  })
+  
+  #### 2.2.3.3 Job adverts ----
+  # Vacancy kpi
+  output$overviewJobKPI2 <- renderUI({
+    validate(need(questionGuessArea() != "", ""))
+    createOverviewKPI2("vacancies", "number")
+  })
+  
+  # Vacancy chart
+  output$jobLineChart2 <- renderPlotly({
+    validate(need(questionGuessArea() != "", ""))
+    renderOverviewChart(createOverviewChart2("vacancies", "number", "Online job adverts"))
+  })
+  
+  output$vacanciesBox2<-renderUI({
+    validate(need(questionGuessArea() != "", "")
+             ,need("vacancies" %in% questionGuessMetric(), "")
+    )
+    div(column(6,
+      h3("Online job adverts (experimental)"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: ONS (Textkernel). Oct 2022. Online job adverts.",
+            uiOutput("overviewJobKPI2"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("jobLineChart2", height = 81))
+        )
+      )
+    )
+    )
+  })
+  
+  #### 2.2.3.4 FE achieve ----
+  # get EandT data for current area
+  output$skisup.ETach2 <- renderUI({
+    validate(need(questionGuessArea() != "", ""))
+    createOverviewKPI2("achievements Education and training", "number")
+  })
+  
+  # e and t chart
+  output$etLineChart2 <- renderPlotly({
+    validate(need(questionGuessArea() != "", ""))
+    renderOverviewChart(createOverviewChart2("achievements Education and training", "number", "Education and training achievements"))
+  })
+  
+  output$achievements_Education_and_trainingBox2<-renderUI({
+    validate(need(questionGuessArea() != "", "")
+             ,need("achievements_Education_and_training" %in% questionGuessMetric(), "")
+    )
+    div(column(6,
+      #h2("Skills"),
+      h3("Education and training achievements"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: ILR AY21/22",
+            uiOutput("skisup.ETach2"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("etLineChart2", height = 81))
+        )
+      )
+    )
+    )
+  })
+  
+  #### 2.2.3.5 FE app achieve ----
+  # get App data for current area
+  output$skisup.APPach2 <- renderUI({
+    validate(need(questionGuessArea() != "", ""))
+    createOverviewKPI2("achievements Apprenticeships", "number")
+  })
+  
+  # app chart
+  output$AppLineChart2 <- renderPlotly({
+    validate(need(questionGuessArea() != "", ""))
+    renderOverviewChart(createOverviewChart2("achievements Apprenticeships", "number", "Apprenticeship achievements"))
+  })
+  
+  output$achievements_ApprenticeshipsBox2<-renderUI({
+    validate(need(questionGuessArea() != "", "")
+             ,need("achievements_Apprenticeships" %in% questionGuessMetric(), "")
+    )
+    div(column(6,
+      h3("Apprenticeship achievements"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: ILR AY21/22",
+            uiOutput("skisup.APPach2"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("AppLineChart2", height = 81))
+        )
+      )
+    )
+    )
+  })
+  
+  #### 2.2.3.6 KS5 sustained positive destination rate ----
+  # destinations overview KPI
+  output$dest.ks5over2 <- renderUI({
+    validate(need(questionGuessArea() != "", ""))
+    createOverviewKPI2("sustainedPositiveDestinationKS5Rate", "percent")
+  })
+  
+  output$KS5LineChart2 <- renderPlotly({
+    validate(need(questionGuessArea() != "", ""))
+    renderOverviewChart(createOverviewChart2("sustainedPositiveDestinationKS5Rate", "percent", "KS5 sustained positive destination rate"))
+  })
+  
+  output$sustainedPositiveDestinationKS4RateBox2<-renderUI({
+    validate(need(questionGuessArea() != "", "")
+             ,need("sustainedPositiveDestinationKS4Rate" %in% questionGuessMetric(), "")
+    )
+    div(column(6,
+      h3("Key Stage 5 positive destination rate"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: NPD. 2021 academic year",
+            uiOutput("dest.ks5over2"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("KS5LineChart2", height = 81))
+        )
+      )
+    )
+    )
+  })
+  
+  #### 2.2.3.7 Micro enterprise ----
+  # enterprise overview KPI
+  output$UBC.micro2 <- renderUI({
+    validate(need(questionGuessArea() != "", ""))
+    createOverviewKPI2("enterprisePctMicro", "percent")
+  })
+  
+  # micro enterprise chart
+  output$UBCLineChart2 <- renderPlotly({
+    validate(need(questionGuessArea() != "", ""))
+    renderOverviewChart(createOverviewChart2("enterprisePctMicro", "percent", "Share of businesses with 0-9 employees (micro)"))
+  })
+  
+  output$enterpriseCountBox2<-renderUI({
+    validate(need(questionGuessArea() != "", "")
+             ,need("enterpriseCount" %in% questionGuessMetric(), "")
+    )
+    div(column(6,
+      h3("Share of businesses with 0-9 employees (micro)"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: UBC. 2022 calendar year",
+            uiOutput("UBC.micro2"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("UBCLineChart2", height = 81))
+        )
+      )
+    )
+    )
+  })
+  
+  #### 2.2.3.8 Qualifications NVQ ----
+  # NVQ3 or above overview KPI
+  output$APS.nvq3plus2 <- renderUI({
+    validate(need(questionGuessArea() != "", ""))
+    createOverviewKPI2("L3PlusRate", "percent")
+  })
+  
+  # qualification chart
+  output$Nvq3plusLineChart2 <- renderPlotly({
+    validate(need(questionGuessArea() != "", ""))
+    renderOverviewChart(createOverviewChart2("L3PlusRate", "percent", "People with a qualification at level 3 or above"))
+  })
+  
+  output$L3PlusRateBox2<-renderUI({
+    validate(need(questionGuessArea() != "", "")
+             ,need("L3PlusRate" %in% questionGuessMetric(), "")
+    )
+    div(column(6,
+      h3("People with a qualification at level 3 or above"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: APS. 2021 calendar year",
+            uiOutput("APS.nvq3plus2"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("Nvq3plusLineChart2", height = 81))
+        )
+      )
+    )
+    )
+  })
+  
+  #### 2.2.3.9 Working futures ----
+  # This is in a slightly different format so the functions aren't used
+  output$wfOverviewKpi2 <- renderUI({
+    validate(need(questionGuessArea() != "", "")
+             ,need(questionGuessGeog() != "LADU",""))
+    change <- (C_Geog %>%
+                 filter(
+                   geogConcat == questionGuessArea()
+                 ))$employmentProjection
+    
+    # print with formatting
+    h4(
+      paste0(format(100 * change, digit = 1), "%"),
+      br(),
+      span(
+        "growth 2023 to 2035",
+        style = paste0("font-size: 16px;color:", cond_color(change > 0)) # colour formating
+        ,
+        .noWS = c("before", "after") # remove whitespace
+      ),
+      br(),
+      style = "font-size: 21px"
+    )
+  })
+  
+  # qualification chart
+  wfLineChart2 <- eventReactive(questionGuessArea(), {
+    wfgeo <- C_time %>%
+      filter(
+        (geogConcat == questionGuessArea()| geogConcat == "England"),
+        metric == "employmentProjection"
+      )
+    
+    ggplot(wfgeo, aes(
+      x = substr(chartPeriod, 3, 4),
+      y = value,
+      group = geogConcat,
+      text = paste0(
+        "Year: ",
+        chartPeriod,
+        "<br>",
+        "Area: ",
+        geogConcat,
+        "<br>",
+        "Year on year growth: ",
+        scales::percent(round(value, 3)),
+        "<br>"
+      )
+    )) +
+      geom_line(data = wfgeo %>% filter(geogConcat == questionGuessArea())) +
+      geom_line(
+        data = wfgeo %>% filter(geogConcat == "England"),
+        alpha = 0.5
+      ) +
+      theme_classic() +
+      theme(
+        axis.line = element_blank(),
+        # axis.text.y = element_blank(),
+        axis.ticks = element_blank(),
+        axis.title = element_blank()#,
+        #panel.background = element_rect(fill = "#f3f2f1"),
+        #plot.background = element_rect(fill = "#f3f2f1")
+      ) +
+      scale_y_continuous(
+        labels = scales::percent_format(accuracy = 2),
+        breaks = c((C_axisMinMax %>% filter(metric == "employmentProjection"))$minAxis, (C_axisMinMax %>% filter(metric == "employmentProjection"))$maxAxis),
+        limits = c((C_axisMinMax %>% filter(metric == "employmentProjection"))$minAxis - 0.001, (C_axisMinMax %>% filter(metric == "employmentProjection"))$maxAxis)
+      ) +
+      scale_x_discrete(breaks = c("23", "25", "27", "29", "31", "33", "35"))
+  })
+  
+  output$wfOverviewChart2 <- renderPlotly({
+    validate(need(questionGuessArea() != "", ""))
+    renderOverviewChart(wfLineChart2())
+  })
+  
+  output$employmentProjectionBox2<-renderUI({
+    validate(need(questionGuessArea() != "", "")
+             ,need("employmentProjection" %in% questionGuessMetric(), "")
+             ,need(questionGuessGeog() != "LADU","")
+    )
+    div(column(6,
+      h3("Year on year projected employment growth"),
+      fluidRow(
+        column(
+          width = 4,
+          div(
+            title = "Source: Skills Imperative 2035.",
+            uiOutput("wfOverviewKpi2"),
+          )
+        ),
+        column(
+          width = 8,
+          withSpinner(plotlyOutput("wfOverviewChart2", height = 81))
+        )
+      )
+    )
+    )
+  })
+  
+  #### 2.2.3.10 best match map----
+  output$questionMapHeading<-renderText({
+    paste0((I_DataText %>% filter(metric == questionGuessMetricMap()[1]))$timeTitle, "  across England")
+  })
+  
+  #### 2.3.5.3 Map ----
+  output$mapOverview2 <- renderLeaflet({
+    validate(
+      need(questionGuessArea() != "", ""),
+      #need(input$splashGeoType != "", "")
+    )
+    mapData <- C_Geog %>% filter(geog == questionGuessGeog())
+    pal <- colorNumeric("Blues", mapData[[questionGuessMetricMap()[1]]])
+    labels <-
+      # if a percentage then format as %, else big number
+      if (str_sub(questionGuessMetricMap()[1], start = -4) == "Rate" | questionGuessMetricMap()[1] == "employmentProjection") {
+        sprintf(
+          "<strong>%s</strong><br/>%s: %s%%",
+          mapData$areaName,
+          (I_DataText %>% filter(metric == questionGuessMetricMap()[1]))$mapPop,
+          round(mapData[[questionGuessMetricMap()[1]]] * 100)
+        ) %>% lapply(htmltools::HTML)
+      } else {
+        sprintf(
+          "<strong>%s</strong><br/>%s: %s",
+          mapData$areaName,
+          (I_DataText %>% filter(metric == questionGuessMetricMap()[1]))$mapPop,
+          format(round(mapData[[questionGuessMetricMap()[1]]]), big.mark = ",")
+        ) %>% lapply(htmltools::HTML)
+      }
+    
+    leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
+      addProviderTiles(providers$CartoDB.Positron) %>%
+      addPolygons(
+        data = mapData,
+        fillColor = ~ pal(mapData[[questionGuessMetricMap()[1]]]),
+        fillOpacity = 1,
+        color = "black",
+        layerId = ~areaCode,
+        weight = 1,
+        highlightOptions = highlightOptions(
+          weight = 2,
+          bringToFront = TRUE
+        ),
+        label = labels,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "12px",
+          direction = "auto"
+        )
+      ) %>%
+      setView(
+        lng = -1.6,
+        lat = 52.8,
+        zoom = 5.7
+      )
+  })
+  observe({
+    validate( need(questionGuessArea() != "", ""))
+    mapData <- C_Geog %>% filter(geogConcat == questionGuessArea())
+    labels <-
+      # if a percentage then format as %, else big number
+      if (str_sub(questionGuessMetricMap()[1], start = -4) == "Rate" | questionGuessMetricMap()[1] == "employmentProjection") {
+        sprintf(
+          "<strong>%s</strong><br/>%s: %s%%",
+          mapData$areaName,
+          (I_DataText %>% filter(metric == questionGuessMetricMap()[1]))$mapPop,
+          round(mapData[[questionGuessMetricMap()[1]]] * 100)
+        ) %>% lapply(htmltools::HTML)
+      } else {
+        sprintf(
+          "<strong>%s</strong><br/>%s: %s",
+          mapData$areaName,
+          (I_DataText %>% filter(metric == questionGuessMetricMap()[1]))$mapPop,
+          format(round(mapData[[questionGuessMetricMap()[1]]]), big.mark = ",")
+        ) %>% lapply(htmltools::HTML)
+      }
+    proxy <- leafletProxy("mapOverview2")
+    addPopups(
+      proxy,
+      lng = C_Geog$LONG[C_Geog$geogConcat == questionGuessArea()],
+      lat = C_Geog$LAT[C_Geog$geogConcat == questionGuessArea()],
+      popup = labels,
+      layerId = "popup",
+      options = popupOptions(
+        className = "myspecial-popup",
+        textsize = "12px",
+        direction = "auto",
+        closeOnClick = TRUE,
+        closeButton = FALSE
+      )
+    )
+  })
+  
+  #### 2.3.5.2 Comment map AI----
+  output$commentMapAiQuestion <- eventReactive(questionGuessArea(),{
+    validate(
+      need(questionGuessArea() != "", "")
+    )
+    
+    currentArea <-C_Geog %>%
+      filter(geog == questionGuessGeog())%>%
+      select(area=geogConcat,questionGuessMetricMap()[1])%>%
+      st_drop_geometry()%>%
+      mutate(#eval(parse(text =input$splashMetric))=signif(input$splashMetric)),3),
+        sentenceStyle=paste0(questionGuessMetricMap()[1], " in ", area," is " ,eval(parse(text =questionGuessMetricMap()[1])),".")
+      )
+    #write.csv(currentArea%>%select(-sentenceStyle), "Data\\AppData\\timeLlm.csv", row.names = FALSE)
+    write.table(paste(currentArea$sentenceStyle), file = "Data\\AppData\\mapQuestionLlm.txt", row.names = FALSE)
+    print(questionGuessGeog())
+    #Generate the file answer when button pressed
+    load_doc("Data/AppData/mapQuestionLlm.txt",paste0("How does the data for ",questionGuessArea()," compare to England and the areas geographically nearby. In two bullets points and in html.Use 2sf"))
+  })
+  
+  
   ## 2.3 Local skills----
 
   ### 2.3.2 Reusable variables----
