@@ -122,7 +122,6 @@ West_of_England_MCA
 North_East_MCA
 North_of_Tyne_MCA
 Greater_London_Authority_MCA
-England
 Hartlepool_LADU
 Middlesbrough_LADU
 Redcar_and_Cleveland_LADU
@@ -427,8 +426,6 @@ unemployed
 inactive
 enterpriseCount
 L3PlusRate
-achievements_Apprenticeships
-achievements_Education_and_training
 participation_rate_per_100000_population
 achievements_rate_per_100000_population
 participation

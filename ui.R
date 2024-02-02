@@ -717,7 +717,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     # end of homepage Panel
 
     ## 2.2 Overview ----
-    #panel_overview(),
+    panel_overview(),
     
     ## 2.2 Overview ----
     panel_question(),

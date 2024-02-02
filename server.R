@@ -825,17 +825,25 @@ Greater London Authority MCA
   #ask LLM when button pressed
   questionGuessArea <- eventReactive(input$questionButton, {
     #Generate the file answer when button pressed
-    answer<-ask_q(paste0("There might be a geographical area in this sentence: ",geogQuestionText(), ". Which of the following list of Local Enterprise Partnerships (LEP), Local Skills Improvement Plan areas (LSIP), Mayoral Combined Authorities (MCA) and Local Authority Districts (LADU) does the area best match or fall into. Return only a name from the given list in the given format. "
-                         ,areaList
+    answer<-ask_q(paste0("I am going to provide a list of Local Enterprise Partnerships (LEP), Local Skills Improvement Plan areas (LSIP), Mayoral Combined Authorities (MCA) and Local Authority Districts (LADU). Which LEP, LSIP, MCA (there may not be an MCA) and LADU does the geographical area in this sentence: ",geogQuestionText()," fall into? USE ONLY THE NAMES IN THE LIST AS THEY ARE WRITTEN IN THE LIST INCLUDING THE UNDERSCORES. If there is no geographocal area in the sentence, just say 'No geography found'. Return in the following format: 1. best match <br> 2. 2nd best match <br> 3rd best match <br> 4. 4th best match. Use only the exact names in the list as they are written in the list."
+                         # "Extract the geographical area from this sentence: ",geogQuestionText(), ". I am going to provide a list of Local Enterprise Partnerships (LEP), Local Skills Improvement Plan areas (LSIP), Mayoral Combined Authorities (MCA) and Local Authority Districts (LADU). Which LEP, LSIP, MCA (there may not be an MCA) and LADU does the geographical area fall into? Return only a name from the given list in the given format with underscores. "
+                          ,areaList
 ))
+    answer<-gsub('[.]',' ',gsub('[\n]',' ',answer))
     print(answer)
-    answer<-gsub('[.]','',answer)
     commonWords<-mapply(function(x, y) intersect(x, y), 
                         strsplit(answer, ' '), strsplit(areaList, '\n'))
-    print(gsub("_"," ",commonWords[1]))#just get first 
+    print(if(identical(commonWords[[1]],character(0))) {"England"}else{gsub("_"," ",commonWords[1])})#just get first 
   })
   
-  questionGuessGeog<-reactive({print(tail(strsplit(questionGuessArea(),split=" ")[[1]],1))})
+  questionGuessGeog<-reactive({
+    print(
+      if(questionGuessArea()=="England"){"LEP"}#to show lep map if england
+      else{
+      tail(strsplit(questionGuessArea(),split=" ")[[1]],1)
+      }
+      )
+    })
   
 output$questionGuessAreaName<-renderText({questionGuessArea()})
   ### 2.2.2 Screenshot----
@@ -2234,7 +2242,7 @@ output$questionGuessAreaName<-renderText({questionGuessArea()})
   
   #### 2.2.3.10 best match map----
   output$questionMapHeading<-renderText({
-    paste0((I_DataText %>% filter(metric == questionGuessMetricMap()[1]))$timeTitle, "  across England")
+    paste0(str_to_sentence((I_DataText %>% filter(metric == questionGuessMetricMap()[1]))$breakdownTitle), " across England")
   })
   
   #### 2.3.5.3 Map ----
@@ -2341,9 +2349,13 @@ output$questionGuessAreaName<-renderText({questionGuessArea()})
       )
     #write.csv(currentArea%>%select(-sentenceStyle), "Data\\AppData\\timeLlm.csv", row.names = FALSE)
     write.table(paste(currentArea$sentenceStyle), file = "Data\\AppData\\mapQuestionLlm.txt", row.names = FALSE)
-    print(questionGuessGeog())
     #Generate the file answer when button pressed
-    load_doc("Data/AppData/mapQuestionLlm.txt",paste0("How does the data for ",questionGuessArea()," compare to England and the areas geographically nearby. In two bullets points and in html.Use 2sf"))
+    load_doc("Data/AppData/mapQuestionLlm.txt",
+             if(questionGuessArea()=="England"){"Give some insight into data in two bullets points and in html.Use 2sf"}
+             else{
+             paste0("How does the data for ",questionGuessArea()," compare to England and the areas geographically nearby. In two bullets points and in html.Use 2sf")
+             }
+               )
   })
   
   

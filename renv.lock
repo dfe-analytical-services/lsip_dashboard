@@ -171,6 +171,17 @@
       ],
       "Hash": "ae6cbbe1492f4de79c45fce06f967ce8"
     },
+    "RcppTOML": {
+      "Package": "RcppTOML",
+      "Version": "0.2.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "Rcpp"
+      ],
+      "Hash": "c232938949fcd8126034419cc529333a"
+    },
     "XML": {
       "Package": "XML",
       "Version": "3.99-0.14",
@@ -348,11 +359,11 @@
       "Version": "0.1.4",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteUsername": "dreamRs",
+      "RemoteHost": "api.github.com",
       "RemoteRepo": "capture",
+      "RemoteUsername": "dreamRs",
       "RemoteRef": "HEAD",
       "RemoteSha": "eb7696375bf57c7ab1cdc3307800a98be131f5fe",
-      "RemoteHost": "api.github.com",
       "Requirements": [
         "htmltools",
         "jsonlite",
@@ -571,11 +582,11 @@
       "Version": "0.1.1",
       "Source": "GitHub",
       "RemoteType": "github",
+      "RemoteHost": "api.github.com",
       "RemoteUsername": "dfe-analytical-services",
       "RemoteRepo": "dfeshiny",
       "RemoteRef": "main",
       "RemoteSha": "d90d2099892d1ff0f4c688213952f9512d9dea16",
-      "RemoteHost": "api.github.com",
       "Requirements": [
         "shiny",
         "shinyGovstyle",
@@ -925,6 +936,16 @@
         "vctrs"
       ],
       "Hash": "9b302fe352f9cfc5dcf0a4139af3a565"
+    },
+    "here": {
+      "Package": "here",
+      "Version": "1.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "rprojroot"
+      ],
+      "Hash": "24b224366f9c2e7534d2344d10d59211"
     },
     "highr": {
       "Package": "highr",
@@ -1690,6 +1711,28 @@
         "withr"
       ],
       "Hash": "d66fe009d4c20b7ab1927eb405db9ee2"
+    },
+    "reticulate": {
+      "Package": "reticulate",
+      "Version": "1.34.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Matrix",
+        "R",
+        "Rcpp",
+        "RcppTOML",
+        "graphics",
+        "here",
+        "jsonlite",
+        "methods",
+        "png",
+        "rappdirs",
+        "rlang",
+        "utils",
+        "withr"
+      ],
+      "Hash": "a69f815bcba8a055de0b08339b943f9e"
     },
     "rlang": {
       "Package": "rlang",
