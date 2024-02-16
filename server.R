@@ -816,6 +816,8 @@ Worcestershire LSIP
 York and North Yorkshire LSIP
 Greater London Authority MCA
 "))
+    answer<-sub(".*Answer: Keep it short. Do not guess.","",answer)
+    
     vector<-str_split_1(answer,"1")#split where 1 is mentioned (answer always returns multiple lists)
   paste0("1",tail(vector,n=1))
     })
@@ -829,6 +831,7 @@ Greater London Authority MCA
                          # "Extract the geographical area from this sentence: ",geogQuestionText(), ". I am going to provide a list of Local Enterprise Partnerships (LEP), Local Skills Improvement Plan areas (LSIP), Mayoral Combined Authorities (MCA) and Local Authority Districts (LADU). Which LEP, LSIP, MCA (there may not be an MCA) and LADU does the geographical area fall into? Return only a name from the given list in the given format with underscores. "
                           ,areaList
 ))
+    answer<-sub(".*Answer: Keep it short. Do not guess.","",answer)
     answer<-gsub('[.]',' ',gsub('[\n]',' ',answer))
     print(answer)
     commonWords<-mapply(function(x, y) intersect(x, y), 
@@ -950,7 +953,7 @@ output$questionGuessAreaName<-renderText({questionGuessArea()})
       )
     write.table(paste(currentArea$sentenceStyle), file = "Data\\AppData\\QuestionLlm.txt", row.names = FALSE)
     #Generate the file answer when button pressed
-    load_doc("Data/AppData/QuestionLlm.txt",questionValue())
+    sub(".*Helpful Answer:","",load_doc("Data/AppData/QuestionLlm.txt",paste0(questionValue(),".Use 2sf")))
   })
   
   ### 2.2.3 generate the LLM answer to the main question---- 
@@ -963,7 +966,7 @@ output$questionGuessAreaName<-renderText({questionGuessArea()})
       )
     write.table(paste(currentArea$sentenceStyle), file = "Data\\AppData\\MainQuestionLlm.txt", row.names = FALSE)
     #Generate the file answer when button pressed
-    load_doc("Data/AppData/MainQuestionLlm.txt",paste0(geogQuestionText(),". Use 2sf. Do not just list datapoints."))
+    sub(".*Helpful Answer:","",load_doc("Data/AppData/MainQuestionLlm.txt",paste0(geogQuestionText(),". Use 2sf. Do not just list datapoints.")))
   })
   
   output$summaryArea <- eventReactive(input$geoChoiceOver,{
@@ -975,7 +978,7 @@ output$questionGuessAreaName<-renderText({questionGuessArea()})
       )
     write.table(paste(currentArea$sentenceStyle), file = "Data\\AppData\\SummaryLlm.txt", row.names = FALSE)
     #Generate the file answer when button pressed
-    load_doc("Data/AppData/SummaryLlm.txt","Summarise the most interesting trends in this data. Use four bullet points only (one per line and no intro). Interpret metric names into plain English. Don't just list datapoints. Use 2sf. Use HTML tags")
+    sub(".*Helpful Answer:","",load_doc("Data/AppData/SummaryLlm.txt","Summarise the most interesting trends in this data. Use four bullet points only (one per line and no intro). Interpret metric names into plain English. Don't just list datapoints. Use 2sf. Use HTML tags"))
   })
   
   ### 2.2.4 LLM guess on metric ----
@@ -984,6 +987,7 @@ output$questionGuessAreaName<-renderText({questionGuessArea()})
     answer<-ask_q(paste0("I am going to provide a list of metrics. Which metric(s) (there may not be an one) does the question '",questionValue(),"' match best? Return in a numbered list (maximum 3). Use only the metric names in the list. "
 ,metricList
 ))
+    answer<-sub(".*Answer: Keep it short. Do not guess.","",answer)
     answer<-gsub("\n"," ",answer)
     metrics<-"economicallyactiveRate inemploymentRate employeesRate selfemployedRate unemployedRate inactiveRate inemployment selfemployed unemployed inactive enterpriseCount L3PlusRate achievements Apprenticeships achievements Education and training participation_rate_per_100000_population achievements_rate_per_100000_population participation achievements employmentProjection sustainedPositiveDestinationKS4Rate sustainedPositiveDestinationKS5Rate vacancies birthRate deathRate enterprisePctMicro"
     commonWords<-mapply(function(x, y) intersect(x, y), 
@@ -998,6 +1002,7 @@ output$questionGuessAreaName<-renderText({questionGuessArea()})
     answer<-ask_q(paste0("I am going to provide a list of metrics. Which metric(s) (there may not be an one) does the question '",geogQuestionText(),"' match best? Return in a numbered list (maximum 3). Use only the metric names in the list. "
                          ,metricListKpi
     ))
+    answer<-sub(".*Answer: Keep it short. Do not guess.","",answer)
     answer<-gsub("\n"," ",answer)
     commonWords<-mapply(function(x, y) intersect(x, y), 
                         strsplit(answer, ' '), strsplit(metricListKpi, '\n'))
@@ -1010,6 +1015,7 @@ output$questionGuessAreaName<-renderText({questionGuessArea()})
     answer<-ask_q(paste0("I am going to provide a list of metrics. Which metric(s) (there may not be an one) does the question '",geogQuestionText(),"' match best? Return in a numbered list (maximum 3). Use only the metric names in the list. "
                          ,metricList
     ))
+    answer<-sub(".*Answer: Keep it short. Do not guess.","",answer)
     answer<-gsub("\n"," ",answer)
     commonWords<-mapply(function(x, y) intersect(x, y), 
                         strsplit(answer, ' '), strsplit(metricList, '\n'))
@@ -2350,12 +2356,12 @@ output$questionGuessAreaName<-renderText({questionGuessArea()})
     #write.csv(currentArea%>%select(-sentenceStyle), "Data\\AppData\\timeLlm.csv", row.names = FALSE)
     write.table(paste(currentArea$sentenceStyle), file = "Data\\AppData\\mapQuestionLlm.txt", row.names = FALSE)
     #Generate the file answer when button pressed
-    load_doc("Data/AppData/mapQuestionLlm.txt",
+    sub(".*Helpful Answer:","",load_doc("Data/AppData/mapQuestionLlm.txt",
              if(questionGuessArea()=="England"){"Give some insight into data in two bullets points and in html.Use 2sf"}
              else{
              paste0("How does the data for ",questionGuessArea()," compare to England and the areas geographically nearby. In two bullets points and in html.Use 2sf")
              }
-               )
+               ))
   })
   
   
@@ -2547,7 +2553,7 @@ output$questionGuessAreaName<-renderText({questionGuessArea()})
     #write.csv(currentArea%>%select(-sentenceStyle), "Data\\AppData\\timeLlm.csv", row.names = FALSE)
    write.table(paste(currentArea$sentenceStyle), file = "Data\\AppData\\mapLlm.txt", row.names = FALSE)
     #Generate the file answer when button pressed
-    load_doc("Data/AppData/mapLlm.txt",paste0("How does the data for ",input$geoChoice," compare to England and the areas geographically nearby. In two bullets points and use 2sf"))
+   sub(".*Helpful Answer:","",load_doc("Data/AppData/mapLlm.txt",paste0("How does the data for ",input$geoChoice," compare to England and the areas geographically nearby. In two bullets points and use 2sf")))
   })
 
   #### 2.3.5.3 Map ----
@@ -2840,7 +2846,7 @@ output$questionGuessAreaName<-renderText({questionGuessArea()})
     write.csv(currentArea%>%select(-sentenceStyle), "Data\\AppData\\timeLlm.csv", row.names = FALSE)
     write.table(paste(currentArea$sentenceStyle), file = "Data\\AppData\\timeLlm.txt", row.names = FALSE)
     #Generate the file answer when button pressed
-      load_doc("Data/AppData/timeLlm.txt","Summarise the data over time in one sentence (using 2sf)")
+    sub(".*Helpful Answer:","",load_doc("Data/AppData/timeLlm.txt","Summarise the data over time in one sentence (using 2sf)"))
   })
 
   #### 2.3.7.2 Chart ----
