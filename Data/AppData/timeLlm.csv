@@ -1,11 +1,11 @@
 "area","metric","timePeriod","value"
-"Cumbria LEP","enterpriseCount","2019-03-01",24000
-"England","enterpriseCount","2019-03-01",2400000
-"Cumbria LEP","enterpriseCount","2020-03-01",24000
-"England","enterpriseCount","2020-03-01",2400000
-"Cumbria LEP","enterpriseCount","2021-03-01",23000
-"England","enterpriseCount","2021-03-01",2400000
-"Cumbria LEP","enterpriseCount","2022-03-01",23000
-"England","enterpriseCount","2022-03-01",2400000
-"Cumbria LEP","enterpriseCount","2023-03-01",23000
-"England","enterpriseCount","2023-03-01",2400000
+"Buckinghamshire LEP","inemploymentRate","2018-10-01",0.8
+"England","inemploymentRate","2018-10-01",0.76
+"Buckinghamshire LEP","inemploymentRate","2019-10-01",0.79
+"England","inemploymentRate","2019-10-01",0.76
+"Buckinghamshire LEP","inemploymentRate","2020-10-01",0.77
+"England","inemploymentRate","2020-10-01",0.75
+"Buckinghamshire LEP","inemploymentRate","2021-10-01",0.82
+"England","inemploymentRate","2021-10-01",0.76
+"Buckinghamshire LEP","inemploymentRate","2022-10-01",0.8
+"England","inemploymentRate","2022-10-01",0.76
