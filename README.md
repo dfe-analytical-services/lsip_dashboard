@@ -15,21 +15,15 @@ Local Skills Dashboard  <br>
 
 ## Introduction 
 
-Give a brief overview of what your app is for here. 
+The Local Skills dashboard provides published local data from a variety of sources in an easy to navigate format. To support local skills planning, the dashboard covers topics such as employment, qualifications, and education outcomes across England.
 
-Add links to where each version of your app is deployed - e.g.
-
-- Production - https://rsconnect/rsc/dfe-published-data-qa
-- Pre-production - https://rsconnect-pp/rsc/dfe-published-data-qa
-- Development - https://rsconnect-pp/rsc/dev-dfe-published-data-qa
+- Production - https://department-for-education.shinyapps.io/local-skills-dashboard/
+- Pre-production - https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/
 
 
 ---
 
 ## Requirements
-
-You should list out the software and programming skills needed, as well as any access requirements = e.g.
-
 
 ### i. Software requirements (for running locally)
 
@@ -44,17 +38,10 @@ You should list out the software and programming skills needed, as well as any a
 - R at an intermediate level, [DfE R training guide](https://dfe-analytical-services.github.io/r-training-course/)
 
 - Particularly [R Shiny](https://shiny.rstudio.com/)
-
-### iii. Access requirements
-
-- Access to the Stats Development Team SQL modelling area (MA_SDT_NS_DATA) in T1PRANMSQL\SQLPROD,60125. Request access from Cam Race and forward on your request to the PDR mailbox (PupilData.REPOSITORY@education.gov.uk)
   
 ---
 
 ## How to use
-
-You should clearly lay out the steps needed to run your code here - generally, they will be similar to the below for Shiny apps:
-
 
 ### Running the app locally
 
@@ -71,17 +58,9 @@ You should clearly lay out the steps needed to run your code here - generally, t
 
 Package control is handled using renv. As in the steps above, you will need to run `renv::restore()` if this is your first time using the project.
 
-### Tests
-
-UI tests have been created using shinytest that test the app loads, that content appears correctly when different inputs are selected, and that tab content displays as expected. More should be added over time as extra features are added.
-
-GitHub Actions provide CI by running the automated tests and checks for code styling. The yaml files for these workflows can be found in the .github/workflows folder.
-
-The function run_tests_locally() is created in the Rprofile script and is available in the RStudio console at all times to run both the unit and ui tests.
-
 ### Deployment
 
-- The app is deployed to the department's shinyapps.io subscription using GitHub actions, to [https://department-for-education.shinyapps.io/la-school-places-scorecards](https://department-for-education.shinyapps.io/la-school-places-scorecards). The yaml file for this can be found in the .github/workflows folder.
+- The app is deployed to the department's shinyapps.io subscription using GitHub actions, to [https://department-for-education.shinyapps.io/local-skills-dashboard/](https://department-for-education.shinyapps.io/local-skills-dashboard). The yaml file for this can be found in the .github/workflows folder.
 
 ### Navigation
 
@@ -91,12 +70,26 @@ In general all .r files will have a usable outline, so make use of that for navi
 
 The function tidy_code() is created in the Rprofile script and therefore is always available in the RStudio console to tidy code according to tidyverse styling using the styler package. This function also helps to test the running of the code and for basic syntax errors such as missing commas and brackets.
 
+### Key files
+- /Data/2_...: Geographical lookup and shape files
+- /Data/2_...: All the raw data files imported for use in the dashboard
+- /Data/3_...: Text used within the dashboard
+- /Data/AppData: The datafiles the app runs off
+- /DeveloperGuide: Guide to updating the data in the dashboard
+- /R: scripts run when the app runs
+- /renv: package alignment
+- /tests: testing changes to the app (not currently used)
+- /www: web specific files (cookies, css)
+- /ExtractLoadData.R: extract and load raw data
+- /TransformData.R: converts raw data into the data shape used by the app
+- /server.R: calculates the data shown in the dashboard reacting to user input
+- /ui.R: controls the layout of the dashboard
+- /global.R: loads R package libraries and reusable functions
+
 
 ---
 
 ## How to contribute
-
-Details on how to contribute to the app should go here, e.g.
 
 ### Flagging issues
 
@@ -104,10 +97,10 @@ If you spot any issues with the application, please flag it in the "Issues" tab 
 
 ### Merging pull requests
 
-Only members of the Statistics Development team can merge pull requests. Add lauraselby, cjrace and sarahmwong as requested reviewers, and the team will review before merging.
+Only members of the Statistics Development and UFS team can merge pull requests. Add lauraselby, cjrace and pjames as requested reviewers, and the team will review before merging.
 
 ---
 
 ## Contact
 
-Add contact details of how to get in touch with your team.
+If you have questions about the dashboard or data within it, please contact us at ufs.contact@education.gov.uk.
