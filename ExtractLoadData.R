@@ -19,6 +19,9 @@ library(tidyverse) # use map_df, mutate
 library(nomisr) # use nomis api
 library(data.table) # use %like%
 
+#This is done here before any data changes so we can compare the data as it was to the updated data
+C_timeOld <- read_csv("Data/AppData/C_time.csv")
+
 # 1.Geography and mapping tables ----
 ## 1.1 LEPs 2020 and LA%20LSIP lookup ----
 folder <- "1-1_GeogLkup"
