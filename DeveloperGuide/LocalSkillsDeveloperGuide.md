@@ -165,7 +165,26 @@ format used in the other Nomis datasets.
 This takes about 20 mins. You should see your environment is now
 populated with data, including your new, updated dataset.
 
-4.  We have datasets from a wide range of sources that come in all kinds
+4.  Dashboard admin:
+
+<!-- -->
+
+- You need to update the dashboard’s Data Sources tab with information
+  about your new data. Open /Data/3-1_DataTable/DataTable.xlsx in Excel.
+  Update the relevant row with new dates, links and information.
+
+- Update the dashboard’s Version Log. This is done in ui.R under the
+  “2.1.3 Version control” header. Move the current Latest Version text
+  down into the Previous Version area, and repopulate the Current
+  Version with new details.
+
+- You may need to update the Latest Period and/or the data caveats in
+  the /Data/3-2_dataText/dataText.xlsx file as well. These are used to
+  populate dynamic text on the dashboard’s Local Skills tab.
+
+<!-- -->
+
+5.  We have datasets from a wide range of sources that come in all kinds
     of formats. We do a lot of data cleaning, manipulating and
     formatting to get into a format the dashboard can work with. We do
     this in the TransformData.R script. If your new datset is in the
@@ -178,29 +197,19 @@ This takes about 20 mins. You should see your environment is populated
 with new, clean datasets and your Data/AppData folder has been updated
 with the updated versions of the files the dashboard uses.
 
-5.  Dashboard admin:
+6.  Check any changes to the data used in the dashboard. As a step in
+    the QA run this file and have a look at the outputs:
 
-<!-- -->
+    `source("~/RProjects/lsip_dashboard/checkUpdateChanges.R", echo=TRUE)`
 
-1.  You need to update the dashboard’s Data Sources tab with information
-    about your new data. Open /Data/3-1_DataTable/DataTable.xlsx in
-    Excel. Update the relevant row with new dates, links and
-    information.
+    This will show you if there has been any changes to the geography
+    names, the metric names, the time periods and also check for any
+    changes in the NAs within the data (a sign that something has gone
+    awry).
 
-2.  Update the dashboard’s Version Log. This is done in ui.R under the
-    “2.1.3 Version control” header. Move the current Latest Version text
-    down into the Previous Version area, and repopulate the Current
-    Version with new details.
+7.  Run the dashboard: `runApp()`
 
-3.  You may need to update the Latest Period and/or the data caveats in
-    the /Data/3-2_dataText/dataText.xlsx file as well. These are used to
-    populate dynamic text on the dashboard’s Local Skills tab.
-
-<!-- -->
-
-6.  Run the dashboard: `runApp()`
-
-7.  QA. Create a new QA log in “Analytical Projects\Analysis\S005 LSIP
+8.  QA. Create a new QA log in “Analytical Projects\Analysis\S005 LSIP
     dashboard\Documentation\QA”. Follow the structure of one already in
     there. Some checks you may do:
 
@@ -215,7 +224,7 @@ with the updated versions of the files the dashboard uses.
   [here](https://educationgovuk.sharepoint.com/:w:/r/sites/UnitforFutureSkills/Shared%20Documents/Analytical%20Projects/Analysis/S005%20LSIP%20dashboard/Documentation/QA/QA%20plan_Local%20Skills%20dashboard_UFS.docx?d=wa17c64605c7f4a3fb2b8bf35f4bec670&csf=1&web=1&e=Z66Jas)
   for process)
 
-8.  If everything looks ok, commit, push and merge to Development. Wait
+9.  If everything looks ok, commit, push and merge to Development. Wait
     for that to deploy (can take 15mins or more - you can track this in
     [Actions · dfe-analytical-services/lsip_dashboard
     (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)).
@@ -226,7 +235,7 @@ with the updated versions of the files the dashboard uses.
     the live environment:
     <https://department-for-education.shinyapps.io/local-skills-dashboard/>
 
-9.  Consider communicating the change to the wider Team or other
+10. Consider communicating the change to the wider Team or other
     stakeholders.
 
 ## I want to add a metric to the dashboard

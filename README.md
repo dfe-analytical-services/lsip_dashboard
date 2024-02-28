@@ -82,10 +82,10 @@ The function tidy_code() is created in the Rprofile script and therefore is alwa
 - /www: web specific files (cookies, css)
 - /ExtractLoadData.R: extract and load raw data
 - /TransformData.R: converts raw data into the data shape used by the app
+- /checkUpdateChanges.R: compares the old data with any update as part of the QA
 - /server.R: calculates the data shown in the dashboard reacting to user input
 - /ui.R: controls the layout of the dashboard
 - /global.R: loads R package libraries and reusable functions
-
 
 ---
 
