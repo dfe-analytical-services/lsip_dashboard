@@ -75,7 +75,7 @@ The function tidy_code() is created in the Rprofile script and therefore is alwa
 - /Data/2_...: All the raw data files imported for use in the dashboard
 - /Data/3_...: Text used within the dashboard
 - /Data/AppData: The datafiles the app runs off
-- /DeveloperGuide: Guide to updating the data in the dashboard
+- /DeveloperGuide: Guide to updating the data in the dashboard (markdown is here: https://github.com/dfe-analytical-services/lsip_dashboard/blob/main/DeveloperGuide/LocalSkillsDeveloperGuide.md)
 - /R: scripts run when the app runs
 - /renv: package alignment
 - /tests: testing changes to the app (not currently used)
