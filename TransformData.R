@@ -140,7 +140,7 @@ F_emp <- formatNomis(I_emp) %>%
   rename(metric = CELL_NAME) %>%
   mutate(metric = gsub(" : All People )", "", metric)) %>%
   mutate(metric = gsub("[[:digit:]]+", "", metric)) %>%
-  mutate(metric = gsub("T: \\(Aged - - ", "", metric)) %>%
+  mutate(metric = gsub("T: \\(All aged  & over - ", "", metric)) %>%
   mutate(metric = gsub(" ", "", tolower(metric))) %>%
   mutate(breakdown = "Total", subgroup = "Total")
 # add rates
@@ -1087,7 +1087,7 @@ write.csv(C_axisMinMax, file = "Data\\AppData\\C_axisMinMax.csv", row.names = FA
 ## 4.3 C_breakdown ----
 # This is used in the bar chart. It contains the latest data with all splits available.
 C_breakdown <- bind_rows(
-  # Metric where the proportion needs to be calculated
+  # Metric where the proportion needs to be calculated. get proprtion of the total
   C_localSkillsDataset %>%
     filter(
       breakdown != "Total", subgroup != "Total", latest == 1,
@@ -1095,8 +1095,17 @@ C_breakdown <- bind_rows(
     ) %>%
     select(geogConcat, metric, breakdown, subgroup, value) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
-    group_by(across(c(-value, -subgroup))) %>%
-    mutate(across(value, ~ round(prop.table(.), 3))) %>%
+    # get totals for the denominator
+    left_join(
+      C_localSkillsDataset %>%
+        filter(
+          breakdown == "Total", subgroup == "Total", latest == 1,
+          metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "participation", "starts")
+        ) %>%
+        select(geogConcat, metric, total = value) %>%
+        mutate_all(~ replace(., is.na(.), 0))
+    ) %>%
+    mutate(value = round(value / total, 3)) %>%
     mutate(valueText = as.character(value)),
   # Metric where value is used as it is
   C_localSkillsDataset %>%

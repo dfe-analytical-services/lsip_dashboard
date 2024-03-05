@@ -583,14 +583,19 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("25 January 2024 (1.3.8)"),
+            p("5 March 2024 (1.3.9)"),
             tags$ul(
-              tags$li("Update to latest APS employment data.")
+              tags$li("Use 16+ for employmner volumes (previously 16-64)."),
+              tags$li("Calculate split for bar chart based on percentage of the whole area (previously percentage of subgroups with data)."),
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("25 January 2024 (1.3.8)"),
+                tags$ul(
+                  tags$li("Update to latest APS employment data.")
+                ),
                 p("12 January 2024 (1.3.7)"),
                 tags$ul(
                   tags$li("Update to latest ILR FE data data. This includes using some data now published at LEP and LSIP level."),

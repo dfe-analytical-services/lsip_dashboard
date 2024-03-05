@@ -19,7 +19,7 @@ library(tidyverse) # use map_df, mutate
 library(nomisr) # use nomis api
 library(data.table) # use %like%
 
-#This is done here before any data changes so we can compare the data as it was to the updated data
+# This is done here before any data changes so we can compare the data as it was to the updated data
 C_timeOld <- read_csv("Data/AppData/C_time.csv")
 
 # 1.Geography and mapping tables ----
@@ -139,7 +139,7 @@ I_empOcc <-
 # Geog and date as above
 # Cell: T01 Economic activity by age Aged 16-64/ All people
 # find cells we want
-cellsUseAps_emp <- cellsListAps %>% filter(description.en %like% "T01:" & description.en %like% "Aged 16-64" & description.en %like% "All People")
+cellsUseAps_emp <- cellsListAps %>% filter(description.en %like% "T01:" & description.en %like% "All aged 16 & over" & description.en %like% "All People")
 # get data
 I_emp <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_emp$id)
 
