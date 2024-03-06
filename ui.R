@@ -585,8 +585,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             h2("Latest update"),
             p("5 March 2024 (1.3.9)"),
             tags$ul(
-              tags$li("Use 16+ for employmner volumes (previously 16-64)."),
-              tags$li("Calculate split for bar chart based on percentage of the whole area (previously percentage of subgroups with data)."),
+              tags$li("Calculate the bar chart splits based on percentage of the whole area (previously percentage of subgroups with data present)."),
             ),
             details(
               label = "Previous updates",
