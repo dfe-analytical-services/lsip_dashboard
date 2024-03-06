@@ -1,31 +1,32 @@
 "metric","LatestPeriod","subheading","sourceText","dataText","caveatText","mapComment","timeTitle","timeComment","mapPop","breakdownTitle","breakdownComment","LaComment"
 "inemploymentRate","	
 Oct 2022-Sep 2023"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16+ year olds.</li>
+  <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","The employment rate","are employment rates changing","The employment rate in ","Employment rate","employment rates","N/A","Employment rates are "
 "selfemployedRate","	
 Oct 2022-Sep 2023"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16+ year olds.</li>
+  <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","The self-employment rate","are self-employment rates changing","The self-employment rate in ","Self-employment rate","self-employment rates","N/A","Self-employment rates are "
 "unemployedRate","	
 Oct 2022-Sep 2023"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16+ year olds.</li>
+  <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","The unemployment rate","are unemployment rates changing","The employment rate in ","Unemployment rate","unemployment rates","N/A","Unemployment rates are "
 "inactiveRate","	
 Oct 2022-Sep 2023"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16+ year olds.</li>
+  <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","The inactivity rate","are inactivity rates changing","The inactivity rate in ","Inactivity rate","inactivity rates","N/A","Inactivity rates are "
 "inemployment","	
 Oct 2022-Sep 2023"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Employment volumes are for 16+ year olds.</li>
+  <li>Employment volumes are for 16-64 year olds.</li>
+<li>Industry and occupation split volumes are for all ages.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 <li>Standard Occupational Classification 2020 (SOC2020).</li>
@@ -33,19 +34,19 @@ Oct 2022-Sep 2023"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Ann
 </ol>","Employment","are employment volumes changing","Employment in","Employment","employment volumes","employment volume share","Employment is"
 "selfemployed","	
 Oct 2022-Sep 2023"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16+ year olds.</li>
+  <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","Self-employment","are self-employment volumes changing","Self-employment in","Self-employment","self-employment volumes","self-employment volume","Self-employment is"
 "unemployed","	
 Oct 2022-Sep 2023"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16+ year olds.</li>
+  <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","Unemployment","are unemployment volumes changing","Unemployment in","Unemployment","unemployment volumes","unemployment volume","Unemployment is"
 "inactive","	
 Oct 2022-Sep 2023"," ","<a href='https://www.nomisweb.co.uk/datasets/apsnew'>Annual Population Survey</a>"," ","<ol>
-  <li>Figures are for 16+ year olds.</li>
+  <li>Figures are for 16-64 year olds.</li>
 <li>Each estimate from the Annual Population Survey carries a margin of error. These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents. Therefore, please take caution when interpreting data from small subgroups.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","Inactivity","are inactivity volumes changing","Inactivity in","Inactivity","inactivity volumes","inactivity volume","Inactivity is"
