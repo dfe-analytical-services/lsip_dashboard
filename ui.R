@@ -583,7 +583,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("5 March 2024 (1.3.9)"),
+            p("25 March 2024 (1.3.9)"),
             tags$ul(
               tags$li("Calculate the bar chart splits based on percentage of the whole area (previously percentage of subgroups with data present)."),
             ),
