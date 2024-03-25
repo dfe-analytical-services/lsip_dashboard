@@ -19,6 +19,9 @@ library(tidyverse) # use map_df, mutate
 library(nomisr) # use nomis api
 library(data.table) # use %like%
 
+# This is done here before any data changes so we can compare the data as it was to the updated data
+C_timeOld <- read_csv("Data/AppData/C_time.csv")
+
 # 1.Geography and mapping tables ----
 ## 1.1 LEPs 2020 and LA%20LSIP lookup ----
 folder <- "1-1_GeogLkup"
@@ -139,6 +142,12 @@ I_empOcc <-
 cellsUseAps_emp <- cellsListAps %>% filter(description.en %like% "T01:" & description.en %like% "Aged 16-64" & description.en %like% "All People")
 # get data
 I_emp <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_emp$id)
+
+# Cell: T01 Economic activity by age Aged 16+/ All people. We need this as the denominator of the bar charts where the splits are only available in 16+
+# find cells we want
+cellsUseAps_emp <- cellsListAps %>% filter(description.en %like% "T01:" & description.en %like% "All aged 16 & over" & description.en %like% "All People")
+# get data
+I_emp16plus <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_emp$id)
 
 ### 2.1.3 UK Business Count----
 # Enterprise by employment size and industry
