@@ -583,14 +583,18 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("25 March 2024 (1.3.9)"),
+            p("5 April 2024 (1.4.0)"),
             tags$ul(
-              tags$li("Calculate the bar chart splits based on percentage of the whole area (previously percentage of subgroups with data present)."),
+              tags$li("Added some new resources to the Further resources tab."),
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("25 March 2024 (1.3.9)"),
+                tags$ul(
+                  tags$li("Calculate the bar chart splits based on percentage of the whole area (previously percentage of subgroups with data present)."),
+                ),
                 p("25 January 2024 (1.3.8)"),
                 tags$ul(
                   tags$li("Update to latest APS employment data.")
