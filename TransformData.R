@@ -767,21 +767,21 @@ C_destinations <- bind_rows(
 ## 2.10 Job adverts by profession ----
 formatVacancies <- function(x) {
   # Tidy
-  reformat <- x %>%
+  reformat <- I_Ons2digLsip %>%
     row_to_names(row_number = 4) # set columns
   geogLevel <- colnames(reformat)[1] # get geog level
   reformat <- reformat %>%
     rename(area = geogLevel) %>% # rename to match other datafiles
-    mutate(geographic_level = geogLevel) %>% # set to the current geographic type
-    relocate(geographic_level, .before = area) %>%
-    rename(
-      `Summary Profession Category` = `Summary profession category`,
-      `Detailed Profession Category` = `Detailed profession category`
-    )
+    mutate(geographic_level = geogLevel # set to the current geographic type
+           ,SOC2digit = paste0(`SOC 2 digit code`," - ",`SOC 2 digit label`)
+           #,SOC1digit = substr(`SOC 2 digit code`,1,1)
+           ) %>% 
+    relocate(geographic_level, .before = area)%>%
+    select(-`SOC 2 digit code`,-`SOC 2 digit label`)
 
   # Make long
   reformat %>%
-    pivot_longer(!c("geographic_level", "area", "Summary Profession Category", "Detailed Profession Category"),
+    pivot_longer(!c("geographic_level", "area", "SOC2digit"),
       names_to = "time_period", values_to = "valueText"
     ) %>%
     mutate(area = case_when(
@@ -808,10 +808,7 @@ formatVacancies <- function(x) {
 # For the LAs, there are some old LA names within the data so we need to update those
 advertsWithAreas <-
   # format and bind both LA files
-  formatVacancies(I_OnsProfDetailLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% select(-region)) %>% # remove region code. get rid of london since it isn't really an LA.We get that from the region data
-  bind_rows(
-    formatVacancies(I_OnsProfLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% select(-region) %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
-  ) %>%
+  formatVacancies(I_Ons2digLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% select(-region)) %>% # remove region code. get rid of london since it isn't really an LA.We get that from the region data
   # Use new LA names from 2011 areas
   left_join(I_LaLookup %>% select(LAD11NM, LAD23NM_11 = LAD23NM, LAD23CD_11 = LAD23CD), by = c("area" = "LAD11NM")) %>% # make new LAs
   # Use new LA names from 2021 areas
@@ -847,18 +844,13 @@ groupedStats <- advertsWithAreas %>%
 
 # Format all other area types
 F_adverts <- bind_rows(
-  formatVacancies(I_OnsProfDetailLep),
-  formatVacancies(I_OnsProfDetailLsip),
-  formatVacancies(I_OnsProfDetailMca),
-  formatVacancies(I_OnsProfDetailEng) %>% filter(area == "England"),
-  formatVacancies(I_OnsProfDetailRegion) %>% filter(area == "The London Economic Action Partnership") %>% mutate(geographic_level = "Local Skills Improvement Plan", area = "Greater London"),
-  formatVacancies(I_OnsProfDetailRegion) %>% filter(area == "The London Economic Action Partnership") %>% mutate(geographic_level = "Local Enterprise Partnership"),
-  formatVacancies(I_OnsProfLep %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
-  formatVacancies(I_OnsProfLsip %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
-  formatVacancies(I_OnsProfMca %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
-  formatVacancies(I_OnsProfEng %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "England"),
-  formatVacancies(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "The London Economic Action Partnership") %>% mutate(geographic_level = "Local Skills Improvement Plan", area = "Greater London"),
-  formatVacancies(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "The London Economic Action Partnership") %>% mutate(geographic_level = "Local Enterprise Partnership"),
+  formatVacancies(I_Ons2digLep),
+  formatVacancies(I_Ons2digLsip),
+  formatVacancies(I_Ons2digMca),
+  formatVacancies(I_OnsLep),
+  formatVacancies(I_OnsLsip),
+  formatVacancies(I_OnsMca),
+  formatVacancies(I_OnsEng),
   # add on LAs
   groupedStats,
   advertsWithAreas %>%
