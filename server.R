@@ -1477,17 +1477,17 @@ server <- function(input, output, session) {
   #### 2.3.8.2 Optional summary profession filter ----
   summaryCategories <- c("All", (as.vector(
     distinctSubgroups %>%
-      filter(breakdown == "Summary Profession Category")
+      filter(breakdown == "SOC 1 digit")
   ))$subgroup)
   output$professionFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
-      need(input$barBreakdown == "Detailed Profession Category", ""),
+      need(input$barBreakdown == "SOC 2 digit", ""),
       need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     selectizeInput(
       inputId = "summaryProfession",
-      label = "Limit to particular summary profession",
+      label = "Limit to particular SOC 1",
       choices = summaryCategories
     )
   })
@@ -1507,9 +1507,9 @@ server <- function(input, output, session) {
             filter(
               metric == input$splashMetric,
               breakdown == input$barBreakdown,
-              if (input$barBreakdown == "Detailed Profession Category" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
+              if (input$barBreakdown == "SOC 2 digit" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
                 subgroup %in%
-                  (C_detailLookup %>% filter(`Summary Profession Category` == input$summaryProfession))$`Detailed Profession Category`
+                  (C_detailLookup %>% filter(`SOC 1 digit` == input$summaryProfession))$`SOC 2 digit`
               } else {
                 TRUE
               }
@@ -1522,10 +1522,10 @@ server <- function(input, output, session) {
             metric == input$splashMetric,
             breakdown == input$barBreakdown,
             geogConcat == input$geoChoice,
-            if (input$barBreakdown == "Detailed Profession Category" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
-              `Summary Profession Category` == input$summaryProfession
+            if (input$barBreakdown == "SOC 2 digit" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
+              `SOC 1 digit` == input$summaryProfession
             } else {
-              `Summary Profession Category` == "All"
+              `SOC 1 digit` == "All"
             }
           )
       ))$subgroup,

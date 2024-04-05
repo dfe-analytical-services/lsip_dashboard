@@ -524,7 +524,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               actionLink("link_to_tabpanel_vacancies", "Jobs")
             ),
             p(
-              "This is an experimental metric of online job advert data, split by profession, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "
+              "This is an experimental metric of online job advert data, split by SOC 2 digit, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "
             ),
             h3(actionLink(
               "link_to_tabpanel_enterprise", "Businesses"
@@ -583,14 +583,18 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("5 April 2024 (1.4.0)"),
+            p("9 May 2024 (1.4.1)"),
             tags$ul(
-              tags$li("Added some new resources to the Further resources tab."),
+              tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC 2020 2 digit (previously TextKernel's own profession split was used)."),
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("5 April 2024 (1.4.0)"),
+                tags$ul(
+                  tags$li("Added some new resources to the Further resources tab."),
+                ),
                 p("25 March 2024 (1.3.9)"),
                 tags$ul(
                   tags$li("Calculate the bar chart splits based on percentage of the whole area (previously percentage of subgroups with data present)."),
@@ -899,10 +903,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           h3("ONS-Textkernel online job adverts"),
           p(
             "These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.
-            The dashboard shows the monthly average number of live adverts from 2017 to 2022."
+            The dashboard shows the monthly average number of live adverts from 2017 to 2023."
           ),
           p(
-            "Advert volumes are shown split by profession. Textkernel have derived these professions from the job advert job title. These professions do not align directly to the Standard Occupation Classification (SOC2020). ONS are working on using SOC coding in future releases of this data."
+            "Advert volumes are shown split by SOC 2020 2 digit and 1 digit codes. Textkernel have derived these codes from the job advert job title."
           ),
           p(
             "Counts have been rounded to the nearest 5 and so totals may not add due to this rounding. The scope of online job adverts does not fully capture the scope of UK economic activity because of differing advertising methods, for example, casual work may be advertised by word-of-mouth or in shop windows as opposed to online."
@@ -918,7 +922,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               "When job location information is limited, the centroid of the region is used. This may lead to clustering of job counts."
             ),
           ),
-          p("There are errors in the published data for two areas: Dorset LSIP and Enterprise M3 LEP (including all of Surrey) LSIP. This is due to the incorrect mapping of LAs. In the dashboard we have corrected Dorset LSIP (by using the values for the Dorset LEP which has the same geography) so this is accurate in the dashboard but will not match the published data. For the Enterprise M3 LEP (including all of Surrey) LSIP we have estimated the value by looking the broader region and calculating the value of the Enterprise LSIP having removed other LSIPs in the region. This will come with some rounding issues. We are working to get the published data corrected."),
           h3("Individualised Learner Record"),
           p(
             "The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
