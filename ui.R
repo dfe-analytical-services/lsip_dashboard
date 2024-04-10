@@ -524,7 +524,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               actionLink("link_to_tabpanel_vacancies", "Jobs")
             ),
             p(
-              "This is an experimental metric of online job advert data, split by SOC 2 digit, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "
+              "This is an experimental metric of online job advert data, split by SOC submajor groups, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "
             ),
             h3(actionLink(
               "link_to_tabpanel_enterprise", "Businesses"
@@ -585,7 +585,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             h2("Latest update"),
             p("9 May 2024 (1.4.1)"),
             tags$ul(
-              tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC 2020 2 digit (previously TextKernel's own profession split was used)."),
+              tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC2020 submajor groups (previously TextKernel's own profession split was used)."),
             ),
             details(
               label = "Previous updates",
@@ -877,7 +877,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             This dashboard currently shows employment volumes and rates for each geographic area and by occupation (SOC2020) and industry (SIC 2007)."
           ),
           p(
-            "The ONS previously identified a coding error in the collection of SOC20, although this occupational data has been revised, it is advised to continue to use caution when interpreting these data particularly when looking at year-on-year changes as they may continue to be impacted by this coding issue as well as wider factors such as Covid-19, the UK's exit from the EU, and changes to the economy. For more information see this ONS  ",
+            "The ONS previously identified a coding error in the collection of SOC2020, although this occupational data has been revised, it is advised to continue to use caution when interpreting these data particularly when looking at year-on-year changes as they may continue to be impacted by this coding issue as well as wider factors such as Covid-19, the UK's exit from the EU, and changes to the economy. For more information see this ONS  ",
             a(
               href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/revisionofmiscodedoccupationaldataintheonslabourforcesurveyuk/january2021toseptember2022",
               "article",
@@ -906,7 +906,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             The dashboard shows the monthly average number of live adverts from 2017 to 2023."
           ),
           p(
-            "Advert volumes are shown split by SOC 2020 2 digit and 1 digit codes. Textkernel have derived these codes from the job advert job title."
+            "Advert volumes are shown split by SOC2020 major and submajor groups. Textkernel have derived these codes from the job advert job title."
           ),
           p(
             "Counts have been rounded to the nearest 5 and so totals may not add due to this rounding. The scope of online job adverts does not fully capture the scope of UK economic activity because of differing advertising methods, for example, casual work may be advertised by word-of-mouth or in shop windows as opposed to online."

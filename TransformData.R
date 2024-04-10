@@ -824,7 +824,7 @@ advertsWithAreas <-
   bind_rows(
     formatVacancies(I_Ons2digLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% select(-region)),
     formatVacancies(I_OnsLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% select(-region))
-  ) %>% # remove region code. get rid of london since it isn't really an LA.We get that from the region data%>% # remove region code. get rid of london since it isn't really an LA.We get that from the region data
+  ) %>% # remove region code. get rid of london since it isn't really an LA.We get that from the region data
   # Use new LA names from 2011 areas
   left_join(I_LaLookup %>% distinct(LAD11NM, LAD23NM_11 = LAD23NM, LAD23CD_11 = LAD23CD), by = c("area" = "LAD11NM")) %>% # make new LAs
   # Use new LA names from 2021 areas
@@ -916,7 +916,7 @@ C_adverts <- bind_rows(
   # soc 2 digit
   F_adverts %>%
     filter(SOC2digit != " - ") %>%
-    mutate(breakdown = "SOC 2 digit") %>%
+    mutate(breakdown = "SOC2020 submajor group") %>%
     rename(subgroup = SOC2digit),
   # total
   F_adverts %>%
@@ -928,21 +928,21 @@ C_adverts <- bind_rows(
     mutate(
       SOC1digitCode = substr(SOC2digit, 1, 1),
       SOC1digit = case_when(
-        SOC1digitCode == "1" ~ "1 Managers, directors and senior officials",
-        SOC1digitCode == "2" ~ "2 Professional occupations",
-        SOC1digitCode == "3" ~ "3 Associate professional occupations",
-        SOC1digitCode == "4" ~ "4 Administrative and secretarial occupations",
-        SOC1digitCode == "5" ~ "5 Skilled trades occupations",
-        SOC1digitCode == "6" ~ "6 Caring, leisure and other service occupations",
-        SOC1digitCode == "7" ~ "7 Sales and customer service occupations",
-        SOC1digitCode == "8" ~ "8 Process, plant and machine operatives",
-        SOC1digitCode == "9" ~ "9 Elementary occupations",
+        SOC1digitCode == "1" ~ "1 - Managers, directors and senior officials",
+        SOC1digitCode == "2" ~ "2 - Professional occupations",
+        SOC1digitCode == "3" ~ "3 - Associate professional occupations",
+        SOC1digitCode == "4" ~ "4 - Administrative and secretarial occupations",
+        SOC1digitCode == "5" ~ "5 - Skilled trades occupations",
+        SOC1digitCode == "6" ~ "6 - Caring, leisure and other service occupations",
+        SOC1digitCode == "7" ~ "7 - Sales and customer service occupations",
+        SOC1digitCode == "8" ~ "8 - Process, plant and machine operatives",
+        SOC1digitCode == "9" ~ "9 - Elementary occupations",
         TRUE ~ "NULL"
       )
     ) %>%
     group_by(chartPeriod, timePeriod, geogConcat, latest, SOC1digit) %>%
     summarise(value = sum(value)) %>%
-    mutate(breakdown = "SOC 1 digit", valueText = as.character(value)) %>%
+    mutate(breakdown = "SOC2020 major group", valueText = as.character(value)) %>%
     mutate(subgroup = SOC1digit)
 ) %>%
   select(-SOC2digit) %>%
@@ -1156,24 +1156,24 @@ write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALS
 # (these are chosen in the filter)
 # get a list of summary and detailed professions
 C_detailLookup <- C_breakdown %>%
-  filter(breakdown == "SOC 2 digit") %>%
+  filter(breakdown == "SOC2020 submajor group") %>%
   distinct(subgroup) %>%
   mutate(
     SOC1digitCode = substr(subgroup, 1, 1),
-    `SOC 1 digit` = case_when(
-      SOC1digitCode == "1" ~ "1 Managers, directors and senior officials",
-      SOC1digitCode == "2" ~ "2 Professional occupations",
-      SOC1digitCode == "3" ~ "3 Associate professional occupations",
-      SOC1digitCode == "4" ~ "4 Administrative and secretarial occupations",
-      SOC1digitCode == "5" ~ "5 Skilled trades occupations",
-      SOC1digitCode == "6" ~ "6 Caring, leisure and other service occupations",
-      SOC1digitCode == "7" ~ "7 Sales and customer service occupations",
-      SOC1digitCode == "8" ~ "8 Process, plant and machine operatives",
-      SOC1digitCode == "9" ~ "9 Elementary occupations",
+    `SOC2020 major group` = case_when(
+      SOC1digitCode == "1" ~ "1 - Managers, directors and senior officials",
+      SOC1digitCode == "2" ~ "2 - Professional occupations",
+      SOC1digitCode == "3" ~ "3 - Associate professional occupations",
+      SOC1digitCode == "4" ~ "4 - Administrative and secretarial occupations",
+      SOC1digitCode == "5" ~ "5 - Skilled trades occupations",
+      SOC1digitCode == "6" ~ "6 - Caring, leisure and other service occupations",
+      SOC1digitCode == "7" ~ "7 - Sales and customer service occupations",
+      SOC1digitCode == "8" ~ "8 - Process, plant and machine operatives",
+      SOC1digitCode == "9" ~ "9 - Elementary occupations",
       TRUE ~ "NULL"
     )
   ) %>%
-  select(`SOC 1 digit`, `SOC 2 digit` = subgroup)
+  select(`SOC2020 major group`, `SOC2020 submajor group` = subgroup)
 write.csv(C_detailLookup, file = "Data\\AppData\\C_detailLookup.csv", row.names = FALSE)
 
 C_topTenEachBreakdown <-
@@ -1183,12 +1183,12 @@ C_topTenEachBreakdown <-
       group_by(metric, breakdown, geogConcat) %>%
       arrange(desc(value)) %>%
       slice(1:10) %>%
-      mutate(`SOC 1 digit` = "All"),
+      mutate(`SOC2020 major group` = "All"),
     C_breakdown %>%
-      filter(breakdown == "SOC 2 digit", str_sub(geogConcat, -4, -1) != "LADU") %>%
+      filter(breakdown == "SOC2020 submajor group", str_sub(geogConcat, -4, -1) != "LADU") %>%
       mutate(
         SOC1digitCode = substr(subgroup, 1, 1),
-        `SOC 1 digit` = case_when(
+        `SOC2020 major group` = case_when(
           SOC1digitCode == "1" ~ "1 Managers, directors and senior officials",
           SOC1digitCode == "2" ~ "2 Professional occupations",
           SOC1digitCode == "3" ~ "3 Associate professional occupations",
@@ -1201,11 +1201,11 @@ C_topTenEachBreakdown <-
           TRUE ~ "NULL"
         )
       ) %>%
-      group_by(geogConcat, metric, breakdown, `SOC 1 digit`) %>%
+      group_by(geogConcat, metric, breakdown, `SOC2020 major group`) %>%
       arrange(desc(value)) %>%
       slice(1:10)
   ) %>%
-  select(metric, breakdown, geogConcat, subgroup, `SOC 1 digit`)
+  select(metric, breakdown, geogConcat, subgroup, `SOC2020 major group`)
 write.csv(C_topTenEachBreakdown, file = "Data\\AppData\\C_topTenEachBreakdown.csv", row.names = FALSE)
 
 ## 4.4 C_dataHub ----
