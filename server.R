@@ -1351,7 +1351,9 @@ server <- function(input, output, session) {
         input$geoChoice,
         input$mapLA_shape_click,
         input$geoComps,
-        input$splashMetric
+        input$splashMetric,
+        input$breakdownChoice,
+        input$subgroupChoice
       ),
       {
         SplashTime <- C_time %>%
@@ -1368,7 +1370,7 @@ server <- function(input, output, session) {
               } else {
                 geogConcat == "\nNone"
               }),
-            metric == input$splashMetric
+            gsub(" ","",metric) == gsub(" ","",(paste(input$splashMetric,input$subgroupChoice)))
           )
         # add an extra column so the colours work in ggplot when sorting alphabetically
         SplashTime$Areas <- factor(SplashTime$geogConcat,
@@ -1474,6 +1476,26 @@ server <- function(input, output, session) {
         ))$breakdown
     )
   })
+  #breakdown filter for subgroup filter at the top 
+  output$breakdownTopFilter <- renderUI({
+    validate(
+      need(input$splashMetric %in% distinctBreakdowns$metric, "No breakdowns for this metric")
+    )
+    selectizeInput(
+      inputId = "breakdownChoice",
+      label = "Breakdown",
+      choices =
+        c("Total",(as.vector(
+          distinctBreakdowns %>%
+            filter(metric == input$splashMetric)
+        ))$breakdown
+        )
+    )
+  })
+  
+  
+  
+  #
   #### 2.3.8.2 Optional summary profession filter ----
   summaryCategories <- c("All", (as.vector(
     distinctSubgroups %>%
@@ -1532,7 +1554,42 @@ server <- function(input, output, session) {
       options = list(`actions-box` = TRUE, `live-search` = TRUE)
     )
   })
-
+  #### 2.3.8.3 Subgroup filter at the top ---- 
+  output$subgroupTopFilter <- renderUI({
+    validate(
+      need(input$breakdownChoice != "" , "")#,
+      #need(input$splashMetric %in% distinctBreakdowns$metric, "")
+    )
+    selectizeInput(
+      inputId = "subgroupChoice",
+      label = "Subgroup",
+      choices = as.vector((
+          distinctSubgroups %>%
+            filter(
+              metric == input$splashMetric,
+              breakdown == input$breakdownChoice,
+              if (input$breakdownChoice == "SOC 2 digit" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
+                subgroup %in%
+                  (C_detailLookup %>% filter(`SOC 1 digit` == input$summaryProfession))$`SOC 2 digit`
+              } else {
+                TRUE
+              }
+            )
+        ))$subgroup
+    )
+  })
+  output$subgroupDetails <- renderUI({
+    validate(
+    need(input$splashMetric %in% distinctBreakdowns$metric, "")
+    ) 
+  details(
+    label = "Subgroups",
+    inputId = "Subgroups",
+    p(uiOutput("breakdownTopFilter"),
+      uiOutput("subgroupTopFilter")
+    )
+  )
+  })
   #### 2.3.8.3 Title ----
   output$titleBreakdown <- renderUI({
     validate(

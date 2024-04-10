@@ -1070,9 +1070,9 @@ save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 ## 4.2 C_time ----
 # This is used in the line charts and KPIs. It contains historic data for each metric and area.
 C_time <- C_localSkillsDataset %>%
-  filter(breakdown == "Total" |
+ # filter(breakdown == "Total" |
     # We also have a few overview charts that are subgroups-E&T acheivements, app achievments
-    (metric == "achievements" & subgroup %in% c("Apprenticeships", "Education and training"))) %>%
+  #  (metric == "achievements" & subgroup %in% c("Apprenticeships", "Education and training"))) %>%
   # and also micro businesses
   bind_rows(
     C_localSkillsDataset %>%
@@ -1092,11 +1092,10 @@ C_time <- C_localSkillsDataset %>%
     TRUE ~ metric
   )) %>% # set metric name to subgroup when we want subgroup data
   select(geogConcat, metric, timePeriod, chartPeriod, latest, value, valueText) %>%
-  mutate(metric = case_when(
-    metric == "employmentProjectionAnnualGrowth" ~ "employmentProjection",
-    TRUE ~ metric
-  )) # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
-write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
+  mutate(metric = gsub("AnnualGrowth","",metric)) # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
+#data is too big for github so have to split
+write.csv(C_time[seq.int(nrow(C_time) / 2),], file = "Data\\AppData\\C_timePt1.csv", row.names = FALSE)
+write.csv(C_time[-seq.int(nrow(C_time) / 2),], file = "Data\\AppData\\C_timePt2.csv", row.names = FALSE)
 
 ### 4.2.1 Axis min and max ----
 # Create max and min for each metric used in setting axis on the overview page

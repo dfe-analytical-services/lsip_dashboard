@@ -748,16 +748,16 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           pickerInput(
             inputId = "splashMetric",
             choices = metricChoices,
-            multiple = FALSE,
-            choicesOpt = list(
-              disabled = unlist(metricChoices) %in% c("workingFutures"),
-              style = ifelse(
-                unlist(metricChoices) %in% c("workingFutures"),
-                yes = "color: rgba(119, 119, 119, 0.5);",
-                no = ""
-              )
-            )
-          )
+            multiple = FALSE
+          ),
+          uiOutput("subgroupDetails")
+          # details(
+          #   label = "Subgroups",
+          #   inputId = "Subgroups",
+          #   p(uiOutput("breakdownTopFilter"),
+          #     uiOutput("subgroupTopFilter")
+          #   )
+          # )
         ),
         column(1),
         column(

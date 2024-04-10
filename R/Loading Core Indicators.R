@@ -1,7 +1,10 @@
 # load app data
 
 load(file = "./Data/AppData/C_Geog.rdata")
-C_time <- read.csv(file = "./Data/AppData/C_time.csv", check.names = FALSE)
+C_time <- bind_rows(
+  read.csv(file = "./Data/AppData/C_timePt1.csv", check.names = FALSE),
+  read.csv(file = "./Data/AppData/C_timePt2.csv", check.names = FALSE)
+)
 C_breakdown <- read.csv(file = "./Data/AppData/C_breakdown.csv", check.names = FALSE)
 C_detailLookup <- read.csv(file = "./Data/AppData/C_detailLookup.csv", check.names = FALSE)
 C_topTenEachBreakdown <- read.csv(file = "./Data/AppData/C_topTenEachBreakdown.csv", check.names = FALSE)
