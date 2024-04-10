@@ -1477,17 +1477,17 @@ server <- function(input, output, session) {
   #### 2.3.8.2 Optional summary profession filter ----
   summaryCategories <- c("All", (as.vector(
     distinctSubgroups %>%
-      filter(breakdown == "SOC 1 digit")
+      filter(breakdown == "SOC2020 major group")
   ))$subgroup)
   output$professionFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
-      need(input$barBreakdown == "SOC 2 digit", ""),
+      need(input$barBreakdown == "SOC2020 submajor group", ""),
       need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     selectizeInput(
       inputId = "summaryProfession",
-      label = "Limit to particular SOC 1",
+      label = "Limit to particular SOC2020 major group",
       choices = summaryCategories
     )
   })
@@ -1507,9 +1507,9 @@ server <- function(input, output, session) {
             filter(
               metric == input$splashMetric,
               breakdown == input$barBreakdown,
-              if (input$barBreakdown == "SOC 2 digit" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
+              if (input$barBreakdown == "SOC2020 submajor group" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
                 subgroup %in%
-                  (C_detailLookup %>% filter(`SOC 1 digit` == input$summaryProfession))$`SOC 2 digit`
+                  (C_detailLookup %>% filter(`SOC2020 major group` == input$summaryProfession))$`SOC2020 submajor group`
               } else {
                 TRUE
               }
@@ -1522,10 +1522,10 @@ server <- function(input, output, session) {
             metric == input$splashMetric,
             breakdown == input$barBreakdown,
             geogConcat == input$geoChoice,
-            if (input$barBreakdown == "SOC 2 digit" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
-              `SOC 1 digit` == input$summaryProfession
+            if (input$barBreakdown == "SOC2020 submajor group" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
+              `SOC2020 major group` == input$summaryProfession
             } else {
-              `SOC 1 digit` == "All"
+              `SOC2020 major group` == "All"
             }
           )
       ))$subgroup,
@@ -1543,7 +1543,7 @@ server <- function(input, output, session) {
       "How do ",
       (I_DataText %>% filter(metric == input$splashMetric))$breakdownTitle,
       " vary by ",
-      tolower(input$barBreakdown),
+      tolower(gsub("SOC2020 ", "",input$barBreakdown)),
       "?"
     )
   })
