@@ -724,26 +724,26 @@ server <- function(input, output, session) {
   # get EandT data for current area
   output$skisup.ETach <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("achievements Education and training", "number")
+    createOverviewKPI("achievementsEducationandtraining", "number")
   })
 
   # e and t chart
   output$etLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(createOverviewChart("achievements Education and training", "number", "Education and training achievements"))
+    renderOverviewChart(createOverviewChart("achievementsEducationandtraining", "number", "Educationandtrainingachievements"))
   })
 
   #### 2.2.3.5 FE app achieve ----
   # get App data for current area
   output$skisup.APPach <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("achievements Apprenticeships", "number")
+    createOverviewKPI("achievementsApprenticeships", "number")
   })
 
   # app chart
   output$AppLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(createOverviewChart("achievements Apprenticeships", "number", "Apprenticeship achievements"))
+    renderOverviewChart(createOverviewChart("achievementsApprenticeships", "number", "Apprenticeshipachievements"))
   })
 
   # Add link to skills data
@@ -908,7 +908,11 @@ server <- function(input, output, session) {
       unlist(metricChoices)[unlist(metricChoices) == input$splashMetric]
     ))))
   })
-
+  
+  currentMetricSubgroup <- reactive({
+  gsub(" ","",(paste(input$splashMetric,input$subgroupChoice)))
+})
+    
   # get current LA
   laClicked <- reactive({
     eventLA <- input$mapLA_shape_click
@@ -1289,12 +1293,12 @@ server <- function(input, output, session) {
     currentArea <- C_time %>%
       filter(
         geogConcat == input$geoChoice,
-        metric == input$splashMetric
+        metric == currentMetricSubgroup()
       )
     englandArea <- C_time %>%
       filter(
         geogConcat == "England",
-        metric == input$splashMetric
+        metric == currentMetricSubgroup()
       )
     currentChange <- (currentArea %>%
       filter(latest == 1))$value -
@@ -1370,7 +1374,7 @@ server <- function(input, output, session) {
               } else {
                 geogConcat == "\nNone"
               }),
-            gsub(" ","",metric) == gsub(" ","",(paste(input$splashMetric,input$subgroupChoice)))
+            metric == currentMetricSubgroup()
           )
         # add an extra column so the colours work in ggplot when sorting alphabetically
         SplashTime$Areas <- factor(SplashTime$geogConcat,

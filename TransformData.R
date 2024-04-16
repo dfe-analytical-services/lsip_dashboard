@@ -1042,8 +1042,14 @@ C_localSkillsDataset <- bind_rows(
   # ##add in Dorset LSIP to match Dorset LEP
   # C_localSkillsDataset %>%
   #   filter(geogConcat == "Dorset LEP") %>%
-  #   mutate(geogConcat = "Dorset LSIP")
-)
+)%>%
+  mutate(
+    metricOrig=metric
+    ,metric = case_when(
+    subgroup=="Process, plant and machine operatives" & breakdown=="Occupation (SOC2020 major)" ~ gsub(" ","",paste(metric, subgroup,"major")),#this group is named the same in soc major and submajor
+    breakdown != "Total" ~ gsub(" ","",paste(metric, subgroup)),
+    TRUE ~ metric
+  )) # set metric name to subgroup when we want subgroup data
 
 # 4. Create datasets used by the app----
 ## 4.1 Unused metrics ----
@@ -1056,7 +1062,7 @@ C_Geog <- neatGeog %>%
   left_join(
     (C_localSkillsDataset %>%
       filter(
-        breakdown == "Total", latest == 1,
+        latest == 1,
         metric != "employmentProjectionAnnualGrowth", # the maps use the employmentProjectionGrowth2023to2035 metric
         !metric %in% dashboardMetricIgnore # remove metrics not used
       ) %>%
@@ -1087,10 +1093,6 @@ C_time <- C_localSkillsDataset %>%
     metric != "employmentProjectionGrowth2023to2035", # time charts only use employmentProjectionAnnualGrowth metric
     !metric %in% dashboardMetricIgnore # remove metrics not used
   ) %>%
-  mutate(metric = case_when(
-    breakdown != "Total" ~ paste(metric, subgroup),
-    TRUE ~ metric
-  )) %>% # set metric name to subgroup when we want subgroup data
   select(geogConcat, metric, timePeriod, chartPeriod, latest, value, valueText) %>%
   mutate(metric = gsub("AnnualGrowth","",metric)) # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
 #data is too big for github so have to split
@@ -1112,7 +1114,7 @@ C_breakdown <- bind_rows(
   C_localSkillsDataset %>%
     filter(
       breakdown != "Total", subgroup != "Total", latest == 1,
-      metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "participation", "starts")
+      metricOrig %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "participation", "starts")
     ) %>%
     select(geogConcat, metric, breakdown, subgroup, value) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
@@ -1121,7 +1123,7 @@ C_breakdown <- bind_rows(
       C_localSkillsDataset %>%
         filter(
           breakdown == "Total", subgroup == "Total", latest == 1,
-          metric %in% c("vacancies", "enterpriseCount", "achievements", "participation", "starts")
+          metricOrig %in% c("vacancies", "enterpriseCount", "achievements", "participation", "starts")
         ) %>%
         # add on the 16 plus totals
         bind_rows(F_emp16plus %>%
@@ -1137,7 +1139,7 @@ C_breakdown <- bind_rows(
   C_localSkillsDataset %>%
     filter(
       breakdown != "Total", subgroup != "Total", latest == 1,
-      !metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "participation", "starts")
+      !metricOrig %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "participation", "starts")
     ) %>%
     select(geogConcat, metric, breakdown, subgroup, value, valueText)
 ) %>%
