@@ -1543,7 +1543,7 @@ server <- function(input, output, session) {
       "How do ",
       (I_DataText %>% filter(metric == input$splashMetric))$breakdownTitle,
       " vary by ",
-      tolower(gsub("SOC2020 ", "",input$barBreakdown)),
+      tolower(gsub("SOC2020 ", "", input$barBreakdown)),
       "?"
     )
   })
@@ -1747,7 +1747,13 @@ server <- function(input, output, session) {
       need(input$barBreakdown != "No breakdowns available", "")
     )
     paste0(
-      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, "."
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ".",
+      if (input$splashMetric == "achievements") {
+        " SSA splits are based on achievement aims. Other splits are based on learner volumes. Learners can appear in multiple categories if they take multiple courses and as such percentages may add up to more than 100%."
+      },
+      if (input$splashMetric == "participation") {
+        " Splits are based on learner volumes. Learners can appear in multiple categories if they take multiple courses and as such percentages may add up to more than 100%."
+      }
     )
   })
 
