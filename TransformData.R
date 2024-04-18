@@ -171,8 +171,15 @@ C_empOcc <- formatNomis(I_empOcc) %>%
   mutate(subgroup = gsub(" \\(SOC\\) : All people \\)", "", subgroup)) %>%
   mutate(subgroup = gsub("Tb: \\(All people - ", "", subgroup)) %>%
   mutate(valueText = as.character(value)) %>%
-  mutate(breakdown = "Occupation", metric = "inemployment")
-
+  mutate(
+    breakdown = "Occupation (SOC2020 Sub-Major Group)",
+    metric = "inemployment",
+    cleanName = str_to_lower(subgroup)
+  ) %>%
+  # add on soc codes
+  left_join(I_Ons2digRegion %>% distinct(code = X2, cleanName = str_to_lower(X3))) %>%
+  mutate(subgroup = paste0(code, " - ", str_to_sentence(cleanName))) %>%
+  select(-code, -cleanName)
 ## 2.3 Employment by industry ----
 C_empInd <- formatNomis(I_empInd) %>%
   rename(subgroup = CELL_NAME) %>%
@@ -584,9 +591,9 @@ employmentProjections <-
       mutate(
         metric = "employmentProjection",
         breakdown = case_when(
-          grepl("[0-9]", subgroup) == TRUE ~ "Occupation (SOC2020 submajor)",
+          grepl("[0-9]", subgroup) == TRUE ~ "Occupation (SOC2020 Sub-Major Group)",
           subgroup == "All occupations" ~ "Total",
-          TRUE ~ "Occupation (SOC2020 major)"
+          TRUE ~ "Occupation (SOC2020 Major Group)"
         ),
         subgroup = case_when(
           subgroup == "All occupations" ~ "Total",
@@ -922,7 +929,7 @@ C_adverts <- bind_rows(
   # soc 2 digit
   F_adverts %>%
     filter(SOC2digit != " - ") %>%
-    mutate(breakdown = "SOC2020 submajor group") %>%
+    mutate(breakdown = "Occupation (SOC2020 Sub-Major Group)") %>%
     rename(subgroup = SOC2digit),
   # total
   F_adverts %>%
@@ -948,7 +955,7 @@ C_adverts <- bind_rows(
     ) %>%
     group_by(chartPeriod, timePeriod, geogConcat, latest, SOC1digit) %>%
     summarise(value = sum(value)) %>%
-    mutate(breakdown = "SOC2020 major group", valueText = as.character(value)) %>%
+    mutate(breakdown = "Occupation (SOC2020 Major Group)", valueText = as.character(value)) %>%
     mutate(subgroup = SOC1digit)
 ) %>%
   select(-SOC2digit) %>%
@@ -1166,11 +1173,11 @@ write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALS
 # (these are chosen in the filter)
 # get a list of summary and detailed professions
 C_detailLookup <- C_breakdown %>%
-  filter(breakdown == "SOC2020 submajor group") %>%
+  filter(breakdown == "Occupation (SOC2020 Sub-Major Group)") %>%
   distinct(subgroup) %>%
   mutate(
     SOC1digitCode = substr(subgroup, 1, 1),
-    `SOC2020 major group` = case_when(
+    `Occupation (SOC2020 Major Group)` = case_when(
       SOC1digitCode == "1" ~ "1 - Managers, directors and senior officials",
       SOC1digitCode == "2" ~ "2 - Professional occupations",
       SOC1digitCode == "3" ~ "3 - Associate professional occupations",
@@ -1183,7 +1190,7 @@ C_detailLookup <- C_breakdown %>%
       TRUE ~ "NULL"
     )
   ) %>%
-  select(`SOC2020 major group`, `SOC2020 submajor group` = subgroup)
+  select(`Occupation (SOC2020 Major Group)`, `Occupation (SOC2020 Sub-Major Group)` = subgroup)
 write.csv(C_detailLookup, file = "Data\\AppData\\C_detailLookup.csv", row.names = FALSE)
 
 C_topTenEachBreakdown <-
@@ -1193,12 +1200,12 @@ C_topTenEachBreakdown <-
       group_by(metric, breakdown, geogConcat) %>%
       arrange(desc(value)) %>%
       slice(1:10) %>%
-      mutate(`SOC2020 major group` = "All"),
+      mutate(`Occupation (SOC2020 Major Group)` = "All"),
     C_breakdown %>%
-      filter(breakdown == "SOC2020 submajor group", str_sub(geogConcat, -4, -1) != "LADU") %>%
+      filter(breakdown == "Occupation (SOC2020 Sub-Major Group)", str_sub(geogConcat, -4, -1) != "LADU") %>%
       mutate(
         SOC1digitCode = substr(subgroup, 1, 1),
-        `SOC2020 major group` = case_when(
+        `Occupation (SOC2020 Major Group)` = case_when(
           SOC1digitCode == "1" ~ "1 Managers, directors and senior officials",
           SOC1digitCode == "2" ~ "2 Professional occupations",
           SOC1digitCode == "3" ~ "3 Associate professional occupations",
@@ -1211,11 +1218,11 @@ C_topTenEachBreakdown <-
           TRUE ~ "NULL"
         )
       ) %>%
-      group_by(geogConcat, metric, breakdown, `SOC2020 major group`) %>%
+      group_by(geogConcat, metric, breakdown, `Occupation (SOC2020 Major Group)`) %>%
       arrange(desc(value)) %>%
       slice(1:10)
   ) %>%
-  select(metric, breakdown, geogConcat, subgroup, `SOC2020 major group`)
+  select(metric, breakdown, geogConcat, subgroup, `Occupation (SOC2020 Major Group)`)
 write.csv(C_topTenEachBreakdown, file = "Data\\AppData\\C_topTenEachBreakdown.csv", row.names = FALSE)
 
 ## 4.4 C_dataHub ----
