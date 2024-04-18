@@ -1477,17 +1477,17 @@ server <- function(input, output, session) {
   #### 2.3.8.2 Optional summary profession filter ----
   summaryCategories <- c("All", (as.vector(
     distinctSubgroups %>%
-      filter(breakdown == "SOC2020 major group")
+      filter(breakdown == "Occupation (SOC2020 Major Group)")
   ))$subgroup)
   output$professionFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
-      need(input$barBreakdown == "SOC2020 submajor group", ""),
+      need(input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)", ""),
       need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     selectizeInput(
       inputId = "summaryProfession",
-      label = "Limit to particular SOC2020 major group",
+      label = "Limit to particular SOC2020 Major group",
       choices = summaryCategories
     )
   })
@@ -1507,9 +1507,9 @@ server <- function(input, output, session) {
             filter(
               metric == input$splashMetric,
               breakdown == input$barBreakdown,
-              if (input$barBreakdown == "SOC2020 submajor group" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
+              if (input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
                 subgroup %in%
-                  (C_detailLookup %>% filter(`SOC2020 major group` == input$summaryProfession))$`SOC2020 submajor group`
+                  (C_detailLookup %>% filter(`Occupation (SOC2020 Major Group)` == input$summaryProfession))$`Occupation (SOC2020 Sub-Major Group)`
               } else {
                 TRUE
               }
@@ -1522,10 +1522,10 @@ server <- function(input, output, session) {
             metric == input$splashMetric,
             breakdown == input$barBreakdown,
             geogConcat == input$geoChoice,
-            if (input$barBreakdown == "SOC2020 submajor group" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
-              `SOC2020 major group` == input$summaryProfession
+            if (input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
+              `Occupation (SOC2020 Major Group)` == input$summaryProfession
             } else {
-              `SOC2020 major group` == "All"
+              `Occupation (SOC2020 Major Group)` == "All"
             }
           )
       ))$subgroup,

@@ -278,7 +278,7 @@ I_active_ONS20 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files
 sheet <- "Table 3.1d"
 I_active_ONS21 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 
-### 2.3.2 ONS job adverts by profession ----
+### 2.3.2 ONS job adverts by SOC ----
 folder <- "2-12_OnsProf"
 sheet <- "Table 12"
 I_Ons2digLA <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)

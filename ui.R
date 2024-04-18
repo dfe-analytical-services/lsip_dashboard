@@ -524,7 +524,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               actionLink("link_to_tabpanel_vacancies", "Jobs")
             ),
             p(
-              "This is an experimental metric of online job advert data, split by SOC submajor groups, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "
+              "This is an experimental metric of online job advert data, split by SOC2020 Sub-Major groups, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "
             ),
             h3(actionLink(
               "link_to_tabpanel_enterprise", "Businesses"
@@ -585,8 +585,9 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             h2("Latest update"),
             p("9 May 2024 (1.4.0)"),
             tags$ul(
-              tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC2020 submajor groups (previously TextKernel's own profession split was used)."),
+              tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC2020 Sub-Major groups (previously TextKernel's own profession split was used)."),
               tags$li("Made a correction to the achievement split by SSA to use total aims as the denominator."),
+              tags$li("Add SOC codes to employment data SOC labels."),
             ),
             details(
               label = "Previous updates",
@@ -907,7 +908,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             The dashboard shows the monthly average number of live adverts from 2017 to 2023."
           ),
           p(
-            "Advert volumes are shown split by SOC2020 major and submajor groups. Textkernel have derived these codes from the job advert job title."
+            "Advert volumes are shown split by SOC2020 Major and Sub-Major groups. Textkernel have derived these codes from the job advert job title."
           ),
           p(
             "Counts have been rounded to the nearest 5 and so totals may not add due to this rounding. The scope of online job adverts does not fully capture the scope of UK economic activity because of differing advertising methods, for example, casual work may be advertised by word-of-mouth or in shop windows as opposed to online."
