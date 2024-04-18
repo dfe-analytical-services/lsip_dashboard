@@ -24,7 +24,7 @@ fluidPage(
       href = "dfe_shiny_gov_style.css"
     )
   ),
-  # use_tota11y(), # accessibility layer for local testing
+  shinyGovstyle::cookieBanner("DfE R-Shiny dashboard template"),
 
   # Set metadata for browser
   tags$html(lang = "en"),
@@ -588,6 +588,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC2020 Sub-Major groups (previously TextKernel's own profession split was used)."),
               tags$li("Made a correction to the achievement split by SSA to use total aims as the denominator."),
               tags$li("Add SOC codes to employment data SOC labels."),
+              tags$li("Update cookie banner."),
             ),
             details(
               label = "Previous updates",
