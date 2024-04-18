@@ -126,7 +126,6 @@ cellsListAps <- nomis_get_metadata(id = "NM_17_1", concept = "CELL")
 ### 2.1.1 Employment by occupation ----
 # Query data
 # Geography: England, LEPs, regions, LADs (as of April 2021)
-# Date: 12 months to Dec 2017-2021. The latest data is not available so use the last 5 Jan-Decs
 # Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people
 # find cells we want
 cellsUseAps_empOcc <- cellsListAps %>% filter(description.en %like% "T09b:" & description.en %like% "All people - ")
