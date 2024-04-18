@@ -500,10 +500,16 @@ C_FeProvLevelAge <- F_FeProvLevelAge %>%
   # add back onto other data
   bind_rows(F_FeProvLevelAge)
 
-## 2.7 FE enrolments/achievements by ssa ----
+## 2.7 FE enrolments/achievements aims by ssa ----
 feSsaWithAreas <- I_FeSsa %>%
-  filter(notional_nvq_level == "Total", sex == "Total", ethnicity_major == "Total", ssa_t1_desc != "Total") %>%
-  mutate(subgroup = ssa_t1_desc, breakdown = "SSA") %>%
+  filter(notional_nvq_level == "Total", sex == "Total", ethnicity_major == "Total") %>%
+  mutate(
+    subgroup = ssa_t1_desc,
+    breakdown = case_when(
+      subgroup == "Total" ~ "Total",
+      TRUE ~ "SSA"
+    )
+  ) %>%
   mutate(
     areaCode = case_when(
       geographic_level == "Local authority district" ~ lad_code,
@@ -543,7 +549,7 @@ C_FeSsa <- bind_rows(
     filter(newArea == 0)
 ) %>%
   select(-newArea, -e_and_t_aims_ach_1, -e_and_t_aims_enrolments_1) %>%
-  rename(achievements = e_and_t_aims_ach, enrolments = e_and_t_aims_enrolments) %>%
+  rename(achievementsAims = e_and_t_aims_ach, enrolmentsAims = e_and_t_aims_enrolments) %>%
   # make long
   pivot_longer(!c("geogConcat", "timePeriod", "chartPeriod", "latest", "breakdown", "subgroup"),
     names_to = "metric",
@@ -1113,7 +1119,7 @@ C_breakdown <- bind_rows(
   C_localSkillsDataset %>%
     filter(
       breakdown != "Total", subgroup != "Total", latest == 1,
-      metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "participation", "starts")
+      metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "achievementsAims", "participation", "starts")
     ) %>%
     select(geogConcat, metric, breakdown, subgroup, value) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
@@ -1122,7 +1128,7 @@ C_breakdown <- bind_rows(
       C_localSkillsDataset %>%
         filter(
           breakdown == "Total", subgroup == "Total", latest == 1,
-          metric %in% c("vacancies", "enterpriseCount", "achievements", "participation", "starts")
+          metric %in% c("vacancies", "enterpriseCount", "achievements", "achievementsAims", "participation", "starts")
         ) %>%
         # add on the 16 plus totals
         bind_rows(F_emp16plus %>%
@@ -1133,12 +1139,16 @@ C_breakdown <- bind_rows(
     ) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
     mutate(value = round(value / total, 3)) %>%
-    mutate(valueText = as.character(value)),
+    mutate(valueText = as.character(value)) %>%
+    mutate(metric = case_when(
+      metric == "achievementsAims" ~ "achievements",
+      TRUE ~ metric
+    )), # allign metric name so shows up when acievemnts chosen
   # Metric where value is used as it is
   C_localSkillsDataset %>%
     filter(
       breakdown != "Total", subgroup != "Total", latest == 1,
-      !metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "participation", "starts")
+      !metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "achievementsAims", "participation", "starts")
     ) %>%
     select(geogConcat, metric, breakdown, subgroup, value, valueText)
 ) %>%

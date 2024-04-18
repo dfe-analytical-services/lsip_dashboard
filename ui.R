@@ -583,9 +583,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("9 May 2024 (1.4.1)"),
+            p("9 May 2024 (1.4.0)"),
             tags$ul(
               tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC2020 submajor groups (previously TextKernel's own profession split was used)."),
+              tags$li("Made a correction to the achievement split by SSA to use total aims as the denominator."),
             ),
             details(
               label = "Previous updates",
