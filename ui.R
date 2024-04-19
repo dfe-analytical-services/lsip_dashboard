@@ -589,6 +589,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               tags$li("Made a correction to the achievement split by SSA to use total aims as the denominator."),
               tags$li("Add SOC codes to employment data SOC labels."),
               tags$li("Update cookie banner."),
+              tags$li("Updated APS employment rates, employment by industry and occupation data to the latest quarter."),
             ),
             details(
               label = "Previous updates",
