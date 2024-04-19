@@ -219,10 +219,13 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
   HTML(
     '<div class="govuk-phase-banner govuk-width-container govuk-main-wrapper" id="beta banner" style="margin-left:0px;margin-right:0px">
   <p class="govuk-phase-banner__content">
-    <strong class="govuk-tag govuk-phase-banner__content__tag ">beta</strong>
-    <span class="govuk-phase-banner__text">We are aware of performance issues that require some users to reload the page. We are working to fix this.
-</span>
-  </p>
+    <!-- <strong class="govuk-tag govuk-phase-banner__content__tag ">beta</strong> -->
+    <!-- <span class="govuk-phase-banner__text">We are aware of performance issues that require some users to reload the page. We are working to fix this.</span> -->
+
+  <strong class="govuk-tag govuk-phase-banner__content__tag ">feedback</strong>
+    <span class="govuk-phase-banner__text">Shape the future of this dashboard. <a href="https://www.google.com">Share your feedback to help us improve this service</a>.</span>
+
+    </p>
 </div>'
   ),
 
