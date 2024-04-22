@@ -21,14 +21,14 @@ support_links <- function() {
         "The source code for this dashboard is available in our ",
         a(href = "https://github.com/dfe-analytical-services/lsip_dashboard", "GitHub repository", .noWS = c("after")),
         "."
-      ),
-      br()
+      )
     ),
     column(
       12,
       h2("Use of cookies"),
       textOutput("cookie_status"),
       actionButton("remove", "Reset cookie consent"),
+      br(),
       br()
     )
   )
