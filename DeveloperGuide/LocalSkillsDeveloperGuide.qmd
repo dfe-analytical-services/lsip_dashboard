@@ -53,8 +53,6 @@ These are the common release points, however be aware that there may be revision
 
     -   Highest qualification is only updated in the APS once a year in the Apr release.
 
-    -   We are not currently updating Employment by Occupation until the SOC issue is sorted.
-
 -   *Individualised learner record* is updated quarterly but we only update with the final data, usually release in November (the in year data is provisional and subject to lag).
 
 -   *UK business count* is released and updated in the dashboard once a year in Sept/Oct.
@@ -106,7 +104,7 @@ These are the common release points, however be aware that there may be revision
 
 *For Nomis Datasets:*
 
-You should just be able to skip to stage (3) (Run ExtractLoadData.R) - this pulls all the latest Nomis data. However, please take note that some of the datasets currently have hardcoded dates because ONS are not updating Occupation and Qualification data while they fix some problems. Once those problems are fixed the code can be changed to use the LATEST format used in the other Nomis datasets.
+You should just be able to skip to stage (3) (Run ExtractLoadData.R) - this pulls all the latest Nomis data. However, please take note that the highest qualifications data currently includes data from two timeseries (NVQ and RQF), as RQF replaced NVQ in January 2022. The code for this section will need to be updated at each release (yearly) to use all available RQF data, and NVQ data for the remaining quarters. Once there have been five releases of the RQF data the code can be changed to use only the five latest releases of RQF data.
 
 3.  Run the ExtractLoadData.R script. This goes through all the numbered folders in /Data and loads the datasets in each folder as a R object.
 
