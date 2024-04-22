@@ -207,11 +207,15 @@ I_entSize <- I_entIndSize %>% filter(INDUSTRY_NAME == "Total")
 
 ### 2.1.4 Skill by age gender ------------
 # Geog and date as above
-# Cell: T19	Qualification by age and gender - NVQ. All people aged 16-64. only updated every Jan-Dec
-# find cells we want
-cellsUseAps_qual <- cellsListAps %>% filter(description.en %like% "T19:" & description.en %like% "Total")
+# Cell: T19	Qualification by age and gender. All people aged 16-64. only updated every Jan-Dec. NVQ data is available until 2021 - then on rcf
+# find cells we want in NVQ
+cellsUseAps_qualNvq <- cellsListAps %>% filter(description.en %like% "T19:" & description.en %like% "Total")
 # get data
-I_qualAgeGender <- extractNomis("NM_17_1", "2017-12,2018-12,2019-12,2020-12,2021-12", cellsUseAps_qual$id)
+I_qualAgeGenderNvq <- extractNomis("NM_17_1", "2019-12,2020-12,2021-12", cellsUseAps_qualNvq$id)
+# find cells we want in NVQ
+cellsUseAps_qualRqf <- cellsListAps %>% filter(description.en %like% "T19a:" & description.en %like% "Total")
+# get data
+I_qualAgeGenderRqf <- extractNomis("NM_17_1", "latestMINUS4,latest", cellsUseAps_qualRqf$id)
 
 ### 2.1.5 Employment by industry------------
 # Geog and date as above

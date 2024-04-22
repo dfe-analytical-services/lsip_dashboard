@@ -591,8 +591,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC2020 Sub-Major groups (previously TextKernel's own profession split was used)."),
               tags$li("Made a correction to the achievement split by SSA to use total aims as the denominator."),
               tags$li("Add SOC codes to employment data SOC labels."),
-              tags$li("Update cookie banner."),
+              tags$li("Updated cookie banner."),
               tags$li("Updated APS employment rates, employment by industry and occupation data to the latest quarter."),
+              tags$li("Update highest qualification data to use National Qualifications Framework allowing more recent data."),
+              tags$li("Added in highest qualification at level four plus metric."),
             ),
             details(
               label = "Previous updates",
@@ -906,7 +908,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             ),
             "."
           ),
-          p("Qualification estimates for the Jan 2022-Dec2022 survey period are temporarily suspended. The coding of qualifications has been changed to reflect an updated qualification framework. ONS have temporarily suspended the publication of these series while they update their datasets to reflect this change. They will reinstate qualification outputs as soon as they have made this update. "),
+          p("In Q1 2022 (January to March 2022) the highest qualification variable (HIQUAL) of the LFS was revised, therefore figures published after this are not directly comparable to previous years. From 2022 on qualification level is defined by the National Qualifications Framework (NQF). Before that National Vocational Qualifications (NVQ) is used."),
           h3("ONS-Textkernel online job adverts"),
           p(
             "These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.

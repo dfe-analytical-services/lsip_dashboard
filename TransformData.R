@@ -216,22 +216,26 @@ C_entInd <- formatNomis(
   mutate(metric = "enterpriseCount", breakdown = "Industry")
 
 ## 2.5 Qualification level by age and gender ----
-C_qualAgeGender <- formatNomis(I_qualAgeGender) %>%
+C_qualAgeGender <- formatNomis(I_qualAgeGenderNvq %>%
+  bind_rows(I_qualAgeGenderRqf)) %>%
   mutate(
     metric = case_when(
       grepl("None", CELL_NAME) ~ "qualNone",
-      grepl("NVQ1", CELL_NAME) ~ "qualL1",
-      grepl("NVQ2", CELL_NAME) ~ "qualL2",
+      grepl("NVQ1|RQF1", CELL_NAME) ~ "qualL1",
+      grepl("NVQ2|RQF2", CELL_NAME) ~ "qualL2",
       grepl("Trade Apprenticeships", CELL_NAME) ~ "qualApp",
-      grepl("NVQ3", CELL_NAME) ~ "qualL3",
-      grepl("NVQ4", CELL_NAME) ~ "qualL4",
+      grepl("NVQ3|RQF3", CELL_NAME) ~ "qualL3",
+      grepl("NVQ4|RQF4", CELL_NAME) ~ "qualL4",
       grepl("Other Qualifications", CELL_NAME) ~ "qualOther"
     ),
     subgroup = case_when(
       grepl("All people aged 16-64", CELL_NAME) ~ "Total",
       grepl("Males aged 16-64", CELL_NAME) ~ "Males",
       grepl("Females aged 16-64", CELL_NAME) ~ "Females",
-      TRUE ~ substr(CELL_NAME, 33, 37) # get ages
+      TRUE ~ case_when(
+        grepl("19a", CELL_NAME) ~ substr(CELL_NAME, 34, 38),
+        TRUE ~ substr(CELL_NAME, 33, 37)
+      ) # get ages
     ),
     breakdown = case_when(
       subgroup %in% c("Males", "Females") ~ "Gender",
@@ -246,7 +250,7 @@ qualSum <- C_qualAgeGender %>%
   group_by(geogConcat, timePeriod, subgroup) %>%
   summarise(allQuals = sum(value, na.rm = T))
 
-# calculate % of peoplw with L3+ (ie (L3+L4)/all quals)
+# calculate % of people with L3+ (ie (L3+L4)/all quals)
 C_qualL3PlusAgeGender <- C_qualAgeGender %>%
   filter(metric %in% c("qualL3", "qualL4")) %>%
   group_by(chartPeriod, timePeriod, geogConcat, breakdown, subgroup, latest) %>%
@@ -254,6 +258,16 @@ C_qualL3PlusAgeGender <- C_qualAgeGender %>%
   left_join(qualSum) %>%
   mutate(metric = "L3PlusRate", value = qualL3Plus / allQuals) %>%
   select(-qualL3Plus, -allQuals) %>%
+  mutate(valueText = case_when(value == 0 ~ "c", TRUE ~ as.character(value)))
+
+# calculate % of people with L4+ (ie L4/all quals)
+C_qualL4PlusAgeGender <- C_qualAgeGender %>%
+  filter(metric == "qualL4") %>%
+  group_by(chartPeriod, timePeriod, geogConcat, breakdown, subgroup, latest) %>%
+  summarise(qualL4Plus = sum(value, na.rm = T)) %>%
+  left_join(qualSum) %>%
+  mutate(metric = "L4PlusRate", value = qualL4Plus / allQuals) %>%
+  select(-qualL4Plus, -allQuals) %>%
   mutate(valueText = case_when(value == 0 ~ "c", TRUE ~ as.character(value)))
 
 ## 2.6 FE starts/achievements/participation by provision, level, age ----
@@ -1037,6 +1051,7 @@ C_localSkillsDataset <- bind_rows(
   C_entInd,
   C_qualAgeGender,
   C_qualL3PlusAgeGender,
+  C_qualL4PlusAgeGender,
   C_FeProvLevelAge,
   C_FeSsa,
   C_skillsImperative,
