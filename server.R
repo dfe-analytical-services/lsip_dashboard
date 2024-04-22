@@ -127,7 +127,7 @@ server <- function(input, output, session) {
   observeEvent(input$cookieLink, {
     # Need to link here to where further info is located.  You can
     # updateTabsetPanel to have a cookie page for instance
-    updateTabsetPanel(session, "navlistPanel",
+    updateTabsetPanel(session, "navbar",
       selected = "Support and feedback"
     )
   })
