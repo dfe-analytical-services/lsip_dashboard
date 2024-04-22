@@ -9,17 +9,6 @@ panel_overview <- function() {
         div(
           class = "filterRow",
           fluidRow(
-            # column(
-            #   width = 4,
-            #   selectInput("GeoType", "Choose geography",
-            #     choices = c(
-            #       "Local Enterprise Partnership (LEP)" = "LEP",
-            #       "Local Skills Improvement Plan (LSIP)" = "LSIP",
-            #       "Mayoral Combined Authority (MCA)" = "MCA"
-            #     ),
-            #     selected = "LEP"
-            #   )
-            # ),
             column(
               width = 4,
               p("Choose a LEP, LSIP or MCA"),
@@ -220,6 +209,7 @@ panel_overview <- function() {
             withSpinner(plotlyOutput("Nvq3plusLineChart", height = 81))
           )
         ),
+        p("In 2022 the highest qualification variable in the LFS was revised, therefore figures published after this date are not directly comparable to previous years."),
         # third row - link to emp tab
         fluidRow(
           class = "rightAlignLinks",

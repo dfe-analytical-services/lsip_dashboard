@@ -908,7 +908,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             ),
             "."
           ),
-          p("In Q1 2022 (January to March 2022) the highest qualification variable (HIQUAL) of the LFS was revised, therefore figures published after this are not directly comparable to previous years. From 2022 on qualification level is defined by the National Qualifications Framework (NQF). Before that National Vocational Qualifications (NVQ) is used."),
+          p("In Q1 2022 (January to March 2022) the highest qualification variable (HIQUAL) of the LFS was revised. New qualifications have been added after a review identifying gaps in the LFS questionnaire. Therefore figures published after this are not directly comparable to previous years. From 2022 on qualification level is defined by the National Qualifications Framework (NQF). Before that National Vocational Qualifications (NVQ) is used."),
           h3("ONS-Textkernel online job adverts"),
           p(
             "These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.
