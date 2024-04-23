@@ -604,10 +604,6 @@ width: 100%;
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
-                p("5 April 2024 (1.4.0)"),
-                tags$ul(
-                  tags$li("Added some new resources to the Further resources tab."),
-                ),
                 p("25 March 2024 (1.3.9)"),
                 tags$ul(
                   tags$li("Calculate the bar chart splits based on percentage of the whole area (previously percentage of subgroups with data present)."),
@@ -636,7 +632,7 @@ width: 100%;
                 ),
                 p("12 September 2023 (1.3.3)"),
                 tags$ul(
-                  tags$li("Updated FE souces table."),
+                  tags$li("Updated FE sources table."),
                   tags$li("Updated map colours for clarity."),
                   tags$li("Corrected the breakdown table comment text.")
                 ),
