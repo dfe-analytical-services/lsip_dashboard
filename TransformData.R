@@ -180,6 +180,7 @@ C_empOcc <- formatNomis(I_empOcc) %>%
   left_join(I_Ons2digRegion %>% distinct(code = X2, cleanName = str_to_lower(X3))) %>%
   mutate(subgroup = paste0(code, " - ", str_to_sentence(cleanName))) %>%
   select(-code, -cleanName)
+
 ## 2.3 Employment by industry ----
 C_empInd <- formatNomis(I_empInd) %>%
   rename(subgroup = CELL_NAME) %>%
@@ -611,7 +612,7 @@ employmentProjections <-
         ),
         subgroup = case_when(
           subgroup == "All occupations" ~ "Total",
-          grepl("[0-9]", subgroup) == TRUE ~ gsub("^[0-9]", "", subgroup),
+          grepl("[0-9]", subgroup) == TRUE ~ gsub("(...)(.*)", "\\1- \\2", subgroup),
           TRUE ~ subgroup
         )
       ) %>%
@@ -657,7 +658,7 @@ employmentProjections <-
     geogConcat == "Enterprise M3 LEP (including all of Surrey) LSIP" ~ "Enterprise M3 LSIP",
     TRUE ~ geogConcat
   )) %>% # correct different spellings
-  mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) %>% # remove numbers from soc codes for presentation
+  # mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) %>% # remove numbers from soc codes for presentation
   # get time period
   rename(chartPeriod = timePeriod) %>%
   mutate(timePeriod = as.Date(paste("01", "Jan", chartPeriod, sep = " "), format = "%d %b %Y")) %>%
@@ -665,6 +666,18 @@ employmentProjections <-
     timePeriod == max(timePeriod) ~ 1,
     timePeriod == (max(timePeriod) - years(1)) ~ -1,
     TRUE ~ 0
+  )) %>%
+  mutate(subgroup = case_when(
+    subgroup == "Managers, directors and senior officials" ~ "1 - Managers, directors and senior officials",
+    subgroup == "Professional occupations" ~ "2 - Professional occupations",
+    subgroup == "Associate professional occupations" ~ "3 - Associate professional occupations",
+    subgroup == "Administrative and secretarial occupations" ~ "4 - Administrative and secretarial occupations",
+    subgroup == "Skilled trades occupations" ~ "5 - Skilled trades occupations",
+    subgroup == "Caring, leisure and other service occupations" ~ "6 - Caring, leisure and other service occupations",
+    subgroup == "Sales and customer service occupations" ~ "7 - Sales and customer service occupations",
+    subgroup == "Process, plant and machine operatives" ~ "8 - Process, plant and machine operatives",
+    subgroup == "Elementary occupations" ~ "9 - Elementary occupations",
+    TRUE ~ subgroup
   ))
 
 # use dorset lep for dorset lsip because dorset lsip has the wrong LAs and it is the same as dorset LEP anyway

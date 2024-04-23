@@ -44,7 +44,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div( # need a div to add hover over title
-              title = "Source: APS. Oct-Sep 2022",
+              title = "Source: APS",
               uiOutput("overviewEmpCntKPI"),
             )
           ),
@@ -63,7 +63,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: APS. Oct-Sep 2022",
+              title = "Source: APS",
               uiOutput("overviewEmpRateKPI"),
             )
           ),
@@ -83,7 +83,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: ONS (Textkernel). Oct 2022. Online job adverts.",
+              title = "Source: ONS (Textkernel)",
               uiOutput("overviewJobKPI"),
             )
           ),
@@ -103,7 +103,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: UBC. 2022 calendar year",
+              title = "Source: UBC",
               uiOutput("UBC.micro"),
             )
           ),
@@ -123,7 +123,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: Skills Imperative 2035.",
+              title = "Source: Skills Imperative 2035",
               uiOutput("wfOverviewKpi"),
             )
           ),
@@ -148,7 +148,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: ILR AY21/22",
+              title = "Source: ILR",
               uiOutput("skisup.ETach"),
             )
           ),
@@ -162,7 +162,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: ILR AY21/22",
+              title = "Source: ILR",
               uiOutput("skisup.APPach"),
             )
           ),
@@ -181,7 +181,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: NPD. 2021 academic year",
+              title = "Source: NPD",
               uiOutput("dest.ks5over"),
             )
           ),
@@ -195,18 +195,18 @@ panel_overview <- function() {
           actionLink("link_to_tabpanel_destinations2", "Find out more about destinations")
         ),
         # 6th row - link to app data
-        h3("People with a qualification at level 3 or above"),
+        h3("People with a qualification at level 4 or above"),
         fluidRow(
           column(
             width = 4,
             div(
-              title = "Source: APS. 2021 calendar year",
-              uiOutput("APS.nvq3plus"),
+              title = "Source: APS",
+              uiOutput("APS.nvq4plus"),
             )
           ),
           column(
             width = 8,
-            withSpinner(plotlyOutput("Nvq3plusLineChart", height = 81))
+            withSpinner(plotlyOutput("Nvq4plusLineChart", height = 81))
           )
         ),
         p("In 2022 the highest qualification variable in the LFS was revised, therefore figures published after this date are not directly comparable to previous years."),
