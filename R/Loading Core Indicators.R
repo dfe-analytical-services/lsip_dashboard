@@ -14,6 +14,7 @@ C_axisMinMax <- read.csv(file = "./Data/AppData/C_axisMinMax.csv", check.names =
 ## Sources table ----
 I_SourcesTable <- read.csv(file = "./Data/AppData/I_SourcesTable.csv", check.names = FALSE)
 I_ToolsTable <- read.csv(file = "./Data/AppData/I_ToolsTable.csv", check.names = FALSE)
+I_ReportsTable <- read.csv(file = "./Data/AppData/I_ReportsTable.csv", check.names = FALSE)
 
 ## data text table ----
 I_DataText <- read.csv(file = "./Data/AppData/I_DataText.csv", check.names = FALSE)

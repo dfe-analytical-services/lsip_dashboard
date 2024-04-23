@@ -1111,7 +1111,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           12,
           h1("Data sources"),
           p(
-            "Other data sources which cover Further Education and local skills."
+            "Other data sources which cover local skills and jobs."
           ),
           DT::dataTableOutput("sourcesTable"),
           br()
