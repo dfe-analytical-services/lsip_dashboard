@@ -1370,6 +1370,8 @@ names(I_SourcesTable) <- gsub(".", " ", names(I_SourcesTable), fixed = TRUE)
 write.csv(I_SourcesTable, file = "Data\\AppData\\I_SourcesTable.csv", row.names = FALSE)
 names(I_ToolsTable) <- gsub(".", " ", names(I_ToolsTable), fixed = TRUE)
 write.csv(I_ToolsTable, file = "Data\\AppData\\I_ToolsTable.csv", row.names = FALSE)
+names(I_ReportsTable) <- gsub(".", " ", names(I_ReportsTable), fixed = TRUE)
+write.csv(I_ReportsTable, file = "Data\\AppData\\I_ReportsTable.csv", row.names = FALSE)
 
 # Tidy up data text table
 names(I_DataText) <- gsub(".", " ", names(I_DataText), fixed = TRUE)
