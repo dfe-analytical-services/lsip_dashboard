@@ -173,6 +173,15 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     }
 }
 
+ /* increase banner size*/
+.feedback-banner {
+    background-color: #d53880;
+    font-size: 24px;
+    line-height: 1;
+    padding: 5px 8px 4px;
+width: 100%;
+}
+
 "
       )
     ),
@@ -217,15 +226,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 
   # Add bug header
   HTML(
-    '<div class="govuk-phase-banner govuk-width-container govuk-main-wrapper" id="beta banner" style="margin-left:0px;margin-right:0px">
-  <p class="govuk-phase-banner__content">
-    <!-- <strong class="govuk-tag govuk-phase-banner__content__tag ">beta</strong> -->
-    <!-- <span class="govuk-phase-banner__text">We are aware of performance issues that require some users to reload the page. We are working to fix this.</span> -->
-
-  <strong class="govuk-tag govuk-phase-banner__content__tag ">feedback</strong>
-    <span class="govuk-phase-banner__text">Shape the future of this dashboard. <a href="https://forms.office.com/e/gUgfhXcRY3" target="_blank" rel="noopener noreferrer">Share your feedback to help us improve this service</a>.</span>
-
-    </p>
+    '<div class="feedback-banner" id="feedback banner" >
+    <a href="https://forms.office.com/e/gUgfhXcRY3" target="_blank" rel="noopener noreferrer" style="color: #fff;"><strong>FEEDBACK</strong> | Shape the future of this dashboard. Share your feedback to help us improve this service.</a>
 </div>'
   ),
 
