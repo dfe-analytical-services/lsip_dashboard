@@ -810,22 +810,22 @@ server <- function(input, output, session) {
 
   #### 2.2.3.8 Qualifications NVQ ----
   # NVQ3 or above overview KPI
-  output$APS.nvq3plus <- renderUI({
+  output$APS.nvq4plus <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("L3PlusRate", "percent")
+    createOverviewKPI("L4PlusRate", "percent")
   })
 
   # qualification chart
-  output$Nvq3plusLineChart <- renderPlotly({
+  output$Nvq4plusLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(createOverviewChart("L3PlusRate", "percent", "People with a qualification at level 3 or above"))
+    renderOverviewChart(createOverviewChart("L4PlusRate", "percent", "People with a qualification at level 4 or above"))
   })
 
   # add link to qualification level
   observeEvent(input$link_to_tabpanel_qualification2, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-      selected = "L3PlusRate"
+      selected = "L4PlusRate"
     )
   })
 
