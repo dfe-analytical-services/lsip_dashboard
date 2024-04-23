@@ -1463,10 +1463,10 @@ server <- function(input, output, session) {
     if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
       "The definition of when a student is at the end of 16 to 18 study has changed this year and comparisons to previous cohorts should be treated with caution. See footnote below. Also NB non-zero axis."
     } else {
-      if(input$splashMetric %in% c("L3PlusRate","L4PlusRate")) {
+      if (input$splashMetric %in% c("L3PlusRate", "L4PlusRate")) {
         "In 2022 the highest qualification variable in the LFS was revised, therefore figures published after this are not directly comparable to previous years. Also NB non-zero axis."
       } else {
-      "NB non-zero axis."
+        "NB non-zero axis."
       }
     }
   })
@@ -2049,6 +2049,16 @@ server <- function(input, output, session) {
   output$sourcesTable <- DT::renderDataTable({
     DT::datatable(
       I_SourcesTable,
+      escape = FALSE,
+      options = list(dom = "t", pageLength = 50),
+      rownames = FALSE
+    )
+  })
+
+  ## 2.8 FE reports table----
+  output$reportsTable <- DT::renderDataTable({
+    DT::datatable(
+      I_ReportsTable,
       escape = FALSE,
       options = list(dom = "t", pageLength = 50),
       rownames = FALSE

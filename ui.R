@@ -227,7 +227,7 @@ width: 100%;
   # Add bug header
   HTML(
     '<div class="feedback-banner" id="feedback banner" >
-    <a href="https://forms.office.com/e/gUgfhXcRY3" target="_blank" rel="noopener noreferrer" style="color: #fff;"><strong>FEEDBACK</strong> | Shape the future of this dashboard. Share your feedback to help us improve this service.</a>
+    <a href="https://forms.office.com/e/gUgfhXcRY3" target="_blank" rel="noopener noreferrer" style="color: #fff;"><strong>FEEDBACK</strong> | Click here to share your feedback and help shape the future of this dashboard.</a>
 </div>'
   ),
 
@@ -588,7 +588,7 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("9 May 2024 (1.4.0)"),
+            p("23 April 2024 (1.4.0)"),
             tags$ul(
               tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC2020 Sub-Major groups (previously TextKernel's own profession split was used)."),
               tags$li("Made a correction to the achievement split by SSA to use total aims as the denominator."),
@@ -597,6 +597,8 @@ width: 100%;
               tags$li("Updated APS employment rates, employment by industry and occupation data to the latest quarter."),
               tags$li("Update highest qualification data to use National Qualifications Framework allowing more recent data."),
               tags$li("Added in highest qualification at level four plus metric."),
+              tags$li("Added a feedback survey."),
+              tags$li("Added new resources to the Further Resources tab."),
             ),
             details(
               label = "Previous updates",
@@ -1093,6 +1095,17 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
     ## 2.6 FE interventions and sources ----
     tabPanel(
       "Further resources",
+      fluidRow(
+        column(
+          12,
+          h1("Reports"),
+          p(
+            "Published reports related to local skills."
+          ),
+          DT::dataTableOutput("reportsTable"),
+          br()
+        )
+      ),
       fluidRow(
         column(
           12,
