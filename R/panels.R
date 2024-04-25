@@ -209,7 +209,7 @@ panel_overview <- function() {
             withSpinner(plotlyOutput("Nvq4plusLineChart", height = 81))
           )
         ),
-        p("In 2022 the highest qualification variable in the LFS was revised, therefore figures published after this date are not directly comparable to previous years."),
+        p("Figures from 2022 onwards are not directly comparable to previous years due to survey changes."),
         # third row - link to emp tab
         fluidRow(
           class = "rightAlignLinks",
