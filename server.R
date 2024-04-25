@@ -1662,7 +1662,9 @@ server <- function(input, output, session) {
         }) |
           # get england for comparison
           (geogConcat == "England")
-      )
+      )%>%
+        #get rid of soc codes
+        mutate(subgroup=gsub("[0-9]+ - ","",subgroup))
       # if no rows (because of filter lag) then don't plot
       if (nrow(Splash_21) == 0) {
         "x"
