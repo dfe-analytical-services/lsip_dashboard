@@ -39,7 +39,7 @@ panel_overview <- function() {
         width = 6,
         class = "chartBox",
         h2("Labour market"),
-        h3("People employed"),
+        h3("People employed (age 16-64)"),
         fluidRow(
           column(
             width = 4,
@@ -58,7 +58,7 @@ panel_overview <- function() {
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_employment2", "Find out more about employment volumes")
         ),
-        h3("Employment rate"),
+        h3("Employment rate (age 16-64)"),
         fluidRow(
           column(
             width = 4,
