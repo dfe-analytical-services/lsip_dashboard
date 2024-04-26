@@ -271,7 +271,7 @@ C_qualL4PlusAgeGender <- C_qualAgeGender %>%
   select(-qualL4Plus, -allQuals) %>%
   mutate(valueText = case_when(value == 0 ~ "c", TRUE ~ as.character(value)))
 
-## 2.6 FE starts/achievements/participation by provision, level, age ----
+## 2.6 FE starts/achievements/participation per 10k by provision, level, age ----
 # tidy up data
 F_FeProvLevelAge <- I_FeProvLevelAge %>%
   # filter uneeded columns and rows
@@ -520,16 +520,21 @@ C_FeProvLevelAge <- F_FeProvLevelAge %>%
   )) %>%
   mutate(geogConcat = gsub("LSIP", "MCA", geogConcat)) %>%
   # add back onto other data
-  bind_rows(F_FeProvLevelAge)
+  bind_rows(F_FeProvLevelAge)%>%
+  #get rid of non level split because we get it from the aims data
+  filter(!(metric %in% c("achievements","starts","participation")&subgroup=="Level"))
 
-## 2.7 FE enrolments/achievements aims by ssa ----
+## 2.7 FE enrolments/achievements aims by ssa and level----
 feSsaWithAreas <- I_FeSsa %>%
-  filter(notional_nvq_level == "Total", sex == "Total", ethnicity_major == "Total") %>%
+  filter(sex == "Total", ethnicity_major == "Total",!(notional_nvq_level!="Total"&ssa_t1_desc!="Total")) %>%
   mutate(
-    subgroup = ssa_t1_desc,
+    subgroup = case_when(notional_nvq_level=="Total" ~ ssa_t1_desc
+                         ,TRUE ~ notional_nvq_level
+                         ),
     breakdown = case_when(
       subgroup == "Total" ~ "Total",
-      TRUE ~ "SSA"
+      notional_nvq_level=="Total" ~ "SSA"
+      ,TRUE ~ "Level"
     )
   ) %>%
   mutate(
@@ -1154,7 +1159,8 @@ C_breakdown <- bind_rows(
   C_localSkillsDataset %>%
     filter(
       breakdown != "Total", subgroup != "Total", latest == 1,
-      metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "achievementsAims", "participation", "starts")
+      (metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievementsAims") | (metric%in% c("achievements", "participation", "starts") & breakdown=="Age"))#only get age from fe learners data as other data won't add to 100% due to learners doing aims in different categories
+      
     ) %>%
     select(geogConcat, metric, breakdown, subgroup, value) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%

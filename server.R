@@ -1768,10 +1768,7 @@ server <- function(input, output, session) {
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ".",
       if (input$splashMetric == "achievements") {
-        " SSA splits are based on achievement aims. Other splits are based on learner volumes. Learners can appear in multiple categories if they take multiple courses and as such percentages may add up to more than 100%."
-      },
-      if (input$splashMetric == "participation") {
-        " Splits are based on learner volumes. Learners can appear in multiple categories if they take multiple courses and as such percentages may add up to more than 100%."
+        " SSA and level splits are based on achievement aims. Age split is based on learner volumes."
       }
     )
   })
