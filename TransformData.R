@@ -1240,15 +1240,15 @@ C_topTenEachBreakdown <-
       mutate(
         SOC1digitCode = substr(subgroup, 1, 1),
         `Occupation (SOC2020 Major Group)` = case_when(
-          SOC1digitCode == "1" ~ "1 Managers, directors and senior officials",
-          SOC1digitCode == "2" ~ "2 Professional occupations",
-          SOC1digitCode == "3" ~ "3 Associate professional occupations",
-          SOC1digitCode == "4" ~ "4 Administrative and secretarial occupations",
-          SOC1digitCode == "5" ~ "5 Skilled trades occupations",
-          SOC1digitCode == "6" ~ "6 Caring, leisure and other service occupations",
-          SOC1digitCode == "7" ~ "7 Sales and customer service occupations",
-          SOC1digitCode == "8" ~ "8 Process, plant and machine operatives",
-          SOC1digitCode == "9" ~ "9 Elementary occupations",
+          SOC1digitCode == "1" ~ "1 - Managers, directors and senior officials",
+          SOC1digitCode == "2" ~ "2 - Professional occupations",
+          SOC1digitCode == "3" ~ "3 - Associate professional occupations",
+          SOC1digitCode == "4" ~ "4 - Administrative and secretarial occupations",
+          SOC1digitCode == "5" ~ "5 - Skilled trades occupations",
+          SOC1digitCode == "6" ~ "6 - Caring, leisure and other service occupations",
+          SOC1digitCode == "7" ~ "7 - Sales and customer service occupations",
+          SOC1digitCode == "8" ~ "8 - Process, plant and machine operatives",
+          SOC1digitCode == "9" ~ "9 - Elementary occupations",
           TRUE ~ "NULL"
         )
       ) %>%
