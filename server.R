@@ -1464,7 +1464,7 @@ server <- function(input, output, session) {
       "The definition of when a student is at the end of 16 to 18 study has changed this year and comparisons to previous cohorts should be treated with caution. See footnote below. Also NB non-zero axis."
     } else {
       if (input$splashMetric %in% c("L3PlusRate", "L4PlusRate")) {
-        "In 2022 the highest qualification variable in the LFS was revised, therefore figures published after this are not directly comparable to previous years. Also NB non-zero axis."
+        "Figures from 2022 onwards are not directly comparable to previous years due to survey changes. Also NB non-zero axis."
       } else {
         "NB non-zero axis."
       }
@@ -1662,7 +1662,9 @@ server <- function(input, output, session) {
         }) |
           # get england for comparison
           (geogConcat == "England")
-      )
+      )%>%
+        #get rid of soc codes
+        mutate(subgroup=gsub("[0-9]+ - ","",subgroup))
       # if no rows (because of filter lag) then don't plot
       if (nrow(Splash_21) == 0) {
         "x"
@@ -1766,10 +1768,7 @@ server <- function(input, output, session) {
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ".",
       if (input$splashMetric == "achievements") {
-        " SSA splits are based on achievement aims. Other splits are based on learner volumes. Learners can appear in multiple categories if they take multiple courses and as such percentages may add up to more than 100%."
-      },
-      if (input$splashMetric == "participation") {
-        " Splits are based on learner volumes. Learners can appear in multiple categories if they take multiple courses and as such percentages may add up to more than 100%."
+        " SSA and level splits are based on achievement aims. Age split is based on learner volumes."
       }
     )
   })

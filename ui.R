@@ -24,7 +24,7 @@ fluidPage(
       href = "dfe_shiny_gov_style.css"
     )
   ),
-  shinyGovstyle::cookieBanner("DfE R-Shiny dashboard template"),
+  shinyGovstyle::cookieBanner("UFS Local Skills Dashboard"),
 
   # Set metadata for browser
   tags$html(lang = "en"),
