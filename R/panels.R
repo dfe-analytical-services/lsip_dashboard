@@ -39,7 +39,7 @@ panel_overview <- function() {
         width = 6,
         class = "chartBox",
         h2("Labour market"),
-        h3("People employed (age 16-64)"),
+        h3("People employed (age 16+)"),
         fluidRow(
           column(
             width = 4,
