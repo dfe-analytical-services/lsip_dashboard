@@ -226,7 +226,7 @@ cellsUseAps_Ind <- cellsListAps %>% filter(description.en %like% "T13a:" & descr
 I_empInd <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_Ind$id)
 
 ## 2.2 EES datasets----
-### 2.2.1 Achievements by SSAt1, LAD, gender, level------------
+### 2.2.1 Achievement aims by SSAt1, LAD, gender, level, provision------------
 folder <- "2-7_ILRachSSA"
 I_FeSsa <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 

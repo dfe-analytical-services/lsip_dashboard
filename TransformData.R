@@ -524,47 +524,51 @@ C_FeProvLevelAge <- F_FeProvLevelAge %>%
   #get rid of non level split because we get it from the aims data
   filter(!(metric %in% c("achievements","starts","participation")&subgroup=="Level"))
 
-## 2.7 FE enrolments/achievements aims by ssa and level----
-feSsaWithAreas <- I_FeSsa %>%
-  filter(sex == "Total", ethnicity_major == "Total",!(notional_nvq_level!="Total"&ssa_t1_desc!="Total")) %>%
-  mutate(
-    subgroup = case_when(notional_nvq_level=="Total" ~ ssa_t1_desc
-                         ,TRUE ~ notional_nvq_level
-                         ),
-    breakdown = case_when(
-      subgroup == "Total" ~ "Total",
-      notional_nvq_level=="Total" ~ "SSA"
-      ,TRUE ~ "Level"
-    )
-  ) %>%
-  mutate(
-    areaCode = case_when(
-      geographic_level == "Local authority district" ~ lad_code,
-      geographic_level == "National" ~ country_code,
-      TRUE ~ "NA"
-    ),
-    area = case_when(
-      geographic_level == "Local authority district" ~ lad_name,
-      geographic_level == "National" ~ country_name,
-      TRUE ~ "NA"
-    )
-  ) %>%
+## 2.7 FE achievements aims by provision, ssa and level----
+achGrouped <- I_FeSsa %>%
+  group_by(areaCode=delivery_lad_code,Age=age_summary_with_unknowns,Level=notional_nvq_level,SSA=ssa_tier_1)%>%
+  summarise(fe19p=sum(fes_19p_aim_achievements)
+            ,app19p=sum(apps_total_funded_19p_aims_achievements)
+            ,cl=sum(community_learning_aims_achievements)
+            ,et19p=sum(et_19p_aim_achievements)
+            ,loans=sum(loans_aim_achievements))
+
+feSsaWithAreas  <-bind_rows(
+  #by LAD
+  achGrouped%>%group_by(areaCode)%>%summarise(value=sum(fe19p))%>%mutate(subgroup="Total",breakdown="Total")
+,  achGrouped%>%group_by(areaCode,Age)%>%summarise(value=sum(fe19p))%>%mutate(breakdown="Age")%>%rename(subgroup=Age)
+,  achGrouped%>%group_by(areaCode,Level)%>%summarise(value=sum(fe19p))%>%mutate(breakdown="Level")%>%rename(subgroup=Level)
+,  achGrouped%>%group_by(areaCode,SSA)%>%summarise(value=sum(fe19p))%>%mutate(breakdown="SSA")%>%rename(subgroup=SSA)
+,  achGrouped%>%group_by(areaCode)%>%summarise(Total=sum(fe19p),"Education and training (19+)"=sum(et19p),"Community learning"=sum(cl),"Apprenticeships (19+)"=sum(app19p),"Loans"=sum(loans))%>%
+  pivot_longer(!areaCode, names_to = "subgroup", values_to = "value")%>%
+  mutate(breakdown="Provision"))%>%
+  mutate(geographic_level="Local authority district")%>%
+  bind_rows(
+#nationally
+    bind_rows(
+achGrouped%>%ungroup()%>%summarise(value=sum(fe19p))%>%mutate(subgroup="Total",breakdown="Total",area="England")
+,  achGrouped%>%ungroup()%>%group_by(Age)%>%summarise(value=sum(fe19p))%>%mutate(breakdown="Age",area="England")%>%rename(subgroup=Age)
+,  achGrouped%>%ungroup()%>%group_by(Level)%>%summarise(value=sum(fe19p))%>%mutate(breakdown="Level",area="England")%>%rename(subgroup=Level)
+,  achGrouped%>%ungroup()%>%group_by(SSA)%>%summarise(value=sum(fe19p))%>%mutate(breakdown="SSA",area="England")%>%rename(subgroup=SSA)
+,  achGrouped%>%ungroup()%>%select(-areaCode,-Age,-Level)%>% 
+  summarise(Total=sum(fe19p),"Education and training (19+)"=sum(et19p),"Community learning"=sum(cl),"Apprenticeships (19+)"=sum(app19p),"Loans"=sum(loans))%>%mutate(area="England")%>%
+  pivot_longer(!area,names_to = "subgroup", values_to = "value")%>%
+  mutate(breakdown="Provision")
+)%>%
+  mutate(geographic_level="National")
+  )%>%
+  mutate(metric="achievementAims")%>%
+  addGeogs()%>%
   # add dates
-  mutate(chartPeriod = paste("AY", substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
-  mutate(timePeriod = as.Date(paste("01 Aug", substr(time_period, 1, 4), sep = ""), format = "%d %b %Y")) %>%
-  mutate(latest = case_when(
-    timePeriod == max(timePeriod) ~ 1,
-    timePeriod == (max(timePeriod) - years(1)) ~ -1,
-    TRUE ~ 0
-  )) %>%
-  select(-time_period, -ssa_t1_desc, -notional_nvq_level, -lad_code, -country_code, -lad_name, -country_name, -sex, -ethnicity_major, -english_devolved_area_code, -english_devolved_area_name, -time_identifier, -region_code, -region_name) %>%
-  addGeogs()
+  mutate(chartPeriod = paste("AY", substr(I_FeSsa$year[1], 3, 4), "/", substr(I_FeSsa$year[1], 5, 6), sep = "")) %>%
+  mutate(timePeriod = as.Date(paste("01 Aug", substr(I_FeSsa$year[1], 1, 4), sep = ""), format = "%d %b %Y")) %>%
+  mutate(latest = 1) 
+
 # group up areas
 groupedStats <- feSsaWithAreas %>%
   filter(newArea == 1) %>% # no need to group national or LAs that haven't changed
   ungroup() %>%
   select(-newArea) %>%
-  mutate_at(vars(e_and_t_aims_ach, e_and_t_aims_enrolments), as.numeric) %>% # Convert to numeric
   group_by(chartPeriod, timePeriod, latest, geogConcat, subgroup, breakdown) %>% # sum for each LEP
   summarise(across(everything(), list(sum), na.rm = T)) %>%
   mutate(e_and_t_aims_ach = as.character(e_and_t_aims_ach_1), e_and_t_aims_enrolments = as.character(e_and_t_aims_enrolments_1))
