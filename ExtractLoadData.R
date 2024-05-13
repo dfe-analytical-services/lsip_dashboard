@@ -226,9 +226,12 @@ cellsUseAps_Ind <- cellsListAps %>% filter(description.en %like% "T13a:" & descr
 I_empInd <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_Ind$id)
 
 ## 2.2 EES datasets----
-### 2.2.1 Achievements by SSAt1, LAD, gender, level------------
+### 2.2.1 Achievement aims by SSAt1, LAD, gender, level, provision------------
 folder <- "2-7_ILRachSSA"
-I_FeSsa <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+I_FeSsa1920 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))[1]))
+I_FeSsa2021 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))[2]))
+I_FeSsa2122 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))[3]))
+I_FeSsa2223 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))[4]))
 
 ### 2.2.2 Achievements/starts/part by LAD and provision, level and age------------
 ## Download "Further education and skills geography - detailed summary " from https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22

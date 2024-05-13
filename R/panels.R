@@ -143,7 +143,7 @@ panel_overview <- function() {
         width = 6,
         class = "chartBox",
         h2("Skills"),
-        h3("Education and training achievements"),
+        h3("Education and training learner achievements"),
         fluidRow(
           column(
             width = 4,
@@ -157,7 +157,7 @@ panel_overview <- function() {
             withSpinner(plotlyOutput("etLineChart", height = 81))
           )
         ),
-        h3("Apprenticeship achievements"),
+        h3("Apprenticeship learner achievements"),
         fluidRow(
           column(
             width = 4,

@@ -84,6 +84,16 @@ Achievements are the number of learners who successfully complete an individual 
  <li>Years shown represent academic years.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>","FE achievements in","are FE achievement volumes changing","The number of FE achievements","FE achievements","FE achievements","share of FE achievements","FE achievements are"
+"achievementAims","AY22/23 data"," Further education and skills include 19+ apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2022-23'>Individualised Learner Record</a>","Further education and skills included are 19+ apprenticeships and publicly-funded adult learning, including community learning, delivered by an FE institution, a training provider or within a local community.
+FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
+Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
+Community learning funds a wide range of non-formal courses (e.g. IT or employability skills) and activity targeted at deprived areas or disadvantaged groups. They can be offered by local authorities, colleges, community groups.
+Achievements are the number of programme aims successfully completed in an invidual aim in an academic year.","<ol>
+  <li>Total achievements is the count of programme level aims completed at any point during the stated academic period.</li>
+<li> Education and Training and Apprenticeship aims are 19 plus. </li>
+ <li>Years shown represent academic years.</li>
+<li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
+</ol>","FE achievements aims","are FE achievement aim volumes changing","The number of FE achievement aims in","FE achievement aims","FE achievement aims","share of FE achievement aims","FE achievement aims are"
 "participation","AY22/23 data","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.","<a href='https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2022-23'>Individualised Learner Record</a>","Further education and skills include all age apprenticeships and publicly-funded adult (19+) learning, including community learning, delivered by an FE institution, a training provider or within a local community.
 FE and skills does not includer higher education, unless delivered as part of an apprenticeship programme.
 Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
