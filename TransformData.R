@@ -90,7 +90,7 @@ neatGeog <- bind_rows(
   neatMCA, neatLEP, addEngland, neatLA, neatLSIP,
   neatLEP %>% filter(areaCode == "E37000051") %>% mutate(areaName = "Greater London Authority", geog = "MCA"), # add GLA as an MCA (it isn't officially but people like to find it there)
   neatLA %>%
-    filter(LEP2 != "0 LEP") %>%
+    filter(LEP2 != "NA LEP") %>%
     select(-LEP) %>%
     rename(LEP = LEP2) # add LAs with more than one LEP
 ) %>%
@@ -520,58 +520,82 @@ C_FeProvLevelAge <- F_FeProvLevelAge %>%
   )) %>%
   mutate(geogConcat = gsub("LSIP", "MCA", geogConcat)) %>%
   # add back onto other data
-  bind_rows(F_FeProvLevelAge)%>%
-  #get rid of non level split because we get it from the aims data
-  filter(!(metric %in% c("achievements","starts","participation")&subgroup=="Level"))
+  bind_rows(F_FeProvLevelAge) %>%
+  # get rid of non level split because we get it from the aims data
+  filter(!(metric %in% c("achievements", "starts", "participation") & subgroup == "Level"))
 
 ## 2.7 FE achievements aims by provision, ssa and level----
-achGrouped <- I_FeSsa %>%
-  group_by(areaCode=delivery_lad_code,Age=age_summary_with_unknowns,Level=notional_nvq_level,SSA=ssa_tier_1)%>%
-  summarise(fe19p=sum(fes_19p_aim_achievements)
-            ,app19p=sum(apps_total_funded_19p_aims_achievements)
-            ,cl=sum(community_learning_aims_achievements)
-            ,et19p=sum(et_19p_aim_achievements)
-            ,loans=sum(loans_aim_achievements))
+# get the latest year split for the breakdowns
+achGrouped <-
+  I_FeSsa2223 %>%
+  group_by(year, areaCode = delivery_lad_code, Age = age_summary_with_unknowns, Level = notional_nvq_level, SSA = ssa_tier_1) %>%
+  summarise(
+    fe19p = sum(apps_total_funded_19p_aims_achievements, community_learning_aims_achievements, et_19p_aim_achievements),
+    app19p = sum(apps_total_funded_19p_aims_achievements),
+    cl = sum(community_learning_aims_achievements),
+    et19p = sum(et_19p_aim_achievements)
+  )
 
-feSsaWithAreas  <-bind_rows(
-  #by LAD
-  achGrouped%>%group_by(areaCode)%>%summarise(value=sum(fe19p))%>%mutate(subgroup="Total",breakdown="Total")
-,  achGrouped%>%group_by(areaCode,Age)%>%summarise(value=sum(fe19p))%>%mutate(breakdown="Age")%>%rename(subgroup=Age)
-,  achGrouped%>%group_by(areaCode,Level)%>%summarise(value=sum(fe19p))%>%mutate(breakdown="Level")%>%rename(subgroup=Level)
-,  achGrouped%>%group_by(areaCode,SSA)%>%summarise(value=sum(fe19p))%>%mutate(breakdown="SSA")%>%rename(subgroup=SSA)
-,  achGrouped%>%group_by(areaCode)%>%summarise(Total=sum(fe19p),"Education and training (19+)"=sum(et19p),"Community learning"=sum(cl),"Apprenticeships (19+)"=sum(app19p),"Loans"=sum(loans))%>%
-  pivot_longer(!areaCode, names_to = "subgroup", values_to = "value")%>%
-  mutate(breakdown="Provision"))%>%
-  mutate(geographic_level="Local authority district")%>%
+# get totals for all other years
+achGroupedHistoric <-
   bind_rows(
-#nationally
+    I_FeSsa1920,
+    I_FeSsa2021,
+    I_FeSsa2122
+  ) %>%
+  group_by(year, areaCode = delivery_lad_code) %>%
+  summarise(fe19p = sum(apps_total_funded_19p_aims_achievements, community_learning_aims_achievements, et_19p_aim_achievements))
+
+feSsaWithAreas <- bind_rows(
+  # by LAD
+  achGrouped %>%
+    group_by(year, areaCode) %>%
+    summarise(value = sum(fe19p)) %>%
+    mutate(subgroup = "Total", breakdown = "Total"),
+  achGrouped %>% group_by(year, areaCode, Age) %>% summarise(value = sum(fe19p)) %>% mutate(breakdown = "Age") %>% rename(subgroup = Age),
+  achGrouped %>% group_by(year, areaCode, Level) %>% summarise(value = sum(fe19p)) %>% mutate(breakdown = "Level") %>% rename(subgroup = Level),
+  achGrouped %>% group_by(year, areaCode, SSA) %>% summarise(value = sum(fe19p)) %>% mutate(breakdown = "SSA") %>% rename(subgroup = SSA),
+  achGrouped %>% group_by(year, areaCode) %>% summarise(Total = sum(fe19p), "Education and training (19+)" = sum(et19p), "Community learning" = sum(cl), "Apprenticeships (19+)" = sum(app19p)) %>%
+    pivot_longer(!c(areaCode, year), names_to = "subgroup", values_to = "value") %>%
+    mutate(breakdown = "Provision")
+) %>%
+  mutate(geographic_level = "Local authority district") %>%
+  bind_rows(
+    # nationally
     bind_rows(
-achGrouped%>%ungroup()%>%summarise(value=sum(fe19p))%>%mutate(subgroup="Total",breakdown="Total",area="England")
-,  achGrouped%>%ungroup()%>%group_by(Age)%>%summarise(value=sum(fe19p))%>%mutate(breakdown="Age",area="England")%>%rename(subgroup=Age)
-,  achGrouped%>%ungroup()%>%group_by(Level)%>%summarise(value=sum(fe19p))%>%mutate(breakdown="Level",area="England")%>%rename(subgroup=Level)
-,  achGrouped%>%ungroup()%>%group_by(SSA)%>%summarise(value=sum(fe19p))%>%mutate(breakdown="SSA",area="England")%>%rename(subgroup=SSA)
-,  achGrouped%>%ungroup()%>%select(-areaCode,-Age,-Level)%>% 
-  summarise(Total=sum(fe19p),"Education and training (19+)"=sum(et19p),"Community learning"=sum(cl),"Apprenticeships (19+)"=sum(app19p),"Loans"=sum(loans))%>%mutate(area="England")%>%
-  pivot_longer(!area,names_to = "subgroup", values_to = "value")%>%
-  mutate(breakdown="Provision")
-)%>%
-  mutate(geographic_level="National")
-  )%>%
-  mutate(metric="achievementAims")%>%
-  addGeogs()%>%
+      achGrouped %>% ungroup() %>% group_by(year) %>% summarise(value = sum(fe19p)) %>% mutate(subgroup = "Total", breakdown = "Total", area = "England"),
+      achGrouped %>% ungroup() %>% group_by(year, Age) %>% summarise(value = sum(fe19p)) %>% mutate(breakdown = "Age", area = "England") %>% rename(subgroup = Age),
+      achGrouped %>% ungroup() %>% group_by(year, Level) %>% summarise(value = sum(fe19p)) %>% mutate(breakdown = "Level", area = "England") %>% rename(subgroup = Level),
+      achGrouped %>% ungroup() %>% group_by(year, SSA) %>% summarise(value = sum(fe19p)) %>% mutate(breakdown = "SSA", area = "England") %>% rename(subgroup = SSA),
+      achGrouped %>% ungroup() %>% select(-areaCode, -Age, -Level) %>% group_by(year) %>%
+        summarise(Total = sum(fe19p), "Education and training (19+)" = sum(et19p), "Community learning" = sum(cl), "Apprenticeships (19+)" = sum(app19p)) %>% mutate(area = "England") %>%
+        pivot_longer(!c(area, year), names_to = "subgroup", values_to = "value") %>%
+        mutate(breakdown = "Provision")
+    ) %>%
+      mutate(geographic_level = "National")
+  ) %>%
+  # add historic
+  bind_rows(
+    achGroupedHistoric %>%
+      group_by(year, areaCode) %>% summarise(value = sum(fe19p)) %>%
+      mutate(subgroup = "Total", breakdown = "Total", geographic_level = "Local authority district")
+  ) %>%
+  mutate(metric = "achievementAims") %>%
+  addGeogs() %>%
   # add dates
-  mutate(chartPeriod = paste("AY", substr(I_FeSsa$year[1], 3, 4), "/", substr(I_FeSsa$year[1], 5, 6), sep = "")) %>%
-  mutate(timePeriod = as.Date(paste("01 Aug", substr(I_FeSsa$year[1], 1, 4), sep = ""), format = "%d %b %Y")) %>%
-  mutate(latest = 1) 
+  mutate(chartPeriod = paste("AY", substr(year, 3, 4), "/", substr(year, 5, 6), sep = "")) %>%
+  mutate(timePeriod = as.Date(paste("01 Aug", substr(year, 1, 4), sep = ""), format = "%d %b %Y")) %>%
+  ungroup() %>%
+  select(-year)
 
 # group up areas
 groupedStats <- feSsaWithAreas %>%
   filter(newArea == 1) %>% # no need to group national or LAs that haven't changed
   ungroup() %>%
   select(-newArea) %>%
-  group_by(chartPeriod, timePeriod, latest, geogConcat, subgroup, breakdown) %>% # sum for each LEP
+  group_by(chartPeriod, timePeriod, geogConcat, subgroup, breakdown, metric) %>% # sum for each LEP
   summarise(across(everything(), list(sum), na.rm = T)) %>%
-  mutate(e_and_t_aims_ach = as.character(e_and_t_aims_ach_1), e_and_t_aims_enrolments = as.character(e_and_t_aims_enrolments_1))
+  rename(value = value_1)
 
 # add back on original LADUs and format
 C_FeSsa <- bind_rows(
@@ -579,14 +603,13 @@ C_FeSsa <- bind_rows(
   feSsaWithAreas %>%
     filter(newArea == 0)
 ) %>%
-  select(-newArea, -e_and_t_aims_ach_1, -e_and_t_aims_enrolments_1) %>%
-  rename(achievementsAims = e_and_t_aims_ach, enrolmentsAims = e_and_t_aims_enrolments) %>%
-  # make long
-  pivot_longer(!c("geogConcat", "timePeriod", "chartPeriod", "latest", "breakdown", "subgroup"),
-    names_to = "metric",
-    values_to = "valueText"
-  ) %>%
-  mutate(value = as.numeric(valueText))
+  select(-newArea) %>%
+  mutate(valueText = as.character(value)) %>%
+  mutate(latest = case_when(
+    timePeriod == max(feSsaWithAreas$timePeriod) ~ 1,
+    timePeriod == (max(feSsaWithAreas$timePeriod) - years(1)) ~ -1,
+    TRUE ~ 0
+  ))
 
 ## 2.8 Skills imperative 2035 ----
 employmentProjections <-
@@ -1163,8 +1186,7 @@ C_breakdown <- bind_rows(
   C_localSkillsDataset %>%
     filter(
       breakdown != "Total", subgroup != "Total", latest == 1,
-      (metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievementsAims") | (metric%in% c("achievements", "participation", "starts") & breakdown=="Age"))#only get age from fe learners data as other data won't add to 100% due to learners doing aims in different categories
-      
+      (metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievementAims") | (metric %in% c("achievements", "participation", "starts") & breakdown == "Age")) # only get age from fe learners data as other data won't add to 100% due to learners doing aims in different categories
     ) %>%
     select(geogConcat, metric, breakdown, subgroup, value) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
@@ -1173,7 +1195,7 @@ C_breakdown <- bind_rows(
       C_localSkillsDataset %>%
         filter(
           breakdown == "Total", subgroup == "Total", latest == 1,
-          metric %in% c("vacancies", "enterpriseCount", "achievements", "achievementsAims", "participation", "starts")
+          metric %in% c("vacancies", "enterpriseCount", "achievements", "achievementAims", "participation", "starts")
         ) %>%
         # add on the 16 plus totals
         bind_rows(F_emp16plus %>%
@@ -1184,16 +1206,13 @@ C_breakdown <- bind_rows(
     ) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
     mutate(value = round(value / total, 3)) %>%
-    mutate(valueText = as.character(value)) %>%
-    mutate(metric = case_when(
-      metric == "achievementsAims" ~ "achievements",
-      TRUE ~ metric
-    )), # allign metric name so shows up when acievemnts chosen
+    mutate(valueText = as.character(value)),
+  #
   # Metric where value is used as it is
   C_localSkillsDataset %>%
     filter(
       breakdown != "Total", subgroup != "Total", latest == 1,
-      !metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "achievementsAims", "participation", "starts")
+      !metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "achievementAims", "participation", "starts")
     ) %>%
     select(geogConcat, metric, breakdown, subgroup, value, valueText)
 ) %>%
