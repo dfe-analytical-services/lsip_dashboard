@@ -151,15 +151,25 @@ F_emp16plus <- formatNomis(I_emp16plus) %>%
   mutate(metric = gsub("T: \\(All aged  & over - ", "", metric)) %>%
   mutate(metric = gsub(" ", "", tolower(metric))) %>%
   mutate(breakdown = "Total", subgroup = "Total")
-# add rates
+# Create rates for all metrics except unemployment (base is 16 to 64 pop)
+C_emp <- F_emp %>%
+  filter(metric != "unemployed") %>% 
+  left_join(F_emp %>% filter(metric == "all") %>% rename(all = value) %>% select(-metric)) %>%
+  mutate(value = value / all, metric = paste0(metric, "Rate")) %>%
+  filter(metric != "allRate") %>%
+  select(-all)
+# Create rates for unemployment (base is 16+ economically active)
+C_unemp <- F_emp16plus %>%
+  filter(metric == "unemployed") %>% 
+  left_join(F_emp16plus %>% filter(metric == "economicallyactive") %>% rename(economicallyactive = value) %>% select(-metric)) %>%
+  mutate(value = value / economicallyactive, metric = paste0(metric, "Rate")) %>% 
+  select(-economicallyactive)
+# Bind rates and volumes (volumes are 16+ except inactivity which is 16 to 64)
 C_emp <- bind_rows(
-  F_emp %>%
-    left_join(F_emp %>% filter(metric == "all") %>% rename(all = value) %>% select(-metric)) %>%
-    mutate(value = value / all, metric = paste0(metric, "Rate")) %>%
-    filter(metric != "allRate") %>%
-    select(-all),
-  # original data
-  F_emp
+  C_emp,
+  C_unemp,
+  F_emp16plus %>% filter(metric != "inactive"),
+  F_emp %>% filter(metric == "inactive")
 ) %>%
   mutate(valueText = as.character(value))
 
