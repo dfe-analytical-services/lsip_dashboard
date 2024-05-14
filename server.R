@@ -1662,9 +1662,9 @@ server <- function(input, output, session) {
         }) |
           # get england for comparison
           (geogConcat == "England")
-      )%>%
-        #get rid of soc codes
-        mutate(subgroup=gsub("[0-9]+ - ","",subgroup))
+      ) %>%
+        # get rid of soc codes
+        mutate(subgroup = gsub("[0-9]+ - ", "", subgroup))
       # if no rows (because of filter lag) then don't plot
       if (nrow(Splash_21) == 0) {
         "x"
@@ -1767,8 +1767,18 @@ server <- function(input, output, session) {
     )
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ".",
-      if (input$splashMetric == "achievements") {
-        " SSA and level splits are based on achievement aims. Age split is based on learner volumes."
+      if (input$splashMetric %in% c("achievements", "participation")) {
+        if (input$barBreakdown == "Provision") {
+          " Splits based on learner achievement volumes. The apprenticeship volume includes all age apprentices (including under 19) and so the denominator of the provision split is the sum of all age apprentices, 19+ education and training and community learning."
+        } else {
+          if (input$barBreakdown == "SSA") {
+            " SSA splits are based on Education and Training achievement aims (not all FE learners as in other splits)."
+          } else {
+            if (input$barBreakdown == "Level") {
+              " Splits are based on learner volumes. Learners can appear in multiple categories if they take multiple courses and as such percentages may add up to more than 100%.  Full level 2 and Full level 3 are shown for interest but are a subset of Level 2 and Level 3."
+            }
+          }
+        }
       }
     )
   })
