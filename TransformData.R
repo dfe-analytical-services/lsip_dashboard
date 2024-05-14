@@ -153,16 +153,16 @@ F_emp16plus <- formatNomis(I_emp16plus) %>%
   mutate(breakdown = "Total", subgroup = "Total")
 # Create rates for all metrics except unemployment (base is 16 to 64 pop)
 C_emp <- F_emp %>%
-  filter(metric != "unemployed") %>% 
+  filter(metric != "unemployed") %>%
   left_join(F_emp %>% filter(metric == "all") %>% rename(all = value) %>% select(-metric)) %>%
   mutate(value = value / all, metric = paste0(metric, "Rate")) %>%
   filter(metric != "allRate") %>%
   select(-all)
 # Create rates for unemployment (base is 16+ economically active)
 C_unemp <- F_emp16plus %>%
-  filter(metric == "unemployed") %>% 
+  filter(metric == "unemployed") %>%
   left_join(F_emp16plus %>% filter(metric == "economicallyactive") %>% rename(economicallyactive = value) %>% select(-metric)) %>%
-  mutate(value = value / economicallyactive, metric = paste0(metric, "Rate")) %>% 
+  mutate(value = value / economicallyactive, metric = paste0(metric, "Rate")) %>%
   select(-economicallyactive)
 # Bind rates and volumes (volumes are 16+ except inactivity which is 16 to 64)
 C_emp <- bind_rows(
@@ -530,21 +530,16 @@ C_FeProvLevelAge <- F_FeProvLevelAge %>%
   )) %>%
   mutate(geogConcat = gsub("LSIP", "MCA", geogConcat)) %>%
   # add back onto other data
-  bind_rows(F_FeProvLevelAge)%>%
-  #get rid of non level split because we get it from the aims data
-  filter(!(metric %in% c("achievements","starts","participation")&subgroup=="Level"))
+  bind_rows(F_FeProvLevelAge)
 
 ## 2.7 FE enrolments/achievements aims by ssa and level----
 feSsaWithAreas <- I_FeSsa %>%
-  filter(sex == "Total", ethnicity_major == "Total",!(notional_nvq_level!="Total"&ssa_t1_desc!="Total")) %>%
+  filter(notional_nvq_level == "Total", sex == "Total", ethnicity_major == "Total") %>%
   mutate(
-    subgroup = case_when(notional_nvq_level=="Total" ~ ssa_t1_desc
-                         ,TRUE ~ notional_nvq_level
-                         ),
+    subgroup = ssa_t1_desc,
     breakdown = case_when(
       subgroup == "Total" ~ "Total",
-      notional_nvq_level=="Total" ~ "SSA"
-      ,TRUE ~ "Level"
+      TRUE ~ "SSA"
     )
   ) %>%
   mutate(
@@ -1169,11 +1164,11 @@ C_breakdown <- bind_rows(
   C_localSkillsDataset %>%
     filter(
       breakdown != "Total", subgroup != "Total", latest == 1,
-      (metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievementsAims") | (metric%in% c("achievements", "participation", "starts") & breakdown=="Age"))#only get age from fe learners data as other data won't add to 100% due to learners doing aims in different categories
-      
+      (metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievementsAims", "achievements", "participation", "starts"))
     ) %>%
     select(geogConcat, metric, breakdown, subgroup, value) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
+    filter(breakdown != "Provision") %>%
     # get totals for the denominator
     left_join(
       C_localSkillsDataset %>%
@@ -1187,6 +1182,25 @@ C_breakdown <- bind_rows(
             breakdown == "Total", subgroup == "Total", latest == 1
           )) %>%
         select(geogConcat, metric, total = value)
+    ) %>%
+    ## add in provision split as the sub groups include under 19 apps where the total doesn't
+    bind_rows(
+      C_localSkillsDataset %>%
+        filter(
+          breakdown == "Provision", subgroup != "Total", latest == 1,
+          (metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievementsAims", "achievements", "participation", "starts"))
+        ) %>%
+        select(geogConcat, metric, breakdown, subgroup, value) %>%
+        # get totals for the denominator
+        left_join(
+          C_localSkillsDataset %>%
+            filter(
+              breakdown == "Provision", subgroup != "Total", latest == 1,
+              (metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievementsAims", "achievements", "participation", "starts"))
+            ) %>%
+            group_by(geogConcat, metric, breakdown) %>%
+            summarise(total = sum(value, na.rm = T))
+        )
     ) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
     mutate(value = round(value / total, 3)) %>%
