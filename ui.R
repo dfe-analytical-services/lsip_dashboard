@@ -588,10 +588,10 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("16 May 2024 (1.4.0)"),
+            p("17 May 2024 (1.4.0)"),
             tags$ul(
               tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC2020 Sub-Major groups (previously TextKernel's own profession split was used)."),
-              tags$li("Made a correction to the achievement split by SSA to use total aims as the denominator, and the provision split to include under 19 apprenticeships denominator"),
+              tags$li("Made a correction to the achievement split by SSA to use total aims as the denominator, and the provision split to include under 19 apprenticeships and community learning in the denominator."),
               tags$li("Add SOC codes to employment data SOC labels."),
               tags$li("Updated cookie banner."),
               tags$li("Updated APS employment rates, employment by industry and occupation data to the latest quarter and amended age ranges and base populations to be in line with ONS publication of this data."),

@@ -1769,7 +1769,7 @@ server <- function(input, output, session) {
       (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ".",
       if (input$splashMetric %in% c("achievements", "participation")) {
         if (input$barBreakdown == "Provision") {
-          " Splits based on learner achievement volumes. The apprenticeship volume includes all age apprentices (including under 19) and so the denominator of the provision split is the sum of all age apprentices, 19+ education and training and community learning."
+          " Splits based on learner achievement volumes. The apprenticeship and community learning volumes include all age apprentices and community learners (including under 19) and so the denominator of the provision split is the sum of all age apprentices, all age community learners and 19+ education and training learners."
         } else {
           if (input$barBreakdown == "SSA") {
             " SSA splits are based on Education and Training achievement aims (not all FE learners as in other splits)."
