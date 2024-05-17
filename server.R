@@ -38,28 +38,12 @@ server <- function(input, output, session) {
     )
 
   ## 1.3 Set up cookies
-  # output if cookie is unspecified
   observeEvent(input$cookies, {
     if (!is.null(input$cookies)) {
       if (!("dfe_analytics" %in% names(input$cookies))) {
-        shinyalert(
-          inputId = "cookie_consent",
-          title = "Cookie consent",
-          text = "This site uses cookies to record traffic flow using Google Analytics",
-          size = "s",
-          closeOnEsc = TRUE,
-          closeOnClickOutside = FALSE,
-          html = FALSE,
-          type = "",
-          showConfirmButton = TRUE,
-          showCancelButton = TRUE,
-          confirmButtonText = "Accept",
-          confirmButtonCol = "#AEDEF4",
-          timer = 0,
-          imageUrl = "",
-          animation = TRUE
-        )
+        shinyjs::show(id = "cookieMain")
       } else {
+        shinyjs::hide(id = "cookieMain")
         msg <- list(
           name = "dfe_analytics",
           value = input$cookies$dfe_analytics
@@ -74,30 +58,48 @@ server <- function(input, output, session) {
           }
         }
       }
+    } else {
+      shinyjs::hide(id = "cookieMain")
     }
   })
 
-  observeEvent(input$cookie_consent, {
+  # Need these set of observeEvent to create a path through the cookie banner
+  observeEvent(input$cookieAccept, {
     msg <- list(
       name = "dfe_analytics",
-      value = ifelse(input$cookie_consent, "granted", "denied")
+      value = "granted"
     )
     session$sendCustomMessage("cookie-set", msg)
     session$sendCustomMessage("analytics-consent", msg)
-    if ("cookies" %in% names(input)) {
-      if ("dfe_analytics" %in% names(input$cookies)) {
-        if (input$cookies$dfe_analytics == "denied") {
-          ga_msg <- list(name = paste0("_ga_", google_analytics_key))
-          session$sendCustomMessage("cookie-remove", ga_msg)
-        }
-      }
-    }
+    shinyjs::show(id = "cookieAcceptDiv")
+    shinyjs::hide(id = "cookieMain")
+  })
+
+  observeEvent(input$cookieReject, {
+    msg <- list(
+      name = "dfe_analytics",
+      value = "denied"
+    )
+    session$sendCustomMessage("cookie-set", msg)
+    session$sendCustomMessage("analytics-consent", msg)
+    shinyjs::show(id = "cookieRejectDiv")
+    shinyjs::hide(id = "cookieMain")
+  })
+
+  observeEvent(input$hideAccept, {
+    shinyjs::toggle(id = "cookieDiv")
+  })
+
+  observeEvent(input$hideReject, {
+    shinyjs::toggle(id = "cookieDiv")
   })
 
   observeEvent(input$remove, {
+    shinyjs::toggle(id = "cookieMain")
     msg <- list(name = "dfe_analytics", value = "denied")
     session$sendCustomMessage("cookie-remove", msg)
     session$sendCustomMessage("analytics-consent", msg)
+    print(input$cookies)
   })
 
   cookies_data <- reactive({
@@ -105,7 +107,9 @@ server <- function(input, output, session) {
   })
 
   output$cookie_status <- renderText({
-    cookie_text_stem <- "To better understand the reach of our dashboard tools, this site uses cookies to identify numbers of unique users as part of Google Analytics. You have chosen to"
+    cookie_text_stem <- "To better understand the reach of our dashboard tools,
+    this site uses cookies to identify numbers of unique users as part of Google
+    Analytics. You have chosen to"
     cookie_text_tail <- "the use of cookies on this website."
     if ("cookies" %in% names(input)) {
       if ("dfe_analytics" %in% names(input$cookies)) {
@@ -116,9 +120,18 @@ server <- function(input, output, session) {
         }
       }
     } else {
-      paste("Cookies consent has not been confirmed.")
+      "Cookies consent has not been confirmed."
     }
   })
+
+  observeEvent(input$cookieLink, {
+    # Need to link here to where further info is located.  You can
+    # updateTabsetPanel to have a cookie page for instance
+    updateTabsetPanel(session, "navbar",
+      selected = "Support and feedback"
+    )
+  })
+
 
   # 2 Main page ----
   ## 2.1 Homepage ----
@@ -797,22 +810,22 @@ server <- function(input, output, session) {
 
   #### 2.2.3.8 Qualifications NVQ ----
   # NVQ3 or above overview KPI
-  output$APS.nvq3plus <- renderUI({
+  output$APS.nvq4plus <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("L3PlusRate", "percent")
+    createOverviewKPI("L4PlusRate", "percent")
   })
 
   # qualification chart
-  output$Nvq3plusLineChart <- renderPlotly({
+  output$Nvq4plusLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(createOverviewChart("L3PlusRate", "percent", "People with a qualification at level 3 or above"))
+    renderOverviewChart(createOverviewChart("L4PlusRate", "percent", "People with a qualification at level 4 or above"))
   })
 
   # add link to qualification level
   observeEvent(input$link_to_tabpanel_qualification2, {
     updateTabsetPanel(session, "navbar", "Local skills")
     updateSelectInput(session, "splashMetric",
-      selected = "L3PlusRate"
+      selected = "L4PlusRate"
     )
   })
 
@@ -1450,7 +1463,11 @@ server <- function(input, output, session) {
     if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
       "The definition of when a student is at the end of 16 to 18 study has changed this year and comparisons to previous cohorts should be treated with caution. See footnote below. Also NB non-zero axis."
     } else {
-      "NB non-zero axis."
+      if (input$splashMetric %in% c("L3PlusRate", "L4PlusRate")) {
+        "Figures from 2022 onwards are not directly comparable to previous years due to survey changes. Also NB non-zero axis."
+      } else {
+        "NB non-zero axis."
+      }
     }
   })
 
@@ -1477,17 +1494,17 @@ server <- function(input, output, session) {
   #### 2.3.8.2 Optional summary profession filter ----
   summaryCategories <- c("All", (as.vector(
     distinctSubgroups %>%
-      filter(breakdown == "Summary Profession Category")
+      filter(breakdown == "Occupation (SOC2020 Major Group)")
   ))$subgroup)
   output$professionFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
-      need(input$barBreakdown == "Detailed Profession Category", ""),
+      need(input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)", ""),
       need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     selectizeInput(
       inputId = "summaryProfession",
-      label = "Limit to particular summary profession",
+      label = "Limit to particular SOC2020 Major group",
       choices = summaryCategories
     )
   })
@@ -1507,9 +1524,9 @@ server <- function(input, output, session) {
             filter(
               metric == input$splashMetric,
               breakdown == input$barBreakdown,
-              if (input$barBreakdown == "Detailed Profession Category" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
+              if (input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
                 subgroup %in%
-                  (C_detailLookup %>% filter(`Summary Profession Category` == input$summaryProfession))$`Detailed Profession Category`
+                  (C_detailLookup %>% filter(`Occupation (SOC2020 Major Group)` == input$summaryProfession))$`Occupation (SOC2020 Sub-Major Group)`
               } else {
                 TRUE
               }
@@ -1522,10 +1539,10 @@ server <- function(input, output, session) {
             metric == input$splashMetric,
             breakdown == input$barBreakdown,
             geogConcat == input$geoChoice,
-            if (input$barBreakdown == "Detailed Profession Category" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
-              `Summary Profession Category` == input$summaryProfession
+            if (input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
+              `Occupation (SOC2020 Major Group)` == input$summaryProfession
             } else {
-              `Summary Profession Category` == "All"
+              `Occupation (SOC2020 Major Group)` == "All"
             }
           )
       ))$subgroup,
@@ -1543,7 +1560,7 @@ server <- function(input, output, session) {
       "How do ",
       (I_DataText %>% filter(metric == input$splashMetric))$breakdownTitle,
       " vary by ",
-      tolower(input$barBreakdown),
+      tolower(gsub("SOC2020 ", "", input$barBreakdown)),
       "?"
     )
   })
@@ -1645,7 +1662,9 @@ server <- function(input, output, session) {
         }) |
           # get england for comparison
           (geogConcat == "England")
-      )
+      ) %>%
+        # get rid of soc codes
+        mutate(subgroup = gsub("[0-9]+ - ", "", subgroup))
       # if no rows (because of filter lag) then don't plot
       if (nrow(Splash_21) == 0) {
         "x"
@@ -1747,7 +1766,20 @@ server <- function(input, output, session) {
       need(input$barBreakdown != "No breakdowns available", "")
     )
     paste0(
-      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, "."
+      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ".",
+      if (input$splashMetric %in% c("achievements", "participation")) {
+        if (input$barBreakdown == "Provision") {
+          " Splits based on learner achievement volumes. The apprenticeship and community learning volumes include all age apprentices and community learners (including under 19) and so the denominator of the provision split is the sum of all age apprentices, all age community learners and 19+ education and training learners."
+        } else {
+          if (input$barBreakdown == "SSA") {
+            " SSA splits are based on Education and Training achievement aims (not all FE learners as in other splits)."
+          } else {
+            if (input$barBreakdown == "Level") {
+              " Splits are based on learner volumes. Learners can appear in multiple categories if they take multiple courses and as such percentages may add up to more than 100%.  Full level 2 and Full level 3 are shown for interest but are a subset of Level 2 and Level 3."
+            }
+          }
+        }
+      }
     )
   })
 
@@ -2026,6 +2058,16 @@ server <- function(input, output, session) {
   output$sourcesTable <- DT::renderDataTable({
     DT::datatable(
       I_SourcesTable,
+      escape = FALSE,
+      options = list(dom = "t", pageLength = 50),
+      rownames = FALSE
+    )
+  })
+
+  ## 2.8 FE reports table----
+  output$reportsTable <- DT::renderDataTable({
+    DT::datatable(
+      I_ReportsTable,
       escape = FALSE,
       options = list(dom = "t", pageLength = 50),
       rownames = FALSE

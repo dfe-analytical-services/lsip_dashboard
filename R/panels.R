@@ -9,17 +9,6 @@ panel_overview <- function() {
         div(
           class = "filterRow",
           fluidRow(
-            # column(
-            #   width = 4,
-            #   selectInput("GeoType", "Choose geography",
-            #     choices = c(
-            #       "Local Enterprise Partnership (LEP)" = "LEP",
-            #       "Local Skills Improvement Plan (LSIP)" = "LSIP",
-            #       "Mayoral Combined Authority (MCA)" = "MCA"
-            #     ),
-            #     selected = "LEP"
-            #   )
-            # ),
             column(
               width = 4,
               p("Choose a LEP, LSIP or MCA"),
@@ -50,12 +39,12 @@ panel_overview <- function() {
         width = 6,
         class = "chartBox",
         h2("Labour market"),
-        h3("People employed"),
+        h3("People employed (age 16+)"),
         fluidRow(
           column(
             width = 4,
             div( # need a div to add hover over title
-              title = "Source: APS. Oct-Sep 2022",
+              title = "Source: APS",
               uiOutput("overviewEmpCntKPI"),
             )
           ),
@@ -69,12 +58,12 @@ panel_overview <- function() {
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_employment2", "Find out more about employment volumes")
         ),
-        h3("Employment rate"),
+        h3("Employment rate (age 16-64)"),
         fluidRow(
           column(
             width = 4,
             div(
-              title = "Source: APS. Oct-Sep 2022",
+              title = "Source: APS",
               uiOutput("overviewEmpRateKPI"),
             )
           ),
@@ -94,7 +83,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: ONS (Textkernel). Oct 2022. Online job adverts.",
+              title = "Source: ONS (Textkernel)",
               uiOutput("overviewJobKPI"),
             )
           ),
@@ -114,7 +103,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: UBC. 2022 calendar year",
+              title = "Source: UBC",
               uiOutput("UBC.micro"),
             )
           ),
@@ -134,7 +123,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: Skills Imperative 2035.",
+              title = "Source: Skills Imperative 2035",
               uiOutput("wfOverviewKpi"),
             )
           ),
@@ -154,12 +143,12 @@ panel_overview <- function() {
         width = 6,
         class = "chartBox",
         h2("Skills"),
-        h3("Education and training achievements"),
+        h3("Education and training learner achievements"),
         fluidRow(
           column(
             width = 4,
             div(
-              title = "Source: ILR AY21/22",
+              title = "Source: ILR",
               uiOutput("skisup.ETach"),
             )
           ),
@@ -168,12 +157,12 @@ panel_overview <- function() {
             withSpinner(plotlyOutput("etLineChart", height = 81))
           )
         ),
-        h3("Apprenticeship achievements"),
+        h3("Apprenticeship learner achievements"),
         fluidRow(
           column(
             width = 4,
             div(
-              title = "Source: ILR AY21/22",
+              title = "Source: ILR",
               uiOutput("skisup.APPach"),
             )
           ),
@@ -192,7 +181,7 @@ panel_overview <- function() {
           column(
             width = 4,
             div(
-              title = "Source: NPD. 2021 academic year",
+              title = "Source: NPD",
               uiOutput("dest.ks5over"),
             )
           ),
@@ -206,20 +195,21 @@ panel_overview <- function() {
           actionLink("link_to_tabpanel_destinations2", "Find out more about destinations")
         ),
         # 6th row - link to app data
-        h3("People with a qualification at level 3 or above"),
+        h3("People with a qualification at level 4 or above"),
         fluidRow(
           column(
             width = 4,
             div(
-              title = "Source: APS. 2021 calendar year",
-              uiOutput("APS.nvq3plus"),
+              title = "Source: APS",
+              uiOutput("APS.nvq4plus"),
             )
           ),
           column(
             width = 8,
-            withSpinner(plotlyOutput("Nvq3plusLineChart", height = 81))
+            withSpinner(plotlyOutput("Nvq4plusLineChart", height = 81))
           )
         ),
+        p("Figures from 2022 onwards are not directly comparable to previous years due to survey changes."),
         # third row - link to emp tab
         fluidRow(
           class = "rightAlignLinks",

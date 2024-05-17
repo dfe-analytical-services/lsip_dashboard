@@ -24,7 +24,7 @@ fluidPage(
       href = "dfe_shiny_gov_style.css"
     )
   ),
-  # use_tota11y(), # accessibility layer for local testing
+  shinyGovstyle::cookieBanner("UFS Local Skills Dashboard"),
 
   # Set metadata for browser
   tags$html(lang = "en"),
@@ -173,6 +173,15 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     }
 }
 
+ /* increase banner size*/
+.feedback-banner {
+    background-color: #d53880;
+    font-size: 24px;
+    line-height: 1;
+    padding: 5px 8px 4px;
+width: 100%;
+}
+
 "
       )
     ),
@@ -217,12 +226,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 
   # Add bug header
   HTML(
-    '<div class="govuk-phase-banner govuk-width-container govuk-main-wrapper" id="beta banner" style="margin-left:0px;margin-right:0px">
-  <p class="govuk-phase-banner__content">
-    <strong class="govuk-tag govuk-phase-banner__content__tag ">beta</strong>
-    <span class="govuk-phase-banner__text">We are aware of performance issues that require some users to reload the page. We are working to fix this.
-</span>
-  </p>
+    '<div class="feedback-banner" id="feedback banner" >
+    <a href="https://forms.office.com/e/gUgfhXcRY3" target="_blank" rel="noopener noreferrer" style="color: #fff;"><strong>FEEDBACK</strong> | Click here to share your feedback by 31 May and help shape the future of this dashboard.</a>
 </div>'
   ),
 
@@ -524,7 +529,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               actionLink("link_to_tabpanel_vacancies", "Jobs")
             ),
             p(
-              "This is an experimental metric of online job advert data, split by profession, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "
+              "This is an experimental metric of online job advert data, split by SOC2020 Sub-Major groups, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "
             ),
             h3(actionLink(
               "link_to_tabpanel_enterprise", "Businesses"
@@ -583,14 +588,26 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("25 March 2024 (1.3.9)"),
+            p("17 May 2024 (1.4.0)"),
             tags$ul(
-              tags$li("Calculate the bar chart splits based on percentage of the whole area (previously percentage of subgroups with data present)."),
+              tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC2020 Sub-Major groups (previously TextKernel's own profession split was used)."),
+              tags$li("Made a correction to the achievement split by SSA to use total aims as the denominator, and the provision split to include under 19 apprenticeships and community learning in the denominator."),
+              tags$li("Add SOC codes to employment data SOC labels."),
+              tags$li("Updated cookie banner."),
+              tags$li("Updated APS employment rates, employment by industry and occupation data to the latest quarter and amended age ranges and base populations to be in line with ONS publication of this data."),
+              tags$li("Updated highest qualification data to use National Qualifications Framework allowing more recent data."),
+              tags$li("Added in highest qualification at level four plus metric."),
+              tags$li("Added a feedback survey."),
+              tags$li("Added new resources to the Further Resources tab."),
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("25 March 2024 (1.3.9)"),
+                tags$ul(
+                  tags$li("Calculate the bar chart splits based on percentage of the whole area (previously percentage of subgroups with data present)."),
+                ),
                 p("25 January 2024 (1.3.8)"),
                 tags$ul(
                   tags$li("Update to latest APS employment data.")
@@ -615,7 +632,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
                 ),
                 p("12 September 2023 (1.3.3)"),
                 tags$ul(
-                  tags$li("Updated FE souces table."),
+                  tags$li("Updated FE sources table."),
                   tags$li("Updated map colours for clarity."),
                   tags$li("Corrected the breakdown table comment text.")
                 ),
@@ -869,7 +886,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             This dashboard currently shows employment volumes and rates for each geographic area and by occupation (SOC2020) and industry (SIC 2007)."
           ),
           p(
-            "The ONS previously identified a coding error in the collection of SOC20, although this occupational data has been revised, it is advised to continue to use caution when interpreting these data particularly when looking at year-on-year changes as they may continue to be impacted by this coding issue as well as wider factors such as Covid-19, the UK's exit from the EU, and changes to the economy. For more information see this ONS  ",
+            "The ONS previously identified a coding error in the collection of SOC2020, although this occupational data has been revised, it is advised to continue to use caution when interpreting these data particularly when looking at year-on-year changes as they may continue to be impacted by this coding issue as well as wider factors such as Covid-19, the UK's exit from the EU, and changes to the economy. For more information see this ONS  ",
             a(
               href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/revisionofmiscodedoccupationaldataintheonslabourforcesurveyuk/january2021toseptember2022",
               "article",
@@ -891,14 +908,14 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             ),
             "."
           ),
-          p("Qualification estimates for the Jan 2022-Dec2022 survey period are temporarily suspended. The coding of qualifications has been changed to reflect an updated qualification framework. ONS have temporarily suspended the publication of these series while they update their datasets to reflect this change. They will reinstate qualification outputs as soon as they have made this update. "),
+          p("In Q1 2022 (January to March 2022) the highest qualification variable (HIQUAL) of the LFS was revised. New qualifications have been added after a review identifying gaps in the LFS questionnaire. Therefore figures published after this are not directly comparable to previous years. From 2022 on qualification level is defined by the National Qualifications Framework (NQF). Before that National Vocational Qualifications (NVQ) is used."),
           h3("ONS-Textkernel online job adverts"),
           p(
             "These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.
-            The dashboard shows the monthly average number of live adverts from 2017 to 2022."
+            The dashboard shows the monthly average number of live adverts from 2017 to 2023."
           ),
           p(
-            "Advert volumes are shown split by profession. Textkernel have derived these professions from the job advert job title. These professions do not align directly to the Standard Occupation Classification (SOC2020). ONS are working on using SOC coding in future releases of this data."
+            "Advert volumes are shown split by SOC2020 Major and Sub-Major groups. Textkernel have derived these codes from the job advert job title."
           ),
           p(
             "Counts have been rounded to the nearest 5 and so totals may not add due to this rounding. The scope of online job adverts does not fully capture the scope of UK economic activity because of differing advertising methods, for example, casual work may be advertised by word-of-mouth or in shop windows as opposed to online."
@@ -914,7 +931,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               "When job location information is limited, the centroid of the region is used. This may lead to clustering of job counts."
             ),
           ),
-          p("There are errors in the published data for two areas: Dorset LSIP and Enterprise M3 LEP (including all of Surrey) LSIP. This is due to the incorrect mapping of LAs. In the dashboard we have corrected Dorset LSIP (by using the values for the Dorset LEP which has the same geography) so this is accurate in the dashboard but will not match the published data. For the Enterprise M3 LEP (including all of Surrey) LSIP we have estimated the value by looking the broader region and calculating the value of the Enterprise LSIP having removed other LSIPs in the region. This will come with some rounding issues. We are working to get the published data corrected."),
           h3("Individualised Learner Record"),
           p(
             "The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
@@ -1078,9 +1094,20 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
       fluidRow(
         column(
           12,
+          h1("Reports"),
+          p(
+            "Published reports related to local skills."
+          ),
+          DT::dataTableOutput("reportsTable"),
+          br()
+        )
+      ),
+      fluidRow(
+        column(
+          12,
           h1("Data sources"),
           p(
-            "Other data sources which cover Further Education and local skills."
+            "Other data sources which cover local skills and jobs."
           ),
           DT::dataTableOutput("sourcesTable"),
           br()

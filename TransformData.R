@@ -151,15 +151,25 @@ F_emp16plus <- formatNomis(I_emp16plus) %>%
   mutate(metric = gsub("T: \\(All aged  & over - ", "", metric)) %>%
   mutate(metric = gsub(" ", "", tolower(metric))) %>%
   mutate(breakdown = "Total", subgroup = "Total")
-# add rates
+# Create rates for all metrics except unemployment (base is 16 to 64 pop)
+C_emp <- F_emp %>%
+  filter(metric != "unemployed") %>%
+  left_join(F_emp %>% filter(metric == "all") %>% rename(all = value) %>% select(-metric)) %>%
+  mutate(value = value / all, metric = paste0(metric, "Rate")) %>%
+  filter(metric != "allRate") %>%
+  select(-all)
+# Create rates for unemployment (base is 16+ economically active)
+C_unemp <- F_emp16plus %>%
+  filter(metric == "unemployed") %>%
+  left_join(F_emp16plus %>% filter(metric == "economicallyactive") %>% rename(economicallyactive = value) %>% select(-metric)) %>%
+  mutate(value = value / economicallyactive, metric = paste0(metric, "Rate")) %>%
+  select(-economicallyactive)
+# Bind rates and volumes (volumes are 16+ except inactivity which is 16 to 64)
 C_emp <- bind_rows(
-  F_emp %>%
-    left_join(F_emp %>% filter(metric == "all") %>% rename(all = value) %>% select(-metric)) %>%
-    mutate(value = value / all, metric = paste0(metric, "Rate")) %>%
-    filter(metric != "allRate") %>%
-    select(-all),
-  # original data
-  F_emp
+  C_emp,
+  C_unemp,
+  F_emp16plus %>% filter(metric != "inactive"),
+  F_emp %>% filter(metric == "inactive")
 ) %>%
   mutate(valueText = as.character(value))
 
@@ -171,7 +181,15 @@ C_empOcc <- formatNomis(I_empOcc) %>%
   mutate(subgroup = gsub(" \\(SOC\\) : All people \\)", "", subgroup)) %>%
   mutate(subgroup = gsub("Tb: \\(All people - ", "", subgroup)) %>%
   mutate(valueText = as.character(value)) %>%
-  mutate(breakdown = "Occupation", metric = "inemployment")
+  mutate(
+    breakdown = "Occupation (SOC2020 Sub-Major Group)",
+    metric = "inemployment",
+    cleanName = str_to_lower(subgroup)
+  ) %>%
+  # add on soc codes
+  left_join(I_Ons2digRegion %>% distinct(code = X2, cleanName = str_to_lower(X3))) %>%
+  mutate(subgroup = paste0(code, " - ", str_to_sentence(cleanName))) %>%
+  select(-code, -cleanName)
 
 ## 2.3 Employment by industry ----
 C_empInd <- formatNomis(I_empInd) %>%
@@ -209,22 +227,26 @@ C_entInd <- formatNomis(
   mutate(metric = "enterpriseCount", breakdown = "Industry")
 
 ## 2.5 Qualification level by age and gender ----
-C_qualAgeGender <- formatNomis(I_qualAgeGender) %>%
+C_qualAgeGender <- formatNomis(I_qualAgeGenderNvq %>%
+  bind_rows(I_qualAgeGenderRqf)) %>%
   mutate(
     metric = case_when(
       grepl("None", CELL_NAME) ~ "qualNone",
-      grepl("NVQ1", CELL_NAME) ~ "qualL1",
-      grepl("NVQ2", CELL_NAME) ~ "qualL2",
+      grepl("NVQ1|RQF1", CELL_NAME) ~ "qualL1",
+      grepl("NVQ2|RQF2", CELL_NAME) ~ "qualL2",
       grepl("Trade Apprenticeships", CELL_NAME) ~ "qualApp",
-      grepl("NVQ3", CELL_NAME) ~ "qualL3",
-      grepl("NVQ4", CELL_NAME) ~ "qualL4",
+      grepl("NVQ3|RQF3", CELL_NAME) ~ "qualL3",
+      grepl("NVQ4|RQF4", CELL_NAME) ~ "qualL4",
       grepl("Other Qualifications", CELL_NAME) ~ "qualOther"
     ),
     subgroup = case_when(
       grepl("All people aged 16-64", CELL_NAME) ~ "Total",
       grepl("Males aged 16-64", CELL_NAME) ~ "Males",
       grepl("Females aged 16-64", CELL_NAME) ~ "Females",
-      TRUE ~ substr(CELL_NAME, 33, 37) # get ages
+      TRUE ~ case_when(
+        grepl("19a", CELL_NAME) ~ substr(CELL_NAME, 34, 38),
+        TRUE ~ substr(CELL_NAME, 33, 37)
+      ) # get ages
     ),
     breakdown = case_when(
       subgroup %in% c("Males", "Females") ~ "Gender",
@@ -239,7 +261,7 @@ qualSum <- C_qualAgeGender %>%
   group_by(geogConcat, timePeriod, subgroup) %>%
   summarise(allQuals = sum(value, na.rm = T))
 
-# calculate % of peoplw with L3+ (ie (L3+L4)/all quals)
+# calculate % of people with L3+ (ie (L3+L4)/all quals)
 C_qualL3PlusAgeGender <- C_qualAgeGender %>%
   filter(metric %in% c("qualL3", "qualL4")) %>%
   group_by(chartPeriod, timePeriod, geogConcat, breakdown, subgroup, latest) %>%
@@ -249,7 +271,17 @@ C_qualL3PlusAgeGender <- C_qualAgeGender %>%
   select(-qualL3Plus, -allQuals) %>%
   mutate(valueText = case_when(value == 0 ~ "c", TRUE ~ as.character(value)))
 
-## 2.6 FE starts/achievements/participation by provision, level, age ----
+# calculate % of people with L4+ (ie L4/all quals)
+C_qualL4PlusAgeGender <- C_qualAgeGender %>%
+  filter(metric == "qualL4") %>%
+  group_by(chartPeriod, timePeriod, geogConcat, breakdown, subgroup, latest) %>%
+  summarise(qualL4Plus = sum(value, na.rm = T)) %>%
+  left_join(qualSum) %>%
+  mutate(metric = "L4PlusRate", value = qualL4Plus / allQuals) %>%
+  select(-qualL4Plus, -allQuals) %>%
+  mutate(valueText = case_when(value == 0 ~ "c", TRUE ~ as.character(value)))
+
+## 2.6 FE starts/achievements/participation per 10k by provision, level, age ----
 # tidy up data
 F_FeProvLevelAge <- I_FeProvLevelAge %>%
   # filter uneeded columns and rows
@@ -315,9 +347,9 @@ addGeogs <- function(x) {
       geographic_level %in% c("Local authority district", "National")
     ) %>%
     # Use new LA names from 2011 areas
-    left_join(I_LaLookup %>% select(LAD11CD, LAD23CD_11 = LAD23CD), by = c("areaCode" = "LAD11CD")) %>% # make new LAs
+    left_join(I_LaLookup %>% distinct(LAD11CD, LAD23CD_11 = LAD23CD), by = c("areaCode" = "LAD11CD")) %>% # make new LAs
     # Use new LA names from 2021 areas
-    left_join(I_LaLookup %>% select(LAD21CD, LAD23CD_21 = LAD23CD), by = c("areaCode" = "LAD21CD")) %>% # make new LAs
+    left_join(I_LaLookup %>% distinct(LAD21CD, LAD23CD_21 = LAD23CD), by = c("areaCode" = "LAD21CD")) %>% # make new LAs
     # create flag for when the lad code has changed
     mutate(
       newArea = case_when(
@@ -500,10 +532,16 @@ C_FeProvLevelAge <- F_FeProvLevelAge %>%
   # add back onto other data
   bind_rows(F_FeProvLevelAge)
 
-## 2.7 FE enrolments/achievements by ssa ----
+## 2.7 FE enrolments/achievements aims by ssa and level----
 feSsaWithAreas <- I_FeSsa %>%
-  filter(notional_nvq_level == "Total", sex == "Total", ethnicity_major == "Total", ssa_t1_desc != "Total") %>%
-  mutate(subgroup = ssa_t1_desc, breakdown = "SSA") %>%
+  filter(notional_nvq_level == "Total", sex == "Total", ethnicity_major == "Total") %>%
+  mutate(
+    subgroup = ssa_t1_desc,
+    breakdown = case_when(
+      subgroup == "Total" ~ "Total",
+      TRUE ~ "SSA"
+    )
+  ) %>%
   mutate(
     areaCode = case_when(
       geographic_level == "Local authority district" ~ lad_code,
@@ -543,7 +581,7 @@ C_FeSsa <- bind_rows(
     filter(newArea == 0)
 ) %>%
   select(-newArea, -e_and_t_aims_ach_1, -e_and_t_aims_enrolments_1) %>%
-  rename(achievements = e_and_t_aims_ach, enrolments = e_and_t_aims_enrolments) %>%
+  rename(achievementsAims = e_and_t_aims_ach, enrolmentsAims = e_and_t_aims_enrolments) %>%
   # make long
   pivot_longer(!c("geogConcat", "timePeriod", "chartPeriod", "latest", "breakdown", "subgroup"),
     names_to = "metric",
@@ -578,13 +616,13 @@ employmentProjections <-
       mutate(
         metric = "employmentProjection",
         breakdown = case_when(
-          grepl("[0-9]", subgroup) == TRUE ~ "Occupation (SOC2020 submajor)",
+          grepl("[0-9]", subgroup) == TRUE ~ "Occupation (SOC2020 Sub-Major Group)",
           subgroup == "All occupations" ~ "Total",
-          TRUE ~ "Occupation (SOC2020 major)"
+          TRUE ~ "Occupation (SOC2020 Major Group)"
         ),
         subgroup = case_when(
           subgroup == "All occupations" ~ "Total",
-          grepl("[0-9]", subgroup) == TRUE ~ gsub("^[0-9]", "", subgroup),
+          grepl("[0-9]", subgroup) == TRUE ~ gsub("(...)(.*)", "\\1- \\2", subgroup),
           TRUE ~ subgroup
         )
       ) %>%
@@ -630,7 +668,7 @@ employmentProjections <-
     geogConcat == "Enterprise M3 LEP (including all of Surrey) LSIP" ~ "Enterprise M3 LSIP",
     TRUE ~ geogConcat
   )) %>% # correct different spellings
-  mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) %>% # remove numbers from soc codes for presentation
+  # mutate(subgroup = trimws(gsub("[[:digit:]]+", "", subgroup))) %>% # remove numbers from soc codes for presentation
   # get time period
   rename(chartPeriod = timePeriod) %>%
   mutate(timePeriod = as.Date(paste("01", "Jan", chartPeriod, sep = " "), format = "%d %b %Y")) %>%
@@ -638,6 +676,18 @@ employmentProjections <-
     timePeriod == max(timePeriod) ~ 1,
     timePeriod == (max(timePeriod) - years(1)) ~ -1,
     TRUE ~ 0
+  )) %>%
+  mutate(subgroup = case_when(
+    subgroup == "Managers, directors and senior officials" ~ "1 - Managers, directors and senior officials",
+    subgroup == "Professional occupations" ~ "2 - Professional occupations",
+    subgroup == "Associate professional occupations" ~ "3 - Associate professional occupations",
+    subgroup == "Administrative and secretarial occupations" ~ "4 - Administrative and secretarial occupations",
+    subgroup == "Skilled trades occupations" ~ "5 - Skilled trades occupations",
+    subgroup == "Caring, leisure and other service occupations" ~ "6 - Caring, leisure and other service occupations",
+    subgroup == "Sales and customer service occupations" ~ "7 - Sales and customer service occupations",
+    subgroup == "Process, plant and machine operatives" ~ "8 - Process, plant and machine operatives",
+    subgroup == "Elementary occupations" ~ "9 - Elementary occupations",
+    TRUE ~ subgroup
   ))
 
 # use dorset lep for dorset lsip because dorset lsip has the wrong LAs and it is the same as dorset LEP anyway
@@ -772,16 +822,25 @@ formatVacancies <- function(x) {
   geogLevel <- colnames(reformat)[1] # get geog level
   reformat <- reformat %>%
     rename(area = geogLevel) %>% # rename to match other datafiles
-    mutate(geographic_level = geogLevel) %>% # set to the current geographic type
+    mutate(
+      geographic_level = geogLevel # set to the current geographic type
+      , SOC2digit = paste0(
+        {
+          if ("SOC 2 digit code" %in% names(.)) `SOC 2 digit code` else NULL
+        },
+        " - ",
+        {
+          if ("SOC 2 digit label" %in% names(.)) `SOC 2 digit label` else NULL
+        }
+      ),
+      # ,SOC1digit = substr(`SOC 2 digit code`,1,1)
+    ) %>%
     relocate(geographic_level, .before = area) %>%
-    rename(
-      `Summary Profession Category` = `Summary profession category`,
-      `Detailed Profession Category` = `Detailed profession category`
-    )
+    select(-contains("SOC 2 digit code"), -contains("SOC 2 digit label"))
 
   # Make long
   reformat %>%
-    pivot_longer(!c("geographic_level", "area", "Summary Profession Category", "Detailed Profession Category"),
+    pivot_longer(!c("geographic_level", "area", "SOC2digit"),
       names_to = "time_period", values_to = "valueText"
     ) %>%
     mutate(area = case_when(
@@ -800,6 +859,10 @@ formatVacancies <- function(x) {
       area == "Norfolk and Suffolk " & geographic_level == "Local Skills Improvement Plan" ~ "New Anglia",
       area == "South East Midlands" & geographic_level == "Local Skills Improvement Plan" ~ "South-East Midlands",
       area == "Enterprise M3 LEP (including all of Surrey)" ~ "Enterprise M3",
+      area == "StokeonTrent and Staffordshire" ~ "Stoke-on-Trent and Staffordshire",
+      area == "Heart of the SouthWest" ~ "Heart of the South-West",
+      area == "Essex, SouthendonSea and Thurrock" ~ "Essex, Southend-on-Sea and Thurrock",
+      area == "Norfolk and Suffolk" ~ "New Anglia",
       TRUE ~ area
     ))
 }
@@ -808,14 +871,14 @@ formatVacancies <- function(x) {
 # For the LAs, there are some old LA names within the data so we need to update those
 advertsWithAreas <-
   # format and bind both LA files
-  formatVacancies(I_OnsProfDetailLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% select(-region)) %>% # remove region code. get rid of london since it isn't really an LA.We get that from the region data
   bind_rows(
-    formatVacancies(I_OnsProfLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% select(-region) %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
-  ) %>%
+    formatVacancies(I_Ons2digLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% select(-region)),
+    formatVacancies(I_OnsLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% select(-region))
+  ) %>% # remove region code. get rid of london since it isn't really an LA.We get that from the region data
   # Use new LA names from 2011 areas
-  left_join(I_LaLookup %>% select(LAD11NM, LAD23NM_11 = LAD23NM, LAD23CD_11 = LAD23CD), by = c("area" = "LAD11NM")) %>% # make new LAs
+  left_join(I_LaLookup %>% distinct(LAD11NM, LAD23NM_11 = LAD23NM, LAD23CD_11 = LAD23CD), by = c("area" = "LAD11NM")) %>% # make new LAs
   # Use new LA names from 2021 areas
-  left_join(I_LaLookup %>% select(LAD21NM, LAD23NM_21 = LAD23NM, LAD23CD_21 = LAD23CD), by = c("area" = "LAD21NM")) %>% # make new LAs
+  left_join(I_LaLookup %>% distinct(LAD21NM, LAD23NM_21 = LAD23NM, LAD23CD_21 = LAD23CD), by = c("area" = "LAD21NM")) %>% # make new LAs
   # create flag for when the lad code has changed
   mutate(
     newArea = case_when(
@@ -837,28 +900,41 @@ groupedStats <- advertsWithAreas %>%
   ungroup() %>%
   select(-newArea) %>%
   mutate(valueText = as.numeric(valueText)) %>% # so we can sum
-  mutate(timePeriod = as.Date(paste("01 ", time_period, sep = ""), "%d %b %y")) %>%
-  filter(timePeriod == max(timePeriod) | `Detailed Profession Category` == "None") %>% # we only show the latest year at this level of detail
+  mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
+  filter(timePeriod == max(timePeriod)) %>% # we only show the latest year at this level of detail
   select(-timePeriod) %>%
-  group_by(geographic_level, area, `Summary Profession Category`, `Detailed Profession Category`, time_period, areaCode) %>% # sum for each LEP
+  group_by(geographic_level, area, SOC2digit, time_period, areaCode) %>% # sum for each LEP
   summarise(across(everything(), list(sum), na.rm = T)) %>%
   rename_with(~ gsub("_1", "", .)) %>%
   mutate(valueText = as.character(valueText)) # so we can merge
 
 # Format all other area types
 F_adverts <- bind_rows(
-  formatVacancies(I_OnsProfDetailLep),
-  formatVacancies(I_OnsProfDetailLsip),
-  formatVacancies(I_OnsProfDetailMca),
-  formatVacancies(I_OnsProfDetailEng) %>% filter(area == "England"),
-  formatVacancies(I_OnsProfDetailRegion) %>% filter(area == "The London Economic Action Partnership") %>% mutate(geographic_level = "Local Skills Improvement Plan", area = "Greater London"),
-  formatVacancies(I_OnsProfDetailRegion) %>% filter(area == "The London Economic Action Partnership") %>% mutate(geographic_level = "Local Enterprise Partnership"),
-  formatVacancies(I_OnsProfLep %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
-  formatVacancies(I_OnsProfLsip %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
-  formatVacancies(I_OnsProfMca %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None"),
-  formatVacancies(I_OnsProfEng %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "England"),
-  formatVacancies(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "The London Economic Action Partnership") %>% mutate(geographic_level = "Local Skills Improvement Plan", area = "Greater London"),
-  formatVacancies(I_OnsProfRegion %>% mutate(`Detailed Profession Category` = "Detailed profession category")) %>% mutate(`Detailed Profession Category` = "None") %>% filter(area == "The London Economic Action Partnership") %>% mutate(geographic_level = "Local Enterprise Partnership"),
+  formatVacancies(I_Ons2digLep),
+  formatVacancies(I_Ons2digLsip),
+  formatVacancies(I_Ons2digMca) %>%
+    # correct misallingment of columns in data for Greater Manchester
+    mutate(
+      fix = case_when(grepl("Greater Manchester", SOC2digit) == TRUE ~ 1, TRUE ~ 0),
+      SOC2digit = case_when(
+        fix == 1 ~ paste0(area, " - ", sub("(^[^-]+) -.*", "\\1", SOC2digit)),
+        TRUE ~ SOC2digit
+      ),
+      area = case_when(
+        fix == 1 ~ "Greater Manchester",
+        TRUE ~ area
+      )
+    ) %>%
+    select(-fix),
+  # get england soc stats summed from regions
+  formatVacancies(I_Ons2digRegion) %>%
+    group_by(geographic_level, SOC2digit, time_period) %>%
+    summarise(valueText = as.character(sum(as.numeric(valueText), na.rm = T))) %>%
+    mutate(area = "England"),
+  formatVacancies(I_OnsLep),
+  formatVacancies(I_OnsLsip),
+  formatVacancies(I_OnsMca),
+  formatVacancies(I_OnsEng),
   # add on LAs
   groupedStats,
   advertsWithAreas %>%
@@ -872,7 +948,7 @@ F_adverts <- bind_rows(
     geographic_level == "Mayoral Combined Authorities" ~ paste0(area, " MCA"),
     TRUE ~ area
   )) %>%
-  mutate(timePeriod = as.Date(paste("01 ", time_period, sep = ""), "%d %b %y")) %>%
+  mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
   rename(chartPeriod = time_period) %>%
   mutate(latest = case_when(
     timePeriod == max(timePeriod) ~ 1,
@@ -887,52 +963,40 @@ F_adverts <- bind_rows(
 
 # Get summaries
 C_adverts <- bind_rows(
-  # detailed
+  # soc 2 digit
   F_adverts %>%
-    filter(`Detailed Profession Category` != "None") %>%
-    mutate(breakdown = "Detailed Profession Category") %>%
-    rename(subgroup = `Detailed Profession Category`),
-  # summary
-  F_adverts %>%
-    filter(`Detailed Profession Category` == "None") %>%
-    mutate(breakdown = "Summary Profession Category") %>%
-    rename(subgroup = `Summary Profession Category`),
+    filter(SOC2digit != " - ") %>%
+    mutate(breakdown = "Occupation (SOC2020 Sub-Major Group)") %>%
+    rename(subgroup = SOC2digit),
   # total
   F_adverts %>%
-    filter(`Detailed Profession Category` == "None") %>%
-    group_by(chartPeriod, timePeriod, geogConcat, latest) %>%
+    filter(SOC2digit == " - ") %>%
+    mutate(breakdown = "Total", subgroup = "Total"),
+  # soc 1 digit
+  F_adverts %>%
+    filter(SOC2digit != " - ") %>%
+    mutate(
+      SOC1digitCode = substr(SOC2digit, 1, 1),
+      SOC1digit = case_when(
+        SOC1digitCode == "1" ~ "1 - Managers, directors and senior officials",
+        SOC1digitCode == "2" ~ "2 - Professional occupations",
+        SOC1digitCode == "3" ~ "3 - Associate professional occupations",
+        SOC1digitCode == "4" ~ "4 - Administrative and secretarial occupations",
+        SOC1digitCode == "5" ~ "5 - Skilled trades occupations",
+        SOC1digitCode == "6" ~ "6 - Caring, leisure and other service occupations",
+        SOC1digitCode == "7" ~ "7 - Sales and customer service occupations",
+        SOC1digitCode == "8" ~ "8 - Process, plant and machine operatives",
+        SOC1digitCode == "9" ~ "9 - Elementary occupations",
+        TRUE ~ "NULL"
+      )
+    ) %>%
+    group_by(chartPeriod, timePeriod, geogConcat, latest, SOC1digit) %>%
     summarise(value = sum(value)) %>%
-    mutate(breakdown = "Total", valueText = as.character(value)) %>%
-    mutate(subgroup = "Total")
+    mutate(breakdown = "Occupation (SOC2020 Major Group)", valueText = as.character(value)) %>%
+    mutate(subgroup = SOC1digit)
 ) %>%
-  select(-`Summary Profession Category`, -`Detailed Profession Category`) %>%
+  select(-SOC2digit) %>%
   mutate(metric = "vacancies")
-
-
-# use dorset lep for dorset lsip because dorset lsip has the wrong LAs and it is the same as dorset LEP anyway
-C_advertsDorsetLsip <- C_adverts %>%
-  filter(geogConcat == "Dorset LEP") %>%
-  mutate(geogConcat = "Dorset LSIP") # add in dorset lep as lsip
-
-# calculate enterprise M3 LSIP from a combination of LEP areas that include Enterprise LSIP area, and then minus off the areas in that larger area that are not Enterprise Lsip
-# Enterprise LSIP=(Enterprise LEP + C2C LEP + South east LEP)-(Brighton LSIP + Essex LSIP + Kent LSIP)
-C_advertsEntM3Lsip <- C_adverts %>%
-  filter(geogConcat %in% c("Enterprise M3 LEP", "Coast to Capital LEP", "South East LEP", "Brighton and Hove, East Sussex, West Sussex LSIP", "Essex, Southend-on-Sea and Thurrock LSIP", "Kent and Medway LSIP")) %>% # get all the relavant areas
-  mutate(value = case_when(
-    geogConcat %in% c("Enterprise M3 LEP", "Coast to Capital LEP", "South East LEP") ~ value,
-    TRUE ~ 0 - value
-  )) %>%
-  select(-geogConcat, -valueText, -newArea) %>%
-  group_by(subgroup, metric, breakdown, chartPeriod, timePeriod, latest) %>%
-  summarise(value = sum(value)) %>%
-  mutate(geogConcat = "Enterprise M3 LEP (including all of Surrey) LSIP")
-
-# combine them all
-C_adverts <- bind_rows(
-  C_adverts %>% filter(geogConcat != "Dorset LSIP", geogConcat != "Enterprise M3 LEP (including all of Surrey) LSIP"), # remove incorrect dorset and Enterprise LSIPs
-  C_advertsDorsetLsip,
-  C_advertsEntM3Lsip
-)
 
 ## 2.11 Business births/deaths  ----
 formatBusiness <- function(x, y) {
@@ -1010,6 +1074,7 @@ C_localSkillsDataset <- bind_rows(
   C_entInd,
   C_qualAgeGender,
   C_qualL3PlusAgeGender,
+  C_qualL4PlusAgeGender,
   C_FeProvLevelAge,
   C_FeSsa,
   C_skillsImperative,
@@ -1099,16 +1164,17 @@ C_breakdown <- bind_rows(
   C_localSkillsDataset %>%
     filter(
       breakdown != "Total", subgroup != "Total", latest == 1,
-      metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "participation", "starts")
+      (metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievementsAims", "achievements", "participation", "starts"))
     ) %>%
     select(geogConcat, metric, breakdown, subgroup, value) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
+    filter(breakdown != "Provision") %>%
     # get totals for the denominator
     left_join(
       C_localSkillsDataset %>%
         filter(
           breakdown == "Total", subgroup == "Total", latest == 1,
-          metric %in% c("vacancies", "enterpriseCount", "achievements", "participation", "starts")
+          metric %in% c("vacancies", "enterpriseCount", "achievements", "achievementsAims", "participation", "starts")
         ) %>%
         # add on the 16 plus totals
         bind_rows(F_emp16plus %>%
@@ -1117,14 +1183,37 @@ C_breakdown <- bind_rows(
           )) %>%
         select(geogConcat, metric, total = value)
     ) %>%
+    ## add in provision split as the sub groups include under 19 apps where the total doesn't
+    bind_rows(
+      C_localSkillsDataset %>%
+        filter(
+          breakdown == "Provision", subgroup != "Total", latest == 1,
+          (metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievementsAims", "achievements", "participation", "starts"))
+        ) %>%
+        select(geogConcat, metric, breakdown, subgroup, value) %>%
+        # get totals for the denominator
+        left_join(
+          C_localSkillsDataset %>%
+            filter(
+              breakdown == "Provision", subgroup != "Total", latest == 1,
+              (metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievementsAims", "achievements", "participation", "starts"))
+            ) %>%
+            group_by(geogConcat, metric, breakdown) %>%
+            summarise(total = sum(value, na.rm = T))
+        )
+    ) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
     mutate(value = round(value / total, 3)) %>%
-    mutate(valueText = as.character(value)),
+    mutate(valueText = as.character(value)) %>%
+    mutate(metric = case_when(
+      metric == "achievementsAims" ~ "achievements",
+      TRUE ~ metric
+    )), # allign metric name so shows up when acievemnts chosen
   # Metric where value is used as it is
   C_localSkillsDataset %>%
     filter(
       breakdown != "Total", subgroup != "Total", latest == 1,
-      !metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "participation", "starts")
+      !metric %in% c("inemployment", "vacancies", "enterpriseCount", "achievements", "achievementsAims", "participation", "starts")
     ) %>%
     select(geogConcat, metric, breakdown, subgroup, value, valueText)
 ) %>%
@@ -1141,7 +1230,25 @@ write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALS
 ### 4.3.1 Find top ten for each breakdown ----
 # (these are chosen in the filter)
 # get a list of summary and detailed professions
-C_detailLookup <- advertsWithAreas %>% distinct(`Summary Profession Category`, `Detailed Profession Category`)
+C_detailLookup <- C_breakdown %>%
+  filter(breakdown == "Occupation (SOC2020 Sub-Major Group)") %>%
+  distinct(subgroup) %>%
+  mutate(
+    SOC1digitCode = substr(subgroup, 1, 1),
+    `Occupation (SOC2020 Major Group)` = case_when(
+      SOC1digitCode == "1" ~ "1 - Managers, directors and senior officials",
+      SOC1digitCode == "2" ~ "2 - Professional occupations",
+      SOC1digitCode == "3" ~ "3 - Associate professional occupations",
+      SOC1digitCode == "4" ~ "4 - Administrative and secretarial occupations",
+      SOC1digitCode == "5" ~ "5 - Skilled trades occupations",
+      SOC1digitCode == "6" ~ "6 - Caring, leisure and other service occupations",
+      SOC1digitCode == "7" ~ "7 - Sales and customer service occupations",
+      SOC1digitCode == "8" ~ "8 - Process, plant and machine operatives",
+      SOC1digitCode == "9" ~ "9 - Elementary occupations",
+      TRUE ~ "NULL"
+    )
+  ) %>%
+  select(`Occupation (SOC2020 Major Group)`, `Occupation (SOC2020 Sub-Major Group)` = subgroup)
 write.csv(C_detailLookup, file = "Data\\AppData\\C_detailLookup.csv", row.names = FALSE)
 
 C_topTenEachBreakdown <-
@@ -1150,17 +1257,30 @@ C_topTenEachBreakdown <-
       filter(str_sub(geogConcat, -4, -1) != "LADU") %>%
       group_by(metric, breakdown, geogConcat) %>%
       arrange(desc(value)) %>%
-      slice(1:10)
-      %>%
-      mutate(`Summary Profession Category` = "All"),
+      slice(1:10) %>%
+      mutate(`Occupation (SOC2020 Major Group)` = "All"),
     C_breakdown %>%
-      filter(breakdown == "Detailed Profession Category", str_sub(geogConcat, -4, -1) != "LADU") %>%
-      left_join(C_detailLookup, by = c("subgroup" = "Detailed Profession Category")) %>%
-      group_by(geogConcat, metric, breakdown, `Summary Profession Category`) %>%
+      filter(breakdown == "Occupation (SOC2020 Sub-Major Group)", str_sub(geogConcat, -4, -1) != "LADU") %>%
+      mutate(
+        SOC1digitCode = substr(subgroup, 1, 1),
+        `Occupation (SOC2020 Major Group)` = case_when(
+          SOC1digitCode == "1" ~ "1 - Managers, directors and senior officials",
+          SOC1digitCode == "2" ~ "2 - Professional occupations",
+          SOC1digitCode == "3" ~ "3 - Associate professional occupations",
+          SOC1digitCode == "4" ~ "4 - Administrative and secretarial occupations",
+          SOC1digitCode == "5" ~ "5 - Skilled trades occupations",
+          SOC1digitCode == "6" ~ "6 - Caring, leisure and other service occupations",
+          SOC1digitCode == "7" ~ "7 - Sales and customer service occupations",
+          SOC1digitCode == "8" ~ "8 - Process, plant and machine operatives",
+          SOC1digitCode == "9" ~ "9 - Elementary occupations",
+          TRUE ~ "NULL"
+        )
+      ) %>%
+      group_by(geogConcat, metric, breakdown, `Occupation (SOC2020 Major Group)`) %>%
       arrange(desc(value)) %>%
       slice(1:10)
   ) %>%
-  select(metric, breakdown, geogConcat, subgroup, `Summary Profession Category`)
+  select(metric, breakdown, geogConcat, subgroup, `Occupation (SOC2020 Major Group)`)
 write.csv(C_topTenEachBreakdown, file = "Data\\AppData\\C_topTenEachBreakdown.csv", row.names = FALSE)
 
 ## 4.4 C_dataHub ----
@@ -1293,6 +1413,8 @@ names(I_SourcesTable) <- gsub(".", " ", names(I_SourcesTable), fixed = TRUE)
 write.csv(I_SourcesTable, file = "Data\\AppData\\I_SourcesTable.csv", row.names = FALSE)
 names(I_ToolsTable) <- gsub(".", " ", names(I_ToolsTable), fixed = TRUE)
 write.csv(I_ToolsTable, file = "Data\\AppData\\I_ToolsTable.csv", row.names = FALSE)
+names(I_ReportsTable) <- gsub(".", " ", names(I_ReportsTable), fixed = TRUE)
+write.csv(I_ReportsTable, file = "Data\\AppData\\I_ReportsTable.csv", row.names = FALSE)
 
 # Tidy up data text table
 names(I_DataText) <- gsub(".", " ", names(I_DataText), fixed = TRUE)

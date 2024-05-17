@@ -2,7 +2,7 @@
 # Title: LSIP dashboard data load
 # Author: Paul James
 # Date: 30th Aug 2022
-# Last updated: 28th Mar 2023
+# Last updated: 17th Apr 2023
 # Aim: Loads the original data sources used within the dashboard.
 # Use: To update any datasets, delete the relevant file within the relevant folder, and paste in the new data file. Rerun this file and then run TransformData.R
 # Sources: See the dashboard page Data sources for links to the datasets
@@ -126,7 +126,6 @@ cellsListAps <- nomis_get_metadata(id = "NM_17_1", concept = "CELL")
 ### 2.1.1 Employment by occupation ----
 # Query data
 # Geography: England, LEPs, regions, LADs (as of April 2021)
-# Date: 12 months to Dec 2017-2021. The latest data is not available so use the last 5 Jan-Decs
 # Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people
 # find cells we want
 cellsUseAps_empOcc <- cellsListAps %>% filter(description.en %like% "T09b:" & description.en %like% "All people - ")
@@ -208,11 +207,15 @@ I_entSize <- I_entIndSize %>% filter(INDUSTRY_NAME == "Total")
 
 ### 2.1.4 Skill by age gender ------------
 # Geog and date as above
-# Cell: T19	Qualification by age and gender - NVQ. All people aged 16-64. only updated every Jan-Dec
-# find cells we want
-cellsUseAps_qual <- cellsListAps %>% filter(description.en %like% "T19:" & description.en %like% "Total")
+# Cell: T19	Qualification by age and gender. All people aged 16-64. only updated every Jan-Dec. NVQ data is available until 2021 - then on rcf
+# find cells we want in NVQ
+cellsUseAps_qualNvq <- cellsListAps %>% filter(description.en %like% "T19:" & description.en %like% "Total")
 # get data
-I_qualAgeGender <- extractNomis("NM_17_1", "2017-12,2018-12,2019-12,2020-12,2021-12", cellsUseAps_qual$id)
+I_qualAgeGenderNvq <- extractNomis("NM_17_1", "2019-12,2020-12,2021-12", cellsUseAps_qualNvq$id)
+# find cells we want in NVQ
+cellsUseAps_qualRqf <- cellsListAps %>% filter(description.en %like% "T19a:" & description.en %like% "Total")
+# get data
+I_qualAgeGenderRqf <- extractNomis("NM_17_1", "latestMINUS4,latest", cellsUseAps_qualRqf$id)
 
 ### 2.1.5 Employment by industry------------
 # Geog and date as above
@@ -278,33 +281,29 @@ I_active_ONS20 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files
 sheet <- "Table 3.1d"
 I_active_ONS21 <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 
-### 2.3.2 ONS job adverts by profession ----
+### 2.3.2 ONS job adverts by SOC ----
 folder <- "2-12_OnsProf"
-sheet <- "Table 10"
-I_OnsProfDetailEng <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 11"
-I_OnsProfDetailRegion <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 sheet <- "Table 12"
-I_OnsProfDetailLA <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 13"
-I_OnsProfDetailLep <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 14"
-I_OnsProfDetailLsip <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 15"
-I_OnsProfDetailMca <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-
-sheet <- "Table 4"
-I_OnsProfEng <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 5"
-I_OnsProfRegion <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 6"
-I_OnsProfLA <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 7"
-I_OnsProfLep <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 8"
-I_OnsProfLsip <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+I_Ons2digLA <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+sheet <- "Table 10"
+I_Ons2digLep <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 sheet <- "Table 9"
-I_OnsProfMca <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+I_Ons2digLsip <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+sheet <- "Table 11"
+I_Ons2digMca <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+sheet <- "Table 8"
+I_Ons2digRegion <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+
+sheet <- "Table 1"
+I_OnsEng <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+sheet <- "Table 6"
+I_OnsLA <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+sheet <- "Table 4"
+I_OnsLep <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+sheet <- "Table 3"
+I_OnsLsip <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+sheet <- "Table 5"
+I_OnsMca <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 
 ## 2.4 Skills imperative----
 # These take a long time to run ~20mins
@@ -357,3 +356,5 @@ sheetNum <- "Tools"
 I_ToolsTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 sheetNum <- "Sources"
 I_SourcesTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
+sheetNum <- "Reports"
+I_ReportsTable <- read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
