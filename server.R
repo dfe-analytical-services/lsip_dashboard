@@ -615,6 +615,12 @@ server <- function(input, output, session) {
         plot.background = element_rect(fill = "#f3f2f1")
       ) +
       scale_y_continuous(
+        labels =
+          if (format == "percent") {
+            scales::percent_format(accuracy = 1)
+          } else {
+            label_number(accuracy = 1)
+          },
         breaks =
           if (format == "percent") {
             c((C_axisMinMax %>% filter(metric == metricName))$minAxis, (C_axisMinMax %>% filter(metric == metricName))$maxAxis)
