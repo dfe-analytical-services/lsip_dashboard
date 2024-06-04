@@ -1,6 +1,6 @@
 library(shinytest2)
 
-inputs <- c(    
+inputs <- c(
   "geoChoice",
   "geoChoiceOver",
   "hubComparators",
@@ -45,7 +45,7 @@ test_that("Local skills", {
   app$expect_values(
     input = inputs,
     output = outputs
-    )
+  )
 })
 
 test_that("Data sources", {
@@ -55,6 +55,3 @@ test_that("Data sources", {
     output = outputs
   )
 })
-
-
-
