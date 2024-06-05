@@ -632,7 +632,7 @@ server <- function(input, output, session) {
           if (format == "percent") {
             scales::percent_format(accuracy = 1)
           } else {
-            label_number(accuracy = 1)
+            label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
           },
         breaks =
           if (format == "percent") {
