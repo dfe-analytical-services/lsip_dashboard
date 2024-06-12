@@ -1,0 +1,189 @@
+### 2.2.2 Achievements/starts/part by LAD and provision, level and age------------
+## Download "Further education and skills geography - detailed summary " from https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22
+folder <- "2-8_ILRach"
+I_FeProvLevelAge <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+
+# tidy up data
+F_FeProvLevelAge <- I_FeProvLevelAge %>%
+  # filter uneeded columns and rows
+  filter(
+    geographic_level %in% c("Local authority district", "National", "Local enterprise partnership", "Local skills improvement plan area"), # just keep area used
+    # keep only the combinations shown in dashboard
+    (((apprenticeships_or_further_education == "Further education and skills" | stringr::str_sub(level_or_type, -5, -1) == "Total") & age_group == "Total") | level_or_type == "Further education and skills: Total"),
+    lad_code != "z" # ignore Outside of England and unknown
+  ) %>%
+  mutate(area = case_when(
+    geographic_level == "National" ~ country_name,
+    geographic_level == "Local authority district" ~ lad_name,
+    geographic_level == "Local enterprise partnership" ~ local_enterprise_partnership_name,
+    geographic_level == "Local skills improvement plan area" ~ lsip_name
+  )) %>%
+  mutate(areaCode = case_when(
+    geographic_level == "Local authority district" ~ lad_code,
+    geographic_level == "Local enterprise partnership" ~ local_enterprise_partnership_code,
+    geographic_level == "Local skills improvement plan area" ~ lsip_code,
+    TRUE ~ ""
+  )) %>%
+  # add dates
+  mutate(chartPeriod = paste("AY", substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
+  mutate(timePeriod = as.Date(paste("01 Aug", substr(time_period, 1, 4), sep = ""), format = "%d %b %Y")) %>%
+  mutate(latest = case_when(
+    timePeriod == max(timePeriod) ~ 1,
+    timePeriod == (max(timePeriod) - lubridate::years(1)) ~ -1,
+    TRUE ~ 0
+  )) %>%
+  select(-time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name, -local_enterprise_partnership_code, -local_enterprise_partnership_name, -lsip_code, -lsip_name) %>%
+  # find populations at the grouping level so we use the highest volume of population (ie nopt calculate the pop for every small group using small data volumes)
+  mutate(populationGroup = case_when(
+    apprenticeships_or_further_education %in% c("Apprenticeships", "Community Learning") ~ paste("popIncludesUnder19", age_group), # apps and CL include under 19, so the the population used in the per 100k calcs are slightly higher
+    TRUE ~ age_group
+  )) %>%
+  # ILR uses the LEP names as they were at the time of the data. Here we allign those LEPs whose geography has not changed to the latest name
+  mutate(area = case_when(
+    area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
+    area == "Humber" ~ "Hull and East Yorkshire",
+    area == "Derby, Derbyshire, Nottingham and Nottinghamshire" ~ "D2N2",
+    area == "Gloucestershire" ~ "GFirst",
+    area == "Oxfordshire" & geographic_level == "Local enterprise partnership" ~ "OxLEP"
+    # and also rename london to the new name
+    , area == "London" & geographic_level == "Local enterprise partnership" ~ "The London Economic Action Partnership",
+    TRUE ~ area
+  ))
+
+# add on population
+addPopulation <- F_FeProvLevelAge %>%
+  left_join(
+    F_FeProvLevelAge %>%
+      filter(level_or_type == "Further education and skills: Total" | (level_or_type == "Apprenticeships: Total" & (age_group == "Under 19" | age_group == "Total"))) %>% # use the apps poplation as it is bigger than the CL
+      mutate(population = 100000 * as.numeric(participation) / as.numeric(participation_rate_per_100000_population)) %>% # use values to get population
+      select(geographic_level, area, populationGroup, timePeriod, population),
+    by = c("geographic_level" = "geographic_level", "area" = "area", "populationGroup" = "populationGroup", "timePeriod" = "timePeriod")
+  ) %>%
+  select(-populationGroup)
+
+# add on new LADUs/LEP/LSIP/MCA areas
+feWithAreas <- addGeogs(addPopulation)
+
+# Get new LSIP and LEP groups (ILR now publish at that level). However, ILR LEP data is published based on the LEP mappings in each year.
+# As these mappings have changed each year, we don't have a consistent time series.
+# Here we get those LEPs which have stayed consistent across the years so we can use the published data throughout
+feLepsLsips <- addPopulation %>%
+  filter((geographic_level == "Local enterprise partnership" &
+            area %in% c(
+              "Buckinghamshire",
+              "Cheshire and Warrington",
+              "Cornwall and Isles of Scilly",
+              "Coventry and Warwickshire",
+              "Cumbria",
+              "D2N2",
+              "Dorset",
+              "GFirst",
+              "Greater Birmingham and Solihull",
+              "Greater Manchester",
+              "Heart of the South West",
+              "Hull and East Yorkshire",
+              "Lancashire",
+              "Leicester and Leicestershire",
+              "Liverpool City Region",
+              "North East",
+              "OxLEP",
+              "Stoke-on-Trent and Staffordshire",
+              "Swindon and Wiltshire",
+              "Tees Valley",
+              "Thames Valley Berkshire",
+              "The Marches",
+              "West of England",
+              "Worcestershire",
+              "South East Midlands"
+            )) | geographic_level == "Local skills improvement plan area") %>%
+  mutate(
+    geogConcat = case_when(
+      geographic_level == "Local enterprise partnership" ~ paste0(area, " LEP"),
+      geographic_level == "Local skills improvement plan area" ~ paste0(area, " LSIP"),
+      TRUE ~ "NA"
+    ),
+    newArea = 0
+  ) %>%
+  select(-geographic_level, -area, -areaCode)
+
+# group up all the stats for combined areas (including the new LAs)
+groupedStats <- feWithAreas %>%
+  filter(newArea == 1 # areas that have been calculated
+         & (stringr::str_sub(geogConcat, -4, -1) == "LADU" | # lads that have changed over time
+              geogConcat %in% c("West of England MCA", "West Midlands MCA") | # MCAs that don't excactly match an LSIP
+              # LEPs that have changed their geography over time
+              geogConcat %in% c(
+                "Coast to Capital LEP",
+                "South East LEP",
+                "The London Economic Action Partnership LEP",
+                "Enterprise M3 LEP",
+                "Solent LEP",
+                "Greater Lincolnshire LEP",
+                "Hertfordshire LEP",
+                "York and North Yorkshire LEP",
+                "South Yorkshire LEP",
+                "Leeds City Region LEP",
+                "New Anglia LEP",
+                "The Business Board LEP"
+              ) |
+              # since the ilr only publish the latest years lsip we need to calculate the history of those as well
+              (stringr::str_sub(geogConcat, -4, -1) == "LSIP" & chartPeriod != "AY22/23")
+         )) %>%
+  ungroup() %>%
+  select(-newArea, -achievements_rate_per_100000_population, -starts_rate_per_100000_population, -participation_rate_per_100000_population) %>%
+  mutate_at(vars(starts, participation, achievements, population_estimate), as.numeric) %>% # Convert to numeric
+  group_by(apprenticeships_or_further_education, level_or_type, age_group, chartPeriod, timePeriod, latest, geogConcat) %>% # sum for each LEP
+  summarise(across(everything(), list(sum), na.rm = T)) %>%
+  mutate(
+    starts_rate_per_100000_population = as.character(100000 * starts_1 / population_1),
+    participation_rate_per_100000_population = as.character(100000 * participation_1 / population_1),
+    achievements_rate_per_100000_population = as.character(100000 * achievements_1 / population_1)
+  ) %>%
+  mutate(starts = as.character(starts_1), participation = as.character(participation_1), achievements = as.character(achievements_1)) %>%
+  select(-population_1, -starts_1, -participation_1, -achievements_1, -population_estimate_1)
+
+# add back on original LADUs and format
+F_FeProvLevelAge <- bind_rows(
+  groupedStats,
+  feLepsLsips,
+  feWithAreas %>%
+    filter(newArea == 0)
+) %>%
+  select(-population, -newArea, -population_estimate) %>%
+  # get in new format
+  mutate(subgroup = case_when(
+    level_or_type == "Further education and skills: Total" & age_group == "Total" ~ "Total",
+    age_group != "Total" ~ age_group,
+    stringr::str_sub(level_or_type, -5, -1) != "Total" ~ gsub(": Total", "", level_or_type),
+    TRUE ~ apprenticeships_or_further_education
+  )) %>%
+  mutate(breakdown = case_when(
+    level_or_type == "Further education and skills: Total" & age_group == "Total" ~ "Total",
+    age_group != "Total" ~ "Age",
+    stringr::str_sub(level_or_type, -5, -1) != "Total" ~ "Level",
+    TRUE ~ "Provision"
+  )) %>%
+  ungroup() %>%
+  select(-apprenticeships_or_further_education, -level_or_type, -age_group) %>%
+  # make long
+  tidyr::pivot_longer(!c("geogConcat", "timePeriod", "chartPeriod", "latest", "breakdown", "subgroup"),
+               names_to = "metric",
+               values_to = "valueText"
+  ) %>%
+  mutate(value = as.numeric(valueText))
+
+# Repeat some LSIPs to represent MCAs with the same geography
+C_FeProvLevelAge <- F_FeProvLevelAge %>%
+  filter(geogConcat %in% c(
+    "Greater Manchester LSIP",
+    "South Yorkshire LSIP",
+    "West Yorkshire LSIP",
+    "Liverpool City Region LSIP",
+    "Tees Valley LSIP",
+    "Cambridgeshire and Peterborough LSIP",
+    "North East LSIP",
+    "North of Tyne LSIP"
+  )) %>%
+  mutate(geogConcat = gsub("LSIP", "MCA", geogConcat)) %>%
+  # add back onto other data
+  bind_rows(F_FeProvLevelAge)

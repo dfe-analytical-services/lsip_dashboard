@@ -401,18 +401,8 @@ width: 100%;
         p(
           "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, local enterprise partnership (LEP), Mayoral Combined Authority (MCA), regional and national."
         ),
-        # p(
-        #   "This dashboard brings together published statistics on local employment and skills in England, to support local skills planning and delivery."
-        # ),
-        # p(
-        #   "It includes a subset of employment and skills statistics that can be viewed for three geographic areas: Local Enterprise Partnership (LEP), Local Skills Improvement Plan (LSIP) and Mayoral Combined Authority (MCA) areas. The underlying data can be downloaded using the links on each page or directly from the downloads page and contains breakdowns by Local Authority (LA) and region."
-        # ),
-        # p(
-        #   "The dashboard currently uses data published by the Office for National Statistics (ONS) and the Department for Education (DfE). The sources currently included in the dashboard will be added to alongside additional functionality in response to user feedback and new sources being published."
-        # ),
         p(
           "This dashboard is produced by the ",
-          # "To access the additional dashboards developed to help users further understand the labour market outcomes of training use the links below, or from the ",
           a(
             href = "https://www.gov.uk/government/groups/unit-for-future-skills",
             "Unit for Future Skills",
@@ -423,41 +413,8 @@ width: 100%;
             href = "https://www.gov.uk/government/groups/unit-for-future-skills",
             "webpage.",
             .noWS = c("after")
-          ),
-          # " webpage."
+          )
         )
-        # tags$ul(
-        #   tags$li(
-        #     "Graduate outcomes (",
-        #     a(
-        #       href = "https://explore-education-statistics.service.gov.uk/find-statistics/graduate-outcomes-leo",
-        #       "official statistics",
-        #       .noWS = c("after", "before")
-        #     ),
-        #     ")(",
-        #     a(
-        #       href = "https://department-for-education.shinyapps.io/leo-graduate-industry-dashboard",
-        #       "dashboard",
-        #       .noWS = c("after", "before")
-        #     ),
-        #     ")"
-        #   ),
-        #   tags$li(
-        #     "Outcome based success measures (",
-        #     a(
-        #       href = "https://explore-education-statistics.service.gov.uk/find-statistics/further-education-outcome-based-success-measures",
-        #       "official statistics",
-        #       .noWS = c("after", "before")
-        #     ),
-        #     ")(",
-        #     a(
-        #       href = "https://app.powerbi.com/view?r=eyJrIjoiOGYxYmU5ODktN2U1NC00ZjU4LWIwMTgtZDAzMDljMzVlNTE0IiwidCI6ImZhZDI3N2M5LWM2MGEtNGRhMS1iNWYzLWIzYjhiMzRhODJmOSIsImMiOjh9&pageName=ReportSection836f307d5071a434f3a2",
-        #       "dashboard",
-        #       .noWS = c("after", "before")
-        #     ),
-        #     ")"
-        #   )
-        # )
       )),
       # end intro text row
 
@@ -484,10 +441,6 @@ width: 100%;
               tags$li(actionLink("link_to_tabpanel_supportandfeedback", "Support and feedback"), " - provides links to the Unit for Future Skills and Department for Education Statistics Development inboxes for feedback and if you hve any questions about the dashboard or the data it contains. There is also a link to the GitHub repository if you wish to view the dashboard source code.")
             ),
             h2("Local skills metrics"),
-            # h2("Dashboard pages"),
-            # p(
-            #   "The tabs along the top of Local Skills page focus on different parts of the jobs and skills market. Each page includes options to download all of the indicators shown, either just for the selected geographic area or for all available geographies."
-            # ),
             p(
               "Where published figures are not available, area totals for LEP, LSIP or MCA are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
             ),
@@ -500,13 +453,6 @@ width: 100%;
               ),
               "."
             ),
-            # h3(actionLink("link_to_tabpanel_overview", "Overview")),
-            # p(
-            #   "This tab provides a time series summary of employment, qualifications, and further education outcomes for the selected geographic area. Metrics are divided into two columns: Labour market and Skills. Labour market includes employment, online job adverts (experimental), and micro business count (0-9 employees). Skills covers education and training ahcievements, apprenticehsip achievements, highest qualification level, and Key Stage 5 positive destinations."
-            # ),
-            # p(
-            #   "This tab provides a summary of labour market and skills information for the selected geographic area. It includes a time series of data on employment, online job adverts, and further education and skills achievements."
-            # ),
             h3(actionLink(
               "link_to_tabpanel_localskills2", "Local skills"
             )),
@@ -544,13 +490,6 @@ width: 100%;
             p(
               "Where the LEP, LSIP and MCA area totals are not published, area totals are calculated by aggregating the relevant local authorities (see Data sources tab for more information)."
             ),
-            # h3(
-            #   actionLink("link_to_tabpanel_qualification", "Destinations")
-            # ),
-            # p(
-            #   "This page includes information on the highest qualification level for working age individuals (16-64) for the selected geographic area, and the option to compare against another area.
-            #     It includes data on qualification level, with breakdowns by age band and gender."
-            # ),
             h3(actionLink(
               "link_to_tabpanel_destinations", "Destinations"
             )),
@@ -564,12 +503,6 @@ width: 100%;
             p(
               "Projected employment growth until 2035. Sector, industry, occupation and qualification projected growths are available. LA level data is not available for this dataset."
             )
-            # h2("Data download page"),
-            # p(
-            #   "The",
-            #   actionLink("link_to_tabpanel_data", "data download page"),
-            #   " includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."
-            # ),
           )
         )
       )),
@@ -717,8 +650,6 @@ width: 100%;
             h2("Future development"),
             p(
               "The dashboard will be kept up to date with the latest data shortly after it is released – check the data downloads page for dates when new data is published. If there are further data or dashboard features that you would find useful please contact us at ",
-              # p(
-              #   "We will be regularly adding more data and visualisations to the dashboard based on the user feedback we have received.  If there are further data or dashboard features that you would find useful please contact us at ",
               a(
                 href = "mailto:ufs.contact@education.gov.uk",
                 "ufs.contact@education.gov.uk",
@@ -1016,11 +947,6 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           # Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want."
         )
       )),
-      # fluidRow(column(
-      #   12,
-      #   p("If you have a query code, enter it here:"),
-      #   textInput("hubCode", label = NULL),
-      # )),
       ### 2.4.1 Datahub filters ----
       fluidRow(column(12, h2("Geography"))),
       fluidRow(
@@ -1065,11 +991,6 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
         )
       ),
       fluidRow(column(12, h2("Output"))),
-      # fluidRow(column(
-      #   12,
-      #   p("If you want to reuse this query, use this code:"),
-      #   p(uiOutput("uniqueCode")),
-      # )),
       fluidRow(column(
         3,
         downloadButton(
@@ -1124,76 +1045,6 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           br()
         )
       ),
-      # fluidRow(
-      #   column(
-      #     12,
-      #     h1("FE interventions"),
-      #     p(
-      #       "There have been several interventions and policies in recent years which have affected FE. Below provides a list of interventions in FE which hopefully provide some context around the data and trends within this dashboard."
-      #     ),
-      #     h3(2021),
-      #     tags$div(tags$ul(
-      #       tags$li(
-      #         "The Department for Education White Paper created the policy for Local Skills Improvement Plans and the involvement of employer bodies."
-      #       ),
-      #       tags$li(
-      #         "Skills for Jobs: Lifelong Learning for Opportunity and Growth policy paper suggests the Lifetime Loan Entitlement and increased IfATEs role in technical qualifications."
-      #       ),
-      #       tags$li(
-      #         "The Skills and Post-16 education bill confirmed the introduction of the Lifelong Loan Entitlement."
-      #       )
-      #     )),
-      #     h3(2020),
-      #     tags$div(tags$ul(
-      #       tags$li(
-      #         "The Chancellor announced 'Plan for Jobs' in July 2020, to help combat the impact of the pandemic on the education system. There was a particular focus on apprenticeships, with £2,000 for each new apprentice under 25, later raised to £3,000."
-      #       ),
-      #       tags$li(
-      #         "In September 2020 as part of 'Build Back Better', the Lifetime Skills Guarantee was introduced to give adults without a full Level 3 qualification the chance to take free college courses.
-      #                 SKills Bootcamps were also introduced  offering flexible courses of 12-16 weeks to build up digital skills (later expanded in 2021 and 022 to cover construction, engineering and green skills)."
-      #       ),
-      #       tags$li(
-      #         "Independent Commissions on the College of the Future report was published. This called for long-term education and skills reforms, and extra investment to address current and future skilsl gaps."
-      #       )
-      #     )),
-      #     h3(2019),
-      #     tags$div(tags$ul(
-      #       tags$li("The Adult Education Budget (AEB) devolved to six MCAs and the GLA."),
-      #       tags$li(
-      #         "The Auger report, and independent panel report to the Reveiw of Post-18 Education and Funding was published.
-      #                 This called for a major overhaul of the sturcture and funding system for HE and FE, including rationalising the FE college ‘network’, first free full level 2 and 3 qualification for all learners, simplifying the ESFA funding rules, investing in the FE workforce as a ‘priority' and introducing maintenance support for level 4 and 5 qualifications."
-      #       )
-      #     )),
-      #     h3(2018),
-      #     tags$div(tags$ul(
-      #       tags$li(
-      #         "The Technical and Further Education Act extended the remite of IfA to cover college-based technical education from 2018 onwards, creating IfATE."
-      #       )
-      #     )),
-      #     h3(2017),
-      #     tags$div(tags$ul(
-      #       tags$li(
-      #         "Plans for establishing 'Institutes of Technology' were published by DfE. £170 million fund to ‘establish high quality institutions which specialised in delivering high-level technical skills that employers need across all regions of England’. First 12 successful bids were announced in 2019."
-      #       ),
-      #       tags$li(
-      #         "The Education Funding Agency and the SFA were merged to create the Education and Skills Funding Agency (ESFA) that sits within DfE."
-      #       ),
-      #       tags$li(
-      #         "IfA formally became operational alongside the new apprenticeship levy in April 2017."
-      #       ),
-      #       tags$li("UKCES was closed following withdrawal of government funding.")
-      #     )),
-      #     h3(2016),
-      #     tags$div(tags$ul(
-      #       tags$li(
-      #         "Lord Sainsbury report was published, a report of the Independent Panel on Technical Education. This called for new approach to technical education, including: a technical pathway for learners including employment-based (apprenticeship) and college-based training, a single framework of standards for both apprenticeships and college-based provision, a common framework of 15 routes for levels 2 to 5."
-      #       ),
-      #       tags$li(
-      #         "Post-16 skills plan published alongside to deliver recommendations."
-      #       )
-      #     ))
-      #   )
-      # ),
       br()
     ),
     ## 2.8 Accessibility ----
