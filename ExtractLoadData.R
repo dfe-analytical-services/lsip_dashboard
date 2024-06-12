@@ -8,7 +8,7 @@
 # The dataframes are saved in ./Data/AppData to be read by the dashboard app.
 # Sources: See the dashboard page Data sources for links to the datasets
 # Notes: Ensure there is *only* the file(s) that will be used in each of the numbered folders in ./Data/
-# Running time: ~40mins
+# Running time: ~20mins
 ###
 
 # Load libraries ----
