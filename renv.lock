@@ -64,7 +64,7 @@
     },
     "MASS": {
       "Package": "MASS",
-      "Version": "7.3-60.2",
+      "Version": "7.3-61",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -75,7 +75,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "2f342c46163b0b54d7b64d1f798e2c78"
+      "Hash": "0cafd6f0500e5deba33be22c46bf6055"
     },
     "Matrix": {
       "Package": "Matrix",
@@ -644,11 +644,11 @@
       "Version": "0.2.0",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
       "RemoteUsername": "dfe-analytical-services",
       "RemoteRepo": "dfeshiny",
       "RemoteRef": "main",
-      "RemoteSha": "fb0a97efd819c4735c3e57dc3b294a5ad2911ef5",
+      "RemoteSha": "6a4c898934274a5f6f13188c379d04667c4cf1c9",
+      "RemoteHost": "api.github.com",
       "Requirements": [
         "RCurl",
         "checkmate",
@@ -660,7 +660,7 @@
         "stringr",
         "styler"
       ],
-      "Hash": "23cba66872a9f50b6cde614c29286073"
+      "Hash": "dabb4b32305d045b5e091bc0dcb77988"
     },
     "diffobj": {
       "Package": "diffobj",
@@ -679,14 +679,15 @@
     },
     "diffviewer": {
       "Package": "diffviewer",
-      "Version": "0.1.1",
+      "Version": "0.1.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
+        "R",
         "htmlwidgets",
         "jsonlite"
       ],
-      "Hash": "8dfb2780d1c20a2399d9716c9a7f205a"
+      "Hash": "42c3ea48cba4a88987d55e64008d2f3b"
     },
     "digest": {
       "Package": "digest",
@@ -759,14 +760,14 @@
     },
     "evaluate": {
       "Package": "evaluate",
-      "Version": "0.23",
+      "Version": "0.24.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "methods"
       ],
-      "Hash": "daf4a1246be12c1fa8c7705a0935c1a0"
+      "Hash": "a1066cbc05caee9a4bf6d90f194ff4da"
     },
     "fansi": {
       "Package": "fansi",
@@ -1356,7 +1357,7 @@
     },
     "nlme": {
       "Package": "nlme",
-      "Version": "3.1-164",
+      "Version": "3.1-165",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1366,7 +1367,7 @@
         "stats",
         "utils"
       ],
-      "Hash": "a623a2239e642806158bc4dc3f51565d"
+      "Hash": "2769a88be217841b1f33ed469675c3cc"
     },
     "nomisr": {
       "Package": "nomisr",
@@ -2559,7 +2560,7 @@
     },
     "xfun": {
       "Package": "xfun",
-      "Version": "0.44",
+      "Version": "0.45",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2567,7 +2568,7 @@
         "stats",
         "tools"
       ],
-      "Hash": "317a0538d32f4a009658bcedb7923f4b"
+      "Hash": "ca59c87fe305b16a9141a5874c3a7889"
     },
     "xml2": {
       "Package": "xml2",
