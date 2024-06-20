@@ -227,7 +227,7 @@ width: 100%;
   # Add bug header
   HTML(
     '<div class="feedback-banner" id="feedback banner" >
-    <a href="https://forms.office.com/e/gUgfhXcRY3" target="_blank" rel="noopener noreferrer" style="color: #fff;"><strong>FEEDBACK</strong> | Click here to share your feedback by 24th June and help shape the future of this dashboard.</a>
+    <a href="https://forms.office.com/e/gUgfhXcRY3" target="_blank" rel="noopener noreferrer" style="color: #fff;"><strong>FEEDBACK</strong> | Click here to share your feedback and help shape the future of this dashboard.</a>
 </div>'
   ),
 
