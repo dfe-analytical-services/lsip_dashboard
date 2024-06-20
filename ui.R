@@ -596,7 +596,7 @@ width: 100%;
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
-                p("17 JunMay 2024 (1.4.0)"),
+                p("17 May 2024 (1.4.0)"),
                 tags$ul(
                   tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC2020 Sub-Major groups (previously TextKernel's own profession split was used)."),
                   tags$li("Made a correction to the achievement split by SSA to use total aims as the denominator, and the provision split to include under 19 apprenticeships and community learning in the denominator."),
