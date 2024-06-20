@@ -1,5 +1,6 @@
 # Local skills developer guide
 
+
 - [Introduction](#introduction)
 - [I want to see the dashboard](#i-want-to-see-the-dashboard)
 - [I want to run the dashboard in R](#i-want-to-run-the-dashboard-in-r)
@@ -7,7 +8,7 @@
 - [I want to add a metric to the
   dashboard](#i-want-to-add-a-metric-to-the-dashboard)
   - [It’s a metric that already exists in the
-    data.](#its-a-metric-that-already-exists-in-the-data.)
+    data.](#its-a-metric-that-already-exists-in-the-data)
   - [It’s a brand new metric](#its-a-brand-new-metric)
 - [I want to monitor dashboard
   usage](#i-want-to-monitor-dashboard-usage)
@@ -146,23 +147,14 @@ should now be empty.
 
 *For Nomis Datasets:*
 
-You should just be able to skip to stage (3) (Run ExtractLoadData.R) -
-this pulls all the latest Nomis data. However, please take note that
-the highest qualifications data currently includes data from two timeseries
-(NVQ and RQF), as RQF replaced NVQ in January 2022. The code for this section 
-will need to be updated at each release (yearly) to use all available RQF data, 
-and NVQ data for the remaining quarters. Once there have been five releases of 
-the RQF data the code can be changed to use only the five latest releases of 
-RQF data.
-
-3.  Run the ExtractLoadData.R script. This goes through all the numbered
-    folders in /Data and loads the datasets in each folder as a R
-    object.
-
-`source("~/RProjects/lsip_dashboard/ExtractLoadData.R", echo=TRUE)`
-
-This takes about 20 mins. You should see your environment is now
-populated with data, including your new, updated dataset.
+You should just be able to skip to stage (4) as ExtractLoadData.R in
+step (5) will pull all the latest Nomis data. However, please take note
+that the highest qualifications data currently includes data from two
+timeseries (NVQ and RQF), as RQF replaced NVQ in January 2022. The code
+for this section will need to be updated at each release (yearly) to use
+all available RQF data, and NVQ data for the remaining quarters. Once
+there have been five releases of the RQF data the code can be changed to
+use only the five latest releases of RQF data.
 
 4.  Dashboard admin:
 
@@ -181,16 +173,14 @@ populated with data, including your new, updated dataset.
   the /Data/3-2_dataText/dataText.xlsx file as well. These are used to
   populate dynamic text on the dashboard’s Local Skills tab.
 
-<!-- -->
+5.  Run the ExtractLoadData.R script. This runs all the scripts in
+    /importData and goes through all the numbered folders in /Data and
+    loads the datasets in each folder as a R object. As we have datasets
+    from a wide range of sources that come in all kinds of formats, we
+    do a lot of data cleaning, manipulating and formatting to get into a
+    format the dashboard can work with.
 
-5.  We have datasets from a wide range of sources that come in all kinds
-    of formats. We do a lot of data cleaning, manipulating and
-    formatting to get into a format the dashboard can work with. We do
-    this in the TransformData.R script. If your new datset is in the
-    same (or even pretty close) format as the old dataset (as is
-    hopefully the case), you just need run this script:
-
-`source("~/RProjects/lsip_dashboard/TransformData.R", echo=TRUE)`
+`source("~/RProjects/lsip_dashboard/ExtractLoadData.R", echo=TRUE)`
 
 This takes about 20 mins. You should see your environment is populated
 with new, clean datasets and your Data/AppData folder has been updated
@@ -255,8 +245,8 @@ being shown in the dashboard:
 
 To add one of these into the dashboard:
 
-1.  Remove the metric from the unused list in TransformData.R under the
-    “4.1 Unused metrics” header.
+1.  Remove the metric from the unused list in importData/combineData.R
+    under the “4.1 Unused metrics” header.
 
 2.  Add your metric into metricChoices in global.R and assign it a more
     user friendly name for use in the dashboard.
@@ -264,7 +254,7 @@ To add one of these into the dashboard:
 3.  Add a row into /Data/3-2_dataText/dataText.xlsx for your metric
     assigning it the relevant text.
 
-4.  Run TransformData.R
+4.  Run extractLoadData.R
 
 5.  Run `runApp()` and check the metric is available in the Local Skills
     tab.
@@ -303,12 +293,12 @@ To add one of these into the dashboard:
   charts ie percentage vs vol. If the problem is in the time chart or
   map, check server.R where there are a few if statements to assign a
   metric to either % or vol. If the problem is in the breakdown chart
-  check the server and TransformData where some metrics are split into
+  check the server and combineData.R where some metrics are split into
   proportions and some are not.
 
 - If you want it to appear in the Data Explorer tab, remove it from the
-  exclusion list in TransformData.r/4.4 C_dataHub and give it a good
-  name in there as well.
+  exclusion list in combineData.r/4.4 C_dataHub and give it a good name
+  in there as well.
 
 - You may want to add to the Overview page. If so, add to ui.R wherever
   you want and create KPIs and charts in server.R using the following
@@ -342,19 +332,15 @@ To add one of these into the dashboard:
     4.  Add some overview information about the dataset on the User
         Guide page of the dashboard. an do this in ui.R/2.1.2 Contents
 
-4.  Add some data extraction code to ExtractLoadData.R (copy one of the
-    examples in there) directing to your new folder and giving your data
-    a name like I_datasetName.
-
-5.  Run ExtractLoadData.R. You should now have your raw data in your
-    local environment.
-
-6.  You then need to format your data so that it matches the form the
-    dashboard is prepared for. This code is written in TransformData.R.
+4.  Add a new script to /importData to extract and clean the data and
+    add the script to the run list in ExtractLoadData.R (copy one of the
+    examples in there). This file should direct to your new folder and
+    import the data. It will also need to format your data so that it
+    matches the form the dashboard is prepared for.
 
     a\. Firstly clean the raw data so it is a usable format with
-    headings and data rows. There are some functions within
-    TransformData.R that might help (formatNomis cleans Nomis data,
+    headings and data rows. There are some functions within the
+    functions folder that might help (formatNomis cleans Nomis data,
     formatLong puts data into long format)
 
     b\. Ensure you have data for all the geographic areas used in the
@@ -382,9 +368,9 @@ To add one of these into the dashboard:
 | value       | The value of the metric in this subgroup in numeric terms. NA if suppressed.                                           | numeric   | 5000              |
 
 7.  Give the now clean and formatted dataset a name like C_dataName and
-    add into TransformData.R/3. Combine datasets.
+    add into importData/combineData.R file.
 
-8.  Run TransformData.R. You should see some new files in your local
+8.  Run ExtractLoadData.R. You should see some new files in your local
     environment and the data in Data/AppData will have updated to
     include your new metric.
 
@@ -392,7 +378,7 @@ To add one of these into the dashboard:
     user friendly name for use in the dashboard.
 
 10. Give your metric a good name for the Data Explorer tab in
-    TransformData.r/4.4 C_dataHub.
+    combineData.r/4.4 C_dataHub.
 
 11. Run the app `runApp()`.
 
@@ -433,7 +419,7 @@ To add one of these into the dashboard:
   charts ie percentage vs vol. If the problem is in the time chart or
   map, check server.R where there are a few if statements to assign a
   metric to either % or vol. If the problem is in the breakdown chart
-  check the server and TransformData where some metrics are split into
+  check the server and combineData.R where some metrics are split into
   proportions and some are not.
 
 - You may want to add to the Overview page. If so, add to ui.R wherever
@@ -477,9 +463,9 @@ Another source of problem is changing geographical areas:
   latest data on <https://geoportal.statistics.gov.uk/>)
 
 - area name changes. These can be random eg typos, or genuine updates to
-  names. In transformData.R there are a number of bits of correcting
-  code to allign names. We attempt to use codes where possible but some
-  data sets do not have them.
+  names. In the /importData files there are a number of bits of
+  correcting code to allign names. We attempt to use codes where
+  possible but some data sets do not have them.
 
 - some data sets use the boundaries at the time in their historical
   data. Some project the current projections back. In the dashboard we
