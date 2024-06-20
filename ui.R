@@ -588,22 +588,26 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("17 May 2024 (1.4.0)"),
+            p("20 Jun 2024 (1.4.1)"),
             tags$ul(
-              tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC2020 Sub-Major groups (previously TextKernel's own profession split was used)."),
-              tags$li("Made a correction to the achievement split by SSA to use total aims as the denominator, and the provision split to include under 19 apprenticeships and community learning in the denominator."),
-              tags$li("Add SOC codes to employment data SOC labels."),
-              tags$li("Updated cookie banner."),
-              tags$li("Updated APS employment rates, employment by industry and occupation data to the latest quarter and amended age ranges and base populations to be in line with ONS publication of this data."),
-              tags$li("Updated highest qualification data to use National Qualifications Framework allowing more recent data."),
-              tags$li("Added in highest qualification at level four plus metric."),
-              tags$li("Added a feedback survey."),
-              tags$li("Added new resources to the Further Resources tab."),
+              tags$li("Fixed package error which stopped charts plotting.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("17 May 2024 (1.4.0)"),
+                tags$ul(
+                  tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC2020 Sub-Major groups (previously TextKernel's own profession split was used)."),
+                  tags$li("Made a correction to the achievement split by SSA to use total aims as the denominator, and the provision split to include under 19 apprenticeships and community learning in the denominator."),
+                  tags$li("Add SOC codes to employment data SOC labels."),
+                  tags$li("Updated cookie banner."),
+                  tags$li("Updated APS employment rates, employment by industry and occupation data to the latest quarter and amended age ranges and base populations to be in line with ONS publication of this data."),
+                  tags$li("Updated highest qualification data to use National Qualifications Framework allowing more recent data."),
+                  tags$li("Added in highest qualification at level four plus metric."),
+                  tags$li("Added a feedback survey."),
+                  tags$li("Added new resources to the Further Resources tab."),
+                ),
                 p("25 March 2024 (1.3.9)"),
                 tags$ul(
                   tags$li("Calculate the bar chart splits based on percentage of the whole area (previously percentage of subgroups with data present)."),
