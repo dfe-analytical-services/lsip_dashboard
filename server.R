@@ -1422,7 +1422,7 @@ server <- function(input, output, session) {
           scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
             scales::percent
           } else {
-            label_number(accuracy = 1, scale_cut = cut_short_scale())
+            label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
           }) +
           labs(colour = "") +
           scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection") {
@@ -1710,7 +1710,7 @@ server <- function(input, output, session) {
             input$splashMetric == "starts") {
             scales::percent
           } else {
-            label_number(accuracy = 1, scale_cut = cut_short_scale())
+            label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
           }) +
           scale_x_discrete(
             labels = function(x) {
