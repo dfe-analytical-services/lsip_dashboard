@@ -9,17 +9,17 @@ geogUseAps <- nomisr::nomis_get_metadata(id = "NM_17_1", concept = "geography", 
 cellsListAps <- nomisr::nomis_get_metadata(id = "NM_17_1", concept = "CELL")
 
 ### 1 Employment level and rate ------------
-source("~/RProjects/lsip_dashboard/importData/importEmp.R", echo=TRUE)
+source("importData/importEmp.R", echo=TRUE)
 
 ### 2 Employment by occupation ----
-source("~/RProjects/lsip_dashboard/importData/importEmpOcc.R", echo=TRUE)
+source("importData/importEmpOcc.R", echo=TRUE)
 
 ### 3 Employment by industry------------
-source("~/RProjects/lsip_dashboard/importData/importEmpIndustry.R", echo=TRUE)
+source("importData/importEmpIndustry.R", echo=TRUE)
 
 ### 4 UK Business Count----
-source("~/RProjects/lsip_dashboard/importData/importEnterprises.R", echo=TRUE)
+source("importData/importEnterprises.R", echo=TRUE)
 
 ### 5 Skill by age gender ------------
-source("~/RProjects/lsip_dashboard/importData/importQualification.R", echo=TRUE)
+source("importData/importQualification.R", echo=TRUE)
 
