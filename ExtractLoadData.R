@@ -19,29 +19,29 @@ library(data.table) # use %like%
 # C_timeOld <- readr::read_csv("Data/AppData/C_time.csv")
 
 # 1. Load functions ----
-source("~/RProjects/lsip_dashboard/R/functions.R", echo = TRUE)
+source("R/functions.R", echo = TRUE)
 
 # 2. Load lookups ----
-source("~/RProjects/lsip_dashboard/importData/importLookups.R", echo = TRUE)
+source("importData/importLookups.R", echo = TRUE)
 
 # 3. Load geographical boundaries ----
-source("~/RProjects/lsip_dashboard/importData/importBoundaries.R", echo = TRUE)
+source("importData/importBoundaries.R", echo = TRUE)
 
 # 4. Datasets ----
 ## 4.1 Nomis datasets ----
-source("~/RProjects/lsip_dashboard/importData/importNomis.R", echo = TRUE)
+source("importData/importNomis.R", echo = TRUE)
 
 ## 4.2 EES datasets----
-source("~/RProjects/lsip_dashboard/importData/importEES.R", echo = TRUE)
+source("importData/importEES.R", echo = TRUE)
 
 ## 4.3 ONS datasets ----
-source("~/RProjects/lsip_dashboard/importData/importONS.R", echo = TRUE)
+source("importData/importONS.R", echo = TRUE)
 
 ## 4.4 Skills imperative----
-source("~/RProjects/lsip_dashboard/importData/importSkillsImp.R", echo = TRUE)
+source("importData/importSkillsImp.R", echo = TRUE)
 
 # 5 Dashboard text----
-source("~/RProjects/lsip_dashboard/importData/importDashboardText.R", echo = TRUE)
+source("importData/importDashboardText.R", echo = TRUE)
 
 # 6 Combine data ----
-source("~/RProjects/lsip_dashboard/importData/combineData.R", echo = TRUE)
+source("importData/combineData.R", echo = TRUE)
