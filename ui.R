@@ -521,14 +521,18 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("20 Jun 2024 (1.4.1)"),
+            p("5 Jul 2024 (1.4.2)"),
             tags$ul(
-              tags$li("Fixed package error which stopped charts plotting.")
+              tags$li("Updated job adverts data to latest version including data up to December 2023.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("20 Jun 2024 (1.4.1)"),
+                tags$ul(
+                  tags$li("Fixed package error which stopped charts plotting.")
+                ),
                 p("17 May 2024 (1.4.0)"),
                 tags$ul(
                   tags$li("Updated the job adverts data to the latest online job adverts from Textkernel, now split by SOC2020 Sub-Major groups (previously TextKernel's own profession split was used)."),
