@@ -521,7 +521,7 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("5 Jul 2024 (1.4.2)"),
+            p("8 Jul 2024 (1.4.2)"),
             tags$ul(
               tags$li("Updated job adverts data to latest version including data up to December 2023.")
             ),
