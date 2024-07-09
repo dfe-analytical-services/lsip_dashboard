@@ -34,7 +34,7 @@
       ]
     },
     "overviewJobKPI": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">May-23<\/span>\n  <br/>\n  12,870\n  <br/><span style=\"font-size: 16px;color:#e00000\">-4,355<\/span><br/>\n<\/h4>",
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Dec-23<\/span>\n  <br/>\n  10,265\n  <br/><span style=\"font-size: 16px;color:#e00000\">-2,475<\/span><br/>\n<\/h4>",
       "deps": [
 
       ]

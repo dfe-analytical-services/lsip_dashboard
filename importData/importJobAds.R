@@ -75,11 +75,18 @@ formatVacancies <- function(x) {
 
 # format data
 # For the LAs, there are some old LA names within the data so we need to update those
+# Also need to remove Local Authority Code column (X5 in 2digLA and X3 in LA)
 advertsWithAreas <-
   # format and bind both LA files
   bind_rows(
-    formatVacancies(I_Ons2digLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% select(-region)),
-    formatVacancies(I_OnsLA %>% rename(region = 1) %>% filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% select(-region))
+    formatVacancies(I_Ons2digLA %>% 
+                      rename(region = 1) %>% 
+                      filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% 
+                      select(-region, -X5)),
+    formatVacancies(I_OnsLA %>% 
+                      rename(region = 1) %>% 
+                      filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% 
+                      select(-region, -X3))
   ) %>% # remove region code. get rid of london since it isn't really an LA.We get that from the region data
   # Use new LA names from 2011 areas
   left_join(I_LaLookup %>% distinct(LAD11NM, LAD23NM_11 = LAD23NM, LAD23CD_11 = LAD23CD), by = c("area" = "LAD11NM")) %>% # make new LAs
@@ -118,20 +125,7 @@ groupedStats <- advertsWithAreas %>%
 F_adverts <- bind_rows(
   formatVacancies(I_Ons2digLep),
   formatVacancies(I_Ons2digLsip),
-  formatVacancies(I_Ons2digMca) %>%
-    # correct misallingment of columns in data for Greater Manchester
-    mutate(
-      fix = case_when(grepl("Greater Manchester", SOC2digit) == TRUE ~ 1, TRUE ~ 0),
-      SOC2digit = case_when(
-        fix == 1 ~ paste0(area, " - ", sub("(^[^-]+) -.*", "\\1", SOC2digit)),
-        TRUE ~ SOC2digit
-      ),
-      area = case_when(
-        fix == 1 ~ "Greater Manchester",
-        TRUE ~ area
-      )
-    ) %>%
-    select(-fix),
+  formatVacancies(I_Ons2digMca), 
   # get england soc stats summed from regions
   formatVacancies(I_Ons2digRegion) %>%
     group_by(geographic_level, SOC2digit, time_period) %>%
@@ -172,7 +166,12 @@ C_adverts <- bind_rows(
   # soc 2 digit
   F_adverts %>%
     filter(SOC2digit != " - ") %>%
-    mutate(breakdown = "Occupation (SOC2020 Sub-Major Group)") %>%
+    mutate(breakdown = "Occupation (SOC2020 Sub-Major Group)",
+           SOC2digit = case_when(
+            SOC2digit == "Unknown - Unknown" ~ "Unknown",
+            TRUE ~ SOC2digit
+            )
+           ) %>%
     rename(subgroup = SOC2digit),
   # total
   F_adverts %>%
@@ -193,6 +192,7 @@ C_adverts <- bind_rows(
         SOC1digitCode == "7" ~ "7 - Sales and customer service occupations",
         SOC1digitCode == "8" ~ "8 - Process, plant and machine operatives",
         SOC1digitCode == "9" ~ "9 - Elementary occupations",
+        SOC1digitCode == "U" ~ "Unknown",
         TRUE ~ "NULL"
       )
     ) %>%
