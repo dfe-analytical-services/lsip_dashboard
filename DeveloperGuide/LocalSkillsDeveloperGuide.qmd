@@ -130,7 +130,9 @@ This takes about 20 mins. You should see your environment is populated with new,
 
 7.  Run the dashboard: `runApp()`
 
-8.  QA. Create a new QA log in "Analytical Projects\\Analysis\\S005 LSIP dashboard\\Documentation\\QA". Follow the structure of one already in there. Some checks you may do:
+8.  Update the shiny tests by running `shinytest2::test_app()` and checking that any newly generated snapshots look as expected.
+
+9.  QA. Create a new QA log in "Analytical Projects\\Analysis\\S005 LSIP dashboard\\Documentation\\QA". Follow the structure of one already in there. Some checks you may do:
 
 -   Check that your dataset has been updated correctly (by comparing with the version you branched off of and cross checking with the raw data).
 -   Check the Data Sources table has been updated correctly
@@ -163,18 +165,20 @@ To add one of these into the dashboard:
 
 5.  Run `runApp()` and check the metric is available in the Local Skills tab.
 
-6.  QA. Create a new QA log in "Analytical Projects\\Analysis\\S005 LSIP dashboard\\Documentation\\QA". Follow the structure of one already in there. Some checks you may do:
+6.  Update the shiny tests by running `shinytest2::test_app()` and checking that any newly generated snapshots look as expected.
+
+7.  QA. Create a new QA log in "Analytical Projects\\Analysis\\S005 LSIP dashboard\\Documentation\\QA". Follow the structure of one already in there. Some checks you may do:
 
     -   Check that your dataset has been added correctly (by comparing with the version you branched off of and cross checking with the raw data).
     -   Check the Data Sources table has been updated correctly
     -   Check the text in the Local Skills tab makes sense for your updated metric.
     -   Check the charts are in the format you want especially looking at whether it needs to be a percentage or volume
 
-7.  If everything looks ok, commit, push and merge to Development. Wait for that to deploy (can take 15mins or more - you can track this in [Actions · dfe-analytical-services/lsip_dashboard (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)). Again check everything looks ok in the preprod environment: <https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/>
+8.  If everything looks ok, commit, push and merge to Development. Wait for that to deploy (can take 15mins or more - you can track this in [Actions · dfe-analytical-services/lsip_dashboard (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)). Again check everything looks ok in the preprod environment: <https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/>
 
-8.  If you have done sufficient QA and you are satisfied, merge to Main and wait for that to deploy. Check again everything looks ok in the live environment: <https://department-for-education.shinyapps.io/local-skills-dashboard/>
+9.  If you have done sufficient QA and you are satisfied, merge to Main and wait for that to deploy. Check again everything looks ok in the live environment: <https://department-for-education.shinyapps.io/local-skills-dashboard/>
 
-9.  Consider communicating the change to the wider Team or other stakeholders.
+10. Consider communicating the change to the wider Team or other stakeholders.
 
 **Optional extras/troubleshooting**
 
@@ -211,7 +215,7 @@ To add one of these into the dashboard:
     c\. You then need to manipulate your now clean data into the following form:
 
 | Column name | Description                                                                                                            | Format    | Example           |
-|-------------|------------------------------------------------------------------------------------------------------------------------|-----------|-------------------|
+|----------|-------------------------------------------|----------|----------|
 | geogConcat  | Area name and geography                                                                                                | character | Black Country LEP |
 | metric      | Variable of interest                                                                                                   | character | inemployment      |
 | breakdown   | *If* the dataset has a breakdown they are listed here. Every metric **must** have a "Total" as well as any breakdowns. | character | Age               |
@@ -232,20 +236,22 @@ To add one of these into the dashboard:
 
 11. Run the app `runApp()`.
 
-12. QA. Create a new QA log in "Analytical Projects\\Analysis\\S005 LSIP dashboard\\Documentation\\QA". Follow the structure of one already in there. Some checks you may do:
+12. Update the shiny tests by running `shinytest2::test_app()` and checking that any newly generated snapshots look as expected.
+
+13. QA. Create a new QA log in "Analytical Projects\\Analysis\\S005 LSIP dashboard\\Documentation\\QA". Follow the structure of one already in there. Some checks you may do:
 
     -   Check that your dataset has been added correctly (by comparing with the version you branched off of and cross checking with the raw data).
     -   Check the Data Sources table has been updated correctly
     -   Check the text in the Local Skills tab makes sense for your updated metric.
     -   Check the charts are in the format you want especially looking at whether it needs to be a percentage or volume
 
-13. Take a renv snapshot to help future users allign to any packages you have changed/added:`renv::snapshot()`
+14. Take a renv snapshot to help future users allign to any packages you have changed/added:`renv::snapshot()`
 
-14. If everything looks ok, commit, push and merge to Development. Wait for that to deploy (can take 15mins or more - you can track this in [Actions · dfe-analytical-services/lsip_dashboard (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)). Again check everything looks ok in the preprod environment: <https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/>
+15. If everything looks ok, commit, push and merge to Development. Wait for that to deploy (can take 15mins or more - you can track this in [Actions · dfe-analytical-services/lsip_dashboard (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)). Again check everything looks ok in the preprod environment: <https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/>
 
-15. If you have done sufficient QA and you are satisfied, merge to Main and wait for that to deploy. Check again everything looks ok in the live environment: <https://department-for-education.shinyapps.io/local-skills-dashboard/>
+16. If you have done sufficient QA and you are satisfied, merge to Main and wait for that to deploy. Check again everything looks ok in the live environment: <https://department-for-education.shinyapps.io/local-skills-dashboard/>
 
-16. Consider communicating the change to the wider Team or other stakeholders.
+17. Consider communicating the change to the wider Team or other stakeholders.
 
 **Optional extras/troubleshooting**
 
