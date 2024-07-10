@@ -198,7 +198,10 @@ with the updated versions of the files the dashboard uses.
 
 7.  Run the dashboard: `runApp()`
 
-8.  QA. Create a new QA log in “Analytical Projects\Analysis\S005 LSIP
+8.  Update the shiny tests by running `shinytest2::test_app()` and checking
+    that any newly generated snapshots look as expected.
+
+9.  QA. Create a new QA log in “Analytical Projects\Analysis\S005 LSIP
     dashboard\Documentation\QA”. Follow the structure of one already in
     there. Some checks you may do:
 
@@ -213,7 +216,7 @@ with the updated versions of the files the dashboard uses.
   [here](https://educationgovuk.sharepoint.com/:w:/r/sites/UnitforFutureSkills/Shared%20Documents/Analytical%20Projects/Analysis/S005%20LSIP%20dashboard/Documentation/QA/QA%20plan_Local%20Skills%20dashboard_UFS.docx?d=wa17c64605c7f4a3fb2b8bf35f4bec670&csf=1&web=1&e=Z66Jas)
   for process)
 
-9.  If everything looks ok, commit, push and merge to Development. Wait
+10.  If everything looks ok, commit, push and merge to Development. Wait
     for that to deploy (can take 15mins or more - you can track this in
     [Actions · dfe-analytical-services/lsip_dashboard
     (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)).
@@ -224,7 +227,7 @@ with the updated versions of the files the dashboard uses.
     the live environment:
     <https://department-for-education.shinyapps.io/local-skills-dashboard/>
 
-10. Consider communicating the change to the wider Team or other
+11. Consider communicating the change to the wider Team or other
     stakeholders.
 
 ## I want to add a metric to the dashboard
@@ -259,7 +262,10 @@ To add one of these into the dashboard:
 5.  Run `runApp()` and check the metric is available in the Local Skills
     tab.
 
-6.  QA. Create a new QA log in “Analytical Projects\Analysis\S005 LSIP
+6.  Update the shiny tests by running `shinytest2::test_app()` and checking
+    that any newly generated snapshots look as expected.
+
+7.  QA. Create a new QA log in “Analytical Projects\Analysis\S005 LSIP
     dashboard\Documentation\QA”. Follow the structure of one already in
     there. Some checks you may do:
 
@@ -272,19 +278,19 @@ To add one of these into the dashboard:
     - Check the charts are in the format you want especially looking at
       whether it needs to be a percentage or volume
 
-7.  If everything looks ok, commit, push and merge to Development. Wait
+8.  If everything looks ok, commit, push and merge to Development. Wait
     for that to deploy (can take 15mins or more - you can track this in
     [Actions · dfe-analytical-services/lsip_dashboard
     (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)).
     Again check everything looks ok in the preprod environment:
     <https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/>
 
-8.  If you have done sufficient QA and you are satisfied, merge to Main
+9.  If you have done sufficient QA and you are satisfied, merge to Main
     and wait for that to deploy. Check again everything looks ok in the
     live environment:
     <https://department-for-education.shinyapps.io/local-skills-dashboard/>
 
-9.  Consider communicating the change to the wider Team or other
+10.  Consider communicating the change to the wider Team or other
     stakeholders.
 
 **Optional extras/troubleshooting**
@@ -382,7 +388,10 @@ To add one of these into the dashboard:
 
 11. Run the app `runApp()`.
 
-12. QA. Create a new QA log in “Analytical Projects\Analysis\S005 LSIP
+12.  Update the shiny tests by running `shinytest2::test_app()` and checking
+    that any newly generated snapshots look as expected.
+
+13. QA. Create a new QA log in “Analytical Projects\Analysis\S005 LSIP
     dashboard\Documentation\QA”. Follow the structure of one already in
     there. Some checks you may do:
 
@@ -395,22 +404,22 @@ To add one of these into the dashboard:
     - Check the charts are in the format you want especially looking at
       whether it needs to be a percentage or volume
 
-13. Take a renv snapshot to help future users allign to any packages you
+14. Take a renv snapshot to help future users allign to any packages you
     have changed/added:`renv::snapshot()`
 
-14. If everything looks ok, commit, push and merge to Development. Wait
+15. If everything looks ok, commit, push and merge to Development. Wait
     for that to deploy (can take 15mins or more - you can track this in
     [Actions · dfe-analytical-services/lsip_dashboard
     (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)).
     Again check everything looks ok in the preprod environment:
     <https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/>
 
-15. If you have done sufficient QA and you are satisfied, merge to Main
+16. If you have done sufficient QA and you are satisfied, merge to Main
     and wait for that to deploy. Check again everything looks ok in the
     live environment:
     <https://department-for-education.shinyapps.io/local-skills-dashboard/>
 
-16. Consider communicating the change to the wider Team or other
+17. Consider communicating the change to the wider Team or other
     stakeholders.
 
 **Optional extras/troubleshooting**
