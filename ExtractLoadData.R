@@ -2,7 +2,7 @@
 # Title: LSIP dashboard data load and cleanse
 # Author: Paul James
 # Date: 30th Aug 2022
-# Last updated: 12th Jun 2024
+# Last updated: 18th Jul 2024
 # Aim: Loads, cleans and reformats the original data sources used within the dashboard.
 # Use: To update any datasets, delete the relevant file within the relevant folder, and paste in the new data file. Rerun this file.
 # The dataframes are saved in ./Data/AppData to be read by the dashboard app.
@@ -16,7 +16,7 @@ library(dplyr)
 library(data.table) # use %like%
 
 # For QA purposes we compare the old data with any updated data. This is done here before any data changes so we can compare the data as it was to the updated data. This is used with QAdataload.R
-# C_timeOld <- readr::read_csv("Data/AppData/C_time.csv")
+C_timeOld <- readr::read_csv("Data/AppData/C_time.csv")
 
 # 1. Load functions ----
 source("R/functions.R", echo = TRUE)
@@ -45,3 +45,6 @@ source("importData/importDashboardText.R", echo = TRUE)
 
 # 6 Combine data ----
 source("importData/combineData.R", echo = TRUE)
+
+# Run tests to assess changes
+shinytest2::test_app()
