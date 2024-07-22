@@ -521,14 +521,18 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("10 Jul 2024 (1.4.2)"),
+            p("22 Jul 2024 (1.4.3)"),
             tags$ul(
-              tags$li("Updated job adverts data to latest version including data up to December 2023.")
+              tags$li("Updated Annual Population Survey data to Apr 2023 - Mar 2024.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("10 Jul 2024 (1.4.2)"),
+                tags$ul(
+                  tags$li("Updated job adverts data to latest version including data up to December 2023.")
+                ),
                 p("20 Jun 2024 (1.4.1)"),
                 tags$ul(
                   tags$li("Fixed package error which stopped charts plotting.")
