@@ -521,7 +521,7 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("19 Jul 2024 (1.4.3)"),
+            p("22 Jul 2024 (1.4.3)"),
             tags$ul(
               tags$li("Updated Annual Population Survey data to Apr 2023 - Mar 2024.")
             ),
