@@ -521,14 +521,26 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("22 Jul 2024 (1.4.3)"),
+            p("2 Aug 2024 (1.4.4)"),
             tags$ul(
-              tags$li("Updated Annual Population Survey data to Apr 2023 - Mar 2024.")
+              tags$li(
+                "Revised Skills Imperative employment projections using corrected data published by the Office for National Statistics (ONS). ",
+                a(
+                  href = "https://www.nfer.ac.uk/key-topics-expertise/education-to-employment/the-skills-imperative-2035/publications",
+                  "Revised employment and skills projections for the Skills Imperative 2035",
+                  .noWS = c("after", "before")
+                ),
+                " from the National Foundation for Educational Research (NFER) has information about the impact of the corrected data. In brief, the LFS coding error affects the projections of employment by occupation but not the projections of employment by industry. The errors have a very small effect on which skills are projected to be most intensively utilised across the labour market in 2035. The errors do affect how much each occupation is expected to grow or decline as a share of all employment, between 2021 and 2035. The degree to which this share differs between the new and old projections varies by occupational group."
+              )
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("22 Jul 2024 (1.4.3)"),
+                tags$ul(
+                  tags$li("Updated Annual Population Survey data to Apr 2023 - Mar 2024.")
+                ),
                 p("10 Jul 2024 (1.4.2)"),
                 tags$ul(
                   tags$li("Updated job adverts data to latest version including data up to December 2023.")
