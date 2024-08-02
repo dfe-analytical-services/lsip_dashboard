@@ -939,15 +939,6 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           ),
           h3("Skills Imperative 2035 employment projections"),
           p(
-            "The occupation projections are based on ONS survey data that has been impacted by a coding error, so should be used with caution.  For more information on the miscoding of occupation data see this ",
-            a(
-              href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
-              "ONS article",
-              .noWS = c("after")
-            ),
-            "."
-          ),
-          p(
             "Skills Imperative 2035 projects the future size and shape of the labour market by considering employment prospects by industry, occupation, qualification level.
             The dashboard shows the year on year growth of employment as well as the long term growth from 2023 to 2035.
             The employment volumes are available in the data downloads.
@@ -955,7 +946,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           ),
           p("The projections are calculated from a number of different data sources, and as such precise margin errors have not been assigned.
             Care should be taken when using projections with small volumes of individuals (see Skills Imperative 2035 datasets for more detail). "),
-          p("There are errors in the published data for four areas: Dorset LSIP, Enterprise M3 LEP (including all of Surrey) LSIP, Stoke-on-Trent and Staffordshire LEP, and Worcestershire LEP. This is due to the incorrect mapping of LAs. In the dashboard we have corrected Dorset LSIP, Stoke-on-Trent and Staffordshire LEP, and Worcestershire LEP (by using the values for the Dorset LEP, Stoke-on-Trent and Staffordshire LSIP, and Worcestershire LSIP which have the same geographies) so these are accurate in the dashboard but will not match the published data. For the Enterprise M3 LEP (including all of Surrey) LSIP we have estimated the value by looking the broader region and calculating the value of the Enterprise LSIP having removed other LSIPs in the region. This will come with some rounding issues. We are working to get the published data corrected."),
+          p("There is an error in the published data for Enterprise M3 LEP (including all of Surrey) LSIP. This is due to the incorrect mapping of LAs. For this LSIP we have estimated the value by looking the broader region and calculating the value of the Enterprise LSIP having removed other LSIPs in the region. This will come with some rounding issues. We are working to get the published data corrected."),
           br()
         )
       )
