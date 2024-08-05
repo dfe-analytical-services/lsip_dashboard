@@ -521,7 +521,7 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("2 Aug 2024 (1.4.4)"),
+            p("5 Aug 2024 (1.4.4)"),
             tags$ul(
               tags$li(
                 "Revised Skills Imperative employment projections using corrected data published by the Office for National Statistics (ONS). ",
@@ -946,7 +946,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           ),
           p("The projections are calculated from a number of different data sources, and as such precise margin errors have not been assigned.
             Care should be taken when using projections with small volumes of individuals (see Skills Imperative 2035 datasets for more detail). "),
-          p("There is an error in the published data for Enterprise M3 LEP (including all of Surrey) LSIP. This is due to the incorrect mapping of LAs. For this LSIP we have estimated the value by looking the broader region and calculating the value of the Enterprise LSIP having removed other LSIPs in the region. This will come with some rounding issues. We are working to get the published data corrected."),
+          p("There is an error in the data for Enterprise M3 LEP (including all of Surrey) LSIP which has prevented it from being included in the published data. This is due to the incorrect mapping of LAs. For this LSIP we have estimated the value by looking the broader region and calculating the value of the Enterprise LSIP having removed other LSIPs in the region. This will come with some rounding issues."),
           br()
         )
       )
