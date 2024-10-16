@@ -521,22 +521,27 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("5 Aug 2024 (1.4.4)"),
+            p("18 Oct 2024 (1.4.5)"),
             tags$ul(
-              tags$li(
-                "Revised Skills Imperative employment projections using corrected data published by the Office for National Statistics (ONS). ",
-                a(
-                  href = "https://www.nfer.ac.uk/key-topics-expertise/education-to-employment/the-skills-imperative-2035/publications",
-                  "Revised employment and skills projections for the Skills Imperative 2035",
-                  .noWS = c("after", "before")
-                ),
-                " from the National Foundation for Educational Research (NFER) has information about the impact of the corrected data. In brief, the LFS coding error affects the projections of employment by occupation but not the projections of employment by industry. The errors have a very small effect on which skills are projected to be most intensively utilised across the labour market in 2035. The errors do affect how much each occupation is expected to grow or decline as a share of all employment, between 2021 and 2035. The degree to which this share differs between the new and old projections varies by occupational group."
-              )
+              tags$li("Updated Annual Population Survey data to Jul 2023 - Jun 2024."),
+              tags$li("Update to reflect the dashboard is now run by Skills England.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("5 Aug 2024 (1.4.4)"),
+                tags$ul(
+                  tags$li(
+                    "Revised Skills Imperative employment projections using corrected data published by the Office for National Statistics (ONS). ",
+                    a(
+                      href = "https://www.nfer.ac.uk/key-topics-expertise/education-to-employment/the-skills-imperative-2035/publications",
+                      "Revised employment and skills projections for the Skills Imperative 2035",
+                      .noWS = c("after", "before")
+                    ),
+                    " from the National Foundation for Educational Research (NFER) has information about the impact of the corrected data. In brief, the LFS coding error affects the projections of employment by occupation but not the projections of employment by industry. The errors have a very small effect on which skills are projected to be most intensively utilised across the labour market in 2035. The errors do affect how much each occupation is expected to grow or decline as a share of all employment, between 2021 and 2035. The degree to which this share differs between the new and old projections varies by occupational group."
+                  )
+                ),
                 p("22 Jul 2024 (1.4.3)"),
                 tags$ul(
                   tags$li("Updated Annual Population Survey data to Apr 2023 - Mar 2024.")
@@ -854,6 +859,7 @@ width: 100%;
             These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents.
             Therefore, please take caution when interpreting data from small subgroups."
           ),
+          p("In Q1 2022 (January to March 2022) the highest qualification variable (HIQUAL) of the LFS was revised. New qualifications have been added after a review identifying gaps in the LFS questionnaire. Therefore figures published after this are not directly comparable to previous years. From 2022 on qualification level is defined by the National Qualifications Framework (NQF). Before that National Vocational Qualifications (NVQ) is used."),
           p(
             "The Labour Force Survey (LFS) supplies data for the APS. The ONS have highlighted increased uncertainty around the LFS estimates due to falling response rates. As a result, ONS have begun to offer alternative sources of employment data, but these are yet to be published in the form used in this dashboard. For more information see this  ",
             a(
@@ -863,7 +869,23 @@ width: 100%;
             ),
             "."
           ),
-          p("In Q1 2022 (January to March 2022) the highest qualification variable (HIQUAL) of the LFS was revised. New qualifications have been added after a review identifying gaps in the LFS questionnaire. Therefore figures published after this are not directly comparable to previous years. From 2022 on qualification level is defined by the National Qualifications Framework (NQF). Before that National Vocational Qualifications (NVQ) is used."),
+          h4("Annual Population Survey accreditation"),
+          p(
+            "ONS published a ",
+            a(
+              href = "https://osr.statisticsauthority.gov.uk/correspondence/michael-keoghan-to-siobhan-tuohy-smith-request-to-suspend-aps-accreditation/",
+              "response to OSR",
+              .noWS = c("after")
+            ),
+            " about the current quality of Annual Population Survey (APS) (and Labour Force Survey) outputs. ONS asked OSR to temporarily suspend accreditation of all APS-based ONS outputs. There has since been a ",
+            a(
+              href = "https://osr.statisticsauthority.gov.uk/correspondence/ed-humpherson-to-michael-keoghan-suspension-of-the-accredited-official-statistics-status-for-the-estimates-ons-produces-from-the-annual-population-survey/",
+              "response letter from OSR",
+              .noWS = c("after")
+            ),
+            "."
+          ),
+          p("Overall, ONS’ view on the quality of the APS is that while it is robust for national and headline regional estimates, there are concerns with the quality of estimates for smaller segments of the population, such as local authority geographies. ONS will publish an explanatory note later this year providing guidance to users on the quality of current APS and will be used to inform further work ONS is undertaking to improve quality of the survey."),
           h3("ONS-Textkernel online job adverts"),
           p(
             "These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.
