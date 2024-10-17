@@ -402,7 +402,7 @@ width: 100%;
           "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, local enterprise partnership (LEP), Mayoral Combined Authority (MCA), regional and national."
         ),
         p(
-          "This dashboard is produced by the ",
+          "This dashboard is produced by ",
           a(
             href = "https://www.gov.uk/government/collections/skills-england",
             "Skills England",
