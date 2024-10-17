@@ -24,13 +24,13 @@ fluidPage(
       href = "dfe_shiny_gov_style.css"
     )
   ),
-  shinyGovstyle::cookieBanner("UFS Local Skills Dashboard"),
+  shinyGovstyle::cookieBanner("Local Skills Dashboard"),
 
   # Set metadata for browser
   tags$html(lang = "en"),
   tags$head(
-    tags$meta(name = "application_name", content = "Unit for Future Skills - Local Skills Dashboard"),
-    tags$meta(name = "description", content = "Data dashboard presenting Local skills data from the Unit for Future Skills in the Department for Education."),
+    tags$meta(name = "application_name", content = "Local Skills Dashboard"),
+    tags$meta(name = "description", content = "Data dashboard presenting local skills data from Skills England."),
     tags$meta(name = "subject", content = "Education data dashboards.")
   ),
 
@@ -216,7 +216,7 @@ width: 100%;
     </a>
     </div>
     <div class="govuk-header__content" style="width: 70%; text-align: center;float:left;">
-    <a href="https://www.gov.uk/government/groups/unit-for-future-skills" class="govuk-header__link govuk-header__link--service-name" style="font-size: 24px;">Unit for Future Skills - Local Skills Dashboard</a>
+    <a href="https://www.gov.uk/government/collections/skills-england" class="govuk-header__link govuk-header__link--service-name" style="font-size: 24px;">Local Skills Dashboard</a>
     </div>
         <a href="javascript:void(0);" id="menuButton" class="menuBtn" onclick="collapseMenu()">
     <i class="fa fa-bars" style="font-size:24px;"></i></a>
@@ -402,15 +402,15 @@ width: 100%;
           "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, local enterprise partnership (LEP), Mayoral Combined Authority (MCA), regional and national."
         ),
         p(
-          "This dashboard is produced by the ",
+          "This dashboard is produced by ",
           a(
-            href = "https://www.gov.uk/government/groups/unit-for-future-skills",
-            "Unit for Future Skills",
+            href = "https://www.gov.uk/government/collections/skills-england",
+            "Skills England",
             .noWS = c("after")
           ),
-          ", an analytical and research unit within the Department for Education. For more information on the Unit's aims and to access additional dashboards and data to help users further understand the labour market outcomes of training visit our",
+          ", a body that brings together key partners to meet the skills needs of the next decade across all regions. For more information on Skills England's aims and our work, visit our",
           a(
-            href = "https://www.gov.uk/government/groups/unit-for-future-skills",
+            href = "https://www.gov.uk/government/collections/skills-england",
             "webpage.",
             .noWS = c("after")
           )
@@ -438,7 +438,7 @@ width: 100%;
               tags$li(actionLink("link_to_tabpanel_data", "Data information and download"), "- includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
               tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of local labour market and education system."),
               tags$li(actionLink("link_to_tabpanel_accessibility", "Accessibility"), "- provides the Local Skills dashboard accessibility statement, compliance requirmeents, limitations and opportunity to feedback on accessibility of the dashboard."),
-              tags$li(actionLink("link_to_tabpanel_supportandfeedback", "Support and feedback"), " - provides links to the Unit for Future Skills and Department for Education Statistics Development inboxes for feedback and if you hve any questions about the dashboard or the data it contains. There is also a link to the GitHub repository if you wish to view the dashboard source code.")
+              tags$li(actionLink("link_to_tabpanel_supportandfeedback", "Support and feedback"), " - provides links to the Skills England and Department for Education Statistics Development inboxes for feedback and if you hve any questions about the dashboard or the data it contains. There is also a link to the GitHub repository if you wish to view the dashboard source code.")
             ),
             h2("Local skills metrics"),
             p(
@@ -521,22 +521,27 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("5 Aug 2024 (1.4.4)"),
+            p("18 Oct 2024 (1.4.5)"),
             tags$ul(
-              tags$li(
-                "Revised Skills Imperative employment projections using corrected data published by the Office for National Statistics (ONS). ",
-                a(
-                  href = "https://www.nfer.ac.uk/key-topics-expertise/education-to-employment/the-skills-imperative-2035/publications",
-                  "Revised employment and skills projections for the Skills Imperative 2035",
-                  .noWS = c("after", "before")
-                ),
-                " from the National Foundation for Educational Research (NFER) has information about the impact of the corrected data. In brief, the LFS coding error affects the projections of employment by occupation but not the projections of employment by industry. The errors have a very small effect on which skills are projected to be most intensively utilised across the labour market in 2035. The errors do affect how much each occupation is expected to grow or decline as a share of all employment, between 2021 and 2035. The degree to which this share differs between the new and old projections varies by occupational group."
-              )
+              tags$li("Updated Annual Population Survey data to Jul 2023 - Jun 2024."),
+              tags$li("Update to reflect the dashboard is now run by Skills England.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("5 Aug 2024 (1.4.4)"),
+                tags$ul(
+                  tags$li(
+                    "Revised Skills Imperative employment projections using corrected data published by the Office for National Statistics (ONS). ",
+                    a(
+                      href = "https://www.nfer.ac.uk/key-topics-expertise/education-to-employment/the-skills-imperative-2035/publications",
+                      "Revised employment and skills projections for the Skills Imperative 2035",
+                      .noWS = c("after", "before")
+                    ),
+                    " from the National Foundation for Educational Research (NFER) has information about the impact of the corrected data. In brief, the LFS coding error affects the projections of employment by occupation but not the projections of employment by industry. The errors have a very small effect on which skills are projected to be most intensively utilised across the labour market in 2035. The errors do affect how much each occupation is expected to grow or decline as a share of all employment, between 2021 and 2035. The degree to which this share differs between the new and old projections varies by occupational group."
+                  )
+                ),
                 p("22 Jul 2024 (1.4.3)"),
                 tags$ul(
                   tags$li("Updated Annual Population Survey data to Apr 2023 - Mar 2024.")
@@ -675,8 +680,8 @@ width: 100%;
             p(
               "The dashboard will be kept up to date with the latest data shortly after it is released – check the data downloads page for dates when new data is published. If there are further data or dashboard features that you would find useful please contact us at ",
               a(
-                href = "mailto:ufs.contact@education.gov.uk",
-                "ufs.contact@education.gov.uk",
+                href = "mailto:skills.england@education.gov.uk",
+                "skills.england@education.gov.uk",
                 .noWS = c("after")
               ),
               "."
@@ -854,6 +859,7 @@ width: 100%;
             These are available in the original data via NOMIS. Large margins of error are usually associated with groups with only a small number of respondents.
             Therefore, please take caution when interpreting data from small subgroups."
           ),
+          p("In Q1 2022 (January to March 2022) the highest qualification variable (HIQUAL) of the LFS was revised. New qualifications have been added after a review identifying gaps in the LFS questionnaire. Therefore figures published after this are not directly comparable to previous years. From 2022 on qualification level is defined by the National Qualifications Framework (NQF). Before that National Vocational Qualifications (NVQ) is used."),
           p(
             "The Labour Force Survey (LFS) supplies data for the APS. The ONS have highlighted increased uncertainty around the LFS estimates due to falling response rates. As a result, ONS have begun to offer alternative sources of employment data, but these are yet to be published in the form used in this dashboard. For more information see this  ",
             a(
@@ -863,7 +869,23 @@ width: 100%;
             ),
             "."
           ),
-          p("In Q1 2022 (January to March 2022) the highest qualification variable (HIQUAL) of the LFS was revised. New qualifications have been added after a review identifying gaps in the LFS questionnaire. Therefore figures published after this are not directly comparable to previous years. From 2022 on qualification level is defined by the National Qualifications Framework (NQF). Before that National Vocational Qualifications (NVQ) is used."),
+          h4("Annual Population Survey accreditation"),
+          p(
+            "ONS published a ",
+            a(
+              href = "https://osr.statisticsauthority.gov.uk/correspondence/michael-keoghan-to-siobhan-tuohy-smith-request-to-suspend-aps-accreditation/",
+              "response to OSR",
+              .noWS = c("after")
+            ),
+            " about the current quality of Annual Population Survey (APS) (and Labour Force Survey) outputs. ONS asked OSR to temporarily suspend accreditation of all APS-based ONS outputs. There has since been a ",
+            a(
+              href = "https://osr.statisticsauthority.gov.uk/correspondence/ed-humpherson-to-michael-keoghan-suspension-of-the-accredited-official-statistics-status-for-the-estimates-ons-produces-from-the-annual-population-survey/",
+              "response letter from OSR",
+              .noWS = c("after")
+            ),
+            "."
+          ),
+          p("Overall, ONS’ view on the quality of the APS is that while it is robust for national and headline regional estimates, there are concerns with the quality of estimates for smaller segments of the population, such as local authority geographies. ONS will publish an explanatory note later this year providing guidance to users on the quality of current APS and will be used to inform further work ONS is undertaking to improve quality of the survey."),
           h3("ONS-Textkernel online job adverts"),
           p(
             "These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.

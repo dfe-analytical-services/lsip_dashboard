@@ -23,7 +23,7 @@ accessibility <- function() {
     h3("Feedback"),
     br(
       "If you have any feedback on how we could further improve the accessibility of this application, please contact us at",
-      a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk"),
+      a(href = "mailto:skills.england@education.gov.uk", "skills.england@education.gov.uk"),
       br(),
       br(),
       br(),

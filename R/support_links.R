@@ -5,7 +5,7 @@ support_links <- function() {
       h1("Give us feedback"),
       p(
         "This dashboard is a new service that we are developing. If you have any feedback or suggestions for improvements, please contact us at ",
-        a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk", .noWS = c("after")), "."
+        a(href = "mailto:skills.england@education.gov.uk", "skills.england@education.gov.uk", .noWS = c("after")), "."
       ),
       p(
         "If you spot any errors or bugs while using this dashboard, please screenshot and email them to ",
@@ -14,7 +14,7 @@ support_links <- function() {
       h2("Contact us"),
       p(
         "If you have questions about the dashboard or data within it, please contact us at ",
-        a(href = "mailto:ufs.contact@education.gov.uk", "ufs.contact@education.gov.uk", .noWS = c("after")), "."
+        a(href = "mailto:skills.england@education.gov.uk", "skills.england@education.gov.uk", .noWS = c("after")), "."
       ),
       h2("See the source code"),
       p(
