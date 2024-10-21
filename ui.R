@@ -521,15 +521,19 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("18 Oct 2024 (1.4.5)"),
+            p("23 Oct 2024 (1.4.6)"),
             tags$ul(
-              tags$li("Updated Annual Population Survey data to Jul 2023 - Jun 2024."),
-              tags$li("Update to reflect the dashboard is now run by Skills England.")
+              tags$li("Updated UK Business Counts data to March 2024.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("18 Oct 2024 (1.4.5)"),
+                tags$ul(
+                  tags$li("Updated Annual Population Survey data to Jul 2023 - Jun 2024."),
+                  tags$li("Update to reflect the dashboard is now run by Skills England.")
+                ),
                 p("5 Aug 2024 (1.4.4)"),
                 tags$ul(
                   tags$li(
