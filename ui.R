@@ -521,8 +521,9 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("23 Oct 2024 (1.4.6)"),
+            p("28 Oct 2024 (1.4.6)"),
             tags$ul(
+              tags$li("Updated KS4 and KS5 destinations data to AY 22/23."),
               tags$li("Updated UK Business Counts data to March 2024.")
             ),
             details(
