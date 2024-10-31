@@ -155,6 +155,8 @@ F_adverts <- bind_rows(
     timePeriod == (max(timePeriod) - lubridate::years(1)) ~ -1,
     TRUE ~ 0
   )) %>%
+  #filter to last 5 years
+  filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
   select(-area, -geographic_level) %>%
   # make suppressed data zero to use in dashboard
   mutate(value = gsub("\\[x\\]", "0", valueText)) %>%

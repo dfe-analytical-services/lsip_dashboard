@@ -524,7 +524,8 @@ width: 100%;
             p("28 Oct 2024 (1.4.6)"),
             tags$ul(
               tags$li("Updated KS4 and KS5 destinations data to AY 22/23."),
-              tags$li("Updated UK Business Counts data to March 2024.")
+              tags$li("Updated UK Business Counts data to March 2024."),
+              tags$li("Limit all indicators to the last 5 years in the time charts.")
             ),
             details(
               label = "Previous updates",

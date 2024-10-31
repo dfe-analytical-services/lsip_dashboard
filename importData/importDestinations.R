@@ -24,6 +24,8 @@ destinationsWithAreas <-
     timePeriod == (max(timePeriod) - lubridate::years(1)) ~ -1,
     TRUE ~ 0
   )) %>%
+  #filter to last 5 years
+  filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
   addGeogs()
 
 # For destinations we need to also sum up for the whole country, so we take all LEPs again and relabel country ahead of the sum

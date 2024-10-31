@@ -73,6 +73,8 @@ businessesWithAreas <-
     timePeriod == (max(timePeriod) - lubridate::years(1)) ~ -1,
     TRUE ~ 0
   )) %>%
+  #filter to last 5 years
+  filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
   addGeogs()
 
 groupedStats <- businessesWithAreas %>%

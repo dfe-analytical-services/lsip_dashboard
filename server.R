@@ -1341,15 +1341,10 @@ server <- function(input, output, session) {
           "decreased"
         })
       },
-      # ks5 only has the data fr the last 4 years
-      if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
-        " in the last four years."
+      if (input$splashMetric == "employmentProjection") {
+        " to 2035."
       } else {
-        if (input$splashMetric == "employmentProjection") {
-          " to 2035."
-        } else {
-          " in the last five years."
-        }
+        " in the last four years."
       }
     )
   })
