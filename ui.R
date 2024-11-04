@@ -469,7 +469,7 @@ width: 100%;
               "link_to_tabpanel_employment", "Employment"
             )),
             p(
-              "This group of metrics provide information on employment, self-employment and inactivity for the selected geographic area including data on employment rates over time, the share of employment by occupation, and the share of employment by industry"
+              "This group of metrics provide information on employment, self-employment and inactivity for the selected geographic area including data on employment rates over time, the share of employment by occupation, and the share of employment by industry."
             ),
             h3(
               actionLink("link_to_tabpanel_vacancies", "Jobs")
@@ -521,7 +521,7 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("28 Oct 2024 (1.4.6)"),
+            p("4 Nov 2024 (1.4.6)"),
             tags$ul(
               tags$li("Updated KS4 and KS5 destinations data to AY 22/23."),
               tags$li("Updated UK Business Counts data to March 2024."),
