@@ -31,6 +31,8 @@ feSsaWithAreas <- I_FeSsa %>%
     timePeriod == (max(timePeriod) - lubridate::years(1)) ~ -1,
     TRUE ~ 0
   )) %>%
+  #filter to last 5 years
+  filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
   select(-time_period, -ssa_t1_desc, -notional_nvq_level, -lad_code, -country_code, -lad_name, -country_name, -sex, -ethnicity_major, -english_devolved_area_code, -english_devolved_area_name, -time_identifier, -region_code, -region_name) %>%
   addGeogs()
 # group up areas

@@ -32,6 +32,8 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
     timePeriod == (max(timePeriod) - lubridate::years(1)) ~ -1,
     TRUE ~ 0
   )) %>%
+  #filter to last 5 years
+  filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
   select(-time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name, -local_enterprise_partnership_code, -local_enterprise_partnership_name, -lsip_code, -lsip_name) %>%
   # find populations at the grouping level so we use the highest volume of population (ie nopt calculate the pop for every small group using small data volumes)
   mutate(populationGroup = case_when(
