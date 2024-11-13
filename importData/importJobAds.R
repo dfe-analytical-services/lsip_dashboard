@@ -3,7 +3,6 @@ folder <- "2-12_OnsProf"
 sheet <- "Table 12"
 I_Ons2digLA <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 I_Ons2digLA <- I_Ons2digLA[, c(1, 4, 2, 3, 5:ncol(I_Ons2digLA))]
-
 sheet <- "Table 10"
 I_Ons2digLep <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 sheet <- "Table 9"

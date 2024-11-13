@@ -524,7 +524,6 @@ width: 100%;
             p("6 Nov 2024 (1.4.7)"),
             tags$ul(
               tags$li("Updated job adverts to latest, Nov24")
-              
             ),
             details(
               label = "Previous updates",
