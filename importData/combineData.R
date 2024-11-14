@@ -21,7 +21,8 @@ C_localSkillsDataset <- bind_rows(
   ,C_localSkillsDataset %>%
     filter(geogConcat == "The London Economic Action Partnership LEP") %>%
     mutate(geogConcat = "Greater London Authority MCA")
-)
+) %>% 
+  filter(!(geogConcat %in% c("North of Tyne MCA", "North East MCA")))
 
 # 4. Create datasets used by the app----
 ## 4.1 Unused metrics ----
@@ -31,6 +32,7 @@ dashboardMetricIgnore <- c("all", "economicallyactive", "employees", "starts_rat
 ## 4.2 C_Geog ----
 # This is used in the maps. It contains only the latest total data for each metric and area.
 C_Geog <- neatGeog %>%
+  ##filter out MCAs#
   left_join(
     (C_localSkillsDataset %>%
        filter(

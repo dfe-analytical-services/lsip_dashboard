@@ -72,7 +72,7 @@ metricChoices <- list(
   # "Mismatch" = list("Supply vs demand TO COME" = "mismatch")
 )
 
-areaChoices <- list(
+Choices <- list(
   "Local enterprise partnership" = list(
     "Buckinghamshire" = "Buckinghamshire LEP",
     "Cheshire and Warrington" = "Cheshire and Warrington LEP",
@@ -156,8 +156,6 @@ areaChoices <- list(
     "Greater London Authority" = "Greater London Authority MCA",
     "Greater Manchester" = "Greater Manchester MCA",
     "Liverpool City Region" = "Liverpool City Region MCA",
-    "North East" = "North East MCA",
-    "North of Tyne" = "North of Tyne MCA",
     "South Yorkshire" = "South Yorkshire MCA",
     "Tees Valley" = "Tees Valley MCA",
     "West Midlands" = "West Midlands MCA",

@@ -66,11 +66,12 @@ formatVacancies <- function(x) {
       area == "Norfolk and Suffolk " & geographic_level == "Local Skills Improvement Plan" ~ "New Anglia",
       area == "South East Midlands" & geographic_level == "Local Skills Improvement Plan" ~ "South-East Midlands",
       area == "Enterprise M3 LEP (including all of Surrey)" ~ "Enterprise M3",
-      area == "Heart of the South West" & geographic_level == "Local Enterprise Partnership" ~ "Heart of the South-West",
+      area == "Heart of the South West" & geographic_level == "Local Enterprise Partnership" ~ "Heart of the South West",
       area == "Heart of the South West" & geographic_level == "Local Skills Improvement Plan" ~ "Heart of the South-West",
       area == "Stoke on Trent and Staffordshire" & geographic_level == "Local Enterprise Partnership" ~ "Stoke-on-Trent and Staffordshire",
       area == "Stoke-on-Trent and Staffordshire" & geographic_level == "Local Skills Improvement Plan" ~ "Stoke-on-Trent and Staffordshire",
       area == "Norfolk and Suffolk" ~ "New Anglia",
+      area == "Essex, Southend on Sea and Thurrock" & geographic_level == "Local Skills Improvement Plan" ~ "Essex, Southend-on-Sea and Thurrock",
       TRUE ~ area
     ))
 }
