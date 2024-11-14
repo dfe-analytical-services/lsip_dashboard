@@ -72,7 +72,7 @@ metricChoices <- list(
   # "Mismatch" = list("Supply vs demand TO COME" = "mismatch")
 )
 
-Choices <- list(
+areaChoices <- list(
   "Local enterprise partnership" = list(
     "Buckinghamshire" = "Buckinghamshire LEP",
     "Cheshire and Warrington" = "Cheshire and Warrington LEP",
