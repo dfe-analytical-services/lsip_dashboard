@@ -523,7 +523,9 @@ width: 100%;
             h2("Latest update"),
             p("6 Nov 2024 (1.4.7)"),
             tags$ul(
-              tags$li("Updated job adverts to latest, Nov24")
+              tags$li("Updated job adverts to latest, Nov24"),
+              tags$li("Added comment that explains North of Tyne and North East MCA have been temporarily
+                      removed")
             ),
             details(
               label = "Previous updates",
