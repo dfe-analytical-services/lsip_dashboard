@@ -521,7 +521,7 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("6 Nov 2024 (1.4.7)"),
+            p("29 Nov 2024 (1.4.7)"),
             tags$ul(
               tags$li("Updated job adverts to latest, Nov24"),
               tags$li("Added comment that explains North of Tyne and North East MCA have been temporarily
@@ -845,6 +845,10 @@ width: 100%;
         column(
           12,
           h2("Data information"),
+          h3("MCA changes"),
+          p("North East MCA and North of Tyne MCA have been joined together into North East MCA.
+            While we work to change our geographical lookups, we have temporarily removed these areas
+            from the dashboard."),
           h3("Annual Population Survey"),
           p(
             "The Annual Population Survey (APS) is a continuous household survey covering the UK.
