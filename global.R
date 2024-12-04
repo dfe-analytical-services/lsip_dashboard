@@ -28,6 +28,7 @@ shhh(library(capture)) # screenshots
 shhh(library(shinyalert)) # cookie pop up
 shhh(library(shinycssloaders)) # spinners
 shhh(library(RColorBrewer)) # map colours
+shhh(library(quarto)) # map colours
 shhh(library(dfeshiny)) # map colours
 
 google_analytics_key <- "MMB6NG2FE1"
@@ -156,8 +157,6 @@ areaChoices <- list(
     "Greater London Authority" = "Greater London Authority MCA",
     "Greater Manchester" = "Greater Manchester MCA",
     "Liverpool City Region" = "Liverpool City Region MCA",
-    "North East" = "North East MCA",
-    "North of Tyne" = "North of Tyne MCA",
     "South Yorkshire" = "South Yorkshire MCA",
     "Tees Valley" = "Tees Valley MCA",
     "West Midlands" = "West Midlands MCA",

@@ -2,6 +2,7 @@
 folder <- "2-12_OnsProf"
 sheet <- "Table 12"
 I_Ons2digLA <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+I_Ons2digLA <- I_Ons2digLA[, c(1, 4, 2, 3, 5:ncol(I_Ons2digLA))]
 sheet <- "Table 10"
 I_Ons2digLep <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 sheet <- "Table 9"
@@ -60,15 +61,17 @@ formatVacancies <- function(x) {
       area == "Greater Cambridge and Greater Peterborough" ~ "The Business Board",
       area == "Cambridge and Peterborough" ~ "Cambridgeshire and Peterborough",
       area == "Buckinghamshire " ~ "Buckinghamshire",
-      area == "North East*" ~ "North East",
+      area == "North East" ~ "North East",
       area == "Norfolk and Suffolk " & geographic_level == "Local Enterprise Partnership" ~ "Norfolk and Suffolk",
       area == "Norfolk and Suffolk " & geographic_level == "Local Skills Improvement Plan" ~ "New Anglia",
       area == "South East Midlands" & geographic_level == "Local Skills Improvement Plan" ~ "South-East Midlands",
       area == "Enterprise M3 LEP (including all of Surrey)" ~ "Enterprise M3",
-      area == "StokeonTrent and Staffordshire" ~ "Stoke-on-Trent and Staffordshire",
-      area == "Heart of the SouthWest" ~ "Heart of the South-West",
-      area == "Essex, SouthendonSea and Thurrock" ~ "Essex, Southend-on-Sea and Thurrock",
+      area == "Heart of the South West" & geographic_level == "Local Enterprise Partnership" ~ "Heart of the South West",
+      area == "Heart of the South West" & geographic_level == "Local Skills Improvement Plan" ~ "Heart of the South-West",
+      area == "Stoke on Trent and Staffordshire" & geographic_level == "Local Enterprise Partnership" ~ "Stoke-on-Trent and Staffordshire",
+      area == "Stoke-on-Trent and Staffordshire" & geographic_level == "Local Skills Improvement Plan" ~ "Stoke-on-Trent and Staffordshire",
       area == "Norfolk and Suffolk" ~ "New Anglia",
+      area == "Essex, Southend on Sea and Thurrock" & geographic_level == "Local Skills Improvement Plan" ~ "Essex, Southend-on-Sea and Thurrock",
       TRUE ~ area
     ))
 }
@@ -205,3 +208,4 @@ C_adverts <- bind_rows(
 ) %>%
   select(-SOC2digit) %>%
   mutate(metric = "vacancies")
+
