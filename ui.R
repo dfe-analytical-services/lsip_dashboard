@@ -521,7 +521,7 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("29 Nov 2024 (1.4.7)"),
+            p("12 Dec 2024 (1.4.7)"),
             tags$ul(
               tags$li("Updated job adverts to latest, Nov24"),
               tags$li("Added comment that explains North of Tyne and North East MCA have been temporarily
