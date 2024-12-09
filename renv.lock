@@ -163,15 +163,15 @@
     },
     "RCurl": {
       "Package": "RCurl",
-      "Version": "1.98-1.14",
+      "Version": "1.98-1.16",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Requirements": [
         "R",
         "bitops",
         "methods"
       ],
-      "Hash": "47f648d288079d0c696804ad4e55197e"
+      "Hash": "ddbdf53d15b47be4407ede6914f56fbb"
     },
     "Rcpp": {
       "Package": "Rcpp",
@@ -357,21 +357,21 @@
     },
     "capture": {
       "Package": "capture",
-      "Version": "0.1.4",
+      "Version": "0.1.5",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "dreamRs",
       "RemoteRepo": "capture",
-      "RemoteRef": "eb7696375bf57c7ab1cdc3307800a98be131f5fe",
-      "RemoteSha": "eb7696375bf57c7ab1cdc3307800a98be131f5fe",
+      "RemoteRef": "802a55d283aefbea9b3afd563e66fe953b2cc12a",
+      "RemoteSha": "802a55d283aefbea9b3afd563e66fe953b2cc12a",
       "Requirements": [
         "htmltools",
         "jsonlite",
         "shiny",
         "tools"
       ],
-      "Hash": "4da366a3e26c01597b25644176582047"
+      "Hash": "e672a649a628fad91c76f35063d7f43d"
     },
     "cellranger": {
       "Package": "cellranger",
@@ -387,15 +387,15 @@
     },
     "checkmate": {
       "Package": "checkmate",
-      "Version": "2.3.1",
+      "Version": "2.3.2",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Requirements": [
         "R",
         "backports",
         "utils"
       ],
-      "Hash": "c01cab1cb0f9125211a6fc99d540e315"
+      "Hash": "0e14e01ce07e7c88fd25de6d4260d26b"
     },
     "chromote": {
       "Package": "chromote",
@@ -523,15 +523,15 @@
     },
     "crayon": {
       "Package": "crayon",
-      "Version": "1.5.2",
+      "Version": "1.5.3",
       "Source": "Repository",
-      "Repository": "CRAN",
+      "Repository": "RSPM",
       "Requirements": [
         "grDevices",
         "methods",
         "utils"
       ],
-      "Hash": "e8a1e41acf02548751f45c718d55aa6a"
+      "Hash": "859d96e65ef198fd43e82b9628d593ef"
     },
     "crosstalk": {
       "Package": "crosstalk",
@@ -622,14 +622,14 @@
     },
     "dfeshiny": {
       "Package": "dfeshiny",
-      "Version": "0.5.1",
+      "Version": "0.5.2",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteUsername": "dfe-analytical-services",
       "RemoteRepo": "dfeshiny",
-      "RemoteRef": "bff6fef6be5049c7a4a41b350244dba6320ecd7c",
-      "RemoteSha": "bff6fef6be5049c7a4a41b350244dba6320ecd7c",
+      "RemoteRef": "91f1eb3cbac6e1d2ba64300e22a36c95a73dda25",
+      "RemoteSha": "91f1eb3cbac6e1d2ba64300e22a36c95a73dda25",
       "Requirements": [
         "R",
         "RCurl",
@@ -643,7 +643,7 @@
         "stringr",
         "styler"
       ],
-      "Hash": "5d235ed45e2b4c8a6892f157c3117b04"
+      "Hash": "2fcdaff1ae69716fc711621d785828a0"
     },
     "diffobj": {
       "Package": "diffobj",
@@ -1250,7 +1250,7 @@
     },
     "lubridate": {
       "Package": "lubridate",
-      "Version": "1.9.3",
+      "Version": "1.9.4",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1259,7 +1259,7 @@
         "methods",
         "timechange"
       ],
-      "Hash": "680ad542fbcf801442c83a6ac5a2126c"
+      "Hash": "be38bc740fc51783a78edb5a157e4104"
     },
     "magrittr": {
       "Package": "magrittr",
@@ -1460,24 +1460,25 @@
     },
     "pkgload": {
       "Package": "pkgload",
-      "Version": "1.3.4",
+      "Version": "1.4.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
         "R",
         "cli",
-        "crayon",
         "desc",
         "fs",
         "glue",
+        "lifecycle",
         "methods",
         "pkgbuild",
+        "processx",
         "rlang",
         "rprojroot",
         "utils",
         "withr"
       ],
-      "Hash": "876c618df5ae610be84356d5d7a5d124"
+      "Hash": "2ec30ffbeec83da57655b850cf2d3e0e"
     },
     "plotly": {
       "Package": "plotly",
@@ -1942,7 +1943,7 @@
     },
     "shiny": {
       "Package": "shiny",
-      "Version": "1.8.1.1",
+      "Version": "1.9.1",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -1971,7 +1972,7 @@
         "withr",
         "xtable"
       ],
-      "Hash": "54b26646816af9960a4c64d8ceec75d6"
+      "Hash": "6a293995a66e12c48d13aa1f957d09c7"
     },
     "shinyGovstyle": {
       "Package": "shinyGovstyle",
@@ -2022,7 +2023,7 @@
     },
     "shinycssloaders": {
       "Package": "shinycssloaders",
-      "Version": "1.0.0",
+      "Version": "1.1.0",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2030,9 +2031,10 @@
         "digest",
         "glue",
         "grDevices",
+        "htmltools",
         "shiny"
       ],
-      "Hash": "f39bb3c44a9b496723ec7e86f9a771d8"
+      "Hash": "2b45a467a30d6a88a1892a738c0900cf"
     },
     "shinyjs": {
       "Package": "shinyjs",
@@ -2520,7 +2522,7 @@
     },
     "websocket": {
       "Package": "websocket",
-      "Version": "1.4.1",
+      "Version": "1.4.2",
       "Source": "Repository",
       "Repository": "CRAN",
       "Requirements": [
@@ -2529,7 +2531,7 @@
         "cpp11",
         "later"
       ],
-      "Hash": "76e0d400757e318cca33def29ccebbc2"
+      "Hash": "e77c5569354172d0d04d54a9dec89e33"
     },
     "withr": {
       "Package": "withr",
