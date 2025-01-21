@@ -22,13 +22,13 @@
       ]
     },
     "overviewEmpCntKPI": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Jul 2023-Jun 2024<\/span>\n  <br/>\n  280,100\n  <br/><span style=\"font-size: 16px;color:#e00000\">-800<\/span><br/>\n<\/h4>",
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Oct 2023-Sep 2024<\/span>\n  <br/>\n  282,100\n  <br/><span style=\"font-size: 16px;color:green\">+6,200<\/span><br/>\n<\/h4>",
       "deps": [
 
       ]
     },
     "overviewEmpRateKPI": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Jul 2023-Jun 2024<\/span>\n  <br/>\n  80%\n  <br/><span style=\"font-size: 16px;color:#e00000\">-2ppts<\/span><br/>\n<\/h4>",
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Oct 2023-Sep 2024<\/span>\n  <br/>\n  80%\n  <br/><span style=\"font-size: 16px;color:#e00000\">-0ppts<\/span><br/>\n<\/h4>",
       "deps": [
 
       ]
