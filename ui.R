@@ -521,16 +521,20 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("12 Dec 2024 (1.4.7)"),
+            p("25 Jan 2025 (1.4.8)"),
             tags$ul(
-              tags$li("Updated job adverts to latest, Nov24"),
-              tags$li("Added comment that explains North of Tyne and North East MCA have been temporarily
-                      removed")
+              tags$li("Updated business demography to latest data.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("12 Dec 2024 (1.4.7)"),
+                tags$ul(
+                  tags$li("Updated job adverts to latest, Nov24"),
+                  tags$li("Added comment that explains North of Tyne and North East MCA have been temporarily
+                      removed")
+                ),
                 p("18 Oct 2024 (1.4.5)"),
                 tags$ul(
                   tags$li("Updated Annual Population Survey data to Jul 2023 - Jun 2024."),
