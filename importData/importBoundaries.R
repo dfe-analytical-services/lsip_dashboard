@@ -20,15 +20,15 @@ I_mapLA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("
 
 # Neaten
 neatLA <- I_mapLA %>%
-  select(-LAD23NMW) %>% # remove extra welsh column
+  select(-LAD24NMW) %>% # remove extra welsh column
   mutate(geog = "LADU") %>% # add geog type
   rename(OBJECTID = FID) %>% # consistent naming
   # add on lsip, lep and mca groupings
-  left_join(F_LEP2020 %>% mutate(LEP = paste0(LEP23NM1, " LEP"), LEP2 = paste0(LEP23NM2, " LEP"), LSIP = paste0(LSIP23NM, " LSIP")) %>% select(LAD23CD, LSIP, LEP, LEP2), by = c("LAD23CD" = "LAD23CD")) %>%
-  left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH24NM, " MCA")) %>% select(LAD24CD, MCA), by = c("LAD23CD" = "LAD23CD")) %>%
+  left_join(F_LEP2020 %>% mutate(LEP = paste0(LEP23NM1, " LEP"), LEP2 = paste0(LEP23NM2, " LEP"), LSIP = paste0(LSIP23NM, " LSIP")) %>% select(LAD23CD, LSIP, LEP, LEP2), by = c("LAD23CD" = "LAD24CD")) %>%
+  left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH24NM, " MCA")) %>% select(LAD24CD, MCA), by = c("LAD24CD" = "LAD24CD")) %>%
   filter(is.na(LSIP) == FALSE) %>% # remove non England
   mutate(MCA = case_when(LEP == "The London Economic Action Partnership LEP" ~ "Greater London Authority MCA", TRUE ~ MCA)) %>% # add on gla as mca
-  rename(areaName = LAD23NM, areaCode = LAD23CD) %>%
+  rename(areaName = LAD24NM, areaCode = LAD24CD) %>%
   sf::st_transform(4326) # transform to WG84 that leaflet can plot
 
 # 3 MCA boundary----
