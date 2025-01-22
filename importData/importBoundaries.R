@@ -25,7 +25,7 @@ neatLA <- I_mapLA %>%
   rename(OBJECTID = FID) %>% # consistent naming
   # add on lsip, lep and mca groupings
   left_join(F_LEP2020 %>% mutate(LEP = paste0(LEP23NM1, " LEP"), LEP2 = paste0(LEP23NM2, " LEP"), LSIP = paste0(LSIP23NM, " LSIP")) %>% select(LAD23CD, LSIP, LEP, LEP2), by = c("LAD23CD" = "LAD23CD")) %>%
-  left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH23NM, " MCA")) %>% select(LAD23CD, MCA), by = c("LAD23CD" = "LAD23CD")) %>%
+  left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH24NM, " MCA")) %>% select(LAD24CD, MCA), by = c("LAD23CD" = "LAD23CD")) %>%
   filter(is.na(LSIP) == FALSE) %>% # remove non England
   mutate(MCA = case_when(LEP == "The London Economic Action Partnership LEP" ~ "Greater London Authority MCA", TRUE ~ MCA)) %>% # add on gla as mca
   rename(areaName = LAD23NM, areaCode = LAD23CD) %>%
