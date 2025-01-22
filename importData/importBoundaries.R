@@ -39,7 +39,7 @@ I_mapMCA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0(
 
 neatMCA <- I_mapMCA %>%
   mutate(geog = "MCA") %>% # add geog type
-  rename(areaCode = CAUTH22CD, areaName = CAUTH22NM) %>% # consistent naming
+  rename(areaCode = CAUTH24CD, areaName = CAUTH24NM) %>% # consistent naming
   sf::st_transform(4326) # transform to WG84 that leaflet can plot
 
 # 4 Create LSIP boundary from LA data
