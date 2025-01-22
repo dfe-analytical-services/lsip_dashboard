@@ -42,32 +42,16 @@ neatMCA <- I_mapMCA %>%
   rename(areaCode = CAUTH24CD, areaName = CAUTH24NM) %>% # consistent naming
   sf::st_transform(4326) # transform to WG84 that leaflet can plot
 
-# 4 Create LSIP boundary from LA data
-# add on LSIPs to LA file
-LasLsip <- merge(I_mapLA, F_LEP2020 %>% select(LAD23CD, LSIP = LSIP23NM, LEP = LEP23NM1, LEP2 = LEP23NM2), by.x = "LAD23CD", by.y = "LAD23CD")
-# dissolve the LSIP LAs
-sf::sf_use_s2(F) # to avoid overlapping error
-LSIPsh <- LasLsip %>%
-  group_by(LSIP) %>%
-  summarize(geometry = sf::st_union(geometry))
-# turn into GoeJson
-LSIPgeojson <- sf::st_as_sf(LSIPsh)
+# 3 LSIP boundary----
+folder <- "1-8_LSIPBoundary"
+I_mapLSIP <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
+                        stringsAsFactors = F
+)
 
-# add on LSIP names
-LSIPmap <- bind_cols(LSIPgeojson, F_LEP2020 %>%
-                       distinct(Area = LSIP23NM) %>%
-                       arrange(Area) %>%
-                       mutate(geographic_level = "LSIP") %>%
-                       mutate(Area = trimws(Area)))
-# neaten
-neatLSIP <- LSIPmap %>%
-  rename(areaName = Area, geog = geographic_level) %>%
-  mutate(areaCode = paste0("LSIP", row_number())) %>%
-  sf::st_transform(4326) %>%
-  mutate(
-    LONG = purrr::map_dbl(geometry, ~ sf::st_centroid(.x)[[1]]),
-    LAT = purrr::map_dbl(geometry, ~ sf::st_centroid(.x)[[2]])
-  )
+neatLSIP <- I_mapLSIP %>%
+  mutate(geog = "LSIP") %>% # add geog type
+  rename(areaCode = LSIP23CD, areaName = LSIP23NM) %>% # consistent naming
+  sf::st_transform(4326) # transform to WG84 that leaflet can plot
 
 # 4 England blank data ----
 addEngland <- data.frame(
