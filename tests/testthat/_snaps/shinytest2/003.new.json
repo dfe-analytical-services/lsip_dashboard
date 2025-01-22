@@ -80,13 +80,13 @@
       ]
     },
     "skisup.APPach": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">AY22/23<\/span>\n  <br/>\n  1,270\n  <br/><span style=\"font-size: 16px;color:green\">+70<\/span><br/>\n<\/h4>",
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">AY23/24<\/span>\n  <br/>\n  1,500\n  <br/><span style=\"font-size: 16px;color:green\">+230<\/span><br/>\n<\/h4>",
       "deps": [
 
       ]
     },
     "skisup.ETach": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">AY22/23<\/span>\n  <br/>\n  4,060\n  <br/><span style=\"font-size: 16px;color:green\">+490<\/span><br/>\n<\/h4>",
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">AY23/24<\/span>\n  <br/>\n  4,800\n  <br/><span style=\"font-size: 16px;color:green\">+740<\/span><br/>\n<\/h4>",
       "deps": [
 
       ]

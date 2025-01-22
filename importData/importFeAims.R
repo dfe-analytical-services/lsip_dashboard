@@ -9,7 +9,7 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
   filter(
     geographic_level %in% c("Local authority district", "National", "Local enterprise partnership", "Local skills improvement plan area"), # just keep area used
     # keep only the combinations shown in dashboard
-    (((apprenticeships_or_further_education == "Further education and skills" | stringr::str_sub(level_or_type, -5, -1) == "Total") & age_group == "Total") | level_or_type == "Further education and skills: Total"),
+    (((provision_type == "Further education and skills" | stringr::str_sub(level_or_type, -5, -1) == "Total") & age_summary == "Total") | level_or_type == "Further education and skills: Total"),
     lad_code != "z" # ignore Outside of England and unknown
   ) %>%
   mutate(area = case_when(
@@ -37,8 +37,8 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
   select(-time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name, -local_enterprise_partnership_code, -local_enterprise_partnership_name, -lsip_code, -lsip_name) %>%
   # find populations at the grouping level so we use the highest volume of population (ie nopt calculate the pop for every small group using small data volumes)
   mutate(populationGroup = case_when(
-    apprenticeships_or_further_education %in% c("Apprenticeships", "Community Learning") ~ paste("popIncludesUnder19", age_group), # apps and CL include under 19, so the the population used in the per 100k calcs are slightly higher
-    TRUE ~ age_group
+    provision_type %in% c("Apprenticeships", "Community Learning") ~ paste("popIncludesUnder19", age_summary), # apps and CL include under 19, so the the population used in the per 100k calcs are slightly higher
+    TRUE ~ age_summary
   )) %>%
   # ILR uses the LEP names as they were at the time of the data. Here we allign those LEPs whose geography has not changed to the latest name
   mutate(area = case_when(
@@ -56,7 +56,7 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
 addPopulation <- F_FeProvLevelAge %>%
   left_join(
     F_FeProvLevelAge %>%
-      filter(level_or_type == "Further education and skills: Total" | (level_or_type == "Apprenticeships: Total" & (age_group == "Under 19" | age_group == "Total"))) %>% # use the apps poplation as it is bigger than the CL
+      filter(level_or_type == "Further education and skills: Total" | (level_or_type == "Apprenticeships: Total" & (age_summary == "Under 19" | age_summary == "Total"))) %>% # use the apps poplation as it is bigger than the CL
       mutate(population = 100000 * as.numeric(participation) / as.numeric(participation_rate_per_100000_population)) %>% # use values to get population
       select(geographic_level, area, populationGroup, timePeriod, population),
     by = c("geographic_level" = "geographic_level", "area" = "area", "populationGroup" = "populationGroup", "timePeriod" = "timePeriod")
@@ -128,13 +128,13 @@ groupedStats <- feWithAreas %>%
                 "New Anglia LEP",
                 "The Business Board LEP"
               ) |
-              # since the ilr only publish the latest years lsip we need to calculate the history of those as well
-              (stringr::str_sub(geogConcat, -4, -1) == "LSIP" & chartPeriod != "AY22/23")
+              # since the ilr only publish the latest 2 years lsip we need to calculate the history of those as well
+              (stringr::str_sub(geogConcat, -4, -1) == "LSIP" & !(chartPeriod %in% c("AY22/23","AY23/24")))
          )) %>%
   ungroup() %>%
   select(-newArea, -achievements_rate_per_100000_population, -starts_rate_per_100000_population, -participation_rate_per_100000_population) %>%
   mutate_at(vars(starts, participation, achievements, population_estimate), as.numeric) %>% # Convert to numeric
-  group_by(apprenticeships_or_further_education, level_or_type, age_group, chartPeriod, timePeriod, latest, geogConcat) %>% # sum for each LEP
+  group_by(provision_type, level_or_type, age_summary, chartPeriod, timePeriod, latest, geogConcat) %>% # sum for each LEP
   summarise(across(everything(), list(sum), na.rm = T)) %>%
   mutate(
     starts_rate_per_100000_population = as.character(100000 * starts_1 / population_1),
@@ -154,19 +154,19 @@ F_FeProvLevelAge <- bind_rows(
   select(-population, -newArea, -population_estimate) %>%
   # get in new format
   mutate(subgroup = case_when(
-    level_or_type == "Further education and skills: Total" & age_group == "Total" ~ "Total",
-    age_group != "Total" ~ age_group,
+    level_or_type == "Further education and skills: Total" & age_summary == "Total" ~ "Total",
+    age_summary != "Total" ~ age_summary,
     stringr::str_sub(level_or_type, -5, -1) != "Total" ~ gsub(": Total", "", level_or_type),
-    TRUE ~ apprenticeships_or_further_education
+    TRUE ~ provision_type
   )) %>%
   mutate(breakdown = case_when(
-    level_or_type == "Further education and skills: Total" & age_group == "Total" ~ "Total",
-    age_group != "Total" ~ "Age",
+    level_or_type == "Further education and skills: Total" & age_summary == "Total" ~ "Total",
+    age_summary != "Total" ~ "Age",
     stringr::str_sub(level_or_type, -5, -1) != "Total" ~ "Level",
     TRUE ~ "Provision"
   )) %>%
   ungroup() %>%
-  select(-apprenticeships_or_further_education, -level_or_type, -age_group) %>%
+  select(-provision_type, -level_or_type, -age_summary) %>%
   # make long
   tidyr::pivot_longer(!c("geogConcat", "timePeriod", "chartPeriod", "latest", "breakdown", "subgroup"),
                names_to = "metric",

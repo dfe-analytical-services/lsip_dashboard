@@ -5,7 +5,7 @@ I_FeSsa <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = past
 feSsaWithAreas <- I_FeSsa %>%
   filter(notional_nvq_level == "Total", sex == "Total", ethnicity_major == "Total") %>%
   mutate(
-    subgroup = ssa_t1_desc,
+    subgroup = ssa_tier_1,
     breakdown = case_when(
       subgroup == "Total" ~ "Total",
       TRUE ~ "SSA"
@@ -33,17 +33,17 @@ feSsaWithAreas <- I_FeSsa %>%
   )) %>%
   #filter to last 5 years
   filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
-  select(-time_period, -ssa_t1_desc, -notional_nvq_level, -lad_code, -country_code, -lad_name, -country_name, -sex, -ethnicity_major, -english_devolved_area_code, -english_devolved_area_name, -time_identifier, -region_code, -region_name) %>%
+  select(-time_period, -ssa_tier_1, -notional_nvq_level, -lad_code, -country_code, -lad_name, -country_name, -sex, -ethnicity_major, -english_devolved_area_code, -english_devolved_area_name, -time_identifier, -region_code, -region_name) %>%
   addGeogs()
 # group up areas
 groupedStats <- feSsaWithAreas %>%
   filter(newArea == 1) %>% # no need to group national or LAs that haven't changed
   ungroup() %>%
   select(-newArea) %>%
-  mutate_at(vars(e_and_t_aims_ach, e_and_t_aims_enrolments), as.numeric) %>% # Convert to numeric
+  mutate_at(vars(achievements, enrolments), as.numeric) %>% # Convert to numeric
   group_by(chartPeriod, timePeriod, latest, geogConcat, subgroup, breakdown) %>% # sum for each LEP
   summarise(across(everything(), list(sum), na.rm = T)) %>%
-  mutate(e_and_t_aims_ach = as.character(e_and_t_aims_ach_1), e_and_t_aims_enrolments = as.character(e_and_t_aims_enrolments_1))
+  mutate(achievements = as.character(achievements_1), enrolments = as.character(enrolments_1))
 
 # add back on original LADUs and format
 C_FeSsa <- bind_rows(
@@ -51,8 +51,8 @@ C_FeSsa <- bind_rows(
   feSsaWithAreas %>%
     filter(newArea == 0)
 ) %>%
-  select(-newArea, -e_and_t_aims_ach_1, -e_and_t_aims_enrolments_1) %>%
-  rename(achievementsAims = e_and_t_aims_ach, enrolmentsAims = e_and_t_aims_enrolments) %>%
+  select(-newArea, -achievements_1, -enrolments_1) %>%
+  rename(achievementsAims = achievements, enrolmentsAims = enrolments) %>%
   # make long
   tidyr::pivot_longer(!c("geogConcat", "timePeriod", "chartPeriod", "latest", "breakdown", "subgroup"),
                names_to = "metric",

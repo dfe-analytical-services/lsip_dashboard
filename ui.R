@@ -524,6 +524,7 @@ width: 100%;
             p("25 Jan 2025 (1.4.8)"),
             tags$ul(
               tags$li("Updated business demography to latest data."),
+              tags$li("Updated further education enrolments and achievements to latest data."),
               tags$li("Updated APS employment to latest data.")
             ),
             details(
