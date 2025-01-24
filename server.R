@@ -943,7 +943,7 @@ server <- function(input, output, session) {
       "36 LEPs."
     } else {
       if (input$splashGeoType == "MCA") {
-        "11 MCAs."
+        "12 CAs (and GLA)."
       } else {
         "38 LSIPs."
       }
