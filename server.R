@@ -1302,7 +1302,8 @@ server <- function(input, output, session) {
     currentArea <- C_time %>%
       filter(
         geogConcat == input$geoChoice,
-        metric == input$splashMetric
+        metric == input$splashMetric,
+        is.na(value) == FALSE # remove any rows with no data
       )
     englandArea <- C_time %>%
       filter(
@@ -1316,7 +1317,7 @@ server <- function(input, output, session) {
     englandChange <- (englandArea %>%
       filter(latest == 1))$value -
       (englandArea %>%
-        filter(timePeriod == min(timePeriod)))$value
+        filter(timePeriod == min(currentArea$timePeriod)))$value # match with the area data
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$timeComment, " ",
       input$geoChoice, if (input$splashMetric == "employmentProjection") {
@@ -1344,7 +1345,15 @@ server <- function(input, output, session) {
       if (input$splashMetric == "employmentProjection") {
         " to 2035."
       } else {
-        " in the last four years."
+        paste0(
+          " in the last ",
+          if (input$splashMetric == "vacancies") {
+            round(((nrow(currentArea) - 1) / 12))
+          } else {
+            nrow(currentArea) - 1
+          }, # count number of years of change
+          " years."
+        )
       }
     )
   })
