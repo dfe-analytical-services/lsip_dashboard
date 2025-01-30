@@ -521,7 +521,7 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("25 Jan 2025 (1.4.8)"),
+            p("30 Jan 2025 (1.4.8)"),
             tags$ul(
               tags$li("Updated business demography to latest data."),
               tags$li("Updated further education enrolments and achievements to latest data."),
