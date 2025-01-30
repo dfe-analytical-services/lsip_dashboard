@@ -1347,7 +1347,11 @@ server <- function(input, output, session) {
       } else {
         paste0(
           " in the last ",
-          nrow(currentArea) - 1, # count number of years of change
+          if (input$splashMetric == "vacancies") {
+            round(((nrow(currentArea) - 1) / 12))
+          } else {
+            nrow(currentArea) - 1
+          }, # count number of years of change
           " years."
         )
       }
