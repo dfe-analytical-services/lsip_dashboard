@@ -21,8 +21,7 @@ I_missingLAD <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", li
 
 # 3 MCA lookup ----
 folder <- "1-3_MCA_lookup"
-sheetNum <- "Local_Authority_District_to_Com"
-C_mcalookup <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)%>% 
+C_mcalookup <- read.csv(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))%>% 
   select(-ObjectId)
 
 # 4 LA 2011/2021 to 2023 lookup ----

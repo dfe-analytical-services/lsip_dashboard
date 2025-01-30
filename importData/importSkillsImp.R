@@ -77,7 +77,6 @@ employmentProjections <-
   left_join(I_wfAreaName) %>%
   mutate(geogConcat = paste0(trimws(`.Main`, "both"), " ", sub(" name", "", Scenario))) %>% # get name
   mutate(geogConcat = case_when(
-    #   file_name == "BH_LSIP_MainTables.Main.xlsm" ~ "Brighton and Hove, East Sussex, West Sussex LSIP",
     trimws(`.Main`, "both") == "England" ~ "England",
     TRUE ~ geogConcat
   )) %>% # correct error in file calling this a LEP instead of LSIP and getting name wrong
@@ -129,12 +128,19 @@ employmentProjections <-
 
 # use dorset lep for dorset lsip because dorset lsip has the wrong LAs and it is the same as dorset LEP anyway
 # use Worchestershire lsip for Worchestershire lep because Worchestershire lep is missing some LAs and it is the same as Worchestershire lsip anyway
+# use Derbyshire and Nottinghamshire LSIP for East Midlands MCA. East midlands MCA is new so is not in the data. D&N LSIP has the same LADs
+# Use North East LEP for North East MCA. North East MCA is now covering both NE and North of Tyne and North East LEP covers the same LADs 
+# Use  York and North Yorkshire LSIP for York and North Yorkshire MCA. York and North Yorkshire MCA is new and has the same LADs as the LSIP. 
 employmentProjectionsCorrections <- employmentProjections %>%
-  filter(geogConcat %in% c("Dorset LEP", "Worcestershire LSIP", "Stoke-on-Trent and Staffordshire LSIP")) %>%
+  filter(geogConcat %in% c("Dorset LEP", "Worcestershire LSIP", "Stoke-on-Trent and Staffordshire LSIP",
+                           "Derbyshire and Nottinghamshire LSIP","York and North Yorkshire LSIP","North East LEP")) %>%
   mutate(geogConcat = case_when(
     geogConcat == "Dorset LEP" ~ "Dorset LSIP",
     geogConcat == "Worcestershire LSIP" ~ "Worcestershire LEP",
     geogConcat == "Stoke-on-Trent and Staffordshire LSIP" ~ "Stoke-on-Trent and Staffordshire LEP",
+    geogConcat == "Derbyshire and Nottinghamshire LSIP" ~ "East Midlands MCA",
+    geogConcat == "North East LEP" ~ "North East MCA",
+    geogConcat == "York and North Yorkshire LSIP" ~ "York and North Yorkshire MCA",
     TRUE ~ "NA"
   ))
 
@@ -153,7 +159,7 @@ employmentProjectionsEntM3Lsip <- employmentProjections %>%
 
 # combine them all
 employmentProjections <- bind_rows(
-  employmentProjections %>% filter(!geogConcat %in% c("Dorset LSIP", "Enterprise M3 LEP (including all of Surrey) LSIP", "Worcestershire LEP", "Stoke-on-Trent and Staffordshire LEP")), # remove incorrect dorset and Enterprise LSIPs
+  employmentProjections %>% filter(!geogConcat %in% c("Dorset LSIP", "Enterprise M3 LEP (including all of Surrey) LSIP", "Worcestershire LEP", "Stoke-on-Trent and Staffordshire LEP", "North East MCA")), # remove incorrect dorset and Enterprise LSIPs and outdated North East MCA
   employmentProjectionsCorrections,
   employmentProjectionsEntM3Lsip
 )

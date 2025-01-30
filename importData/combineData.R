@@ -1,5 +1,5 @@
 # 3. Combine datasets ----
-C_localSkillsDataset <- bind_rows(
+C_localSkillsDatasetBind <- bind_rows(
   C_emp,
   C_empOcc,
   C_empInd,
@@ -15,14 +15,16 @@ C_localSkillsDataset <- bind_rows(
   C_adverts,
   C_businesses
 )
-# add in GLA as an MCA because people expect it be there
+# add in GLA as an MCA because people expect it be there (no need in FE data because it is published as GLA)
 C_localSkillsDataset <- bind_rows(
-  C_localSkillsDataset 
-  ,C_localSkillsDataset %>%
-    filter(geogConcat == "The London Economic Action Partnership LEP") %>%
+  C_localSkillsDatasetBind 
+  ,C_localSkillsDatasetBind %>%
+    filter(!metric %in% c("starts_rate_per_100000_population","participation_rate_per_100000_population",
+                          "achievements_rate_per_100000_population","starts",                                 
+                          "participation","achievements", "achievementsAims","enrolmentsAims"),
+    geogConcat == "The London Economic Action Partnership LEP") %>%
     mutate(geogConcat = "Greater London Authority MCA")
-) %>% 
-  filter(!(geogConcat %in% c("North of Tyne MCA", "North East MCA")))
+)
 
 # 4. Create datasets used by the app----
 ## 4.1 Unused metrics ----

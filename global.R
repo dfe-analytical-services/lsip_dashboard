@@ -154,14 +154,17 @@ areaChoices <- list(
   ),
   "Mayoral combined authority" = list(
     "Cambridgeshire and Peterborough" = "Cambridgeshire and Peterborough MCA",
+    "East Midlands" = "East Midlands MCA",
     "Greater London Authority" = "Greater London Authority MCA",
     "Greater Manchester" = "Greater Manchester MCA",
     "Liverpool City Region" = "Liverpool City Region MCA",
+    "North East" = "North East MCA",
     "South Yorkshire" = "South Yorkshire MCA",
     "Tees Valley" = "Tees Valley MCA",
     "West Midlands" = "West Midlands MCA",
     "West of England" = "West of England MCA",
-    "West Yorkshire" = "West Yorkshire MCA"
+    "West Yorkshire" = "West Yorkshire MCA",
+    "York and North Yorkshire" = "York and North Yorkshire MCA"
   ),
   "Country" = list(
     "England" = "England "
