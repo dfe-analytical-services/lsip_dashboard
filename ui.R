@@ -518,7 +518,7 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("25 Jan 2025 (1.4.9)"),
+            p("30 Jan 2025 (1.4.8)"),
             tags$ul(
               tags$li("Updated the MCA map to include the new combined authorities (East Midlands, York and North Yorkshire) and the combination of North East MCA and North of Tyne MCA into North East MCA.")
             ),
