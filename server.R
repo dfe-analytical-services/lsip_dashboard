@@ -927,28 +927,7 @@ server <- function(input, output, session) {
     eventLA <- input$mapLA_shape_click
     C_Geog$areaName[C_Geog$areaCode == eventLA$id]
   })
-  # ranking for each geog
-  geogRank <- reactive({
-    validate(need(input$splashGeoType != "", ""))
-    C_Geog %>%
-      filter(geog == input$splashGeoType) %>%
-      mutate(ranking = rank(desc(eval(
-        parse(text = input$splashMetric)
-      )), ties.method = c("first")))
-  })
-  # count of areas
-  groupCount <- reactive({
-    validate(need(input$splashGeoType != "", ""))
-    if (input$splashGeoType == "LEP") {
-      "36 LEPs."
-    } else {
-      if (input$splashGeoType == "MCA") {
-        "11 MCAs."
-      } else {
-        "38 LSIPs."
-      }
-    }
-  })
+
   # filter for just england
   englandGeog <- C_Geog %>%
     filter(geog == "COUNTRY" & areaName == "England")
@@ -1057,7 +1036,11 @@ server <- function(input, output, session) {
       } else {
         "lower"
       }
-    areaRank <- (geogRank() %>%
+    areaRank <- (C_Geog %>%
+      filter(geog == trimws(str_sub(input$geoChoice, start = -4))) %>%
+      mutate(ranking = rank(desc(eval(
+        parse(text = input$splashMetric)
+      )), ties.method = c("first"))) %>%
       filter(geogConcat == input$geoChoice))$ranking
     suff <- case_when(
       areaRank %in% c(11, 12, 13) ~ "th",
@@ -1080,7 +1063,15 @@ server <- function(input, output, session) {
       areaRank,
       suff,
       " of the ",
-      groupCount()
+      if (str_sub(input$geoChoice, start = -3) == "LEP") {
+        "36 LEPs."
+      } else {
+        if (str_sub(input$geoChoice, start = -3) == "MCA") {
+          "12 CAs (and GLA)."
+        } else {
+          "38 LSIPs."
+        }
+      }
     )
   })
 

@@ -442,7 +442,7 @@ width: 100%;
             ),
             h2("Local skills metrics"),
             p(
-              "Where published figures are not available, area totals for LEP, LSIP or MCA are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
+              "Where published figures are not available, area totals for LEP, LSIP or MCA are either taken from a matching geographical area or are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
             ),
             p(
               "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS ",
@@ -487,9 +487,6 @@ width: 100%;
             p(
               "This group of metrics provide information on training activity for the selected geographic area including data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period."
             ),
-            p(
-              "Where the LEP, LSIP and MCA area totals are not published, area totals are calculated by aggregating the relevant local authorities (see Data sources tab for more information)."
-            ),
             h3(actionLink(
               "link_to_tabpanel_destinations", "Destinations"
             )),
@@ -521,16 +518,20 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("30 Jan 2025 (1.4.8)"),
+            p("6 Feb 2025 (1.4.9)"),
             tags$ul(
-              tags$li("Updated business demography to latest data."),
-              tags$li("Updated further education enrolments and achievements to latest data."),
-              tags$li("Updated APS employment to latest data.")
+              tags$li("Updated the MCA map to include the new combined authorities (East Midlands, York and North Yorkshire) and the combination of North East MCA and North of Tyne MCA into North East MCA.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("30 Jan 2025 (1.4.8)"),
+                tags$ul(
+                  tags$li("Updated business demography to latest data."),
+                  tags$li("Updated further education enrolments and achievements to latest data."),
+                  tags$li("Updated APS employment to latest data.")
+                ),
                 p("12 Dec 2024 (1.4.7)"),
                 tags$ul(
                   tags$li("Updated job adverts to latest, Nov24"),
@@ -851,10 +852,6 @@ width: 100%;
         column(
           12,
           h2("Data information"),
-          h3("MCA changes"),
-          p("North East MCA and North of Tyne MCA have been joined together into North East MCA.
-            While we work to change our geographical lookups, we have temporarily removed these areas
-            from the dashboard."),
           h3("Annual Population Survey"),
           p(
             "The Annual Population Survey (APS) is a continuous household survey covering the UK.
@@ -934,7 +931,6 @@ width: 100%;
           ),
           p("
             For LSIPs, only the most recent year's data is published. We therefore compile the statistics from LAs for all years except the most recent."),
-          p("No MCA level data is published. However, most MCAs match an LSIP in their geography and so we can use the corresponding LSIP published values for the most recent year. Where there is no matching LSIP (West of England MCA and West Midlands MCA) we compile the statistics from the LAs."),
           p("Rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
 Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset."),
           h3("KS4 and KS5 destinations"),

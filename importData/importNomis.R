@@ -3,7 +3,7 @@
 
 # First list of all the geographies we need (excluding the user defined which are added in the function)
 geogUseAps <- nomisr::nomis_get_metadata(id = "NM_17_1", concept = "geography", type = "type") %>%
-  filter(description.en %in% c("local enterprise partnerships (as of April 2021)", "local authorities: district / unitary (as of April 2021)", "countries"))
+  filter(description.en %in% c("local enterprise partnerships (as of April 2021)", "combined authorities","local authorities: district / unitary (as of April 2021)", "countries"))
 
 # list all the APS cells available
 cellsListAps <- nomisr::nomis_get_metadata(id = "NM_17_1", concept = "CELL")
