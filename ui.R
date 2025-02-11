@@ -836,6 +836,135 @@ width: 100%;
       br()
     ),
 
+    ## 2.3 Sector skills ----
+    tabPanel(
+      "Sector skills",
+      br(),
+      ### 2.3.1 Filters ----
+      fluidRow(
+        column(
+          4,
+          p("Choose a sector"),
+          selectizeInput(
+            "sectorChoice",
+            multiple = FALSE,
+            label = NULL,
+            choices = unique(I_sectorLookup$Name)
+          )
+        ),
+        column(
+          4,
+          p("What are you interested in?"),
+          pickerInput(
+            inputId = "splashMetric",
+            choices = metricChoices,
+            multiple = FALSE,
+            choicesOpt = list(
+              disabled = unlist(metricChoices) %in% c("workingFutures"),
+              style = ifelse(
+                unlist(metricChoices) %in% c("workingFutures"),
+                yes = "color: rgba(119, 119, 119, 0.5);",
+                no = ""
+              )
+            )
+          )
+        ),
+        column(1),
+        column(
+          3,
+          uiOutput("screenshotFile")
+        )
+      ),
+      fluidRow(
+        column(
+          12,
+          p(uiOutput("subheading"))
+        )
+      ),
+      ### 2.3.2 Visuals row 1 ----
+      fluidRow(
+        column(
+          6,
+          h3(uiOutput("titleMap")),
+          radioGroupButtons(
+            inputId = "splashGeoType",
+            choices = c("LEP", "LSIP", "MCA")
+          ),
+          p(uiOutput("commentMap")),
+          withSpinner(leafletOutput("map")),
+          p(uiOutput("mapFoot"))
+        ),
+        column(
+          6,
+          h3(uiOutput("titleTime")),
+          p(uiOutput("commentTime")),
+          uiOutput("geoComp"),
+          withSpinner(plotlyOutput("Splash_time")),
+          p(uiOutput("timeFoot"))
+        )
+      ),
+      br(),
+      ### 2.3.3 Visuals row 2 ----
+      fluidRow(
+        column(
+          6,
+          h3(uiOutput("titleBreakdown")),
+          uiOutput("breakdownFilter"),
+          uiOutput("professionFilter"),
+          uiOutput("subgroupFilter"),
+          p(uiOutput("commentBreakdown")),
+          uiOutput("breadownPlot"),
+          p(uiOutput("breakdownFoot"))
+        ),
+        column(
+          6,
+          h3(uiOutput("titleLaMap")),
+          p(uiOutput("commentLA")),
+          withSpinner(leafletOutput("mapLA")),
+          p(uiOutput("mapLaFoot"))
+        )
+      ),
+      ### 2.3.3 Downloads ----
+      fluidRow(
+        column(
+          width = 3,
+          downloadButton(
+            outputId = "downloadV1All",
+            label = "All areas   ",
+            icon = shiny::icon("download"),
+            class = "downloadButton"
+          )
+        ),
+        column(
+          width = 9,
+          "Download metric data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
+        )
+      ),
+      fluidRow(
+        column(
+          width = 3,
+          downloadButton(
+            outputId = "downloadV1Current",
+            label = "Current geographic areas",
+            icon = shiny::icon("download"),
+            class = "downloadButton"
+          )
+        ),
+        column(width = 9, "Download metric data for the selected geographic areas")
+      ),
+      ### 2.3.3 Data notes ----
+      fluidRow(column(
+        12,
+        h2("Data notes"),
+        p(uiOutput("dataSource")),
+        p(uiOutput("dataNote")),
+        p("Caveats:"),
+        p(uiOutput("dataCaveat"))
+      )),
+      br()
+    ),
+
+
     ## 2.5 Data information ----
     tabPanel(
       "Data sources",

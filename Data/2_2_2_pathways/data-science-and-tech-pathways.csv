@@ -1,0 +1,245 @@
+"time_period","time_identifier","geographic_level","country_code","country_name","group","stem","pathway","top_10_subjects","percentage","all_occupations_percentage"
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","Not STEM",NA,NA,0.390810606720688,0.719278351581855
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","STEM",NA,NA,0.609189393279312,0.280721648418145
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","Not STEM",NA,NA,0.386768491212519,0.719278351581855
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","STEM",NA,NA,0.613231508787481,0.280721648418145
+2019,"Calendar year","National","E92000001","England","Design and development engineers","Not STEM",NA,NA,0.19047619047619,0.719278351581855
+2019,"Calendar year","National","E92000001","England","Design and development engineers","STEM",NA,NA,0.80952380952381,0.280721648418145
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","Not STEM",NA,NA,0.446951844048997,0.719278351581855
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","STEM",NA,NA,0.553048155951003,0.280721648418145
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","Not STEM",NA,NA,0.290104850690034,0.719278351581855
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","STEM",NA,NA,0.709895149309966,0.280721648418145
+2019,"Calendar year","National","E92000001","England","Engineering technicians","Not STEM",NA,NA,0.355555555555556,0.719278351581855
+2019,"Calendar year","National","E92000001","England","Engineering technicians","STEM",NA,NA,0.644444444444444,0.280721648418145
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","Not STEM",NA,NA,0.402985926750592,0.719278351581855
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","STEM",NA,NA,0.597014073249408,0.280721648418145
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","Not STEM",NA,NA,0.429414027439415,0.719278351581855
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","STEM",NA,NA,0.570585972560585,0.280721648418145
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","Not STEM",NA,NA,0.190209282632364,0.719278351581855
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","STEM",NA,NA,0.809790717367636,0.280721648418145
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","Not STEM",NA,NA,0.274036323425124,0.719278351581855
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","STEM",NA,NA,0.725963676574876,0.280721648418145
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","Not STEM",NA,NA,0.477555630825435,0.719278351581855
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","STEM",NA,NA,0.522444369174565,0.280721648418145
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","Not STEM",NA,NA,0.359399441154057,0.719278351581855
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","STEM",NA,NA,0.640600558845943,0.280721648418145
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","Not STEM","A/AS levels",NA,0.0658321473865606,0.0968779254094927
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","Not STEM","Apprenticeship",NA,0.0261392349917226,0.0889583085508588
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","Not STEM","Further Education",NA,0.043565391652871,0.226791966857858
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","Not STEM","GCSEs",NA,0.0203305161046731,0.06380948440385
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","Not STEM","Higher Education",NA,0.234943316584861,0.242840666359795
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","STEM","Apprenticeship",NA,0.0726089860881183,0.0438003299732608
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","STEM","Further Education",NA,0.0561509492414781,0.0766424962115139
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","STEM","Higher Education",NA,0.480429457949716,0.160278822233371
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","Not STEM","A/AS levels",NA,0.0664814278165113,0.0968779254094927
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","Not STEM","Apprenticeship",NA,0.0272744319247226,0.0889583085508588
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","Not STEM","Further Education",NA,0.0721636011341618,0.226791966857858
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","Not STEM","GCSEs",NA,0.0306837359153129,0.06380948440385
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","Not STEM","Higher Education",NA,0.19016529442181,0.242840666359795
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","STEM","Apprenticeship",NA,0.10114268505418,0.0438003299732608
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","STEM","Further Education",NA,0.0914829904141736,0.0766424962115139
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","STEM","Higher Education",NA,0.420605833319128,0.160278822233371
+2019,"Calendar year","National","E92000001","England","Design and development engineers","Not STEM","A/AS levels",NA,0.0476190476190476,0.0968779254094927
+2019,"Calendar year","National","E92000001","England","Design and development engineers","Not STEM","Apprenticeship",NA,0.0119047619047619,0.0889583085508588
+2019,"Calendar year","National","E92000001","England","Design and development engineers","Not STEM","GCSEs",NA,0.0119047619047619,0.06380948440385
+2019,"Calendar year","National","E92000001","England","Design and development engineers","Not STEM","Higher Education",NA,0.119047619047619,0.242840666359795
+2019,"Calendar year","National","E92000001","England","Design and development engineers","STEM","Apprenticeship",NA,0.0833333333333333,0.0438003299732608
+2019,"Calendar year","National","E92000001","England","Design and development engineers","STEM","Further Education",NA,0.142857142857143,0.0766424962115139
+2019,"Calendar year","National","E92000001","England","Design and development engineers","STEM","Higher Education",NA,0.583333333333333,0.160278822233371
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","Not STEM","A/AS levels",NA,0.0807734263754382,0.0968779254094927
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","Not STEM","Apprenticeship",NA,0.038304923848146,0.0889583085508588
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","Not STEM","Further Education",NA,0.0691154060738286,0.226791966857858
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","Not STEM","GCSEs",NA,0.0199851776599022,0.06380948440385
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","Not STEM","Higher Education",NA,0.238772910091682,0.242840666359795
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","STEM","Apprenticeship",NA,0.0874351522620723,0.0438003299732608
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","STEM","Further Education",NA,0.064119111658853,0.0766424962115139
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","STEM","Higher Education",NA,0.401493892030078,0.160278822233371
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","Not STEM","A/AS levels",NA,0.0559777811268758,0.0968779254094927
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","Not STEM","Apprenticeship",NA,0.0139944452817189,0.0889583085508588
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","Not STEM","Further Education",NA,0.0667427390358904,0.226791966857858
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","Not STEM","GCSEs",NA,0.025835898981635,0.06380948440385
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","Not STEM","Higher Education",NA,0.127553986263914,0.242840666359795
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","STEM","Apprenticeship",NA,0.108726074881047,0.0438003299732608
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","STEM","Further Education",NA,0.0947316295993283,0.0766424962115139
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","STEM","Higher Education",NA,0.506437444829591,0.160278822233371
+2019,"Calendar year","National","E92000001","England","Engineering technicians","Not STEM","A/AS levels",NA,0.0555555555555556,0.0968779254094927
+2019,"Calendar year","National","E92000001","England","Engineering technicians","Not STEM","Apprenticeship",NA,0.0444444444444444,0.0889583085508588
+2019,"Calendar year","National","E92000001","England","Engineering technicians","Not STEM","Further Education",NA,0.155555555555556,0.226791966857858
+2019,"Calendar year","National","E92000001","England","Engineering technicians","Not STEM","GCSEs",NA,0.0444444444444444,0.06380948440385
+2019,"Calendar year","National","E92000001","England","Engineering technicians","Not STEM","Higher Education",NA,0.0555555555555556,0.242840666359795
+2019,"Calendar year","National","E92000001","England","Engineering technicians","STEM","Apprenticeship",NA,0.211111111111111,0.0438003299732608
+2019,"Calendar year","National","E92000001","England","Engineering technicians","STEM","Further Education",NA,0.2,0.0766424962115139
+2019,"Calendar year","National","E92000001","England","Engineering technicians","STEM","Higher Education",NA,0.233333333333333,0.160278822233371
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","Not STEM","A/AS levels",NA,0.0666076713006575,0.0968779254094927
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","Not STEM","Apprenticeship",NA,0.027594606681701,0.0889583085508588
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","Not STEM","Further Education",NA,0.0608984423320297,0.226791966857858
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","Not STEM","GCSEs",NA,0.0304492211660149,0.06380948440385
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","Not STEM","Higher Education",NA,0.217435985270189,0.242840666359795
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","STEM","Apprenticeship",NA,0.0913476634980446,0.0438003299732608
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","STEM","Further Education",NA,0.0884930490137307,0.0766424962115139
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","STEM","Higher Education",NA,0.417173360737632,0.160278822233371
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","Not STEM","A/AS levels",NA,0.0769329401205283,0.0968779254094927
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","Not STEM","Apprenticeship",NA,0.0641107834337736,0.0889583085508588
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","Not STEM","Further Education",NA,0.0256443133735094,0.226791966857858
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","Not STEM","GCSEs",NA,0.0384664700602641,0.06380948440385
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","Not STEM","Higher Education",NA,0.22425952045134,0.242840666359795
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","STEM","Apprenticeship",NA,0.115399410180792,0.0438003299732608
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","STEM","Further Education",NA,0.0512886267470189,0.0766424962115139
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","STEM","Higher Education",NA,0.403897935632773,0.160278822233371
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","Not STEM","A/AS levels",NA,0.0282269446348643,0.0968779254094927
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","Not STEM","Apprenticeship",NA,0.00403242066212347,0.0889583085508588
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","Not STEM","Further Education",NA,0.0161296826484939,0.226791966857858
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","Not STEM","GCSEs",NA,0.00403242066212347,0.06380948440385
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","Not STEM","Higher Education",NA,0.137787814024759,0.242840666359795
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","STEM","Apprenticeship",NA,0.0483890479454817,0.0438003299732608
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","STEM","Further Education",NA,0.0483890479454817,0.0766424962115139
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","STEM","Higher Education",NA,0.713012621476672,0.160278822233371
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","Not STEM","A/AS levels",NA,0.0516845559335072,0.0968779254094927
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","Not STEM","Apprenticeship",NA,0.0192314626729329,0.0889583085508588
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","Not STEM","Further Education",NA,0.0504825895164489,0.226791966857858
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","Not STEM","GCSEs",NA,0.0144235970046997,0.06380948440385
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","Not STEM","Higher Education",NA,0.138214118297535,0.242840666359795
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","STEM","Apprenticeship",NA,0.0973592797817229,0.0438003299732608
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","STEM","Further Education",NA,0.0925514141134897,0.0766424962115139
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","STEM","Higher Education",NA,0.536052982679664,0.160278822233371
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","Not STEM","A/AS levels",NA,0.0775716592774495,0.0968779254094927
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","Not STEM","Apprenticeship",NA,0.0494462623464444,0.0889583085508588
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","Not STEM","Further Education",NA,0.105394632585541,0.226791966857858
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","Not STEM","GCSEs",NA,0.0443050607569058,0.06380948440385
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","Not STEM","Higher Education",NA,0.200838015859095,0.242840666359795
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","STEM","Apprenticeship",NA,0.139417290163369,0.0438003299732608
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","STEM","Further Education",NA,0.118550060182301,0.0766424962115139
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","STEM","Higher Education",NA,0.264477018828895,0.160278822233371
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","Not STEM","A/AS levels",NA,0.0695215048731901,0.0968779254094927
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","Not STEM","Apprenticeship",NA,0.0280759923526345,0.0889583085508588
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","Not STEM","Further Education",NA,0.105619209326577,0.226791966857858
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","Not STEM","GCSEs",NA,0.0374346564701793,0.06380948440385
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","Not STEM","Higher Education",NA,0.118748078131476,0.242840666359795
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","STEM","Apprenticeship",NA,0.148401673863925,0.0438003299732608
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","STEM","Further Education",NA,0.137706057729588,0.0766424962115139
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","STEM","Higher Education",NA,0.35449282725243,0.160278822233371
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","Not STEM","Higher Education","Business & administrative studies",0.0596168181774176,0.0525235455057952
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","Not STEM","Higher Education","Social studies",0.0656869294143843,0.0403877832313588
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","STEM","Apprenticeship","Engineering and Manufacturing Technologies",0.0261392349917226,0.0287368954584715
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","STEM","Apprenticeship","Information and Communication Technology (ICT)",0.0425972718383627,0.00730544249000512
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","STEM","Further Education","Information and Communication Technology (ICT)",0.0251711151772143,0.0223688770047944
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","STEM","Higher Education","Biological sciences",0.0341939918484312,0.0398495725346394
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","STEM","Higher Education","Computer science",0.189267423736362,0.0174406125710503
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","STEM","Higher Education","Engineering & technology",0.132148354680375,0.0204116002668749
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","STEM","Higher Education","Mathematical sciences",0.0414645716553881,0.00830493046253149
+2019,"Calendar year","National","E92000001","England","Artificial Intelligence SOC2010","STEM","Higher Education","Physical sciences",0.0573030118207429,0.0177797014724669
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","Not STEM","Higher Education","Business & administrative studies",0.0489121479183358,0.0525235455057952
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","Not STEM","Higher Education","Creative arts & design",0.033331628681338,0.0440951336702026
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","Not STEM","Higher Education","Social studies",0.0434743080533442,0.0403877832313588
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","STEM","Apprenticeship","Engineering and Manufacturing Technologies",0.0625039064941559,0.0287368954584715
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","STEM","Apprenticeship","Information and Communication Technology (ICT)",0.0306837359153129,0.00730544249000512
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","STEM","Further Education","Engineering and Manufacturing Technologies",0.0460256038729693,0.0257306735488676
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","STEM","Higher Education","Biological sciences",0.054014739557586,0.0398495725346394
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","STEM","Higher Education","Computer science",0.121501912051321,0.0174406125710503
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","STEM","Higher Education","Engineering & technology",0.113830978072493,0.0204116002668749
+2019,"Calendar year","National","E92000001","England","Critical Technologies SOC2010","STEM","Higher Education","Physical sciences",0.0647370006079925,0.0177797014724669
+2019,"Calendar year","National","E92000001","England","Design and development engineers","Not STEM","Apprenticeship","Business, Administration, Finance and Law",0.0119047619047619,0.0303208188301982
+2019,"Calendar year","National","E92000001","England","Design and development engineers","Not STEM","Higher Education","Business & administrative studies",0.0119047619047619,0.0525235455057952
+2019,"Calendar year","National","E92000001","England","Design and development engineers","Not STEM","Higher Education","Creative arts & design",0.0714285714285714,0.0440951336702026
+2019,"Calendar year","National","E92000001","England","Design and development engineers","Not STEM","Higher Education","Education",0.0119047619047619,0.0370770601347822
+2019,"Calendar year","National","E92000001","England","Design and development engineers","Not STEM","Higher Education","Languages",0.0119047619047619,0.0213797330216345
+2019,"Calendar year","National","E92000001","England","Design and development engineers","Not STEM","Higher Education","Social studies",0.0119047619047619,0.0403877832313588
+2019,"Calendar year","National","E92000001","England","Design and development engineers","STEM","Apprenticeship","Construction, Planning and the Built Environment",0.0119047619047619,0.0076610171244744
+2019,"Calendar year","National","E92000001","England","Design and development engineers","STEM","Apprenticeship","Engineering and Manufacturing Technologies",0.0714285714285714,0.0287368954584715
+2019,"Calendar year","National","E92000001","England","Design and development engineers","STEM","Further Education","Construction, Planning and the Built Environment",0.0476190476190476,0.0200738043641291
+2019,"Calendar year","National","E92000001","England","Design and development engineers","STEM","Further Education","Engineering and Manufacturing Technologies",0.0952380952380952,0.0257306735488676
+2019,"Calendar year","National","E92000001","England","Design and development engineers","STEM","Higher Education","Architecture, building & planning",0.0238095238095238,0.0085897134197746
+2019,"Calendar year","National","E92000001","England","Design and development engineers","STEM","Higher Education","Computer science",0.0357142857142857,0.0174406125710503
+2019,"Calendar year","National","E92000001","England","Design and development engineers","STEM","Higher Education","Engineering & technology",0.5,0.0204116002668749
+2019,"Calendar year","National","E92000001","England","Design and development engineers","STEM","Higher Education","Physical sciences",0.0238095238095238,0.0177797014724669
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","Not STEM","Apprenticeship","Business, Administration, Finance and Law",0.0341413451689997,0.0303208188301982
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","Not STEM","Higher Education","Business & administrative studies",0.0627701121668096,0.0525235455057952
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","Not STEM","Higher Education","Creative arts & design",0.0358067766406582,0.0440951336702026
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","Not STEM","Higher Education","Social studies",0.0506874068399271,0.0403877832313588
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","STEM","Apprenticeship","Information and Communication Technology (ICT)",0.0807734263754382,0.00730544249000512
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","STEM","Further Education","Information and Communication Technology (ICT)",0.0482975126780971,0.0223688770047944
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","STEM","Higher Education","Biological sciences",0.0320429015147099,0.0398495725346394
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","STEM","Higher Education","Computer science",0.220661342837396,0.0174406125710503
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","STEM","Higher Education","Engineering & technology",0.0512120177534995,0.0204116002668749
+2019,"Calendar year","National","E92000001","England","Digital and Computing SOC2010","STEM","Higher Education","Physical sciences",0.0498463639467395,0.0177797014724669
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","Not STEM","Higher Education","Business & administrative studies",0.0357934850474735,0.0525235455057952
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","Not STEM","Higher Education","Creative arts & design",0.0342648610243934,0.0440951336702026
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","STEM","Apprenticeship","Engineering and Manufacturing Technologies",0.0828901758994122,0.0287368954584715
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","STEM","Further Education","Engineering and Manufacturing Technologies",0.049518806381467,0.0257306735488676
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","STEM","Further Education","Information and Communication Technology (ICT)",0.0226064116089306,0.0223688770047944
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","STEM","Higher Education","Biological sciences",0.0653755893814455,0.0398495725346394
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","STEM","Higher Education","Computer science",0.155908885396258,0.0174406125710503
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","STEM","Higher Education","Engineering & technology",0.147835166964497,0.0204116002668749
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","STEM","Higher Education","Physical sciences",0.0673563416367042,0.0177797014724669
+2019,"Calendar year","National","E92000001","England","Engineering Biology SOC2010","STEM","Higher Education","Subjects allied to medicine",0.0308523693672358,0.0348059079695266
+2019,"Calendar year","National","E92000001","England","Engineering technicians","Not STEM","Apprenticeship","Business, Administration, Finance and Law",0.0333333333333333,0.0303208188301982
+2019,"Calendar year","National","E92000001","England","Engineering technicians","Not STEM","Further Education","Health, Public Services and Care",0.0333333333333333,0.0570535663489338
+2019,"Calendar year","National","E92000001","England","Engineering technicians","Not STEM","Further Education","Leisure, Travel and Tourism",0.0555555555555556,0.0345877144438296
+2019,"Calendar year","National","E92000001","England","Engineering technicians","Not STEM","Higher Education","Creative arts & design",0.0333333333333333,0.0440951336702026
+2019,"Calendar year","National","E92000001","England","Engineering technicians","STEM","Apprenticeship","Construction, Planning and the Built Environment",0.0333333333333333,0.0076610171244744
+2019,"Calendar year","National","E92000001","England","Engineering technicians","STEM","Apprenticeship","Engineering and Manufacturing Technologies",0.155555555555556,0.0287368954584715
+2019,"Calendar year","National","E92000001","England","Engineering technicians","STEM","Further Education","Engineering and Manufacturing Technologies",0.144444444444444,0.0257306735488676
+2019,"Calendar year","National","E92000001","England","Engineering technicians","STEM","Higher Education","Biological sciences",0.0333333333333333,0.0398495725346394
+2019,"Calendar year","National","E92000001","England","Engineering technicians","STEM","Higher Education","Computer science",0.0333333333333333,0.0174406125710503
+2019,"Calendar year","National","E92000001","England","Engineering technicians","STEM","Higher Education","Engineering & technology",0.155555555555556,0.0204116002668749
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","Not STEM","Higher Education","Business & administrative studies",0.0545421674136241,0.0525235455057952
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","Not STEM","Higher Education","Creative arts & design",0.0344076199175968,0.0440951336702026
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","Not STEM","Higher Education","Social studies",0.0512498453750488,0.0403877832313588
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","STEM","Apprenticeship","Engineering and Manufacturing Technologies",0.0475769080718982,0.0287368954584715
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","STEM","Apprenticeship","Information and Communication Technology (ICT)",0.0380615264575186,0.00730544249000512
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","STEM","Further Education","Engineering and Manufacturing Technologies",0.0418676791032704,0.0257306735488676
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","STEM","Higher Education","Biological sciences",0.0358349271597537,0.0398495725346394
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","STEM","Higher Education","Computer science",0.170477577003226,0.0174406125710503
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","STEM","Higher Education","Engineering & technology",0.102128590867137,0.0204116002668749
+2019,"Calendar year","National","E92000001","England","Future Telecommunications SOC2010","STEM","Higher Education","Physical sciences",0.0483952308907349,0.0177797014724669
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","Not STEM","Apprenticeship","Business, Administration, Finance and Law",0.0384664700602641,0.0303208188301982
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","Not STEM","Higher Education","Historical & philosophical studies",0.0384664700602641,0.0174874837728667
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","Not STEM","Higher Education","Law",0.0384664700602641,0.0158385872179323
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","Not STEM","Higher Education","Mass communications & documentation",0.0448775484036415,0.0140513398052227
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","Not STEM","Higher Education","Social studies",0.0448775484036415,0.0403877832313588
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","STEM","Apprenticeship","Information and Communication Technology (ICT)",0.115399410180792,0.00730544249000512
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","STEM","Further Education","Information and Communication Technology (ICT)",0.0384664700602641,0.0223688770047944
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","STEM","Higher Education","Computer science",0.205154506988075,0.0174406125710503
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","STEM","Higher Education","Engineering & technology",0.102577253494038,0.0204116002668749
+2019,"Calendar year","National","E92000001","England","IT business analysts, architects and systems designers","STEM","Higher Education","Physical sciences",0.0769329401205283,0.0177797014724669
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","Not STEM","Higher Education","Business & administrative studies",0.0510907697891044,0.0525235455057952
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","Not STEM","Higher Education","Creative arts & design",0.0141134723174322,0.0440951336702026
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","Not STEM","Higher Education","Languages",0.0201621033106174,0.0213797330216345
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","Not STEM","Higher Education","Social studies",0.0201621033106174,0.0403877832313588
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","STEM","Apprenticeship","Information and Communication Technology (ICT)",0.0403242066212347,0.00730544249000512
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","STEM","Further Education","Information and Communication Technology (ICT)",0.0362917859591113,0.0223688770047944
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","STEM","Higher Education","Computer science",0.501350860921811,0.0174406125710503
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","STEM","Higher Education","Engineering & technology",0.0826646235735312,0.0204116002668749
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","STEM","Higher Education","Mathematical sciences",0.0544376789386669,0.00830493046253149
+2019,"Calendar year","National","E92000001","England","Programmers and software development professionals","STEM","Higher Education","Physical sciences",0.0557683777571676,0.0177797014724669
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","Not STEM","Higher Education","Business & administrative studies",0.0387513972859598,0.0525235455057952
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","Not STEM","Higher Education","Creative arts & design",0.0292438429270286,0.0440951336702026
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","STEM","Apprenticeship","Engineering and Manufacturing Technologies",0.0588963544358571,0.0287368954584715
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","STEM","Apprenticeship","Information and Communication Technology (ICT)",0.0276452275923411,0.00730544249000512
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","STEM","Further Education","Engineering and Manufacturing Technologies",0.046876690265274,0.0257306735488676
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","STEM","Further Education","Information and Communication Technology (ICT)",0.0240393283411661,0.0223688770047944
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","STEM","Higher Education","Biological sciences",0.0423572965371348,0.0398495725346394
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","STEM","Higher Education","Computer science",0.191112660312271,0.0174406125710503
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","STEM","Higher Education","Engineering & technology",0.183900861809921,0.0204116002668749
+2019,"Calendar year","National","E92000001","England","Quantum SOC2010","STEM","Higher Education","Physical sciences",0.0674062766686299,0.0177797014724669
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","Not STEM","Apprenticeship","Business, Administration, Finance and Law",0.0328129630861726,0.0303208188301982
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","Not STEM","Higher Education","Business & administrative studies",0.0715216747010542,0.0525235455057952
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","Not STEM","Higher Education","Social studies",0.0453937857993964,0.0403877832313588
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","STEM","Apprenticeship","Engineering and Manufacturing Technologies",0.0942049585377213,0.0287368954584715
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","STEM","Further Education","Construction, Planning and the Built Environment",0.0353835638809419,0.0200738043641291
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","STEM","Further Education","Engineering and Manufacturing Technologies",0.0579141237880373,0.0257306735488676
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","STEM","Higher Education","Biological sciences",0.0426250975316184,0.0398495725346394
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","STEM","Higher Education","Computer science",0.0492784172357271,0.0174406125710503
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","STEM","Higher Education","Engineering & technology",0.0663698882847137,0.0204116002668749
+2019,"Calendar year","National","E92000001","England","STEM SOC2010","STEM","Higher Education","Physical sciences",0.0388190962372453,0.0177797014724669
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","Not STEM","Further Education","Arts, Media and Publishing",0.0280759923526345,0.0414729323658255
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","Not STEM","Further Education","Leisure, Travel and Tourism",0.0254020883190502,0.0345877144438296
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","Not STEM","Higher Education","Business & administrative studies",0.0275144725055818,0.0525235455057952
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","Not STEM","Higher Education","Creative arts & design",0.041886706686097,0.0440951336702026
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","STEM","Apprenticeship","Engineering and Manufacturing Technologies",0.122999585544875,0.0287368954584715
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","STEM","Further Education","Construction, Planning and the Built Environment",0.0254020883190502,0.0200738043641291
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","STEM","Further Education","Engineering and Manufacturing Technologies",0.0815540730243191,0.0257306735488676
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","STEM","Higher Education","Biological sciences",0.0546947070069655,0.0398495725346394
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","STEM","Higher Education","Computer science",0.0327553244114069,0.0174406125710503
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","STEM","Higher Education","Engineering & technology",0.177587336390497,0.0204116002668749
+2019,"Calendar year","National","E92000001","England","Semiconductors SOC2010","STEM","Higher Education","Physical sciences",0.0435578967070872,0.0177797014724669
