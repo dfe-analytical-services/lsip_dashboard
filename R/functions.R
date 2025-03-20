@@ -78,7 +78,6 @@ formatNomis <- function(x) {
     )) %>%
     mutate(geogConcat = case_when(
       GEOGRAPHY_TYPE == "local authorities: district / unitary (as of April 2021)" ~ paste0(GEOGRAPHY_NAME, " LADU"),
-      GEOGRAPHY_TYPE == "local enterprise partnerships (as of April 2021)" ~ paste0(GEOGRAPHY_NAME, " LEP"),
       GEOGRAPHY_TYPE == "combined authorities" ~ paste0(GEOGRAPHY_NAME, " MCA"),
       TRUE ~ GEOGRAPHY_NAME
     )) %>%
