@@ -725,7 +725,7 @@ width: 100%;
       fluidRow(
         column(
           4,
-          p("Choose a LEP, LSIP or MCA"),
+          p("Choose an LSIP or MCA"),
           selectizeInput(
             "geoChoice",
             multiple = FALSE,
@@ -769,7 +769,7 @@ width: 100%;
           h3(uiOutput("titleMap")),
           radioGroupButtons(
             inputId = "splashGeoType",
-            choices = c("LEP", "LSIP", "MCA")
+            choices = c("LSIP", "MCA")
           ),
           p(uiOutput("commentMap")),
           withSpinner(leafletOutput("map")),
