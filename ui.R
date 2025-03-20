@@ -182,6 +182,11 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 width: 100%;
 }
 
+/* allow text wrap in screen shot button*/
+.btn-block {
+    white-space: normal;
+}
+
 "
       )
     ),
@@ -724,17 +729,18 @@ width: 100%;
       ### 2.3.1 Filters ----
       fluidRow(
         column(
-          4,
+          5,
           p("Choose a LEP, LSIP or MCA"),
           selectizeInput(
             "geoChoice",
             multiple = FALSE,
             label = NULL,
             choices = areaChoices[1:3]
-          )
+          ),
+          uiOutput("geoComp")
         ),
         column(
-          4,
+          5,
           p("What are you interested in?"),
           pickerInput(
             inputId = "splashMetric",
@@ -750,9 +756,8 @@ width: 100%;
             )
           )
         ),
-        column(1),
         column(
-          3,
+          2,
           uiOutput("screenshotFile")
         )
       ),
@@ -779,7 +784,6 @@ width: 100%;
           6,
           h3(uiOutput("titleTime")),
           p(uiOutput("commentTime")),
-          uiOutput("geoComp"),
           withSpinner(plotlyOutput("Splash_time")),
           p(uiOutput("timeFoot"))
         )
