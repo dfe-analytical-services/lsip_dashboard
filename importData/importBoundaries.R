@@ -12,7 +12,7 @@ neatLA <- I_mapLA %>%
   mutate(geog = "LADU") %>% # add geog type
   rename(OBJECTID = FID) %>% # consistent naming
   # add on lsip, and mca groupings
-  left_join(F_LEP2020 %>% mutate(LSIP = paste0(LSIP23NM, " LSIP")) %>% select(LAD23CD, LSIP), by = c("LAD24CD" = "LAD23CD")) %>%
+  left_join(C_LADLSIP %>% mutate(LSIP = paste0(LSIP23NM, " LSIP")) %>% select(LAD23CD, LSIP), by = c("LAD24CD" = "LAD23CD")) %>%
   left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH24NM, " MCA")) %>% select(LAD24CD, MCA), by = c("LAD24CD" = "LAD24CD")) %>%
   filter(is.na(LSIP) == FALSE) %>% # remove non England
   mutate(MCA = case_when(LSIP == "Greater London" ~ "Greater London Authority MCA", TRUE ~ MCA)) %>% # add on gla as mca
