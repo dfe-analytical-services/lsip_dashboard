@@ -15,7 +15,7 @@ neatLA <- I_mapLA %>%
   left_join(C_LADLSIP %>% mutate(LSIP = paste0(LSIP23NM, " LSIP")) %>% select(LAD23CD, LSIP), by = c("LAD24CD" = "LAD23CD")) %>%
   left_join(C_mcalookup %>% mutate(MCA = paste0(CAUTH24NM, " MCA")) %>% select(LAD24CD, MCA), by = c("LAD24CD" = "LAD24CD")) %>%
   filter(is.na(LSIP) == FALSE) %>% # remove non England
-  mutate(MCA = case_when(LSIP == "Greater London" ~ "Greater London Authority MCA", TRUE ~ MCA)) %>% # add on gla as mca
+  mutate(MCA = case_when(LSIP == "Greater London LSIP" ~ "Greater London Authority MCA", TRUE ~ MCA)) %>% # add on gla as mca
   rename(areaName = LAD24NM, areaCode = LAD24CD) %>%
   sf::st_transform(4326) # transform to WG84 that leaflet can plot
 
@@ -50,8 +50,7 @@ addEngland <- data.frame(
 # 5 Combine all boundary data ----
 neatGeog <- bind_rows(
   neatMCA, addEngland, neatLA, neatLSIP,
-  neatLSIP %>% filter(areaCode == "E69000013") %>% mutate(areaName = "Greater London Authority", geog = "MCA"), # add GLA as an MCA (it isn't officially but people like to find it there)
-  neatLA
+  neatLSIP %>% filter(areaCode == "E69000013") %>% mutate(areaName = "Greater London Authority", geog = "MCA") # add GLA as an MCA (it isn't officially but people like to find it there)
 ) %>%
   mutate(geogConcat = case_when(
     areaName == "England" ~ "England",
