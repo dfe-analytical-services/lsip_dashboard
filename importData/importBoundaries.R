@@ -12,6 +12,18 @@ neatLEP <- I_mapLEP %>%
   inner_join(distinct(F_LEP2020, LEP23CD1), by = c("areaCode" = "LEP23CD1")) %>% # remove any areas that are no longer LEPs in 2023 (Black Country and Coventry)
   sf::st_transform(4326) # transform to WG84 that leaflet can plot
 
+# 1 England boundary----
+folder <- "1-5_EnglandBoundary"
+I_mapEngland <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
+                        stringsAsFactors = F
+)
+
+neatEngland <- I_mapEngland %>%
+  mutate(geog = "Country") %>% # add geog type
+  rename(areaCode = CTRY24CD, areaName = CTRY24NM) %>% # consistent naming
+  select(-CTRY24NMW)%>%
+  sf::st_transform(4326) # transform to WG84 that leaflet can plot
+
 # 2 LA boundary----
 folder <- "1-6_LABoundary"
 I_mapLA <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))),
@@ -53,15 +65,9 @@ neatLSIP <- I_mapLSIP %>%
   rename(areaCode = LSIP23CD, areaName = LSIP23NM) %>% # consistent naming
   sf::st_transform(4326) # transform to WG84 that leaflet can plot
 
-# 4 England blank data ----
-addEngland <- data.frame(
-  areaName = "England", areaCode = "x",
-  geog = "COUNTRY"
-)
-
 # 5 Combine all boundary data ----
 neatGeog <- bind_rows(
-  neatMCA, neatLEP, addEngland, neatLA, neatLSIP,
+  neatMCA, neatLEP, neatEngland, neatLA, neatLSIP,
   neatLEP %>% filter(areaCode == "E37000051") %>% mutate(areaName = "Greater London Authority", geog = "MCA"), # add GLA as an MCA (it isn't officially but people like to find it there)
   neatLA %>%
     filter(LEP2 != "0 LEP") %>%

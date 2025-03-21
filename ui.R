@@ -769,7 +769,7 @@ width: 100%;
           h3(uiOutput("titleMap")),
           radioGroupButtons(
             inputId = "splashGeoType",
-            choices = c("LEP", "LSIP", "MCA")
+            choices = c("LSIP", "MCA", "England")
           ),
           p(uiOutput("commentMap")),
           withSpinner(leafletOutput("map")),
