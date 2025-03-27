@@ -739,16 +739,11 @@ width: 100%;
           pickerInput(
             inputId = "splashMetric",
             choices = metricChoices,
-            multiple = FALSE,
-            choicesOpt = list(
-              disabled = unlist(metricChoices) %in% c("workingFutures"),
-              style = ifelse(
-                unlist(metricChoices) %in% c("workingFutures"),
-                yes = "color: rgba(119, 119, 119, 0.5);",
-                no = ""
-              )
-            )
-          )
+            multiple = FALSE
+          ),
+          uiOutput("breakdownPageTitle"),
+          uiOutput("breakdownPageFilter"),
+          uiOutput("subgroupPageFilter")
         ),
         column(1),
         column(
@@ -766,14 +761,14 @@ width: 100%;
       fluidRow(
         column(
           6,
-          h3(uiOutput("titleMap")),
+          # h3(uiOutput("titleMap")),
           radioGroupButtons(
             inputId = "splashGeoType",
             choices = c("LEP", "LSIP", "MCA")
           ),
-          p(uiOutput("commentMap")),
+          # p(uiOutput("commentMap")),
           withSpinner(leafletOutput("map")),
-          p(uiOutput("mapFoot"))
+          # p(uiOutput("mapFoot"))
         ),
         column(
           6,

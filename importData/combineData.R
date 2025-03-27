@@ -38,10 +38,14 @@ C_Geog <- neatGeog %>%
   left_join(
     (C_localSkillsDataset %>%
        filter(
-         breakdown == "Total", latest == 1,
+         latest == 1,
          metric != "employmentProjectionAnnualGrowth", # the maps use the employmentProjectionGrowth2023to2035 metric
          !metric %in% dashboardMetricIgnore # remove metrics not used
        ) %>%
+       mutate(metric=case_when(
+         breakdown=="Total" ~ metric,
+         TRUE ~ paste0(metric,breakdown,subgroup))
+         )%>%
        select(value, metric, geogConcat) %>%
        tidyr::pivot_wider(names_from = metric, values_from = value)),
     by = c("geogConcat" = "geogConcat")

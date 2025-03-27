@@ -997,6 +997,48 @@ server <- function(input, output, session) {
     )
   })
 
+  # update subgroups based on metric
+  output$breakdownPageTitle <- renderUI({
+    validate(
+      need(input$splashMetric %in% distinctBreakdowns$metric, "")
+    )
+    p("Limit to subgroup")
+  })
+
+  output$breakdownPageFilter <- renderUI({
+    validate(
+      need(input$splashMetric %in% distinctBreakdowns$metric, "")
+    )
+    selectizeInput(
+      inputId = "breakdownPage",
+      label = NULL,
+      choices =
+        c("All", (as.vector(
+          distinctBreakdowns %>%
+            filter(metric == input$splashMetric)
+        ))$breakdown)
+    )
+  })
+
+  output$subgroupPageFilter <- renderUI({
+    validate(
+      need(input$splashMetric %in% distinctBreakdowns$metric, ""),
+      need(input$breakdownPage != "All", "")
+    )
+    selectizeInput(
+      inputId = "subgroupPage",
+      label = NULL,
+      choices =
+        (as.vector(
+          distinctSubgroups %>%
+            filter(
+              metric == input$splashMetric,
+              breakdown == input$breakdownPage,
+            )
+        ))$subgroup
+    )
+  })
+
   ### 2.3.5 National map ----
   #### 2.3.5.1 Dropdown area select----
   observeEvent(input$map_shape_click, {
@@ -1081,8 +1123,18 @@ server <- function(input, output, session) {
       need(input$geoChoice != "", ""),
       need(input$splashGeoType != "", "")
     )
-    mapData <- C_Geog %>% filter(geog == input$splashGeoType)
-    pal <- colorNumeric("Blues", mapData[[input$splashMetric]])
+    print(input$splashMetric)
+    print(input$breakdownPage)
+    print(input$subgroupPage)
+    mapData <- C_Geog %>%
+      filter(geog == input$splashGeoType) %>%
+      select(areaName, areaCode, value = paste0(input$splashMetric, if ("breakdownPage" %in% names(input) && input$breakdownPage == "All") {
+        ""
+      } else {
+        input$breakdownPage
+      }, input$subgroupPage))
+    print(mapData)
+    pal <- colorNumeric("Blues", mapData$value)
     labels <-
       # if a percentage then format as %, else big number
       if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
@@ -1090,14 +1142,14 @@ server <- function(input, output, session) {
           "<strong>%s</strong><br/>%s: %s%%",
           mapData$areaName,
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          round(mapData[[input$splashMetric]] * 100)
+          round(mapData$value * 100)
         ) %>% lapply(htmltools::HTML)
       } else {
         sprintf(
           "<strong>%s</strong><br/>%s: %s",
           mapData$areaName,
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData[[input$splashMetric]]), big.mark = ",")
+          format(round(mapData$value), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
 
@@ -1105,7 +1157,7 @@ server <- function(input, output, session) {
       addProviderTiles(providers$CartoDB.Positron) %>%
       addPolygons(
         data = mapData,
-        fillColor = ~ pal(mapData[[input$splashMetric]]),
+        fillColor = ~ pal(mapData$value),
         fillOpacity = 1,
         color = "black",
         layerId = ~areaCode,
@@ -1127,9 +1179,24 @@ server <- function(input, output, session) {
         zoom = 5.7
       )
   })
-  observe({
+  observeEvent(list(input$geoChoice, input$splashMetric, input$splashGeoType, input$breakdownPage, input$subgroupPage), {
     validate(need("geoChoice" %in% names(input), ""))
-    mapData <- C_Geog %>% filter(geogConcat == input$geoChoice)
+    validate(need("subgroupPage" %in% names(input) && "subgroupPage" %in% (as.vector(
+      distinctSubgroups %>%
+        filter(
+          metric == input$splashMetric,
+          breakdown == input$breakdownPage,
+        )
+    ))$subgroup, ""))
+    print("update accessed")
+    mapData <- C_Geog %>%
+      filter(geogConcat == input$geoChoice) %>%
+      select(areaName, value = paste0(input$splashMetric, if ("breakdownPage" %in% names(input) && input$breakdownPage == "All") {
+        ""
+      } else {
+        input$breakdownPage
+      }, input$subgroupPage))
+    print(mapData)
     labels <-
       # if a percentage then format as %, else big number
       if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
@@ -1137,14 +1204,14 @@ server <- function(input, output, session) {
           "<strong>%s</strong><br/>%s: %s%%",
           mapData$areaName,
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          round(mapData[[input$splashMetric]] * 100)
+          round(mapData$value * 100)
         ) %>% lapply(htmltools::HTML)
       } else {
         sprintf(
           "<strong>%s</strong><br/>%s: %s",
           mapData$areaName,
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData[[input$splashMetric]]), big.mark = ",")
+          format(round(mapData$value), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
     proxy <- leafletProxy("map")
