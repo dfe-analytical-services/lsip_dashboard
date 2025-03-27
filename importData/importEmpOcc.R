@@ -1,6 +1,6 @@
 ### 2.1.1 Employment by occupation ----
 # Query data
-# Geography: England, LEPs, regions, LADs (as of April 2021)
+# Geography: England, regions, LADs (as of April 2021)
 # Cell: T09a Employment by occupation (SOC2010) sub-major group and full-time/part-time; All people/ All people
 # find cells we want
 

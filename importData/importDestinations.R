@@ -30,9 +30,9 @@ destinationsWithAreas <-
   mutate_at(c('cohort','education','appren','all_work','all_notsust','all_unknown'), as.numeric)%>%#convert to numeric to sum
   addGeogs()
 
-# For destinations we need to also sum up for the whole country, so we take all LEPs again and relabel country ahead of the sum
+# For destinations we need to also sum up for the whole country, so we take all LSIPs again and relabel country ahead of the sum
 destinationsEngland <- destinationsWithAreas %>%
-  filter(stringr::str_sub(geogConcat, -3, -1) == "LEP") %>%
+  filter(stringr::str_sub(geogConcat, -4, -1) == "LSIP") %>%
   mutate(geogConcat = "England") %>%
   bind_rows(destinationsWithAreas)#%>%
 
@@ -40,7 +40,7 @@ groupedStats <- destinationsEngland %>%
   filter(newArea == 1) %>% # no need to group national or LAs that haven't changed
   ungroup() %>%
   select(-newArea) %>%
-  group_by(chartPeriod, timePeriod, latest, geogConcat, cohort_level_group, metric) %>% # sum for each LEP
+  group_by(chartPeriod, timePeriod, latest, geogConcat, cohort_level_group, metric) %>% # sum for each area
   summarise(across(everything(), list(sum), na.rm = T)) %>%
   rename_with(~ gsub("_1", "", .))
 

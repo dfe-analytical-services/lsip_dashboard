@@ -11,7 +11,7 @@ panel_overview <- function() {
           fluidRow(
             column(
               width = 4,
-              p("Choose a LEP, LSIP or MCA"),
+              p("Choose an LSIP or MCA"),
               selectizeInput(
                 "geoChoiceOver",
                 multiple = FALSE,
