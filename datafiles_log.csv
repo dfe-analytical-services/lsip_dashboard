@@ -3,9 +3,9 @@ Data/1-1_GeogLkup/Geog_lkups_LSIP_dashboard.xlsx,published
 Data/1-2_LEPmissing/missing_leps.xlsx,published
 Data/1-3_MCA_lookup/Local_Authority_District_to_Combined_Authority_(May_2024)_Lookup_in_EN.csv,published
 Data/1-4_LaLookup/LAD_(2011)_to_LAD_(2021)_Lookup_for_England_and_Wales.xlsx,published
-Data/2-10_KS5destin/data-16-18-destination-measures.csv,published
+Data/2-10_KS5destin/1618_dm_ud_202223_la_rev.csv,published
 Data/2-11_bussdemo/businessdemographyexceltables2023.xlsx,published
-Data/2-12_OnsProf/labourdemandbyoccupation1.xlsx,published
+Data/2-12_OnsProf/tables.xlsx,published
 Data/2-13_skillsImperative2035/BC_LEP_MainTables.Main.xlsm,published
 Data/2-13_skillsImperative2035/BH_LSIP_MainTables.Main.xlsm,published
 Data/2-13_skillsImperative2035/BS_LEP_MainTables.Main.xlsm,published
@@ -95,7 +95,7 @@ Data/2-13_skillsImperative2035/YY_LEP_MainTables.Main.xlsm,published
 Data/2-13_skillsImperative2035/YY_LSIP_MainTables.Main.xlsm,published
 Data/2-7_ILRachSSA/data-further-education-and-skills.csv,published
 Data/2-8_ILRach/fes-geography-population-202324-q4.csv,published
-Data/2-9_KS4destin/data-key-stage-4-destination-measures.csv,published
+Data/2-9_KS4destin/ks4_dm_ud_202223_la_rev.csv,published
 Data/3-1_DataTable/DataTable.xlsx,published
 Data/3-2_dataText/dataText.xlsx,published
 Data/3-3_FeInterventions/FeInterventions.xlsx,published
