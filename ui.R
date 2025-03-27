@@ -523,15 +523,19 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("20 Mar 2025 (1.4.11)"),
+            p("xx April 2025 (1.5.1)"),
             tags$ul(
-              tags$li("Update to latest revised destination data."),
-              tags$li("Update to latest online job advert data.")
+              tags$li("Removed LEPs.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("20 Mar 2025 (1.4.11)"),
+                tags$ul(
+                  tags$li("Update to latest revised destination data."),
+                  tags$li("Update to latest online job advert data.")
+                ),
                 p("17 Feb 2025 (1.4.10)"),
                 tags$ul(
                   tags$li("Update to latest online job advert data.")
@@ -730,7 +734,7 @@ width: 100%;
       fluidRow(
         column(
           5,
-          p("Choose a LEP, LSIP or MCA"),
+          p("Choose an LSIP or MCA"),
           selectizeInput(
             "geoChoice",
             multiple = FALSE,
@@ -774,7 +778,7 @@ width: 100%;
           h3(uiOutput("titleMap")),
           radioGroupButtons(
             inputId = "splashGeoType",
-            choices = c("LEP", "LSIP", "MCA")
+            choices = c("LSIP", "MCA")
           ),
           p(uiOutput("commentMap")),
           withSpinner(leafletOutput("map")),

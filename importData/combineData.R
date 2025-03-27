@@ -22,7 +22,7 @@ C_localSkillsDataset <- bind_rows(
     filter(!metric %in% c("starts_rate_per_100000_population","participation_rate_per_100000_population",
                           "achievements_rate_per_100000_population","starts",                                 
                           "participation","achievements", "achievementsAims","enrolmentsAims"),
-    geogConcat == "The London Economic Action Partnership LEP") %>%
+    geogConcat == "Greater London LSIP") %>%
     mutate(geogConcat = "Greater London Authority MCA")
 )
 
