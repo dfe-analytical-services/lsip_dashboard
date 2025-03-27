@@ -937,6 +937,7 @@ server <- function(input, output, session) {
     capture::capture(
       selector = "body",
       filename = paste0(input$geoChoice, "-", input$splashMetric, ".png"),
+      button_class = "btn btn-default btn-block",
       icon("camera"),
       "Screenshot"
     )
@@ -987,7 +988,7 @@ server <- function(input, output, session) {
       multiple = TRUE,
       label = NULL,
       choices = areaChoices,
-      options = list(maxItems = 7, placeholder = "Choose comparison areas")
+      options = list(maxItems = 7, placeholder = "Comparison areas")
     )
   })
 
