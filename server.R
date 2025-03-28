@@ -1134,11 +1134,16 @@ server <- function(input, output, session) {
     print(input$subgroupPage)
     mapData <- C_Geog %>%
       filter(geog == input$splashGeoType) %>%
-      select(areaName, areaCode, value = paste0(input$splashMetric, if ("breakdownPage" %in% names(input) && input$breakdownPage == "All") {
-        ""
-      } else {
-        input$breakdownPage
-      }, input$subgroupPage))
+      select(areaName, areaCode,
+        value = paste0(
+          input$splashMetric,
+          if ("breakdownPage" %in% names(input) && input$breakdownPage == "All") {
+            ""
+          } else {
+            paste0(input$breakdownPage, input$subgroupPage)
+          }
+        )
+      )
     print(mapData)
     pal <- colorNumeric("Blues", mapData$value)
     labels <-

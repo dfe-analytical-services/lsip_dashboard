@@ -42,6 +42,7 @@ C_Geog <- neatGeog %>%
          metric != "employmentProjectionAnnualGrowth", # the maps use the employmentProjectionGrowth2023to2035 metric
          !metric %in% dashboardMetricIgnore # remove metrics not used
        ) %>%
+       mutate(metric=gsub("employmentProjectionGrowth2023to2035","employmentProjection",metric))%>%# for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
        mutate(metric=case_when(
          breakdown=="Total" ~ metric,
          TRUE ~ paste0(metric,breakdown,subgroup))
@@ -49,8 +50,7 @@ C_Geog <- neatGeog %>%
        select(value, metric, geogConcat) %>%
        tidyr::pivot_wider(names_from = metric, values_from = value)),
     by = c("geogConcat" = "geogConcat")
-  ) %>%
-  rename(employmentProjection = employmentProjectionGrowth2023to2035)%>% # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
+  ) %>% 
 mutate(England=case_when(geog=="LADU" ~ "England",
                          TRUE ~ NA)) #add in a column for all LAs for when england is selected
   save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
