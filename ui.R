@@ -182,6 +182,11 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 width: 100%;
 }
 
+/* allow text wrap in screen shot button*/
+.btn-block {
+    white-space: normal;
+}
+
 "
       )
     ),
@@ -518,15 +523,19 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("20 Mar 2025 (1.4.11)"),
+            p("xx April 2025 (1.5.1)"),
             tags$ul(
-              tags$li("Update to latest revised destination data."),
-              tags$li("Update to latest online job advert data.")
+              tags$li("Removed LEPs.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("20 Mar 2025 (1.4.11)"),
+                tags$ul(
+                  tags$li("Update to latest revised destination data."),
+                  tags$li("Update to latest online job advert data.")
+                ),
                 p("17 Feb 2025 (1.4.10)"),
                 tags$ul(
                   tags$li("Update to latest online job advert data.")
@@ -724,17 +733,18 @@ width: 100%;
       ### 2.3.1 Filters ----
       fluidRow(
         column(
-          4,
-          p("Choose a LEP, LSIP or MCA"),
+          5,
+          p("Choose an LSIP, MCA or England"),
           selectizeInput(
             "geoChoice",
             multiple = FALSE,
             label = NULL,
             choices = areaChoices[1:3]
-          )
+          ),
+          uiOutput("geoComp")
         ),
         column(
-          4,
+          5,
           p("What are you interested in?"),
           pickerInput(
             inputId = "splashMetric",
@@ -750,9 +760,8 @@ width: 100%;
             )
           )
         ),
-        column(1),
         column(
-          3,
+          2,
           uiOutput("screenshotFile")
         )
       ),
@@ -779,7 +788,6 @@ width: 100%;
           6,
           h3(uiOutput("titleTime")),
           p(uiOutput("commentTime")),
-          uiOutput("geoComp"),
           withSpinner(plotlyOutput("Splash_time")),
           p(uiOutput("timeFoot"))
         )

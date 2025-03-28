@@ -937,6 +937,7 @@ server <- function(input, output, session) {
     capture::capture(
       selector = "body",
       filename = paste0(input$geoChoice, "-", input$splashMetric, ".png"),
+      button_class = "btn btn-default btn-block",
       icon("camera"),
       "Screenshot"
     )
@@ -987,7 +988,7 @@ server <- function(input, output, session) {
       multiple = TRUE,
       label = NULL,
       choices = areaChoices,
-      options = list(maxItems = 7, placeholder = "Choose comparison areas")
+      options = list(maxItems = 7, placeholder = "Comparison areas")
     )
   })
 
@@ -1186,7 +1187,7 @@ server <- function(input, output, session) {
     validate(
       need("geoChoice" %in% names(input), ""),
       need(input$geoChoice != "", ""),
-      need(!((input$geoChoice %in% c("The London Economic Action Partnership LEP", "Greater London LSIP", "Greater London Authority MCA") &
+      need(!((input$geoChoice %in% c("Greater London LSIP", "Greater London Authority MCA") &
         currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), "Data is not available at LA level."),
     )
     LaHighLow <- C_Geog %>%
@@ -1221,7 +1222,7 @@ server <- function(input, output, session) {
   #### 2.3.6.3 Map----
   output$mapLA <- renderLeaflet({
     validate(
-      need(!((input$geoChoice %in% c("The London Economic Action Partnership LEP", "Greater London LSIP", "Greater London Authority MCA") &
+      need(!((input$geoChoice %in% c("Greater London LSIP", "Greater London Authority MCA") &
         currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), ""),
       need(input$geoChoice != "", "")
     )

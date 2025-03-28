@@ -4,8 +4,6 @@ sheet <- "Table 12"
 I_Ons2digLA <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 I_Ons2digLA <- I_Ons2digLA[, c(1, 4, 2, 3, 5:ncol(I_Ons2digLA))]
 sheet <- "Table 10"
-I_Ons2digLep <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 9"
 I_Ons2digLsip <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 sheet <- "Table 11"
 I_Ons2digMca <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
@@ -16,8 +14,6 @@ sheet <- "Table 1"
 I_OnsEng <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 sheet <- "Table 6"
 I_OnsLA <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 4"
-I_OnsLep <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 sheet <- "Table 3"
 I_OnsLsip <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 sheet <- "Table 5"
@@ -54,25 +50,19 @@ formatVacancies <- function(x) {
       area == "Sheffield City Region" ~ "South Yorkshire",
       area == "Derby, Derbyshire, Nottingham and Nottinghamshire" ~ "D2N2",
       area == "London" ~ "The London Economic Action Partnership",
-      area == "Oxfordshire" & geographic_level == "Local Enterprise Partnership" ~ "OxLEP",
       area == "Oxfordshire" & geographic_level == "Local Skills Improvement Plan" ~ "Oxfordshire",
-      area == "Gloucestershire" & geographic_level == "Local Enterprise Partnership" ~ "GFirst",
       area == "Gloucestershire" & geographic_level == "Local Skills Improvement Plan" ~ "G First (Gloucestershire)",
       area == "Greater Cambridge and Greater Peterborough" ~ "The Business Board",
       area == "Cambridge and Peterborough" ~ "Cambridgeshire and Peterborough",
       area == "Buckinghamshire " ~ "Buckinghamshire",
       area == "North East" ~ "North East",
-      area == "Norfolk and Suffolk " & geographic_level == "Local Enterprise Partnership" ~ "Norfolk and Suffolk",
       area == "Norfolk and Suffolk " & geographic_level == "Local Skills Improvement Plan" ~ "New Anglia",
       area == "South East Midlands" & geographic_level == "Local Skills Improvement Plan" ~ "South-East Midlands",
       area == "Enterprise M3 LEP (including all of Surrey)" ~ "Enterprise M3",
-      area == "Heart of the South West" & geographic_level == "Local Enterprise Partnership" ~ "Heart of the South West",
       area == "Heart of the South West" & geographic_level == "Local Skills Improvement Plan" ~ "Heart of the South-West",
-      area == "Stoke on Trent and Staffordshire" & geographic_level == "Local Enterprise Partnership" ~ "Stoke-on-Trent and Staffordshire",
       area == "Stoke on Trent and Staffordshire" & geographic_level == "Local Skills Improvement Plan" ~ "Stoke-on-Trent and Staffordshire",
       area == "Norfolk and Suffolk" ~ "New Anglia",
       area == "Essex, Southend on Sea and Thurrock" & geographic_level == "Local Skills Improvement Plan" ~ "Essex, Southend-on-Sea and Thurrock",
-      area == "West of England and North Somerset" & geographic_level == "Local Enterprise Partnership" ~ "West of England",
       TRUE ~ area
     ))
 }
@@ -128,7 +118,6 @@ groupedStats <- advertsWithAreas %>%
 
 # Format all other area types
 F_adverts <- bind_rows(
-  formatVacancies(I_Ons2digLep),
   formatVacancies(I_Ons2digLsip),
   formatVacancies(I_Ons2digMca), 
   # get england soc stats summed from regions
@@ -136,7 +125,6 @@ F_adverts <- bind_rows(
     group_by(geographic_level, SOC2digit, time_period) %>%
     summarise(valueText = as.character(sum(as.numeric(valueText), na.rm = T))) %>%
     mutate(area = "England"),
-  formatVacancies(I_OnsLep),
   formatVacancies(I_OnsLsip),
   formatVacancies(I_OnsMca),
   formatVacancies(I_OnsEng),
@@ -148,7 +136,6 @@ F_adverts <- bind_rows(
   # change lep naming to match other datafiles
   mutate(geogConcat = case_when(
     geographic_level == "Local Authority District" ~ paste0(area, " LADU"),
-    geographic_level == "Local Enterprise Partnership" ~ paste0(area, " LEP"),
     geographic_level == "Local Skills Improvement Plan" ~ paste0(area, " LSIP"),
     geographic_level == "Mayoral Combined Authorities" ~ paste0(area, " MCA"),
     TRUE ~ area
