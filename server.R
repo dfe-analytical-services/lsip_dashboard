@@ -930,13 +930,14 @@ server <- function(input, output, session) {
 
   # filter for just england
   englandGeog <- C_Geog %>%
-    filter(geog == "COUNTRY" & areaName == "England")
+    filter(geog == "Country" & areaName == "England")
 
   ### 2.3.3 Screenshot----
   output$screenshotFile <- renderUI({
     capture::capture(
       selector = "body",
       filename = paste0(input$geoChoice, "-", input$splashMetric, ".png"),
+      button_class = "btn btn-default btn-block",
       icon("camera"),
       "Screenshot"
     )
@@ -987,7 +988,7 @@ server <- function(input, output, session) {
       multiple = TRUE,
       label = NULL,
       choices = areaChoices,
-      options = list(maxItems = 7, placeholder = "Choose comparison areas")
+      options = list(maxItems = 7, placeholder = "Comparison areas")
     )
   })
 
@@ -1055,19 +1056,24 @@ server <- function(input, output, session) {
 
   observeEvent(input$geoChoice, {
     updateRadioGroupButtons(session, "splashGeoType",
-      selected = gsub(" ", "", str_sub(input$geoChoice, -4, -1))
+      selected = tail(strsplit(input$geoChoice, split = " ")[[1]], 1)
     )
   })
   #### 2.3.5.1 Title ----
   output$titleMap <- renderUI({
-    paste0("Where does ", input$geoChoice, " fit in the national picture?")
+    if (input$geoChoice == "England") {
+      paste0("Latest ", input$geoChoice, " data")
+    } else {
+      paste0("Where does ", input$geoChoice, " fit in the national picture?")
+    }
   })
 
   #### 2.3.5.2 Comment ----
   output$commentMap <- renderUI({
     validate(
       need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", "")
+      need(input$geoChoice != "", ""),
+      need(input$geoChoice != "England", "")
     )
     compareNational <-
       if ((C_Geog %>%
@@ -1248,13 +1254,16 @@ server <- function(input, output, session) {
     validate(
       need("geoChoice" %in% names(input), ""),
       need(input$geoChoice != "", ""),
-      need(!((input$geoChoice %in% c("The London Economic Action Partnership LEP", "Greater London LSIP", "Greater London Authority MCA") &
+      need(!((input$geoChoice %in% c("Greater London LSIP", "Greater London Authority MCA") &
         currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), "Data is not available at LA level."),
     )
     LaHighLow <- C_Geog %>%
       filter(
         geog == "LADU",
-        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == input$geoChoice
+        eval(parse(text = tail(strsplit(input$geoChoice, split = " ")[[1]], 1))) == input$geoChoice,
+        is.na(eval(
+          parse(text = input$splashMetric)
+        )) == FALSE
       ) %>%
       mutate(ranking = rank(desc(eval(
         parse(text = input$splashMetric)
@@ -1280,7 +1289,7 @@ server <- function(input, output, session) {
   #### 2.3.6.3 Map----
   output$mapLA <- renderLeaflet({
     validate(
-      need(!((input$geoChoice %in% c("The London Economic Action Partnership LEP", "Greater London LSIP", "Greater London Authority MCA") &
+      need(!((input$geoChoice %in% c("Greater London LSIP", "Greater London Authority MCA") &
         currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), ""),
       need(input$geoChoice != "", "")
     )
@@ -1288,7 +1297,7 @@ server <- function(input, output, session) {
     mapData <- C_Geog %>%
       filter(
         geog == "LADU",
-        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == input$geoChoice
+        eval(parse(text = tail(strsplit(input$geoChoice, split = " ")[[1]], 1))) == input$geoChoice
       )
     pal <- colorNumeric("Blues", mapData[[input$splashMetric]])
 
@@ -1355,7 +1364,8 @@ server <- function(input, output, session) {
   output$commentTime <- renderUI({
     validate(
       need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", "")
+      need(input$geoChoice != "", ""),
+      need(input$geoChoice != "England", "")
     )
     currentArea <- C_time %>%
       filter(
@@ -1435,8 +1445,8 @@ server <- function(input, output, session) {
             } else {
               "\nNone"
             }) |
-              # get england for comparison (if a rate)
-              (if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection") {
+              # get england for comparison (if a rate and not alrady chosen)
+              (if ((str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection") & input$geoChoice != "England") {
                 (geogConcat == "England")
               } else {
                 geogConcat == "\nNone"
@@ -1444,8 +1454,13 @@ server <- function(input, output, session) {
             metric == input$splashMetric
           )
         # add an extra column so the colours work in ggplot when sorting alphabetically
-        SplashTime$Areas <- factor(SplashTime$geogConcat,
-          levels = c("England", input$geoChoice, input$geoComps) # paste0(laClicked()," LADU"),
+        SplashTime$Areas <- factor(
+          SplashTime$geogConcat,
+          if (input$geoChoice == "England") {
+            levels <- c(input$geoChoice, input$geoComps)
+          } else {
+            levels <- c("England", input$geoChoice, input$geoComps)
+          } # paste0(laClicked()," LADU"),
         )
 
         ggplot(
@@ -1629,7 +1644,8 @@ server <- function(input, output, session) {
   output$commentBreakdown <- renderUI({
     validate(
       need("barBreakdown" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric, ""),
-      need(input$geoChoice != "", "")
+      need(input$geoChoice != "", ""),
+      need(input$geoChoice != "England", "")
     )
 
     if (!input$splashMetric %in% distinctBreakdowns$metric) {
@@ -1730,8 +1746,13 @@ server <- function(input, output, session) {
         "x"
       } else {
         # add an extra column so the colours work in ggplot when sorting alphabetically
-        Splash_21$Area <- factor(Splash_21$geogConcat,
-          levels = c("England", input$geoChoice, input$geoComps) # paste0(laClicked()," LADU"),
+        Splash_21$Area <- factor(
+          Splash_21$geogConcat,
+          if (input$geoChoice == "England") {
+            levels <- c(input$geoChoice, input$geoComps)
+          } else {
+            levels <- c("England", input$geoChoice, input$geoComps)
+          } # paste0(laClicked()," LADU"),
         )
         ggplot(
           Splash_21,
