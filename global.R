@@ -129,7 +129,7 @@ areaChoices <- list(
     "York and North Yorkshire" = "York and North Yorkshire MCA"
   ),
   "Country" = list(
-    "England" = "England "
+    "England" = "England"
   ),
   "Local authority" = list(
     "Adur" = "Adur LADU",

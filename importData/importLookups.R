@@ -9,7 +9,7 @@ F_LADLSIP <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.
 # Tidy LAD-LSIP lookup table
 C_LADLSIP <- distinct(F_LADLSIP, LAD23CD, LAD23NM, LSIP23NM)
 
-# 2 Missing LAD-LEP lookup----
+# 2 Missing LADs lookup----
 # This happens because we have some old LADs in the ILR (and other) data that have since been made inactive. These do not feature in the most recent LSIP lookups. We have manually mapped these LADs to the latest LSIPs
 folder <- "1-2_OldLas"
 sheetNum <- 2

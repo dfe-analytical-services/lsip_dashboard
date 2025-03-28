@@ -46,8 +46,10 @@ C_Geog <- neatGeog %>%
        tidyr::pivot_wider(names_from = metric, values_from = value)),
     by = c("geogConcat" = "geogConcat")
   ) %>%
-  rename(employmentProjection = employmentProjectionGrowth2023to2035) # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
-save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
+  rename(employmentProjection = employmentProjectionGrowth2023to2035)%>% # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
+mutate(England=case_when(geog=="LADU" ~ "England",
+                         TRUE ~ NA)) #add in a column for all LAs for when england is selected
+  save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 
 ## 4.2 C_time ----
 # This is used in the line charts and KPIs. It contains historic data for each metric and area.
