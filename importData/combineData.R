@@ -45,6 +45,7 @@ C_Geog <- neatGeog %>%
        mutate(metric=gsub("employmentProjectionGrowth2023to2035","employmentProjection",metric))%>%# for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
        mutate(metric=case_when(
          breakdown=="Total" ~ metric,
+         metric == "achievementsAims" ~ paste0("achievements",breakdown,subgroup),# align achieve aims metric name so shows up when achievements chosen
          TRUE ~ paste0(metric,breakdown,subgroup))
          )%>%
        select(value, metric, geogConcat) %>%

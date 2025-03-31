@@ -1129,36 +1129,49 @@ server <- function(input, output, session) {
       need(input$geoChoice != "", ""),
       need(input$splashGeoType != "", "")
     )
-    print(input$splashMetric)
-    print(input$breakdownPage)
-    print(input$subgroupPage)
+    validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
+      distinctSubgroups %>%
+        filter(
+          metric == input$splashMetric,
+          breakdown == input$breakdownPage,
+        )
+    ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
     mapData <- C_Geog %>%
       filter(geog == input$splashGeoType) %>%
       select(areaName, areaCode,
         value = paste0(
           input$splashMetric,
-          if ("breakdownPage" %in% names(input) && input$breakdownPage == "All") {
+          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
             ""
           } else {
             paste0(input$breakdownPage, input$subgroupPage)
           }
         )
       )
-    print(mapData)
     pal <- colorNumeric("Blues", mapData$value)
     labels <-
       # if a percentage then format as %, else big number
       if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
         sprintf(
-          "<strong>%s</strong><br/>%s: %s%%",
+          "<strong>%s</strong><br/>%s<br/>%s: %s%%",
           mapData$areaName,
+          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
+            "Total"
+          } else {
+            paste0(input$breakdownPage, ": ", input$subgroupPage)
+          },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
           round(mapData$value * 100)
         ) %>% lapply(htmltools::HTML)
       } else {
         sprintf(
-          "<strong>%s</strong><br/>%s: %s",
+          "<strong>%s</strong><br/>%s<br/>%s: %s",
           mapData$areaName,
+          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
+            "Total"
+          } else {
+            paste0(input$breakdownPage, ": ", input$subgroupPage)
+          },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
           format(round(mapData$value), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
@@ -1190,37 +1203,53 @@ server <- function(input, output, session) {
         zoom = 5.7
       )
   })
-  observeEvent(list(input$geoChoice, input$splashMetric, input$splashGeoType, input$breakdownPage, input$subgroupPage), {
-    validate(need("geoChoice" %in% names(input), ""))
-    validate(need("subgroupPage" %in% names(input) && "subgroupPage" %in% (as.vector(
+  observe({
+    validate(
+      need(input$geoChoice != "", ""),
+      need(input$splashGeoType != "", "")
+    )
+    validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
       distinctSubgroups %>%
         filter(
           metric == input$splashMetric,
           breakdown == input$breakdownPage,
         )
-    ))$subgroup, ""))
-    print("update accessed")
+    ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
     mapData <- C_Geog %>%
       filter(geogConcat == input$geoChoice) %>%
-      select(areaName, value = paste0(input$splashMetric, if ("breakdownPage" %in% names(input) && input$breakdownPage == "All") {
-        ""
-      } else {
-        input$breakdownPage
-      }, input$subgroupPage))
-    print(mapData)
+      select(areaName, areaCode,
+        value = paste0(
+          input$splashMetric,
+          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
+            ""
+          } else {
+            paste0(input$breakdownPage, input$subgroupPage)
+          }
+        )
+      )
     labels <-
       # if a percentage then format as %, else big number
       if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
         sprintf(
-          "<strong>%s</strong><br/>%s: %s%%",
+          "<strong>%s</strong><br/>%s<br/>%s: %s%%",
           mapData$areaName,
+          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric) {
+            "Total"
+          } else {
+            paste0(input$breakdownPage, ": ", input$subgroupPage)
+          },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
           round(mapData$value * 100)
         ) %>% lapply(htmltools::HTML)
       } else {
         sprintf(
-          "<strong>%s</strong><br/>%s: %s",
+          "<strong>%s</strong><br/>%s<br/>%s: %s",
           mapData$areaName,
+          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric) {
+            "Total"
+          } else {
+            paste0(input$breakdownPage, ": ", input$subgroupPage)
+          },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
           format(round(mapData$value), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
