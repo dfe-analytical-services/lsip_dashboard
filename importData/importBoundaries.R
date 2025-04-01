@@ -7,7 +7,7 @@ I_mapEngland <- sf::st_read(paste0("./Data/", folder, "/", list.files(path = pas
 )
 
 neatEngland <- I_mapEngland %>%
-  mutate(geog = "Country") %>% # add geog type
+  mutate(geog = "England") %>% # add geog type
   rename(areaCode = CTRY24CD, areaName = CTRY24NM) %>% # consistent naming
   select(-CTRY24NMW)%>%
   sf::st_transform(4326) # transform to WG84 that leaflet can plot

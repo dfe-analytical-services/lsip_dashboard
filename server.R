@@ -1043,6 +1043,11 @@ server <- function(input, output, session) {
       selected = C_Geog$geogConcat[C_Geog$areaCode == input$map_shape_click$id]
     )
   })
+  observeEvent(input$splashGeoType, {
+    updateSelectizeInput(session, "geoChoice",
+      selected = C_Geog$geogConcat[C_Geog$geog == input$splashGeoType][1]
+    )
+  })
 
   observeEvent(input$geoChoiceOver, {
     updateSelectizeInput(session, "geoChoice",
@@ -1079,7 +1084,7 @@ server <- function(input, output, session) {
     ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
 
     C_Geog %>%
-      filter(geog == input$splashGeoType | geog == "Country") %>%
+      filter(geog == input$splashGeoType | geog == "England") %>%
       select(areaName, areaCode, geogConcat, geog,
         value = paste0(
           input$splashMetric,
@@ -1097,7 +1102,8 @@ server <- function(input, output, session) {
     validate(
       need("geoChoice" %in% names(input), ""),
       need(input$geoChoice != "", ""),
-      need(input$geoChoice != "England", "")
+      need(input$geoChoice != "England", ""),
+      need(input$geoChoice %in% currentMapData()$geogConcat, "")
     )
     compareNational <-
       if ((currentMapData() %>% filter(geogConcat == input$geoChoice))$value
@@ -1131,14 +1137,10 @@ server <- function(input, output, session) {
       areaRank,
       suff,
       " of the ",
-      if (str_sub(input$geoChoice, start = -3) == "LEP") {
-        "36 LEPs."
+      if (str_sub(input$geoChoice, start = -3) == "MCA") {
+        "12 CAs (and GLA)."
       } else {
-        if (str_sub(input$geoChoice, start = -3) == "MCA") {
-          "12 CAs (and GLA)."
-        } else {
-          "38 LSIPs."
-        }
+        "38 LSIPs."
       }
     )
   })
