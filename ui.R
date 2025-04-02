@@ -749,16 +749,11 @@ width: 100%;
           pickerInput(
             inputId = "splashMetric",
             choices = metricChoices,
-            multiple = FALSE,
-            choicesOpt = list(
-              disabled = unlist(metricChoices) %in% c("workingFutures"),
-              style = ifelse(
-                unlist(metricChoices) %in% c("workingFutures"),
-                yes = "color: rgba(119, 119, 119, 0.5);",
-                no = ""
-              )
-            )
-          )
+            multiple = FALSE
+          ),
+          uiOutput("breakdownPageTitle"),
+          uiOutput("breakdownPageFilter"),
+          uiOutput("subgroupPageFilter")
         ),
         column(
           2,
