@@ -1002,6 +1002,7 @@ server <- function(input, output, session) {
     p("Limit to subgroup")
   })
 
+  # Page wide breakdown filter
   output$breakdownPageFilter <- renderUI({
     validate(
       need(input$splashMetric %in% distinctBreakdowns$metric, "")
@@ -1017,6 +1018,7 @@ server <- function(input, output, session) {
     )
   })
 
+  # Page wide subgroup filter
   output$subgroupPageFilter <- renderUI({
     validate(
       need(input$splashMetric %in% distinctBreakdowns$metric, ""),
@@ -1667,6 +1669,15 @@ server <- function(input, output, session) {
         ))$breakdown
     )
   })
+
+  # Update filter based on top breakdown filter
+  observeEvent(input$breakdownPage, {
+    validate(need(input$breakdownPage != "All", ""))
+    updateSelectizeInput(session, "barBreakdown",
+      selected = input$breakdownPage
+    )
+  })
+
   #### 2.3.8.2 Optional summary profession filter ----
   summaryCategories <- c("All", (as.vector(
     distinctSubgroups %>%
@@ -1818,7 +1829,9 @@ server <- function(input, output, session) {
       # input$barBreakdown,
       input$barSubgroup,
       # input$mapLA_shape_click,
-      input$splashMetric
+      input$splashMetric,
+      input$subgroupPage,
+      input$breakdownPage
     ),
     {
       validate(
@@ -1827,6 +1840,14 @@ server <- function(input, output, session) {
         need(input$splashMetric != "", ""),
         need(input$barBreakdown != "No breakdowns available", "")
       )
+      validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
+        distinctSubgroups %>%
+          filter(
+            metric == input$splashMetric,
+            breakdown == input$breakdownPage,
+          )
+      ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
+
       Splash_21 <- C_breakdown %>% filter(
         breakdown == input$barBreakdown,
         subgroup %in% input$barSubgroup,
@@ -1839,9 +1860,19 @@ server <- function(input, output, session) {
         }) |
           # get england for comparison
           (geogConcat == "England")
-      ) %>%
-        # get rid of soc codes
-        mutate(subgroup = gsub("[0-9]+ - ", "", subgroup))
+      )
+      # bold the category chosen
+      if ("breakdownPage" %in% names(input) && input$breakdownPage != "All" && "subgroupPage" %in% names(input)) {
+        Splash_21 <- Splash_21 %>% mutate(subgroup = case_when(
+          subgroup == input$subgroupPage ~ paste0("<b>", subgroup, "</b>"),
+          TRUE ~ subgroup
+        ))
+      } else {
+        "x"
+      }
+      # get rid of soc codes
+      Splash_21 <- Splash_21 %>% mutate(subgroup = gsub("[0-9]+ - ", "", subgroup))
+
       # if no rows (because of filter lag) then don't plot
       if (nrow(Splash_21) == 0) {
         "x"
