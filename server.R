@@ -737,26 +737,26 @@ server <- function(input, output, session) {
   # get EandT data for current area
   output$skisup.ETach <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("achievements Education and training", "number")
+    createOverviewKPI("achievementsProvisionEducation and training", "number")
   })
 
   # e and t chart
   output$etLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(createOverviewChart("achievements Education and training", "number", "Education and training achievements"))
+    renderOverviewChart(createOverviewChart("achievementsProvisionEducation and training", "number", "Education and training achievements"))
   })
 
   #### 2.2.3.5 FE app achieve ----
   # get App data for current area
   output$skisup.APPach <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("achievements Apprenticeships", "number")
+    createOverviewKPI("achievementsProvisionApprenticeships", "number")
   })
 
   # app chart
   output$AppLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(createOverviewChart("achievements Apprenticeships", "number", "Apprenticeship achievements"))
+    renderOverviewChart(createOverviewChart("achievementsProvisionApprenticeships", "number", "Apprenticeship achievements"))
   })
 
   # Add link to skills data
@@ -1424,16 +1424,38 @@ server <- function(input, output, session) {
       need(input$geoChoice != "", ""),
       need(input$geoChoice != "England", "")
     )
+    validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
+      distinctSubgroups %>%
+        filter(
+          metric == input$splashMetric,
+          breakdown == input$breakdownPage,
+        )
+    ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
+
     currentArea <- C_time %>%
       filter(
         geogConcat == input$geoChoice,
-        metric == input$splashMetric,
+        metric == paste0(
+          input$splashMetric,
+          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
+            ""
+          } else {
+            paste0(input$breakdownPage, input$subgroupPage)
+          }
+        ),
         is.na(value) == FALSE # remove any rows with no data
       )
     englandArea <- C_time %>%
       filter(
         geogConcat == "England",
-        metric == input$splashMetric
+        metric == paste0(
+          input$splashMetric,
+          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
+            ""
+          } else {
+            paste0(input$breakdownPage, input$subgroupPage)
+          }
+        )
       )
     currentChange <- (currentArea %>%
       filter(latest == 1))$value -
@@ -1491,9 +1513,19 @@ server <- function(input, output, session) {
         input$geoChoice,
         input$mapLA_shape_click,
         input$geoComps,
-        input$splashMetric
+        input$splashMetric,
+        input$breakdownPage,
+        input$subgroupPage
       ),
       {
+        validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
+          distinctSubgroups %>%
+            filter(
+              metric == input$splashMetric,
+              breakdown == input$breakdownPage,
+            )
+        ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
+
         SplashTime <- C_time %>%
           filter(
             # get lep/lsip/mca areas
@@ -1508,7 +1540,14 @@ server <- function(input, output, session) {
               } else {
                 geogConcat == "\nNone"
               }),
-            metric == input$splashMetric
+            metric == paste0(
+              input$splashMetric,
+              if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
+                ""
+              } else {
+                paste0(input$breakdownPage, input$subgroupPage)
+              }
+            )
           )
         # add an extra column so the colours work in ggplot when sorting alphabetically
         SplashTime$Areas <- factor(
@@ -1517,7 +1556,7 @@ server <- function(input, output, session) {
             levels <- c(input$geoChoice, input$geoComps)
           } else {
             levels <- c("England", input$geoChoice, input$geoComps)
-          } # paste0(laClicked()," LADU"),
+          }
         )
 
         ggplot(
@@ -1534,7 +1573,12 @@ server <- function(input, output, session) {
               "Area: ",
               Areas,
               "<br>",
-              currentMetric(),
+              if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
+                "Total"
+              } else {
+                paste0(input$breakdownPage, ": ", input$subgroupPage)
+              }, " ",
+              (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
               ": ",
               if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
                 scales::percent(round(value, 3))

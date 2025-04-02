@@ -59,10 +59,7 @@ mutate(England=case_when(geog=="LADU" ~ "England",
 ## 4.2 C_time ----
 # This is used in the line charts and KPIs. It contains historic data for each metric and area.
 C_time <- C_localSkillsDataset %>%
-  filter(breakdown == "Total" |
-           # We also have a few overview charts that are subgroups-E&T acheivements, app achievments
-           (metric == "achievements" & subgroup %in% c("Apprenticeships", "Education and training"))) %>%
-  # and also micro businesses
+  # add on micro business rate for the overview tab
   bind_rows(
     C_localSkillsDataset %>%
       filter(metric == "enterpriseCount", subgroup %in% c("Total", "Micro (0 to 9)")) %>%
@@ -73,19 +70,21 @@ C_time <- C_localSkillsDataset %>%
       mutate(metric = "enterprisePctMicro", breakdown = "Total", valueText = as.character(value))
   ) %>%
   filter(
-    metric != "employmentProjectionGrowth2023to2035", # time charts only use employmentProjectionAnnualGrowth metric
+    !metric %in% c("economicallyactiveRate","employeesRate" ,"employmentProjectionGrowth2023to2035"), # time charts only use employmentProjectionAnnualGrowth metric
     !metric %in% dashboardMetricIgnore # remove metrics not used
   ) %>%
   mutate(metric = case_when(
-    breakdown != "Total" ~ paste(metric, subgroup),
+    breakdown != "Total" ~ paste0(metric,breakdown, subgroup),
     TRUE ~ metric
   )) %>% # set metric name to subgroup when we want subgroup data
   select(geogConcat, metric, timePeriod, chartPeriod, latest, value, valueText) %>%
-  mutate(metric = case_when(
-    metric == "employmentProjectionAnnualGrowth" ~ "employmentProjection",
-    TRUE ~ metric
-  )) # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
-write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
+  mutate(metric = gsub("employmentProjectionAnnualGrowth","employmentProjection",metric))# for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
+#Need to split this to two files less than 100mb to upload to git
+  index <- seq.int(nrow(C_time) / 2)
+  C_time1<-C_time[index, ]
+  C_time2<-C_time[-index, ]
+  write.csv(C_time1, file = "Data\\AppData\\C_time1.csv", row.names = FALSE)
+  write.csv(C_time2, file = "Data\\AppData\\C_time2.csv", row.names = FALSE)
 
 ### 4.2.1 Axis min and max ----
 # Create max and min for each metric used in setting axis on the overview page
