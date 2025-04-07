@@ -138,7 +138,7 @@ server <- function(input, output, session) {
   ### 2.1.1 Make links ----
   # Create link to overview tab
   observeEvent(input$link_to_tabpanel_overview, {
-    updateTabsetPanel(session, "navbar", "Overview")
+    updateTabsetPanel(session, "navbar", "Summary")
   })
 
   # Create link to local skills tab
@@ -429,7 +429,7 @@ server <- function(input, output, session) {
 
   # define page title
   output$page0title <- renderUI({
-    paste0("Overview of local landscape in ", input$geoChoiceOver)
+    paste0(input$geoChoiceOver)
   })
 
   ### 2.2.1 Filters ----
@@ -449,6 +449,322 @@ server <- function(input, output, session) {
       "Screenshot"
     )
   })
+
+  # define page title
+  output$summaryArea <- renderUI({
+    input$geoChoiceOver
+  })
+
+  # make employment rate box
+  output$summaryEmployment <- renderText({
+    paste0(format(100 * (C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "inemploymentRate",
+        latest == 1
+      ))$value, digit = 2), "%")
+  })
+
+  output$sparklineEmployment <- renderPlotly({
+    overTime <- C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "inemploymentRate"
+      )
+
+    fig <-
+      plot_ly(overTime, height = 100) |>
+      add_lines(
+        x = ~timePeriod,
+        y = ~ 100 * value,
+        text = ~chartPeriod,
+        color = I("#406EF1"),
+        fill = "tozeroy",
+        alpha = 0.2,
+        hovertemplate = paste(
+          "%{y:.0f}%<extra></extra>",
+          "<br> %{text}<br>"
+        )
+      ) %>%
+      layout(
+        xaxis = list(visible = FALSE, showgrid = FALSE),
+        yaxis = list(visible = FALSE, showgrid = FALSE),
+        hovermode = "x",
+        margin = list(t = 0, r = 0, l = 0, b = 0),
+        paper_bgcolor = "transparent",
+        plot_bgcolor = "transparent"
+      ) %>%
+      config(displayModeBar = FALSE)
+
+    fig
+  })
+
+  # make online job ad box
+  output$summaryAdverts <- renderText({
+    format((C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "vacancies",
+        latest == 1
+      ))$value, big.mark = ",")
+  })
+
+  output$sparklineAdverts <- renderPlotly({
+    overTime <- C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "vacancies"
+      )
+
+    fig <-
+      plot_ly(overTime, height = 100) |>
+      add_lines(
+        x = ~timePeriod,
+        y = ~value,
+        text = ~chartPeriod,
+        color = I("#406EF1"),
+        fill = "tozeroy",
+        alpha = 0.2,
+        hovertemplate = paste(
+          "%{y:,}<extra></extra>",
+          "<br> %{text}<br>"
+        )
+      ) %>%
+      layout(
+        xaxis = list(visible = FALSE, showgrid = FALSE),
+        yaxis = list(visible = FALSE, showgrid = FALSE),
+        hovermode = "x",
+        margin = list(t = 0, r = 0, l = 0, b = 0),
+        paper_bgcolor = "transparent",
+        plot_bgcolor = "transparent"
+      ) %>%
+      config(displayModeBar = FALSE)
+
+    fig
+  })
+
+  # make Fe achievements box
+  output$summaryFeAchievements <- renderText({
+    format((C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "achievementsProvisionEducation and training",
+        latest == 1
+      ))$value, big.mark = ",")
+  })
+
+  output$sparklineFeAchievements <- renderPlotly({
+    overTime <- C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "achievementsProvisionEducation and training"
+      )
+
+    fig <-
+      plot_ly(overTime, height = 100) |>
+      add_lines(
+        x = ~timePeriod,
+        y = ~value,
+        text = ~chartPeriod,
+        color = I("#406EF1"),
+        fill = "tozeroy",
+        alpha = 0.2,
+        hovertemplate = paste(
+          "%{y:,}<extra></extra>",
+          "<br> %{text}<br>"
+        )
+      ) %>%
+      layout(
+        xaxis = list(visible = FALSE, showgrid = FALSE),
+        yaxis = list(visible = FALSE, showgrid = FALSE),
+        hovermode = "x",
+        margin = list(t = 0, r = 0, l = 0, b = 0),
+        paper_bgcolor = "transparent",
+        plot_bgcolor = "transparent"
+      ) %>%
+      config(displayModeBar = FALSE)
+
+    fig
+  })
+
+  # Top projected jobs sentence
+  output$summaryTopProjected <- renderUI({
+    paste0(
+      "From 2023 to 2035 ", input$geoChoiceOver, " is projected to grow ",
+      format((C_Geog %>%
+        filter(
+          geogConcat == input$geoChoiceOver
+        ))$employmentProjection * 100, digit = 1),
+      "% (compared to ",
+      format((C_Geog %>%
+        filter(
+          geogConcat == "England"
+        ))$employmentProjection * 100, digit = 1),
+      "% nationally). These are the top projected growth occupations in the area:"
+    )
+  })
+
+  # get top growing occupations
+  summaryTopProjectedList <- reactive({
+    C_breakdown %>%
+      dplyr::filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "employmentProjection",
+        breakdown == "Occupation (SOC2020 Sub-Major Group)"
+      ) %>%
+      dplyr::arrange(dplyr::desc(value)) %>%
+      dplyr::slice_head(n = 5) %>%
+      mutate(
+        value = label_percent(accuracy = 1)(value),
+        subgroup = gsub("[[:digit:]]+", "", gsub(" - ", "", subgroup))
+      ) %>%
+      select(Occupation = subgroup, Growth = value)
+  })
+
+  output$summaryTopProjectedListTable <- renderDataTable({
+    DT::datatable(summaryTopProjectedList(),
+      options = list(
+        info = FALSE,
+        paging = FALSE,
+        searching = FALSE,
+        rownames = FALSE
+      )
+    )
+  })
+
+  # Businesses sentence
+  output$summaryBusinesses <- renderUI({
+    currentArea <- C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "enterpriseCount"
+      )
+    englandArea <- C_time %>%
+      filter(
+        geogConcat == "England",
+        metric == "enterpriseCount"
+      )
+    currentChange <- (currentArea %>%
+      filter(latest == 1))$value -
+      (currentArea %>%
+        filter(timePeriod == min(timePeriod)))$value
+    englandChange <- (englandArea %>%
+      filter(latest == 1))$value -
+      (englandArea %>%
+        filter(timePeriod == min(currentArea$timePeriod)))$value # match with the area data
+
+    paste0(
+      "In ",
+      (currentArea %>%
+        dplyr::filter(latest == 1)
+      )$chartPeriod,
+      ", ",
+      format((currentArea %>%
+        dplyr::filter(latest == 1)
+      )$value, big.mark = ","),
+      " businesses were active in ",
+      input$geoChoiceOver,
+      ". The number of businesses has ",
+      ifelse(currentChange > 0, "grown ", "fallen "),
+      label_percent(accuracy = 1)(currentChange / (currentArea %>%
+        filter(timePeriod == min(timePeriod)))$value),
+      " in the last four years, while the nationally businesses have ",
+      ifelse(englandChange > 0, "grown ", "fallen "),
+      label_percent(accuracy = 1)(englandChange / (englandArea %>%
+        filter(timePeriod == min(currentArea$timePeriod)))$value),
+      ". The top five industries in the area are: "
+    )
+  })
+
+  # get top 5 industries
+  chartColors2 <-
+    c(
+      "#BFBFBF",
+      "#12436D"
+    )
+  summaryBusinessesPlot <- eventReactive(input$geoChoiceOver, {
+    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
+    # find top and bottom 5 for area
+    areaBreakdownData <- C_breakdown %>%
+      dplyr::filter(geogConcat %in% c(input$geoChoiceOver, "England"))
+    topBotCats <- (areaBreakdownData %>%
+      dplyr::filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "enterpriseCount",
+        breakdown == "Industry"
+      ) %>%
+      dplyr::arrange(dplyr::desc(value)) %>%
+      dplyr::slice(1:5))$subgroup
+
+    chartData <- areaBreakdownData %>%
+      dplyr::filter(
+        metric == "enterpriseCount",
+        breakdown == "Industry",
+        subgroup %in% topBotCats
+      ) %>%
+      dplyr::mutate(subgroup = gsub("[[:digit:]]+ - ", "", subgroup))
+
+    # sort by the area chosen
+    chartData$subgroup <- factor(chartData$subgroup, levels = levels(reorder(chartData[chartData$geogConcat == input$geoChoiceOver, ]$subgroup, chartData[chartData$geogConcat == input$geoChoiceOver, ]$value)))
+
+    # add an extra column so the colours work in ggplot when sorting alphabetically
+    chartData$Area <- factor(chartData$geogConcat,
+      levels = c("England", input$geoChoiceOver)
+    )
+    # plot
+    ggplot2::ggplot(
+      chartData,
+      ggplot2::aes(
+        x = subgroup,
+        y = value,
+        fill = Area,
+        text = paste0(
+          Area,
+          "<br>",
+          "Percentage of businesses in ",
+          subgroup,
+          ": ",
+          label_percent(accuracy = 1)(value)
+        )
+      )
+    ) +
+      ggplot2::geom_col(position = "dodge") +
+      ggplot2::scale_y_continuous(labels = scales::percent) +
+      ggplot2::coord_flip() +
+      ggplot2::theme_minimal() +
+      ggplot2::labs(fill = "") +
+      ggplot2::theme(
+        legend.position = "bottom",
+        legend.location = "plot",
+        axis.title.x = ggplot2::element_blank(),
+        axis.title.y = ggplot2::element_blank(),
+        panel.grid.major.y = ggplot2::element_blank(),
+        panel.grid.minor = ggplot2::element_blank()
+      ) +
+      ggplot2::scale_fill_manual(values = chartColors2)
+  })
+
+
+  output$summaryBusinessesChart <- renderPlotly({
+    validate(
+      need("geoChoiceOver" %in% names(input), ""),
+      need(input$geoChoiceOver != "", "")
+    )
+    ggplotly(summaryBusinessesPlot(), tooltip = "text") %>%
+      layout(
+        legend = list(
+          orientation = "h",
+          x = 0,
+          y = -0.1
+        ),
+        xaxis = list(fixedrange = TRUE),
+        yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+
+
+
 
   ###  2.2.3 Downloads ----
   # download all indicators
