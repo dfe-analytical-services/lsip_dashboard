@@ -390,7 +390,7 @@ width: 100%;
     id = "navbar",
     widths = c(2, 10),
     well = FALSE,
-    selected = "Overview",
+    selected = "Summary",
 
     ## 2.1 User guide ----
 
@@ -724,7 +724,8 @@ width: 100%;
     # end of homepage Panel
 
     ## 2.2 Overview ----
-    panel_overview(),
+    #  panel_overview(),
+    summaryTab(),
 
     ## 2.3 Local skills ----
     tabPanel(
