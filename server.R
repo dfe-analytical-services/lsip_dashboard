@@ -709,7 +709,7 @@ server <- function(input, output, session) {
 
     # add an extra column so the colours work in ggplot when sorting alphabetically
     chartData$Area <- factor(chartData$geogConcat,
-      levels = c("England", input$geoChoiceOver)
+      levels = c("England", ifelse(input$geoChoiceOver == "England", NA, input$geoChoiceOver))
     )
     # plot
     ggplot2::ggplot(
