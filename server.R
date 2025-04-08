@@ -1921,7 +1921,7 @@ server <- function(input, output, session) {
             label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
           }) +
           labs(colour = "") +
-          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection") {
+          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection" | input$geoChoice == "England") {
             chartColors6
           } else {
             chartColors5
