@@ -509,10 +509,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             h2("Latest update"),
             p("xx April 2025 (1.5.1)"),
             tags$ul(
-              tags$li("Added a national view of the metrics.")
-              ,tags$li("Removed LEPs.")
-              ,tags$li("Added a subgroups filter to the local skills tab.")
-              ,tags$li("Reorganised the summary tab.")
+              tags$li("Added a national view of the metrics."),
+              tags$li("Removed LEPs."),
+              tags$li("Added a subgroups filter to the local skills tab."),
+              tags$li("Reorganised the summary tab.")
             ),
             details(
               label = "Previous updates",
