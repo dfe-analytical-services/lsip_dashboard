@@ -173,15 +173,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     }
 }
 
- /* increase banner size*/
-.feedback-banner {
-    background-color: #d53880;
-    font-size: 24px;
-    line-height: 1;
-    padding: 5px 8px 4px;
-width: 100%;
-}
-
 /* allow text wrap in screen shot button*/
 .btn-block {
     white-space: normal;
@@ -227,13 +218,6 @@ width: 100%;
     <i class="fa fa-bars" style="font-size:24px;"></i></a>
     </div>
     </header>'
-  ),
-
-  # Add bug header
-  HTML(
-    '<div class="feedback-banner" id="feedback banner" >
-    <a href="https://forms.office.com/e/gUgfhXcRY3" target="_blank" rel="noopener noreferrer" style="color: #fff;"><strong>FEEDBACK</strong> | Click here to share your feedback and help shape the future of this dashboard.</a>
-</div>'
   ),
 
   # Force page to scroll to top when links clicked
@@ -438,7 +422,7 @@ width: 100%;
             p("Use the navigation bar on the left to select the tab you want to view."),
             h2("Dashboard structure"),
             tags$ul(
-              tags$li(actionLink("link_to_tabpanel_overview", "Overview"), " - this tab provides a time series summary of employment, qualifications, and further education outcomes for the selected geographic area. Metrics are divided into two columns: Labour market and Skills. Labour market includes employment, online job adverts (experimental), and micro business count (0-9 employees). Skills covers education and training ahcievements, apprenticehsip achievements, highest qualification level, and Key Stage 5 positive destinations."),
+              tags$li(actionLink("link_to_tabpanel_overview", "Summary"), " - this tab provides a summary of some of the key metrics for the selected geographic area."),
               tags$li(actionLink("link_to_tabpanel_localskills", "Local skills"), " - the Local Skills tab provides additional metrics and breakdowns for the selected geographic area."),
               tags$li(actionLink("link_to_tabpanel_data", "Data information and download"), "- includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
               tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of local labour market and education system."),
@@ -525,7 +509,10 @@ width: 100%;
             h2("Latest update"),
             p("xx April 2025 (1.5.1)"),
             tags$ul(
-              tags$li("Removed LEPs.")
+              tags$li("Added a national view of the metrics.")
+              ,tags$li("Removed LEPs.")
+              ,tags$li("Added a subgroups filter to the local skills tab.")
+              ,tags$li("Reorganised the summary tab.")
             ),
             details(
               label = "Previous updates",
