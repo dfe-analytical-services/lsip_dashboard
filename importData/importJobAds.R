@@ -100,7 +100,7 @@ advertsWithAreas <-
   ) %>%
   # select new name
   select(-LAD23CD_11, -LAD23CD_21, -LAD23NM_21, -LAD23NM_11) %>%
-  left_join(distinct(F_LEP2020, areaCode = LAD23CD, LAD23NM), by = c("area" = "LAD23NM")) # use to get consistent LA names
+  left_join(distinct(C_LADLSIP, areaCode = LAD23CD, LAD23NM), by = c("area" = "LAD23NM")) # use to get consistent LA names
 
 # Group up the new LAs
 groupedStats <- advertsWithAreas %>%

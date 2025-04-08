@@ -74,6 +74,7 @@ C_time <- C_localSkillsDataset %>%
     !metric %in% dashboardMetricIgnore # remove metrics not used
   ) %>%
   mutate(metric = case_when(
+    metric == "achievementsAims" ~ paste0("achievements",breakdown,subgroup),# align achieve aims metric name so shows up when achievements chosen
     breakdown != "Total" ~ paste0(metric,breakdown, subgroup),
     TRUE ~ metric
   )) %>% # set metric name to subgroup when we want subgroup data
