@@ -16,7 +16,7 @@ library(dplyr)
 library(data.table) # use %like%
 
 # For QA purposes we compare the old data with any updated data. This is done here before any data changes so we can compare the data as it was to the updated data. This is used with QAdataload.R
-C_timeOld <- readr::read_csv("Data/AppData/C_time.csv")
+C_timeOld <- bind_rows(readr::read_csv("Data/AppData/C_time1.csv"), readr::read_csv("Data/AppData/C_time2.csv"))
 
 # 1. Load functions ----
 source("R/functions.R", echo = TRUE)

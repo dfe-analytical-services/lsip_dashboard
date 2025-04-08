@@ -1740,7 +1740,8 @@ server <- function(input, output, session) {
     validate(
       need("geoChoice" %in% names(input), ""),
       need(input$geoChoice != "", ""),
-      need(input$geoChoice != "England", "")
+      need(input$geoChoice != "England", ""),
+      need(paste0(input$splashMetric, input$breakdownPage) != "achievementsSSA", "")
     )
     validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
       distinctSubgroups %>%
@@ -1921,7 +1922,7 @@ server <- function(input, output, session) {
             label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
           }) +
           labs(colour = "") +
-          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection") {
+          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection" | input$geoChoice == "England") {
             chartColors6
           } else {
             chartColors5
@@ -1937,7 +1938,8 @@ server <- function(input, output, session) {
   output$Splash_time <- renderPlotly({
     validate(
       need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", "")
+      need(input$geoChoice != "", ""),
+      need(paste0(input$splashMetric, input$breakdownPage) != "achievementsSSA", "There is only SSA achievement data for the latest year, so no time series.")
     )
     ggplotly(Splash_time(), tooltip = "text") %>%
       layout(
@@ -1954,6 +1956,10 @@ server <- function(input, output, session) {
 
   #### 2.3.7.3 Time footnote ----
   output$timeFoot <- renderUI({
+    validate(
+      need(paste0(input$splashMetric, input$breakdownPage) != "achievementsSSA", "")
+    )
+
     if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
       "The definition of when a student is at the end of 16 to 18 study has changed last year and comparisons to previous cohorts should be treated with caution. See footnote below. Also NB non-zero axis."
     } else {
