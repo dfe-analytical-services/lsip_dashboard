@@ -518,14 +518,18 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("17 Feb 2025 (1.4.10)"),
+            p("17 Feb 2025 (1.4.11)"),
             tags$ul(
-              tags$li("Update to latest online job advert data.")
+              tags$li("Updated APS employment to latest data.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("17 Feb 2025 (1.4.10)"),
+                tags$ul(
+                  tags$li("Update to latest online job advert data.")
+                ),
                 p("6 Feb 2025 (1.4.9)"),
                 tags$ul(
                   tags$li("Updated the MCA map to include the new combined authorities (East Midlands, York and North Yorkshire) and the combination of North East MCA and North of Tyne MCA into North East MCA.")
