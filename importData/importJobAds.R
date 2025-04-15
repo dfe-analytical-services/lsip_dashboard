@@ -69,8 +69,9 @@ formatVacancies <- function(x) {
       area == "Heart of the South West" & geographic_level == "Local Enterprise Partnership" ~ "Heart of the South West",
       area == "Heart of the South West" & geographic_level == "Local Skills Improvement Plan" ~ "Heart of the South-West",
       area == "Stoke on Trent and Staffordshire" & geographic_level == "Local Enterprise Partnership" ~ "Stoke-on-Trent and Staffordshire",
-      area == "Stoke-on-Trent and Staffordshire" & geographic_level == "Local Skills Improvement Plan" ~ "Stoke-on-Trent and Staffordshire",
+      area == "Stoke on Trent and Staffordshire" & geographic_level == "Local Skills Improvement Plan" ~ "Stoke-on-Trent and Staffordshire",
       area == "Norfolk and Suffolk" ~ "New Anglia",
+      area == "West of England and North Somerset" & geographic_level == "Local Enterprise Partnership" ~ "West of England",
       area == "Essex, Southend on Sea and Thurrock" & geographic_level == "Local Skills Improvement Plan" ~ "Essex, Southend-on-Sea and Thurrock",
       TRUE ~ area
     ))
@@ -85,6 +86,7 @@ advertsWithAreas <-
     formatVacancies(I_Ons2digLA %>% 
                       rename(region = 1) %>% 
                       filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% 
+                      relocate(X2)%>%#put geography column at the start
                       select(-region, -X5)),
     formatVacancies(I_OnsLA %>% 
                       rename(region = 1) %>% 
