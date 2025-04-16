@@ -11,10 +11,11 @@ I_KS5 <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0
 destinationsWithAreas <-
   # combine dataset
   bind_rows(
-    I_KS4 %>% mutate(metric = "sustainedPositiveDestinationKS4Rate"),
-    I_KS5 %>% mutate(metric = "sustainedPositiveDestinationKS5Rate")
+    I_KS4 %>% mutate(metric = "sustainedPositiveDestinationKS4Rate")%>%filter(institution_group=="State-funded mainstream schools"),#just schools to match the headline stats in the publication
+    I_KS5 %>% mutate(metric = "sustainedPositiveDestinationKS5Rate")%>%filter(institution_group=="State-funded mainstream schools & colleges",level_methodology=="16-18 Provider location")
   ) %>%
-  select(-data_type, -institution_group, -level_methodology, -old_la_code, -opportunity_area_code, -opportunity_area_name, -new_la_code, -la_name, -pcon_code, -pcon_name, -time_identifier, -country_code, -country_name, -region_code, -region_name, -breakdown_topic, -breakdown, -cohort_level) %>% # remove unused columns
+  filter(data_type=="Number of pupils",breakdown_topic=="Total")%>%
+  select(-data_type, -institution_group, -institution_type, -version, -level_methodology, -old_la_code, -opportunity_area_code, -opportunity_area_name, -new_la_code, -la_name, -pcon_code, -pcon_name, -time_identifier, -country_code, -country_name, -region_code, -region_name, -breakdown_topic, -breakdown, -cohort_level,-overall, -fe, -ssf,-sfc,-other_edu,-appl3,-appl2,-appl4,-he,-fel1,-fel2,-fel3) %>% # remove unused columns
   rename(areaCode = lad_code, area = lad_name, timePeriod = time_period) %>%
   # add dates
   mutate(chartPeriod = paste("AY", substr(timePeriod, 3, 4), "/", substr(timePeriod, 5, 6), sep = "")) %>%
@@ -26,15 +27,16 @@ destinationsWithAreas <-
   )) %>%
   #filter to last 5 years
   filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
+  mutate_at(c('cohort','education','appren','all_work','all_notsust','all_unknown'), as.numeric)%>%#convert to numeric to sum
   addGeogs()
 
 # For destinations we need to also sum up for the whole country, so we take all LEPs again and relabel country ahead of the sum
-destinationsWithAreas <- destinationsWithAreas %>%
+destinationsEngland <- destinationsWithAreas %>%
   filter(stringr::str_sub(geogConcat, -3, -1) == "LEP") %>%
   mutate(geogConcat = "England") %>%
-  bind_rows(destinationsWithAreas)
+  bind_rows(destinationsWithAreas)#%>%
 
-groupedStats <- destinationsWithAreas %>%
+groupedStats <- destinationsEngland %>%
   filter(newArea == 1) %>% # no need to group national or LAs that haven't changed
   ungroup() %>%
   select(-newArea) %>%
@@ -45,7 +47,7 @@ groupedStats <- destinationsWithAreas %>%
 # add back on original LADUs and format
 C_destinations <- bind_rows(
   groupedStats,
-  destinationsWithAreas %>%
+  destinationsEngland %>%
     filter(newArea == 0)
 ) %>%
   select(-newArea) %>%
@@ -59,8 +61,8 @@ C_destinations <- bind_rows(
   select(-education, -appren, -all_work, -all_notsust, -all_unknown, -cohort) %>%
   # make long
   tidyr::pivot_longer(!c("geogConcat", "timePeriod", "chartPeriod", "latest", "cohort_level_group", "metric"),
-               names_to = "subgroup",
-               values_to = "value"
+                      names_to = "subgroup",
+                      values_to = "value"
   ) %>%
   mutate(breakdown = case_when(
     (subgroup == "Total" & (is.na(cohort_level_group) == TRUE | cohort_level_group == "Total")) ~ "Total",
