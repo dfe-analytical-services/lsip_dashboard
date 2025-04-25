@@ -31,6 +31,7 @@ shhh(library(RColorBrewer)) # map colours
 shhh(library(quarto)) # map colours
 shhh(library(dfeshiny)) # map colours
 
+site_title <- "Local skills dashboard"
 google_analytics_key <- "MMB6NG2FE1"
 
 area_select <- c("Coast to Capital", "Greater Manchester", "England")
