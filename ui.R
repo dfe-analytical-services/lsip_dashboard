@@ -45,12 +45,6 @@ fluidPage(
     tags$style(
       HTML(
         "
-
-    /* remove the max width of the main panel so spreads across screen*/
-.govuk-width-container {
-    max-width: 100%;
-}
-
 /*style filter row grey background*/
 .filterRow{
 background-color: #f3f2f1; /*#1d70b8*/
@@ -150,27 +144,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 
 }
 
- /* overwrite ccs to keep margin*/
-@media (min-width:1020px) {
-    .govuk-width-container {
-        margin-right: max(30px, calc(15px + env(safe-area-inset-left)));
-        margin-left: max(30px, calc(15px + env(safe-area-inset-left)))
-    }
-    @supports (margin:max(calc(0px))) {
-        .govuk-width-container {
-            margin-right: max(30px, calc(15px + env(safe-area-inset-left)));
-            margin-left: max(30px, calc(15px + env(safe-area-inset-left)))
-        }
-    }
-}
-
  /* increase banner size*/
 .feedback-banner {
     background-color: #d53880;
-    font-size: 24px;
-    line-height: 1;
+    font-size: 16px;
+    line-height: 1.5;
     padding: 5px 8px 4px;
-width: 100%;
 }
 
 "
