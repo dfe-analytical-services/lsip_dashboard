@@ -161,18 +161,6 @@
       ],
       "Hash": "45f0398006e83a5b10b72a90663d8d8c"
     },
-    "RCurl": {
-      "Package": "RCurl",
-      "Version": "1.98-1.16",
-      "Source": "Repository",
-      "Repository": "RSPM",
-      "Requirements": [
-        "R",
-        "bitops",
-        "methods"
-      ],
-      "Hash": "ddbdf53d15b47be4407ede6914f56fbb"
-    },
     "Rcpp": {
       "Package": "Rcpp",
       "Version": "1.0.13-1",
@@ -259,13 +247,6 @@
         "utils"
       ],
       "Hash": "e84984bf5f12a18628d9a02322128dfd"
-    },
-    "bitops": {
-      "Package": "bitops",
-      "Version": "1.0-9",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "d972ef991d58c19e6efa71b21f5e144b"
     },
     "blob": {
       "Package": "blob",
@@ -399,11 +380,17 @@
     },
     "chromote": {
       "Package": "chromote",
-      "Version": "0.3.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
+      "Version": "0.5.1.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "rstudio",
+      "RemoteRepo": "chromote",
+      "RemoteRef": "main",
+      "RemoteSha": "13a789a2c2f9bae17687cb11b724e6c26ff46ada",
       "Requirements": [
         "R6",
+        "cli",
         "curl",
         "fastmap",
         "jsonlite",
@@ -413,9 +400,11 @@
         "promises",
         "rlang",
         "utils",
-        "websocket"
+        "websocket",
+        "withr",
+        "zip"
       ],
-      "Hash": "5532726015b620830baae59aa689ea52"
+      "Hash": "a1b7c99b64a1ae2137ae0f50236d6895"
     },
     "class": {
       "Package": "class",
@@ -622,28 +611,32 @@
     },
     "dfeshiny": {
       "Package": "dfeshiny",
-      "Version": "0.5.2",
+      "Version": "0.5.3.9000",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
       "RemoteUsername": "dfe-analytical-services",
       "RemoteRepo": "dfeshiny",
-      "RemoteRef": "91f1eb3cbac6e1d2ba64300e22a36c95a73dda25",
-      "RemoteSha": "91f1eb3cbac6e1d2ba64300e22a36c95a73dda25",
+      "RemoteRef": "main",
+      "RemoteSha": "adf5bbfca5481efaaa407b0d6e1115ceb81176ab",
+      "RemoteHost": "api.github.com",
       "Requirements": [
         "R",
-        "RCurl",
         "checkmate",
+        "dplyr",
         "glue",
         "htmltools",
+        "lubridate",
         "magrittr",
+        "reactable",
+        "readr",
         "shiny",
         "shinyGovstyle",
         "shinyjs",
         "stringr",
-        "styler"
+        "styler",
+        "xfun"
       ],
-      "Hash": "2fcdaff1ae69716fc711621d785828a0"
+      "Hash": "fd082b29d8cf50d16d41785db2e03a61"
     },
     "diffobj": {
       "Package": "diffobj",
@@ -1685,6 +1678,31 @@
         "terra"
       ],
       "Hash": "0e2829df8cb74a98179c886b023ffea8"
+    },
+    "reactR": {
+      "Package": "reactR",
+      "Version": "0.6.1",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "htmltools"
+      ],
+      "Hash": "b8e3d93f508045812f47136c7c44c251"
+    },
+    "reactable": {
+      "Package": "reactable",
+      "Version": "0.4.4",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "digest",
+        "htmltools",
+        "htmlwidgets",
+        "jsonlite",
+        "reactR"
+      ],
+      "Hash": "6069eb2a6597963eae0605c1875ff14c"
     },
     "readr": {
       "Package": "readr",

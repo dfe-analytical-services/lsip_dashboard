@@ -61,8 +61,8 @@ C_destinations <- bind_rows(
   select(-education, -appren, -all_work, -all_notsust, -all_unknown, -cohort) %>%
   # make long
   tidyr::pivot_longer(!c("geogConcat", "timePeriod", "chartPeriod", "latest", "cohort_level_group", "metric"),
-               names_to = "subgroup",
-               values_to = "value"
+                      names_to = "subgroup",
+                      values_to = "value"
   ) %>%
   mutate(breakdown = case_when(
     (subgroup == "Total" & (is.na(cohort_level_group) == TRUE | cohort_level_group == "Total")) ~ "Total",

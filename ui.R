@@ -6,17 +6,7 @@ fluidPage(
     href = "dfefavicon.png"
   )),
   shinyjs::useShinyjs(),
-  # Setting up cookie consent based on a cookie recording the consent:
-  # https://book.javascript-for-r.com/shiny-cookies.html
-  tags$head(
-    tags$script(
-      src = paste0(
-        "https://cdn.jsdelivr.net/npm/js-cookie@rc/",
-        "dist/js.cookie.min.js"
-      )
-    ),
-    tags$script(src = "cookie-consent.js")
-  ),
+  dfeshiny::custom_disconnect_message(dashboard_title = site_title),
   tags$head(
     tags$link(
       rel = "stylesheet",
@@ -24,7 +14,8 @@ fluidPage(
       href = "dfe_shiny_gov_style.css"
     )
   ),
-  shinyGovstyle::cookieBanner("Local Skills Dashboard"),
+  dfeshiny::dfe_cookies_script(),
+  dfeshiny::cookies_banner_ui(name = site_title),
 
   # Set metadata for browser
   tags$html(lang = "en"),
@@ -54,12 +45,6 @@ fluidPage(
     tags$style(
       HTML(
         "
-
-    /* remove the max width of the main panel so spreads across screen*/
-.govuk-width-container {
-    max-width: 100%;
-}
-
 /*style filter row grey background*/
 .filterRow{
 background-color: #f3f2f1; /*#1d70b8*/
@@ -159,27 +144,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 
 }
 
- /* overwrite ccs to keep margin*/
-@media (min-width:1020px) {
-    .govuk-width-container {
-        margin-right: max(30px, calc(15px + env(safe-area-inset-left)));
-        margin-left: max(30px, calc(15px + env(safe-area-inset-left)))
-    }
-    @supports (margin:max(calc(0px))) {
-        .govuk-width-container {
-            margin-right: max(30px, calc(15px + env(safe-area-inset-left)));
-            margin-left: max(30px, calc(15px + env(safe-area-inset-left)))
-        }
-    }
-}
-
  /* increase banner size*/
 .feedback-banner {
     background-color: #d53880;
-    font-size: 24px;
-    line-height: 1;
+    font-size: 16px;
+    line-height: 1.5;
     padding: 5px 8px 4px;
-width: 100%;
 }
 
 "
@@ -202,16 +172,14 @@ width: 100%;
       )
     )
   ),
-
   # Force the top nav bar to left align and centre the title
   HTML(
     '<header class="govuk-header" role="banner">
     <div class="govuk-header__container">
-    <div class="govuk-header__logo" style="width: 15%; margin-left: 15px;float:left;">
+    <div class="govuk-header__logo" style="margin-left: 15px">
     <a href="https://www.gov.uk/government/organisations/department-for-education" class="govuk-header__link govuk-header__link--homepage">
     <span class="govuk-header__logotype">
-   <img src="images/DfE_logo.png" class="govuk-header__logotype-crown-fallback-image"/>
-    <span class="govuk-header__logotype-text">DfE</span>
+     <img src="images/DfE_logo_landscape.png" class="govuk-header__logotype-crown-fallback-image" width="133px"/>
     </span>
     </a>
     </div>
@@ -223,7 +191,6 @@ width: 100%;
     </div>
     </header>'
   ),
-
   # Add bug header
   HTML(
     '<div class="feedback-banner" id="feedback banner" >
@@ -518,15 +485,20 @@ width: 100%;
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("27 Mar 2025 (1.4.11)"),
+            p("25 Apr 2025 (1.4.12)"),
             tags$ul(
-              tags$li("Update to latest revised destination data."),
+              tags$li("Updated APS employment to latest data."),
               tags$li("Update to latest online job advert data.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("27 Mar 2025 (1.4.11)"),
+                tags$ul(
+                  tags$li("Update to latest revised destination data."),
+                  tags$li("Update to latest online job advert data.")
+                ),
                 p("17 Feb 2025 (1.4.10)"),
                 tags$ul(
                   tags$li("Update to latest online job advert data.")
@@ -1164,8 +1136,21 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
 
     ## 2.9 Support ----
     tabPanel(
+      "Cookie information",
+      dfeshiny::cookies_panel_ui(
+        id = "cookies_panel",
+        google_analytics_key = google_analytics_key
+      )
+    ),
+    ## 2.10 Support ----
+    tabPanel(
       "Support and feedback",
-      support_links() # defined in R/supporting_links.R))
+      dfeshiny::support_panel(
+        team_email = "skills.england@education.gov.uk",
+        repo_name = "https://github.com/dfe-analytical-services/lsip_dashboard",
+        form_url = "https://forms.office.com/pages/responsepage.aspx?id=yXfS-grGoU2187O4s0qC-fk-uIY5X_9Grwm9UK_gdoJUNzhPRjkxRUE1MFZXS0lZNDdZVkpUM0Y0Wi4u&route=shorturl",
+        custom_data_info = "This dashboard collates data from a wide range of sources. Full details of all sources are provided on the data sources page of this dashboard."
+      )
     )
   ),
   # End of navBarPage

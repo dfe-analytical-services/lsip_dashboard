@@ -1,0 +1,2 @@
+dashboard_name: "local-skills-dashboard"
+deploy_target: "shinyapps"
