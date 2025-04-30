@@ -543,21 +543,21 @@ server <- function(input, output, session) {
     fig
   })
 
-  # make Fe achievements box
-  output$summaryFeAchievements <- renderText({
+  # make App achievements box
+  output$summaryAppAchievements <- renderText({
     format((C_time %>%
       filter(
         geogConcat == input$geoChoiceOver,
-        metric == "achievementsProvisionEducation and training",
+        metric == "achievementsProvisionApprenticeships",
         latest == 1
       ))$value, big.mark = ",")
   })
 
-  output$sparklineFeAchievements <- renderPlotly({
+  output$sparklineAppAchievements <- renderPlotly({
     overTime <- C_time %>%
       filter(
         geogConcat == input$geoChoiceOver,
-        metric == "achievementsProvisionEducation and training"
+        metric == "achievementsProvisionApprenticeships"
       )
 
     fig <-

@@ -64,9 +64,9 @@ summaryTab <- function() {
       column(
         4,
         value_box(
-          title = "FE achievements",
-          value = uiOutput("summaryFeAchievements"),
-          showcase = plotlyOutput("sparklineFeAchievements"),
+          title = "Apprenticeship achievements",
+          value = uiOutput("summaryAppAchievements"),
+          showcase = plotlyOutput("sparklineAppAchievements"),
           showcase_layout = "bottom",
           # theme = "primary"
         ),
