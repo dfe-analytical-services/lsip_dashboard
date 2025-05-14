@@ -1979,7 +1979,8 @@ server <- function(input, output, session) {
     distinct(metric, breakdown)
   output$breakdownFilter <- renderUI({
     validate(
-      need(input$splashMetric %in% distinctBreakdowns$metric, "")
+      need(input$splashMetric %in% distinctBreakdowns$metric, ""),
+      need(input$breakdownPage == "All", "")
     )
     selectizeInput(
       inputId = "barBreakdown",
@@ -2021,7 +2022,7 @@ server <- function(input, output, session) {
   #### 2.3.8.2 Subgroup filter ----
   output$subgroupFilter <- renderUI({
     validate(
-      need(input$barBreakdown != "", ""),
+      # need(input$barBreakdown != "", ""),
       need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     pickerInput(
@@ -2032,7 +2033,7 @@ server <- function(input, output, session) {
           distinctSubgroups %>%
             filter(
               metric == input$splashMetric,
-              breakdown == input$barBreakdown,
+              breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
               if (input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
                 subgroup %in%
                   (C_detailLookup %>% filter(`Occupation (SOC2020 Major Group)` == input$summaryProfession))$`Occupation (SOC2020 Sub-Major Group)`
@@ -2046,7 +2047,7 @@ server <- function(input, output, session) {
         C_topTenEachBreakdown %>%
           filter(
             metric == input$splashMetric,
-            breakdown == input$barBreakdown,
+            breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
             geogConcat == input$geoChoice,
             if (input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
               `Occupation (SOC2020 Major Group)` == input$summaryProfession
@@ -2171,7 +2172,7 @@ server <- function(input, output, session) {
       ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
 
       Splash_21 <- C_breakdown %>% filter(
-        breakdown == input$barBreakdown,
+        breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
         subgroup %in% input$barSubgroup,
         metric == input$splashMetric,
         # get lep/lsip/mca areas
