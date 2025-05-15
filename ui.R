@@ -485,15 +485,20 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("25 Apr 2025 (1.4.12)"),
+            p("14 May 2025 (1.4.13)"),
             tags$ul(
-              tags$li("Updated APS employment to latest data."),
-              tags$li("Update to latest online job advert data.")
+              tags$li("Update to latest online job advert data."),
+              tags$li("Update to latest qualification data.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("25 Apr 2025 (1.4.12)"),
+                tags$ul(
+                  tags$li("Updated APS employment to latest data."),
+                  tags$li("Update to latest online job advert data.")
+                ),
                 p("27 Mar 2025 (1.4.11)"),
                 tags$ul(
                   tags$li("Update to latest revised destination data."),
