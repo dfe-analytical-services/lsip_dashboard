@@ -2010,6 +2010,8 @@ server <- function(input, output, session) {
     validate(
       need(input$barBreakdown != "", ""),
       need(input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)", ""),
+      need(input$breakdownPage != "Industry", ""),
+      need(input$breakdownPage != "Occupation (SOC2020 Major Group)", ""),
       need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     selectizeInput(
@@ -2022,7 +2024,8 @@ server <- function(input, output, session) {
   #### 2.3.8.2 Subgroup filter ----
   output$subgroupFilter <- renderUI({
     validate(
-      # need(input$barBreakdown != "", ""),
+      need(input$barBreakdown != "", ""),
+      need(input$breakdownPage != "", ""),
       need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     pickerInput(
