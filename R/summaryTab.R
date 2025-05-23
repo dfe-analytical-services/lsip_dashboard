@@ -76,6 +76,7 @@ summaryTab <- function() {
         )
       )
     ),
+    p("Change quoted is since last year."),
     br(),
     # Employment projections
     fluidRow(

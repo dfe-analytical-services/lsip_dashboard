@@ -457,12 +457,31 @@ server <- function(input, output, session) {
 
   # make employment rate box
   output$summaryEmployment <- renderText({
-    paste0(format(100 * (C_time %>%
+    latest <- (C_time %>%
       filter(
         geogConcat == input$geoChoiceOver,
         metric == "inemploymentRate",
         latest == 1
-      ))$value, digit = 2), "%")
+      ))$value
+    change <- latest - (C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "inemploymentRate",
+        latest == -1
+      ))$value
+    paste0(
+      format(100 * latest, digit = 2), "% ",
+      span(
+        # if (format == "percent") {
+        paste0(sprintf("%+.0f", 100 * change), "ppts")
+        # } else {
+        #  format_pm(change)
+        # }
+        , # plus-minus and comma sep formatting
+        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
+        .noWS = c("before", "after") # remove whitespace
+      )
+    )
   })
 
   output$sparklineEmployment <- renderPlotly({
@@ -501,12 +520,27 @@ server <- function(input, output, session) {
 
   # make online job ad box
   output$summaryAdverts <- renderText({
-    format((C_time %>%
+    latest <- (C_time %>%
       filter(
         geogConcat == input$geoChoiceOver,
         metric == "vacancies",
         latest == 1
-      ))$value, big.mark = ",")
+      ))$value
+    change <- latest - (C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "vacancies",
+        latest == -1
+      ))$value
+    paste0(
+      format(latest, big.mark = ","), " ",
+      span(
+        format_pm(change),
+        # plus-minus and comma sep formatting
+        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
+        .noWS = c("before", "after") # remove whitespace
+      )
+    )
   })
 
   output$sparklineAdverts <- renderPlotly({
@@ -545,12 +579,27 @@ server <- function(input, output, session) {
 
   # make App achievements box
   output$summaryAppAchievements <- renderText({
-    format((C_time %>%
+    latest <- (C_time %>%
       filter(
         geogConcat == input$geoChoiceOver,
         metric == "achievementsProvisionApprenticeships",
         latest == 1
-      ))$value, big.mark = ",")
+      ))$value
+    change <- latest - (C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "achievementsProvisionApprenticeships",
+        latest == -1
+      ))$value
+    paste0(
+      format(latest, big.mark = ","), " ",
+      span(
+        format_pm(change),
+        # plus-minus and comma sep formatting
+        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
+        .noWS = c("before", "after") # remove whitespace
+      )
+    )
   })
 
   output$sparklineAppAchievements <- renderPlotly({
