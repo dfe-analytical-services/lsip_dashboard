@@ -98,7 +98,7 @@ summaryTab <- function() {
         12,
         h3("Businesses"),
         p(uiOutput("summaryBusinesses")),
-        withSpinner(plotlyOutput("summaryBusinessesChart")),
+        withSpinner(plotlyOutput("summaryBusinessesChartCurrent")),
         fluidRow(
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_enterprise2", "More about businesses")
