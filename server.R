@@ -506,14 +506,16 @@ server <- function(input, output, session) {
         )
       ) %>%
       layout(
-        xaxis = list(visible = FALSE, showgrid = FALSE),
+        xaxis = list(tickvals = c(as.Date(min(overTime$timePeriod)) + 1, max(overTime$timePeriod)), ticktext = c(min(overTime$chartPeriod), max(overTime$chartPeriod)), title = "", rotation = "horizontal"),
         yaxis = list(visible = FALSE, showgrid = FALSE),
-        hovermode = "x",
-        margin = list(t = 0, r = 0, l = 0, b = 0),
+        # hovermode = "x",
+        # margin = list(t = 0, r = 0, l = 0, b = 0),
         paper_bgcolor = "transparent",
         plot_bgcolor = "transparent"
       ) %>%
       config(displayModeBar = FALSE)
+
+
 
     fig
   })
@@ -682,7 +684,7 @@ server <- function(input, output, session) {
   })
 
   # Businesses sentence
-  output$summaryBusinesses <- renderUI({
+  output$summaryBusinesses <- renderText({
     currentArea <- C_time %>%
       filter(
         geogConcat == input$geoChoiceOver,
@@ -717,58 +719,72 @@ server <- function(input, output, session) {
       ifelse(currentChange > 0, "grown ", "fallen "),
       label_percent(accuracy = 1)(currentChange / (currentArea %>%
         filter(timePeriod == min(timePeriod)))$value),
-      " in the last four years, while the nationally businesses have ",
+      " in the last four years, while nationally businesses have ",
       ifelse(englandChange > 0, "grown ", "fallen "),
       label_percent(accuracy = 1)(englandChange / (englandArea %>%
         filter(timePeriod == min(currentArea$timePeriod)))$value),
-      ". The top five industries in the area are: "
+      ". In the LSIP area, there are more ",
+      span((chartData() %>% filter(extremes == "top"))$subgroup[1], style = "color:#28A197"),
+      " businesses than the across England, and less ",
+      span((chartData() %>% filter(extremes == "bottom"))$subgroup[1], style = "color:#801650"),
+      " businesses. "
     )
   })
 
-  # get top 5 industries
-  chartColors2 <-
-    c(
-      "#BFBFBF",
-      "#12436D"
-    )
-  summaryBusinessesPlot <- eventReactive(input$geoChoiceOver, {
-    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
-    # find top and bottom 5 for area
+  chartData <- reactive({
     areaBreakdownData <- C_breakdown %>%
       dplyr::filter(geogConcat %in% c(input$geoChoiceOver, "England"))
-    topBotCats <- (areaBreakdownData %>%
-      dplyr::filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "enterpriseCount",
-        breakdown == "Industry"
-      ) %>%
-      dplyr::arrange(dplyr::desc(value)) %>%
-      dplyr::slice(1:5))$subgroup
 
-    chartData <- areaBreakdownData %>%
+    lsipData <- areaBreakdownData %>%
       dplyr::filter(
         metric == "enterpriseCount",
         breakdown == "Industry",
-        subgroup %in% topBotCats
+        geogConcat == input$geoChoiceOver
       ) %>%
-      dplyr::mutate(subgroup = gsub("[[:digit:]]+ - ", "", subgroup))
+      left_join(areaBreakdownData %>%
+        dplyr::filter(
+          metric == "enterpriseCount",
+          breakdown == "Industry",
+          geogConcat == "England"
+        ) %>%
+        select(subgroup, valueEngland = value)) %>%
+      mutate(diff = value - valueEngland) %>%
+      mutate(extremes = case_when(
+        diff == max(diff) ~ "top",
+        diff == min(diff) ~ "bottom",
+        TRUE ~ subgroup
+      )) %>%
+      dplyr::mutate(subgroup = gsub("[[:digit:]]+ - ", "", subgroup)) %>%
+      dplyr::mutate(geogOrder = str_trim(str_sub(geogConcat, start = -4)))
 
-    # sort by the area chosen
-    chartData$subgroup <- factor(chartData$subgroup, levels = levels(reorder(chartData[chartData$geogConcat == input$geoChoiceOver, ]$subgroup, chartData[chartData$geogConcat == input$geoChoiceOver, ]$value)))
+    # get England
+    englandData <- areaBreakdownData %>%
+      dplyr::filter(
+        metric == "enterpriseCount",
+        breakdown == "Industry",
+        geogConcat == "England"
+      ) %>%
+      left_join(lsipData %>% select(subgroup, extremes)) %>%
+      dplyr::mutate(geogOrder = "England")
 
-    # add an extra column so the colours work in ggplot when sorting alphabetically
-    chartData$Area <- factor(chartData$geogConcat,
-      levels = c("England", ifelse(input$geoChoiceOver == "England", NA, input$geoChoiceOver))
-    )
+    bind_rows(lsipData, englandData)
+  })
+
+
+  summaryBusinessesPlotCurrent <- eventReactive(input$geoChoiceOver, {
+    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
+    chartData <- chartData() # %>%filter(geogConcat!="England")
+    chartData$extremes <- reorder(chartData$extremes, chartData$value, sum)
+
     # plot
     ggplot2::ggplot(
       chartData,
       ggplot2::aes(
-        x = subgroup,
+        x = geogOrder,
         y = value,
-        fill = Area,
+        fill = extremes,
         text = paste0(
-          Area,
+          geogConcat,
           "<br>",
           "Percentage of businesses in ",
           subgroup,
@@ -777,43 +793,34 @@ server <- function(input, output, session) {
         )
       )
     ) +
-      ggplot2::geom_col(position = "dodge") +
+      ggplot2::geom_col() +
       ggplot2::scale_y_continuous(labels = scales::percent) +
       ggplot2::coord_flip() +
       ggplot2::theme_minimal() +
       ggplot2::labs(fill = "") +
       ggplot2::theme(
-        legend.position = "bottom",
-        legend.location = "plot",
+        legend.position = "none",
         axis.title.x = ggplot2::element_blank(),
         axis.title.y = ggplot2::element_blank(),
         panel.grid.major.y = ggplot2::element_blank(),
         panel.grid.minor = ggplot2::element_blank()
       ) +
-      ggplot2::scale_fill_manual(values = chartColors2)
+      ggplot2::scale_fill_manual(values = c("top" = "#28A197", "bottom" = "#801650"), na.value = "lightgrey")
   })
 
 
-  output$summaryBusinessesChart <- renderPlotly({
+  output$summaryBusinessesChartCurrent <- renderPlotly({
     validate(
       need("geoChoiceOver" %in% names(input), ""),
       need(input$geoChoiceOver != "", "")
     )
-    ggplotly(summaryBusinessesPlot(), tooltip = "text") %>%
+    ggplotly(summaryBusinessesPlotCurrent(), tooltip = "text") %>%
       layout(
-        legend = list(
-          orientation = "h",
-          x = 0,
-          y = -0.1
-        ),
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-
-
-
 
   ###  2.2.3 Downloads ----
   # download all indicators
