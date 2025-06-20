@@ -31,10 +31,11 @@ summaryTab <- function() {
 
     h1(uiOutput("page0title")),
     fluidRow(
+      h2("Headline data"),
       column(
         4,
         value_box(
-          title = "Employment rate",
+          title = "Working: Employment rate",
           value = uiOutput("summaryEmployment"),
           # "England 76%",
           showcase = plotlyOutput("sparklineEmployment"),
@@ -50,7 +51,7 @@ summaryTab <- function() {
       column(
         4,
         value_box(
-          title = "Online job adverts",
+          title = "Demand: Online job adverts",
           value = uiOutput("summaryAdverts"),
           showcase = plotlyOutput("sparklineAdverts"),
           showcase_layout = "bottom",
@@ -64,7 +65,7 @@ summaryTab <- function() {
       column(
         4,
         value_box(
-          title = "Apprenticeship achievements",
+          title = "Skills supply: Apprenticeship achievements",
           value = uiOutput("summaryAppAchievements"),
           showcase = plotlyOutput("sparklineAppAchievements"),
           showcase_layout = "bottom",

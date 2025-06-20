@@ -506,14 +506,16 @@ server <- function(input, output, session) {
         )
       ) %>%
       layout(
-        xaxis = list(visible = FALSE, showgrid = FALSE),
+        xaxis = list(tickvals = c(as.Date(min(overTime$timePeriod)) + 1, max(overTime$timePeriod)), ticktext = c(min(overTime$chartPeriod), max(overTime$chartPeriod)), title = "", rotation = "horizontal"),
         yaxis = list(visible = FALSE, showgrid = FALSE),
-        hovermode = "x",
-        margin = list(t = 0, r = 0, l = 0, b = 0),
+        # hovermode = "x",
+        # margin = list(t = 0, r = 0, l = 0, b = 0),
         paper_bgcolor = "transparent",
         plot_bgcolor = "transparent"
       ) %>%
       config(displayModeBar = FALSE)
+
+
 
     fig
   })
