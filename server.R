@@ -719,7 +719,7 @@ server <- function(input, output, session) {
       ifelse(currentChange > 0, "grown ", "fallen "),
       label_percent(accuracy = 1)(currentChange / (currentArea %>%
         filter(timePeriod == min(timePeriod)))$value),
-      " in the last four years, while the nationally businesses have ",
+      " in the last four years, while nationally businesses have ",
       ifelse(englandChange > 0, "grown ", "fallen "),
       label_percent(accuracy = 1)(englandChange / (englandArea %>%
         filter(timePeriod == min(currentArea$timePeriod)))$value),

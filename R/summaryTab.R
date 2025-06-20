@@ -106,6 +106,7 @@ summaryTab <- function() {
         )
       )
     ),
+    h4("Explore more data and metrics on the Local skills data page"),
     ### Downloads-------------
     br(),
     fluidRow(
