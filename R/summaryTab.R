@@ -30,12 +30,12 @@ summaryTab <- function() {
     ), # end of filters row
 
     h1(uiOutput("page0title")),
+    h2("Headline data"),
     fluidRow(
-      h2("Headline data"),
       column(
         4,
         value_box(
-          title = "Working: Employment rate",
+          title = span(tags$p("Workforce:", style = "font-weight: bold;"), p("Employment rate")),
           value = uiOutput("summaryEmployment"),
           # "England 76%",
           showcase = plotlyOutput("sparklineEmployment"),
@@ -51,7 +51,7 @@ summaryTab <- function() {
       column(
         4,
         value_box(
-          title = "Demand: Online job adverts",
+          title = span(tags$p("Demand:", style = "font-weight: bold;"), p("Online job adverts")),
           value = uiOutput("summaryAdverts"),
           showcase = plotlyOutput("sparklineAdverts"),
           showcase_layout = "bottom",
@@ -65,7 +65,7 @@ summaryTab <- function() {
       column(
         4,
         value_box(
-          title = "Skills supply: Apprenticeship achievements",
+          title = span(tags$p("Skills supply:", style = "font-weight: bold;"), p("Apprenticeship achievements")),
           value = uiOutput("summaryAppAchievements"),
           showcase = plotlyOutput("sparklineAppAchievements"),
           showcase_layout = "bottom",
@@ -106,7 +106,9 @@ summaryTab <- function() {
         )
       )
     ),
-    h4("Explore more data and metrics on the Local skills data page"),
+    fluidRow(
+      h4(actionLink("link_to_tabpanel_LS", "Explore more data and metrics on the Local skills data page."))
+    ),
     ### Downloads-------------
     br(),
     fluidRow(
