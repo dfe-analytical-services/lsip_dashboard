@@ -37,8 +37,7 @@ summaryTab <- function() {
         value_box(
           title = span(tags$p("Workforce:", style = "font-weight: bold;"), p("Employment rate")),
           value = uiOutput("summaryEmployment"),
-          # "England 76%",
-          showcase = plotlyOutput("sparklineEmployment"),
+          showcase = plotlyOutput("empRateLineChart"), # , height = 81
           showcase_layout = "bottom",
           # theme = "primary"
         ),
@@ -53,7 +52,7 @@ summaryTab <- function() {
         value_box(
           title = span(tags$p("Demand:", style = "font-weight: bold;"), p("Online job adverts")),
           value = uiOutput("summaryAdverts"),
-          showcase = plotlyOutput("sparklineAdverts"),
+          showcase = plotlyOutput("jobLineChart"),
           showcase_layout = "bottom",
           # theme = "primary"
         ),
@@ -67,7 +66,7 @@ summaryTab <- function() {
         value_box(
           title = span(tags$p("Skills supply:", style = "font-weight: bold;"), p("Apprenticeship achievements")),
           value = uiOutput("summaryAppAchievements"),
-          showcase = plotlyOutput("sparklineAppAchievements"),
+          showcase = plotlyOutput("AppLineChart"),
           showcase_layout = "bottom",
           # theme = "primary"
         ),
@@ -77,7 +76,6 @@ summaryTab <- function() {
         )
       )
     ),
-    p("Change quoted is since last year."),
     br(),
     # Employment projections
     fluidRow(

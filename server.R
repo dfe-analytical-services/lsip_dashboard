@@ -1000,9 +1000,9 @@ server <- function(input, output, session) {
       theme(
         axis.line = element_blank(),
         axis.ticks = element_blank(),
-        axis.title = element_blank(),
-        panel.background = element_rect(fill = "#f3f2f1"),
-        plot.background = element_rect(fill = "#f3f2f1")
+        axis.title = element_blank() # ,
+        # panel.background = element_rect(fill = "#f3f2f1"),
+        # plot.background = element_rect(fill = "#f3f2f1")
       ) +
       scale_y_continuous(
         labels =
