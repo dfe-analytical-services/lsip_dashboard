@@ -30,15 +30,14 @@ summaryTab <- function() {
     ), # end of filters row
 
     h1(uiOutput("page0title")),
+    h2("Headline data"),
     fluidRow(
-      h2("Headline data"),
       column(
         4,
         value_box(
-          title = "Working: Employment rate",
+          title = span(tags$p("Workforce:", style = "font-weight: bold;"), p("Employment rate")),
           value = uiOutput("summaryEmployment"),
-          # "England 76%",
-          showcase = plotlyOutput("sparklineEmployment"),
+          showcase = plotlyOutput("empRateLineChart"), # , height = 81
           showcase_layout = "bottom",
           # theme = "primary"
         ),
@@ -51,9 +50,9 @@ summaryTab <- function() {
       column(
         4,
         value_box(
-          title = "Demand: Online job adverts",
+          title = span(tags$p("Demand:", style = "font-weight: bold;"), p("Online job adverts")),
           value = uiOutput("summaryAdverts"),
-          showcase = plotlyOutput("sparklineAdverts"),
+          showcase = plotlyOutput("jobLineChart"),
           showcase_layout = "bottom",
           # theme = "primary"
         ),
@@ -65,9 +64,9 @@ summaryTab <- function() {
       column(
         4,
         value_box(
-          title = "Skills supply: Apprenticeship achievements",
+          title = span(tags$p("Skills supply:", style = "font-weight: bold;"), p("Apprenticeship achievements")),
           value = uiOutput("summaryAppAchievements"),
-          showcase = plotlyOutput("sparklineAppAchievements"),
+          showcase = plotlyOutput("AppLineChart"),
           showcase_layout = "bottom",
           # theme = "primary"
         ),
@@ -77,13 +76,13 @@ summaryTab <- function() {
         )
       )
     ),
-    p("Change quoted is since last year."),
     br(),
     # Employment projections
     fluidRow(
-      style = "padding-left: 15px;padding-right: 15px;", # indent slightly so box aligns
-      column(12,
-        class = "chartBox",
+      # style = "padding-left: 15px;padding-right: 15px;", # indent slightly so box aligns
+      column(
+        6,
+        # class = "chartBox",
         h3("Top projected growth occupations"),
         p(uiOutput("summaryTopProjected")),
         dataTableOutput("summaryTopProjectedListTable"),
@@ -91,22 +90,26 @@ summaryTab <- function() {
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_wf", "More about employment projections")
         )
-      )
-    ),
-    p(""),
-    fluidRow(
+      ),
       column(
-        12,
+        6,
+        # class = "chartBox",
         h3("Businesses"),
         p(uiOutput("summaryBusinesses")),
-        withSpinner(plotlyOutput("summaryBusinessesChartCurrent")),
+        h4(uiOutput("summaryBusinessesTop")),
+        withSpinner(plotlyOutput("summaryBusinessesChartTop", height = 150)),
+        h4(uiOutput("summaryBusinessesBottom")),
+        withSpinner(plotlyOutput("summaryBusinessesChartBottom", height = 150)),
         fluidRow(
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_enterprise2", "More about businesses")
         )
       )
     ),
-    h4("Explore more data and metrics on the Local skills data page"),
+    p(""),
+    fluidRow(
+      h4(actionLink("link_to_tabpanel_LS", "Explore more data and metrics on the Local skills data page."))
+    ),
     ### Downloads-------------
     br(),
     fluidRow(
