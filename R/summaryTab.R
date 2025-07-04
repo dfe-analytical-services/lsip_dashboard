@@ -79,9 +79,10 @@ summaryTab <- function() {
     br(),
     # Employment projections
     fluidRow(
-      style = "padding-left: 15px;padding-right: 15px;", # indent slightly so box aligns
-      column(12,
-        class = "chartBox",
+      # style = "padding-left: 15px;padding-right: 15px;", # indent slightly so box aligns
+      column(
+        6,
+        # class = "chartBox",
         h3("Top projected growth occupations"),
         p(uiOutput("summaryTopProjected")),
         dataTableOutput("summaryTopProjectedListTable"),
@@ -89,21 +90,23 @@ summaryTab <- function() {
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_wf", "More about employment projections")
         )
-      )
-    ),
-    p(""),
-    fluidRow(
+      ),
       column(
-        12,
+        6,
+        # class = "chartBox",
         h3("Businesses"),
         p(uiOutput("summaryBusinesses")),
-        withSpinner(plotlyOutput("summaryBusinessesChartCurrent")),
+        h4(uiOutput("summaryBusinessesTop")),
+        withSpinner(plotlyOutput("summaryBusinessesChartTop", height = 150)),
+        h4(uiOutput("summaryBusinessesBottom")),
+        withSpinner(plotlyOutput("summaryBusinessesChartBottom", height = 150)),
         fluidRow(
           class = "rightAlignLinks",
           actionLink("link_to_tabpanel_enterprise2", "More about businesses")
         )
       )
     ),
+    p(""),
     fluidRow(
       h4(actionLink("link_to_tabpanel_LS", "Explore more data and metrics on the Local skills data page."))
     ),

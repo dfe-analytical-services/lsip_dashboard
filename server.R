@@ -651,12 +651,16 @@ server <- function(input, output, session) {
         filter(
           geogConcat == input$geoChoiceOver
         ))$employmentProjection * 100, digit = 1),
-      "% (compared to ",
-      format((C_Geog %>%
-        filter(
-          geogConcat == "England"
-        ))$employmentProjection * 100, digit = 1),
-      "% nationally). These are the top projected growth occupations in the area:"
+      "%",
+      ifelse(input$geoChoiceOver == "England", "", paste0(
+        "(compared to ",
+        format((C_Geog %>%
+          filter(
+            geogConcat == "England"
+          ))$employmentProjection * 100, digit = 1),
+        "% nationally)"
+      )),
+      ". These are the top projected growth occupations in the area:"
     )
   })
 
@@ -724,15 +728,44 @@ server <- function(input, output, session) {
       ifelse(currentChange > 0, "grown ", "fallen "),
       label_percent(accuracy = 1)(currentChange / (currentArea %>%
         filter(timePeriod == min(timePeriod)))$value),
-      " in the last four years, while nationally businesses have ",
-      ifelse(englandChange > 0, "grown ", "fallen "),
-      label_percent(accuracy = 1)(englandChange / (englandArea %>%
-        filter(timePeriod == min(currentArea$timePeriod)))$value),
-      ". In the LSIP area, there are more ",
-      span((chartData() %>% filter(extremes == "top"))$subgroup[1], style = "color:#28A197"),
-      " businesses than the across England, and less ",
-      span((chartData() %>% filter(extremes == "bottom"))$subgroup[1], style = "color:#801650"),
-      " businesses. "
+      " in the last four years",
+      ifelse(input$geoChoiceOver == "England", ".",
+        paste0(
+          ", while nationally businesses have ",
+          ifelse(englandChange > 0, "grown ", "fallen "),
+          label_percent(accuracy = 1)(englandChange / (englandArea %>%
+            filter(timePeriod == min(currentArea$timePeriod)))$value),
+          ". Across this area, there are more ",
+          (chartData() %>% filter(extremes == "top"))$subgroup[1],
+          " businesses than the across England, and less ",
+          (chartData() %>% filter(extremes == "bottom"))$subgroup[1],
+          " businesses. "
+        )
+      )
+    )
+  })
+
+  # Businesses sentence
+  output$summaryBusinessesTop <- renderText({
+    validate(
+      need("geoChoiceOver" %in% names(input), ""),
+      need(input$geoChoiceOver != "", ""),
+      need(input$geoChoiceOver != "England", "")
+    )
+    paste0(
+      (chartData() %>% filter(extremes == "top"))$subgroup[1]
+    )
+  })
+
+  # Businesses sentence
+  output$summaryBusinessesBottom <- renderText({
+    validate(
+      need("geoChoiceOver" %in% names(input), ""),
+      need(input$geoChoiceOver != "", ""),
+      need(input$geoChoiceOver != "England", "")
+    )
+    paste0(
+      (chartData() %>% filter(extremes == "bottom"))$subgroup[1]
     )
   })
 
@@ -772,22 +805,22 @@ server <- function(input, output, session) {
       left_join(lsipData %>% select(subgroup, extremes)) %>%
       dplyr::mutate(geogOrder = "England")
 
-    bind_rows(lsipData, englandData)
+    bind_rows(lsipData, englandData) %>%
+      filter(extremes %in% c("top", "bottom"))
   })
 
 
-  summaryBusinessesPlotCurrent <- eventReactive(input$geoChoiceOver, {
+  summaryBusinessesPlotTop <- eventReactive(input$geoChoiceOver, {
     validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
-    chartData <- chartData() # %>%filter(geogConcat!="England")
+    chartData <- chartData() %>% filter(extremes == "top")
     chartData$extremes <- reorder(chartData$extremes, chartData$value, sum)
-
     # plot
     ggplot2::ggplot(
       chartData,
       ggplot2::aes(
         x = geogOrder,
         y = value,
-        fill = extremes,
+        fill = geogOrder,
         text = paste0(
           geogConcat,
           "<br>",
@@ -810,22 +843,80 @@ server <- function(input, output, session) {
         panel.grid.major.y = ggplot2::element_blank(),
         panel.grid.minor = ggplot2::element_blank()
       ) +
-      ggplot2::scale_fill_manual(values = c("top" = "#28A197", "bottom" = "#801650"), na.value = "lightgrey")
+      ggplot2::scale_fill_manual(values = c(
+        "lightgrey", "#12436D"
+        # "LSIP" = "#12436D", "England" = "lightgrey"
+      ))
   })
 
-
-  output$summaryBusinessesChartCurrent <- renderPlotly({
+  output$summaryBusinessesChartTop <- renderPlotly({
     validate(
       need("geoChoiceOver" %in% names(input), ""),
-      need(input$geoChoiceOver != "", "")
+      need(input$geoChoiceOver != "", ""),
+      need(input$geoChoiceOver != "England", "")
     )
-    ggplotly(summaryBusinessesPlotCurrent(), tooltip = "text") %>%
+    ggplotly(summaryBusinessesPlotTop(), tooltip = "text") %>%
       layout(
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
+
+  summaryBusinessesPlotBottom <- eventReactive(input$geoChoiceOver, {
+    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
+    chartData <- chartData() %>% filter(extremes == "bottom")
+    chartData$extremes <- reorder(chartData$extremes, chartData$value, sum)
+    # plot
+    ggplot2::ggplot(
+      chartData,
+      ggplot2::aes(
+        x = geogOrder,
+        y = value,
+        fill = geogOrder,
+        text = paste0(
+          geogConcat,
+          "<br>",
+          "Percentage of businesses in ",
+          subgroup,
+          ": ",
+          label_percent(accuracy = 1)(value)
+        )
+      )
+    ) +
+      ggplot2::geom_col() +
+      ggplot2::scale_y_continuous(labels = scales::percent) +
+      ggplot2::coord_flip() +
+      ggplot2::theme_minimal() +
+      ggplot2::labs(fill = "") +
+      ggplot2::theme(
+        legend.position = "none",
+        axis.title.x = ggplot2::element_blank(),
+        axis.title.y = ggplot2::element_blank(),
+        panel.grid.major.y = ggplot2::element_blank(),
+        panel.grid.minor = ggplot2::element_blank()
+      ) +
+      ggplot2::scale_fill_manual(values = c(
+        "lightgrey", "#12436D"
+        # "LSIP" = "#12436D", "England" = "lightgrey"
+      ))
+  })
+
+
+  output$summaryBusinessesChartBottom <- renderPlotly({
+    validate(
+      need("geoChoiceOver" %in% names(input), ""),
+      need(input$geoChoiceOver != "", ""),
+      need(input$geoChoiceOver != "England", "")
+    )
+    ggplotly(summaryBusinessesPlotBottom(), tooltip = "text") %>%
+      layout(
+        xaxis = list(fixedrange = TRUE),
+        yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+
 
   ###  2.2.3 Downloads ----
   # download all indicators
