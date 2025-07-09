@@ -1,158 +1,116 @@
-### 2.3.2 ONS job adverts by SOC ----
+### 1 ONS job adverts by 3 digit SOC and LA----
 folder <- "2-12_OnsProf"
-sheet <- "Table 12"
-I_Ons2digLA <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-I_Ons2digLA <- I_Ons2digLA[, c(1, 4, 2, 3, 5:ncol(I_Ons2digLA))]
-sheet <- "Table 10"
-I_Ons2digLep <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 9"
-I_Ons2digLsip <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 11"
-I_Ons2digMca <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 8"
-I_Ons2digRegion <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+ sheet <- "Table 4"
+ I_Ons3digLA <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
 
-sheet <- "Table 1"
-I_OnsEng <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 6"
-I_OnsLA <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 4"
-I_OnsLep <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 3"
-I_OnsLsip <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-sheet <- "Table 5"
-I_OnsMca <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-
-formatVacancies <- function(x) {
-  # Tidy
-  reformat <- x %>%
-    janitor::row_to_names(row_number = 4) # set columns
-  geogLevel <- colnames(reformat)[1] # get geog level
-  reformat <- reformat %>%
-    rename(area = geogLevel) %>% # rename to match other datafiles
-    mutate(
-      geographic_level = geogLevel # set to the current geographic type
-      , SOC2digit = paste0(
-        {
-          if ("SOC 2 digit code" %in% names(.)) `SOC 2 digit code` else NULL
-        },
-        " - ",
-        {
-          if ("SOC 2 digit label" %in% names(.)) `SOC 2 digit label` else NULL
-        }
-      ),
-    ) %>%
-    relocate(geographic_level, .before = area) %>%
-    select(-contains("SOC 2 digit code"), -contains("SOC 2 digit label"))
-  
-  # Make long
-  reformat %>%
-    tidyr::pivot_longer(!c("geographic_level", "area", "SOC2digit"),
-                 names_to = "time_period", values_to = "valueText"
-    ) %>%
-    mutate(area = case_when(
-      area == "Sheffield City Region" ~ "South Yorkshire",
-      area == "Derby, Derbyshire, Nottingham and Nottinghamshire" ~ "D2N2",
-      area == "London" ~ "The London Economic Action Partnership",
-      area == "Oxfordshire" & geographic_level == "Local Enterprise Partnership" ~ "OxLEP",
-      area == "Oxfordshire" & geographic_level == "Local Skills Improvement Plan" ~ "Oxfordshire",
-      area == "Gloucestershire" & geographic_level == "Local Enterprise Partnership" ~ "GFirst",
-      area == "Gloucestershire" & geographic_level == "Local Skills Improvement Plan" ~ "G First (Gloucestershire)",
-      area == "Greater Cambridge and Greater Peterborough" ~ "The Business Board",
-      area == "Cambridge and Peterborough" ~ "Cambridgeshire and Peterborough",
-      area == "Buckinghamshire " ~ "Buckinghamshire",
-      area == "North East" ~ "North East",
-      area == "Norfolk and Suffolk " & geographic_level == "Local Enterprise Partnership" ~ "Norfolk and Suffolk",
-      area == "Norfolk and Suffolk " & geographic_level == "Local Skills Improvement Plan" ~ "New Anglia",
-      area == "South East Midlands" & geographic_level == "Local Skills Improvement Plan" ~ "South-East Midlands",
-      area == "Enterprise M3 LEP (including all of Surrey)" ~ "Enterprise M3",
-      area == "Heart of the South West" & geographic_level == "Local Enterprise Partnership" ~ "Heart of the South West",
-      area == "Heart of the South West" & geographic_level == "Local Skills Improvement Plan" ~ "Heart of the South-West",
-      area == "Stoke on Trent and Staffordshire" & geographic_level == "Local Enterprise Partnership" ~ "Stoke-on-Trent and Staffordshire",
-      area == "Stoke on Trent and Staffordshire" & geographic_level == "Local Skills Improvement Plan" ~ "Stoke-on-Trent and Staffordshire",
-      area == "Norfolk and Suffolk" ~ "New Anglia",
-      area == "West of England and North Somerset" & geographic_level == "Local Enterprise Partnership" ~ "West of England",
-      area == "Essex, Southend on Sea and Thurrock" & geographic_level == "Local Skills Improvement Plan" ~ "Essex, Southend-on-Sea and Thurrock",
-      TRUE ~ area
-    ))
-}
-
-# format data
-# For the LAs, there are some old LA names within the data so we need to update those
-# Also need to remove Local Authority Code column (X5 in 2digLA and X3 in LA)
-advertsWithAreas <-
-  # format and bind both LA files
-  bind_rows(
-    formatVacancies(I_Ons2digLA %>% 
-                      rename(region = 1) %>% 
-                      filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% 
-                      relocate(X2)%>%#put geography column at the start
-                      select(-region, -X5)),
-    formatVacancies(I_OnsLA %>% 
-                      rename(region = 1) %>% 
-                      filter(!(region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown", "London"))) %>% 
-                      select(-region, -X3))
-  ) %>% # remove region code. get rid of london since it isn't really an LA.We get that from the region data
-  # Use new LA names from 2011 areas
-  left_join(I_LaLookup %>% distinct(LAD11NM, LAD23NM_11 = LAD23NM, LAD23CD_11 = LAD23CD), by = c("area" = "LAD11NM")) %>% # make new LAs
-  # Use new LA names from 2021 areas
-  left_join(I_LaLookup %>% distinct(LAD21NM, LAD23NM_21 = LAD23NM, LAD23CD_21 = LAD23CD), by = c("area" = "LAD21NM")) %>% # make new LAs
-  # create flag for when the lad code has changed
-  mutate(
-    newArea = case_when(
-      (LAD23NM_11 != area) | (LAD23NM_21 != area) ~ 1, TRUE ~ 0
-    ),
-    area = case_when(
-      is.na(LAD23CD_11) == FALSE ~ LAD23NM_11,
-      is.na(LAD23CD_21) == FALSE ~ LAD23NM_21,
-      TRUE ~ area
-    )
-  ) %>%
-  # select new name
-  select(-LAD23CD_11, -LAD23CD_21, -LAD23NM_21, -LAD23NM_11) %>%
-  left_join(distinct(F_LEP2020, areaCode = LAD23CD, LAD23NM), by = c("area" = "LAD23NM")) # use to get consistent LA names
-
-# Group up the new LAs
-groupedStats <- advertsWithAreas %>%
-  filter(newArea == 1) %>% # no need to group national or LAs that haven't changed
-  ungroup() %>%
-  select(-newArea) %>%
-  mutate(valueText = as.numeric(valueText)) %>% # so we can sum
-  mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
-  filter(timePeriod == max(timePeriod)) %>% # we only show the latest year at this level of detail
-  select(-timePeriod) %>%
-  group_by(geographic_level, area, SOC2digit, time_period, areaCode) %>% # sum for each LEP
-  summarise(across(everything(), list(sum), na.rm = T)) %>%
-  rename_with(~ gsub("_1", "", .)) %>%
-  mutate(valueText = as.character(valueText)) # so we can merge
+ #Tidy up data
+ tidydata<-I_Ons3digLA %>% 
+   janitor::row_to_names(row_number = 4)%>% # set columns
+   filter(!(Region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown")))%>%
+   rename(area=`Local Authority District`,areaCode=`Local Authority Code`)%>%
+   mutate(geographic_level="Local authority district")%>%
+   mutate(areaCode=case_when(area=="London" ~ "E09000001", TRUE ~ areaCode))%>%#Online job ad data is not at LA level for London. To make the lookups for MCA/LSIP/LEP work, just add in City of London LA code
+ select(-Region,-ITL2,-`SOC 3 digit label`)
+ 
+ #turn into 2 digit SOC
+ SOC2digit<-tidydata%>%
+   mutate(SOC2digitCode= as.numeric(substr(case_when(`SOC 3 digit code`=="Unknown" ~ "999", TRUE ~ `SOC 3 digit code`),1,2)))%>% #get 2 digit code
+   left_join(C_SOC2020structure%>%mutate(SOC2digit=paste0(code," - ",stringr::str_to_sentence(cleanName))), by = c("SOC2digitCode" = "code")) %>% #add on SOC 2 digit names
+   mutate(SOC2digit=case_when(SOC2digitCode==99 ~ "Unknown", TRUE ~ SOC2digit))%>%
+   select(-cleanName,-`SOC 3 digit code`, -SOC2digitCode)
+ 
+ #unique(SOC2digit$SOC2digit) #Check all are populated
+ 
+ #make long, filter to latest data and group up to 2 digit
+ SOC2digitLong<-SOC2digit %>%
+   tidyr::pivot_longer(!c("geographic_level", "area","areaCode","SOC2digit"),
+                       names_to = "time_period", values_to = "value"
+   )%>%
+   mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
+   filter(timePeriod == max(timePeriod)) %>% # we only show the latest year at this level of detail
+   group_by(geographic_level,area,areaCode,SOC2digit,time_period)%>%
+   summarise(value=sum(as.numeric(value)))%>%
+   ungroup()
+ 
+ #make long, filter to latest data and group up to 2 digit
+ SOC2digitLong<-SOC2digit %>%
+   tidyr::pivot_longer(!c("geographic_level", "area","areaCode","SOC2digit"),
+                       names_to = "time_period", values_to = "value"
+   )%>%
+   mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
+   filter(timePeriod == max(timePeriod)) %>% # we only show the latest year at this level of detail
+   group_by(geographic_level,area,areaCode,SOC2digit,time_period)%>%
+   summarise(value=sum(as.numeric(value)))%>%
+   mutate(value = as.character(value))%>% # so we can merge
+   ungroup()
+ 
+ ### 2 ONS job adverts by LA----
+ sheet <- "Table 2"
+ I_OnsLA <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+ 
+ #Tidy up data
+ tidyDataLA<-I_OnsLA %>% 
+   janitor::row_to_names(row_number = 4)%>% # set columns
+   filter(!(Region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown")))%>%
+   rename(area=`Local Authority District`,areaCode=`Local Authority Code`)%>%
+   mutate(geographic_level="Local authority district")%>%
+   mutate(areaCode=case_when(area=="London" ~ "E09000001", TRUE ~ areaCode))%>%#Online job ad data is not at LA level for London. To make the lookups for MCA/LSIP/LEP work, just add in City of London LA code
+   select(-Region,-ITL2)
+ 
+ #make long
+ LaLong<-tidyDataLA %>%
+   tidyr::pivot_longer(!c("geographic_level", "area","areaCode"),
+                       names_to = "time_period", values_to = "value"
+   )
+ 
+ ### 3 ONS job adverts England----
+ sheet <- "Table 1"
+ I_OnsEng <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+ 
+ #Tidy up data
+ tidyDataEng<-I_OnsEng %>% 
+   janitor::row_to_names(row_number = 4)%>% # set columns
+   filter(Country == "England")%>%
+   rename(area=Country)%>%
+   mutate(geographic_level="National")
+ 
+ #make long
+ EngLong<-tidyDataEng %>%
+   tidyr::pivot_longer(!c("geographic_level", "area"),
+                       names_to = "time_period", values_to = "value"
+   )
+ 
+ ### 4 Get all the other geographies by joining to the lookups----
+ #add on MCA, LEP, LSIP
+ geogs<-bind_rows(
+   SOC2digitLong,
+   LaLong,
+   EngLong)%>%
+   addGeogs()%>% #repeat data for each geography
+   filter(geogConcat!="City of London LADU") #remove the City of London data which was used just to get the london LSIP. LEP
+ 
+ #group up MCA, LEP, LSIP
+ geogsSummed <- geogs %>%
+   filter(newArea == 1) %>% # no need to group LAs that haven't changed
+   ungroup() %>%
+   select(-newArea) %>%
+   group_by(geogConcat, SOC2digit, time_period) %>% # sum for each area
+   summarise(value=sum(as.numeric(value))) %>%
+   mutate(value = as.character(value)) # so we can merge
+ 
+ # get england soc stats summed from LSIPs
+ SOC2digitEngland<-geogsSummed %>%
+   filter(stringr::str_sub(geogConcat, -4, -1)=="LSIP",is.na(SOC2digit)==FALSE )%>%
+   group_by(SOC2digit, time_period) %>%
+   summarise(value = as.character(sum(as.numeric(value), na.rm = T))) %>%
+   mutate(geogConcat = "England")
 
 # Format all other area types
 F_adverts <- bind_rows(
-  formatVacancies(I_Ons2digLep),
-  formatVacancies(I_Ons2digLsip),
-  formatVacancies(I_Ons2digMca), 
-  # get england soc stats summed from regions
-  formatVacancies(I_Ons2digRegion) %>%
-    group_by(geographic_level, SOC2digit, time_period) %>%
-    summarise(valueText = as.character(sum(as.numeric(valueText), na.rm = T))) %>%
-    mutate(area = "England"),
-  formatVacancies(I_OnsLep),
-  formatVacancies(I_OnsLsip),
-  formatVacancies(I_OnsMca),
-  formatVacancies(I_OnsEng),
-  # add on LAs
-  groupedStats,
-  advertsWithAreas %>%
-    filter(newArea == 0)
-) %>%
-  # change lep naming to match other datafiles
-  mutate(geogConcat = case_when(
-    geographic_level == "Local Authority District" ~ paste0(area, " LADU"),
-    geographic_level == "Local Enterprise Partnership" ~ paste0(area, " LEP"),
-    geographic_level == "Local Skills Improvement Plan" ~ paste0(area, " LSIP"),
-    geographic_level == "Mayoral Combined Authorities" ~ paste0(area, " MCA"),
-    TRUE ~ area
-  )) %>%
+  SOC2digitEngland,#SOC 2 digit for england
+  geogsSummed, #summed up geographies
+  geogs %>% filter(newArea == 0)#LAs
+)%>%
   mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
   rename(chartPeriod = time_period) %>%
   mutate(latest = case_when(
@@ -162,31 +120,24 @@ F_adverts <- bind_rows(
   )) %>%
   #filter to last 5 years
   filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
-  select(-area, -geographic_level) %>%
-  # make suppressed data zero to use in dashboard
-  mutate(value = gsub("\\[x\\]", "0", valueText)) %>%
-  mutate(value = gsub("\\[X\\]", "0", value)) %>%
-  mutate(value = as.numeric(value))
+  mutate(valueText = value)%>%
+  mutate(value = as.numeric(valueText))%>%
+  select(-newArea)
 
 # Get summaries
 C_adverts <- bind_rows(
   # soc 2 digit
   F_adverts %>%
-    filter(SOC2digit != " - ") %>%
-    mutate(breakdown = "Occupation (SOC2020 Sub-Major Group)",
-           SOC2digit = case_when(
-            SOC2digit == "Unknown - Unknown" ~ "Unknown",
-            TRUE ~ SOC2digit
-            )
-           ) %>%
+    filter(is.na(SOC2digit) == FALSE) %>%
+    mutate(breakdown = "Occupation (SOC2020 Sub-Major Group)") %>%
     rename(subgroup = SOC2digit),
   # total
   F_adverts %>%
-    filter(SOC2digit == " - ") %>%
+    filter(is.na(SOC2digit) == TRUE) %>%
     mutate(breakdown = "Total", subgroup = "Total"),
   # soc 1 digit
   F_adverts %>%
-    filter(SOC2digit != " - ") %>%
+    filter(is.na(SOC2digit) == FALSE) %>%
     mutate(
       SOC1digitCode = substr(SOC2digit, 1, 1),
       SOC1digit = case_when(
@@ -208,6 +159,6 @@ C_adverts <- bind_rows(
     mutate(breakdown = "Occupation (SOC2020 Major Group)", valueText = as.character(value)) %>%
     mutate(subgroup = SOC1digit)
 ) %>%
-  select(-SOC2digit) %>%
+  select(-SOC2digit, -SOC1digit) %>%
   mutate(metric = "vacancies")
 
