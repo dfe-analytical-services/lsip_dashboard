@@ -40,6 +40,12 @@ team for access:
   - R for Windows 4.4 or higher
   - RStudio
   - RTools 4.4 or higher
+  
+- You will also need to install Git, which is version control software. You 
+can download this directly from the [Git for windows website](https://gitforwindows.org/). 
+
+- Once the installer has started, follow the instructions as provided 
+in the Git Setup wizard screen until the installation is complete.
 
 > [!IMPORTANT]
 > It is important that all your software is the same version. 
@@ -60,11 +66,6 @@ run the function getRversion() in the console.
 > If you have the latest version of R downloaded but RStudio still shows an 
 older one, use [this guide to help you switch to the version of R you need](https://bioinformatics.ccr.cancer.gov/docs/rtools/R%20and%20RStudio/2.6_switching_r_version/).
 
-You will also need to install Git, which is version control software. You 
-can download this directly from the [Git for windows website](https://gitforwindows.org/). 
-Once the installer has started, follow the instructions as provided 
-in the Git Setup wizard screen until the installation is complete.
-
 ### Step 2 - Clone the repository
 
 The code for the dashboard is stored in [a repository on GitHub](https://github.com/dfe-analytical-services/lsip_dashboard). 
@@ -73,7 +74,7 @@ This allows us to collaborate on the project using version control.
 You will need to 'clone' the repository ('repo'), so that you can
 work on and run the code on your own machine. To do this, navigate to a folder 
 where you would like to store your copy of the repo. This should be outside of 
-your OneDrive area. To do this, click on documents, then click in the file path
+your OneDrive area. To do this, click on documents, then click on the file path
 and delete everything up to your username (1). This should take you to your user 
 folder outside of OneDrive. You can make a folder there to store all your 
 repos (2).
