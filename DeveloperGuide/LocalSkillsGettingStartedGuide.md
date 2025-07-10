@@ -39,7 +39,7 @@ team for access:
 
 > [!CAUTION]
 > It is important that all your software is the same version. 
-For example, if R is 4.4, your RTools also needs to be 4.4.
+For example, if R is 4.4, RTools also needs to be 4.4.
 
 > You can find the version number under the name of the software in the
 Software Center or by clicking on the software and looking for “Version:” 
@@ -48,7 +48,7 @@ in the information.
 > You can also check the R version you’re using in RStudio by checking 
 under the console tab (1) or the information shown in 
 the console on start up (2) as shown in the image below. Or, you can 
-use the function getRversion() in the console.
+run the function getRversion() in the console.
 
 ![R version is shown under the console tab](./Images/R_version_number.png)
 
@@ -57,7 +57,7 @@ use the function getRversion() in the console.
 older one, use [this guide to help you switch to the version of R you need](https://bioinformatics.ccr.cancer.gov/docs/rtools/R%20and%20RStudio/2.6_switching_r_version/).
 
 - You will also need to install git, which is a version control software. You 
-can downloaded this directly from the [git for windows website](https://gitforwindows.org/). 
+can download this directly from the [git for windows website](https://gitforwindows.org/). 
 Once the installer has started, follow the instructions as provided 
 in the Git Setup wizard screen until the installation is complete.
 
@@ -67,18 +67,18 @@ The code for the dashboard is stored in [a repository on GitHub](https://github.
 This allows us to collaborate on the project using version control. 
 
 You will need to 'clone' the repository ('repo'), so that you can
-work on the code on your own machine. To do this, navigate to a folder where
-you would like to store your copy of the repo. This should be outside of your 
-OneDrive area. To do this, click on documents, then click in the file path
+work on and run the code on your own machine. To do this, navigate to a folder 
+where you would like to store your copy of the repo. This should be outside of 
+your OneDrive area. To do this, click on documents, then click in the file path
 and delete everything up to your username (1). This should take you to your user 
 folder outside of OneDrive. You can make a folder there to store all your 
 repos (2).
 
 ![Creat a Repo folder within your user folder](./Images/Repo_folder.png)
 
-One you have done this, right click in your new repos folder and click 'Open Git
-Bash here'. If this doesn't appear as an option, go back to step one and install
-Git.
+One you have done this, navigate into your new repos folder and right click 
+anywhere in the folder. Select 'Open GitBash here' in the menu. If this doesn't 
+appear as an option, go back to step one and install Git.
 
 ![Right click to open Git Bash](./Images/Gitbash.png)
 
@@ -94,11 +94,48 @@ the repository. You only need to do this once, unless you later delete your
 cloned folder. 
 
 > [!CAUTION]
-> You can't paste into the Git Bash using Ctrl + V, instead you can right 
-click and choose paste, or you can click the middle roller button on your
+> You can't paste into the Git Bash console using Ctrl + V, instead you can 
+right click and choose paste, or you can click the middle roller button on your
 mouse if you have one.
 
 There are more details about using git and github, and a link to full training,
 in the main developer guide.
 
 # Run the dashboard in R
+
+Step 1 - Open the project in R
+
+Navigate to the project folder in your repos folder, find the RStudio project
+file (called lsip_dashboard), and open it in RStudio.
+
+Step 2 - Update the packages
+
+The dashboard uses a package called renv to track and manage all the other
+R packages used by the dashboard.  
+
+To align your packages with the dashboard packages, run `renv::restore()` in 
+the R console. The first time you do this, it will list a large number of
+required installations. Type `Y` in the console and press enter to start
+installing them. Once this is complete run `renv::status()`, which should
+generate the message "No issues found -- the project is in a consistent state."
+
+If you don't get this message, run `renv::restore()` again; packages sometimes
+fail to install, especially when trying to install a large number in one go.
+
+You will need to restore renv again each time you work on the dashboard, but 
+normally only a few packages will need updating.
+
+Step 3 - You are ready to run the dashboard!
+
+To launch a local version of the dashboard, run `shiny::runApp()` in the 
+R console. This should launch the dashboard in a new window. 
+
+> [!NOTE]
+> You will not be able to run any other code in R while the dashboard is 
+running. To stop running the dashboard, close the dashboard window.
+
+# Where to go next
+
+If you are planning to contribute to the project, the [Developer Guide](https://github.com/dfe-analytical-services/lsip_dashboard/blob/main/DeveloperGuide/LocalSkillsDeveloperGuide.md) 
+contains more detailed information on how to work on the project, including 
+links to further training on git. 
