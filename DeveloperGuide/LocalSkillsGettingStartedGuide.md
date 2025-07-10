@@ -1,10 +1,14 @@
 # Local skills getting started guide
 
 - [Introduction](#introduction)
+- [View the live dashboard](#view-the-live-dashboard)
+- [Prepare to run the dashboard in R](#prepare-to-run-the-dashboard-in-r)
+- [Run the dashboard in R](#run-the-dashboard-in-r)
+- [Where to go next](#where-to-go-next)
 
 ## Introduction
 
-The Local Skills dashboard is an R shiny dashboard displaying published
+The Local Skills dashboard is an R Shiny dashboard displaying published
 local data from a variety of sources in an easy to navigate format. To
 support local skills planning, the dashboard covers topics such as
 employment, qualifications, and education outcomes across England.
@@ -56,8 +60,8 @@ run the function getRversion() in the console.
 > If you have the latest version of R downloaded but RStudio still shows an 
 older one, use [this guide to help you switch to the version of R you need](https://bioinformatics.ccr.cancer.gov/docs/rtools/R%20and%20RStudio/2.6_switching_r_version/).
 
-- You will also need to install git, which is a version control software. You 
-can download this directly from the [git for windows website](https://gitforwindows.org/). 
+You will also need to install Git, which is version control software. You 
+can download this directly from the [Git for windows website](https://gitforwindows.org/). 
 Once the installer has started, follow the instructions as provided 
 in the Git Setup wizard screen until the installation is complete.
 
@@ -74,19 +78,19 @@ and delete everything up to your username (1). This should take you to your user
 folder outside of OneDrive. You can make a folder there to store all your 
 repos (2).
 
-![Creat a Repo folder within your user folder](./Images/Repo_folder.PNG)
+![Create a Repo folder within your user folder](./Images/Repo_folder.PNG)
 
-One you have done this, navigate into your new repos folder and right click 
-anywhere in the folder. Select 'Open GitBash here' in the menu. If this doesn't 
+Once you have done this, open your new repos folder and right click 
+anywhere in the folder. Select 'Open Git Bash here' in the menu. If this doesn't 
 appear as an option, go back to step one and install Git.
 
 ![Right click to open Git Bash](./Images/Gitbash.PNG)
 
-Next, go to the [repository](https://github.com/dfe-analytical-services/lsip_dashboard),
+Next, go to the [repository on GitHub](https://github.com/dfe-analytical-services/lsip_dashboard),
 click on code in the top right hand corner and then copy the URL in the
 HTTPS section.
 
-![Click on the code button to copy the HHTPS address](./Images/Clone.PNG)
+![Click on the code button to copy the HTTPS address](./Images/Clone.PNG)
 
 In the Git Bash console window you opened earlier, after the $ type `git clone`,
 leave a space and then paste the URL. Press Enter. This should start cloning 
@@ -98,15 +102,15 @@ cloned folder.
 right click and choose paste, or you can click the middle roller button on your
 mouse if you have one.
 
-There are more details about using git and github, and a link to full training,
-in the main developer guide.
+There are more details about using Git and GitHub, and a link to full training,
+in the main [Developer Guide](https://github.com/dfe-analytical-services/lsip_dashboard/blob/main/DeveloperGuide/LocalSkillsDeveloperGuide.md).
 
 # Run the dashboard in R
 
 ### Step 1 - Open the project in R
 
-Navigate to the project folder in your repos folder, find the RStudio project
-file (called lsip_dashboard), and open it in RStudio.
+Navigate to the lsip_dashboard folder in your repos folder, find the RStudio 
+project file (called lsip_dashboard), and open it in RStudio.
 
 ### Step 2 - Update the packages
 
@@ -138,4 +142,4 @@ running. To stop running the dashboard, close the dashboard window.
 
 If you are planning to contribute to the project, the [Developer Guide](https://github.com/dfe-analytical-services/lsip_dashboard/blob/main/DeveloperGuide/LocalSkillsDeveloperGuide.md) 
 contains more detailed information on how to work on the project, including 
-links to further training on git. 
+links to further training on using Git. 
