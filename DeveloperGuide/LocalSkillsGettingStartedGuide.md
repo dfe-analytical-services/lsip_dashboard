@@ -48,8 +48,8 @@ can download this directly from the [Git for windows website](https://gitforwind
 in the Git Setup wizard screen until the installation is complete.
 
 > [!IMPORTANT]
-> It is important that all your software is the same version. 
-For example, if R is 4.4, RTools also needs to be 4.4.
+> It is important that R and RTools are compatible versions. For example, if 
+R is 4.4, RTools also needs to be 4.4.
 
 You can find the version number under the name of the software in the
 Software Center or by clicking on the software and looking for “Version:” 
