@@ -37,22 +37,22 @@ team for access:
   - RStudio
   - RTools 4.4 or higher
 
-> [!CAUTION]
+> [!IMPORTANT]
 > It is important that all your software is the same version. 
 For example, if R is 4.4, RTools also needs to be 4.4.
 
-> You can find the version number under the name of the software in the
+You can find the version number under the name of the software in the
 Software Center or by clicking on the software and looking for “Version:” 
 in the information.
 
-> You can also check the R version you’re using in RStudio by checking 
+You can also check the R version you’re using in RStudio by checking 
 under the console tab (1) or the information shown in 
 the console on start up (2) as shown in the image below. Or, you can 
 run the function getRversion() in the console.
 
-![R version is shown under the console tab](./Images/R_version_number.png)
+![R version is shown under the console tab](./Images/R_version_number.PNG)
 
-> [!NOTE]
+> [!TIP]
 > If you have the latest version of R downloaded but RStudio still shows an 
 older one, use [this guide to help you switch to the version of R you need](https://bioinformatics.ccr.cancer.gov/docs/rtools/R%20and%20RStudio/2.6_switching_r_version/).
 
@@ -74,26 +74,26 @@ and delete everything up to your username (1). This should take you to your user
 folder outside of OneDrive. You can make a folder there to store all your 
 repos (2).
 
-![Creat a Repo folder within your user folder](./Images/Repo_folder.png)
+![Creat a Repo folder within your user folder](./Images/Repo_folder.PNG)
 
 One you have done this, navigate into your new repos folder and right click 
 anywhere in the folder. Select 'Open GitBash here' in the menu. If this doesn't 
 appear as an option, go back to step one and install Git.
 
-![Right click to open Git Bash](./Images/Gitbash.png)
+![Right click to open Git Bash](./Images/Gitbash.PNG)
 
 Next, go to the [repository](https://github.com/dfe-analytical-services/lsip_dashboard),
 click on code in the top right hand corner and then copy the URL in the
 HTTPS section.
 
-![Click on the code button to copy the HHTPS address](./Images/Clone.png)
+![Click on the code button to copy the HHTPS address](./Images/Clone.PNG)
 
 In the Git Bash console window you opened earlier, after the $ type `git clone`,
 leave a space and then paste the URL. Press Enter. This should start cloning 
 the repository. You only need to do this once, unless you later delete your 
 cloned folder. 
 
-> [!CAUTION]
+> [!TIP]
 > You can't paste into the Git Bash console using Ctrl + V, instead you can 
 right click and choose paste, or you can click the middle roller button on your
 mouse if you have one.
@@ -103,12 +103,12 @@ in the main developer guide.
 
 # Run the dashboard in R
 
-Step 1 - Open the project in R
+### Step 1 - Open the project in R
 
 Navigate to the project folder in your repos folder, find the RStudio project
 file (called lsip_dashboard), and open it in RStudio.
 
-Step 2 - Update the packages
+### Step 2 - Update the packages
 
 The dashboard uses a package called renv to track and manage all the other
 R packages used by the dashboard.  
@@ -125,7 +125,7 @@ fail to install, especially when trying to install a large number in one go.
 You will need to restore renv again each time you work on the dashboard, but 
 normally only a few packages will need updating.
 
-Step 3 - You are ready to run the dashboard!
+### Step 3 - You are ready to run the dashboard!
 
 To launch a local version of the dashboard, run `shiny::runApp()` in the 
 R console. This should launch the dashboard in a new window. 
