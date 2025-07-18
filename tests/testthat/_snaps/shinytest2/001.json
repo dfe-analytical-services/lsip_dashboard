@@ -22,13 +22,13 @@
       ]
     },
     "overviewEmpCntKPI": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Jan 2024-Dec 2024<\/span>\n  <br/>\n  285,100\n  <br/><span style=\"font-size: 16px;color:green\">+7,300<\/span><br/>\n<\/h4>",
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Apr 2024-Mar 2025<\/span>\n  <br/>\n  291,200\n  <br/><span style=\"font-size: 16px;color:green\">+9,500<\/span><br/>\n<\/h4>",
       "deps": [
 
       ]
     },
     "overviewEmpRateKPI": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Jan 2024-Dec 2024<\/span>\n  <br/>\n  81%\n  <br/><span style=\"font-size: 16px;color:#e00000\">-1ppts<\/span><br/>\n<\/h4>",
+      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Apr 2024-Mar 2025<\/span>\n  <br/>\n  82%\n  <br/><span style=\"font-size: 16px;color:green\">+1ppts<\/span><br/>\n<\/h4>",
       "deps": [
 
       ]
