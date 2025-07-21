@@ -342,7 +342,12 @@ server <- function(input, output, session) {
     )
   })
 
-  ## 2.2 Overview ----
+  ## 2.2 Overview
+
+  # Add link to local skills data
+  observeEvent(input$link_to_tabpanel_LS, {
+    updateTabsetPanel(session, "navbar", "Local skills data")
+  })
 
   # define page title
   output$page0title <- renderUI({
@@ -365,6 +370,286 @@ server <- function(input, output, session) {
       icon("camera"),
       "Screenshot"
     )
+  })
+
+  # define page title
+  output$summaryArea <- renderUI({
+    input$geoChoiceOver
+  })
+
+
+  # Top projected jobs sentence
+  output$summaryTopProjected <- renderUI({
+    paste0(
+      "From 2023 to 2035 ", input$geoChoiceOver, " is projected to grow ",
+      format((C_Geog %>%
+        filter(
+          geogConcat == input$geoChoiceOver
+        ))$employmentProjection * 100, digit = 1),
+      "%",
+      ifelse(input$geoChoiceOver == "England", "", paste0(
+        "(compared to ",
+        format((C_Geog %>%
+          filter(
+            geogConcat == "England"
+          ))$employmentProjection * 100, digit = 1),
+        "% nationally)"
+      )),
+      ". These are the top projected growth occupations in the area:"
+    )
+  })
+
+  # get top growing occupations
+  summaryTopProjectedList <- reactive({
+    C_breakdown %>%
+      dplyr::filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "employmentProjection",
+        breakdown == "Occupation (SOC2020 Sub-Major Group)"
+      ) %>%
+      dplyr::arrange(dplyr::desc(value)) %>%
+      dplyr::slice_head(n = 5) %>%
+      mutate(
+        value = label_percent(accuracy = 1)(value),
+        subgroup = gsub("[[:digit:]]+", "", gsub(" - ", "", subgroup))
+      ) %>%
+      select(Occupation = subgroup, Growth = value)
+  })
+
+  output$summaryTopProjectedListTable <- renderDataTable({
+    DT::datatable(summaryTopProjectedList(),
+      options = list(
+        info = FALSE,
+        paging = FALSE,
+        searching = FALSE,
+        rownames = FALSE
+      )
+    )
+  })
+
+  # Businesses sentence
+  output$summaryBusinesses <- renderText({
+    currentArea <- C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "enterpriseCount"
+      )
+    englandArea <- C_time %>%
+      filter(
+        geogConcat == "England",
+        metric == "enterpriseCount"
+      )
+    currentChange <- (currentArea %>%
+      filter(latest == 1))$value -
+      (currentArea %>%
+        filter(timePeriod == min(timePeriod)))$value
+    englandChange <- (englandArea %>%
+      filter(latest == 1))$value -
+      (englandArea %>%
+        filter(timePeriod == min(currentArea$timePeriod)))$value # match with the area data
+
+    paste0(
+      "In ",
+      (currentArea %>%
+        dplyr::filter(latest == 1)
+      )$chartPeriod,
+      ", ",
+      format((currentArea %>%
+        dplyr::filter(latest == 1)
+      )$value, big.mark = ","),
+      " businesses were active in ",
+      input$geoChoiceOver,
+      ". The number of businesses has ",
+      ifelse(currentChange > 0, "grown ", "fallen "),
+      label_percent(accuracy = 1)(currentChange / (currentArea %>%
+        filter(timePeriod == min(timePeriod)))$value),
+      " in the last four years",
+      ifelse(input$geoChoiceOver == "England", ".",
+        paste0(
+          ", while nationally businesses have ",
+          ifelse(englandChange > 0, "grown ", "fallen "),
+          label_percent(accuracy = 1)(englandChange / (englandArea %>%
+            filter(timePeriod == min(currentArea$timePeriod)))$value),
+          ". Across this area, there are more ",
+          (chartData() %>% filter(extremes == "top"))$subgroup[1],
+          " businesses than the across England, and less ",
+          (chartData() %>% filter(extremes == "bottom"))$subgroup[1],
+          " businesses. "
+        )
+      )
+    )
+  })
+
+  # Businesses sentence
+  output$summaryBusinessesTop <- renderText({
+    validate(
+      need("geoChoiceOver" %in% names(input), ""),
+      need(input$geoChoiceOver != "", ""),
+      need(input$geoChoiceOver != "England", "")
+    )
+    paste0(
+      (chartData() %>% filter(extremes == "top"))$subgroup[1]
+    )
+  })
+
+  # Businesses sentence
+  output$summaryBusinessesBottom <- renderText({
+    validate(
+      need("geoChoiceOver" %in% names(input), ""),
+      need(input$geoChoiceOver != "", ""),
+      need(input$geoChoiceOver != "England", "")
+    )
+    paste0(
+      (chartData() %>% filter(extremes == "bottom"))$subgroup[1]
+    )
+  })
+
+  chartData <- reactive({
+    areaBreakdownData <- C_breakdown %>%
+      dplyr::filter(geogConcat %in% c(input$geoChoiceOver, "England"))
+
+    lsipData <- areaBreakdownData %>%
+      dplyr::filter(
+        metric == "enterpriseCount",
+        breakdown == "Industry",
+        geogConcat == input$geoChoiceOver
+      ) %>%
+      left_join(areaBreakdownData %>%
+        dplyr::filter(
+          metric == "enterpriseCount",
+          breakdown == "Industry",
+          geogConcat == "England"
+        ) %>%
+        select(subgroup, valueEngland = value)) %>%
+      mutate(diff = value - valueEngland) %>%
+      mutate(extremes = case_when(
+        diff == max(diff) ~ "top",
+        diff == min(diff) ~ "bottom",
+        TRUE ~ subgroup
+      )) %>%
+      dplyr::mutate(subgroup = gsub("[[:digit:]]+ - ", "", subgroup)) %>%
+      dplyr::mutate(geogOrder = str_trim(str_sub(geogConcat, start = -4)))
+
+    # get England
+    englandData <- areaBreakdownData %>%
+      dplyr::filter(
+        metric == "enterpriseCount",
+        breakdown == "Industry",
+        geogConcat == "England"
+      ) %>%
+      left_join(lsipData %>% select(subgroup, extremes)) %>%
+      dplyr::mutate(geogOrder = "England")
+
+    bind_rows(lsipData, englandData) %>%
+      filter(extremes %in% c("top", "bottom"))
+  })
+
+
+  summaryBusinessesPlotTop <- eventReactive(input$geoChoiceOver, {
+    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
+    chartData <- chartData() %>% filter(extremes == "top")
+    chartData$extremes <- reorder(chartData$extremes, chartData$value, sum)
+    # plot
+    ggplot2::ggplot(
+      chartData,
+      ggplot2::aes(
+        x = geogOrder,
+        y = value,
+        fill = geogOrder,
+        text = paste0(
+          geogConcat,
+          "<br>",
+          "Percentage of businesses in ",
+          subgroup,
+          ": ",
+          label_percent(accuracy = 1)(value)
+        )
+      )
+    ) +
+      ggplot2::geom_col() +
+      ggplot2::scale_y_continuous(labels = scales::percent) +
+      ggplot2::coord_flip() +
+      ggplot2::theme_minimal() +
+      ggplot2::labs(fill = "") +
+      ggplot2::theme(
+        legend.position = "none",
+        axis.title.x = ggplot2::element_blank(),
+        axis.title.y = ggplot2::element_blank(),
+        panel.grid.major.y = ggplot2::element_blank(),
+        panel.grid.minor = ggplot2::element_blank()
+      ) +
+      ggplot2::scale_fill_manual(values = c(
+        "lightgrey", "#12436D"
+        # "LSIP" = "#12436D", "England" = "lightgrey"
+      ))
+  })
+
+  output$summaryBusinessesChartTop <- renderPlotly({
+    validate(
+      need("geoChoiceOver" %in% names(input), ""),
+      need(input$geoChoiceOver != "", ""),
+      need(input$geoChoiceOver != "England", "")
+    )
+    ggplotly(summaryBusinessesPlotTop(), tooltip = "text") %>%
+      layout(
+        xaxis = list(fixedrange = TRUE),
+        yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+
+  summaryBusinessesPlotBottom <- eventReactive(input$geoChoiceOver, {
+    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
+    chartData <- chartData() %>% filter(extremes == "bottom")
+    chartData$extremes <- reorder(chartData$extremes, chartData$value, sum)
+    # plot
+    ggplot2::ggplot(
+      chartData,
+      ggplot2::aes(
+        x = geogOrder,
+        y = value,
+        fill = geogOrder,
+        text = paste0(
+          geogConcat,
+          "<br>",
+          "Percentage of businesses in ",
+          subgroup,
+          ": ",
+          label_percent(accuracy = 1)(value)
+        )
+      )
+    ) +
+      ggplot2::geom_col() +
+      ggplot2::scale_y_continuous(labels = scales::percent) +
+      ggplot2::coord_flip() +
+      ggplot2::theme_minimal() +
+      ggplot2::labs(fill = "") +
+      ggplot2::theme(
+        legend.position = "none",
+        axis.title.x = ggplot2::element_blank(),
+        axis.title.y = ggplot2::element_blank(),
+        panel.grid.major.y = ggplot2::element_blank(),
+        panel.grid.minor = ggplot2::element_blank()
+      ) +
+      ggplot2::scale_fill_manual(values = c(
+        "lightgrey", "#12436D"
+        # "LSIP" = "#12436D", "England" = "lightgrey"
+      ))
+  })
+
+
+  output$summaryBusinessesChartBottom <- renderPlotly({
+    validate(
+      need("geoChoiceOver" %in% names(input), ""),
+      need(input$geoChoiceOver != "", ""),
+      need(input$geoChoiceOver != "England", "")
+    )
+    ggplotly(summaryBusinessesPlotBottom(), tooltip = "text") %>%
+      layout(
+        xaxis = list(fixedrange = TRUE),
+        yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
   })
 
   ###  2.2.3 Downloads ----
@@ -540,9 +825,9 @@ server <- function(input, output, session) {
       theme(
         axis.line = element_blank(),
         axis.ticks = element_blank(),
-        axis.title = element_blank(),
-        panel.background = element_rect(fill = "#f3f2f1"),
-        plot.background = element_rect(fill = "#f3f2f1")
+        axis.title = element_blank() # ,
+        # panel.background = element_rect(fill = "#f3f2f1"),
+        # plot.background = element_rect(fill = "#f3f2f1")
       ) +
       scale_y_continuous(
         labels =
@@ -623,7 +908,7 @@ server <- function(input, output, session) {
   })
   # Add link to employment rate
   observeEvent(input$link_to_tabpanel_empRate, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "inemploymentRate"
     )
@@ -644,7 +929,7 @@ server <- function(input, output, session) {
 
   # Add link to vacancy data
   observeEvent(input$link_to_tabpanel_vacancies2, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "vacancies"
     )
@@ -678,7 +963,7 @@ server <- function(input, output, session) {
 
   # Add link to skills data
   observeEvent(input$link_to_tabpanel_FE2, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "achievements_rate_per_100000_population"
     )
@@ -698,7 +983,7 @@ server <- function(input, output, session) {
 
   # add link to destinations
   observeEvent(input$link_to_tabpanel_destinations2, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "sustainedPositiveDestinationKS4Rate"
     )
@@ -719,7 +1004,7 @@ server <- function(input, output, session) {
 
   # add link to enterprise
   observeEvent(input$link_to_tabpanel_enterprise2, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "enterpriseCount"
     )
@@ -740,7 +1025,7 @@ server <- function(input, output, session) {
 
   # add link to qualification level
   observeEvent(input$link_to_tabpanel_qualification2, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "L4PlusRate"
     )
@@ -823,7 +1108,7 @@ server <- function(input, output, session) {
 
   # add link to qualification level
   observeEvent(input$link_to_tabpanel_wf, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "employmentProjection"
     )
@@ -1389,7 +1674,8 @@ server <- function(input, output, session) {
     distinct(metric, breakdown)
   output$breakdownFilter <- renderUI({
     validate(
-      need(input$splashMetric %in% distinctBreakdowns$metric, "")
+      need(input$splashMetric %in% distinctBreakdowns$metric, ""),
+      need(input$breakdownPage == "All", "")
     )
     selectizeInput(
       inputId = "barBreakdown",
@@ -1410,6 +1696,8 @@ server <- function(input, output, session) {
     validate(
       need(input$barBreakdown != "", ""),
       need(input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)", ""),
+      need(input$breakdownPage != "Industry", ""),
+      need(input$breakdownPage != "Occupation (SOC2020 Major Group)", ""),
       need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     selectizeInput(
@@ -1423,6 +1711,7 @@ server <- function(input, output, session) {
   output$subgroupFilter <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
+      need(input$breakdownPage != "", ""),
       need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     pickerInput(
@@ -1433,7 +1722,7 @@ server <- function(input, output, session) {
           distinctSubgroups %>%
             filter(
               metric == input$splashMetric,
-              breakdown == input$barBreakdown,
+              breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
               if (input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
                 subgroup %in%
                   (C_detailLookup %>% filter(`Occupation (SOC2020 Major Group)` == input$summaryProfession))$`Occupation (SOC2020 Sub-Major Group)`
@@ -1447,7 +1736,7 @@ server <- function(input, output, session) {
         C_topTenEachBreakdown %>%
           filter(
             metric == input$splashMetric,
-            breakdown == input$barBreakdown,
+            breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
             geogConcat == input$geoChoice,
             if (input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
               `Occupation (SOC2020 Major Group)` == input$summaryProfession
@@ -1561,7 +1850,7 @@ server <- function(input, output, session) {
         need(input$barBreakdown != "No breakdowns available", "")
       )
       Splash_21 <- C_breakdown %>% filter(
-        breakdown == input$barBreakdown,
+        breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
         subgroup %in% input$barSubgroup,
         metric == input$splashMetric,
         # get lep/lsip/mca areas

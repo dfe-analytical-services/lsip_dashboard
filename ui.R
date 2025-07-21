@@ -704,7 +704,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 
     ## 2.3 Local skills ----
     tabPanel(
-      "Local skills",
+      "Local skills data",
       br(),
       ### 2.3.1 Filters ----
       fluidRow(
@@ -822,6 +822,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       fluidRow(column(
         12,
         h2("Data notes"),
+        p("Any NAs or missing data in the charts or maps are due to supressed data."),
         p(uiOutput("dataSource")),
         p(uiOutput("dataNote")),
         p("Caveats:"),
