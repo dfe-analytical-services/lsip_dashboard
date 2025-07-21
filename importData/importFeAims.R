@@ -7,7 +7,7 @@ I_FeProvLevelAge <- read.csv(file = paste0("./Data/", folder, "/", list.files(pa
 F_FeProvLevelAge <- I_FeProvLevelAge %>%
   # filter uneeded columns and rows
   filter(
-    geographic_level %in% c("Local authority district", "National", "Local skills improvement plan area","English devolved area"), # just keep area used
+    geographic_level %in% c("Local authority district", "National", "Local enterprise partnership", "Local skills improvement plan area","English devolved area"), # just keep area used
     # keep only the combinations shown in dashboard
     (((provision_type == "Further education and skills" | stringr::str_sub(level_or_type, -5, -1) == "Total") & age_summary == "Total") | level_or_type == "Further education and skills: Total"),
     lad_code != "z" # ignore Outside of England and unknown
@@ -15,12 +15,14 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
   mutate(area = case_when(
     geographic_level == "National" ~ country_name,
     geographic_level == "Local authority district" ~ lad_name,
+    geographic_level == "Local enterprise partnership" ~ local_enterprise_partnership_name,
     geographic_level == "Local skills improvement plan area" ~ lsip_name,
     geographic_level == "English devolved area" ~ english_devolved_area_name,
     TRUE ~ ""
   )) %>%
   mutate(areaCode = case_when(
     geographic_level == "Local authority district" ~ lad_code,
+    geographic_level == "Local enterprise partnership" ~ local_enterprise_partnership_code,
     geographic_level == "Local skills improvement plan area" ~ lsip_code,
     geographic_level == "English devolved area" ~ english_devolved_area_code,
     TRUE ~ ""
@@ -47,6 +49,9 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
     area == "Humber" ~ "Hull and East Yorkshire",
     area == "Derby, Derbyshire, Nottingham and Nottinghamshire" ~ "D2N2",
     area == "Gloucestershire" ~ "GFirst",
+    area == "Oxfordshire" & geographic_level == "Local enterprise partnership" ~ "OxLEP"
+    # and also rename london to the new name
+    , area == "London" & geographic_level == "Local enterprise partnership" ~ "The London Economic Action Partnership",
     TRUE ~ area
   ))
 
@@ -61,13 +66,41 @@ addPopulation <- F_FeProvLevelAge %>%
   ) %>%
   select(-populationGroup)
 
-# add on new LADUs/LSIP/MCA areas
+# add on new LADUs/LEP/LSIP/MCA areas
 feWithAreas <- addGeogs(addPopulation)
 
-# Get LSIP and MCA groups (ILR now publish at that level). 
-# Here we get those LSIPs and MCAs which have stayed consistent across the years so we can use the published data throughout
+# Get new LSIP and LEP groups (ILR now publish at that level). However, ILR LEP data is published based on the LEP mappings in each year.
+# As these mappings have changed each year, we don't have a consistent time series.
+# Here we get those LEPs which have stayed consistent across the years so we can use the published data throughout
 feLepsLsips <- addPopulation %>%
-  filter(geographic_level == "Local skills improvement plan area"
+  filter((geographic_level == "Local enterprise partnership" &
+            area %in% c(
+              "Buckinghamshire",
+              "Cheshire and Warrington",
+              "Cornwall and Isles of Scilly",
+              "Coventry and Warwickshire",
+              "Cumbria",
+              "D2N2",
+              "Dorset",
+              "GFirst",
+              "Greater Birmingham and Solihull",
+              "Greater Manchester",
+              "Heart of the South West",
+              "Hull and East Yorkshire",
+              "Lancashire",
+              "Leicester and Leicestershire",
+              "Liverpool City Region",
+              "North East",
+              "OxLEP",
+              "Stoke-on-Trent and Staffordshire",
+              "Swindon and Wiltshire",
+              "Tees Valley",
+              "Thames Valley Berkshire",
+              "The Marches",
+              "West of England",
+              "Worcestershire",
+              "South East Midlands"
+            )) | geographic_level == "Local skills improvement plan area"
          | (geographic_level == "English devolved area" &
               area %in% c("Cambridgeshire and Peterborough",
                           "Greater London Authority",
@@ -80,6 +113,7 @@ feLepsLsips <- addPopulation %>%
               ) %>%
   mutate(
     geogConcat = case_when(
+      geographic_level == "Local enterprise partnership" ~ paste0(area, " LEP"),
       geographic_level == "Local skills improvement plan area" ~ paste0(area, " LSIP"),
       geographic_level == "English devolved area" ~ paste0(area, " MCA"),
       TRUE ~ "NA"
@@ -92,8 +126,20 @@ feLepsLsips <- addPopulation %>%
 groupedStats <- feWithAreas %>%
   filter(newArea == 1 # areas that have been calculated
          & (stringr::str_sub(geogConcat, -4, -1) == "LADU" | # lads that have changed over time
-              # MCAs that have changed their geography over time or are newly formed
+              # LEPs and MCAs that have changed their geography over time or are newly formed
               geogConcat %in% c(
+                "Coast to Capital LEP",
+                "South East LEP",
+                "The London Economic Action Partnership LEP",
+                "Enterprise M3 LEP",
+                "Solent LEP",
+                "Greater Lincolnshire LEP",
+                "Hertfordshire LEP",
+                "York and North Yorkshire LEP",
+                "South Yorkshire LEP",
+                "Leeds City Region LEP",
+                "New Anglia LEP",
+                "The Business Board LEP",
                 "East Midlands MCA",
                 "North East MCA",
                 "South Yorkshire MCA",

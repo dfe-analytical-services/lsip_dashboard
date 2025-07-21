@@ -6,17 +6,7 @@ fluidPage(
     href = "dfefavicon.png"
   )),
   shinyjs::useShinyjs(),
-  # Setting up cookie consent based on a cookie recording the consent:
-  # https://book.javascript-for-r.com/shiny-cookies.html
-  tags$head(
-    tags$script(
-      src = paste0(
-        "https://cdn.jsdelivr.net/npm/js-cookie@rc/",
-        "dist/js.cookie.min.js"
-      )
-    ),
-    tags$script(src = "cookie-consent.js")
-  ),
+  dfeshiny::custom_disconnect_message(dashboard_title = site_title),
   tags$head(
     tags$link(
       rel = "stylesheet",
@@ -24,7 +14,8 @@ fluidPage(
       href = "dfe_shiny_gov_style.css"
     )
   ),
-  shinyGovstyle::cookieBanner("Local Skills Dashboard"),
+  dfeshiny::dfe_cookies_script(),
+  dfeshiny::cookies_banner_ui(name = site_title),
 
   # Set metadata for browser
   tags$html(lang = "en"),
@@ -54,12 +45,6 @@ fluidPage(
     tags$style(
       HTML(
         "
-
-    /* remove the max width of the main panel so spreads across screen*/
-.govuk-width-container {
-    max-width: 100%;
-}
-
 /*style filter row grey background*/
 .filterRow{
 background-color: #f3f2f1; /*#1d70b8*/
@@ -159,23 +144,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 
 }
 
- /* overwrite ccs to keep margin*/
-@media (min-width:1020px) {
-    .govuk-width-container {
-        margin-right: max(30px, calc(15px + env(safe-area-inset-left)));
-        margin-left: max(30px, calc(15px + env(safe-area-inset-left)))
-    }
-    @supports (margin:max(calc(0px))) {
-        .govuk-width-container {
-            margin-right: max(30px, calc(15px + env(safe-area-inset-left)));
-            margin-left: max(30px, calc(15px + env(safe-area-inset-left)))
-        }
-    }
-}
-
-/* allow text wrap in screen shot button*/
-.btn-block {
-    white-space: normal;
+ /* increase banner size*/
+.feedback-banner {
+    background-color: #d53880;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: 5px 8px 4px;
 }
 
 "
@@ -198,16 +172,14 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       )
     )
   ),
-
   # Force the top nav bar to left align and centre the title
   HTML(
     '<header class="govuk-header" role="banner">
     <div class="govuk-header__container">
-    <div class="govuk-header__logo" style="width: 15%; margin-left: 15px;float:left;">
+    <div class="govuk-header__logo" style="margin-left: 15px">
     <a href="https://www.gov.uk/government/organisations/department-for-education" class="govuk-header__link govuk-header__link--homepage">
     <span class="govuk-header__logotype">
-   <img src="images/DfE_logo.png" class="govuk-header__logotype-crown-fallback-image"/>
-    <span class="govuk-header__logotype-text">DfE</span>
+     <img src="images/DfE_logo_landscape.png" class="govuk-header__logotype-crown-fallback-image" width="133px"/>
     </span>
     </a>
     </div>
@@ -218,6 +190,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     <i class="fa fa-bars" style="font-size:24px;"></i></a>
     </div>
     </header>'
+  ),
+  # Add bug header
+  HTML(
+    '<div class="feedback-banner" id="feedback banner" >
+    <a href="https://forms.office.com/e/gUgfhXcRY3" target="_blank" rel="noopener noreferrer" style="color: #fff;"><strong>FEEDBACK</strong> | Click here to share your feedback and help shape the future of this dashboard.</a>
+</div>'
   ),
 
   # Force page to scroll to top when links clicked
@@ -374,7 +352,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     id = "navbar",
     widths = c(2, 10),
     well = FALSE,
-    selected = "Summary",
+    selected = "Overview",
 
     ## 2.1 User guide ----
 
@@ -422,7 +400,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             p("Use the navigation bar on the left to select the tab you want to view."),
             h2("Dashboard structure"),
             tags$ul(
-              tags$li(actionLink("link_to_tabpanel_overview", "Summary"), " - this tab provides a summary of some of the key metrics for the selected geographic area."),
+              tags$li(actionLink("link_to_tabpanel_overview", "Overview"), " - this tab provides a time series summary of employment, qualifications, and further education outcomes for the selected geographic area. Metrics are divided into two columns: Labour market and Skills. Labour market includes employment, online job adverts (experimental), and micro business count (0-9 employees). Skills covers education and training ahcievements, apprenticehsip achievements, highest qualification level, and Key Stage 5 positive destinations."),
               tags$li(actionLink("link_to_tabpanel_localskills", "Local skills"), " - the Local Skills tab provides additional metrics and breakdowns for the selected geographic area."),
               tags$li(actionLink("link_to_tabpanel_data", "Data information and download"), "- includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
               tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of local labour market and education system."),
@@ -507,18 +485,29 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("xx April 2025 (1.5.1)"),
+            p("18 Jul 2025 (1.4.15)"),
             tags$ul(
-              tags$li("Added a national view of the metrics."),
-              tags$li("Removed LEPs."),
-              tags$li("Added a subgroups filter to the local skills tab."),
-              tags$li("Reorganised the summary tab.")
+              tags$li("Update to latest APS data.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
-                p("20 Mar 2025 (1.4.11)"),
+                p("11 Jul 2025 (1.4.14)"),
+                tags$ul(
+                  tags$li("Update to latest online job advert data.")
+                ),
+                p("14 May 2025 (1.4.13)"),
+                tags$ul(
+                  tags$li("Update to latest online job advert data."),
+                  tags$li("Update to latest qualification data.")
+                ),
+                p("25 Apr 2025 (1.4.12)"),
+                tags$ul(
+                  tags$li("Updated APS employment to latest data."),
+                  tags$li("Update to latest online job advert data.")
+                ),
+                p("27 Mar 2025 (1.4.11)"),
                 tags$ul(
                   tags$li("Update to latest revised destination data."),
                   tags$li("Update to latest online job advert data.")
@@ -711,8 +700,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     # end of homepage Panel
 
     ## 2.2 Overview ----
-    #  panel_overview(),
-    summaryTab(),
+    panel_overview(),
 
     ## 2.3 Local skills ----
     tabPanel(
@@ -721,30 +709,35 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       ### 2.3.1 Filters ----
       fluidRow(
         column(
-          5,
-          p("Choose an LSIP, MCA or England"),
+          4,
+          p("Choose a LEP, LSIP or MCA"),
           selectizeInput(
             "geoChoice",
             multiple = FALSE,
             label = NULL,
             choices = areaChoices[1:3]
-          ),
-          uiOutput("geoComp")
+          )
         ),
         column(
-          5,
+          4,
           p("What are you interested in?"),
           pickerInput(
             inputId = "splashMetric",
             choices = metricChoices,
-            multiple = FALSE
-          ),
-          uiOutput("breakdownPageTitle"),
-          uiOutput("breakdownPageFilter"),
-          uiOutput("subgroupPageFilter")
+            multiple = FALSE,
+            choicesOpt = list(
+              disabled = unlist(metricChoices) %in% c("workingFutures"),
+              style = ifelse(
+                unlist(metricChoices) %in% c("workingFutures"),
+                yes = "color: rgba(119, 119, 119, 0.5);",
+                no = ""
+              )
+            )
+          )
         ),
+        column(1),
         column(
-          2,
+          3,
           uiOutput("screenshotFile")
         )
       ),
@@ -761,7 +754,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           h3(uiOutput("titleMap")),
           radioGroupButtons(
             inputId = "splashGeoType",
-            choices = c("LSIP", "MCA", "England")
+            choices = c("LEP", "LSIP", "MCA")
           ),
           p(uiOutput("commentMap")),
           withSpinner(leafletOutput("map")),
@@ -771,6 +764,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           6,
           h3(uiOutput("titleTime")),
           p(uiOutput("commentTime")),
+          uiOutput("geoComp"),
           withSpinner(plotlyOutput("Splash_time")),
           p(uiOutput("timeFoot"))
         )
@@ -1156,8 +1150,21 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
 
     ## 2.9 Support ----
     tabPanel(
+      "Cookie information",
+      dfeshiny::cookies_panel_ui(
+        id = "cookies_panel",
+        google_analytics_key = google_analytics_key
+      )
+    ),
+    ## 2.10 Support ----
+    tabPanel(
       "Support and feedback",
-      support_links() # defined in R/supporting_links.R))
+      dfeshiny::support_panel(
+        team_email = "skills.england@education.gov.uk",
+        repo_name = "https://github.com/dfe-analytical-services/lsip_dashboard",
+        form_url = "https://forms.office.com/pages/responsepage.aspx?id=yXfS-grGoU2187O4s0qC-fk-uIY5X_9Grwm9UK_gdoJUNzhPRjkxRUE1MFZXS0lZNDdZVkpUM0Y0Wi4u&route=shorturl",
+        custom_data_info = "This dashboard collates data from a wide range of sources. Full details of all sources are provided on the data sources page of this dashboard."
+      )
     )
   ),
   # End of navBarPage

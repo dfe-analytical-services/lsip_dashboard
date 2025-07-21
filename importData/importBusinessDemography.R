@@ -81,7 +81,7 @@ groupedStats <- businessesWithAreas %>%
   filter(newArea == 1) %>% # no need to group national or LAs that haven't changed
   ungroup() %>%
   select(-newArea) %>%
-  group_by(chartPeriod, timePeriod, latest, geogConcat, metric) %>% # sum for each area
+  group_by(chartPeriod, timePeriod, latest, geogConcat, metric) %>% # sum for each LEP
   summarise(across(everything(), list(sum), na.rm = T)) %>%
   rename_with(~ gsub("_1", "", .))
 

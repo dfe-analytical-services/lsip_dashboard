@@ -1,7 +1,7 @@
 ### 2.1.3 UK Business Count----
 # Enterprise by employment size and industry
 # Query data
-# Geography: England, regions, LADs (as of April 2022)
+# Geography: England, LEPs, regions, LADs (as of April 2022)
 # Date: 12 months to Dec 2018-2022
 # Cell: UK Business Counts - enterprises by industry and employment size band
 # Enterprise by employment size and industry

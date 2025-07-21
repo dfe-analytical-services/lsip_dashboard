@@ -38,107 +38,24 @@ server <- function(input, output, session) {
     )
 
   ## 1.3 Set up cookies
-  observeEvent(input$cookies, {
-    if (!is.null(input$cookies)) {
-      if (!("dfe_analytics" %in% names(input$cookies))) {
-        shinyjs::show(id = "cookieMain")
-      } else {
-        shinyjs::hide(id = "cookieMain")
-        msg <- list(
-          name = "dfe_analytics",
-          value = input$cookies$dfe_analytics
-        )
-        session$sendCustomMessage("analytics-consent", msg)
-        if ("cookies" %in% names(input)) {
-          if ("dfe_analytics" %in% names(input$cookies)) {
-            if (input$cookies$dfe_analytics == "denied") {
-              ga_msg <- list(name = paste0("_ga_", google_analytics_key))
-              session$sendCustomMessage("cookie-remove", ga_msg)
-            }
-          }
-        }
-      }
-    } else {
-      shinyjs::hide(id = "cookieMain")
-    }
-  })
-
-  # Need these set of observeEvent to create a path through the cookie banner
-  observeEvent(input$cookieAccept, {
-    msg <- list(
-      name = "dfe_analytics",
-      value = "granted"
-    )
-    session$sendCustomMessage("cookie-set", msg)
-    session$sendCustomMessage("analytics-consent", msg)
-    shinyjs::show(id = "cookieAcceptDiv")
-    shinyjs::hide(id = "cookieMain")
-  })
-
-  observeEvent(input$cookieReject, {
-    msg <- list(
-      name = "dfe_analytics",
-      value = "denied"
-    )
-    session$sendCustomMessage("cookie-set", msg)
-    session$sendCustomMessage("analytics-consent", msg)
-    shinyjs::show(id = "cookieRejectDiv")
-    shinyjs::hide(id = "cookieMain")
-  })
-
-  observeEvent(input$hideAccept, {
-    shinyjs::toggle(id = "cookieDiv")
-  })
-
-  observeEvent(input$hideReject, {
-    shinyjs::toggle(id = "cookieDiv")
-  })
-
-  observeEvent(input$remove, {
-    shinyjs::toggle(id = "cookieMain")
-    msg <- list(name = "dfe_analytics", value = "denied")
-    session$sendCustomMessage("cookie-remove", msg)
-    session$sendCustomMessage("analytics-consent", msg)
-    print(input$cookies)
-  })
-
-  cookies_data <- reactive({
-    input$cookies
-  })
-
-  output$cookie_status <- renderText({
-    cookie_text_stem <- "To better understand the reach of our dashboard tools,
-    this site uses cookies to identify numbers of unique users as part of Google
-    Analytics. You have chosen to"
-    cookie_text_tail <- "the use of cookies on this website."
-    if ("cookies" %in% names(input)) {
-      if ("dfe_analytics" %in% names(input$cookies)) {
-        if (input$cookies$dfe_analytics == "granted") {
-          paste(cookie_text_stem, "accept", cookie_text_tail)
-        } else {
-          paste(cookie_text_stem, "reject", cookie_text_tail)
-        }
-      }
-    } else {
-      "Cookies consent has not been confirmed."
-    }
-  })
-
-  observeEvent(input$cookieLink, {
-    # Need to link here to where further info is located.  You can
-    # updateTabsetPanel to have a cookie page for instance
-    updateTabsetPanel(session, "navbar",
-      selected = "Support and feedback"
-    )
-  })
-
+  dfeshiny::cookies_banner_server(
+    input_cookies = reactive(input$cookies),
+    parent_session = session,
+    google_analytics_key = google_analytics_key,
+    cookies_link_panel = "cookies_panel"
+  )
+  dfeshiny::cookies_panel_server(
+    id = "cookies_panel",
+    input_cookies = reactive(input$cookies),
+    google_analytics_key = google_analytics_key
+  )
 
   # 2 Main page ----
   ## 2.1 Homepage ----
   ### 2.1.1 Make links ----
   # Create link to overview tab
   observeEvent(input$link_to_tabpanel_overview, {
-    updateTabsetPanel(session, "navbar", "Summary")
+    updateTabsetPanel(session, "navbar", "Overview")
   })
 
   # Create link to local skills tab
@@ -434,7 +351,7 @@ server <- function(input, output, session) {
 
   # define page title
   output$page0title <- renderUI({
-    paste0(input$geoChoiceOver)
+    paste0("Overview of local landscape in ", input$geoChoiceOver)
   })
 
   ### 2.2.1 Filters ----
@@ -460,188 +377,6 @@ server <- function(input, output, session) {
     input$geoChoiceOver
   })
 
-  # make employment rate box
-  output$summaryEmployment <- renderText({
-    latest <- (C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "inemploymentRate",
-        latest == 1
-      ))$value
-    change <- latest - (C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "inemploymentRate",
-        latest == -1
-      ))$value
-    paste0(
-      format(100 * latest, digit = 2), "% ",
-      span(
-        # if (format == "percent") {
-        paste0(sprintf("%+.0f", 100 * change), "ppts")
-        # } else {
-        #  format_pm(change)
-        # }
-        , # plus-minus and comma sep formatting
-        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
-        .noWS = c("before", "after") # remove whitespace
-      )
-    )
-  })
-
-  output$sparklineEmployment <- renderPlotly({
-    overTime <- C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "inemploymentRate"
-      )
-
-    fig <-
-      plot_ly(overTime, height = 100) |>
-      add_lines(
-        x = ~timePeriod,
-        y = ~ 100 * value,
-        text = ~chartPeriod,
-        color = I("#406EF1"),
-        fill = "tozeroy",
-        alpha = 0.2,
-        hovertemplate = paste(
-          "%{y:.0f}%<extra></extra>",
-          "<br> %{text}<br>"
-        )
-      ) %>%
-      layout(
-        xaxis = list(tickvals = c(as.Date(min(overTime$timePeriod)) + 1, max(overTime$timePeriod)), ticktext = c(min(overTime$chartPeriod), max(overTime$chartPeriod)), title = "", rotation = "horizontal"),
-        yaxis = list(visible = FALSE, showgrid = FALSE),
-        # hovermode = "x",
-        # margin = list(t = 0, r = 0, l = 0, b = 0),
-        paper_bgcolor = "transparent",
-        plot_bgcolor = "transparent"
-      ) %>%
-      config(displayModeBar = FALSE)
-
-
-
-    fig
-  })
-
-  # make online job ad box
-  output$summaryAdverts <- renderText({
-    latest <- (C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "vacancies",
-        latest == 1
-      ))$value
-    change <- latest - (C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "vacancies",
-        latest == -1
-      ))$value
-    paste0(
-      format(latest, big.mark = ","), " ",
-      span(
-        format_pm(change),
-        # plus-minus and comma sep formatting
-        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
-        .noWS = c("before", "after") # remove whitespace
-      )
-    )
-  })
-
-  output$sparklineAdverts <- renderPlotly({
-    overTime <- C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "vacancies"
-      )
-
-    fig <-
-      plot_ly(overTime, height = 100) |>
-      add_lines(
-        x = ~timePeriod,
-        y = ~value,
-        text = ~chartPeriod,
-        color = I("#406EF1"),
-        fill = "tozeroy",
-        alpha = 0.2,
-        hovertemplate = paste(
-          "%{y:,}<extra></extra>",
-          "<br> %{text}<br>"
-        )
-      ) %>%
-      layout(
-        xaxis = list(visible = FALSE, showgrid = FALSE),
-        yaxis = list(visible = FALSE, showgrid = FALSE),
-        hovermode = "x",
-        margin = list(t = 0, r = 0, l = 0, b = 0),
-        paper_bgcolor = "transparent",
-        plot_bgcolor = "transparent"
-      ) %>%
-      config(displayModeBar = FALSE)
-
-    fig
-  })
-
-  # make App achievements box
-  output$summaryAppAchievements <- renderText({
-    latest <- (C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "achievementsProvisionApprenticeships",
-        latest == 1
-      ))$value
-    change <- latest - (C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "achievementsProvisionApprenticeships",
-        latest == -1
-      ))$value
-    paste0(
-      format(latest, big.mark = ","), " ",
-      span(
-        format_pm(change),
-        # plus-minus and comma sep formatting
-        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
-        .noWS = c("before", "after") # remove whitespace
-      )
-    )
-  })
-
-  output$sparklineAppAchievements <- renderPlotly({
-    overTime <- C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "achievementsProvisionApprenticeships"
-      )
-
-    fig <-
-      plot_ly(overTime, height = 100) |>
-      add_lines(
-        x = ~timePeriod,
-        y = ~value,
-        text = ~chartPeriod,
-        color = I("#406EF1"),
-        fill = "tozeroy",
-        alpha = 0.2,
-        hovertemplate = paste(
-          "%{y:,}<extra></extra>",
-          "<br> %{text}<br>"
-        )
-      ) %>%
-      layout(
-        xaxis = list(visible = FALSE, showgrid = FALSE),
-        yaxis = list(visible = FALSE, showgrid = FALSE),
-        hovermode = "x",
-        margin = list(t = 0, r = 0, l = 0, b = 0),
-        paper_bgcolor = "transparent",
-        plot_bgcolor = "transparent"
-      ) %>%
-      config(displayModeBar = FALSE)
-
-    fig
-  })
 
   # Top projected jobs sentence
   output$summaryTopProjected <- renderUI({
@@ -916,7 +651,6 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = FALSE)
   })
-
 
   ###  2.2.3 Downloads ----
   # download all indicators
@@ -1205,26 +939,26 @@ server <- function(input, output, session) {
   # get EandT data for current area
   output$skisup.ETach <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("achievementsProvisionEducation and training", "number")
+    createOverviewKPI("achievements Education and training", "number")
   })
 
   # e and t chart
   output$etLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(createOverviewChart("achievementsProvisionEducation and training", "number", "Education and training achievements"))
+    renderOverviewChart(createOverviewChart("achievements Education and training", "number", "Education and training achievements"))
   })
 
   #### 2.2.3.5 FE app achieve ----
   # get App data for current area
   output$skisup.APPach <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("achievementsProvisionApprenticeships", "number")
+    createOverviewKPI("achievements Apprenticeships", "number")
   })
 
   # app chart
   output$AppLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(createOverviewChart("achievementsProvisionApprenticeships", "number", "Apprenticeship achievements"))
+    renderOverviewChart(createOverviewChart("achievements Apprenticeships", "number", "Apprenticeship achievements"))
   })
 
   # Add link to skills data
@@ -1396,12 +1130,15 @@ server <- function(input, output, session) {
     C_Geog$areaName[C_Geog$areaCode == eventLA$id]
   })
 
+  # filter for just england
+  englandGeog <- C_Geog %>%
+    filter(geog == "COUNTRY" & areaName == "England")
+
   ### 2.3.3 Screenshot----
   output$screenshotFile <- renderUI({
     capture::capture(
       selector = "body",
       filename = paste0(input$geoChoice, "-", input$splashMetric, ".png"),
-      button_class = "btn btn-default btn-block",
       icon("camera"),
       "Screenshot"
     )
@@ -1452,7 +1189,7 @@ server <- function(input, output, session) {
       multiple = TRUE,
       label = NULL,
       choices = areaChoices,
-      options = list(maxItems = 7, placeholder = "Comparison areas")
+      options = list(maxItems = 7, placeholder = "Choose comparison areas")
     )
   })
 
@@ -1462,60 +1199,11 @@ server <- function(input, output, session) {
     )
   })
 
-  # update subgroups based on metric
-  output$breakdownPageTitle <- renderUI({
-    validate(
-      need(input$splashMetric %in% distinctBreakdowns$metric, "")
-    )
-    p("Limit to subgroup")
-  })
-
-  # Page wide breakdown filter
-  output$breakdownPageFilter <- renderUI({
-    validate(
-      need(input$splashMetric %in% distinctBreakdowns$metric, "")
-    )
-    selectizeInput(
-      inputId = "breakdownPage",
-      label = NULL,
-      choices =
-        c("All", (as.vector(
-          distinctBreakdowns %>%
-            filter(metric == input$splashMetric)
-        ))$breakdown)
-    )
-  })
-
-  # Page wide subgroup filter
-  output$subgroupPageFilter <- renderUI({
-    validate(
-      need(input$splashMetric %in% distinctBreakdowns$metric, ""),
-      need(input$breakdownPage != "All", "")
-    )
-    selectizeInput(
-      inputId = "subgroupPage",
-      label = NULL,
-      choices =
-        (as.vector(
-          distinctSubgroups %>%
-            filter(
-              metric == input$splashMetric,
-              breakdown == input$breakdownPage,
-            )
-        ))$subgroup
-    )
-  })
-
   ### 2.3.5 National map ----
   #### 2.3.5.1 Dropdown area select----
   observeEvent(input$map_shape_click, {
     updateSelectizeInput(session, "geoChoice",
       selected = C_Geog$geogConcat[C_Geog$areaCode == input$map_shape_click$id]
-    )
-  })
-  observeEvent(input$splashGeoType, {
-    updateSelectizeInput(session, "geoChoice",
-      selected = C_Geog$geogConcat[C_Geog$geog == input$splashGeoType][1]
     )
   })
 
@@ -1527,64 +1215,34 @@ server <- function(input, output, session) {
 
   observeEvent(input$geoChoice, {
     updateRadioGroupButtons(session, "splashGeoType",
-      selected = tail(strsplit(input$geoChoice, split = " ")[[1]], 1)
+      selected = gsub(" ", "", str_sub(input$geoChoice, -4, -1))
     )
   })
   #### 2.3.5.1 Title ----
   output$titleMap <- renderUI({
-    if (input$geoChoice == "England") {
-      paste0("Latest ", input$geoChoice, " data")
-    } else {
-      paste0("Where does ", input$geoChoice, " fit in the national picture?")
-    }
-  })
-
-  #### 2.3.5.2 Map data----
-  currentMapData <- eventReactive(list(input$splashGeoType, input$splashMetric, input$breakdownPage, input$subgroupPage), {
-    validate(
-      need(input$geoChoice != "", ""),
-      need(input$splashGeoType != "", "")
-    )
-    validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
-      distinctSubgroups %>%
-        filter(
-          metric == input$splashMetric,
-          breakdown == input$breakdownPage,
-        )
-    ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
-
-    C_Geog %>%
-      filter(geog == input$splashGeoType | geog == "England") %>%
-      select(areaName, areaCode, geogConcat, geog,
-        value = paste0(
-          input$splashMetric,
-          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
-            ""
-          } else {
-            paste0(input$breakdownPage, input$subgroupPage)
-          }
-        )
-      )
+    paste0("Where does ", input$geoChoice, " fit in the national picture?")
   })
 
   #### 2.3.5.2 Comment ----
   output$commentMap <- renderUI({
     validate(
       need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", ""),
-      need(input$geoChoice != "England", ""),
-      need(input$geoChoice %in% currentMapData()$geogConcat, "")
+      need(input$geoChoice != "", "")
     )
     compareNational <-
-      if ((currentMapData() %>% filter(geogConcat == input$geoChoice))$value
+      if ((C_Geog %>%
+        filter(geogConcat == input$geoChoice))[[input$splashMetric]]
       >
-        (currentMapData() %>% filter(geogConcat == "England"))$value) {
+        (englandGeog)[[input$splashMetric]]) {
         "higher"
       } else {
         "lower"
       }
-    areaRank <- (currentMapData() %>% filter(geog == input$splashGeoType) %>%
-      mutate(ranking = rank(desc(value), ties.method = c("first"))) %>%
+    areaRank <- (C_Geog %>%
+      filter(geog == trimws(str_sub(input$geoChoice, start = -4))) %>%
+      mutate(ranking = rank(desc(eval(
+        parse(text = input$splashMetric)
+      )), ties.method = c("first"))) %>%
       filter(geogConcat == input$geoChoice))$ranking
     suff <- case_when(
       areaRank %in% c(11, 12, 13) ~ "th",
@@ -1607,43 +1265,41 @@ server <- function(input, output, session) {
       areaRank,
       suff,
       " of the ",
-      if (str_sub(input$geoChoice, start = -3) == "MCA") {
-        "12 CAs (and GLA)."
+      if (str_sub(input$geoChoice, start = -3) == "LEP") {
+        "36 LEPs."
       } else {
-        "38 LSIPs."
+        if (str_sub(input$geoChoice, start = -3) == "MCA") {
+          "12 CAs (and GLA)."
+        } else {
+          "38 LSIPs."
+        }
       }
     )
   })
 
   #### 2.3.5.3 Map ----
   output$map <- renderLeaflet({
-    mapData <- currentMapData() %>% filter(geog == input$splashGeoType)
-    pal <- colorNumeric("Blues", mapData$value)
+    validate(
+      need(input$geoChoice != "", ""),
+      need(input$splashGeoType != "", "")
+    )
+    mapData <- C_Geog %>% filter(geog == input$splashGeoType)
+    pal <- colorNumeric("Blues", mapData[[input$splashMetric]])
     labels <-
       # if a percentage then format as %, else big number
       if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
         sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s%%",
+          "<strong>%s</strong><br/>%s: %s%%",
           mapData$areaName,
-          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
-            "Total"
-          } else {
-            paste0(input$breakdownPage, ": ", input$subgroupPage)
-          },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          round(mapData$value * 100)
+          round(mapData[[input$splashMetric]] * 100)
         ) %>% lapply(htmltools::HTML)
       } else {
         sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s",
+          "<strong>%s</strong><br/>%s: %s",
           mapData$areaName,
-          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
-            "Total"
-          } else {
-            paste0(input$breakdownPage, ": ", input$subgroupPage)
-          },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData$value), big.mark = ",")
+          format(round(mapData[[input$splashMetric]]), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
 
@@ -1651,7 +1307,7 @@ server <- function(input, output, session) {
       addProviderTiles(providers$CartoDB.Positron) %>%
       addPolygons(
         data = mapData,
-        fillColor = ~ pal(mapData$value),
+        fillColor = ~ pal(mapData[[input$splashMetric]]),
         fillOpacity = 1,
         color = "black",
         layerId = ~areaCode,
@@ -1674,33 +1330,23 @@ server <- function(input, output, session) {
       )
   })
   observe({
-    mapData <- currentMapData() %>%
-      filter(geogConcat == input$geoChoice)
+    validate(need("geoChoice" %in% names(input), ""))
+    mapData <- C_Geog %>% filter(geogConcat == input$geoChoice)
     labels <-
       # if a percentage then format as %, else big number
       if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
         sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s%%",
+          "<strong>%s</strong><br/>%s: %s%%",
           mapData$areaName,
-          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric) {
-            "Total"
-          } else {
-            paste0(input$breakdownPage, ": ", input$subgroupPage)
-          },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          round(mapData$value * 100)
+          round(mapData[[input$splashMetric]] * 100)
         ) %>% lapply(htmltools::HTML)
       } else {
         sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s",
+          "<strong>%s</strong><br/>%s: %s",
           mapData$areaName,
-          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric) {
-            "Total"
-          } else {
-            paste0(input$breakdownPage, ": ", input$subgroupPage)
-          },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData$value), big.mark = ",")
+          format(round(mapData[[input$splashMetric]]), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
     proxy <- leafletProxy("map")
@@ -1737,35 +1383,17 @@ server <- function(input, output, session) {
     validate(
       need("geoChoice" %in% names(input), ""),
       need(input$geoChoice != "", ""),
-      need(!((input$geoChoice %in% c("Greater London LSIP", "Greater London Authority MCA") &
+      need(!((input$geoChoice %in% c("The London Economic Action Partnership LEP", "Greater London LSIP", "Greater London Authority MCA") &
         currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), "Data is not available at LA level."),
     )
-    validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
-      distinctSubgroups %>%
-        filter(
-          metric == input$splashMetric,
-          breakdown == input$breakdownPage,
-        )
-    ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
-
-    LaHighLow <- # Filter to those LAs in that region
-      mapData <- C_Geog %>%
+    LaHighLow <- C_Geog %>%
       filter(
         geog == "LADU",
-        eval(parse(text = tail(strsplit(input$geoChoice, split = " ")[[1]], 1))) == input$geoChoice
+        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == input$geoChoice
       ) %>%
-      select(areaName, areaCode,
-        value = paste0(
-          input$splashMetric,
-          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
-            ""
-          } else {
-            paste0(input$breakdownPage, input$subgroupPage)
-          }
-        )
-      ) %>%
-      filter(is.na(value) == FALSE) %>% # remove NAs from ranking
-      mutate(ranking = rank(desc(value), ties.method = c("first")))
+      mutate(ranking = rank(desc(eval(
+        parse(text = input$splashMetric)
+      )), ties.method = c("first")))
     LaHigh <- (LaHighLow %>% filter(ranking == 1))$areaName
     LaLow <-
       (LaHighLow %>% filter(ranking == max(ranking)))$areaName
@@ -1787,61 +1415,32 @@ server <- function(input, output, session) {
   #### 2.3.6.3 Map----
   output$mapLA <- renderLeaflet({
     validate(
-      need(!((input$geoChoice %in% c("Greater London LSIP", "Greater London Authority MCA") &
+      need(!((input$geoChoice %in% c("The London Economic Action Partnership LEP", "Greater London LSIP", "Greater London Authority MCA") &
         currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), ""),
       need(input$geoChoice != "", "")
     )
-    validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
-      distinctSubgroups %>%
-        filter(
-          metric == input$splashMetric,
-          breakdown == input$breakdownPage,
-        )
-    ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
-
     # Filter to those LAs in that region
     mapData <- C_Geog %>%
       filter(
         geog == "LADU",
-        eval(parse(text = tail(strsplit(input$geoChoice, split = " ")[[1]], 1))) == input$geoChoice
-      ) %>%
-      select(areaName, areaCode,
-        value = paste0(
-          input$splashMetric,
-          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
-            ""
-          } else {
-            paste0(input$breakdownPage, input$subgroupPage)
-          }
-        )
+        eval(parse(text = gsub(" ", "", str_sub(input$geoChoice, -4, -1)))) == input$geoChoice
       )
-    pal <- colorNumeric("Blues", mapData$value)
+    pal <- colorNumeric("Blues", mapData[[input$splashMetric]])
 
     labels <-
-      # if a percentage then format as %, else big number
-      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
+      if (str_sub(input$splashMetric, start = -4) == "Rate") {
         sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s%%",
+          "<strong>%s</strong><br/>%s: %s%%",
           mapData$areaName,
-          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
-            "Total"
-          } else {
-            paste0(input$breakdownPage, ": ", input$subgroupPage)
-          },
-          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          round(mapData$value * 100)
+          currentMetric(),
+          round(mapData[[input$splashMetric]] * 100)
         ) %>% lapply(htmltools::HTML)
       } else {
         sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s",
+          "<strong>%s</strong><br/>%s: %s",
           mapData$areaName,
-          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
-            "Total"
-          } else {
-            paste0(input$breakdownPage, ": ", input$subgroupPage)
-          },
-          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData$value), big.mark = ",")
+          currentMetric(),
+          format(round(mapData[[input$splashMetric]]), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
 
@@ -1849,7 +1448,7 @@ server <- function(input, output, session) {
       addProviderTiles(providers$CartoDB.Positron) %>%
       addPolygons(
         data = mapData,
-        fillColor = ~ pal(mapData$value),
+        fillColor = ~ pal(mapData[[input$splashMetric]]),
         fillOpacity = 1,
         color = "black",
         layerId = ~areaCode,
@@ -1861,7 +1460,7 @@ server <- function(input, output, session) {
         label = labels,
         labelOptions = labelOptions(
           style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "12px",
+          textsize = "15px",
           direction = "auto"
         )
       )
@@ -1891,42 +1490,18 @@ server <- function(input, output, session) {
   output$commentTime <- renderUI({
     validate(
       need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", ""),
-      need(input$geoChoice != "England", ""),
-      need(paste0(input$splashMetric, input$breakdownPage) != "achievementsSSA", "")
+      need(input$geoChoice != "", "")
     )
-    validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
-      distinctSubgroups %>%
-        filter(
-          metric == input$splashMetric,
-          breakdown == input$breakdownPage,
-        )
-    ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
-
     currentArea <- C_time %>%
       filter(
         geogConcat == input$geoChoice,
-        metric == paste0(
-          input$splashMetric,
-          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
-            ""
-          } else {
-            paste0(input$breakdownPage, input$subgroupPage)
-          }
-        ),
+        metric == input$splashMetric,
         is.na(value) == FALSE # remove any rows with no data
       )
     englandArea <- C_time %>%
       filter(
         geogConcat == "England",
-        metric == paste0(
-          input$splashMetric,
-          if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
-            ""
-          } else {
-            paste0(input$breakdownPage, input$subgroupPage)
-          }
-        )
+        metric == input$splashMetric
       )
     currentChange <- (currentArea %>%
       filter(latest == 1))$value -
@@ -1984,19 +1559,9 @@ server <- function(input, output, session) {
         input$geoChoice,
         input$mapLA_shape_click,
         input$geoComps,
-        input$splashMetric,
-        input$breakdownPage,
-        input$subgroupPage
+        input$splashMetric
       ),
       {
-        validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
-          distinctSubgroups %>%
-            filter(
-              metric == input$splashMetric,
-              breakdown == input$breakdownPage,
-            )
-        ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
-
         SplashTime <- C_time %>%
           filter(
             # get lep/lsip/mca areas
@@ -2005,29 +1570,17 @@ server <- function(input, output, session) {
             } else {
               "\nNone"
             }) |
-              # get england for comparison (if a rate and not alrady chosen)
-              (if ((str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection") & input$geoChoice != "England") {
+              # get england for comparison (if a rate)
+              (if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection") {
                 (geogConcat == "England")
               } else {
                 geogConcat == "\nNone"
               }),
-            metric == paste0(
-              input$splashMetric,
-              if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
-                ""
-              } else {
-                paste0(input$breakdownPage, input$subgroupPage)
-              }
-            )
+            metric == input$splashMetric
           )
         # add an extra column so the colours work in ggplot when sorting alphabetically
-        SplashTime$Areas <- factor(
-          SplashTime$geogConcat,
-          if (input$geoChoice == "England") {
-            levels <- c(input$geoChoice, input$geoComps)
-          } else {
-            levels <- c("England", input$geoChoice, input$geoComps)
-          }
+        SplashTime$Areas <- factor(SplashTime$geogConcat,
+          levels = c("England", input$geoChoice, input$geoComps) # paste0(laClicked()," LADU"),
         )
 
         ggplot(
@@ -2044,12 +1597,7 @@ server <- function(input, output, session) {
               "Area: ",
               Areas,
               "<br>",
-              if (("breakdownPage" %in% names(input) && input$breakdownPage == "All") | !input$splashMetric %in% distinctBreakdowns$metric | !"subgroupPage" %in% names(input)) {
-                "Total"
-              } else {
-                paste0(input$breakdownPage, ": ", input$subgroupPage)
-              }, " ",
-              (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
+              currentMetric(),
               ": ",
               if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
                 scales::percent(round(value, 3))
@@ -2074,7 +1622,7 @@ server <- function(input, output, session) {
             label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
           }) +
           labs(colour = "") +
-          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection" | input$geoChoice == "England") {
+          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection") {
             chartColors6
           } else {
             chartColors5
@@ -2090,8 +1638,7 @@ server <- function(input, output, session) {
   output$Splash_time <- renderPlotly({
     validate(
       need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", ""),
-      need(paste0(input$splashMetric, input$breakdownPage) != "achievementsSSA", "There is only SSA achievement data for the latest year, so no time series.")
+      need(input$geoChoice != "", "")
     )
     ggplotly(Splash_time(), tooltip = "text") %>%
       layout(
@@ -2108,10 +1655,6 @@ server <- function(input, output, session) {
 
   #### 2.3.7.3 Time footnote ----
   output$timeFoot <- renderUI({
-    validate(
-      need(paste0(input$splashMetric, input$breakdownPage) != "achievementsSSA", "")
-    )
-
     if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
       "The definition of when a student is at the end of 16 to 18 study has changed last year and comparisons to previous cohorts should be treated with caution. See footnote below. Also NB non-zero axis."
     } else {
@@ -2144,15 +1687,6 @@ server <- function(input, output, session) {
         ))$breakdown
     )
   })
-
-  # Update filter based on top breakdown filter
-  observeEvent(input$breakdownPage, {
-    validate(need(input$breakdownPage != "All", ""))
-    updateSelectizeInput(session, "barBreakdown",
-      selected = input$breakdownPage
-    )
-  })
-
   #### 2.3.8.2 Optional summary profession filter ----
   summaryCategories <- c("All", (as.vector(
     distinctSubgroups %>%
@@ -2234,8 +1768,7 @@ server <- function(input, output, session) {
   output$commentBreakdown <- renderUI({
     validate(
       need("barBreakdown" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric, ""),
-      need(input$geoChoice != "", ""),
-      need(input$geoChoice != "England", "")
+      need(input$geoChoice != "", "")
     )
 
     if (!input$splashMetric %in% distinctBreakdowns$metric) {
@@ -2307,9 +1840,7 @@ server <- function(input, output, session) {
       # input$barBreakdown,
       input$barSubgroup,
       # input$mapLA_shape_click,
-      input$splashMetric,
-      input$subgroupPage,
-      input$breakdownPage
+      input$splashMetric
     ),
     {
       validate(
@@ -2318,14 +1849,6 @@ server <- function(input, output, session) {
         need(input$splashMetric != "", ""),
         need(input$barBreakdown != "No breakdowns available", "")
       )
-      validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
-        distinctSubgroups %>%
-          filter(
-            metric == input$splashMetric,
-            breakdown == input$breakdownPage,
-          )
-      ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
-
       Splash_21 <- C_breakdown %>% filter(
         breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
         subgroup %in% input$barSubgroup,
@@ -2338,31 +1861,16 @@ server <- function(input, output, session) {
         }) |
           # get england for comparison
           (geogConcat == "England")
-      )
-      # bold the category chosen
-      if ("breakdownPage" %in% names(input) && input$breakdownPage != "All" && "subgroupPage" %in% names(input)) {
-        Splash_21 <- Splash_21 %>% mutate(subgroup = case_when(
-          subgroup == input$subgroupPage ~ paste0("<b>", subgroup, "</b>"),
-          TRUE ~ subgroup
-        ))
-      } else {
-        "x"
-      }
-      # get rid of soc codes
-      Splash_21 <- Splash_21 %>% mutate(subgroup = gsub("[0-9]+ - ", "", subgroup))
-
+      ) %>%
+        # get rid of soc codes
+        mutate(subgroup = gsub("[0-9]+ - ", "", subgroup))
       # if no rows (because of filter lag) then don't plot
       if (nrow(Splash_21) == 0) {
         "x"
       } else {
         # add an extra column so the colours work in ggplot when sorting alphabetically
-        Splash_21$Area <- factor(
-          Splash_21$geogConcat,
-          if (input$geoChoice == "England") {
-            levels <- c(input$geoChoice, input$geoComps)
-          } else {
-            levels <- c("England", input$geoChoice, input$geoComps)
-          } # paste0(laClicked()," LADU"),
+        Splash_21$Area <- factor(Splash_21$geogConcat,
+          levels = c("England", input$geoChoice, input$geoComps) # paste0(laClicked()," LADU"),
         )
         ggplot(
           Splash_21,
