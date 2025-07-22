@@ -60,10 +60,10 @@ server <- function(input, output, session) {
 
   # Create link to local skills tab
   observeEvent(input$link_to_tabpanel_localskills, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
   })
   observeEvent(input$link_to_tabpanel_localskills2, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
   })
 
   # Create link to further resources tab
@@ -83,7 +83,7 @@ server <- function(input, output, session) {
 
   # Create link to employment data
   observeEvent(input$link_to_tabpanel_employment, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "inemploymentRate"
     )
@@ -91,7 +91,7 @@ server <- function(input, output, session) {
 
   # Create link to employment data
   observeEvent(input$link_to_tabpanel_employment2, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "inemployment"
     )
@@ -99,42 +99,42 @@ server <- function(input, output, session) {
 
   # Create link to job advert
   observeEvent(input$link_to_tabpanel_vacancies, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "vacancies"
     )
   })
   # Create link to skills data tab
   observeEvent(input$link_to_tabpanel_FE, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "achievements_rate_per_100000_population"
     )
   })
   # Create link to enterprises
   observeEvent(input$link_to_tabpanel_enterprise, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "enterpriseCount"
     )
   })
   # Create link to qualification
   observeEvent(input$link_to_tabpanel_qualification, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "L3PlusRate"
     )
   })
   # Create link to destinations
   observeEvent(input$link_to_tabpanel_destinations, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "sustainedPositiveDestinationKS4Rate"
     )
   })
   # Create link to working futures
   observeEvent(input$link_to_tabpanel_wf1, {
-    updateTabsetPanel(session, "navbar", "Local skills")
+    updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "employmentProjection"
     )
@@ -386,7 +386,7 @@ server <- function(input, output, session) {
         filter(
           geogConcat == input$geoChoiceOver
         ))$employmentProjection * 100, digit = 1),
-      "%",
+      "% ",
       ifelse(input$geoChoiceOver == "England", "", paste0(
         "(compared to ",
         format((C_Geog %>%

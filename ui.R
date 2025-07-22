@@ -395,7 +395,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             h2("Dashboard structure"),
             tags$ul(
               tags$li(actionLink("link_to_tabpanel_overview", "Summary"), " - this tab provides a summary of some of the key metrics for the selected geographic area."),
-              tags$li(actionLink("link_to_tabpanel_localskills", "Local skills"), " - the Local Skills tab provides additional metrics and breakdowns for the selected geographic area."),
+              tags$li(actionLink("link_to_tabpanel_localskills", "Local skills data"), " - the Local Skills tab provides additional metrics and breakdowns for the selected geographic area."),
               tags$li(actionLink("link_to_tabpanel_data", "Data information and download"), "- includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
               tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of local labour market and education system."),
               tags$li(actionLink("link_to_tabpanel_accessibility", "Accessibility"), "- provides the Local Skills dashboard accessibility statement, compliance requirmeents, limitations and opportunity to feedback on accessibility of the dashboard."),
@@ -415,7 +415,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               "."
             ),
             h3(actionLink(
-              "link_to_tabpanel_localskills2", "Local skills"
+              "link_to_tabpanel_localskills2", "Local skills data"
             )),
             p(
               "The Local skills tab provides additional metrics and breakdowns for the selected geographic area. Using the various filters you can select the metric of interest, primary area from the England map, and multiple comparison areas alongside the default England comparator. The chart in the bottom left provides additional breakdowns specific to the metric, for example:"
@@ -482,8 +482,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             p("xx Jul 2025 (1.5.1)"),
             tags$ul(
               tags$li("Refresh of the summary page."),
-              tags$li("Remove LEP maps and add in National."),
-              tags$li("Add in page wide ubgroup filters to the Local Skills data page."),
+              tags$li("Remove LEP maps and add in National picture."),
+              tags$li("Add in page wide subgroup filters to the Local Skills data page."),
             ),
             details(
               label = "Previous updates",
