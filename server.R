@@ -162,7 +162,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list("1a.Employment by occupation" = C_datahub %>%
-        filter(metric == "inemployment", Breakdown == "Occupation") %>%
+        filter(metric == "inemployment", Breakdown == "Occupation (SOC2020 Sub-Major Group)") %>%
         select(-metric, -metricNeat, -Breakdown) %>%
         rename("Employment volume" = valueText, Occupation = Subgroup)), path = file)
     }
