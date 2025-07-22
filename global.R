@@ -30,8 +30,8 @@ shhh(library(shinycssloaders)) # spinners
 shhh(library(RColorBrewer)) # map colours
 shhh(library(quarto)) # map colours
 shhh(library(dfeshiny)) # map colours
+shhh(library(bslib)) # Value boxes
 
-site_title <- "Local skills dashboard"
 google_analytics_key <- "MMB6NG2FE1"
 
 area_select <- c("Coast to Capital", "Greater Manchester", "England")
@@ -75,44 +75,6 @@ metricChoices <- list(
 )
 
 areaChoices <- list(
-  "Local enterprise partnership" = list(
-    "Buckinghamshire" = "Buckinghamshire LEP",
-    "Cheshire and Warrington" = "Cheshire and Warrington LEP",
-    "Coast to Capital" = "Coast to Capital LEP",
-    "Cornwall and Isles of Scilly" = "Cornwall and Isles of Scilly LEP",
-    "Cumbria" = "Cumbria LEP",
-    "D2N2" = "D2N2 LEP",
-    "Dorset" = "Dorset LEP",
-    "Enterprise M3" = "Enterprise M3 LEP",
-    "GFirst" = "GFirst LEP",
-    "Greater Birmingham and Solihull" = "Greater Birmingham and Solihull LEP",
-    "The Business Board" = "The Business Board LEP",
-    "Greater Lincolnshire" = "Greater Lincolnshire LEP",
-    "Greater Manchester" = "Greater Manchester LEP",
-    "Heart of the South West" = "Heart of the South West LEP",
-    "Hertfordshire" = "Hertfordshire LEP",
-    "Hull and East Yorkshire" = "Hull and East Yorkshire LEP",
-    "Lancashire" = "Lancashire LEP",
-    "Leeds City Region" = "Leeds City Region LEP",
-    "Leicester and Leicestershire" = "Leicester and Leicestershire LEP",
-    "Liverpool City Region" = "Liverpool City Region LEP",
-    "The London Economic Action Partnership" = "The London Economic Action Partnership LEP",
-    "New Anglia" = "New Anglia LEP",
-    "North East" = "North East LEP",
-    "OxLEP" = "OxLEP LEP",
-    "Solent" = "Solent LEP",
-    "South East" = "South East LEP",
-    "South East Midlands" = "South East Midlands LEP",
-    "Stoke-on-Trent and Staffordshire" = "Stoke-on-Trent and Staffordshire LEP",
-    "South Yorkshire" = "South Yorkshire LEP",
-    "Swindon and Wiltshire" = "Swindon and Wiltshire LEP",
-    "Tees Valley" = "Tees Valley LEP",
-    "Thames Valley Berkshire" = "Thames Valley Berkshire LEP",
-    "The Marches" = "The Marches LEP",
-    "West of England" = "West of England LEP",
-    "Worcestershire" = "Worcestershire LEP",
-    "York and North Yorkshire" = "York and North Yorkshire LEP"
-  ),
   "Local skills partnership area" = list(
     "Brighton and Hove, East Sussex, West Sussex" = "Brighton and Hove, East Sussex, West Sussex LSIP",
     "Buckinghamshire" = "Buckinghamshire LSIP",
@@ -168,7 +130,7 @@ areaChoices <- list(
     "York and North Yorkshire" = "York and North Yorkshire MCA"
   ),
   "Country" = list(
-    "England" = "England "
+    "England" = "England"
   ),
   "Local authority" = list(
     "Adur" = "Adur LADU",

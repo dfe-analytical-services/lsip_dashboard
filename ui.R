@@ -191,12 +191,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     </div>
     </header>'
   ),
-  # Add bug header
-  HTML(
-    '<div class="feedback-banner" id="feedback banner" >
-    <a href="https://forms.office.com/e/gUgfhXcRY3" target="_blank" rel="noopener noreferrer" style="color: #fff;"><strong>FEEDBACK</strong> | Click here to share your feedback and help shape the future of this dashboard.</a>
-</div>'
-  ),
 
   # Force page to scroll to top when links clicked
   tags$script(
@@ -352,7 +346,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     id = "navbar",
     widths = c(2, 10),
     well = FALSE,
-    selected = "Overview",
+    selected = "Summary",
 
     ## 2.1 User guide ----
 
@@ -400,7 +394,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             p("Use the navigation bar on the left to select the tab you want to view."),
             h2("Dashboard structure"),
             tags$ul(
-              tags$li(actionLink("link_to_tabpanel_overview", "Overview"), " - this tab provides a time series summary of employment, qualifications, and further education outcomes for the selected geographic area. Metrics are divided into two columns: Labour market and Skills. Labour market includes employment, online job adverts (experimental), and micro business count (0-9 employees). Skills covers education and training ahcievements, apprenticehsip achievements, highest qualification level, and Key Stage 5 positive destinations."),
+              tags$li(actionLink("link_to_tabpanel_overview", "Summary"), " - this tab provides a summary of some of the key metrics for the selected geographic area."),
               tags$li(actionLink("link_to_tabpanel_localskills", "Local skills"), " - the Local Skills tab provides additional metrics and breakdowns for the selected geographic area."),
               tags$li(actionLink("link_to_tabpanel_data", "Data information and download"), "- includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
               tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of local labour market and education system."),
@@ -700,7 +694,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     # end of homepage Panel
 
     ## 2.2 Overview ----
-    panel_overview(),
+    summaryTab(),
 
     ## 2.3 Local skills ----
     tabPanel(
@@ -709,35 +703,30 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       ### 2.3.1 Filters ----
       fluidRow(
         column(
-          4,
-          p("Choose a LEP, LSIP or MCA"),
+          5,
+          p("Choose a LSIP, MCA or England"),
           selectizeInput(
             "geoChoice",
             multiple = FALSE,
             label = NULL,
             choices = areaChoices[1:3]
-          )
+          ),
+          uiOutput("geoComp")
         ),
         column(
-          4,
+          5,
           p("What are you interested in?"),
           pickerInput(
             inputId = "splashMetric",
             choices = metricChoices,
-            multiple = FALSE,
-            choicesOpt = list(
-              disabled = unlist(metricChoices) %in% c("workingFutures"),
-              style = ifelse(
-                unlist(metricChoices) %in% c("workingFutures"),
-                yes = "color: rgba(119, 119, 119, 0.5);",
-                no = ""
-              )
-            )
-          )
+            multiple = FALSE
+          ),
+          uiOutput("breakdownPageTitle"),
+          uiOutput("breakdownPageFilter"),
+          uiOutput("subgroupPageFilter")
         ),
-        column(1),
         column(
-          3,
+          2,
           uiOutput("screenshotFile")
         )
       ),
@@ -754,7 +743,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           h3(uiOutput("titleMap")),
           radioGroupButtons(
             inputId = "splashGeoType",
-            choices = c("LEP", "LSIP", "MCA")
+            choices = c("LSIP", "MCA", "England")
           ),
           p(uiOutput("commentMap")),
           withSpinner(leafletOutput("map")),
@@ -764,7 +753,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           6,
           h3(uiOutput("titleTime")),
           p(uiOutput("commentTime")),
-          uiOutput("geoComp"),
           withSpinner(plotlyOutput("Splash_time")),
           p(uiOutput("timeFoot"))
         )
