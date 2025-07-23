@@ -264,40 +264,40 @@
 "unemployed",3900,1419100
 "unemployedRate",0.0147821576763485,0.0675628369390184
 "vacancies",5783,2188530
-"vacanciesOccupation (SOC2020 Major Group)1 - Managers, directors and senior officials",506,86365
-"vacanciesOccupation (SOC2020 Major Group)2 - Professional occupations",1737,332361
-"vacanciesOccupation (SOC2020 Major Group)3 - Associate professional occupations",1449,256845
-"vacanciesOccupation (SOC2020 Major Group)4 - Administrative and secretarial occupations",782,110526
-"vacanciesOccupation (SOC2020 Major Group)5 - Skilled trades occupations",988,122727
-"vacanciesOccupation (SOC2020 Major Group)6 - Caring, leisure and other service occupations",804,110388
-"vacanciesOccupation (SOC2020 Major Group)7 - Sales and customer service occupations",376,45997
-"vacanciesOccupation (SOC2020 Major Group)8 - Process, plant and machine operatives",585,78385
-"vacanciesOccupation (SOC2020 Major Group)9 - Elementary occupations",770,94432
-"vacanciesOccupation (SOC2020 Major Group)Unknown",3,1226
-"vacanciesOccupation (SOC2020 Sub-Major Group)11 - Corporate managers and directors",308,54361
-"vacanciesOccupation (SOC2020 Sub-Major Group)12 - Other managers and proprietors",198,32004
-"vacanciesOccupation (SOC2020 Sub-Major Group)21 - Science, research, engineering and technology professionals",305,92486
-"vacanciesOccupation (SOC2020 Sub-Major Group)22 - Health professionals",545,69116
-"vacanciesOccupation (SOC2020 Sub-Major Group)23 - Teaching and other educational professionals",195,57418
-"vacanciesOccupation (SOC2020 Sub-Major Group)24 - Business, media and public service professionals",439,113341
-"vacanciesOccupation (SOC2020 Sub-Major Group)31 - Science, engineering and technology associate professionals",260,47383
-"vacanciesOccupation (SOC2020 Sub-Major Group)32 - Health and social care associate professionals",238,37311
-"vacanciesOccupation (SOC2020 Sub-Major Group)33 - Protective service occupations",17,3870
-"vacanciesOccupation (SOC2020 Sub-Major Group)34 - Culture, media and sports occupations",154,23980
-"vacanciesOccupation (SOC2020 Sub-Major Group)35 - Business and public service associate professionals",666,144301
-"vacanciesOccupation (SOC2020 Sub-Major Group)41 - Administrative occupations",560,93154
-"vacanciesOccupation (SOC2020 Sub-Major Group)42 - Secretarial and related occupations",113,17372
-"vacanciesOccupation (SOC2020 Sub-Major Group)51 - Skilled agricultural and related trades",19,4095
-"vacanciesOccupation (SOC2020 Sub-Major Group)52 - Skilled metal, electrical and electronic trades",449,69811
-"vacanciesOccupation (SOC2020 Sub-Major Group)53 - Skilled construction and building trades",145,18515
-"vacanciesOccupation (SOC2020 Sub-Major Group)54 - Textiles, printing and other skilled trades",199,30306
-"vacanciesOccupation (SOC2020 Sub-Major Group)61 - Caring personal service occupations",702,93935
-"vacanciesOccupation (SOC2020 Sub-Major Group)62 - Leisure, travel and related personal service occupations",93,15897
-"vacanciesOccupation (SOC2020 Sub-Major Group)63 - Community and civil enforcement occupations",3,556
-"vacanciesOccupation (SOC2020 Sub-Major Group)71 - Sales occupations",238,27538
-"vacanciesOccupation (SOC2020 Sub-Major Group)72 - Customer service occupations",138,18459
-"vacanciesOccupation (SOC2020 Sub-Major Group)81 - Process, plant and machine operatives",265,37747
-"vacanciesOccupation (SOC2020 Sub-Major Group)82 - Transport and mobile machine drivers and operatives",320,40638
-"vacanciesOccupation (SOC2020 Sub-Major Group)91 - Elementary trades and related occupations",112,13681
-"vacanciesOccupation (SOC2020 Sub-Major Group)92 - Elementary administration and service occupations",658,80751
-"vacanciesOccupation (SOC2020 Sub-Major Group)Unknown",3,1226
+"vacanciesOccupation (SOC2020 Major Group)1 - Managers, directors and senior officials",345,154219
+"vacanciesOccupation (SOC2020 Major Group)2 - Professional occupations",1421,640536
+"vacanciesOccupation (SOC2020 Major Group)3 - Associate professional occupations",1109,450932
+"vacanciesOccupation (SOC2020 Major Group)4 - Administrative and secretarial occupations",509,210991
+"vacanciesOccupation (SOC2020 Major Group)5 - Skilled trades occupations",621,167444
+"vacanciesOccupation (SOC2020 Major Group)6 - Caring, leisure and other service occupations",523,173529
+"vacanciesOccupation (SOC2020 Major Group)7 - Sales and customer service occupations",217,96861
+"vacanciesOccupation (SOC2020 Major Group)8 - Process, plant and machine operatives",359,113933
+"vacanciesOccupation (SOC2020 Major Group)9 - Elementary occupations",411,169864
+"vacanciesOccupation (SOC2020 Major Group)Unknown",1,3355
+"vacanciesOccupation (SOC2020 Sub-Major Group)11 - Corporate managers and directors",196,102241
+"vacanciesOccupation (SOC2020 Sub-Major Group)12 - Other managers and proprietors",116,51978
+"vacanciesOccupation (SOC2020 Sub-Major Group)21 - Science, research, engineering and technology professionals",246,236268
+"vacanciesOccupation (SOC2020 Sub-Major Group)22 - Health professionals",437,119205
+"vacanciesOccupation (SOC2020 Sub-Major Group)23 - Teaching and other educational professionals",115,70405
+"vacanciesOccupation (SOC2020 Sub-Major Group)24 - Business, media and public service professionals",367,214658
+"vacanciesOccupation (SOC2020 Sub-Major Group)31 - Science, engineering and technology associate professionals",196,87603
+"vacanciesOccupation (SOC2020 Sub-Major Group)32 - Health and social care associate professionals",144,42531
+"vacanciesOccupation (SOC2020 Sub-Major Group)33 - Protective service occupations",9,6638
+"vacanciesOccupation (SOC2020 Sub-Major Group)34 - Culture, media and sports occupations",80,31768
+"vacanciesOccupation (SOC2020 Sub-Major Group)35 - Business and public service associate professionals",536,282392
+"vacanciesOccupation (SOC2020 Sub-Major Group)41 - Administrative occupations",451,182056
+"vacanciesOccupation (SOC2020 Sub-Major Group)42 - Secretarial and related occupations",58,28935
+"vacanciesOccupation (SOC2020 Sub-Major Group)51 - Skilled agricultural and related trades",6,4626
+"vacanciesOccupation (SOC2020 Sub-Major Group)52 - Skilled metal, electrical and electronic trades",359,94039
+"vacanciesOccupation (SOC2020 Sub-Major Group)53 - Skilled construction and building trades",72,29839
+"vacanciesOccupation (SOC2020 Sub-Major Group)54 - Textiles, printing and other skilled trades",86,39279
+"vacanciesOccupation (SOC2020 Sub-Major Group)61 - Caring personal service occupations",467,150779
+"vacanciesOccupation (SOC2020 Sub-Major Group)62 - Leisure, travel and related personal service occupations",46,22047
+"vacanciesOccupation (SOC2020 Sub-Major Group)63 - Community and civil enforcement occupations",0,703
+"vacanciesOccupation (SOC2020 Sub-Major Group)71 - Sales occupations",133,54307
+"vacanciesOccupation (SOC2020 Sub-Major Group)72 - Customer service occupations",79,42554
+"vacanciesOccupation (SOC2020 Sub-Major Group)81 - Process, plant and machine operatives",180,58822
+"vacanciesOccupation (SOC2020 Sub-Major Group)82 - Transport and mobile machine drivers and operatives",151,55111
+"vacanciesOccupation (SOC2020 Sub-Major Group)91 - Elementary trades and related occupations",55,26942
+"vacanciesOccupation (SOC2020 Sub-Major Group)92 - Elementary administration and service occupations",335,142922
+"vacanciesOccupation (SOC2020 Sub-Major Group)Unknown",1,3355
