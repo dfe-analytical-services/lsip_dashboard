@@ -1190,7 +1190,7 @@ server <- function(input, output, session) {
       multiple = TRUE,
       label = NULL,
       choices = areaChoices,
-      options = list(maxItems = 7, placeholder = "Comparison areas")
+      options = list(maxItems = 7, placeholder = "Comparison areas (LA/LSIP/MCA/National")
     )
   })
 
@@ -1254,7 +1254,11 @@ server <- function(input, output, session) {
 
   observeEvent(input$splashGeoType, {
     updateSelectizeInput(session, "geoChoice",
-      selected = C_Geog$geogConcat[C_Geog$geog == input$splashGeoType][1]
+      selected = if (tail(strsplit(input$geoChoice, split = " ")[[1]], 1) == input$splashGeoType) {
+        input$geoChoice
+      } else {
+        C_Geog$geogConcat[C_Geog$geog == input$splashGeoType][1]
+      }
     )
   })
 
