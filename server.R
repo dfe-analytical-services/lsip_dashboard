@@ -355,7 +355,7 @@ server <- function(input, output, session) {
   })
 
   ### 2.2.1 Filters ----
-  # alter area dropdown depending if lep or lsip
+  # alter area dropdown
   observeEvent(input$geoChoice, {
     updateSelectInput(session, "geoChoiceOver",
       selected = input$geoChoice
@@ -1611,7 +1611,7 @@ server <- function(input, output, session) {
     validate(
       need("geoChoice" %in% names(input), ""),
       need(input$geoChoice != "", ""),
-      need(!((input$geoChoice %in% c("The London Economic Action Partnership LEP", "Greater London LSIP", "Greater London Authority MCA") &
+      need(!((input$geoChoice %in% c("Greater London LSIP", "Greater London Authority MCA") &
         currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), ""),
     )
     paste0(
@@ -1738,7 +1738,7 @@ server <- function(input, output, session) {
 
         SplashTime <- C_time %>%
           filter(
-            # get lep/lsip/mca areas
+            # get lsip/mca areas
             (geogConcat == input$geoChoice | geogConcat %in% if ("geoComps" %in% names(input)) {
               input$geoComps
             } else {
@@ -2069,7 +2069,7 @@ server <- function(input, output, session) {
         breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
         subgroup %in% input$barSubgroup,
         metric == input$splashMetric,
-        # get lep/lsip/mca areas
+        # get lsip/mca areas
         (geogConcat == input$geoChoice | geogConcat %in% if ("geoComps" %in% names(input)) {
           input$geoComps
         } else {
@@ -2283,7 +2283,7 @@ server <- function(input, output, session) {
       "hubArea",
       multiple = TRUE,
       label = NULL,
-      options = list(placeholder = "Choose LEP, LSIPs, MCAs, LAs*"),
+      options = list(placeholder = "Choose LSIPs, MCAs, LAs*"),
       choices = areaChoices
     )
   })
@@ -2365,7 +2365,7 @@ server <- function(input, output, session) {
           } |
             (if ("Yes" %in% input$hubLA) {
               Area %in% (
-                C_Geog %>% filter(geog == "LADU", (LEP %in% input$hubArea | LSIP %in% input$hubArea | MCA %in% input$hubArea))
+                C_Geog %>% filter(geog == "LADU", (LSIP %in% input$hubArea | MCA %in% input$hubArea))
                   %>% distinct(geogConcat)
               )$geogConcat
             } else {

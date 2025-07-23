@@ -360,7 +360,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           "The Local Skills dashboard provides published local data from a variety of sources in an easy to navigate format. To support local skills planning, the dashboard covers topics such as employment, qualifications, and education outcomes across England."
         ),
         p(
-          "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, local enterprise partnership (LEP), Mayoral Combined Authority (MCA), regional and national."
+          "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, Mayoral Combined Authority (MCA) and national."
         ),
         p(
           "This dashboard is produced by ",
@@ -395,15 +395,15 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             h2("Dashboard structure"),
             tags$ul(
               tags$li(actionLink("link_to_tabpanel_overview", "Summary"), " - this tab provides a summary of some of the key metrics for the selected geographic area."),
-              tags$li(actionLink("link_to_tabpanel_localskills", "Local skills data"), " - the Local Skills tab provides additional metrics and breakdowns for the selected geographic area."),
-              tags$li(actionLink("link_to_tabpanel_data", "Data information and download"), "- includes details on the sources of data used in this dashboard, and includes options to download some or all of the data."),
+              tags$li(actionLink("link_to_tabpanel_localskills", "Local skills data"), " - the Local skills data tab provides additional metrics and breakdowns for the selected geographic area."),
+              tags$li(actionLink("link_to_tabpanel_data", "Data sources and Data download"), "- the sources tab includes details on the sources of data used in this dashboard, and the download tab includes options to download some or all of the data."),
               tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of local labour market and education system."),
               tags$li(actionLink("link_to_tabpanel_accessibility", "Accessibility"), "- provides the Local Skills dashboard accessibility statement, compliance requirmeents, limitations and opportunity to feedback on accessibility of the dashboard."),
               tags$li(actionLink("link_to_tabpanel_supportandfeedback", "Support and feedback"), " - provides links to the Skills England and Department for Education Statistics Development inboxes for feedback and if you hve any questions about the dashboard or the data it contains. There is also a link to the GitHub repository if you wish to view the dashboard source code.")
             ),
             h2("Local skills metrics"),
             p(
-              "Where published figures are not available, area totals for LEP, LSIP or MCA are either taken from a matching geographical area or are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
+              "Where published figures are not available, area totals for LSIP or MCA are either taken from a matching geographical area or are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
             ),
             p(
               "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS ",
@@ -418,7 +418,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               "link_to_tabpanel_localskills2", "Local skills data"
             )),
             p(
-              "The Local skills tab provides additional metrics and breakdowns for the selected geographic area. Using the various filters you can select the metric of interest, primary area from the England map, and multiple comparison areas alongside the default England comparator. The chart in the bottom left provides additional breakdowns specific to the metric, for example:"
+              "The Local skills data tab provides additional metrics and breakdowns for the selected geographic area. Using the various filters you can select the metric of interest, primary area from the England map, and multiple comparison areas alongside the default England comparator. The chart in the bottom left provides additional breakdowns specific to the metric, for example:"
             ),
             tags$ul(
               tags$li("Occupation and industry for employment volumes"),
@@ -685,7 +685,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             ),
             h2("Future development"),
             p(
-              "The dashboard will be kept up to date with the latest data shortly after it is released – check the data downloads page for dates when new data is published. If there are further data or dashboard features that you would find useful please contact us at ",
+              "The dashboard will be kept up to date with the latest data shortly after it is released – check the data sources page for dates when new data is published. If there are further data or dashboard features that you would find useful please contact us at ",
               a(
                 href = "mailto:skills.england@education.gov.uk",
                 "skills.england@education.gov.uk",
@@ -797,7 +797,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         ),
         column(
           width = 9,
-          "Download metric data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
+          "Download metric data for all geographies (LSIP, MCA areas, LAs, regions and England)",
         )
       ),
       fluidRow(
@@ -915,13 +915,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             "The Individualised Learner Record (ILR) is an on-going collection of data about learners from training providers in the further education and skills sector in England.
           The dashboard shows further education and skills learner achievements over time split by apprenticeships, community learning, education and training."
           ),
-          p(
-            "DfE have published LEP level statistics for the past six years. However, since the geography of the LEP areas has changed over that period we do not have a consistent timeline. In the cases where LEP geography has not changed, we use the published statistics for all historic data points. Where the geography has changed we calculate the statistics by compiling the LA level data based on the latest mapping of LA to LEP for all years. Therefore the statistics shown will not always match the published statistics."
-          ),
           p("
             For LSIPs, only the most recent year's data is published. We therefore compile the statistics from LAs for all years except the most recent."),
           p("Rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
-Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset."),
+Per 100,000 figures for LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset."),
           h3("KS4 and KS5 destinations"),
           p(
             "Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education, employment or an apprenticeship
@@ -936,7 +933,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
             )
           ),
           p(
-            "LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
+            "LSIP and MCA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
             Some new local authorities due to boundary changes are not included due to these changes not being updated in data publications."
           ),
@@ -957,7 +954,7 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
             The reference period is December, and therefore the 2021 publication measures businesses that were active between December 2020 and December 2021."
           ),
           p(
-            "LEP, LSIP and MCA area totals are calculated by adding up the relevant local authorities,
+            "LSIP and MCA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."
           ),
           h3("Skills Imperative 2035 employment projections"),
@@ -1007,9 +1004,9 @@ Per 100,000 figures for LEP/LSIP/MCA areas are based on subgroup populations cal
           selectizeInput(
             "hubComparators",
             label = NULL,
-            choices = c("National", "Regional (to come)"),
+            choices = c("National"),
             multiple = TRUE,
-            options = list(placeholder = "Include national/regional data?")
+            options = list(placeholder = "Include national data?")
           )
         )
       ),
