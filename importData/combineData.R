@@ -279,7 +279,7 @@ write.csv(C_datahubLimitAds, file = "Data\\AppData\\C_datahub.csv", row.names = 
 ## 4.5 Core indicator download ----
 list_of_datasets0 <- list(
   "1a.Employment by occupation" = C_datahub %>%
-    filter(metric == "inemployment", Breakdown == "Occupation") %>%
+    filter(metric == "inemployment", Breakdown == "Occupation (SOC2020 Sub-Major Group)") %>%
     select(-metric, -metricNeat, -Breakdown) %>%
     rename("Employment volume" = valueText, Occupation = Subgroup),
   "1b.Employment volumes" = C_datahub %>%
@@ -299,7 +299,7 @@ list_of_datasets0 <- list(
     select(-metric, -metricNeat) %>%
     rename("Online job adverts" = valueText, "Detailed/Summary" = Breakdown, Profession = Subgroup),
   "3a.FE achievements by SSA" = C_datahub %>%
-    filter(metric == "achievements", Breakdown == "SSA") %>%
+    filter(metric == "achievementsAims", Breakdown == "SSA") %>%
     select(-metric, -metricNeat, -Breakdown) %>%
     rename(Achievements = valueText, "Sector subject area tier 1" = Subgroup),
   "3b.FE achievement&participation" = C_datahub %>%

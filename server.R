@@ -195,7 +195,7 @@ server <- function(input, output, session) {
     },
     content = function(file) {
       write_xlsx(list("3a.FE achievements by SSA" = C_datahub %>%
-        filter(metric == "achievements", Breakdown == "SSA") %>%
+        filter(metric == "achievementsAims", Breakdown == "SSA") %>%
         select(-metric, -metricNeat, -Breakdown) %>%
         rename(Achievements = valueText, "Sector subject area tier 1" = Subgroup)), path = file)
     }
@@ -669,7 +669,7 @@ server <- function(input, output, session) {
       filter(Area == input$geoChoiceOver)
     list(
       "1a.Employment by occupation" = currentGeogconcat %>%
-        filter(metric == "inemployment", Breakdown == "Occupation") %>%
+        filter(metric == "inemployment", Breakdown == "Occupation (SOC2020 Sub-Major Group)") %>%
         select(-metric, -metricNeat, -Breakdown) %>%
         rename("Employment volume" = valueText, Occupation = Subgroup),
       "1b.Employment volumes" = currentGeogconcat %>%
@@ -689,7 +689,7 @@ server <- function(input, output, session) {
         select(-metric, -metricNeat) %>%
         rename("Online job adverts" = valueText, "Detailed/Summary" = Breakdown, Profession = Subgroup),
       "3a.FE achievements by SSA" = currentGeogconcat %>%
-        filter(metric == "achievements", Breakdown == "SSA") %>%
+        filter(metric == "achievementsAims", Breakdown == "SSA") %>%
         select(-metric, -metricNeat, -Breakdown) %>%
         rename(Achievements = valueText, "Sector subject area tier 1" = Subgroup),
       "3b.FE achievement&participation" = currentGeogconcat %>%

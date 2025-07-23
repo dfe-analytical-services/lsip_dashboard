@@ -124,7 +124,7 @@ summaryTab <- function() {
       ),
       column(
         width = 9,
-        "Download all data for all geographies (LEPs, LSIP, MCA areas, LAs, regions and England)",
+        "Download all data for all geographies (LSIPs, MCA areas, LAs and England)",
       )
     ),
     fluidRow(

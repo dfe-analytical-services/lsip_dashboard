@@ -63,7 +63,8 @@ C_entInd <- I_entIndSize %>%
   mutate(subgroup = gsub("[[:digit:]]+", "", subgroup)) %>%
   mutate(subgroup = gsub(" : ", "", subgroup)) %>%
   mutate(subgroup = gsub(" \\(.*", "", subgroup)) %>% # delete after first bracket
-  mutate(metric = "enterpriseCount", breakdown = "Industry")
+  mutate(metric = "enterpriseCount", breakdown = "Industry")%>%
+  mutate(valueText = as.character(value))
 
 # Enterprise by employment size
 C_entSize <- I_entIndSize %>% 
@@ -77,4 +78,5 @@ C_entSize <- I_entIndSize %>%
   mutate(breakdown = case_when(
     subgroup == "Total" ~ "Total",
     TRUE ~ "Size"
-  ))
+  ))%>%
+  mutate(valueText = as.character(value))
