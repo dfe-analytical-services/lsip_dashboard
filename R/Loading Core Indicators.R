@@ -7,6 +7,7 @@ C_detailLookup <- read.csv(file = "./Data/AppData/C_detailLookup.csv", check.nam
 C_topTenEachBreakdown <- read.csv(file = "./Data/AppData/C_topTenEachBreakdown.csv", check.names = FALSE)
 C_datahub <- read.csv(file = "./Data/AppData/C_datahub.csv", check.names = FALSE)
 C_axisMinMax <- read.csv(file = "./Data/AppData/C_axisMinMax.csv", check.names = FALSE)
+areaChoices <- readRDS("Data/AppData/areaChoices.rds")
 
 ## Intervention table ----
 # I_InterventionTable <- read.csv(file = "./Data/AppData/I_InterventionTable.csv", check.names = FALSE)

@@ -329,3 +329,29 @@ list_of_datasets0 <- list(
     rename("Projected employment" = valueText)
 )
 writexl::write_xlsx(list_of_datasets0, "Data\\AppData\\CoreIndicators.xlsx")
+
+##4.6 Create nested list of all areas to use in drop downs ----
+areaChoicesUnique<-C_time%>%
+  distinct(geogConcat)%>%
+  mutate(geography=case_when(stringr::str_sub(geogConcat, -4, -1) == "LSIP" ~ "Local skills partnership area",
+                             stringr::str_sub(geogConcat, -4, -1) == " LEP" ~ "Local enterprise partnership",
+                             stringr::str_sub(geogConcat, -4, -1) == "LADU" ~ "Local authority",
+                             stringr::str_sub(geogConcat, -4, -1) == " MCA" ~ "Mayoral combined authority",
+                             TRUE ~ "Country"),
+         areaClean=gsub("\\s+\\w*$", "", geogConcat)
+  )%>%
+  #filter out closed areas
+  filter(!geogConcat %in% c("Black Country LEP", "Coventry and Warwickshire LEP", "Outside of an English Devolved Area and unknown MCA"))%>%
+  arrange(geography,geogConcat)
+#check these aren;t in there
+
+areaChoices <- areaChoicesUnique %>%
+  group_by(geography) %>%
+  summarise(mapping = list(setNames(geogConcat, areaClean)), .groups = "drop") %>%
+  { setNames(.$mapping, .$geography) }
+
+# Reorder nested_list according to desired_order
+areaChoices <- areaChoices[c("Local enterprise partnership", "Local skills partnership area", "Mayoral combined authority", "Country", "Local authority")]
+
+saveRDS(areaChoices, file = "Data/AppData/areaChoices.rds")
+

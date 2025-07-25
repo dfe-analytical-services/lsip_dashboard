@@ -485,14 +485,19 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("18 Jul 2025 (1.4.15)"),
+            p("25 Jul 2025 (1.4.16)"),
             tags$ul(
-              tags$li("Update to latest APS data.")
+              tags$li("Add in North Yorkshire LAD to the comparison drop down list."),
+              tags$li("Correction to Enterprise M3 employment projections to 2035. Previous versions used the incorrect published figures. See Data information tab for more information on the correction.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("18 Jul 2025 (1.4.15)"),
+                tags$ul(
+                  tags$li("Update to latest APS data.")
+                ),
                 p("11 Jul 2025 (1.4.14)"),
                 tags$ul(
                   tags$li("Update to latest online job advert data.")
