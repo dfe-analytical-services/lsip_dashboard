@@ -341,7 +341,7 @@ areaChoicesUnique<-C_time%>%
          areaClean=gsub("\\s+\\w*$", "", geogConcat)
   )%>%
   #filter out closed areas
-  filter(!geogConcat %in% c("Black Country LEP", "Coventry and Warwickshire LEP", "Outside of an English Devolved Area and unknown MCA"))%>%
+  filter(!geogConcat %in% c("Black Country LEP", "Coventry and Warwickshire LEP", "Outside of an English Devolved Area and unknown MCA", "NA LADU"))%>%
   arrange(geography,geogConcat)
 #check these aren;t in there
 

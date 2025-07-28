@@ -159,7 +159,7 @@ employmentProjectionsEntM3Lsip <- employmentProjections %>%
 
 # combine them all
 employmentProjections <- bind_rows(
-  employmentProjections %>% filter(!geogConcat %in% c("Dorset LSIP", "Enterprise M3 LSIP", "Worcestershire LEP", "Stoke-on-Trent and Staffordshire LEP", "North East MCA","North of Tyne MCA")), # remove incorrect dorset and Enterprise LSIPs and outdated North East MCA
+  employmentProjections %>% filter(!geogConcat %in% c("Dorset LSIP", "Enterprise M3 LSIP", "Worcestershire LEP", "Stoke-on-Trent and Staffordshire LEP", "North East MCA","North of Tyne MCA")), # remove incorrect dorset and Enterprise LSIPs. Remove legacy Worchester and Stoke on trent LEPs. Remove North East MCA and North of Tyne MCA as they have been merged to North East MCA
   employmentProjectionsCorrections,
   employmentProjectionsEntM3Lsip
 )
