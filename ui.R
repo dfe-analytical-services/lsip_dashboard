@@ -485,7 +485,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("25 Jul 2025 (1.4.16)"),
+            p("28 Jul 2025 (1.4.16)"),
             tags$ul(
               tags$li("Add in North Yorkshire LAD to the comparison drop down list."),
               tags$li("Correction to Enterprise M3 employment projections to 2035. Previous versions used the incorrect published figures. See Data information tab for more information on the correction.")
