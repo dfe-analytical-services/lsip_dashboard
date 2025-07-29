@@ -461,18 +461,18 @@ server <- function(input, output, session) {
       input$geoChoiceOver,
       ". The number of businesses has ",
       ifelse(currentChange > 0, "grown ", "fallen "),
-      label_percent(accuracy = 1)(currentChange / (currentArea %>%
+      label_percent(accuracy = 0.1)(currentChange / (currentArea %>%
         filter(timePeriod == min(timePeriod)))$value),
       " in the last four years",
       ifelse(input$geoChoiceOver == "England", ".",
         paste0(
           ", while nationally businesses have ",
           ifelse(englandChange > 0, "grown ", "fallen "),
-          label_percent(accuracy = 1)(englandChange / (englandArea %>%
+          label_percent(accuracy = 0.1)(englandChange / (englandArea %>%
             filter(timePeriod == min(currentArea$timePeriod)))$value),
-          ". Across this area, there are more ",
+          ". Across this area, there is a higher proportion of ",
           (chartData() %>% filter(extremes == "top"))$subgroup[1],
-          " businesses than the across England, and less ",
+          " businesses than across England, and less ",
           (chartData() %>% filter(extremes == "bottom"))$subgroup[1],
           " businesses. "
         )
