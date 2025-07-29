@@ -466,7 +466,7 @@ server <- function(input, output, session) {
       " in the last four years",
       ifelse(input$geoChoiceOver == "England", ".",
         paste0(
-          ", while nationally businesses have ",
+          ", while across England businesses have ",
           ifelse(englandChange > 0, "grown ", "fallen "),
           label_percent(accuracy = 0.1)(englandChange / (englandArea %>%
             filter(timePeriod == min(currentArea$timePeriod)))$value),
@@ -883,23 +883,34 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   }
 
-  #### 2.2.3.1 Employment count ----
-  # Employment count KPI
-  output$overviewEmpCntKPI <- renderUI({
-    validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("inemployment", "number")
-  })
-
-  # render empchart
-  output$empLineChart <- renderPlotly({
-    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
-    renderOverviewChart(createOverviewChart("inemployment", "number", "In employment"))
-  })
-
   #### 2.2.3.2 Employment rate ----
   output$overviewEmpRateKPI <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
     createOverviewKPI("inemploymentRate", "percent")
+  })
+
+  # make employment rate box
+  output$summaryEmployment <- renderText({
+    latest <- (C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "inemploymentRate",
+        latest == 1
+      ))$value
+    change <- latest - (C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "inemploymentRate",
+        latest == -1
+      ))$value
+    paste0(
+      format(100 * latest, digit = 2), "% ",
+      span(
+        paste0(sprintf("%+.01f", 100 * change), "ppts"),
+        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
+        .noWS = c("before", "after") # remove whitespace
+      )
+    )
   })
 
   output$empRateLineChart <- renderPlotly({
@@ -921,6 +932,32 @@ server <- function(input, output, session) {
     createOverviewKPI("vacancies", "number")
   })
 
+  # make online job ad box
+  output$summaryAdverts <- renderText({
+    latest <- (C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "vacancies",
+        latest == 1
+      ))$value
+    change <- latest - (C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "vacancies",
+        latest == -1
+      ))$value
+    paste0(
+      format(latest, big.mark = ","), " ",
+      span(
+        format_pm(change),
+        # plus-minus and comma sep formatting
+        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
+        .noWS = c("before", "after") # remove whitespace
+      )
+    )
+  })
+
+
   # Vacancy chart
   output$jobLineChart <- renderPlotly({
     validate(need(input$geoChoiceOver != "", ""))
@@ -935,24 +972,36 @@ server <- function(input, output, session) {
     )
   })
 
-  #### 2.2.3.4 FE achieve ----
-  # get EandT data for current area
-  output$skisup.ETach <- renderUI({
-    validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("achievementsProvisionEducation and training", "number")
-  })
-
-  # e and t chart
-  output$etLineChart <- renderPlotly({
-    validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(createOverviewChart("achievementsProvisionEducation and training", "number", "Education and training achievements"))
-  })
-
   #### 2.2.3.5 FE app achieve ----
   # get App data for current area
   output$skisup.APPach <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
     createOverviewKPI("achievementsProvisionApprenticeships", "number")
+  })
+
+  # make App achievements box
+  output$summaryAppAchievements <- renderText({
+    latest <- (C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "achievementsProvisionApprenticeships",
+        latest == 1
+      ))$value
+    change <- latest - (C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "achievementsProvisionApprenticeships",
+        latest == -1
+      ))$value
+    paste0(
+      format(latest, big.mark = ","), " ",
+      span(
+        format_pm(change),
+        # plus-minus and comma sep formatting
+        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
+        .noWS = c("before", "after") # remove whitespace
+      )
+    )
   })
 
   # app chart
@@ -966,151 +1015,6 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "achievements_rate_per_100000_population"
-    )
-  })
-
-  #### 2.2.3.6 KS5 sustained positive destination rate ----
-  # destinations overview KPI
-  output$dest.ks5over <- renderUI({
-    validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("sustainedPositiveDestinationKS5Rate", "percent")
-  })
-
-  output$KS5LineChart <- renderPlotly({
-    validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(createOverviewChart("sustainedPositiveDestinationKS5Rate", "percent", "KS5 sustained positive destination rate"))
-  })
-
-  # add link to destinations
-  observeEvent(input$link_to_tabpanel_destinations2, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
-    updateSelectInput(session, "splashMetric",
-      selected = "sustainedPositiveDestinationKS4Rate"
-    )
-  })
-
-  #### 2.2.3.7 Micro enterprise ----
-  # enterprise overview KPI
-  output$UBC.micro <- renderUI({
-    validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("enterprisePctMicro", "percent")
-  })
-
-  # micro enterprise chart
-  output$UBCLineChart <- renderPlotly({
-    validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(createOverviewChart("enterprisePctMicro", "percent", "Share of businesses with 0-9 employees (micro)"))
-  })
-
-  # add link to enterprise
-  observeEvent(input$link_to_tabpanel_enterprise2, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
-    updateSelectInput(session, "splashMetric",
-      selected = "enterpriseCount"
-    )
-  })
-
-  #### 2.2.3.8 Qualifications NVQ ----
-  # NVQ3 or above overview KPI
-  output$APS.nvq4plus <- renderUI({
-    validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("L4PlusRate", "percent")
-  })
-
-  # qualification chart
-  output$Nvq4plusLineChart <- renderPlotly({
-    validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(createOverviewChart("L4PlusRate", "percent", "People with a qualification at level 4 or above"))
-  })
-
-  # add link to qualification level
-  observeEvent(input$link_to_tabpanel_qualification2, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
-    updateSelectInput(session, "splashMetric",
-      selected = "L4PlusRate"
-    )
-  })
-
-  #### 2.2.3.9 Working futures ----
-  # This is in a slightly different format so the functions aren't used
-  output$wfOverviewKpi <- renderUI({
-    validate(need(input$geoChoiceOver != "", ""))
-    change <- (C_Geog %>%
-      filter(
-        geogConcat == input$geoChoiceOver
-      ))$employmentProjection
-
-    # print with formatting
-    h4(
-      paste0(format(100 * change, digit = 1), "%"),
-      br(),
-      span(
-        "growth 2023 to 2035",
-        style = paste0("font-size: 16px;color:", cond_color(change > 0)) # colour formating
-        ,
-        .noWS = c("before", "after") # remove whitespace
-      ),
-      br(),
-      style = "font-size: 21px"
-    )
-  })
-
-  # qualification chart
-  wfLineChart <- eventReactive(input$geoChoiceOver, {
-    wfgeo <- C_time %>%
-      filter(
-        (geogConcat == input$geoChoiceOver | geogConcat == "England"),
-        metric == "employmentProjection"
-      )
-
-    ggplot(wfgeo, aes(
-      x = substr(chartPeriod, 3, 4),
-      y = value,
-      group = geogConcat,
-      text = paste0(
-        "Year: ",
-        chartPeriod,
-        "<br>",
-        "Area: ",
-        geogConcat,
-        "<br>",
-        "Year on year growth: ",
-        scales::percent(round(value, 3)),
-        "<br>"
-      )
-    )) +
-      geom_line(data = wfgeo %>% filter(geogConcat == input$geoChoiceOver)) +
-      geom_line(
-        data = wfgeo %>% filter(geogConcat == "England"),
-        alpha = 0.5
-      ) +
-      theme_classic() +
-      theme(
-        axis.line = element_blank(),
-        # axis.text.y = element_blank(),
-        axis.ticks = element_blank(),
-        axis.title = element_blank(),
-        panel.background = element_rect(fill = "#f3f2f1"),
-        plot.background = element_rect(fill = "#f3f2f1")
-      ) +
-      scale_y_continuous(
-        labels = scales::percent_format(accuracy = 2),
-        breaks = c((C_axisMinMax %>% filter(metric == "employmentProjection"))$minAxis, (C_axisMinMax %>% filter(metric == "employmentProjection"))$maxAxis),
-        limits = c((C_axisMinMax %>% filter(metric == "employmentProjection"))$minAxis - 0.001, (C_axisMinMax %>% filter(metric == "employmentProjection"))$maxAxis)
-      ) +
-      scale_x_discrete(breaks = c("23", "25", "27", "29", "31", "33", "35"))
-  })
-
-  output$wfOverviewChart <- renderPlotly({
-    validate(need(input$geoChoiceOver != "", ""))
-    renderOverviewChart(wfLineChart())
-  })
-
-  # add link to qualification level
-  observeEvent(input$link_to_tabpanel_wf, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
-    updateSelectInput(session, "splashMetric",
-      selected = "employmentProjection"
     )
   })
 
