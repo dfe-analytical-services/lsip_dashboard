@@ -157,6 +157,10 @@ cond_color <- function(condition, true_color = "green") {
   if (is.na(condition)) {
     return("black")
   }
+  # if change too small
+  if (abs(condition) < 0.0005) {
+    return("black")
+  }
   colours <- c("green", "#e00000")
-  return(ifelse(condition, true_color, colours[!colours == true_color]))
+  return(ifelse(condition > 0, true_color, colours[!colours == true_color]))
 }

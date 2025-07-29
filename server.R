@@ -460,19 +460,19 @@ server <- function(input, output, session) {
       " businesses were active in ",
       input$geoChoiceOver,
       ". The number of businesses has ",
-      ifelse(currentChange > 0, "grown ", "fallen "),
+      ifelse(currentChange > 0.0005, "grown ", ifelse(currentChange < 0.0005, "fallen ", "remained broadly stable (less than 0.1% change)")),
       label_percent(accuracy = 0.1)(currentChange / (currentArea %>%
         filter(timePeriod == min(timePeriod)))$value),
       " in the last four years",
       ifelse(input$geoChoiceOver == "England", ".",
         paste0(
           ", while across England businesses have ",
-          ifelse(englandChange > 0, "grown ", "fallen "),
+          ifelse(englandChange > 0.0005, "grown ", ifelse(englandChange < 0.0005, "fallen ", "remained broadly stable (less than 0.1% change)")),
           label_percent(accuracy = 0.1)(englandChange / (englandArea %>%
             filter(timePeriod == min(currentArea$timePeriod)))$value),
           ". Across this area, there is a higher proportion of ",
           (chartData() %>% filter(extremes == "top"))$subgroup[1],
-          " businesses than across England, and less ",
+          " businesses than across England, and a lower proportion of ",
           (chartData() %>% filter(extremes == "bottom"))$subgroup[1],
           " businesses. "
         )
@@ -767,7 +767,7 @@ server <- function(input, output, session) {
         } else {
           format_pm(change)
         }, # plus-minus and comma sep formatting
-        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
+        style = paste0("font-size: 16px;color:", cond_color(change)), # colour formating
         .noWS = c("before", "after") # remove whitespace
       ),
       br(),
@@ -814,12 +814,12 @@ server <- function(input, output, session) {
       geom_ribbon(
         data = line %>% filter(timePeriod >= timeChop, geogConcat == input$geoChoiceOver),
         aes(ymin = min(value), ymax = value),
-        fill = ifelse(change > 0, "#00703c", "#d4351c"),
+        fill = ifelse(change > 0.0005, "#00703c", ifelse(change < -0.0005, "#d4351c", "#000")),
         alpha = 0.3
       ) +
       geom_line(
         data = line %>% filter(timePeriod >= timeChop, geogConcat == input$geoChoiceOver),
-        color = ifelse(change > 0, "#00703c", "#d4351c")
+        color = ifelse(change > 0.0005, "#00703c", ifelse(change < -0.0005, "#d4351c", "#000"))
       ) +
       theme_classic() +
       theme(
@@ -907,7 +907,7 @@ server <- function(input, output, session) {
       format(100 * latest, digit = 2), "% ",
       span(
         paste0(sprintf("%+.01f", 100 * change), "ppts"),
-        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
+        style = paste0("font-size: 16px;color:", cond_color(change)), # colour formating
         .noWS = c("before", "after") # remove whitespace
       )
     )
@@ -951,7 +951,7 @@ server <- function(input, output, session) {
       span(
         format_pm(change),
         # plus-minus and comma sep formatting
-        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
+        style = paste0("font-size: 16px;color:", cond_color(change)), # colour formating
         .noWS = c("before", "after") # remove whitespace
       )
     )
@@ -998,7 +998,7 @@ server <- function(input, output, session) {
       span(
         format_pm(change),
         # plus-minus and comma sep formatting
-        style = paste0("font-size: 16px;color:", cond_color(change > 0)), # colour formating
+        style = paste0("font-size: 16px;color:", cond_color(change)), # colour formating
         .noWS = c("before", "after") # remove whitespace
       )
     )
