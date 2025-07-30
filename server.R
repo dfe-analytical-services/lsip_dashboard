@@ -460,16 +460,16 @@ server <- function(input, output, session) {
       " businesses were active in ",
       input$geoChoiceOver,
       ". The number of businesses has ",
-      ifelse(currentChange > 0.0005, "grown ", ifelse(currentChange < 0.0005, "fallen ", "remained broadly stable (less than 0.1% change)")),
-      label_percent(accuracy = 0.1)(currentChange / (currentArea %>%
-        filter(timePeriod == min(timePeriod)))$value),
+      ifelse(currentChange > 0.0005, "grown ", ifelse(currentChange < -0.0005, "fallen ", "remained broadly stable (less than 0.1% change)")),
+      ifelse(abs(currentChange) < 0.0005, "", label_percent(accuracy = 0.1)(currentChange / (currentArea %>%
+        filter(timePeriod == min(timePeriod)))$value)),
       " in the last four years",
       ifelse(input$geoChoiceOver == "England", ".",
         paste0(
           ", while across England businesses have ",
-          ifelse(englandChange > 0.0005, "grown ", ifelse(englandChange < 0.0005, "fallen ", "remained broadly stable (less than 0.1% change)")),
-          label_percent(accuracy = 0.1)(englandChange / (englandArea %>%
-            filter(timePeriod == min(currentArea$timePeriod)))$value),
+          ifelse(englandChange > 0.0005, "grown ", ifelse(englandChange < -0.0005, "fallen ", "remained broadly stable (less than 0.1% change)")),
+          ifelse(abs(currentChange) < 0.0005, "", label_percent(accuracy = 0.1)(englandChange / (englandArea %>%
+            filter(timePeriod == min(currentArea$timePeriod)))$value)),
           ". Across this area, there is a higher proportion of ",
           (chartData() %>% filter(extremes == "top"))$subgroup[1],
           " businesses than across England, and a lower proportion of ",
