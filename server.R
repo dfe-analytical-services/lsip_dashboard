@@ -1872,7 +1872,7 @@ server <- function(input, output, session) {
       "How do ",
       (I_DataText %>% filter(metric == input$splashMetric))$breakdownTitle,
       " vary by ",
-      tolower(gsub("SOC2020 ", "", input$barBreakdown)),
+      tolower(gsub("SOC2020 ", "", ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage))),
       "?"
     )
   })
@@ -1908,7 +1908,7 @@ server <- function(input, output, session) {
         filter(
           geogConcat == input$geoChoice |
             geogConcat == "England",
-          breakdown == input$barBreakdown,
+          breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
           metric == input$splashMetric
         ) %>%
         arrange(desc(geogConcat == "England")) %>% # force england to the top
