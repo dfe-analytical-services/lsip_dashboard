@@ -256,7 +256,7 @@ C_datahub <- C_localSkillsDataset %>%
     metric == "sustainedPositiveDestinationKS5Rate" ~ "KS5 sustained positive detination rate",
     metric == "vacancies" ~ "Online job adverts",
     metric == "employmentProjection" ~ "Employment projections",
-    metric == "qualNone" ~ "None",
+    metric == "qualNone" ~ "No qualification",
     metric == "qualL1" ~ "NVQ1",
     metric == "qualL2" ~ "NVQ2",
     metric == "qualApp" ~ "Trade apprenticeship",

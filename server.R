@@ -2217,7 +2217,7 @@ server <- function(input, output, session) {
   output$hubBreakdownInput <- renderUI({
     selectizeInput(
       "hubBreakdowns",
-      choices = C_datahub %>% filter(
+      choices = (C_datahub %>% filter(
         if (is.null(input$hubArea) == TRUE) {
           TRUE
         } else {
@@ -2228,7 +2228,7 @@ server <- function(input, output, session) {
         } else {
           metricNeat %in% input$hubMetric
         }
-      ) %>% distinct(Breakdown),
+      ) %>% distinct(Breakdown))$Breakdown,
       multiple = TRUE,
       label = NULL,
       options = list(placeholder = "Choose breakdowns")
