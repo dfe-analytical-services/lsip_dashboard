@@ -1,28 +1,28 @@
 "metric","minAxis","maxAxis"
-"L3PlusRate",0.455391351943076,0.783058823529412
+"L3PlusRate",0.484138124649074,0.783058823529412
 "L3PlusRateAge16-19",0,0.440677966101695
 "L3PlusRateAge20-24",0.443298969072165,1
-"L3PlusRateAge25-29",0.492788461538462,1
+"L3PlusRateAge25-29",0.556213017751479,1
 "L3PlusRateAge30-39",0.530581039755352,0.88135593220339
-"L3PlusRateAge40-49",0.498884758364312,0.879161528976572
-"L3PlusRateAge50-64",0.385869565217391,0.795088257866462
-"L3PlusRateGenderFemales",0.48279658684283,0.786597267404034
-"L3PlusRateGenderMales",0.428376906318083,0.786938397406207
-"L4PlusRate",0.291187739463602,0.616993035641131
+"L3PlusRateAge40-49",0.514907332796132,0.879161528976572
+"L3PlusRateAge50-64",0.387704918032787,0.795088257866462
+"L3PlusRateGenderFemales",0.514589665653495,0.786597267404034
+"L3PlusRateGenderMales",0.439623180131316,0.786938397406207
+"L4PlusRate",0.308662613981763,0.616993035641131
 "L4PlusRateAge16-19",0,0.101694915254237
 "L4PlusRateAge20-24",0.186390532544379,0.592417061611374
-"L4PlusRateAge25-29",0.262745098039216,0.90745501285347
+"L4PlusRateAge25-29",0.284090909090909,0.90745501285347
 "L4PlusRateAge30-39",0.321100917431193,0.753738783649053
 "L4PlusRateAge40-49",0.344586728754366,0.741379310344828
-"L4PlusRateAge50-64",0.249547101449275,0.648503453568688
-"L4PlusRateGenderFemales",0.321772639691715,0.64440172993753
-"L4PlusRateGenderMales",0.25809105869446,0.616876344436477
+"L4PlusRateAge50-64",0.261065573770492,0.648503453568688
+"L4PlusRateGenderFemales",0.325067224380042,0.64440172993753
+"L4PlusRateGenderMales",0.271812080536913,0.616876344436477
 "achievements",7200,1252510
 "achievementsAge19-24",1400,260550
 "achievementsAge25+",5140,991710
 "achievementsAgeUnknown",NA,NA
-"achievementsLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",640,295680
-"achievementsLevelFurther education and skills: Essential Skills - English and maths",920,294330
+"achievementsLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",650,295680
+"achievementsLevelFurther education and skills: Essential Skills - English and maths",930,294330
 "achievementsLevelFurther education and skills: Full Level 2",280,64700
 "achievementsLevelFurther education and skills: Full Level 3",640,105180
 "achievementsLevelFurther education and skills: Level 2",2200,381500
@@ -32,38 +32,38 @@
 "achievementsProvisionApprenticeships",1000,178220
 "achievementsProvisionCommunity Learning",930,326940
 "achievementsProvisionEducation and training",3430,783410
-"achievementsSSAAgriculture, Horticulture and Animal Care",60,17930
-"achievementsSSAArts, Media and Publishing",70,42230
-"achievementsSSABusiness, Administration and Law",310,91050
-"achievementsSSAConstruction, Planning and the Built Environment",100,70100
-"achievementsSSAEducation and Training",110,31600
-"achievementsSSAEngineering and Manufacturing Technologies",50,52580
-"achievementsSSAHealth, Public Services and Care",970,206150
+"achievementsSSAAgriculture, Horticulture and Animal Care",80,17930
+"achievementsSSAArts, Media and Publishing",110,42230
+"achievementsSSABusiness, Administration and Law",640,91050
+"achievementsSSAConstruction, Planning and the Built Environment",230,70100
+"achievementsSSAEducation and Training",150,31600
+"achievementsSSAEngineering and Manufacturing Technologies",60,52580
+"achievementsSSAHealth, Public Services and Care",1290,206150
 "achievementsSSAHistory, Philosophy and Theology",NA,NA
 "achievementsSSAInformation and Communication Technology",200,69820
-"achievementsSSALanguages, Literature and Culture",60,24060
-"achievementsSSALeisure, Travel and Tourism",30,12680
-"achievementsSSANot Applicable/ Not Known",90,41790
-"achievementsSSAPreparation for Life and Work",1870,758450
-"achievementsSSARetail and Commercial Enterprise",150,66640
-"achievementsSSAScience and Mathematics",80,26950
+"achievementsSSALanguages, Literature and Culture",70,24060
+"achievementsSSALeisure, Travel and Tourism",40,12680
+"achievementsSSANot Applicable/ Not Known",140,41790
+"achievementsSSAPreparation for Life and Work",2050,758450
+"achievementsSSARetail and Commercial Enterprise",270,66640
+"achievementsSSAScience and Mathematics",100,26950
 "achievementsSSASocial Sciences",0,1920
-"achievementsTotalTotal",4190,1514280
-"achievements_rate_per_100000_population",NA,NA
-"achievements_rate_per_100000_populationAge19-24",NA,NA
-"achievements_rate_per_100000_populationAge25+",NA,NA
+"achievementsTotalTotal",7840,1514280
+"achievements_rate_per_100000_population",2088.08303373888,6243
+"achievements_rate_per_100000_populationAge19-24",3004,13405
+"achievements_rate_per_100000_populationAge25+",1691.58942332549,5382
 "achievements_rate_per_100000_populationAgeUnknown",NA,NA
-"achievements_rate_per_100000_populationLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",NA,NA
-"achievements_rate_per_100000_populationLevelFurther education and skills: Essential Skills - English and maths",NA,NA
-"achievements_rate_per_100000_populationLevelFurther education and skills: Full Level 2",NA,NA
-"achievements_rate_per_100000_populationLevelFurther education and skills: Full Level 3",NA,NA
-"achievements_rate_per_100000_populationLevelFurther education and skills: Level 2",NA,NA
-"achievements_rate_per_100000_populationLevelFurther education and skills: Level 3",NA,NA
-"achievements_rate_per_100000_populationLevelFurther education and skills: Level 4+",NA,NA
-"achievements_rate_per_100000_populationLevelFurther education and skills: No Level Assigned",NA,NA
-"achievements_rate_per_100000_populationProvisionApprenticeships",NA,NA
-"achievements_rate_per_100000_populationProvisionCommunity Learning",NA,NA
-"achievements_rate_per_100000_populationProvisionEducation and training",NA,NA
+"achievements_rate_per_100000_populationLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",190.181732433042,1752
+"achievements_rate_per_100000_populationLevelFurther education and skills: Essential Skills - English and maths",328.160752311483,1486
+"achievements_rate_per_100000_populationLevelFurther education and skills: Full Level 2",74,465.439156485248
+"achievements_rate_per_100000_populationLevelFurther education and skills: Full Level 3",190,514
+"achievements_rate_per_100000_populationLevelFurther education and skills: Level 2",446,2593
+"achievements_rate_per_100000_populationLevelFurther education and skills: Level 3",236.846397963437,883
+"achievements_rate_per_100000_populationLevelFurther education and skills: Level 4+",46.4404701889091,217
+"achievements_rate_per_100000_populationLevelFurther education and skills: No Level Assigned",260.166694669168,1939
+"achievements_rate_per_100000_populationProvisionApprenticeships",210,810
+"achievements_rate_per_100000_populationProvisionCommunity Learning",204.006925070514,1573
+"achievements_rate_per_100000_populationProvisionEducation and training",1084.43149583543,4742
 "birthRate",0.0736774469907903,0.186440677966102
 "deathRate",0.0669328769728085,0.162919008952738
 "employmentProjection",0.00179630444983279,0.0138260340186448
@@ -138,26 +138,26 @@
 "employmentProjectionQualificationRQF6 First degree",-0.00982297886682659,0.031393486849192
 "employmentProjectionQualificationRQF7 Other higher degree",0.0126128060637572,0.0640800448805811
 "employmentProjectionQualificationRQF8 Doctorate",0.0153878965417932,0.0627693670352374
-"enrolmentsAims",5620,1910840
-"enrolmentsAimsSSAAgriculture, Horticulture and Animal Care",70,22090
-"enrolmentsAimsSSAArts, Media and Publishing",80,48480
-"enrolmentsAimsSSABusiness, Administration and Law",430,118080
-"enrolmentsAimsSSAConstruction, Planning and the Built Environment",130,83600
-"enrolmentsAimsSSAEducation and Training",130,40510
+"enrolmentsAims",10380,1910840
+"enrolmentsAimsSSAAgriculture, Horticulture and Animal Care",80,22090
+"enrolmentsAimsSSAArts, Media and Publishing",130,48480
+"enrolmentsAimsSSABusiness, Administration and Law",880,118080
+"enrolmentsAimsSSAConstruction, Planning and the Built Environment",300,83600
+"enrolmentsAimsSSAEducation and Training",200,40510
 "enrolmentsAimsSSAEngineering and Manufacturing Technologies",90,62940
-"enrolmentsAimsSSAHealth, Public Services and Care",1380,282290
+"enrolmentsAimsSSAHealth, Public Services and Care",1930,282290
 "enrolmentsAimsSSAHistory, Philosophy and Theology",NA,NA
 "enrolmentsAimsSSAInformation and Communication Technology",310,94290
-"enrolmentsAimsSSALanguages, Literature and Culture",80,31290
-"enrolmentsAimsSSALeisure, Travel and Tourism",30,16020
-"enrolmentsAimsSSANot Applicable/ Not Known",160,69560
-"enrolmentsAimsSSAPreparation for Life and Work",2380,915620
-"enrolmentsAimsSSARetail and Commercial Enterprise",220,85810
-"enrolmentsAimsSSAScience and Mathematics",120,36980
+"enrolmentsAimsSSALanguages, Literature and Culture",100,31290
+"enrolmentsAimsSSALeisure, Travel and Tourism",60,16020
+"enrolmentsAimsSSANot Applicable/ Not Known",230,69560
+"enrolmentsAimsSSAPreparation for Life and Work",3100,915620
+"enrolmentsAimsSSARetail and Commercial Enterprise",330,85810
+"enrolmentsAimsSSAScience and Mathematics",170,36980
 "enrolmentsAimsSSASocial Sciences",10,2860
 "enterpriseCount",17450,2408040
 "enterpriseCountIndustryAccommodation & food services",1055,146105
-"enterpriseCountIndustryAgriculture, forestry & fishing",80,99425
+"enterpriseCountIndustryAgriculture, forestry & fishing",295,99425
 "enterpriseCountIndustryArts, entertainment, recreation & other services",1250,163065
 "enterpriseCountIndustryBusiness administration & support services",1365,211430
 "enterpriseCountIndustryConstruction",2430,332020
@@ -170,7 +170,7 @@
 "enterpriseCountIndustryMotor trades",655,69750
 "enterpriseCountIndustryProfessional, scientific & technical",2095,418630
 "enterpriseCountIndustryProperty",480,105500
-"enterpriseCountIndustryPublic administration & defence",5,7170
+"enterpriseCountIndustryPublic administration & defence",20,7170
 "enterpriseCountIndustryRetail",1340,195395
 "enterpriseCountIndustryTransport & storage",625,122760
 "enterpriseCountIndustryWholesale",475,96705
@@ -223,81 +223,81 @@
 "participationAge25+",8500,1377180
 "participationAgeUnknown",NA,NA
 "participationLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",730,323560
-"participationLevelFurther education and skills: Essential Skills - English and maths",2170,479250
+"participationLevelFurther education and skills: Essential Skills - English and maths",2180,479250
 "participationLevelFurther education and skills: Full Level 2",630,180640
 "participationLevelFurther education and skills: Full Level 3",2180,339390
 "participationLevelFurther education and skills: Level 2",3420,585160
 "participationLevelFurther education and skills: Level 3",2570,404950
 "participationLevelFurther education and skills: Level 4+",1360,280210
-"participationLevelFurther education and skills: No Level Assigned",1240,414800
+"participationLevelFurther education and skills: No Level Assigned",1250,414800
 "participationProvisionApprenticeships",5310,752150
 "participationProvisionCommunity Learning",1020,358510
 "participationProvisionEducation and training",4680,992060
-"participation_rate_per_100000_population",NA,NA
-"participation_rate_per_100000_populationAge19-24",NA,NA
-"participation_rate_per_100000_populationAge25+",NA,NA
+"participation_rate_per_100000_population",3480.58506013411,8478
+"participation_rate_per_100000_populationAge19-24",5675,19925
+"participation_rate_per_100000_populationAge25+",2792.53177581871,7102
 "participation_rate_per_100000_populationAgeUnknown",NA,NA
-"participation_rate_per_100000_populationLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",NA,NA
-"participation_rate_per_100000_populationLevelFurther education and skills: Essential Skills - English and maths",NA,NA
-"participation_rate_per_100000_populationLevelFurther education and skills: Full Level 2",NA,NA
-"participation_rate_per_100000_populationLevelFurther education and skills: Full Level 3",NA,NA
-"participation_rate_per_100000_populationLevelFurther education and skills: Level 2",NA,NA
-"participation_rate_per_100000_populationLevelFurther education and skills: Level 3",NA,NA
-"participation_rate_per_100000_populationLevelFurther education and skills: Level 4+",NA,NA
-"participation_rate_per_100000_populationLevelFurther education and skills: No Level Assigned",NA,NA
-"participation_rate_per_100000_populationProvisionApprenticeships",NA,NA
-"participation_rate_per_100000_populationProvisionCommunity Learning",NA,NA
-"participation_rate_per_100000_populationProvisionEducation and training",NA,NA
+"participation_rate_per_100000_populationLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",213.58871488634,1871
+"participation_rate_per_100000_populationLevelFurther education and skills: Essential Skills - English and maths",733,2369
+"participation_rate_per_100000_populationLevelFurther education and skills: Full Level 2",188,1310.94211163694
+"participation_rate_per_100000_populationLevelFurther education and skills: Full Level 3",556,1727.91160349039
+"participation_rate_per_100000_populationLevelFurther education and skills: Level 2",762,3525
+"participation_rate_per_100000_populationLevelFurther education and skills: Level 3",803.948235294118,1909
+"participation_rate_per_100000_populationLevelFurther education and skills: Level 4+",407,1080
+"participation_rate_per_100000_populationLevelFurther education and skills: No Level Assigned",290.364614586125,2016
+"participation_rate_per_100000_populationProvisionApprenticeships",1225,3210
+"participation_rate_per_100000_populationProvisionCommunity Learning",223.749530722499,1595
+"participation_rate_per_100000_populationProvisionEducation and training",1452.94471299281,5534
 "selfemployed",26200,3848000
 "selfemployedRate",0.0577017114914425,0.164257151645647
 "sustainedPositiveDestinationKS4Rate",0.909560002789206,0.965726827621138
 "sustainedPositiveDestinationKS4RateOutcomeApprenticeships",0.00668990744605111,0.105771293713795
 "sustainedPositiveDestinationKS4RateOutcomeEducation",0.775014571595104,0.937275679371048
-"sustainedPositiveDestinationKS4RateOutcomeEmployment",0.00843296589988461,0.0656995396847538
-"sustainedPositiveDestinationKS5Rate",0.749126034958602,0.888807607900512
+"sustainedPositiveDestinationKS4RateOutcomeEmployment",0.00843296589988461,0.0646978822615116
+"sustainedPositiveDestinationKS5Rate",0.749126034958602,0.875350140056022
 "sustainedPositiveDestinationKS5RateLevelAll other qualifications",0.451704545454545,0.708841463414634
-"sustainedPositiveDestinationKS5RateLevelLevel 2",0.473684210526316,0.814814814814815
+"sustainedPositiveDestinationKS5RateLevelLevel 2",0.576518412242946,0.814814814814815
 "sustainedPositiveDestinationKS5RateLevelLevel 3",0.832436793975255,0.913937867338371
 "sustainedPositiveDestinationKS5RateOutcomeApprenticeships",0.0290580413834317,0.190007765984986
 "sustainedPositiveDestinationKS5RateOutcomeEducation",0.32459831675593,0.641356041931227
 "sustainedPositiveDestinationKS5RateOutcomeEmployment",0.119182789273175,0.374504914185125
 "unemployed",3900,1419100
-"unemployedRate",0.0147821576763485,0.0704531961211162
-"vacancies",4669,2188530
-"vacanciesOccupation (SOC2020 Major Group)1 - Managers, directors and senior officials",432,86365
-"vacanciesOccupation (SOC2020 Major Group)2 - Professional occupations",1430,332361
-"vacanciesOccupation (SOC2020 Major Group)3 - Associate professional occupations",1204,256845
-"vacanciesOccupation (SOC2020 Major Group)4 - Administrative and secretarial occupations",566,110526
-"vacanciesOccupation (SOC2020 Major Group)5 - Skilled trades occupations",803,122727
-"vacanciesOccupation (SOC2020 Major Group)6 - Caring, leisure and other service occupations",625,110388
-"vacanciesOccupation (SOC2020 Major Group)7 - Sales and customer service occupations",250,45997
-"vacanciesOccupation (SOC2020 Major Group)8 - Process, plant and machine operatives",585,78385
-"vacanciesOccupation (SOC2020 Major Group)9 - Elementary occupations",636,94432
-"vacanciesOccupation (SOC2020 Major Group)Unknown",3,1226
-"vacanciesOccupation (SOC2020 Sub-Major Group)11 - Corporate managers and directors",249,54361
-"vacanciesOccupation (SOC2020 Sub-Major Group)12 - Other managers and proprietors",183,32004
-"vacanciesOccupation (SOC2020 Sub-Major Group)21 - Science, research, engineering and technology professionals",305,92486
-"vacanciesOccupation (SOC2020 Sub-Major Group)22 - Health professionals",432,69116
-"vacanciesOccupation (SOC2020 Sub-Major Group)23 - Teaching and other educational professionals",195,57418
-"vacanciesOccupation (SOC2020 Sub-Major Group)24 - Business, media and public service professionals",402,113341
-"vacanciesOccupation (SOC2020 Sub-Major Group)31 - Science, engineering and technology associate professionals",260,47383
-"vacanciesOccupation (SOC2020 Sub-Major Group)32 - Health and social care associate professionals",207,37311
-"vacanciesOccupation (SOC2020 Sub-Major Group)33 - Protective service occupations",15,3870
-"vacanciesOccupation (SOC2020 Sub-Major Group)34 - Culture, media and sports occupations",100,23980
-"vacanciesOccupation (SOC2020 Sub-Major Group)35 - Business and public service associate professionals",621,144301
-"vacanciesOccupation (SOC2020 Sub-Major Group)41 - Administrative occupations",466,93154
-"vacanciesOccupation (SOC2020 Sub-Major Group)42 - Secretarial and related occupations",100,17372
-"vacanciesOccupation (SOC2020 Sub-Major Group)51 - Skilled agricultural and related trades",19,4095
-"vacanciesOccupation (SOC2020 Sub-Major Group)52 - Skilled metal, electrical and electronic trades",440,69811
-"vacanciesOccupation (SOC2020 Sub-Major Group)53 - Skilled construction and building trades",80,18515
-"vacanciesOccupation (SOC2020 Sub-Major Group)54 - Textiles, printing and other skilled trades",199,30306
-"vacanciesOccupation (SOC2020 Sub-Major Group)61 - Caring personal service occupations",540,93935
-"vacanciesOccupation (SOC2020 Sub-Major Group)62 - Leisure, travel and related personal service occupations",82,15897
-"vacanciesOccupation (SOC2020 Sub-Major Group)63 - Community and civil enforcement occupations",3,556
-"vacanciesOccupation (SOC2020 Sub-Major Group)71 - Sales occupations",167,27538
-"vacanciesOccupation (SOC2020 Sub-Major Group)72 - Customer service occupations",83,18459
-"vacanciesOccupation (SOC2020 Sub-Major Group)81 - Process, plant and machine operatives",265,37747
-"vacanciesOccupation (SOC2020 Sub-Major Group)82 - Transport and mobile machine drivers and operatives",320,40638
-"vacanciesOccupation (SOC2020 Sub-Major Group)91 - Elementary trades and related occupations",90,13681
-"vacanciesOccupation (SOC2020 Sub-Major Group)92 - Elementary administration and service occupations",546,80751
-"vacanciesOccupation (SOC2020 Sub-Major Group)Unknown",3,1226
+"unemployedRate",0.0147821576763485,0.0675628369390184
+"vacancies",5783,2188530
+"vacanciesOccupation (SOC2020 Major Group)1 - Managers, directors and senior officials",345,154219
+"vacanciesOccupation (SOC2020 Major Group)2 - Professional occupations",1421,640536
+"vacanciesOccupation (SOC2020 Major Group)3 - Associate professional occupations",1109,450932
+"vacanciesOccupation (SOC2020 Major Group)4 - Administrative and secretarial occupations",509,210991
+"vacanciesOccupation (SOC2020 Major Group)5 - Skilled trades occupations",621,167444
+"vacanciesOccupation (SOC2020 Major Group)6 - Caring, leisure and other service occupations",523,173529
+"vacanciesOccupation (SOC2020 Major Group)7 - Sales and customer service occupations",217,96861
+"vacanciesOccupation (SOC2020 Major Group)8 - Process, plant and machine operatives",359,113933
+"vacanciesOccupation (SOC2020 Major Group)9 - Elementary occupations",411,169864
+"vacanciesOccupation (SOC2020 Major Group)Unknown",1,3355
+"vacanciesOccupation (SOC2020 Sub-Major Group)11 - Corporate managers and directors",196,102241
+"vacanciesOccupation (SOC2020 Sub-Major Group)12 - Other managers and proprietors",116,51978
+"vacanciesOccupation (SOC2020 Sub-Major Group)21 - Science, research, engineering and technology professionals",246,236268
+"vacanciesOccupation (SOC2020 Sub-Major Group)22 - Health professionals",437,119205
+"vacanciesOccupation (SOC2020 Sub-Major Group)23 - Teaching and other educational professionals",115,70405
+"vacanciesOccupation (SOC2020 Sub-Major Group)24 - Business, media and public service professionals",367,214658
+"vacanciesOccupation (SOC2020 Sub-Major Group)31 - Science, engineering and technology associate professionals",196,87603
+"vacanciesOccupation (SOC2020 Sub-Major Group)32 - Health and social care associate professionals",144,42531
+"vacanciesOccupation (SOC2020 Sub-Major Group)33 - Protective service occupations",9,6638
+"vacanciesOccupation (SOC2020 Sub-Major Group)34 - Culture, media and sports occupations",80,31768
+"vacanciesOccupation (SOC2020 Sub-Major Group)35 - Business and public service associate professionals",536,282392
+"vacanciesOccupation (SOC2020 Sub-Major Group)41 - Administrative occupations",451,182056
+"vacanciesOccupation (SOC2020 Sub-Major Group)42 - Secretarial and related occupations",58,28935
+"vacanciesOccupation (SOC2020 Sub-Major Group)51 - Skilled agricultural and related trades",6,4626
+"vacanciesOccupation (SOC2020 Sub-Major Group)52 - Skilled metal, electrical and electronic trades",359,94039
+"vacanciesOccupation (SOC2020 Sub-Major Group)53 - Skilled construction and building trades",72,29839
+"vacanciesOccupation (SOC2020 Sub-Major Group)54 - Textiles, printing and other skilled trades",86,39279
+"vacanciesOccupation (SOC2020 Sub-Major Group)61 - Caring personal service occupations",467,150779
+"vacanciesOccupation (SOC2020 Sub-Major Group)62 - Leisure, travel and related personal service occupations",46,22047
+"vacanciesOccupation (SOC2020 Sub-Major Group)63 - Community and civil enforcement occupations",0,703
+"vacanciesOccupation (SOC2020 Sub-Major Group)71 - Sales occupations",133,54307
+"vacanciesOccupation (SOC2020 Sub-Major Group)72 - Customer service occupations",79,42554
+"vacanciesOccupation (SOC2020 Sub-Major Group)81 - Process, plant and machine operatives",180,58822
+"vacanciesOccupation (SOC2020 Sub-Major Group)82 - Transport and mobile machine drivers and operatives",151,55111
+"vacanciesOccupation (SOC2020 Sub-Major Group)91 - Elementary trades and related occupations",55,26942
+"vacanciesOccupation (SOC2020 Sub-Major Group)92 - Elementary administration and service occupations",335,142922
+"vacanciesOccupation (SOC2020 Sub-Major Group)Unknown",1,3355

@@ -225,7 +225,7 @@ write.csv(C_topTenEachBreakdown, file = "Data\\AppData\\C_topTenEachBreakdown.cs
 # This is used in the data explorer page
 C_datahub <- C_localSkillsDataset %>%
   select(geogConcat, metric, breakdown, subgroup, chartPeriod, valueText, latest) %>%
-  filter(!metric %in% c("economicallyactive", "employees", "inemploymentRate", "selfemployedRate", "inactiveRate", "unemployedRate", "starts_rate_per_100000_population", "starts", "enrolments", "employmentProjectionAnnualGrowth", "employmentProjectionGrowth2024to2035", "birthRate", "deathRate", "L3PlusRate")) %>% # very bad data coverage
+  filter(!metric %in% c("economicallyactive", "employees","economicallyactiveRate", "employeesRate", "inemploymentRate", "selfemployedRate", "inactiveRate", "unemployedRate", "starts_rate_per_100000_population", "starts", "enrolments", "employmentProjectionAnnualGrowth", "employmentProjectionGrowth2024to2035", "birthRate", "deathRate", "L3PlusRate","L4PlusRate")) %>% 
   # rename some of the elements so they make sense here
   mutate(metricNeat = case_when(
     metric == "all" ~ "Population volume",
@@ -244,7 +244,8 @@ C_datahub <- C_localSkillsDataset %>%
     # metric == "starts_rate_per_100000_population" ~ "FE start rate per 100k",
     metric == "achievements" ~ "FE achievements volume",
     metric == "participation" ~ "FE participation volume",
-    metric == "enrolments" ~ "FE enrolled volume",
+    metric == "achievementsAims" ~ "FE achievement aims volume",
+    metric == "enrolmentsAims" ~ "FE enrolment aims volume",
     # metric == "starts" ~ "FE starts volume",
     metric == "births" ~ "Enterprise births",
     metric == "deaths" ~ "Enterprise deaths",
