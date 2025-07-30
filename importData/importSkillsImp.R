@@ -162,20 +162,20 @@ empGrowth <- employmentProjections %>%
   filter(chartPeriod != 2022) %>%
   mutate(metric = "employmentProjectionAnnualGrowth")
 
-# Get 2023 to 2035 growth metric
-empGrowth2023_2035 <- employmentProjections %>%
-  filter(chartPeriod %in% c(2023, 2035)) %>%
+# Get 2024 to 2035 growth metric
+empGrowth2024_2035 <- employmentProjections %>%
+  filter(chartPeriod %in% c(2024, 2035)) %>%
   # get growth
   arrange(chartPeriod, timePeriod, latest) %>%
   group_by(geogConcat, metric, breakdown, subgroup) %>%
   mutate(value = (value - lag(value)) / lag(value)) %>%
-  filter(chartPeriod != 2023) %>%
-  mutate(metric = "employmentProjectionGrowth2023to2035")
+  filter(chartPeriod != 2024) %>%
+  mutate(metric = "employmentProjectionGrowth2024to2035")
 
 # combine all skills imperative  metrics
 C_skillsImperative <- bind_rows(
   employmentProjections,
   empGrowth,
-  empGrowth2023_2035
+  empGrowth2024_2035
 ) %>%
   mutate(valueText = as.character(value))

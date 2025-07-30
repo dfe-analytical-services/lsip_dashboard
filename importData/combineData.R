@@ -39,10 +39,10 @@ C_Geog <- neatGeog %>%
     (C_localSkillsDataset %>%
        filter(
          latest == 1,
-         metric != "employmentProjectionAnnualGrowth", # the maps use the employmentProjectionGrowth2023to2035 metric
+         metric != "employmentProjectionAnnualGrowth", # the maps use the employmentProjectionGrowth2024to2035 metric
          !metric %in% dashboardMetricIgnore # remove metrics not used
        ) %>%
-       mutate(metric=gsub("employmentProjectionGrowth2023to2035","employmentProjection",metric))%>%# for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
+       mutate(metric=gsub("employmentProjectionGrowth2024to2035","employmentProjection",metric))%>%# for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
        mutate(metric=case_when(
          breakdown=="Total" ~ metric,
          metric == "achievementsAims" ~ paste0("achievements",breakdown,subgroup),# align achieve aims metric name so shows up when achievements chosen
@@ -70,7 +70,7 @@ C_time <- C_localSkillsDataset %>%
       mutate(metric = "enterprisePctMicro", breakdown = "Total", valueText = as.character(value))
   ) %>%
   filter(
-    !metric %in% c("economicallyactiveRate","employeesRate" ,"employmentProjectionGrowth2023to2035"), # time charts only use employmentProjectionAnnualGrowth metric
+    !metric %in% c("economicallyactiveRate","employeesRate" ,"employmentProjectionGrowth2024to2035"), # time charts only use employmentProjectionAnnualGrowth metric
     !metric %in% dashboardMetricIgnore # remove metrics not used
   ) %>%
   mutate(metric = case_when(
@@ -156,11 +156,11 @@ C_breakdown <- bind_rows(
     select(geogConcat, metric, breakdown, subgroup, value, valueText)
 ) %>%
   filter(
-    metric != "employmentProjectionAnnualGrowth", # breakdown chart only uses employmentProjectionGrowth2023to2035 metric
+    metric != "employmentProjectionAnnualGrowth", # breakdown chart only uses employmentProjectionGrowth2024to2035 metric
     !metric %in% dashboardMetricIgnore # remove metrics not used
   ) %>%
   mutate(metric = case_when(
-    metric == "employmentProjectionGrowth2023to2035" ~ "employmentProjection",
+    metric == "employmentProjectionGrowth2024to2035" ~ "employmentProjection",
     TRUE ~ metric
   )) # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
 write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
@@ -225,7 +225,7 @@ write.csv(C_topTenEachBreakdown, file = "Data\\AppData\\C_topTenEachBreakdown.cs
 # This is used in the data explorer page
 C_datahub <- C_localSkillsDataset %>%
   select(geogConcat, metric, breakdown, subgroup, chartPeriod, valueText, latest) %>%
-  filter(!metric %in% c("economicallyactive", "employees", "inemploymentRate", "selfemployedRate", "inactiveRate", "unemployedRate", "starts_rate_per_100000_population", "starts", "enrolments", "employmentProjectionAnnualGrowth", "employmentProjectionGrowth2023to2035", "birthRate", "deathRate", "L3PlusRate")) %>% # very bad data coverage
+  filter(!metric %in% c("economicallyactive", "employees", "inemploymentRate", "selfemployedRate", "inactiveRate", "unemployedRate", "starts_rate_per_100000_population", "starts", "enrolments", "employmentProjectionAnnualGrowth", "employmentProjectionGrowth2024to2035", "birthRate", "deathRate", "L3PlusRate")) %>% # very bad data coverage
   # rename some of the elements so they make sense here
   mutate(metricNeat = case_when(
     metric == "all" ~ "Population volume",

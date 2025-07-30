@@ -381,7 +381,7 @@ server <- function(input, output, session) {
   # Top projected jobs sentence
   output$summaryTopProjected <- renderUI({
     paste0(
-      "From 2023 to 2035 ", input$geoChoiceOver, " is projected to grow ",
+      "From 2024 to 2035 ", input$geoChoiceOver, " is projected to grow ",
       format((C_Geog %>%
         filter(
           geogConcat == input$geoChoiceOver
@@ -1201,7 +1201,7 @@ server <- function(input, output, session) {
     ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
 
     C_Geog %>%
-      filter(geog == input$splashGeoType | geog == "England") %>%
+      filter(geog == input$splashGeoType | geog == "COUNTRY") %>%
       select(areaName, areaCode, geogConcat, geog,
         value = paste0(
           input$splashMetric,
@@ -1696,7 +1696,7 @@ server <- function(input, output, session) {
               } else {
                 paste0(input$breakdownPage, ": ", input$subgroupPage)
               }, " ",
-              (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
+              ifelse(input$splashMetric == "employmentProjection", "Projected annual employment growth", (I_DataText %>% filter(metric == input$splashMetric))$mapPop),
               ": ",
               if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
                 scales::percent(round(value, 3))

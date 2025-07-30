@@ -484,6 +484,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               tags$li("Refresh of the summary page."),
               tags$li("Remove LEP maps and add in National picture."),
               tags$li("Add in page wide subgroup filters to the Local Skills data page."),
+              tags$li("Update Skills Imperative projection long term growth metric to 2024 to 2035.")
             ),
             details(
               label = "Previous updates",
@@ -891,7 +892,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           h3("ONS-Textkernel online job adverts"),
           p(
             "These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.
-            The dashboard shows the monthly average number of live adverts from 2017 to 2023."
+            The dashboard shows the monthly average number of live adverts."
           ),
           p(
             "Advert volumes are shown split by SOC2020 Major and Sub-Major groups. Textkernel have derived these codes from the job advert job title."
@@ -960,7 +961,7 @@ Per 100,000 figures for LSIP/MCA areas are based on subgroup populations calcula
           h3("Skills Imperative 2035 employment projections"),
           p(
             "Skills Imperative 2035 projects the future size and shape of the labour market by considering employment prospects by industry, occupation, qualification level.
-            The dashboard shows the year on year growth of employment as well as the long term growth from 2023 to 2035.
+            The dashboard shows the year on year growth of employment as well as the long term growth from 2024 to 2035.
             The employment volumes are available in the data downloads.
             "
           ),
