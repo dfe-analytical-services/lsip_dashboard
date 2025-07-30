@@ -5,7 +5,7 @@ I_FeProvLevelAge <- read.csv(file = paste0("./Data/", folder, "/", list.files(pa
 
 # tidy up data
 F_FeProvLevelAge <- I_FeProvLevelAge %>%
-  # filter uneeded columns and rows
+  # filter needed columns and rows
   filter(
     geographic_level %in% c("Local authority district", "National", "Local skills improvement plan area","English devolved area"), # just keep area used
     # keep only the combinations shown in dashboard
@@ -35,22 +35,14 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
   )) %>%
   #filter to last 5 years
   filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
-  select(-time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name, -local_enterprise_partnership_code, -local_enterprise_partnership_name, -lsip_code, -lsip_name) %>%
-  # ILR uses the LEP names as they were at the time of the data. Here we align those LEPs whose geography has not changed to the latest name
-  mutate(area = case_when(
-    area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
-    area == "Humber" ~ "Hull and East Yorkshire",
-    area == "Derby, Derbyshire, Nottingham and Nottinghamshire" ~ "D2N2",
-    area == "Gloucestershire" ~ "GFirst",
-    TRUE ~ area
-  ))
+  select(-time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name, -local_enterprise_partnership_code, -local_enterprise_partnership_name, -lsip_code, -lsip_name)
 
 # add on new LADUs/LSIP/MCA areas
 feWithAreas <- addGeogs(F_FeProvLevelAge)
 
 # Get LSIP and MCA groups (ILR now publish at that level). 
 # Here we get those LSIPs and MCAs which have stayed consistent across the years so we can use the published data throughout
-feLepsLsips <- F_FeProvLevelAge %>%
+feLsipsMcas <- F_FeProvLevelAge %>%
   filter(geographic_level == "Local skills improvement plan area"
          | (geographic_level == "English devolved area" &
               area %in% c("Cambridgeshire and Peterborough",
@@ -102,7 +94,7 @@ groupedStats <- feWithAreas %>%
 # add back on original LADUs and format
 C_FeProvLevelAge <- bind_rows(
   groupedStats,
-  feLepsLsips,
+  feLsipsMcas,
   feWithAreas %>%
     filter(newArea == 0)
 ) %>%
