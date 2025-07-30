@@ -1708,6 +1708,7 @@ server <- function(input, output, session) {
           )
         ) +
           geom_line() +
+          geom_point() +
           theme_minimal() +
           theme(
             axis.title.x = element_blank(),
