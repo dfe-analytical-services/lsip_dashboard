@@ -484,7 +484,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               tags$li("Refresh of the summary page."),
               tags$li("Remove LEP maps and add in National picture."),
               tags$li("Add in page wide subgroup filters to the Local Skills data page."),
-              tags$li("Update Skills Imperative projection long term growth metric to 2024 to 2035.")
+              tags$li("Update Skills Imperative projection long term growth metric to 2024 to 2035."),
+              tags$li("Utilise the populations published in FE data to calculate grouped FE per 10k statistics."),
             ),
             details(
               label = "Previous updates",

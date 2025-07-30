@@ -36,11 +36,6 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
   #filter to last 5 years
   filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
   select(-time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name, -local_enterprise_partnership_code, -local_enterprise_partnership_name, -lsip_code, -lsip_name) %>%
-  # find populations at the grouping level so we use the highest volume of population (ie not calculate the pop for every small group using small data volumes)
-  mutate(populationGroup = case_when(
-    provision_type %in% c("Apprenticeships", "Community Learning") ~ paste("popIncludesUnder19", age_summary), # apps and CL include under 19, so the the population used in the per 100k calcs are slightly higher
-    TRUE ~ age_summary
-  )) %>%
   # ILR uses the LEP names as they were at the time of the data. Here we align those LEPs whose geography has not changed to the latest name
   mutate(area = case_when(
     area == "Buckinghamshire Thames Valley" ~ "Buckinghamshire",
@@ -50,23 +45,12 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
     TRUE ~ area
   ))
 
-# add on population
-addPopulation <- F_FeProvLevelAge %>%
-  left_join(
-    F_FeProvLevelAge %>%
-      filter(level_or_type == "Further education and skills: Total" | (level_or_type == "Apprenticeships: Total" & (age_summary == "Under 19" | age_summary == "Total"))) %>% # use the apps poplation as it is bigger than the CL
-      mutate(population = 100000 * as.numeric(participation) / as.numeric(participation_rate_per_100000_population)) %>% # use values to get population
-      select(geographic_level, area, populationGroup, timePeriod, population),
-    by = c("geographic_level" = "geographic_level", "area" = "area", "populationGroup" = "populationGroup", "timePeriod" = "timePeriod")
-  ) %>%
-  select(-populationGroup)
-
 # add on new LADUs/LSIP/MCA areas
-feWithAreas <- addGeogs(addPopulation)
+feWithAreas <- addGeogs(F_FeProvLevelAge)
 
 # Get LSIP and MCA groups (ILR now publish at that level). 
 # Here we get those LSIPs and MCAs which have stayed consistent across the years so we can use the published data throughout
-feLepsLsips <- addPopulation %>%
+feLepsLsips <- F_FeProvLevelAge %>%
   filter(geographic_level == "Local skills improvement plan area"
          | (geographic_level == "English devolved area" &
               area %in% c("Cambridgeshire and Peterborough",
@@ -108,12 +92,12 @@ groupedStats <- feWithAreas %>%
   group_by(provision_type, level_or_type, age_summary, chartPeriod, timePeriod, latest, geogConcat) %>% # sum for each LEP
   summarise(across(everything(), list(sum), na.rm = T)) %>%
   mutate(
-    starts_rate_per_100000_population = as.character(100000 * starts_1 / population_1),
-    participation_rate_per_100000_population = as.character(100000 * participation_1 / population_1),
-    achievements_rate_per_100000_population = as.character(100000 * achievements_1 / population_1)
+    starts_rate_per_100000_population = as.character(100000 * starts_1 / population_estimate_1),
+    participation_rate_per_100000_population = as.character(100000 * participation_1 / population_estimate_1),
+    achievements_rate_per_100000_population = as.character(100000 * achievements_1 / population_estimate_1)
   ) %>%
   mutate(starts = as.character(starts_1), participation = as.character(participation_1), achievements = as.character(achievements_1)) %>%
-  select(-population_1, -starts_1, -participation_1, -achievements_1, -population_estimate_1)
+  select(-starts_1, -participation_1, -achievements_1, -population_estimate_1)
 
 # add back on original LADUs and format
 C_FeProvLevelAge <- bind_rows(
@@ -122,7 +106,7 @@ C_FeProvLevelAge <- bind_rows(
   feWithAreas %>%
     filter(newArea == 0)
 ) %>%
-  select(-population, -newArea, -population_estimate) %>%
+  select(-newArea, -population_estimate) %>%
   # get in new format
   mutate(subgroup = case_when(
     level_or_type == "Further education and skills: Total" & age_summary == "Total" ~ "Total",

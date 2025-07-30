@@ -1036,7 +1036,7 @@ server <- function(input, output, session) {
 
   # filter for just england
   englandGeog <- C_Geog %>%
-    filter(geog == "COUNTRY" & areaName == "England")
+    filter(geog == "England" & areaName == "England")
 
   ### 2.3.3 Screenshot----
   output$screenshotFile <- renderUI({
@@ -1201,7 +1201,7 @@ server <- function(input, output, session) {
     ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
 
     C_Geog %>%
-      filter(geog == input$splashGeoType | geog == "COUNTRY") %>%
+      filter(geog == input$splashGeoType | geog == "England") %>%
       select(areaName, areaCode, geogConcat, geog,
         value = paste0(
           input$splashMetric,

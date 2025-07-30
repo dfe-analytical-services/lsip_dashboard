@@ -49,21 +49,21 @@
 "achievementsSSAScience and Mathematics",100,26950
 "achievementsSSASocial Sciences",0,1920
 "achievementsTotalTotal",7840,1514280
-"achievements_rate_per_100000_population",2088.08303373888,6243
+"achievements_rate_per_100000_population",2090.28374569841,6243
 "achievements_rate_per_100000_populationAge19-24",3004,13405
-"achievements_rate_per_100000_populationAge25+",1691.58942332549,5382
+"achievements_rate_per_100000_populationAge25+",1691.94712171486,5382
 "achievements_rate_per_100000_populationAgeUnknown",NA,NA
-"achievements_rate_per_100000_populationLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",190.181732433042,1752
-"achievements_rate_per_100000_populationLevelFurther education and skills: Essential Skills - English and maths",328.160752311483,1486
-"achievements_rate_per_100000_populationLevelFurther education and skills: Full Level 2",74,465.439156485248
+"achievements_rate_per_100000_populationLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",190.153556310319,1752
+"achievements_rate_per_100000_populationLevelFurther education and skills: Essential Skills - English and maths",328.348091344321,1486
+"achievements_rate_per_100000_populationLevelFurther education and skills: Full Level 2",74,465.643198060199
 "achievements_rate_per_100000_populationLevelFurther education and skills: Full Level 3",190,514
 "achievements_rate_per_100000_populationLevelFurther education and skills: Level 2",446,2593
-"achievements_rate_per_100000_populationLevelFurther education and skills: Level 3",236.846397963437,883
-"achievements_rate_per_100000_populationLevelFurther education and skills: Level 4+",46.4404701889091,217
-"achievements_rate_per_100000_populationLevelFurther education and skills: No Level Assigned",260.166694669168,1939
+"achievements_rate_per_100000_populationLevelFurther education and skills: Level 3",237.104535205374,883
+"achievements_rate_per_100000_populationLevelFurther education and skills: Level 4+",46.4910853343871,217
+"achievements_rate_per_100000_populationLevelFurther education and skills: No Level Assigned",260.132992992667,1939
 "achievements_rate_per_100000_populationProvisionApprenticeships",210,810
-"achievements_rate_per_100000_populationProvisionCommunity Learning",204.006925070514,1573
-"achievements_rate_per_100000_populationProvisionEducation and training",1084.43149583543,4742
+"achievements_rate_per_100000_populationProvisionCommunity Learning",204.089246252329,1573
+"achievements_rate_per_100000_populationProvisionEducation and training",1084.64735765653,4742
 "birthRate",0.0736774469907903,0.186440677966102
 "deathRate",0.0669328769728085,0.162919008952738
 "employmentProjection",0.00179630444983279,0.0138260340186448
@@ -233,21 +233,21 @@
 "participationProvisionApprenticeships",5310,752150
 "participationProvisionCommunity Learning",1020,358510
 "participationProvisionEducation and training",4680,992060
-"participation_rate_per_100000_population",3480.58506013411,8478
+"participation_rate_per_100000_population",3481.42792105193,8478
 "participation_rate_per_100000_populationAge19-24",5675,19925
-"participation_rate_per_100000_populationAge25+",2792.53177581871,7102
+"participation_rate_per_100000_populationAge25+",2795.67698236416,7102
 "participation_rate_per_100000_populationAgeUnknown",NA,NA
-"participation_rate_per_100000_populationLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",213.58871488634,1871
+"participation_rate_per_100000_populationLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",213.557070933127,1871
 "participation_rate_per_100000_populationLevelFurther education and skills: Essential Skills - English and maths",733,2369
-"participation_rate_per_100000_populationLevelFurther education and skills: Full Level 2",188,1310.94211163694
-"participation_rate_per_100000_populationLevelFurther education and skills: Full Level 3",556,1727.91160349039
+"participation_rate_per_100000_populationLevelFurther education and skills: Full Level 2",188,1310.59917686675
+"participation_rate_per_100000_populationLevelFurther education and skills: Full Level 3",556,1728.22780669605
 "participation_rate_per_100000_populationLevelFurther education and skills: Level 2",762,3525
-"participation_rate_per_100000_populationLevelFurther education and skills: Level 3",803.948235294118,1909
+"participation_rate_per_100000_populationLevelFurther education and skills: Level 3",804.29957353418,1909
 "participation_rate_per_100000_populationLevelFurther education and skills: Level 4+",407,1080
-"participation_rate_per_100000_populationLevelFurther education and skills: No Level Assigned",290.364614586125,2016
+"participation_rate_per_100000_populationLevelFurther education and skills: No Level Assigned",290.327001107888,2016
 "participation_rate_per_100000_populationProvisionApprenticeships",1225,3210
-"participation_rate_per_100000_populationProvisionCommunity Learning",223.749530722499,1595
-"participation_rate_per_100000_populationProvisionEducation and training",1452.94471299281,5534
+"participation_rate_per_100000_populationProvisionCommunity Learning",223.839818470296,1595
+"participation_rate_per_100000_populationProvisionEducation and training",1453.23392931759,5534
 "selfemployed",26200,3848000
 "selfemployedRate",0.0577017114914425,0.164257151645647
 "sustainedPositiveDestinationKS4Rate",0.909560002789206,0.965726827621138
