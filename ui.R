@@ -485,7 +485,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               tags$li("Remove LEP maps and add in National picture."),
               tags$li("Add in page wide subgroup filters to the Local Skills data page."),
               tags$li("Update Skills Imperative projection long term growth metric to 2024 to 2035."),
-              tags$li("Utilise the populations published in FE data to calculate grouped FE per 10k statistics."),
+              tags$li("Utilise the populations published in FE data to calculate grouped FE per 100k statistics."),
             ),
             details(
               label = "Previous updates",
@@ -968,7 +968,7 @@ Per 100,000 figures for LSIP/MCA areas are based on subgroup populations calcula
           ),
           p("The projections are calculated from a number of different data sources, and as such precise margin errors have not been assigned.
             Care should be taken when using projections with small volumes of individuals (see Skills Imperative 2035 datasets for more detail). "),
-          p("There is an error in the data for Enterprise M3 LEP (including all of Surrey) LSIP which has prevented it from being included in the published data. This is due to the incorrect mapping of LAs. For this LSIP we have estimated the value by looking the broader region and calculating the value of the Enterprise LSIP having removed other LSIPs in the region. This will come with some rounding issues."),
+          p("There is an error in the data for Enterprise M3 LSIP which has prevented it from being included in the published data. This is due to the incorrect mapping of LAs. For this LSIP we have estimated the value by looking the broader region and calculating the value of the Enterprise LSIP having removed other LSIPs in the region. This will come with some rounding issues."),
           br()
         )
       )

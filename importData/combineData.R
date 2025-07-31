@@ -34,7 +34,6 @@ dashboardMetricIgnore <- c("all", "economicallyactive", "employees", "starts_rat
 ## 4.2 C_Geog ----
 # This is used in the maps. It contains only the latest total data for each metric and area.
 C_Geog <- neatGeog %>%
-  ##filter out MCAs#
   left_join(
     (C_localSkillsDataset %>%
        filter(
