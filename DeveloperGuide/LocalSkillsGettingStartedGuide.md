@@ -55,10 +55,9 @@ When downloading R and Rtools, you can check the version number under the name
 of the software in the Software Center or by clicking on the software and 
 looking for “Version:” in the information.
 
-You can also check the R version you’re using in RStudio by checking 
-under the console tab or the information shown in the console on start up as 
-shown in the image below. Or, you can run the function getRversion() in the 
-console.
+You can check the R version you’re using in RStudio by checking 
+under the console tab or looking at the information shown in the console on 
+start up. You can also run the function getRversion() in the console.
 
 ![R version is shown under the console tab](./Images/R_version_number.PNG)
 
@@ -71,7 +70,7 @@ older one, use [this guide to help you switch to the version of R you need](http
 The code for the dashboard is stored in [a repository on GitHub](https://github.com/dfe-analytical-services/lsip_dashboard). 
 This allows us to collaborate on the project using version control. 
 
-You will need to 'clone' the repository (also called 'repo'), so that you can
+You will need to 'clone' the repository (known as a 'repo'), so that you can
 work on and run the code on your own machine. To do this, navigate to a folder 
 where you would like to store your copy of the repo. This should be outside of 
 your OneDrive area. To do this, click on documents, then click on the file path
@@ -125,7 +124,9 @@ installing them. Once this is complete run `renv::status()`, which should
 generate the message "No issues found -- the project is in a consistent state."
 
 If you don't get this message, run `renv::restore()` again; packages sometimes
-fail to install, especially when trying to install a large number in one go.
+fail to install, especially when trying to install a large number in one go. If
+this still doesn't work, go back to step one and check you have the right versions
+of R and RTools installed, then try again.
 
 You will need to restore renv again each time you work on the dashboard, but 
 normally only a few packages will need updating.
