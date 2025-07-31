@@ -9,7 +9,7 @@
 ## Introduction
 
 The Local Skills dashboard is an R Shiny dashboard displaying published
-local data from a variety of sources in an easy to navigate format. To
+local data from a variety of sources, in an easy to navigate format. To
 support local skills planning, the dashboard covers topics such as
 employment, qualifications, and education outcomes across England.
 
@@ -24,7 +24,8 @@ Anyone can view the public dashboard, here:
 
 We also have a 'pre production dashboard' where we test the dashboard 
 before publishing. The URL is below but you will need to contact the project 
-team for access:
+team for access. You don't need access to follow the rest of this getting 
+started guide.
 
 <https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/>
 
@@ -43,22 +44,21 @@ team for access:
   
 - You will also need to install Git, which is version control software. You 
 can download this directly from the [Git for windows website](https://gitforwindows.org/). 
-
-- Once the installer has started, follow the instructions as provided 
+Once the installer has started, follow the instructions as provided 
 in the Git Setup wizard screen until the installation is complete.
 
 > [!IMPORTANT]
 > It is important that R and RTools are compatible versions. For example, if 
 R is 4.4, RTools also needs to be 4.4.
 
-You can find the version number under the name of the software in the
-Software Center or by clicking on the software and looking for “Version:” 
-in the information.
+When downloading R and Rtools, you can check the version number under the name 
+of the software in the Software Center or by clicking on the software and 
+looking for “Version:” in the information.
 
 You can also check the R version you’re using in RStudio by checking 
-under the console tab (1) or the information shown in 
-the console on start up (2) as shown in the image below. Or, you can 
-run the function getRversion() in the console.
+under the console tab or the information shown in the console on start up as 
+shown in the image below. Or, you can run the function getRversion() in the 
+console.
 
 ![R version is shown under the console tab](./Images/R_version_number.PNG)
 
@@ -71,19 +71,19 @@ older one, use [this guide to help you switch to the version of R you need](http
 The code for the dashboard is stored in [a repository on GitHub](https://github.com/dfe-analytical-services/lsip_dashboard). 
 This allows us to collaborate on the project using version control. 
 
-You will need to 'clone' the repository ('repo'), so that you can
+You will need to 'clone' the repository (also called 'repo'), so that you can
 work on and run the code on your own machine. To do this, navigate to a folder 
 where you would like to store your copy of the repo. This should be outside of 
 your OneDrive area. To do this, click on documents, then click on the file path
-and delete everything up to your username (1). This should take you to your user 
+and delete everything up to your username. This should take you to your user 
 folder outside of OneDrive. You can make a folder there to store all your 
-repos (2).
+repos.
 
 ![Create a Repo folder within your user folder](./Images/Repo_folder.PNG)
 
 Once you have done this, open your new repos folder and right click 
 anywhere in the folder. Select 'Open Git Bash here' in the menu. If this doesn't 
-appear as an option, go back to step one and install Git.
+appear as an option, go back to step one and make sure you have installed Git.
 
 ![Right click to open Git Bash](./Images/Gitbash.PNG)
 
