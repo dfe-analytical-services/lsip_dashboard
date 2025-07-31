@@ -1643,7 +1643,6 @@ server <- function(input, output, session) {
               breakdown == input$breakdownPage,
             )
         ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
-
         SplashTime <- C_time %>%
           filter(
             # get lsip/mca areas
@@ -1652,8 +1651,8 @@ server <- function(input, output, session) {
             } else {
               "\nNone"
             }) |
-              # get england for comparison (if a rate and not alrady chosen)
-              (if ((str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection") & input$geoChoice != "England") {
+              # get england for comparison (if a rate and not already chosen)
+              (if ((str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection") & input$geoChoice != "England" & !("England" %in% input$geoComps)) {
                 (geogConcat == "England")
               } else {
                 geogConcat == "\nNone"
@@ -1673,7 +1672,11 @@ server <- function(input, output, session) {
           if (input$geoChoice == "England") {
             levels <- c(input$geoChoice, input$geoComps)
           } else {
-            levels <- c("England", input$geoChoice, input$geoComps)
+            if ("England" %in% input$geoComps) {
+              levels <- c("England", input$geoChoice, input$geoComps[!grepl("England", input$geoComps)])
+            } else {
+              levels <- c("England", input$geoChoice, input$geoComps)
+            }
           }
         )
 
@@ -1722,7 +1725,7 @@ server <- function(input, output, session) {
             label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
           }) +
           labs(colour = "") +
-          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection" | input$geoChoice == "England") {
+          scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection" | input$geoChoice == "England" | "England" %in% input$geoComps) {
             chartColors6
           } else {
             chartColors5
@@ -1985,7 +1988,11 @@ server <- function(input, output, session) {
           "\nNone"
         }) |
           # get england for comparison
-          (geogConcat == "England")
+          if (!("England" %in% input$geoComps)) {
+            (geogConcat == "England")
+          } else {
+            geogConcat == "\nNone"
+          }
       )
       # bold the category chosen
       if ("breakdownPage" %in% names(input) && input$breakdownPage != "All" && "subgroupPage" %in% names(input)) {
@@ -2006,7 +2013,7 @@ server <- function(input, output, session) {
         # add an extra column so the colours work in ggplot when sorting alphabetically
         Splash_21$Area <- factor(
           Splash_21$geogConcat,
-          if (input$geoChoice == "England") {
+          if (input$geoChoice == "England" | "England" %in% input$geoComps) {
             levels <- c(input$geoChoice, input$geoComps)
           } else {
             levels <- c("England", input$geoChoice, input$geoComps)
