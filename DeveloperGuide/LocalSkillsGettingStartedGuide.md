@@ -27,7 +27,7 @@ before publishing. The URL is below but you will need to contact the project
 team for access. You don't need access to follow the rest of this getting 
 started guide.
 
-<https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/>
+<https://department-for-education.shinyapps.io/dev-local-skills-dashboard/>
 
 ## Prepare to run the dashboard in R
 
