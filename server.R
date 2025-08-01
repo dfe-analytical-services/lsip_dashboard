@@ -1733,11 +1733,16 @@ server <- function(input, output, session) {
             legend.position = "bottom",
             legend.title = element_blank()
           ) +
-          scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
-            scales::percent
-          } else {
-            label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
-          }) +
+          scale_y_continuous(
+            # Style labels. If a rate style as %, If bigger than 1m style as x.xxM, else use cut_short_scale to append a k for bigger than 1000
+            labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
+              scales::percent
+            } else if (max(SplashTime$value >= 1000000)) {
+              label_number(accuracy = 0.01, scale_cut = append(scales::cut_short_scale(), 1, 1))
+            } else {
+              label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
+            }
+          ) +
           labs(colour = "") +
           scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection" | input$geoChoice == "England" | "England" %in% input$geoComps) {
             chartColors6
