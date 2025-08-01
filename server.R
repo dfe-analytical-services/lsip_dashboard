@@ -111,8 +111,15 @@ server <- function(input, output, session) {
       selected = "achievements_rate_per_100000_population"
     )
   })
-  # Create link to enterprises
+  # Create link to enterprises from user guide
   observeEvent(input$link_to_tabpanel_enterprise, {
+    updateTabsetPanel(session, "navbar", "Local skills data")
+    updateSelectInput(session, "splashMetric",
+      selected = "enterpriseCount"
+    )
+  })
+  # Create link to enterprises from summary
+  observeEvent(input$link_to_tabpanel_enterprise2, {
     updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "enterpriseCount"
@@ -132,8 +139,15 @@ server <- function(input, output, session) {
       selected = "sustainedPositiveDestinationKS4Rate"
     )
   })
-  # Create link to working futures
+  # Create link to working futures user guide
   observeEvent(input$link_to_tabpanel_wf1, {
+    updateTabsetPanel(session, "navbar", "Local skills data")
+    updateSelectInput(session, "splashMetric",
+      selected = "employmentProjection"
+    )
+  })
+  # Create link to working futures from Summary
+  observeEvent(input$link_to_tabpanel_wf, {
     updateTabsetPanel(session, "navbar", "Local skills data")
     updateSelectInput(session, "splashMetric",
       selected = "employmentProjection"

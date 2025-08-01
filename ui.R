@@ -340,6 +340,13 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
                 });
                 });"
   ),
+  tags$script(
+    " $(document).ready(function () {
+                $('#link_to_tabpanel_LS').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+  ),
 
   # 2 Main page ----
   navlistPanel(
