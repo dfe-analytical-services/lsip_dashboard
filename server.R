@@ -2130,7 +2130,7 @@ server <- function(input, output, session) {
   output$breakdownFoot <- renderUI({
     validate(
       need(input$barBreakdown != "", ""),
-      need(input$barBreakdown != "No breakdowns available", "")
+      need(input$splashMetric %in% distinctBreakdowns$metric, "")
     )
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ".",
