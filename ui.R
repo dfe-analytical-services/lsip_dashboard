@@ -485,7 +485,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("4 Aug 2025 (1.4.17)"),
+            p("5 Aug 2025 (1.4.17)"),
             tags$ul(
               tags$li("Update to latest online job advert data.")
             ),
