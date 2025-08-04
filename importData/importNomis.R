@@ -1,5 +1,6 @@
 # Nomis datasets
 # get all APS data that comes via the nomis API
+library(nomisr)
 
 # First list of all the geographies we need (excluding the user defined which are added in the function)
 geogUseAps <- nomisr::nomis_get_metadata(id = "NM_17_1", concept = "geography", type = "type") %>%
