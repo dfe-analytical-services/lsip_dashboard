@@ -154,12 +154,12 @@ employmentProjections <- bind_rows(
 
 # Get future year on year growth metric
 empGrowth <- employmentProjections %>%
-  filter(chartPeriod >= 2022) %>%
+  filter(chartPeriod >= 2023) %>%
   # get growth
   arrange(chartPeriod, timePeriod, latest) %>%
   group_by(geogConcat, metric, breakdown, subgroup) %>%
   mutate(value = (value - lag(value)) / lag(value)) %>%
-  filter(chartPeriod != 2022) %>%
+  filter(chartPeriod != 2023) %>%
   mutate(metric = "employmentProjectionAnnualGrowth")
 
 # Get 2024 to 2035 growth metric
