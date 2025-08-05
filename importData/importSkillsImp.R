@@ -143,14 +143,15 @@ employmentProjectionsEntM3Lsip <- employmentProjections %>%
   select(-geogConcat) %>%
   group_by(subgroup, metric, breakdown, chartPeriod, timePeriod, latest) %>%
   summarise(value = sum(value)) %>%
-  mutate(geogConcat = "Enterprise M3 LEP (including all of Surrey) LSIP")
+  mutate(geogConcat = "Enterprise M3 LSIP")
 
 # combine them all
 employmentProjections <- bind_rows(
-  employmentProjections %>% filter(!geogConcat %in% c("Dorset LSIP", "Enterprise M3 LEP (including all of Surrey) LSIP", "North East MCA")), # remove incorrect dorset and Enterprise LSIPs and outdated North East MCA
+  employmentProjections %>% filter(!geogConcat %in% c("Dorset LSIP", "Enterprise M3 LSIP", "North East MCA")), # remove incorrect dorset and Enterprise LSIPs and outdated North East MCA
   employmentProjectionsCorrections,
   employmentProjectionsEntM3Lsip
-)
+)%>%#filter out LEPs
+  filter(str_sub(geogConcat, start = -3) !="LEP")
 
 # Get future year on year growth metric
 empGrowth <- employmentProjections %>%

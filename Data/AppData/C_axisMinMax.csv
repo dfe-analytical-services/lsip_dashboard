@@ -69,7 +69,7 @@
 "employmentProjection",0.00179630444983279,0.0112500180868454
 "employmentProjectionBroad sectorBusiness and other services",0.00291221368875925,0.00985372243650433
 "employmentProjectionBroad sectorConstruction",-0.00254514604290455,0.0346357622602932
-"employmentProjectionBroad sectorManufacturing",-0.0158360919745939,0.000412419725449727
+"employmentProjectionBroad sectorManufacturing",-0.0158360919745939,-0.00120701928135715
 "employmentProjectionBroad sectorNon-marketed services",0.000916099146126121,0.0162355759537956
 "employmentProjectionBroad sectorPrimary sector and utilities",-0.00227566062088087,0.0270673486786025
 "employmentProjectionBroad sectorTrade, accomod. and transport",0.00239204373634493,0.0165995074994375
@@ -78,11 +78,11 @@
 "employmentProjectionIndustryArts and entertainment",0.000630289933368366,0.0227227227227244
 "employmentProjectionIndustryEducation",-0.00102080288833835,0.0121879667164529
 "employmentProjectionIndustryElectricity and gas",-0.00704225352112451,0.00326012354152587
-"employmentProjectionIndustryEngineering",-0.0321890498881649,0.0433150802928679
+"employmentProjectionIndustryEngineering",-0.0300489826676669,0.0433150802928679
 "employmentProjectionIndustryFinance and insurance",-0.0167849606752336,0.00162538624245877
 "employmentProjectionIndustryFood drink and tobacco",-0.0291545189504376,0.0177690029614988
 "employmentProjectionIndustryHealth and social work",0.000806747998816248,0.0242581715757991
-"employmentProjectionIndustryInformation technology",0.00244167118828282,0.0173939766441308
+"employmentProjectionIndustryInformation technology",0.00278706800446032,0.0173939766441308
 "employmentProjectionIndustryMedia",-0.0069305405821675,0.00848914853568874
 "employmentProjectionIndustryMining and quarrying",-0.0869565217391271,1.1073393284573e-15
 "employmentProjectionIndustryOther services",-0.00835204310732121,0.00989266961077928
@@ -91,7 +91,7 @@
 "employmentProjectionIndustryReal estate",-0.0220203688411783,0.0172450728363318
 "employmentProjectionIndustryRest of manufacturing",-0.0205365402405229,0.00114630211429118
 "employmentProjectionIndustrySupport services",0.0022528611336394,0.0167276823429997
-"employmentProjectionIndustryTransport and storage",-0.0036358709152918,0.0146350447693555
+"employmentProjectionIndustryTransport and storage",-0.00354757472900694,0.0146350447693555
 "employmentProjectionIndustryWater and sewerage",-0.00314465408804831,0.0636402206194337
 "employmentProjectionIndustryWholesale and retail trade",-0.000449731427992298,0.00318921465589152
 "employmentProjectionOccupation (SOC2020 Major Group)1 - Managers, directors and senior officials",0.00435898964330172,0.0205405892172601
@@ -103,7 +103,7 @@
 "employmentProjectionOccupation (SOC2020 Major Group)7 - Sales and customer service occupations",-0.00296931982469474,0.00800723788015898
 "employmentProjectionOccupation (SOC2020 Major Group)8 - Process, plant and machine operatives",-0.00802937489354868,0.0107192347198382
 "employmentProjectionOccupation (SOC2020 Major Group)9 - Elementary occupations",-0.010320078233769,0.0116858773094299
-"employmentProjectionOccupation (SOC2020 Sub-Major Group)11 - Corporate managers and directors",0.00718049246139511,0.017423745495431
+"employmentProjectionOccupation (SOC2020 Sub-Major Group)11 - Corporate managers and directors",0.00729040962798628,0.017423745495431
 "employmentProjectionOccupation (SOC2020 Sub-Major Group)12 - Other managers and proprietors",-0.000646460687001934,0.0275125473995757
 "employmentProjectionOccupation (SOC2020 Sub-Major Group)21 - Science, research, engineering and technology professionals",0.00789591029755751,0.0166634240055004
 "employmentProjectionOccupation (SOC2020 Sub-Major Group)22 - Health professionals",0.00188667158789773,0.0221734244441441
@@ -263,38 +263,38 @@
 "sustainedPositiveDestinationKS5RateOutcomeEmployment",0.119182789273175,0.374504914185125
 "unemployed",3900,1419100
 "unemployedRate",0.0147821576763485,0.0675628369390184
-"vacancies",5783,2188530
-"vacanciesOccupation (SOC2020 Major Group)1 - Managers, directors and senior officials",345,154219
-"vacanciesOccupation (SOC2020 Major Group)2 - Professional occupations",1421,640536
-"vacanciesOccupation (SOC2020 Major Group)3 - Associate professional occupations",1109,450932
-"vacanciesOccupation (SOC2020 Major Group)4 - Administrative and secretarial occupations",509,210991
-"vacanciesOccupation (SOC2020 Major Group)5 - Skilled trades occupations",621,167444
+"vacancies",5784,2188576
+"vacanciesOccupation (SOC2020 Major Group)1 - Managers, directors and senior officials",345,154223
+"vacanciesOccupation (SOC2020 Major Group)2 - Professional occupations",1422,640538
+"vacanciesOccupation (SOC2020 Major Group)3 - Associate professional occupations",1111,450931
+"vacanciesOccupation (SOC2020 Major Group)4 - Administrative and secretarial occupations",509,210996
+"vacanciesOccupation (SOC2020 Major Group)5 - Skilled trades occupations",621,167469
 "vacanciesOccupation (SOC2020 Major Group)6 - Caring, leisure and other service occupations",523,173529
-"vacanciesOccupation (SOC2020 Major Group)7 - Sales and customer service occupations",217,96861
+"vacanciesOccupation (SOC2020 Major Group)7 - Sales and customer service occupations",217,96875
 "vacanciesOccupation (SOC2020 Major Group)8 - Process, plant and machine operatives",359,113933
 "vacanciesOccupation (SOC2020 Major Group)9 - Elementary occupations",411,169864
 "vacanciesOccupation (SOC2020 Major Group)Unknown",1,3355
-"vacanciesOccupation (SOC2020 Sub-Major Group)11 - Corporate managers and directors",196,102241
+"vacanciesOccupation (SOC2020 Sub-Major Group)11 - Corporate managers and directors",196,102245
 "vacanciesOccupation (SOC2020 Sub-Major Group)12 - Other managers and proprietors",116,51978
-"vacanciesOccupation (SOC2020 Sub-Major Group)21 - Science, research, engineering and technology professionals",246,236268
-"vacanciesOccupation (SOC2020 Sub-Major Group)22 - Health professionals",437,119205
+"vacanciesOccupation (SOC2020 Sub-Major Group)21 - Science, research, engineering and technology professionals",247,236267
+"vacanciesOccupation (SOC2020 Sub-Major Group)22 - Health professionals",438,119205
 "vacanciesOccupation (SOC2020 Sub-Major Group)23 - Teaching and other educational professionals",115,70405
-"vacanciesOccupation (SOC2020 Sub-Major Group)24 - Business, media and public service professionals",367,214658
-"vacanciesOccupation (SOC2020 Sub-Major Group)31 - Science, engineering and technology associate professionals",196,87603
-"vacanciesOccupation (SOC2020 Sub-Major Group)32 - Health and social care associate professionals",144,42531
+"vacanciesOccupation (SOC2020 Sub-Major Group)24 - Business, media and public service professionals",368,214661
+"vacanciesOccupation (SOC2020 Sub-Major Group)31 - Science, engineering and technology associate professionals",196,87604
+"vacanciesOccupation (SOC2020 Sub-Major Group)32 - Health and social care associate professionals",144,42529
 "vacanciesOccupation (SOC2020 Sub-Major Group)33 - Protective service occupations",9,6638
 "vacanciesOccupation (SOC2020 Sub-Major Group)34 - Culture, media and sports occupations",80,31768
-"vacanciesOccupation (SOC2020 Sub-Major Group)35 - Business and public service associate professionals",536,282392
-"vacanciesOccupation (SOC2020 Sub-Major Group)41 - Administrative occupations",451,182056
-"vacanciesOccupation (SOC2020 Sub-Major Group)42 - Secretarial and related occupations",58,28935
+"vacanciesOccupation (SOC2020 Sub-Major Group)35 - Business and public service associate professionals",538,282392
+"vacanciesOccupation (SOC2020 Sub-Major Group)41 - Administrative occupations",451,182059
+"vacanciesOccupation (SOC2020 Sub-Major Group)42 - Secretarial and related occupations",58,28937
 "vacanciesOccupation (SOC2020 Sub-Major Group)51 - Skilled agricultural and related trades",6,4626
-"vacanciesOccupation (SOC2020 Sub-Major Group)52 - Skilled metal, electrical and electronic trades",359,94039
+"vacanciesOccupation (SOC2020 Sub-Major Group)52 - Skilled metal, electrical and electronic trades",359,94063
 "vacanciesOccupation (SOC2020 Sub-Major Group)53 - Skilled construction and building trades",72,29839
-"vacanciesOccupation (SOC2020 Sub-Major Group)54 - Textiles, printing and other skilled trades",86,39279
+"vacanciesOccupation (SOC2020 Sub-Major Group)54 - Textiles, printing and other skilled trades",86,39280
 "vacanciesOccupation (SOC2020 Sub-Major Group)61 - Caring personal service occupations",467,150779
 "vacanciesOccupation (SOC2020 Sub-Major Group)62 - Leisure, travel and related personal service occupations",46,22047
 "vacanciesOccupation (SOC2020 Sub-Major Group)63 - Community and civil enforcement occupations",0,703
-"vacanciesOccupation (SOC2020 Sub-Major Group)71 - Sales occupations",133,54307
+"vacanciesOccupation (SOC2020 Sub-Major Group)71 - Sales occupations",133,54321
 "vacanciesOccupation (SOC2020 Sub-Major Group)72 - Customer service occupations",79,42554
 "vacanciesOccupation (SOC2020 Sub-Major Group)81 - Process, plant and machine operatives",180,58822
 "vacanciesOccupation (SOC2020 Sub-Major Group)82 - Transport and mobile machine drivers and operatives",151,55111

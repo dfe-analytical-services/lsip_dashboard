@@ -492,12 +492,21 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               tags$li("Remove LEP maps and add in National picture."),
               tags$li("Add in page wide subgroup filters to the Local Skills data page."),
               tags$li("Update Skills Imperative projection long term growth metric to 2024 to 2035."),
-              tags$li("Utilise the populations published in FE data to calculate grouped FE per 100k statistics."),
+              tags$li("Utilise the populations published in FE data to calculate grouped FE per 100k statistics.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("5 Aug 2025 (1.4.17)"),
+                tags$ul(
+                  tags$li("Update to latest online job advert data.")
+                ),
+                p("28 Jul 2025 (1.4.16)"),
+                tags$ul(
+                  tags$li("Add in North Yorkshire LAD to the comparison drop down list."),
+                  tags$li("Correction to Enterprise M3 employment projections to 2035. Previous versions used the incorrect published figures. See Data information tab for more information on the correction.")
+                ),
                 p("18 Jul 2025 (1.4.15)"),
                 tags$ul(
                   tags$li("Update to latest APS data.")
