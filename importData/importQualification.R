@@ -38,7 +38,8 @@ C_qualAgeGender <- formatNomis(I_qualAgeGenderNvq %>%
       TRUE ~ "Age"
     )
   ) %>%
-  select(-CELL_NAME)
+  select(-CELL_NAME)%>%
+  mutate(valueText = case_when(value == 0 ~ "c", TRUE ~ as.character(value)))
 
 # sum all quals for each subgroup
 qualSum <- C_qualAgeGender %>%

@@ -22,7 +22,7 @@ C_localSkillsDataset <- bind_rows(
     filter(!metric %in% c("starts_rate_per_100000_population","participation_rate_per_100000_population",
                           "achievements_rate_per_100000_population","starts",                                 
                           "participation","achievements", "achievementsAims","enrolmentsAims"),
-    geogConcat == "The London Economic Action Partnership LEP") %>%
+           geogConcat == "Greater London LSIP") %>%
     mutate(geogConcat = "Greater London Authority MCA")
 )
 
@@ -34,28 +34,31 @@ dashboardMetricIgnore <- c("all", "economicallyactive", "employees", "starts_rat
 ## 4.2 C_Geog ----
 # This is used in the maps. It contains only the latest total data for each metric and area.
 C_Geog <- neatGeog %>%
-  ##filter out MCAs#
   left_join(
     (C_localSkillsDataset %>%
        filter(
-         breakdown == "Total", latest == 1,
-         metric != "employmentProjectionAnnualGrowth", # the maps use the employmentProjectionGrowth2023to2035 metric
+         latest == 1,
+         metric != "employmentProjectionAnnualGrowth", # the maps use the employmentProjectionGrowth2024to2035 metric
          !metric %in% dashboardMetricIgnore # remove metrics not used
        ) %>%
+       mutate(metric=gsub("employmentProjectionGrowth2024to2035","employmentProjection",metric))%>%# for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
+       mutate(metric=case_when(
+         breakdown=="Total" ~ metric,
+         metric == "achievementsAims" ~ paste0("achievements",breakdown,subgroup),# align achieve aims metric name so shows up when achievements chosen
+         TRUE ~ paste0(metric,breakdown,subgroup))
+       )%>%
        select(value, metric, geogConcat) %>%
        tidyr::pivot_wider(names_from = metric, values_from = value)),
     by = c("geogConcat" = "geogConcat")
-  ) %>%
-  rename(employmentProjection = employmentProjectionGrowth2023to2035) # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
+  ) %>% 
+  mutate(England=case_when(geog=="LADU" ~ "England",
+                           TRUE ~ NA)) #add in a column for all LAs for when england is selected
 save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 
 ## 4.2 C_time ----
 # This is used in the line charts and KPIs. It contains historic data for each metric and area.
 C_time <- C_localSkillsDataset %>%
-  filter(breakdown == "Total" |
-           # We also have a few overview charts that are subgroups-E&T acheivements, app achievments
-           (metric == "achievements" & subgroup %in% c("Apprenticeships", "Education and training"))) %>%
-  # and also micro businesses
+  # add on micro business rate for the overview tab
   bind_rows(
     C_localSkillsDataset %>%
       filter(metric == "enterpriseCount", subgroup %in% c("Total", "Micro (0 to 9)")) %>%
@@ -66,19 +69,22 @@ C_time <- C_localSkillsDataset %>%
       mutate(metric = "enterprisePctMicro", breakdown = "Total", valueText = as.character(value))
   ) %>%
   filter(
-    metric != "employmentProjectionGrowth2023to2035", # time charts only use employmentProjectionAnnualGrowth metric
+    !metric %in% c("economicallyactiveRate","employeesRate" ,"employmentProjectionGrowth2024to2035"), # time charts only use employmentProjectionAnnualGrowth metric
     !metric %in% dashboardMetricIgnore # remove metrics not used
   ) %>%
   mutate(metric = case_when(
-    breakdown != "Total" ~ paste(metric, subgroup),
+    metric == "achievementsAims" ~ paste0("achievements",breakdown,subgroup),# align achieve aims metric name so shows up when achievements chosen
+    breakdown != "Total" ~ paste0(metric,breakdown, subgroup),
     TRUE ~ metric
   )) %>% # set metric name to subgroup when we want subgroup data
   select(geogConcat, metric, timePeriod, chartPeriod, latest, value, valueText) %>%
-  mutate(metric = case_when(
-    metric == "employmentProjectionAnnualGrowth" ~ "employmentProjection",
-    TRUE ~ metric
-  )) # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
-write.csv(C_time, file = "Data\\AppData\\C_time.csv", row.names = FALSE)
+  mutate(metric = gsub("employmentProjectionAnnualGrowth","employmentProjection",metric))# for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
+#Need to split this to two files less than 100mb to upload to git
+index <- seq.int(nrow(C_time) / 2)
+C_time1<-C_time[index, ]
+C_time2<-C_time[-index, ]
+write.csv(C_time1, file = "Data\\AppData\\C_time1.csv", row.names = FALSE)
+write.csv(C_time2, file = "Data\\AppData\\C_time2.csv", row.names = FALSE)
 
 ### 4.2.1 Axis min and max ----
 # Create max and min for each metric used in setting axis on the overview page
@@ -149,11 +155,11 @@ C_breakdown <- bind_rows(
     select(geogConcat, metric, breakdown, subgroup, value, valueText)
 ) %>%
   filter(
-    metric != "employmentProjectionAnnualGrowth", # breakdown chart only uses employmentProjectionGrowth2023to2035 metric
+    metric != "employmentProjectionAnnualGrowth", # breakdown chart only uses employmentProjectionGrowth2024to2035 metric
     !metric %in% dashboardMetricIgnore # remove metrics not used
   ) %>%
   mutate(metric = case_when(
-    metric == "employmentProjectionGrowth2023to2035" ~ "employmentProjection",
+    metric == "employmentProjectionGrowth2024to2035" ~ "employmentProjection",
     TRUE ~ metric
   )) # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
 write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
@@ -218,7 +224,7 @@ write.csv(C_topTenEachBreakdown, file = "Data\\AppData\\C_topTenEachBreakdown.cs
 # This is used in the data explorer page
 C_datahub <- C_localSkillsDataset %>%
   select(geogConcat, metric, breakdown, subgroup, chartPeriod, valueText, latest) %>%
-  filter(!metric %in% c("economicallyactive", "employees", "inemploymentRate", "selfemployedRate", "inactiveRate", "unemployedRate", "starts_rate_per_100000_population", "starts", "enrolments", "employmentProjectionAnnualGrowth", "employmentProjectionGrowth2023to2035", "birthRate", "deathRate", "L3PlusRate")) %>% # very bad data coverage
+  filter(!metric %in% c("economicallyactive", "employees","economicallyactiveRate", "employeesRate", "inemploymentRate", "selfemployedRate", "inactiveRate", "unemployedRate", "starts_rate_per_100000_population", "starts", "enrolments", "employmentProjectionAnnualGrowth", "employmentProjectionGrowth2024to2035", "birthRate", "deathRate", "L3PlusRate","L4PlusRate")) %>% 
   # rename some of the elements so they make sense here
   mutate(metricNeat = case_when(
     metric == "all" ~ "Population volume",
@@ -237,7 +243,8 @@ C_datahub <- C_localSkillsDataset %>%
     # metric == "starts_rate_per_100000_population" ~ "FE start rate per 100k",
     metric == "achievements" ~ "FE achievements volume",
     metric == "participation" ~ "FE participation volume",
-    metric == "enrolments" ~ "FE enrolled volume",
+    metric == "achievementsAims" ~ "FE achievement aims volume",
+    metric == "enrolmentsAims" ~ "FE enrolment aims volume",
     # metric == "starts" ~ "FE starts volume",
     metric == "births" ~ "Enterprise births",
     metric == "deaths" ~ "Enterprise deaths",
@@ -248,7 +255,7 @@ C_datahub <- C_localSkillsDataset %>%
     metric == "sustainedPositiveDestinationKS5Rate" ~ "KS5 sustained positive detination rate",
     metric == "vacancies" ~ "Online job adverts",
     metric == "employmentProjection" ~ "Employment projections",
-    metric == "qualNone" ~ "None",
+    metric == "qualNone" ~ "No qualification",
     metric == "qualL1" ~ "NVQ1",
     metric == "qualL2" ~ "NVQ2",
     metric == "qualApp" ~ "Trade apprenticeship",
@@ -272,7 +279,7 @@ write.csv(C_datahubLimitAds, file = "Data\\AppData\\C_datahub.csv", row.names = 
 ## 4.5 Core indicator download ----
 list_of_datasets0 <- list(
   "1a.Employment by occupation" = C_datahub %>%
-    filter(metric == "inemployment", Breakdown == "Occupation") %>%
+    filter(metric == "inemployment", Breakdown == "Occupation (SOC2020 Sub-Major Group)") %>%
     select(-metric, -metricNeat, -Breakdown) %>%
     rename("Employment volume" = valueText, Occupation = Subgroup),
   "1b.Employment volumes" = C_datahub %>%
@@ -292,7 +299,7 @@ list_of_datasets0 <- list(
     select(-metric, -metricNeat) %>%
     rename("Online job adverts" = valueText, "Detailed/Summary" = Breakdown, Profession = Subgroup),
   "3a.FE achievements by SSA" = C_datahub %>%
-    filter(metric == "achievements", Breakdown == "SSA") %>%
+    filter(metric == "achievementsAims", Breakdown == "SSA") %>%
     select(-metric, -metricNeat, -Breakdown) %>%
     rename(Achievements = valueText, "Sector subject area tier 1" = Subgroup),
   "3b.FE achievement&participation" = C_datahub %>%
@@ -328,6 +335,7 @@ list_of_datasets0 <- list(
     select(-metric, -metricNeat) %>%
     rename("Projected employment" = valueText)
 )
+
 writexl::write_xlsx(list_of_datasets0, "Data\\AppData\\CoreIndicators.xlsx")
 
 ##4.6 Create nested list of all areas to use in drop downs ----
@@ -351,7 +359,6 @@ areaChoices <- areaChoicesUnique %>%
   { setNames(.$mapping, .$geography) }
 
 # Reorder nested_list according to desired_order
-areaChoices <- areaChoices[c("Local enterprise partnership", "Local skills partnership area", "Mayoral combined authority", "Country", "Local authority")]
+areaChoices <- areaChoices[c("Local skills partnership area", "Mayoral combined authority", "Country", "Local authority")]
 
 saveRDS(areaChoices, file = "Data/AppData/areaChoices.rds")
-
