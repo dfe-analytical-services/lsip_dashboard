@@ -825,7 +825,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # Businesses sentence
+  # Businesses title top
   output$summaryBusinessesTop <- renderText({
     validate(
       need("geoChoiceOver" %in% names(input), ""),
@@ -833,11 +833,12 @@ server <- function(input, output, session) {
       need(input$geoChoiceOver != "England", "")
     )
     paste0(
+      "Percentage of businesses in ",
       (chartData() %>% filter(extremes == "top"))$subgroup[1]
     )
   })
 
-  # Businesses sentence
+  # Businesses title bottom
   output$summaryBusinessesBottom <- renderText({
     validate(
       need("geoChoiceOver" %in% names(input), ""),
@@ -845,6 +846,7 @@ server <- function(input, output, session) {
       need(input$geoChoiceOver != "England", "")
     )
     paste0(
+      "Percentage of businesses in ",
       (chartData() %>% filter(extremes == "bottom"))$subgroup[1]
     )
   })
@@ -925,7 +927,6 @@ server <- function(input, output, session) {
       ) +
       ggplot2::scale_fill_manual(values = c(
         "lightgrey", "#12436D"
-        # "LSIP" = "#12436D", "England" = "lightgrey"
       ))
   })
 
@@ -978,7 +979,6 @@ server <- function(input, output, session) {
       ) +
       ggplot2::scale_fill_manual(values = c(
         "lightgrey", "#12436D"
-        # "LSIP" = "#12436D", "England" = "lightgrey"
       ))
   })
 
