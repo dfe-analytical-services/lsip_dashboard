@@ -391,281 +391,6 @@ server <- function(input, output, session) {
     input$geoChoiceOver
   })
 
-
-  # Top projected jobs sentence
-  output$summaryTopProjected <- renderUI({
-    paste0(
-      "From 2024 to 2035 ", input$geoChoiceOver, " is projected to grow ",
-      format((C_Geog %>%
-        filter(
-          geogConcat == input$geoChoiceOver
-        ))$employmentProjection * 100, digit = 1),
-      "% ",
-      ifelse(input$geoChoiceOver == "England", "", paste0(
-        "(compared to ",
-        format((C_Geog %>%
-          filter(
-            geogConcat == "England"
-          ))$employmentProjection * 100, digit = 1),
-        "% nationally)"
-      )),
-      ". These are the top projected growth occupations in the area:"
-    )
-  })
-
-  # get top growing occupations
-  summaryTopProjectedList <- reactive({
-    C_breakdown %>%
-      dplyr::filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "employmentProjection",
-        breakdown == "Occupation (SOC2020 Sub-Major Group)"
-      ) %>%
-      dplyr::arrange(dplyr::desc(value)) %>%
-      dplyr::slice_head(n = 5) %>%
-      mutate(
-        value = label_percent(accuracy = 1)(value),
-        subgroup = gsub("[[:digit:]]+", "", gsub(" - ", "", subgroup))
-      ) %>%
-      select(Occupation = subgroup, Growth = value)
-  })
-
-  output$summaryTopProjectedListTable <- renderDataTable({
-    DT::datatable(summaryTopProjectedList(),
-      options = list(
-        info = FALSE,
-        paging = FALSE,
-        searching = FALSE,
-        rownames = FALSE
-      )
-    )
-  })
-
-  # Businesses sentence
-  output$summaryBusinesses <- renderText({
-    currentArea <- C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "enterpriseCount"
-      )
-    englandArea <- C_time %>%
-      filter(
-        geogConcat == "England",
-        metric == "enterpriseCount"
-      )
-    currentChange <- (currentArea %>%
-      filter(latest == 1))$value -
-      (currentArea %>%
-        filter(timePeriod == min(timePeriod)))$value
-    englandChange <- (englandArea %>%
-      filter(latest == 1))$value -
-      (englandArea %>%
-        filter(timePeriod == min(currentArea$timePeriod)))$value # match with the area data
-
-    paste0(
-      "In ",
-      (currentArea %>%
-        dplyr::filter(latest == 1)
-      )$chartPeriod,
-      ", ",
-      format((currentArea %>%
-        dplyr::filter(latest == 1)
-      )$value, big.mark = ","),
-      " businesses were active in ",
-      input$geoChoiceOver,
-      ". The number of businesses has ",
-      ifelse(currentChange > 0.0005, "grown ", ifelse(currentChange < -0.0005, "fallen ", "remained broadly stable (less than 0.1% change)")),
-      ifelse(abs(currentChange) < 0.0005, "", label_percent(accuracy = 0.1)(currentChange / (currentArea %>%
-        filter(timePeriod == min(timePeriod)))$value)),
-      " in the last four years",
-      ifelse(input$geoChoiceOver == "England", ".",
-        paste0(
-          ", while across England businesses have ",
-          ifelse(englandChange > 0.0005, "grown ", ifelse(englandChange < -0.0005, "fallen ", "remained broadly stable (less than 0.1% change)")),
-          ifelse(abs(currentChange) < 0.0005, "", label_percent(accuracy = 0.1)(englandChange / (englandArea %>%
-            filter(timePeriod == min(currentArea$timePeriod)))$value)),
-          ". Across this area, there is a higher proportion of ",
-          (chartData() %>% filter(extremes == "top"))$subgroup[1],
-          " businesses than across England, and a lower proportion of ",
-          (chartData() %>% filter(extremes == "bottom"))$subgroup[1],
-          " businesses. "
-        )
-      )
-    )
-  })
-
-  # Businesses sentence
-  output$summaryBusinessesTop <- renderText({
-    validate(
-      need("geoChoiceOver" %in% names(input), ""),
-      need(input$geoChoiceOver != "", ""),
-      need(input$geoChoiceOver != "England", "")
-    )
-    paste0(
-      (chartData() %>% filter(extremes == "top"))$subgroup[1]
-    )
-  })
-
-  # Businesses sentence
-  output$summaryBusinessesBottom <- renderText({
-    validate(
-      need("geoChoiceOver" %in% names(input), ""),
-      need(input$geoChoiceOver != "", ""),
-      need(input$geoChoiceOver != "England", "")
-    )
-    paste0(
-      (chartData() %>% filter(extremes == "bottom"))$subgroup[1]
-    )
-  })
-
-  chartData <- reactive({
-    areaBreakdownData <- C_breakdown %>%
-      dplyr::filter(geogConcat %in% c(input$geoChoiceOver, "England"))
-
-    lsipData <- areaBreakdownData %>%
-      dplyr::filter(
-        metric == "enterpriseCount",
-        breakdown == "Industry",
-        geogConcat == input$geoChoiceOver
-      ) %>%
-      left_join(areaBreakdownData %>%
-        dplyr::filter(
-          metric == "enterpriseCount",
-          breakdown == "Industry",
-          geogConcat == "England"
-        ) %>%
-        select(subgroup, valueEngland = value)) %>%
-      mutate(diff = value - valueEngland) %>%
-      mutate(extremes = case_when(
-        diff == max(diff) ~ "top",
-        diff == min(diff) ~ "bottom",
-        TRUE ~ subgroup
-      )) %>%
-      dplyr::mutate(subgroup = gsub("[[:digit:]]+ - ", "", subgroup)) %>%
-      dplyr::mutate(geogOrder = str_trim(str_sub(geogConcat, start = -4)))
-
-    # get England
-    englandData <- areaBreakdownData %>%
-      dplyr::filter(
-        metric == "enterpriseCount",
-        breakdown == "Industry",
-        geogConcat == "England"
-      ) %>%
-      left_join(lsipData %>% select(subgroup, extremes)) %>%
-      dplyr::mutate(geogOrder = "England")
-
-    bind_rows(lsipData, englandData) %>%
-      filter(extremes %in% c("top", "bottom"))
-  })
-
-
-  summaryBusinessesPlotTop <- eventReactive(input$geoChoiceOver, {
-    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
-    chartData <- chartData() %>% filter(extremes == "top")
-    chartData$extremes <- reorder(chartData$extremes, chartData$value, sum)
-    # plot
-    ggplot2::ggplot(
-      chartData,
-      ggplot2::aes(
-        x = geogOrder,
-        y = value,
-        fill = geogOrder,
-        text = paste0(
-          geogConcat,
-          "<br>",
-          "Percentage of businesses in ",
-          subgroup,
-          ": ",
-          label_percent(accuracy = 1)(value)
-        )
-      )
-    ) +
-      ggplot2::geom_col() +
-      ggplot2::scale_y_continuous(labels = scales::percent) +
-      ggplot2::coord_flip() +
-      ggplot2::theme_minimal() +
-      ggplot2::labs(fill = "") +
-      ggplot2::theme(
-        legend.position = "none",
-        axis.title.x = ggplot2::element_blank(),
-        axis.title.y = ggplot2::element_blank(),
-        panel.grid.major.y = ggplot2::element_blank(),
-        panel.grid.minor = ggplot2::element_blank()
-      ) +
-      ggplot2::scale_fill_manual(values = c(
-        "lightgrey", "#12436D"
-        # "LSIP" = "#12436D", "England" = "lightgrey"
-      ))
-  })
-
-  output$summaryBusinessesChartTop <- renderPlotly({
-    validate(
-      need("geoChoiceOver" %in% names(input), ""),
-      need(input$geoChoiceOver != "", ""),
-      need(input$geoChoiceOver != "England", "")
-    )
-    ggplotly(summaryBusinessesPlotTop(), tooltip = "text") %>%
-      layout(
-        xaxis = list(fixedrange = TRUE),
-        yaxis = list(fixedrange = TRUE)
-      ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
-  })
-
-  summaryBusinessesPlotBottom <- eventReactive(input$geoChoiceOver, {
-    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
-    chartData <- chartData() %>% filter(extremes == "bottom")
-    chartData$extremes <- reorder(chartData$extremes, chartData$value, sum)
-    # plot
-    ggplot2::ggplot(
-      chartData,
-      ggplot2::aes(
-        x = geogOrder,
-        y = value,
-        fill = geogOrder,
-        text = paste0(
-          geogConcat,
-          "<br>",
-          "Percentage of businesses in ",
-          subgroup,
-          ": ",
-          label_percent(accuracy = 1)(value)
-        )
-      )
-    ) +
-      ggplot2::geom_col() +
-      ggplot2::scale_y_continuous(labels = scales::percent) +
-      ggplot2::coord_flip() +
-      ggplot2::theme_minimal() +
-      ggplot2::labs(fill = "") +
-      ggplot2::theme(
-        legend.position = "none",
-        axis.title.x = ggplot2::element_blank(),
-        axis.title.y = ggplot2::element_blank(),
-        panel.grid.major.y = ggplot2::element_blank(),
-        panel.grid.minor = ggplot2::element_blank()
-      ) +
-      ggplot2::scale_fill_manual(values = c(
-        "lightgrey", "#12436D"
-        # "LSIP" = "#12436D", "England" = "lightgrey"
-      ))
-  })
-
-
-  output$summaryBusinessesChartBottom <- renderPlotly({
-    validate(
-      need("geoChoiceOver" %in% names(input), ""),
-      need(input$geoChoiceOver != "", ""),
-      need(input$geoChoiceOver != "England", "")
-    )
-    ggplotly(summaryBusinessesPlotBottom(), tooltip = "text") %>%
-      layout(
-        xaxis = list(fixedrange = TRUE),
-        yaxis = list(fixedrange = TRUE)
-      ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
-  })
-
   ###  2.2.3 Downloads ----
   # download all indicators
   output$download_btn0a <- downloadHandler(
@@ -986,7 +711,7 @@ server <- function(input, output, session) {
     )
   })
 
-  #### 2.2.3.5 FE app achieve ----
+  #### 2.2.3.4 FE app achieve ----
   # get App data for current area
   output$skisup.APPach <- renderUI({
     validate(need(input$geoChoiceOver != "", ""))
@@ -1030,6 +755,291 @@ server <- function(input, output, session) {
     updateSelectInput(session, "splashMetric",
       selected = "achievements_rate_per_100000_population"
     )
+  })
+
+  #### 2.2.3.5 Skills projections ----
+  # Top projected jobs sentence
+  output$summaryTopProjected <- renderUI({
+    paste0(
+      "From 2024 to 2035 ", input$geoChoiceOver, " is projected to grow ",
+      format((C_Geog %>%
+        filter(
+          geogConcat == input$geoChoiceOver
+        ))$employmentProjection * 100, digit = 1),
+      "% ",
+      ifelse(input$geoChoiceOver == "England", "", paste0(
+        "(compared to ",
+        format((C_Geog %>%
+          filter(
+            geogConcat == "England"
+          ))$employmentProjection * 100, digit = 1),
+        "% nationally)"
+      )),
+      ". These are the top projected growth occupations in the area:"
+    )
+  })
+
+  # get top growing occupations
+  summaryTopProjectedList <- reactive({
+    C_breakdown %>%
+      dplyr::filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "employmentProjection",
+        breakdown == "Occupation (SOC2020 Sub-Major Group)"
+      ) %>%
+      dplyr::arrange(dplyr::desc(value)) %>%
+      dplyr::slice_head(n = 5) %>%
+      select(subgroup, value) %>%
+      left_join(C_breakdown %>%
+        dplyr::filter(
+          geogConcat == "England",
+          metric == "employmentProjection",
+          breakdown == "Occupation (SOC2020 Sub-Major Group)"
+        ) %>%
+        rename(National = value), by = join_by(subgroup)) %>%
+      mutate(
+        Growth = label_percent(accuracy = 1)(value),
+        National = label_percent(accuracy = 1)(National),
+        subgroup = gsub("[[:digit:]]+", "", gsub(" - ", "", subgroup))
+      ) %>%
+      select(Occupation = subgroup, Growth, National)
+  })
+
+  output$summaryTopProjectedListTable <- renderDataTable({
+    DT::datatable(summaryTopProjectedList(),
+      options = list(
+        info = FALSE,
+        paging = FALSE,
+        searching = FALSE,
+        rownames = FALSE
+      )
+    )
+  })
+
+  #### 2.2.3.6 Businesses ----
+  # Businesses sentence
+  output$summaryBusinesses <- renderText({
+    currentArea <- C_time %>%
+      filter(
+        geogConcat == input$geoChoiceOver,
+        metric == "enterpriseCount"
+      )
+    englandArea <- C_time %>%
+      filter(
+        geogConcat == "England",
+        metric == "enterpriseCount"
+      )
+    currentChange <- (currentArea %>%
+      filter(latest == 1))$value -
+      (currentArea %>%
+        filter(timePeriod == min(timePeriod)))$value
+    englandChange <- (englandArea %>%
+      filter(latest == 1))$value -
+      (englandArea %>%
+        filter(timePeriod == min(currentArea$timePeriod)))$value # match with the area data
+
+    paste0(
+      "In ",
+      (currentArea %>%
+        dplyr::filter(latest == 1)
+      )$chartPeriod,
+      ", ",
+      format((currentArea %>%
+        dplyr::filter(latest == 1)
+      )$value, big.mark = ","),
+      " businesses were active in ",
+      input$geoChoiceOver,
+      ". The number of businesses has ",
+      ifelse(currentChange > 0.0005, "grown ", ifelse(currentChange < -0.0005, "fallen ", "remained broadly stable (less than 0.1% change)")),
+      ifelse(abs(currentChange) < 0.0005, "", label_percent(accuracy = 0.1)(currentChange / (currentArea %>%
+        filter(timePeriod == min(timePeriod)))$value)),
+      " in the last four years",
+      ifelse(input$geoChoiceOver == "England", ".",
+        paste0(
+          ", while across England businesses have ",
+          ifelse(englandChange > 0.0005, "grown ", ifelse(englandChange < -0.0005, "fallen ", "remained broadly stable (less than 0.1% change)")),
+          ifelse(abs(currentChange) < 0.0005, "", label_percent(accuracy = 0.1)(englandChange / (englandArea %>%
+            filter(timePeriod == min(currentArea$timePeriod)))$value)),
+          ". Across this area, there is a higher proportion of ",
+          (chartData() %>% filter(extremes == "top"))$subgroup[1],
+          " businesses than across England, and a lower proportion of ",
+          (chartData() %>% filter(extremes == "bottom"))$subgroup[1],
+          " businesses. "
+        )
+      )
+    )
+  })
+
+  # Businesses sentence
+  output$summaryBusinessesTop <- renderText({
+    validate(
+      need("geoChoiceOver" %in% names(input), ""),
+      need(input$geoChoiceOver != "", ""),
+      need(input$geoChoiceOver != "England", "")
+    )
+    paste0(
+      (chartData() %>% filter(extremes == "top"))$subgroup[1]
+    )
+  })
+
+  # Businesses sentence
+  output$summaryBusinessesBottom <- renderText({
+    validate(
+      need("geoChoiceOver" %in% names(input), ""),
+      need(input$geoChoiceOver != "", ""),
+      need(input$geoChoiceOver != "England", "")
+    )
+    paste0(
+      (chartData() %>% filter(extremes == "bottom"))$subgroup[1]
+    )
+  })
+
+  chartData <- reactive({
+    areaBreakdownData <- C_breakdown %>%
+      dplyr::filter(geogConcat %in% c(input$geoChoiceOver, "England"))
+
+    lsipData <- areaBreakdownData %>%
+      dplyr::filter(
+        metric == "enterpriseCount",
+        breakdown == "Industry",
+        geogConcat == input$geoChoiceOver
+      ) %>%
+      left_join(areaBreakdownData %>%
+        dplyr::filter(
+          metric == "enterpriseCount",
+          breakdown == "Industry",
+          geogConcat == "England"
+        ) %>%
+        select(subgroup, valueEngland = value)) %>%
+      mutate(diff = value - valueEngland) %>%
+      mutate(extremes = case_when(
+        diff == max(diff) ~ "top",
+        diff == min(diff) ~ "bottom",
+        TRUE ~ subgroup
+      )) %>%
+      dplyr::mutate(subgroup = gsub("[[:digit:]]+ - ", "", subgroup)) %>%
+      dplyr::mutate(geogOrder = str_trim(str_sub(geogConcat, start = -4)))
+
+    # get England
+    englandData <- areaBreakdownData %>%
+      dplyr::filter(
+        metric == "enterpriseCount",
+        breakdown == "Industry",
+        geogConcat == "England"
+      ) %>%
+      left_join(lsipData %>% select(subgroup, extremes)) %>%
+      dplyr::mutate(geogOrder = "England")
+
+    bind_rows(lsipData, englandData) %>%
+      filter(extremes %in% c("top", "bottom"))
+  })
+
+
+  summaryBusinessesPlotTop <- eventReactive(input$geoChoiceOver, {
+    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
+    chartData <- chartData() %>% filter(extremes == "top")
+    chartData$extremes <- reorder(chartData$extremes, chartData$value, sum)
+    # plot
+    ggplot2::ggplot(
+      chartData,
+      ggplot2::aes(
+        x = geogOrder,
+        y = value,
+        fill = geogOrder,
+        text = paste0(
+          geogConcat,
+          "<br>",
+          "Percentage of businesses in ",
+          subgroup,
+          ": ",
+          label_percent(accuracy = 1)(value)
+        )
+      )
+    ) +
+      ggplot2::geom_col() +
+      ggplot2::scale_y_continuous(labels = scales::percent) +
+      ggplot2::coord_flip() +
+      ggplot2::theme_minimal() +
+      ggplot2::labs(fill = "") +
+      ggplot2::theme(
+        legend.position = "none",
+        axis.title.x = ggplot2::element_blank(),
+        axis.title.y = ggplot2::element_blank(),
+        panel.grid.major.y = ggplot2::element_blank(),
+        panel.grid.minor = ggplot2::element_blank()
+      ) +
+      ggplot2::scale_fill_manual(values = c(
+        "lightgrey", "#12436D"
+        # "LSIP" = "#12436D", "England" = "lightgrey"
+      ))
+  })
+
+  output$summaryBusinessesChartTop <- renderPlotly({
+    validate(
+      need("geoChoiceOver" %in% names(input), ""),
+      need(input$geoChoiceOver != "", ""),
+      need(input$geoChoiceOver != "England", "")
+    )
+    ggplotly(summaryBusinessesPlotTop(), tooltip = "text") %>%
+      layout(
+        xaxis = list(fixedrange = TRUE),
+        yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+
+  summaryBusinessesPlotBottom <- eventReactive(input$geoChoiceOver, {
+    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
+    chartData <- chartData() %>% filter(extremes == "bottom")
+    chartData$extremes <- reorder(chartData$extremes, chartData$value, sum)
+    # plot
+    ggplot2::ggplot(
+      chartData,
+      ggplot2::aes(
+        x = geogOrder,
+        y = value,
+        fill = geogOrder,
+        text = paste0(
+          geogConcat,
+          "<br>",
+          "Percentage of businesses in ",
+          subgroup,
+          ": ",
+          label_percent(accuracy = 1)(value)
+        )
+      )
+    ) +
+      ggplot2::geom_col() +
+      ggplot2::scale_y_continuous(labels = scales::percent) +
+      ggplot2::coord_flip() +
+      ggplot2::theme_minimal() +
+      ggplot2::labs(fill = "") +
+      ggplot2::theme(
+        legend.position = "none",
+        axis.title.x = ggplot2::element_blank(),
+        axis.title.y = ggplot2::element_blank(),
+        panel.grid.major.y = ggplot2::element_blank(),
+        panel.grid.minor = ggplot2::element_blank()
+      ) +
+      ggplot2::scale_fill_manual(values = c(
+        "lightgrey", "#12436D"
+        # "LSIP" = "#12436D", "England" = "lightgrey"
+      ))
+  })
+
+
+  output$summaryBusinessesChartBottom <- renderPlotly({
+    validate(
+      need("geoChoiceOver" %in% names(input), ""),
+      need(input$geoChoiceOver != "", ""),
+      need(input$geoChoiceOver != "England", "")
+    )
+    ggplotly(summaryBusinessesPlotBottom(), tooltip = "text") %>%
+      layout(
+        xaxis = list(fixedrange = TRUE),
+        yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
   })
 
   ## 2.3 Local skills----
