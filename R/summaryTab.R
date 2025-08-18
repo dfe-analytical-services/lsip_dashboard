@@ -30,16 +30,15 @@ summaryTab <- function() {
     ), # end of filters row
 
     h1(uiOutput("page0title")),
-    h2("Headline data"),
+    #    h2("Headline data"),
     fluidRow(
       column(
         4,
         value_box(
-          title = span(tags$p("Workforce:", style = "font-weight: bold;"), p("Employment rate")),
-          value = uiOutput("summaryEmployment"),
-          showcase = plotlyOutput("empRateLineChart"), # , height = 81
+          title = uiOutput("overviewEmpRateTitle"),
+          value = uiOutput("overviewEmpRateKPI"),
+          showcase = plotlyOutput("empRateLineChart"),
           showcase_layout = "bottom",
-          # theme = "primary"
         ),
         # third row - link to emp tab
         fluidRow(
@@ -50,11 +49,10 @@ summaryTab <- function() {
       column(
         4,
         value_box(
-          title = span(tags$p("Demand:", style = "font-weight: bold;"), p("Online job adverts")),
-          value = uiOutput("summaryAdverts"),
+          title = uiOutput("overviewJobTitle"),
+          value = uiOutput("overviewJobKPI"),
           showcase = plotlyOutput("jobLineChart"),
           showcase_layout = "bottom",
-          # theme = "primary"
         ),
         fluidRow(
           class = "rightAlignLinks",
@@ -64,11 +62,10 @@ summaryTab <- function() {
       column(
         4,
         value_box(
-          title = span(tags$p("Skills supply:", style = "font-weight: bold;"), p("Apprenticeship achievements")),
-          value = uiOutput("summaryAppAchievements"),
+          title = uiOutput("overviewAppTitle"),
+          value = uiOutput("overviewAppKPI"),
           showcase = plotlyOutput("AppLineChart"),
           showcase_layout = "bottom",
-          # theme = "primary"
         ),
         fluidRow(
           class = "rightAlignLinks",

@@ -365,7 +365,7 @@ server <- function(input, output, session) {
 
   # define page title
   output$page0title <- renderUI({
-    paste0(input$geoChoiceOver)
+    paste0(input$geoChoiceOver, " headline data")
   })
 
   ### 2.2.1 Filters ----
@@ -489,11 +489,8 @@ server <- function(input, output, session) {
     currentGeogTimeMetric <- currentGeogTime() %>% filter(metric == metricName)
     latest <- (currentGeogTimeMetric %>% filter(latest == 1))$value
     change <- latest - (currentGeogTimeMetric %>% filter(latest == -1))$value
-
-    # print with formatting
-    h4(
-      span((currentGeogTimeMetric %>% filter(latest == 1))$chartPeriod, style = "font-size: 16px;font-weight:normal;"),
-      br(),
+    paste0(
+      # print with formatting
       if (format == "percent") {
         paste0(format(100 * latest, digit = 2), "%")
       } else {
@@ -508,9 +505,7 @@ server <- function(input, output, session) {
         }, # plus-minus and comma sep formatting
         style = paste0("font-size: 16px;color:", cond_color(change)), # colour formating
         .noWS = c("before", "after") # remove whitespace
-      ),
-      br(),
-      style = "font-size: 21px"
+      )
     )
   }
 
@@ -622,34 +617,27 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   }
 
+  createOverviewTitle <- function(metricName) {
+    span(paste0(
+      (currentGeogTime() %>% filter(metric == metricName) %>%
+        filter(latest == 1))$chartPeriod,
+      " compared to a year earlier"
+    ), style = "color:grey")
+  }
+
   #### 2.2.3.2 Employment rate ----
-  output$overviewEmpRateKPI <- renderUI({
+  # Create title
+  output$overviewEmpRateTitle <- renderText({
+    validate(need(input$geoChoiceOver != "", ""))
+    paste0(
+      p("Workforce: employment rate", style = "font-weight: bold; font-size: 18px;"),
+      createOverviewTitle("inemploymentRate")
+    )
+  })
+  # Get value
+  output$overviewEmpRateKPI <- renderText({
     validate(need(input$geoChoiceOver != "", ""))
     createOverviewKPI("inemploymentRate", "percent")
-  })
-
-  # make employment rate box
-  output$summaryEmployment <- renderText({
-    latest <- (C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "inemploymentRate",
-        latest == 1
-      ))$value
-    change <- latest - (C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "inemploymentRate",
-        latest == -1
-      ))$value
-    paste0(
-      format(100 * latest, digit = 2), "% ",
-      span(
-        paste0(sprintf("%+.01f", 100 * change), "ppts"),
-        style = paste0("font-size: 16px;color:", cond_color(change)), # colour formating
-        .noWS = c("before", "after") # remove whitespace
-      )
-    )
   })
 
   output$empRateLineChart <- renderPlotly({
@@ -665,37 +653,20 @@ server <- function(input, output, session) {
   })
 
   #### 2.2.3.3 Job adverts ----
-  # Vacancy kpi
-  output$overviewJobKPI <- renderUI({
+  # Create title
+  output$overviewJobTitle <- renderText({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("vacancies", "number")
-  })
-
-  # make online job ad box
-  output$summaryAdverts <- renderText({
-    latest <- (C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "vacancies",
-        latest == 1
-      ))$value
-    change <- latest - (C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "vacancies",
-        latest == -1
-      ))$value
     paste0(
-      format(latest, big.mark = ","), " ",
-      span(
-        format_pm(change),
-        # plus-minus and comma sep formatting
-        style = paste0("font-size: 16px;color:", cond_color(change)), # colour formating
-        .noWS = c("before", "after") # remove whitespace
-      )
+      p("Demand: online job adverts", style = "font-weight: bold; font-size: 18px;"),
+      createOverviewTitle("vacancies")
     )
   })
 
+  # Vacancy kpi
+  output$overviewJobKPI <- renderText({
+    validate(need(input$geoChoiceOver != "", ""))
+    createOverviewKPI("vacancies", "number")
+  })
 
   # Vacancy chart
   output$jobLineChart <- renderPlotly({
@@ -712,35 +683,19 @@ server <- function(input, output, session) {
   })
 
   #### 2.2.3.4 FE app achieve ----
-  # get App data for current area
-  output$skisup.APPach <- renderUI({
+  # Create title
+  output$overviewAppTitle <- renderText({
     validate(need(input$geoChoiceOver != "", ""))
-    createOverviewKPI("achievementsProvisionApprenticeships", "number")
+    paste0(
+      p("Skills supply: apprenticeship achievements", style = "font-weight: bold; font-size: 18px;"),
+      createOverviewTitle("achievementsProvisionApprenticeships")
+    )
   })
 
-  # make App achievements box
-  output$summaryAppAchievements <- renderText({
-    latest <- (C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "achievementsProvisionApprenticeships",
-        latest == 1
-      ))$value
-    change <- latest - (C_time %>%
-      filter(
-        geogConcat == input$geoChoiceOver,
-        metric == "achievementsProvisionApprenticeships",
-        latest == -1
-      ))$value
-    paste0(
-      format(latest, big.mark = ","), " ",
-      span(
-        format_pm(change),
-        # plus-minus and comma sep formatting
-        style = paste0("font-size: 16px;color:", cond_color(change)), # colour formating
-        .noWS = c("before", "after") # remove whitespace
-      )
-    )
+  # get App data for current area
+  output$overviewAppKPI <- renderText({
+    validate(need(input$geoChoiceOver != "", ""))
+    createOverviewKPI("achievementsProvisionApprenticeships", "number")
   })
 
   # app chart
