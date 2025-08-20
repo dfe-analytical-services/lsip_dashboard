@@ -258,13 +258,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
   ),
   tags$script(
     " $(document).ready(function () {
-                $('#link_to_tabpanel_employment2').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"
-  ),
-  tags$script(
-    " $(document).ready(function () {
                 $('#link_to_tabpanel_vacancies2').on('click', function (e) {
                 window.scrollTo(0, 0)
                 });
@@ -735,19 +728,54 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             label = NULL,
             choices = areaChoices[1:3]
           ),
-          uiOutput("geoComp")
+          selectizeInput(
+            "geoComps",
+            multiple = TRUE,
+            label = NULL,
+            choices = areaChoices,
+            options = list(
+              maxItems = 7,
+              placeholder = "Comparison areas (LA/LSIP/MCA/National"
+            )
+          )
         ),
         column(
           5,
           p("What are you interested in?"),
-          pickerInput(
+          selectizeInput(
             inputId = "splashMetric",
             choices = metricChoices,
-            multiple = FALSE
+            multiple = FALSE,
+            label = NULL
           ),
-          uiOutput("breakdownPageTitle"),
-          uiOutput("breakdownPageFilter"),
-          uiOutput("subgroupPageFilter")
+          hidden(
+            div(
+              id = "breakdownPage_wrapper",
+              selectInput("breakdownPage", "Limit to subgroup:", choices = "")
+            )
+          ),
+          hidden(
+            div(
+              id = "subgroupPage_wrapper",
+              selectInput("subgroupPage", "Subgroup:", choices = "")
+            )
+          )
+          #       conditionalPanel(
+          #         condition = "input$splashMetric %in% (C_breakdown %>%
+          # distinct(metric, breakdown))$metric",   # JS condition
+          #         selectizeInput(
+          #           inputId = "breakdownPage",
+          #           label = "Limit to subgroup",
+          #           choices =
+          #             c("All", (as.vector(
+          #               C_breakdown %>%
+          #                 distinct(metric, breakdown)
+          #             ))$breakdown)
+          #       )
+          #       ),
+          #       uiOutput("breakdownPageTitle"),
+          #       uiOutput("breakdownPageFilter"),
+          #       uiOutput("subgroupPageFilter")
         ),
         column(
           2,
