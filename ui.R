@@ -486,7 +486,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("xx Jul 2025 (1.5.1)"),
+            p("22 Aug 2025 (1.5.1)"),
             tags$ul(
               tags$li("Refresh of the summary page."),
               tags$li("Remove LEP maps and add in National picture."),
