@@ -504,7 +504,7 @@ server <- function(input, output, session) {
           } else {
             format_pm(change)
           },
-          " from ",
+          " since ",
           (currentGeogTime() %>% filter(metric == metricName) %>%
             filter(latest == -1))$chartPeriod
         ),
