@@ -815,9 +815,30 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         column(
           6,
           h3(uiOutput("titleBreakdown")),
-          uiOutput("breakdownFilter"),
-          uiOutput("professionFilter"),
-          uiOutput("subgroupFilter"),
+          hidden(
+            div(
+              id = "breakdownBar_wrapper",
+              selectInput("barBreakdown", "Subgroup type", choices = "")
+            )
+          ),
+          # uiOutput("breakdownFilter"),
+          hidden(
+            div(
+              id = "professionBar_wrapper",
+              selectInput("barProfession", "Limit to particular SOC2020 Major group", choices = "")
+            )
+          ),
+          # uiOutput("professionFilter"),
+          hidden(
+            div(
+              id = "subgroupBar_wrapper",
+              pickerInput(
+                inputId = "barSubgroup", label = NULL, choices = "",
+                multiple = TRUE, options = list(`actions-box` = TRUE, `live-search` = TRUE)
+              )
+            )
+          ),
+          # uiOutput("subgroupFilter"),
           p(uiOutput("commentBreakdown")),
           uiOutput("breadownPlot"),
           p(uiOutput("breakdownFoot"))

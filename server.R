@@ -617,7 +617,7 @@ server <- function(input, output, session) {
   ### 3.4.1 Employment rate ----
   # Create title
   output$overviewEmpRateTitle <- renderText({
-    validate(need(input$geoChoiceOver != "", ""))
+    # validate(need(input$geoChoiceOver != "", ""))
     paste0(
       p("Workforce: employment rate", style = "font-weight: bold; font-size: 18px;"),
       createOverviewTitle("inemploymentRate")
@@ -625,12 +625,12 @@ server <- function(input, output, session) {
   })
   # Get value
   output$overviewEmpRateKPI <- renderText({
-    validate(need(input$geoChoiceOver != "", ""))
+    # validate(need(input$geoChoiceOver != "", ""))
     createOverviewKPI("inemploymentRate", "percent")
   })
   # Create chart
   output$empRateLineChart <- renderPlotly({
-    validate(need(input$geoChoiceOver != "", ""))
+    # validate(need(input$geoChoiceOver != "", ""))
     renderOverviewChart(createOverviewChart("inemploymentRate", "percent", "Employment rate"))
   })
   # Add link to employment rate
@@ -644,7 +644,7 @@ server <- function(input, output, session) {
   ### 3.4.2 Job adverts ----
   # Create title
   output$overviewJobTitle <- renderText({
-    validate(need(input$geoChoiceOver != "", ""))
+    # validate(need(input$geoChoiceOver != "", ""))
     paste0(
       p("Demand: online job adverts", style = "font-weight: bold; font-size: 18px;"),
       createOverviewTitle("vacancies")
@@ -653,13 +653,13 @@ server <- function(input, output, session) {
 
   # Vacancy kpi
   output$overviewJobKPI <- renderText({
-    validate(need(input$geoChoiceOver != "", ""))
+    # validate(need(input$geoChoiceOver != "", ""))
     createOverviewKPI("vacancies", "number")
   })
 
   # Vacancy chart
   output$jobLineChart <- renderPlotly({
-    validate(need(input$geoChoiceOver != "", ""))
+    # validate(need(input$geoChoiceOver != "", ""))
     renderOverviewChart(createOverviewChart("vacancies", "number", "Online job adverts"))
   })
 
@@ -674,7 +674,7 @@ server <- function(input, output, session) {
   ### 3.4.3 FE app achieve ----
   # Create title
   output$overviewAppTitle <- renderText({
-    validate(need(input$geoChoiceOver != "", ""))
+    # validate(need(input$geoChoiceOver != "", ""))
     paste0(
       p("Skills supply: apprenticeship achievements", style = "font-weight: bold; font-size: 18px;"),
       createOverviewTitle("achievementsProvisionApprenticeships")
@@ -683,13 +683,13 @@ server <- function(input, output, session) {
 
   # get App data for current area
   output$overviewAppKPI <- renderText({
-    validate(need(input$geoChoiceOver != "", ""))
+    # validate(need(input$geoChoiceOver != "", ""))
     createOverviewKPI("achievementsProvisionApprenticeships", "number")
   })
 
   # app chart
   output$AppLineChart <- renderPlotly({
-    validate(need(input$geoChoiceOver != "", ""))
+    # validate(need(input$geoChoiceOver != "", ""))
     renderOverviewChart(createOverviewChart("achievementsProvisionApprenticeships", "number", "Apprenticeship achievements"))
   })
 
@@ -856,11 +856,11 @@ server <- function(input, output, session) {
 
   # Businesses title top
   output$summaryBusinessesTop <- renderText({
-    validate(
-      need("geoChoiceOver" %in% names(input), ""),
-      need(input$geoChoiceOver != "", ""),
-      need(input$geoChoiceOver != "England", "")
-    )
+    # validate(
+    #   need("geoChoiceOver" %in% names(input), ""),
+    #   need(input$geoChoiceOver != "", ""),
+    #   need(input$geoChoiceOver != "England", "")
+    # )
     paste0(
       "Percentage of businesses in ",
       (chartData() %>% filter(extremes == "top"))$subgroup[1]
@@ -869,11 +869,11 @@ server <- function(input, output, session) {
 
   # Businesses title bottom
   output$summaryBusinessesBottom <- renderText({
-    validate(
-      need("geoChoiceOver" %in% names(input), ""),
-      need(input$geoChoiceOver != "", ""),
-      need(input$geoChoiceOver != "England", "")
-    )
+    # validate(
+    #   need("geoChoiceOver" %in% names(input), ""),
+    #   need(input$geoChoiceOver != "", ""),
+    #   need(input$geoChoiceOver != "England", "")
+    # )
     paste0(
       "Percentage of businesses in ",
       (chartData() %>% filter(extremes == "bottom"))$subgroup[1]
@@ -881,7 +881,7 @@ server <- function(input, output, session) {
   })
 
   summaryBusinessesPlotTop <- eventReactive(input$geoChoiceOver, {
-    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
+    # validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
     chartData <- chartData() %>% filter(extremes == "top")
     chartData$extremes <- reorder(chartData$extremes, chartData$value, sum)
     # plot
@@ -919,11 +919,11 @@ server <- function(input, output, session) {
   })
 
   output$summaryBusinessesChartTop <- renderPlotly({
-    validate(
-      need("geoChoiceOver" %in% names(input), ""),
-      need(input$geoChoiceOver != "", ""),
-      need(input$geoChoiceOver != "England", "")
-    )
+    # validate(
+    #   need("geoChoiceOver" %in% names(input), ""),
+    #   need(input$geoChoiceOver != "", ""),
+    #   need(input$geoChoiceOver != "England", "")
+    # )
     ggplotly(summaryBusinessesPlotTop(), tooltip = "text") %>%
       layout(
         xaxis = list(fixedrange = TRUE),
@@ -933,7 +933,7 @@ server <- function(input, output, session) {
   })
 
   summaryBusinessesPlotBottom <- eventReactive(input$geoChoiceOver, {
-    validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
+    # validate(need(input$geoChoiceOver != "", "")) # if area not yet loaded don't try to load
     chartData <- chartData() %>% filter(extremes == "bottom")
     chartData$extremes <- reorder(chartData$extremes, chartData$value, sum)
     # plot
@@ -971,11 +971,11 @@ server <- function(input, output, session) {
   })
 
   output$summaryBusinessesChartBottom <- renderPlotly({
-    validate(
-      need("geoChoiceOver" %in% names(input), ""),
-      need(input$geoChoiceOver != "", ""),
-      need(input$geoChoiceOver != "England", "")
-    )
+    # validate(
+    #   need("geoChoiceOver" %in% names(input), ""),
+    #   need(input$geoChoiceOver != "", ""),
+    #   need(input$geoChoiceOver != "England", "")
+    # )
     ggplotly(summaryBusinessesPlotBottom(), tooltip = "text") %>%
       layout(
         xaxis = list(fixedrange = TRUE),
@@ -1012,10 +1012,7 @@ server <- function(input, output, session) {
   ## 4.3 Dynamic text----
   # create subheading
   output$subheading <- renderUI({
-    validate(
-      need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", "")
-    )
+    req(input$geoChoice)
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$subheading,
       if (input$splashMetric %in% c("vacancies", "employmentProjection")) {
@@ -1058,26 +1055,31 @@ server <- function(input, output, session) {
   })
 
   # Initialise filters
-  updateSelectInput(session, "splashMetric", selected = metricChoices[[1]][1])
-  updateSelectInput(session, "breakdownPage", selected = "All")
-  updateSelectInput(session, "subgroupPage", selected = "11 - Corporate managers and directors")
+  # updateSelectInput(session, "splashMetric", selected = metricChoices[[1]][1])
+  # updateSelectInput(session, "breakdownPage", selected = "All")
+  # updateSelectInput(session, "subgroupPage", selected = "11 - Corporate managers and directors")
   # Metric changes subgroup filter
   observeEvent(input$splashMetric,
     {
       types <- distinctBreakdowns$breakdown[distinctBreakdowns$metric == input$splashMetric] # find subgroups in metric
-
+      # If there are no subgroups for the metric, then hide all the breakdown filters
       if (length(types) == 0) {
         shinyjs::hide("breakdownPage_wrapper")
-        shinyjs::hide("subgroupPage_wrapper")
         updateSelectInput(session, "breakdownPage", choices = "", selected = "")
-        updateSelectInput(session, "subgroupPage", choices = "", selected = "")
-      } else {
-        shinyjs::show("breakdownPage_wrapper")
-        updateSelectInput(session, "breakdownPage",
-          choices = c("All", types), selected = "All"
-        )
         shinyjs::hide("subgroupPage_wrapper")
         updateSelectInput(session, "subgroupPage", choices = "", selected = "")
+        shinyjs::hide("breakdownBar_wrapper")
+        updateSelectInput(session, "barBreakdown", choices = "", selected = "")
+        shinyjs::hide("professionBar_wrapper")
+        updateSelectInput(session, "barProfession", choices = "", selected = "")
+        shinyjs::hide("subgroupBar_wrapper")
+        updatePickerInput(inputId = "barSubgroup", choices = "", selected = "")
+      } else { # if there are subgroups then show the subgroup type filters
+        shinyjs::show("breakdownPage_wrapper")
+        updateSelectInput(session, "breakdownPage", choices = c("All", types), selected = "All")
+
+        shinyjs::show("breakdownBar_wrapper")
+        updateSelectInput(session, "barBreakdown", choices = types, selected = types[1])
       }
     },
     ignoreInit = FALSE
@@ -1086,13 +1088,57 @@ server <- function(input, output, session) {
   # ---- Subgroup type changes
   observeEvent(input$breakdownPage,
     {
+      # if breakdown doesn't exists or is all, then hide the top subgroup filter but show the barchart filter
       if (is.null(input$breakdownPage) || input$breakdownPage == "" || input$breakdownPage == "All") {
         shinyjs::hide("subgroupPage_wrapper")
         updateSelectInput(session, "subgroupPage", choices = "", selected = "")
       } else {
+        # if breakdown option is chosen then show relevant subgroups in top subgroup filter
         shinyjs::show("subgroupPage_wrapper")
         subgroups <- distinctSubgroups$subgroup[distinctSubgroups$metric == input$splashMetric & distinctSubgroups$breakdown == input$breakdownPage]
         updateSelectInput(session, "subgroupPage", choices = subgroups, selected = subgroups[1])
+
+        # also turn off the bar chart subgroup type filter as it is already selected above, but set it to the same as breakdownPage
+        shinyjs::hide("breakdownBar_wrapper")
+        updateSelectInput(session, "barBreakdown", selected = input$breakdownPage)
+      }
+    },
+    ignoreInit = TRUE
+  )
+
+  # ---- Subgroup type changes
+  observeEvent(input$barBreakdown,
+    {
+      # if occupation is chosen then show the major group filter above the bar chart
+      if (input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)") {
+        shinyjs::show("professionBar_wrapper")
+        updateSelectInput(session, "barProfession", choices = distinctSubgroups$subgroup[distinctSubgroups$metric == input$splashMetric & distinctSubgroups$breakdown == input$barBreakdown])
+        # Show the subgroups for that major profession
+        shinyjs::show("subgroupBar_wrapper")
+        subgroups <- distinctSubgroups$subgroup[distinctSubgroups$metric == input$splashMetric & distinctSubgroups$breakdown == input$barBreakdown]
+        subgroupsBar <- (as.vector(
+          C_topTenEachBreakdown %>%
+            filter(
+              metric == input$splashMetric,
+              breakdown == input$barBreakdown,
+              geogConcat == input$geoChoice,
+              `Occupation (SOC2020 Major Group)` == input$barProfession
+            )
+        ))$subgroup
+        updatePickerInput(session = session, inputId = "barSubgroup", choices = subgroups, selected = subgroupsBar)
+      } else {
+        # show only show the top ten
+        shinyjs::show("subgroupBar_wrapper")
+        subgroupsBar <- (as.vector(
+          C_topTenEachBreakdown %>%
+            filter(
+              metric == input$splashMetric,
+              breakdown == input$barBreakdown,
+              geogConcat == input$geoChoice,
+              `Occupation (SOC2020 Major Group)` == "All"
+            )
+        ))$subgroup
+        updatePickerInput(session = session, inputId = "barSubgroup", choices = subgroups, selected = subgroupsBar)
       }
     },
     ignoreInit = TRUE
@@ -1100,9 +1146,9 @@ server <- function(input, output, session) {
 
   # update the comparison filter when an LA is clicked
   observeEvent(input$mapLA_shape_click, {
-    eventLA <- input$mapLA_shape_click
+    # eventLA <- input$mapLA_shape_click
     updateSelectizeInput(session, "geoComps",
-      selected = c(input$geoComps, paste0(C_Geog$areaName[C_Geog$areaCode == eventLA$id], " LADU")), options = list()
+      selected = c(input$geoComps, paste0(C_Geog$areaName[C_Geog$areaCode == input$mapLA_shape_click$id], " LADU")), options = list()
     )
   })
 
@@ -1213,17 +1259,17 @@ server <- function(input, output, session) {
 
   ### 4.5.2 Map data----
   currentMapData <- eventReactive(list(input$splashGeoType, input$splashMetric, input$breakdownPage, input$subgroupPage), {
-    validate(
-      need(input$geoChoice != "", ""),
-      need(input$splashGeoType != "", "")
-    )
-    validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
-      distinctSubgroups %>%
-        filter(
-          metric == input$splashMetric,
-          breakdown == input$breakdownPage,
-        )
-    ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
+    # validate(
+    #   need(input$geoChoice != "", ""),
+    #   need(input$splashGeoType != "", "")
+    # )
+    # validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
+    #   distinctSubgroups %>%
+    #     filter(
+    #       metric == input$splashMetric,
+    #       breakdown == input$breakdownPage,
+    #     )
+    # ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
 
     C_Geog %>%
       filter(geog == input$splashGeoType | geog == "England") %>%
@@ -1241,12 +1287,12 @@ server <- function(input, output, session) {
 
   #### 2.3.5.2 Comment ----
   output$commentMap <- renderUI({
-    validate(
-      need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", ""),
-      need(input$geoChoice != "England", ""),
-      need(input$geoChoice %in% currentMapData()$geogConcat, "")
-    )
+    # validate(
+    #   need("geoChoice" %in% names(input), ""),
+    #   need(input$geoChoice != "", ""),
+    #   need(input$geoChoice != "England", ""),
+    #   need(input$geoChoice %in% currentMapData()$geogConcat, "")
+    # )
     compareNational <-
       if ((currentMapData() %>% filter(geogConcat == input$geoChoice))$value
       >
@@ -1458,19 +1504,19 @@ server <- function(input, output, session) {
   })
   #### 2.3.6.2 Comment----
   output$commentLA <- renderUI({
-    validate(
-      need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", ""),
-      need(!((input$geoChoice %in% c("Greater London LSIP", "Greater London Authority MCA") &
-        currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), "Data is not available at LA level."),
-    )
-    validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
-      distinctSubgroups %>%
-        filter(
-          metric == input$splashMetric,
-          breakdown == input$breakdownPage,
-        )
-    ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
+    # validate(
+    #   need("geoChoice" %in% names(input), ""),
+    #   need(input$geoChoice != "", ""),
+    #   need(!((input$geoChoice %in% c("Greater London LSIP", "Greater London Authority MCA") &
+    #     currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), "Data is not available at LA level."),
+    # )
+    # validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
+    #   distinctSubgroups %>%
+    #     filter(
+    #       metric == input$splashMetric,
+    #       breakdown == input$breakdownPage,
+    #     )
+    # ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
 
     LaHighLow <- # Filter to those LAs in that region
       mapData <- C_Geog %>%
@@ -1515,18 +1561,18 @@ server <- function(input, output, session) {
   })
 
   observe({
-    validate(
-      need(!((input$geoChoice %in% c("Greater London LSIP", "Greater London Authority MCA") &
-        currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), ""),
-      need(input$geoChoice != "", "")
-    )
-    validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
-      distinctSubgroups %>%
-        filter(
-          metric == input$splashMetric,
-          breakdown == input$breakdownPage,
-        )
-    ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
+    # validate(
+    #   need(!((input$geoChoice %in% c("Greater London LSIP", "Greater London Authority MCA") &
+    #     currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), ""),
+    #   need(input$geoChoice != "", "")
+    # )
+    # validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
+    #   distinctSubgroups %>%
+    #     filter(
+    #       metric == input$splashMetric,
+    #       breakdown == input$breakdownPage,
+    #     )
+    # ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
 
     # Filter to those LAs in that region
     mapData <- C_Geog %>%
@@ -1608,12 +1654,12 @@ server <- function(input, output, session) {
 
   #### 2.3.6.4 Map footnote ----
   output$mapLaFoot <- renderUI({
-    validate(
-      need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", ""),
-      need(!((input$geoChoice %in% c("Greater London LSIP", "Greater London Authority MCA") &
-        currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), ""),
-    )
+    # validate(
+    #   need("geoChoice" %in% names(input), ""),
+    #   need(input$geoChoice != "", ""),
+    #   need(!((input$geoChoice %in% c("Greater London LSIP", "Greater London Authority MCA") &
+    #     currentMetric() == "online job adverts") | (input$splashMetric == "employmentProjection")), ""),
+    # )
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ". Click an area to update other charts with LA data."
     )
@@ -1628,19 +1674,19 @@ server <- function(input, output, session) {
 
   #### 2.3.7.1 Comment ----
   output$commentTime <- renderUI({
-    validate(
-      need("geoChoice" %in% names(input), ""),
-      need(input$geoChoice != "", ""),
-      need(input$geoChoice != "England", ""),
-      need(paste0(input$splashMetric, input$breakdownPage) != "achievementsSSA", "")
-    )
-    validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
-      distinctSubgroups %>%
-        filter(
-          metric == input$splashMetric,
-          breakdown == input$breakdownPage,
-        )
-    ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
+    # validate(
+    #   need("geoChoice" %in% names(input), ""),
+    #   need(input$geoChoice != "", ""),
+    #   need(input$geoChoice != "England", ""),
+    #   need(paste0(input$splashMetric, input$breakdownPage) != "achievementsSSA", "")
+    # )
+    # validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
+    #   distinctSubgroups %>%
+    #     filter(
+    #       metric == input$splashMetric,
+    #       breakdown == input$breakdownPage,
+    #     )
+    # ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
 
     currentArea <- C_time %>%
       filter(
@@ -1837,20 +1883,20 @@ server <- function(input, output, session) {
   #   )
 
   output$Splash_time <- renderPlotly({
-    validate(
-      # need("geoChoice" %in% names(input), ""),
-      # need(input$geoChoice != "", ""),
-      need(
-        ("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
-          distinctSubgroups %>%
-            filter(
-              metric == input$splashMetric,
-              breakdown == input$breakdownPage,
-            )
-        ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""
-      ),
-      need(paste0(input$splashMetric, input$breakdownPage) != "achievementsSSA", "There is only SSA achievement data for the latest year, so no time series.")
-    )
+    # validate(
+    #   # need("geoChoice" %in% names(input), ""),
+    #   # need(input$geoChoice != "", ""),
+    #   need(
+    #     ("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
+    #       distinctSubgroups %>%
+    #         filter(
+    #           metric == input$splashMetric,
+    #           breakdown == input$breakdownPage,
+    #         )
+    #     ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""
+    #   ),
+    #   need(paste0(input$splashMetric, input$breakdownPage) != "achievementsSSA", "There is only SSA achievement data for the latest year, so no time series.")
+    # )
     req(input$splashMetric)
     req(input$geoChoice)
 
@@ -1971,9 +2017,9 @@ server <- function(input, output, session) {
 
   #### 2.3.7.3 Time footnote ----
   output$timeFoot <- renderUI({
-    validate(
-      need(paste0(input$splashMetric, input$breakdownPage) != "achievementsSSA", "")
-    )
+    # validate(
+    #   need(paste0(input$splashMetric, input$breakdownPage) != "achievementsSSA", "")
+    # )
 
     if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
       "The definition of when a student is at the end of 16 to 18 study has changed last year and comparisons to previous cohorts should be treated with caution. See footnote below. Also NB non-zero axis."
@@ -1992,98 +2038,98 @@ server <- function(input, output, session) {
     distinct(metric, breakdown, subgroup)
   distinctBreakdowns <- C_breakdown %>%
     distinct(metric, breakdown)
-  output$breakdownFilter <- renderUI({
-    validate(
-      need(input$splashMetric %in% distinctBreakdowns$metric, ""),
-      need(input$breakdownPage == "All", "")
-    )
-    selectizeInput(
-      inputId = "barBreakdown",
-      label = NULL,
-      choices =
-        (as.vector(
-          distinctBreakdowns %>%
-            filter(metric == input$splashMetric)
-        ))$breakdown
-    )
-  })
+  # output$breakdownFilter <- renderUI({
+  #   # validate(
+  #   #   need(input$splashMetric %in% distinctBreakdowns$metric, ""),
+  #   #   need(input$breakdownPage == "All", "")
+  #   # )
+  #   selectizeInput(
+  #     inputId = "barBreakdown",
+  #     label = NULL,
+  #     choices =
+  #       (as.vector(
+  #         distinctBreakdowns %>%
+  #           filter(metric == input$splashMetric)
+  #       ))$breakdown
+  #   )
+  # })
 
   # Update filter based on top breakdown filter
-  observeEvent(input$breakdownPage, {
-    validate(need(input$breakdownPage != "All", ""))
-    updateSelectizeInput(session, "barBreakdown",
-      selected = input$breakdownPage
-    )
-  })
+  # observeEvent(input$breakdownPage, {
+  #   # validate(need(input$breakdownPage != "All", ""))
+  #   updateSelectizeInput(session, "barBreakdown",
+  #     selected = input$breakdownPage
+  #   )
+  # })
 
   #### 2.3.8.2 Optional summary profession filter ----
-  summaryCategories <- c("All", (as.vector(
-    distinctSubgroups %>%
-      filter(breakdown == "Occupation (SOC2020 Major Group)")
-  ))$subgroup)
-  output$professionFilter <- renderUI({
-    validate(
-      need(input$barBreakdown != "", ""),
-      need(input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)", ""),
-      need(input$breakdownPage != "Industry", ""),
-      need(input$breakdownPage != "Occupation (SOC2020 Major Group)", ""),
-      need(input$splashMetric %in% distinctBreakdowns$metric, "")
-    )
-    selectizeInput(
-      inputId = "summaryProfession",
-      label = "Limit to particular SOC2020 Major group",
-      choices = summaryCategories
-    )
-  })
+  # summaryCategories <- c("All", (as.vector(
+  #   distinctSubgroups %>%
+  #     filter(breakdown == "Occupation (SOC2020 Major Group)")
+  # ))$subgroup)
+  # output$professionFilter <- renderUI({
+  #   # validate(
+  #   #   need(input$barBreakdown != "", ""),
+  #   #   need(input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)", ""),
+  #   #   need(input$breakdownPage != "Industry", ""),
+  #   #   need(input$breakdownPage != "Occupation (SOC2020 Major Group)", ""),
+  #   #   need(input$splashMetric %in% distinctBreakdowns$metric, "")
+  #   # )
+  #   selectizeInput(
+  #     inputId = "barProfession",
+  #     label = "Limit to particular SOC2020 Major group",
+  #     choices = summaryCategories
+  #   )
+  # })
 
   #### 2.3.8.2 Subgroup filter ----
-  output$subgroupFilter <- renderUI({
-    validate(
-      need(input$barBreakdown != "", ""),
-      need(input$breakdownPage != "", ""),
-      need(input$splashMetric %in% distinctBreakdowns$metric, "")
-    )
-    pickerInput(
-      inputId = "barSubgroup",
-      label = NULL,
-      choices =
-        as.vector((
-          distinctSubgroups %>%
-            filter(
-              metric == input$splashMetric,
-              breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
-              if (input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
-                subgroup %in%
-                  (C_detailLookup %>% filter(`Occupation (SOC2020 Major Group)` == input$summaryProfession))$`Occupation (SOC2020 Sub-Major Group)`
-              } else {
-                TRUE
-              }
-            )
-        ))$subgroup,
-      multiple = TRUE,
-      selected = (as.vector(
-        C_topTenEachBreakdown %>%
-          filter(
-            metric == input$splashMetric,
-            breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
-            geogConcat == input$geoChoice,
-            if (input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)" & "summaryProfession" %in% names(input) && input$summaryProfession != "All") {
-              `Occupation (SOC2020 Major Group)` == input$summaryProfession
-            } else {
-              `Occupation (SOC2020 Major Group)` == "All"
-            }
-          )
-      ))$subgroup,
-      options = list(`actions-box` = TRUE, `live-search` = TRUE)
-    )
-  })
+  # output$subgroupFilter <- renderUI({
+  #   # validate(
+  #   #   need(input$barBreakdown != "", ""),
+  #   #   need(input$breakdownPage != "", ""),
+  #   #   need(input$splashMetric %in% distinctBreakdowns$metric, "")
+  #   # )
+  #   pickerInput(
+  #     inputId = "barSubgroup",
+  #     label = NULL,
+  #     choices =
+  #       as.vector((
+  #         distinctSubgroups %>%
+  #           filter(
+  #             metric == input$splashMetric,
+  #             breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
+  #             if (input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)" & "barProfession" %in% names(input) && input$barProfession != "All") {
+  #               subgroup %in%
+  #                 (C_detailLookup %>% filter(`Occupation (SOC2020 Major Group)` == input$barProfession))$`Occupation (SOC2020 Sub-Major Group)`
+  #             } else {
+  #               TRUE
+  #             }
+  #           )
+  #       ))$subgroup,
+  #     multiple = TRUE,
+  #     selected = (as.vector(
+  #       C_topTenEachBreakdown %>%
+  #         filter(
+  #           metric == input$splashMetric,
+  #           breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
+  #           geogConcat == input$geoChoice,
+  #           if (input$barBreakdown == "Occupation (SOC2020 Sub-Major Group)" & "barProfession" %in% names(input) && input$barProfession != "All") {
+  #             `Occupation (SOC2020 Major Group)` == input$barProfession
+  #           } else {
+  #             `Occupation (SOC2020 Major Group)` == "All"
+  #           }
+  #         )
+  #     ))$subgroup,
+  #     options = list(`actions-box` = TRUE, `live-search` = TRUE)
+  #   )
+  # })
 
   #### 2.3.8.3 Title ----
   output$titleBreakdown <- renderUI({
-    validate(
-      need(input$barBreakdown != "", ""),
-      need(input$splashMetric %in% distinctBreakdowns$metric, "")
-    )
+    # validate(
+    #   need(input$barBreakdown != "", ""),
+    #   need(input$splashMetric %in% distinctBreakdowns$metric, "")
+    # )
     paste0(
       "How do ",
       (I_DataText %>% filter(metric == input$splashMetric))$breakdownTitle,
@@ -2095,11 +2141,11 @@ server <- function(input, output, session) {
 
   #### 2.3.8.4 Comment ----
   output$commentBreakdown <- renderUI({
-    validate(
-      need("barBreakdown" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric, ""),
-      need(input$geoChoice != "", ""),
-      need(input$geoChoice != "England", "")
-    )
+    # validate(
+    #   need("barBreakdown" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric, ""),
+    #   need(input$geoChoice != "", ""),
+    #   need(input$geoChoice != "England", "")
+    # )
 
     if (!input$splashMetric %in% distinctBreakdowns$metric) {
       paste0(
@@ -2174,19 +2220,19 @@ server <- function(input, output, session) {
       input$breakdownPage
     ),
     {
-      validate(
-        need(input$barBreakdown != "", ""),
-        need(input$barSubgroup != "", ""),
-        need(input$splashMetric != "", ""),
-        need(input$barBreakdown != "No breakdowns available", "")
-      )
-      validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
-        distinctSubgroups %>%
-          filter(
-            metric == input$splashMetric,
-            breakdown == input$breakdownPage,
-          )
-      ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
+      # validate(
+      #   need(input$barBreakdown != "", ""),
+      #   need(input$barSubgroup != "", ""),
+      #   need(input$splashMetric != "", ""),
+      #   need(input$barBreakdown != "No breakdowns available", "")
+      # )
+      # validate(need(("subgroupPage" %in% names(input) && input$subgroupPage %in% (as.vector(
+      #   distinctSubgroups %>%
+      #     filter(
+      #       metric == input$splashMetric,
+      #       breakdown == input$breakdownPage,
+      #     )
+      # ))$subgroup) | !"subgroupPage" %in% names(input) | !input$splashMetric %in% distinctBreakdowns$metric | ("breakdownPage" %in% names(input) && input$breakdownPage == "All"), ""))
 
       Splash_21 <- C_breakdown %>% filter(
         breakdown == ifelse(input$breakdownPage == "All", input$barBreakdown, input$breakdownPage),
@@ -2294,7 +2340,7 @@ server <- function(input, output, session) {
 
   output$Splash_pc <- renderPlotly({
     # check it exists
-    validate(need(Splash_pc() != "x", ""))
+    # validate(need(Splash_pc() != "x", ""))
     ggplotly(Splash_pc(),
       tooltip = c("text")
     ) %>%
@@ -2318,10 +2364,10 @@ server <- function(input, output, session) {
 
   #### 2.3.8.6 Bar footnote ----
   output$breakdownFoot <- renderUI({
-    validate(
-      need(input$barBreakdown != "", ""),
-      need(input$splashMetric %in% distinctBreakdowns$metric, "")
-    )
+    # validate(
+    #   need(input$barBreakdown != "", ""),
+    #   need(input$splashMetric %in% distinctBreakdowns$metric, "")
+    # )
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ".",
       if (input$splashMetric %in% c("achievements", "participation")) {
