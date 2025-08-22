@@ -32,4 +32,3 @@ names(I_ToolsTable) <- gsub(".", " ", names(I_ToolsTable), fixed = TRUE)
 write.csv(I_ToolsTable, file = "Data\\AppData\\I_ToolsTable.csv", row.names = FALSE)
 names(I_ReportsTable) <- gsub(".", " ", names(I_ReportsTable), fixed = TRUE)
 write.csv(I_ReportsTable, file = "Data\\AppData\\I_ReportsTable.csv", row.names = FALSE)
-

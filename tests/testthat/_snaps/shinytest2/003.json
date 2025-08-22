@@ -1,52 +1,24 @@
 {
   "input": {
-    "geoChoice": "Buckinghamshire LEP",
-    "geoChoiceOver": "Buckinghamshire LEP",
+    "geoChoice": "Brighton and Hove, East Sussex, West Sussex LSIP",
+    "geoChoiceOver": "Brighton and Hove, East Sussex, West Sussex LSIP",
     "hubComparators": null,
     "hubLA": null,
-    "navbar": "Local skills",
-    "splashGeoType": "LEP",
+    "navbar": "User guide",
+    "splashGeoType": "LSIP",
     "splashMetric": "inemploymentRate"
   },
   "output": {
-    "UBC.micro": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Mar 2024<\/span>\n  <br/>\n  91%\n  <br/><span style=\"font-size: 16px;color:green\">+0ppts<\/span><br/>\n<\/h4>",
-      "deps": [
-
-      ]
-    },
-    "dest.ks5over": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">AY22/23<\/span>\n  <br/>\n  85%\n  <br/><span style=\"font-size: 16px;color:#e00000\">-2ppts<\/span><br/>\n<\/h4>",
-      "deps": [
-
-      ]
-    },
-    "overviewEmpCntKPI": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Apr 2024-Mar 2025<\/span>\n  <br/>\n  291,200\n  <br/><span style=\"font-size: 16px;color:green\">+9,500<\/span><br/>\n<\/h4>",
-      "deps": [
-
-      ]
-    },
-    "overviewEmpRateKPI": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Apr 2024-Mar 2025<\/span>\n  <br/>\n  82%\n  <br/><span style=\"font-size: 16px;color:green\">+1ppts<\/span><br/>\n<\/h4>",
-      "deps": [
-
-      ]
-    },
-    "overviewJobKPI": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">Jun-25<\/span>\n  <br/>\n  12,182\n  <br/><span style=\"font-size: 16px;color:#e00000\">-109<\/span><br/>\n<\/h4>",
-      "deps": [
-
-      ]
-    },
+    "overviewEmpRateKPI": "77%<br/><span style=\"font-size: 16px;color:black\">+0ppts  since  Apr 2023-Mar 2024<\/span>",
+    "overviewJobKPI": "43,666<br/><span style=\"font-size: 16px;color:green\">+2,003  since  Jun-24<\/span>",
     "page0title": {
-      "html": "Overview of local landscape in Buckinghamshire LEP",
+      "html": "Brighton and Hove, East Sussex, West Sussex LSIP headline data",
       "deps": [
 
       ]
     },
     "screenshotOverview": {
-      "html": "<button class=\"btn btn-default btn-capture btn-capture-screenshot\" data-selector=\"body\" data-filename=\"Buckinghamshire LEP-overview.png\" data-options=\"{}\" data-loading=\"false\">\n  <i class=\"fas fa-camera\" role=\"presentation\" aria-label=\"camera icon\"><\/i>\n  Screenshot\n<\/button>",
+      "html": "<button class=\"btn btn-default btn-capture btn-capture-screenshot\" data-selector=\"body\" data-filename=\"Brighton and Hove, East Sussex, West Sussex LSIP-overview.png\" data-options=\"{}\" data-loading=\"false\">\n  <i class=\"fas fa-camera\" role=\"presentation\" aria-label=\"camera icon\"><\/i>\n  Screenshot\n<\/button>",
       "deps": [
         {
           "name": "font-awesome",
@@ -77,24 +49,6 @@
           "attachment": null,
           "all_files": true
         }
-      ]
-    },
-    "skisup.APPach": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">AY23/24<\/span>\n  <br/>\n  1,500\n  <br/><span style=\"font-size: 16px;color:green\">+230<\/span><br/>\n<\/h4>",
-      "deps": [
-
-      ]
-    },
-    "skisup.ETach": {
-      "html": "<h4 style=\"font-size: 21px\">\n  <span style=\"font-size: 16px;font-weight:normal;\">AY23/24<\/span>\n  <br/>\n  4,800\n  <br/><span style=\"font-size: 16px;color:green\">+740<\/span><br/>\n<\/h4>",
-      "deps": [
-
-      ]
-    },
-    "wfOverviewKpi": {
-      "html": "<h4 style=\"font-size: 21px\">\n  4%\n  <br/><span style=\"font-size: 16px;color:green\">growth 2023 to 2035<\/span><br/>\n<\/h4>",
-      "deps": [
-
       ]
     }
   }

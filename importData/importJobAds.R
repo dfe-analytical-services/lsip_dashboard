@@ -21,13 +21,12 @@ folder <- "2-12_OnsProf"
  
  #unique(SOC2digit$SOC2digit) #Check all are populated
  
- #make long, filter to latest data and group up to 2 digit
+ #make long and group up to 2 digit
  SOC2digitLong<-SOC2digit %>%
    tidyr::pivot_longer(!c("geographic_level", "area","areaCode","SOC2digit"),
                        names_to = "time_period", values_to = "value"
    )%>%
    mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
-   filter(timePeriod == max(timePeriod)) %>% # we only show the latest year at this level of detail
    group_by(geographic_level,area,areaCode,SOC2digit,time_period)%>%
    summarise(value=sum(as.numeric(value)))%>%
    mutate(value = as.character(value))%>% # so we can merge

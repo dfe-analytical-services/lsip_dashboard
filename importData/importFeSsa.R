@@ -41,7 +41,7 @@ feSsaTidy <- I_FeSsa %>%
 #Get the LEP and LSIP groups from the LADs (MCAs are given in the data)
 feSsaWithAreas<-feSsaTidy%>%
   addGeogs()%>%
-filter(substr(geogConcat,nchar(geogConcat)-(2),nchar(geogConcat))!="MCA")#get rid of the MCAs calculated since we have those in the data already
+  filter(substr(geogConcat,nchar(geogConcat)-(2),nchar(geogConcat))!="MCA")#get rid of the MCAs calculated since we have those in the data already
 
 # group up areas
 groupedStats <- feSsaWithAreas %>%
@@ -68,7 +68,7 @@ C_FeSsa <- bind_rows(
   rename(achievementsAims = achievements, enrolmentsAims = enrolments) %>%
   # make long
   tidyr::pivot_longer(!c("geogConcat", "timePeriod", "chartPeriod", "latest", "breakdown", "subgroup"),
-               names_to = "metric",
-               values_to = "valueText"
+                      names_to = "metric",
+                      values_to = "valueText"
   ) %>%
   mutate(value = as.numeric(valueText))

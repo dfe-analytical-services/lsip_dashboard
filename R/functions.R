@@ -78,7 +78,6 @@ formatNomis <- function(x) {
     )) %>%
     mutate(geogConcat = case_when(
       GEOGRAPHY_TYPE == "local authorities: district / unitary (as of April 2021)" ~ paste0(GEOGRAPHY_NAME, " LADU"),
-      GEOGRAPHY_TYPE == "local enterprise partnerships (as of April 2021)" ~ paste0(GEOGRAPHY_NAME, " LEP"),
       GEOGRAPHY_TYPE == "combined authorities" ~ paste0(GEOGRAPHY_NAME, " MCA"),
       TRUE ~ GEOGRAPHY_NAME
     )) %>%
@@ -109,11 +108,9 @@ addGeogs <- function(x) {
     ) %>%
     # select new name
     select(-area, -LAD23CD_11, -LAD23CD_21) %>%
-    left_join(distinct(F_LEP2020, LAD23CD, area = LAD23NM), by = c("areaCode" = "LAD23CD")) %>% # use to get consistent LA names
-    # add lep names
-    left_join(select(C_LADLEP2020, -LAD23NM), by = c("areaCode" = "LAD23CD")) %>%
+    left_join(distinct(C_LADLSIP, LAD23CD, area = LAD23NM), by = c("areaCode" = "LAD23CD")) %>% # use to get consistent LA names
     # addLSIPS
-    left_join(select(C_LADLSIP2020, -LAD23NM), by = c("areaCode" = "LAD23CD")) %>%
+    left_join(select(C_LADLSIP, -LAD23NM), by = c("areaCode" = "LAD23CD")) %>%
     # addMCA
     left_join(select(C_mcalookup, -CAUTH24CD, -LAD24NM), by = c("areaCode" = "LAD24CD")) %>%
     # add national name
@@ -130,25 +127,22 @@ addGeogs <- function(x) {
         TRUE ~ paste0(area, " LADU")
       )) %>%
       # group by and slice to remove those LAs that are in multiple LEPs
-      group_by(across(c(-area, -LEP23NM1, -LSIP23NM, -CAUTH24NM, -areaCode, -geographic_level, -LEP23NM2))) %>%
+      group_by(across(c(-area, -LSIP23NM, -CAUTH24NM, -areaCode, -geographic_level))) %>%
       slice(1),
     withAreas %>%
-      filter(is.na(LEP23NM1) == FALSE) %>%
-      mutate(geogConcat = paste0(LEP23NM1, " LEP"), newArea = 1),
-    withAreas %>%
       # group by and slice to remove those LAs that are in multiple LEPs
-      group_by(across(c(-area, -LEP23NM1, -LSIP23NM, -CAUTH24NM, -geographic_level, -LEP23NM2))) %>%
+      group_by(across(c(-area, -LSIP23NM, -CAUTH24NM, -geographic_level))) %>%
       slice(1) %>%
       filter(is.na(LSIP23NM) == FALSE) %>%
       mutate(geogConcat = paste0(LSIP23NM, " LSIP"), newArea = 1),
     withAreas %>%
       # group by and slice to remove those LAs that are in multiple LEPs
-      group_by(across(c(-area, -LEP23NM1, -LSIP23NM, -CAUTH24NM, -geographic_level, -LEP23NM2))) %>%
+      group_by(across(c(-area, -LSIP23NM, -CAUTH24NM, -geographic_level))) %>%
       slice(1) %>%
       filter(is.na(CAUTH24NM) == FALSE) %>%
       mutate(geogConcat = paste0(CAUTH24NM, " MCA"), newArea = 1)
   ) %>%
-    select(-area, -LEP23NM1, -LSIP23NM, -CAUTH24NM, -areaCode, -geographic_level, -LEP23NM2)
+    select(-area, -LSIP23NM, -CAUTH24NM, -areaCode, -geographic_level)
 }
 
 format_pm <- function(x) {
@@ -163,6 +157,10 @@ cond_color <- function(condition, true_color = "green") {
   if (is.na(condition)) {
     return("black")
   }
+  # if change too small
+  if (abs(condition) < 0.0005) {
+    return("black")
+  }
   colours <- c("green", "#e00000")
-  return(ifelse(condition, true_color, colours[!colours == true_color]))
+  return(ifelse(condition > 0, true_color, colours[!colours == true_color]))
 }
