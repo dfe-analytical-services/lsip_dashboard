@@ -479,18 +479,22 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("xx Jul 2025 (1.5.1)"),
+            p("27 Aug 2025 (1.5.2)"),
             tags$ul(
-              tags$li("Refresh of the summary page."),
-              tags$li("Remove LEP maps and add in National picture."),
-              tags$li("Add in page wide subgroup filters to the Local Skills data page."),
-              tags$li("Update Skills Imperative projection long term growth metric to 2024 to 2035."),
-              tags$li("Utilise the populations published in FE data to calculate grouped FE per 100k statistics.")
+              tags$li("Reorganise the filter methodology to speed up the dashboard.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("22 Aug 2025 (1.5.1)"),
+                tags$ul(
+                  tags$li("Refresh of the summary page."),
+                  tags$li("Remove LEP maps and add in National picture."),
+                  tags$li("Add in page wide subgroup filters to the Local Skills data page."),
+                  tags$li("Update Skills Imperative projection long term growth metric to 2024 to 2035."),
+                  tags$li("Utilise the populations published in FE data to calculate grouped FE per 100k statistics.")
+                ),
                 p("5 Aug 2025 (1.4.17)"),
                 tags$ul(
                   tags$li("Update to latest online job advert data.")
@@ -721,11 +725,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       fluidRow(
         column(
           5,
-          p("Choose a LSIP, MCA or England"),
           selectizeInput(
             "geoChoice",
             multiple = FALSE,
-            label = NULL,
+            label = "Choose an LSIP, MCA or England",
             choices = areaChoices[1:3]
           ),
           selectizeInput(
@@ -741,12 +744,11 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         ),
         column(
           5,
-          p("What are you interested in?"),
           selectizeInput(
             inputId = "splashMetric",
             choices = metricChoices,
             multiple = FALSE,
-            label = NULL
+            label = "What are you interested in?"
           ),
           hidden(
             div(
@@ -760,22 +762,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               selectInput("subgroupPage", "Subgroup:", choices = "")
             )
           )
-          #       conditionalPanel(
-          #         condition = "input$splashMetric %in% (C_breakdown %>%
-          # distinct(metric, breakdown))$metric",   # JS condition
-          #         selectizeInput(
-          #           inputId = "breakdownPage",
-          #           label = "Limit to subgroup",
-          #           choices =
-          #             c("All", (as.vector(
-          #               C_breakdown %>%
-          #                 distinct(metric, breakdown)
-          #             ))$breakdown)
-          #       )
-          #       ),
-          #       uiOutput("breakdownPageTitle"),
-          #       uiOutput("breakdownPageFilter"),
-          #       uiOutput("subgroupPageFilter")
         ),
         column(
           2,
@@ -821,14 +807,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               selectInput("barBreakdown", "Subgroup type", choices = "")
             )
           ),
-          # uiOutput("breakdownFilter"),
           hidden(
             div(
               id = "professionBar_wrapper",
               selectInput("barProfession", "Limit to particular SOC2020 Major group", choices = "")
             )
           ),
-          # uiOutput("professionFilter"),
           hidden(
             div(
               id = "subgroupBar_wrapper",
@@ -838,7 +822,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               )
             )
           ),
-          # uiOutput("subgroupFilter"),
           p(uiOutput("commentBreakdown")),
           uiOutput("breadownPlot"),
           p(uiOutput("breakdownFoot"))
