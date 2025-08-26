@@ -486,12 +486,17 @@ server <- function(input, output, session) {
         format(latest, big.mark = ",")
       },
       br(),
-      span(
-        if (format == "percent") {
-          paste0(sprintf("%+.0f", 100 * change), "ppts")
-        } else {
-          format_pm(change)
-        }, # plus-minus and comma sep formatting
+      span( # plus-minus and comma sep formatting
+        paste(
+          if (format == "percent") {
+            paste0(sprintf("%+.0f", 100 * change), "ppts")
+          } else {
+            format_pm(change)
+          },
+          " since ",
+          (currentGeogTime() %>% filter(metric == metricName) %>%
+            filter(latest == -1))$chartPeriod
+        ),
         style = paste0("font-size: 16px;color:", cond_color(change)), # colour formating
         .noWS = c("before", "after") # remove whitespace
       )
@@ -605,11 +610,11 @@ server <- function(input, output, session) {
   }
 
   createOverviewTitle <- function(metricName) {
-    span(paste0(
+    span(
       (currentGeogTime() %>% filter(metric == metricName) %>%
         filter(latest == 1))$chartPeriod,
-      " compared to a year earlier"
-    ), style = "color:grey")
+      style = "color:grey"
+    )
   }
 
   ### 3.4.1 Employment rate ----
@@ -731,11 +736,11 @@ server <- function(input, output, session) {
         ) %>%
         rename(National = value), by = join_by(subgroup)) %>%
       mutate(
-        Growth = label_percent(accuracy = 1)(value),
+        value = label_percent(accuracy = 1)(value),
         National = label_percent(accuracy = 1)(National),
         subgroup = gsub("[[:digit:]]+", "", gsub(" - ", "", subgroup))
       ) %>%
-      select(Occupation = subgroup, Growth, National)
+      select(Occupation = subgroup, `Local growth` = value, `National growth` = National)
   })
 
   output$summaryTopProjectedListTable <- renderDataTable({

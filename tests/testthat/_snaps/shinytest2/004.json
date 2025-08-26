@@ -9,8 +9,13 @@
     "splashMetric": "inemploymentRate"
   },
   "output": {
+<<<<<<< HEAD
     "overviewEmpRateKPI": "77%<br/><span style=\"font-size: 16px;color:black\">+0ppts<\/span>",
     "overviewJobKPI": "43,666<br/><span style=\"font-size: 16px;color:green\">+2,003<\/span>",
+=======
+    "overviewEmpRateKPI": "77%<br/><span style=\"font-size: 16px;color:black\">+0ppts  since  Apr 2023-Mar 2024<\/span>",
+    "overviewJobKPI": "43,666<br/><span style=\"font-size: 16px;color:green\">+2,003  since  Jun-24<\/span>",
+>>>>>>> 03ec759389c91bf35ef3b7510adb3130a42c7895
     "page0title": {
       "html": "Brighton and Hove, East Sussex, West Sussex LSIP headline data",
       "deps": [
