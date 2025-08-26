@@ -45,13 +45,39 @@ server <- function(input, output, session) {
     ))
   })
 
+  # Trigger bookmarking whenever inputs change
   observe({
-    # Trigger this observer every time an input changes
     reactiveValuesToList(input)
     session$doBookmark()
   })
+
+  # Clean up URL after Shiny encodes it
   onBookmarked(function(url) {
-    updateQueryString(url)
+    query <- parseQueryString(sub(".*\\?", "", url))
+
+    # Try to JSON-decode each value; fall back to raw string if not JSON
+    decode <- function(x) {
+      out <- tryCatch(fromJSON(x), error = function(e) x)
+      out
+    }
+    query <- lapply(query, decode)
+
+    # Drop NULLs, empty strings, empty vectors
+    keep <- !sapply(query, function(x) {
+      is.null(x) || identical(x, "") || (is.atomic(x) && length(x) == 0)
+    })
+    query <- query[keep]
+
+    # Flatten vectors into comma-separated strings
+    query <- lapply(query, function(x) {
+      if (length(x) > 1) paste(x, collapse = ",") else as.character(x)
+    })
+
+    # Rebuild clean query string
+    qs <- paste(paste0(names(query), "=", query), collapse = "&")
+    if (qs != "") qs <- paste0("?", qs)
+
+    updateQueryString(qs, mode = "replace", session = session)
   })
 
   ## 1.2 Load chart colours ----
