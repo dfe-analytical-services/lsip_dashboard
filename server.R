@@ -1103,7 +1103,7 @@ server <- function(input, output, session) {
         updateSelectInput(session, "barProfession", choices = "", selected = "")
         shinyjs::show("professionBar_wrapper")
         updateSelectInput(session, "barProfession", choices = c("All", unique(distinctSubgroups$subgroup[distinctSubgroups$breakdown == "Occupation (SOC2020 Major Group)"])))
-      } else {
+      } else if (input$barBreakdown != "") {
         shinyjs::hide("professionBar_wrapper")
         # show only show the top ten
         shinyjs::show("subgroupBar_wrapper")
@@ -1126,19 +1126,21 @@ server <- function(input, output, session) {
   # Updates that occur when the bar chart submajor group filter changes
   observeEvent(input$barProfession,
     {
-      # Show the subgroups for that major profession
-      shinyjs::show("subgroupBar_wrapper")
-      subgroups <- distinctSubgroups$subgroup[distinctSubgroups$metric == input$splashMetric & distinctSubgroups$breakdown == input$barBreakdown]
-      subgroupsBar <- (as.vector(
-        C_topTenEachBreakdown %>%
-          filter(
-            metric == input$splashMetric,
-            breakdown == input$barBreakdown,
-            geogConcat == input$geoChoice,
-            `Occupation (SOC2020 Major Group)` == input$barProfession
-          )
-      ))$subgroup
-      updatePickerInput(session = session, inputId = "barSubgroup", choices = subgroups, selected = subgroupsBar)
+      if (input$barProfession != "") {
+        # Show the subgroups for that major profession
+        shinyjs::show("subgroupBar_wrapper")
+        subgroups <- distinctSubgroups$subgroup[distinctSubgroups$metric == input$splashMetric & distinctSubgroups$breakdown == input$barBreakdown]
+        subgroupsBar <- (as.vector(
+          C_topTenEachBreakdown %>%
+            filter(
+              metric == input$splashMetric,
+              breakdown == input$barBreakdown,
+              geogConcat == input$geoChoice,
+              `Occupation (SOC2020 Major Group)` == input$barProfession
+            )
+        ))$subgroup
+        updatePickerInput(session = session, inputId = "barSubgroup", choices = subgroups, selected = subgroupsBar)
+      }
     },
     ignoreInit = TRUE
   )
@@ -1994,7 +1996,7 @@ server <- function(input, output, session) {
 
   output$Splash_pc <- renderPlotly({
     # check it exists
-    validate(need(Splash_pc() != "x", ""))
+    req(Splash_pc() != "x")
     ggplotly(Splash_pc(),
       tooltip = c("text")
     ) %>%
@@ -2017,22 +2019,24 @@ server <- function(input, output, session) {
 
   #### 2.3.8.6 Bar footnote ----
   output$breakdownFoot <- renderUI({
-    paste0(
-      (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ".",
-      if (input$splashMetric %in% c("achievements", "participation")) {
-        if (input$barBreakdown == "Provision") {
-          " Splits based on learner achievement volumes. The apprenticeship and community learning volumes include all age apprentices and community learners (including under 19) and so the denominator of the provision split is the sum of all age apprentices, all age community learners and 19+ education and training learners."
-        } else {
-          if (input$barBreakdown == "SSA") {
-            " SSA splits are based on Education and Training achievement aims (not all FE learners as in other splits)."
+    if (input$splashMetric %in% distinctBreakdowns$metric) {
+      paste0(
+        (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ".",
+        if (input$splashMetric %in% c("achievements", "participation")) {
+          if (input$barBreakdown == "Provision") {
+            " Splits based on learner achievement volumes. The apprenticeship and community learning volumes include all age apprentices and community learners (including under 19) and so the denominator of the provision split is the sum of all age apprentices, all age community learners and 19+ education and training learners."
           } else {
-            if (input$barBreakdown == "Level") {
-              " Splits are based on learner volumes. Learners can appear in multiple categories if they take multiple courses and as such percentages may add up to more than 100%.  Full level 2 and Full level 3 are shown for interest but are a subset of Level 2 and Level 3."
+            if (input$barBreakdown == "SSA") {
+              " SSA splits are based on Education and Training achievement aims (not all FE learners as in other splits)."
+            } else {
+              if (input$barBreakdown == "Level") {
+                " Splits are based on learner volumes. Learners can appear in multiple categories if they take multiple courses and as such percentages may add up to more than 100%.  Full level 2 and Full level 3 are shown for interest but are a subset of Level 2 and Level 3."
+              }
             }
           }
         }
-      }
-    )
+      )
+    }
   })
 
   ### 2.3.9 Downloads local skills ----
