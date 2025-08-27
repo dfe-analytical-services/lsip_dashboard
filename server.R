@@ -1159,6 +1159,13 @@ server <- function(input, output, session) {
     )
   })
 
+  # update the comparison filter to exclude the current choice
+  observeEvent(input$geoChoice, {
+    updateSelectizeInput(session, "geoComps",
+      choices = lapply(areaChoices, function(x) x[x != input$geoChoice])
+    )
+  })
+
   ## 4.5 National map ----
 
   # If map changes to a different geography, then change are to first in that list
