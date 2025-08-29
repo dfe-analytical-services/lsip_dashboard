@@ -1073,6 +1073,8 @@ server <- function(input, output, session) {
         updateSelectInput(session, "subgroupPage", choices = "", selected = "")
         # Update metric to just the main metric as type is set to All
         currentMetric(input$splashMetric)
+        # also turn on the bar chart filter to allow the option from there
+        shinyjs::show("breakdownBar_wrapper")
       } else {
         # if breakdown option is chosen then show relevant subgroups in top subgroup filter
         shinyjs::show("subgroupPage_wrapper")
