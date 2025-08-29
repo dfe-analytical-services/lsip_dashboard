@@ -1307,11 +1307,11 @@ server <- function(input, output, session) {
             currentMetricSpaces()
           },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData$value), big.mark = ",")
+          format(round(mapDataPopup$value), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
 
-
+    # Create map
     leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
       addProviderTiles(providers$CartoDB.Positron) %>%
       setView(
@@ -1319,103 +1319,6 @@ server <- function(input, output, session) {
         lat = 52.8,
         zoom = 5.7
       ) %>%
-      addPolygons(
-        data = mapData,
-        fillColor = ~ pal(mapData$value),
-        fillOpacity = 1,
-        color = "black",
-        layerId = ~areaCode,
-        weight = 1,
-        highlightOptions = highlightOptions(
-          weight = 2,
-          bringToFront = TRUE
-        ),
-        label = labels,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "12px",
-          direction = "auto"
-        ),
-      ) %>%
-      addPopups(
-        # proxy,
-        lng = C_Geog$LONG[C_Geog$geogConcat == input$geoChoice],
-        lat = C_Geog$LAT[C_Geog$geogConcat == input$geoChoice],
-        popup = popupLabel,
-        layerId = "popup",
-        options = popupOptions(
-          className = "myspecial-popup",
-          textsize = "12px",
-          direction = "auto",
-          closeOnClick = TRUE,
-          closeButton = FALSE
-        )
-      )
-  })
-
-  observe({
-    mapData <- currentMapData() %>% filter(geog == input$splashGeoType)
-    pal <- colorNumeric("Blues", mapData$value)
-    labels <-
-      # if a percentage then format as %, else big number
-      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
-        sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s%%",
-          mapData$areaName,
-          if (currentMetric() %in% unname(unlist(lapply(metricChoices, unlist)))) {
-            "Total"
-          } else {
-            currentMetricSpaces()
-          },
-          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          round(mapData$value * 100)
-        ) %>% lapply(htmltools::HTML)
-      } else {
-        sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s",
-          mapData$areaName,
-          if (currentMetric() %in% unname(unlist(lapply(metricChoices, unlist)))) {
-            "Total"
-          } else {
-            currentMetricSpaces()
-          },
-          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData$value), big.mark = ",")
-        ) %>% lapply(htmltools::HTML)
-      }
-    mapDataPopup <- currentMapData() %>%
-      filter(geogConcat == input$geoChoice)
-
-    popupLabel <-
-      # if a percentage then format as %, else big number
-      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
-        sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s%%",
-          mapDataPopup$areaName,
-          if (currentMetric() %in% unname(unlist(lapply(metricChoices, unlist)))) {
-            "Total"
-          } else {
-            currentMetricSpaces()
-          },
-          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          round(mapDataPopup$value * 100)
-        ) %>% lapply(htmltools::HTML)
-      } else {
-        sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s",
-          mapDataPopup$areaName,
-          if (currentMetric() %in% unname(unlist(lapply(metricChoices, unlist)))) {
-            "Total"
-          } else {
-            currentMetricSpaces()
-          },
-          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData$value), big.mark = ",")
-        ) %>% lapply(htmltools::HTML)
-      }
-    proxy <- leafletProxy("map")
-    proxy %>%
-      clearShapes() %>%
       addPolygons(
         data = mapData,
         fillColor = ~ pal(mapData$value),
@@ -1493,60 +1396,8 @@ server <- function(input, output, session) {
   })
 
   ### 5.6.3 Map----
-  # Render map on initial load with initial load choice of Brighton and employment rate
-  output$mapLA <- renderLeaflet({
-    mapData <- C_Geog %>%
-      filter(
-        geog == "LADU",
-        LSIP == "Brighton and Hove, East Sussex, West Sussex LSIP"
-      ) %>%
-      select(areaName, areaCode, geometry,
-        value = "inemploymentRate"
-      )
-    pal <- colorNumeric("Blues", mapData$value)
-
-    labels <-
-      sprintf(
-        "<strong>%s</strong><br/>%s<br/>%s: %s%%",
-        mapData$areaName,
-        "Total",
-        "Employment rate",
-        round(mapData$value * 100)
-      ) %>% lapply(htmltools::HTML)
-    # Find bounds
-    bbox <- sf::st_bbox(mapData$geometry)
-    bbox_list <- as.list(bbox)
-
-    leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
-      addProviderTiles(providers$CartoDB.Positron) %>%
-      addPolygons(
-        data = mapData,
-        fillColor = ~ pal(mapData$value),
-        fillOpacity = 1,
-        color = "black",
-        layerId = ~areaCode,
-        weight = 1,
-        highlightOptions = highlightOptions(
-          weight = 2,
-          bringToFront = TRUE
-        ),
-        label = labels,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "12px",
-          direction = "auto"
-        )
-      ) %>%
-      fitBounds(
-        lng1 = bbox_list$xmin,
-        lat1 = bbox_list$ymin,
-        lng2 = bbox_list$xmax,
-        lat2 = bbox_list$ymax
-      )
-  })
-
   # Update LA map when interaction
-  observe({
+  output$mapLA <- renderLeaflet({
     # Filter to those LAs in that region
     mapData <- C_Geog %>%
       filter(
@@ -1556,8 +1407,6 @@ server <- function(input, output, session) {
       select(areaName, areaCode, geometry,
         value = currentMetric()
       )
-
-    proxy <- leafletProxy("mapLA")
 
     # If there is no data in any of the LAs (as is the case for some of the subgroups) then create colours (only use grey)
     if (!all(is.na(mapData$value))) {
@@ -1595,8 +1444,8 @@ server <- function(input, output, session) {
     bbox <- sf::st_bbox(mapData$geometry)
     bbox_list <- as.list(bbox)
 
-    proxy %>%
-      clearShapes() %>%
+    leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
+      addProviderTiles(providers$CartoDB.Positron) %>%
       addPolygons(
         data = mapData,
         fillColor = if (all(is.na(mapData$value))) {
