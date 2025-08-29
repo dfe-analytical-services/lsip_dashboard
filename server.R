@@ -1204,7 +1204,11 @@ server <- function(input, output, session) {
 
   ### 5.5.3 Comment ----
   output$commentMap <- renderUI({
+    # Ensure currentMapData has been updated to the current area
     req(input$geoChoice %in% currentMapData()$geogConcat)
+    # Ensure there is data in the latest year (sometimes not the case in small subgroups)
+    req(is.na((currentMapData() %>% filter(geogConcat == input$geoChoice))$value) == FALSE)
+
     compareNational <-
       if ((currentMapData() %>% filter(geogConcat == input$geoChoice))$value
       >
@@ -1639,6 +1643,21 @@ server <- function(input, output, session) {
 
   ### 5.7.1 Comment ----
   output$commentTime <- renderUI({
+    # ensure latest data is available for comparison
+    req(is.na((C_time %>%
+      filter(
+        geogConcat == input$geoChoice,
+        metric == currentMetric(),
+        latest == 1
+      ))$value) == FALSE)
+    # ensure there are at least two data points for comparison
+    req(nrow(C_time %>%
+      filter(
+        geogConcat == input$geoChoice,
+        metric == currentMetric(),
+        is.na(value) == FALSE # remove any rows with no data
+      )) >= 2)
+
     currentArea <- C_time %>%
       filter(
         geogConcat == input$geoChoice,
