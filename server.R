@@ -1168,7 +1168,7 @@ server <- function(input, output, session) {
 
   ## 5.5 National map ----
 
-  # If map changes to a different geography, then change are to first in that list
+  # If map changes to a different geography, then change area to first in that list
   observeEvent(input$splashGeoType, {
     if (tail(strsplit(input$geoChoice, split = " ")[[1]], 1) != input$splashGeoType) {
       updateSelectizeInput(session, "geoChoice",
