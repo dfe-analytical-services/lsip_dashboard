@@ -2158,9 +2158,4 @@ server <- function(input, output, session) {
       rownames = FALSE
     )
   })
-
-  # 8 Stop app -----
-  session$onSessionEnded(function() {
-    stopApp()
-  })
 }

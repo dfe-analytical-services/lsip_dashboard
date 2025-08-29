@@ -16,7 +16,12 @@ summaryTab <- function() {
                 "geoChoiceOver",
                 multiple = FALSE,
                 label = NULL,
-                choices = areaChoices[1:3]
+                choices = areaChoices[1:3],
+                options = list(
+                  persist = TRUE, # keep selected value
+                  create = FALSE, # disallow new values
+                  onDelete = I("function(values) { return false; }")
+                )
               )
             ),
             column(

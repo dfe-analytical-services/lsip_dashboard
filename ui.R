@@ -729,7 +729,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             "geoChoice",
             multiple = FALSE,
             label = "Choose an LSIP, MCA or England",
-            choices = areaChoices[1:3]
+            choices = areaChoices[1:3],
+            options = list(
+              persist = TRUE, # keep selected value
+              create = FALSE, # disallow new values
+              onDelete = I("function(values) { return false; }")
+            )
           ),
           selectizeInput(
             "geoComps",
@@ -748,7 +753,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             inputId = "splashMetric",
             choices = metricChoices,
             multiple = FALSE,
-            label = "What are you interested in?"
+            label = "What are you interested in?",
+            options = list(
+              persist = TRUE, # keep selected value
+              create = FALSE, # disallow new values
+              onDelete = I("function(values) { return false; }")
+            )
           ),
           hidden(
             div(
