@@ -1398,6 +1398,18 @@ server <- function(input, output, session) {
   ### 5.6.3 Map----
   # Update LA map when interaction
   output$mapLA <- renderLeaflet({
+    # If there is no data in any of the LAs (as is the case for some of the subgroups and for London in online job ads) then do not plot
+    shiny::validate(need(
+      all(is.na((C_Geog %>%
+        filter(
+          geog == "LADU",
+          eval(parse(text = tail(strsplit(input$geoChoice, split = " ")[[1]], 1))) == input$geoChoice
+        ) %>%
+        select(areaName, areaCode, geometry,
+          value = currentMetric()
+        ))$value)) == FALSE, "No data is available at LA level."
+    ))
+
     # Filter to those LAs in that region
     mapData <- C_Geog %>%
       filter(
@@ -1408,10 +1420,7 @@ server <- function(input, output, session) {
         value = currentMetric()
       )
 
-    # If there is no data in any of the LAs (as is the case for some of the subgroups) then create colours (only use grey)
-    if (!all(is.na(mapData$value))) {
-      pal <- colorNumeric("Blues", mapData$value)
-    }
+    pal <- colorNumeric("Blues", mapData$value)
 
     labels <-
       # if a percentage then format as %, else big number
@@ -1448,11 +1457,7 @@ server <- function(input, output, session) {
       addProviderTiles(providers$CartoDB.Positron) %>%
       addPolygons(
         data = mapData,
-        fillColor = if (all(is.na(mapData$value))) {
-          "darkgrey"
-        } else {
-          ~ pal(mapData$value)
-        },
+        fillColor = ~ pal(mapData$value),
         fillOpacity = 1,
         color = "black",
         layerId = ~areaCode,
