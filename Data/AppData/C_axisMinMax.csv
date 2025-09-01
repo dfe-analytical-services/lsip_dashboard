@@ -217,7 +217,7 @@
 "inemploymentOccupation (SOC2020 Sub-Major Group)82 - Transport and mobile machine drivers and operatives",NA,NA
 "inemploymentOccupation (SOC2020 Sub-Major Group)91 - Elementary trades and related occupations",NA,NA
 "inemploymentOccupation (SOC2020 Sub-Major Group)92 - Elementary administration and service occupations",NA,NA
-"inemploymentRate",0.685685093568509,0.835092657752756
+"inemploymentRate",0.688205527442585,0.835092657752756
 "participation",11700,1830650
 "participationAge19-24",2940,459590
 "participationAge25+",8500,1377180
@@ -262,7 +262,7 @@
 "sustainedPositiveDestinationKS5RateOutcomeEducation",0.32459831675593,0.641356041931227
 "sustainedPositiveDestinationKS5RateOutcomeEmployment",0.119182789273175,0.374504914185125
 "unemployed",3900,1419100
-"unemployedRate",0.0147821576763485,0.0675628369390184
+"unemployedRate",0.0147821576763485,0.065679012345679
 "vacancies",5784,2188576
 "vacanciesOccupation (SOC2020 Major Group)1 - Managers, directors and senior officials",345,154223
 "vacanciesOccupation (SOC2020 Major Group)2 - Professional occupations",1422,640538
@@ -281,7 +281,7 @@
 "vacanciesOccupation (SOC2020 Sub-Major Group)23 - Teaching and other educational professionals",115,70405
 "vacanciesOccupation (SOC2020 Sub-Major Group)24 - Business, media and public service professionals",368,214661
 "vacanciesOccupation (SOC2020 Sub-Major Group)31 - Science, engineering and technology associate professionals",196,87604
-"vacanciesOccupation (SOC2020 Sub-Major Group)32 - Health and social care associate professionals",144,42529
+"vacanciesOccupation (SOC2020 Sub-Major Group)32 - Health and social care associate professionals",144,43231
 "vacanciesOccupation (SOC2020 Sub-Major Group)33 - Protective service occupations",9,6638
 "vacanciesOccupation (SOC2020 Sub-Major Group)34 - Culture, media and sports occupations",80,31768
 "vacanciesOccupation (SOC2020 Sub-Major Group)35 - Business and public service associate professionals",538,282392

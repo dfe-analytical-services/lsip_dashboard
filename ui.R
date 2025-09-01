@@ -486,18 +486,22 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("22 Aug 2025 (1.5.1)"),
+            p("29 Aug 2025 (1.5.2)"),
             tags$ul(
-              tags$li("Refresh of the summary page."),
-              tags$li("Remove LEP maps and add in National picture."),
-              tags$li("Add in page wide subgroup filters to the Local Skills data page."),
-              tags$li("Update Skills Imperative projection long term growth metric to 2024 to 2035."),
-              tags$li("Utilise the populations published in FE data to calculate grouped FE per 100k statistics.")
+              tags$li("Update to latest online job advert data.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("22 Aug 2025 (1.5.1)"),
+                tags$ul(
+                  tags$li("Refresh of the summary page."),
+                  tags$li("Remove LEP maps and add in National picture."),
+                  tags$li("Add in page wide subgroup filters to the Local Skills data page."),
+                  tags$li("Update Skills Imperative projection long term growth metric to 2024 to 2035."),
+                  tags$li("Utilise the populations published in FE data to calculate grouped FE per 100k statistics.")
+                ),
                 p("5 Aug 2025 (1.4.17)"),
                 tags$ul(
                   tags$li("Update to latest online job advert data.")
