@@ -258,13 +258,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
   ),
   tags$script(
     " $(document).ready(function () {
-                $('#link_to_tabpanel_employment2').on('click', function (e) {
-                window.scrollTo(0, 0)
-                });
-                });"
-  ),
-  tags$script(
-    " $(document).ready(function () {
                 $('#link_to_tabpanel_vacancies2').on('click', function (e) {
                 window.scrollTo(0, 0)
                 });
@@ -486,9 +479,11 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("29 Aug 2025 (1.5.2)"),
+            p("02 Sep 2025 (1.5.2)"),
             tags$ul(
-              tags$li("Update to latest online job advert data.")
+              tags$li("Update to latest online job advert data."),
+              tags$li("Reorganise the filter methodology to speed up the dashboard."),
+              tags$li("Small bug fixes.")
             ),
             details(
               label = "Previous updates",
@@ -732,26 +727,53 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       fluidRow(
         column(
           5,
-          p("Choose a LSIP, MCA or England"),
           selectizeInput(
             "geoChoice",
             multiple = FALSE,
-            label = NULL,
-            choices = areaChoices[1:3]
+            label = "Choose an LSIP, MCA or England",
+            choices = areaChoices[1:3],
+            options = list(
+              persist = TRUE, # keep selected value
+              create = FALSE, # disallow new values
+              onDelete = I("function(values) { return false; }")
+            )
           ),
-          uiOutput("geoComp")
+          selectizeInput(
+            "geoComps",
+            multiple = TRUE,
+            label = NULL,
+            choices = areaChoices,
+            options = list(
+              maxItems = 7,
+              placeholder = "Comparison areas (LA/LSIP/MCA/National"
+            )
+          )
         ),
         column(
           5,
-          p("What are you interested in?"),
-          pickerInput(
+          selectizeInput(
             inputId = "splashMetric",
             choices = metricChoices,
-            multiple = FALSE
+            multiple = FALSE,
+            label = "What are you interested in?",
+            options = list(
+              persist = TRUE, # keep selected value
+              create = FALSE, # disallow new values
+              onDelete = I("function(values) { return false; }")
+            )
           ),
-          uiOutput("breakdownPageTitle"),
-          uiOutput("breakdownPageFilter"),
-          uiOutput("subgroupPageFilter")
+          hidden(
+            div(
+              id = "breakdownPage_wrapper",
+              selectInput("breakdownPage", "Limit to subgroup:", choices = "")
+            )
+          ),
+          hidden(
+            div(
+              id = "subgroupPage_wrapper",
+              selectInput("subgroupPage", "Subgroup:", choices = "")
+            )
+          )
         ),
         column(
           2,
@@ -791,9 +813,27 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         column(
           6,
           h3(uiOutput("titleBreakdown")),
-          uiOutput("breakdownFilter"),
-          uiOutput("professionFilter"),
-          uiOutput("subgroupFilter"),
+          hidden(
+            div(
+              id = "breakdownBar_wrapper",
+              selectInput("barBreakdown", "Subgroup type", choices = "")
+            )
+          ),
+          hidden(
+            div(
+              id = "professionBar_wrapper",
+              selectInput("barProfession", "Limit to particular SOC2020 Major group", choices = "")
+            )
+          ),
+          hidden(
+            div(
+              id = "subgroupBar_wrapper",
+              pickerInput(
+                inputId = "barSubgroup", label = NULL, choices = "",
+                multiple = TRUE, options = list(`actions-box` = TRUE, `live-search` = TRUE)
+              )
+            )
+          ),
           p(uiOutput("commentBreakdown")),
           uiOutput("breadownPlot"),
           p(uiOutput("breakdownFoot"))

@@ -158,7 +158,7 @@ cond_color <- function(condition, true_color = "green") {
     return("black")
   }
   # if change too small
-  if (abs(condition) < 0.0005) {
+  if (abs(condition) < 0.005) {
     return("black")
   }
   colours <- c("green", "#e00000")
