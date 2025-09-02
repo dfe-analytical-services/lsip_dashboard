@@ -78,7 +78,7 @@ formatNomis <- function(x) {
     )) %>%
     mutate(geogConcat = case_when(
       GEOGRAPHY_TYPE == "local authorities: district / unitary (as of April 2021)" ~ paste0(GEOGRAPHY_NAME, " LADU"),
-      GEOGRAPHY_TYPE == "combined authorities" ~ paste0(GEOGRAPHY_NAME, " MCA"),
+      GEOGRAPHY_TYPE == "combined authorities (as of May 2025)" ~ paste0(GEOGRAPHY_NAME, " MCA"),
       TRUE ~ GEOGRAPHY_NAME
     )) %>%
     select(-GEOGRAPHY_TYPE, -GEOGRAPHY_NAME, -GEOGRAPHY_CODE) %>%
@@ -158,7 +158,7 @@ cond_color <- function(condition, true_color = "green") {
     return("black")
   }
   # if change too small
-  if (abs(condition) < 0.0005) {
+  if (abs(condition) < 0.005) {
     return("black")
   }
   colours <- c("green", "#e00000")

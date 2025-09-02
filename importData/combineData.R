@@ -349,7 +349,9 @@ areaChoicesUnique<-C_time%>%
          areaClean=gsub("\\s+\\w*$", "", geogConcat)
   )%>%
   #filter out closed areas
-  filter(!geogConcat %in% c("Black Country LEP", "Coventry and Warwickshire LEP", "Outside of an English Devolved Area and unknown MCA", "NA LADU"))%>%
+  filter(!geogConcat %in% c("Black Country LEP", "Coventry and Warwickshire LEP", "Outside of an English Devolved Area and unknown MCA", "North of Tyne MCA", "NA LADU"))%>%
+  #temporarily filter out new MCAs
+  filter(!geogConcat %in% c("Devon and Torbay MCA", "Greater Lincolnshire MCA", "Hull and East Yorkshire MCA", "Lancashire MCA"))%>%
   arrange(geography,geogConcat)
 #check these aren;t in there
 

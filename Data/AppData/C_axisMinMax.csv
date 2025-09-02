@@ -1,21 +1,21 @@
 "metric","minAxis","maxAxis"
-"L3PlusRate",0.484138124649074,0.783058823529412
+"L3PlusRate",0.482899921197794,0.783058823529412
 "L3PlusRateAge16-19",0,0.440677966101695
 "L3PlusRateAge20-24",0.443298969072165,1
 "L3PlusRateAge25-29",0.556213017751479,1
-"L3PlusRateAge30-39",0.530581039755352,0.88135593220339
-"L3PlusRateAge40-49",0.514907332796132,0.879161528976572
+"L3PlusRateAge30-39",0.523622047244094,0.88135593220339
+"L3PlusRateAge40-49",0.50784475639967,0.879161528976572
 "L3PlusRateAge50-64",0.387704918032787,0.795088257866462
-"L3PlusRateGenderFemales",0.514589665653495,0.786597267404034
+"L3PlusRateGenderFemales",0.510331872260488,0.786597267404034
 "L3PlusRateGenderMales",0.439623180131316,0.786938397406207
-"L4PlusRate",0.308662613981763,0.616993035641131
+"L4PlusRate",0.303210649960846,0.616993035641131
 "L4PlusRateAge16-19",0,0.101694915254237
-"L4PlusRateAge20-24",0.186390532544379,0.592417061611374
-"L4PlusRateAge25-29",0.284090909090909,0.90745501285347
-"L4PlusRateAge30-39",0.321100917431193,0.753738783649053
+"L4PlusRateAge20-24",0.173228346456693,0.592417061611374
+"L4PlusRateAge25-29",0.245125348189415,0.90745501285347
+"L4PlusRateAge30-39",0.317322834645669,0.753738783649053
 "L4PlusRateAge40-49",0.344586728754366,0.741379310344828
 "L4PlusRateAge50-64",0.261065573770492,0.648503453568688
-"L4PlusRateGenderFemales",0.325067224380042,0.64440172993753
+"L4PlusRateGenderFemales",0.320110701107011,0.64440172993753
 "L4PlusRateGenderMales",0.271812080536913,0.616876344436477
 "achievements",7200,1252510
 "achievementsAge19-24",1400,260550
@@ -262,7 +262,7 @@
 "sustainedPositiveDestinationKS5RateOutcomeEducation",0.32459831675593,0.641356041931227
 "sustainedPositiveDestinationKS5RateOutcomeEmployment",0.119182789273175,0.374504914185125
 "unemployed",3900,1419100
-"unemployedRate",0.0147821576763485,0.0675628369390184
+"unemployedRate",0.0141358869129047,0.0675628369390184
 "vacancies",5784,2188576
 "vacanciesOccupation (SOC2020 Major Group)1 - Managers, directors and senior officials",345,154223
 "vacanciesOccupation (SOC2020 Major Group)2 - Professional occupations",1422,640538
@@ -281,7 +281,7 @@
 "vacanciesOccupation (SOC2020 Sub-Major Group)23 - Teaching and other educational professionals",115,70405
 "vacanciesOccupation (SOC2020 Sub-Major Group)24 - Business, media and public service professionals",368,214661
 "vacanciesOccupation (SOC2020 Sub-Major Group)31 - Science, engineering and technology associate professionals",196,87604
-"vacanciesOccupation (SOC2020 Sub-Major Group)32 - Health and social care associate professionals",144,42529
+"vacanciesOccupation (SOC2020 Sub-Major Group)32 - Health and social care associate professionals",144,43231
 "vacanciesOccupation (SOC2020 Sub-Major Group)33 - Protective service occupations",9,6638
 "vacanciesOccupation (SOC2020 Sub-Major Group)34 - Culture, media and sports occupations",80,31768
 "vacanciesOccupation (SOC2020 Sub-Major Group)35 - Business and public service associate professionals",538,282392
