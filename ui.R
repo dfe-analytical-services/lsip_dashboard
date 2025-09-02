@@ -479,9 +479,11 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("27 Aug 2025 (1.5.2)"),
+            p("02 Sep 2025 (1.5.2)"),
             tags$ul(
-              tags$li("Reorganise the filter methodology to speed up the dashboard.")
+              tags$li("Update to latest online job advert data."),
+              tags$li("Reorganise the filter methodology to speed up the dashboard."),
+              tags$li("Small bug fixes.")
             ),
             details(
               label = "Previous updates",

@@ -151,7 +151,7 @@ employmentProjections <- bind_rows(
   employmentProjectionsCorrections,
   employmentProjectionsEntM3Lsip
 )%>%#filter out LEPs
-  filter(str_sub(geogConcat, start = -3) !="LEP")
+  filter(stringr::str_sub(geogConcat, start = -3) !="LEP")
 
 # Get future year on year growth metric
 empGrowth <- employmentProjections %>%
