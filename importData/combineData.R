@@ -79,12 +79,7 @@ C_time <- C_localSkillsDataset %>%
   )) %>% # set metric name to subgroup when we want subgroup data
   select(geogConcat, metric, timePeriod, chartPeriod, latest, value, valueText) %>%
   mutate(metric = gsub("employmentProjectionAnnualGrowth","employmentProjection",metric))# for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
-#Need to split this to two files less than 100mb to upload to git
-index <- seq.int(nrow(C_time) / 2)
-C_time1<-C_time[index, ]
-C_time2<-C_time[-index, ]
-write.csv(C_time1, file = "Data\\AppData\\C_time1.csv", row.names = FALSE)
-write.csv(C_time2, file = "Data\\AppData\\C_time2.csv", row.names = FALSE)
+saveRDS(C_time, file = "Data/AppData/C_time.rds")
 
 ### 4.2.1 Axis min and max ----
 # Create max and min for each metric used in setting axis on the overview page
@@ -92,7 +87,7 @@ C_axisMinMax <- C_time %>%
   filter(stringr::str_sub(geogConcat, -4, -1) != "LADU") %>%
   group_by(metric) %>%
   summarise(minAxis = min(value), maxAxis = max(value)) # , .groups = "drop"
-write.csv(C_axisMinMax, file = "Data\\AppData\\C_axisMinMax.csv", row.names = FALSE)
+saveRDS(C_axisMinMax, file = "Data/AppData/C_axisMinMax.rds")
 
 ## 4.3 C_breakdown ----
 # This is used in the bar chart. It contains the latest data with all splits available.
@@ -162,7 +157,7 @@ C_breakdown <- bind_rows(
     metric == "employmentProjectionGrowth2024to2035" ~ "employmentProjection",
     TRUE ~ metric
   )) # for the emp projections page we use two metrics on different charts. we give them the same name so the filters work
-write.csv(C_breakdown, file = "Data\\AppData\\C_breakdown.csv", row.names = FALSE)
+saveRDS(C_breakdown, file = "Data/AppData/C_breakdown.rds")
 
 ### 4.3.1 Find top ten for each breakdown ----
 # (these are chosen in the filter)
@@ -186,7 +181,7 @@ C_detailLookup <- C_breakdown %>%
     )
   ) %>%
   select(`Occupation (SOC2020 Major Group)`, `Occupation (SOC2020 Sub-Major Group)` = subgroup)
-write.csv(C_detailLookup, file = "Data\\AppData\\C_detailLookup.csv", row.names = FALSE)
+saveRDS(C_detailLookup, file = "Data/AppData/C_detailLookup.rds")
 
 C_topTenEachBreakdown <-
   bind_rows(
@@ -218,7 +213,7 @@ C_topTenEachBreakdown <-
       slice(1:10)
   ) %>%
   select(metric, breakdown, geogConcat, subgroup, `Occupation (SOC2020 Major Group)`)
-write.csv(C_topTenEachBreakdown, file = "Data\\AppData\\C_topTenEachBreakdown.csv", row.names = FALSE)
+saveRDS(C_topTenEachBreakdown, file = "Data/AppData/C_topTenEachBreakdown.rds")
 
 ## 4.4 C_dataHub ----
 # This is used in the data explorer page
@@ -274,7 +269,7 @@ C_datahubLimitAds <- bind_rows(
   C_datahub %>%
     filter(metric != "vacancies")
 ) %>% select(-latest)
-write.csv(C_datahubLimitAds, file = "Data\\AppData\\C_datahub.csv", row.names = FALSE)
+saveRDS(C_datahubLimitAds, file = "Data/AppData/C_datahub.rds")
 
 ## 4.5 Core indicator download ----
 list_of_datasets0 <- list(
