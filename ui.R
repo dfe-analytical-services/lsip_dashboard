@@ -468,26 +468,32 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         # end of dashboard contents row
 
         ### 2.1.3 Version control ----
-        fluidRow(column(
-          12,
+      fluidRow(column(
+        12,
+        div(
+          class = "panel panel-info",
           div(
-            class = "panel panel-info",
-            div(
-              class = "panel-heading",
-              style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-              h2("Update history")
+            class = "panel-heading",
+            style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
+            h2("Update history")
+          ),
+          div(
+            class = "panel-body",
+            h2("Latest update"),
+            p("05 Sep 2025 (1.5.3)"),
+            tags$ul(
+              tags$li("Add dynamic URLs.")
             ),
-            div(
-              class = "panel-body",
-              h2("Latest update"),
-              p("27 Aug 2025 (1.5.2)"),
-              tags$ul(
-                tags$li("Reorganise the filter methodology to speed up the dashboard.")
-              ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+            p("02 Sep 2025 (1.5.2)"),
+            tags$ul(
+              tags$li("Update to latest online job advert data."),
+              tags$li("Reorganise the filter methodology to speed up the dashboard."),
+              tags$li("Small bug fixes.")
+            ),
                   p("22 Aug 2025 (1.5.1)"),
                   tags$ul(
                     tags$li("Refresh of the summary page."),
@@ -718,29 +724,47 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       ## 2.2 Overview ----
       summaryTab(),
 
-      ## 2.3 Local skills ----
-      tabPanel(
-        "Local skills data",
-        br(),
-        ### 2.3.1 Filters ----
-        fluidRow(
-          column(
-            5,
-            selectizeInput(
-              "geoChoice",
-              multiple = FALSE,
-              label = "Choose an LSIP, MCA or England",
-              choices = areaChoices[1:3]
-            ),
-            selectizeInput(
-              "geoComps",
-              multiple = TRUE,
-              label = NULL,
-              choices = areaChoices,
-              options = list(
-                maxItems = 7,
-                placeholder = "Comparison areas (LA/LSIP/MCA/National"
-              )
+    ## 2.3 Local skills ----
+    tabPanel(
+      "Local skills data",
+      br(),
+      ### 2.3.1 Filters ----
+      fluidRow(
+        column(
+          5,
+          selectizeInput(
+            "geoChoice",
+            multiple = FALSE,
+            label = "Choose an LSIP, MCA or England",
+            choices = areaChoices[1:3],
+            options = list(
+              persist = TRUE, # keep selected value
+              create = FALSE, # disallow new values
+              onDelete = I("function(values) { return false; }")
+            )
+          ),
+          selectizeInput(
+            "geoComps",
+            multiple = TRUE,
+            label = NULL,
+            choices = areaChoices,
+            options = list(
+              maxItems = 7,
+              placeholder = "Comparison areas (LA/LSIP/MCA/National"
+            )
+          )
+        ),
+        column(
+          5,
+          selectizeInput(
+            inputId = "splashMetric",
+            choices = metricChoices,
+            multiple = FALSE,
+            label = "What are you interested in?",
+            options = list(
+              persist = TRUE, # keep selected value
+              create = FALSE, # disallow new values
+              onDelete = I("function(values) { return false; }")
             )
           ),
           column(

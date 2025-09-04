@@ -194,7 +194,7 @@ server <- function(input, output, session) {
     updateTabsetPanel(session, "navbar", "Data sources")
   })
   # 3 Data sources ----
-  ## 2.1 Data table download links----
+  ## 3.1 Data table download links----
   output$downloadData1 <- downloadHandler(
     filename = function() {
       "EmploymentVolumes.xlsx"
@@ -373,7 +373,7 @@ server <- function(input, output, session) {
     downloadLink(paste0("downloadData", i), "download", class = "hiddenLink")
   }))
 
-  ## 2.2 Data table ----
+  ## 3.1 Data table ----
   output$DataTbl <- renderDataTable({
     DT::datatable(
       I_DataTable %>%
@@ -393,7 +393,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # 3 Summary ----
+  # 4 Summary ----
 
   # Add link to local skills data
   observeEvent(input$link_to_tabpanel_LS, {
@@ -405,7 +405,7 @@ server <- function(input, output, session) {
     paste0(input$geoChoiceOver, " headline data")
   })
 
-  ## 3.1 Filter ----
+  ## 4.1 Filter ----
   # alter area dropdown if changed on other tab
   observeEvent(input$geoChoice, {
     if (input$geoChoiceOver != input$geoChoice) {
@@ -415,7 +415,7 @@ server <- function(input, output, session) {
     }
   })
 
-  ## 3.2 Screenshot----
+  ## 4.2 Screenshot----
   output$screenshotOverview <- renderUI({
     capture::capture(
       selector = "body",
@@ -425,7 +425,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ##  3.3 Downloads ----
+  ##  4.3 Downloads ----
   # download all indicators
   output$download_btn0a <- downloadHandler(
     filename = function() {
@@ -508,7 +508,7 @@ server <- function(input, output, session) {
     }
   )
 
-  ## 3.4 KPIs and charts----
+  ## 4.4 KPIs and charts----
   currentGeogTime <- eventReactive(input$geoChoiceOver, {
     C_time %>%
       filter(geogConcat == input$geoChoiceOver)
@@ -662,7 +662,7 @@ server <- function(input, output, session) {
     )
   }
 
-  ### 3.4.1 Employment rate ----
+  ### 4.4.1 Employment rate ----
   # Create title
   output$overviewEmpRateTitle <- renderText({
     paste0(
@@ -686,7 +686,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ### 3.4.2 Job adverts ----
+  ### 4.4.2 Job adverts ----
   # Create title
   output$overviewJobTitle <- renderText({
     paste0(
@@ -713,7 +713,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ### 3.4.3 FE app achieve ----
+  ### 4.4.3 FE app achieve ----
   # Create title
   output$overviewAppTitle <- renderText({
     paste0(
@@ -740,7 +740,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ## 3.5 Skills projections ----
+  ## 4.5 Skills projections ----
   # Top projected jobs sentence
   output$summaryTopProjected <- renderUI({
     paste0(
@@ -799,7 +799,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ## 3.6 Businesses ----
+  ## 4.6 Businesses ----
 
   # Get data
   chartData <- reactive({
@@ -1001,9 +1001,9 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
 
-  # 4 Local skills----
+  # 5 Local skills----
 
-  ## 4.1 Reusable variables----
+  ## 5.1 Reusable variables----
   # get current metric in plain English
   currentMetricClean <- reactive({
     sub("fe", "FE", tolower(gsub("^.*\\.", "", names(
@@ -1015,7 +1015,7 @@ server <- function(input, output, session) {
   englandGeog <- C_Geog %>%
     filter(geog == "England" & areaName == "England")
 
-  ## 4.2 Screenshot----
+  ## 5.2 Screenshot----
   output$screenshotFile <- renderUI({
     capture::capture(
       selector = "body",
@@ -1026,7 +1026,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ## 4.3 Dynamic text----
+  ## 5.3 Dynamic text----
   # create subheading
   output$subheading <- renderUI({
     req(input$geoChoice)
@@ -1061,7 +1061,7 @@ server <- function(input, output, session) {
     HTML((I_DataText %>% filter(metric == input$splashMetric))$caveatText)
   })
 
-  ## 4.4 Filters----
+  ## 5.4 Filters----
   # Update if summary tab filter changed
   observeEvent(input$geoChoiceOver, {
     if (input$geoChoice != input$geoChoiceOver) {
@@ -1118,6 +1118,8 @@ server <- function(input, output, session) {
         updateSelectInput(session, "subgroupPage", choices = "", selected = "")
         # Update metric to just the main metric as type is set to All
         currentMetric(input$splashMetric)
+        # also turn on the bar chart filter to allow the option from there
+        shinyjs::show("breakdownBar_wrapper")
       } else {
         # if breakdown option is chosen then show relevant subgroups in top subgroup filter
         shinyjs::show("subgroupPage_wrapper")
@@ -1204,9 +1206,16 @@ server <- function(input, output, session) {
     )
   })
 
-  ## 4.5 National map ----
+  # update the comparison filter to exclude the current choice
+  observeEvent(input$geoChoice, {
+    updateSelectizeInput(session, "geoComps",
+      choices = lapply(areaChoices, function(x) x[x != input$geoChoice])
+    )
+  })
 
-  # If map changes to a different geography, then change are to first in that list
+  ## 5.5 National map ----
+
+  # If map changes to a different geography, then change area to first in that list
   observeEvent(input$splashGeoType, {
     if (tail(strsplit(input$geoChoice, split = " ")[[1]], 1) != input$splashGeoType) {
       updateSelectizeInput(session, "geoChoice",
@@ -1222,7 +1231,7 @@ server <- function(input, output, session) {
       )
     }
   })
-  ### 4.5.1 Title ----
+  ### 5.5.1 Title ----
   output$titleMap <- renderUI({
     if (input$geoChoice == "England") {
       paste0("Latest England data")
@@ -1231,7 +1240,7 @@ server <- function(input, output, session) {
     }
   })
 
-  ### 4.5.2 Map data----
+  ### 5.5.2 Map data----
   currentMapData <- reactive({
     C_Geog %>%
       filter(geog == input$splashGeoType | geog == "England") %>%
@@ -1240,9 +1249,13 @@ server <- function(input, output, session) {
       )
   })
 
-  #### 2.3.5.2 Comment ----
+  ### 5.5.3 Comment ----
   output$commentMap <- renderUI({
+    # Ensure currentMapData has been updated to the current area
     req(input$geoChoice %in% currentMapData()$geogConcat)
+    # Ensure there is data in the latest year (sometimes not the case in small subgroups)
+    req(is.na((currentMapData() %>% filter(geogConcat == input$geoChoice))$value) == FALSE)
+
     compareNational <-
       if ((currentMapData() %>% filter(geogConcat == input$geoChoice))$value
       >
@@ -1283,7 +1296,7 @@ server <- function(input, output, session) {
     )
   })
 
-  #### 2.3.5.3 Map ----
+  ### 5.5.4 Map ----
   output$map <- renderLeaflet({
     mapData <- currentMapData() %>% filter(geog == input$splashGeoType)
     pal <- colorNumeric("Blues", mapData$value)
@@ -1341,11 +1354,11 @@ server <- function(input, output, session) {
             currentMetricSpaces()
           },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData$value), big.mark = ",")
+          format(round(mapDataPopup$value), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
 
-
+    # Create map
     leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
       addProviderTiles(providers$CartoDB.Positron) %>%
       setView(
@@ -1387,116 +1400,19 @@ server <- function(input, output, session) {
       )
   })
 
-  observe({
-    mapData <- currentMapData() %>% filter(geog == input$splashGeoType)
-    pal <- colorNumeric("Blues", mapData$value)
-    labels <-
-      # if a percentage then format as %, else big number
-      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
-        sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s%%",
-          mapData$areaName,
-          if (currentMetric() %in% unname(unlist(lapply(metricChoices, unlist)))) {
-            "Total"
-          } else {
-            currentMetricSpaces()
-          },
-          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          round(mapData$value * 100)
-        ) %>% lapply(htmltools::HTML)
-      } else {
-        sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s",
-          mapData$areaName,
-          if (currentMetric() %in% unname(unlist(lapply(metricChoices, unlist)))) {
-            "Total"
-          } else {
-            currentMetricSpaces()
-          },
-          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData$value), big.mark = ",")
-        ) %>% lapply(htmltools::HTML)
-      }
-    mapDataPopup <- currentMapData() %>%
-      filter(geogConcat == input$geoChoice)
-
-    popupLabel <-
-      # if a percentage then format as %, else big number
-      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
-        sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s%%",
-          mapDataPopup$areaName,
-          if (currentMetric() %in% unname(unlist(lapply(metricChoices, unlist)))) {
-            "Total"
-          } else {
-            currentMetricSpaces()
-          },
-          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          round(mapDataPopup$value * 100)
-        ) %>% lapply(htmltools::HTML)
-      } else {
-        sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s",
-          mapDataPopup$areaName,
-          if (currentMetric() %in% unname(unlist(lapply(metricChoices, unlist)))) {
-            "Total"
-          } else {
-            currentMetricSpaces()
-          },
-          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData$value), big.mark = ",")
-        ) %>% lapply(htmltools::HTML)
-      }
-    proxy <- leafletProxy("map")
-    proxy %>%
-      clearShapes() %>%
-      addPolygons(
-        data = mapData,
-        fillColor = ~ pal(mapData$value),
-        fillOpacity = 1,
-        color = "black",
-        layerId = ~areaCode,
-        weight = 1,
-        highlightOptions = highlightOptions(
-          weight = 2,
-          bringToFront = TRUE
-        ),
-        label = labels,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "12px",
-          direction = "auto"
-        ),
-      ) %>%
-      addPopups(
-        # proxy,
-        lng = C_Geog$LONG[C_Geog$geogConcat == input$geoChoice],
-        lat = C_Geog$LAT[C_Geog$geogConcat == input$geoChoice],
-        popup = popupLabel,
-        layerId = "popup",
-        options = popupOptions(
-          className = "myspecial-popup",
-          textsize = "12px",
-          direction = "auto",
-          closeOnClick = TRUE,
-          closeButton = FALSE
-        )
-      )
-  })
-
-  #### 2.3.5.4 Map footnote ----
+  ### 5.4.5 Map footnote ----
   output$mapFoot <- renderUI({
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ". Click an area to update dashboard."
     )
   })
 
-  ## 4.6 LA map ----
-  #### 2.3.6.1 Title ----
+  ## 5.6 LA map ----
+  ### 5.6.1 Title ----
   output$titleLaMap <- renderUI({
     paste0("What is the variation within ", input$geoChoice, "?")
   })
-  #### 2.3.6.2 Comment----
+  ### 5.6.2 Comment----
   output$commentLA <- renderUI({
     LaHighLow <- # Filter to those LAs in that region
       C_Geog %>%
@@ -1526,27 +1442,60 @@ server <- function(input, output, session) {
     }
   })
 
-  #### 2.3.6.3 Map----
-  # Render map on initial load with initial load choice of Brighton and employment rate
+  ### 5.6.3 Map----
+  # Update LA map when interaction
   output$mapLA <- renderLeaflet({
+    # If there is no data in any of the LAs (as is the case for some of the subgroups and for London in online job ads) then do not plot
+    shiny::validate(need(
+      all(is.na((C_Geog %>%
+        filter(
+          geog == "LADU",
+          eval(parse(text = tail(strsplit(input$geoChoice, split = " ")[[1]], 1))) == input$geoChoice
+        ) %>%
+        select(areaName, areaCode, geometry,
+          value = currentMetric()
+        ))$value)) == FALSE, "No data is available at LA level."
+    ))
+
+    # Filter to those LAs in that region
     mapData <- C_Geog %>%
       filter(
         geog == "LADU",
-        LSIP == "Brighton and Hove, East Sussex, West Sussex LSIP"
+        eval(parse(text = tail(strsplit(input$geoChoice, split = " ")[[1]], 1))) == input$geoChoice
       ) %>%
       select(areaName, areaCode, geometry,
-        value = "inemploymentRate"
+        value = currentMetric()
       )
+
     pal <- colorNumeric("Blues", mapData$value)
 
     labels <-
-      sprintf(
-        "<strong>%s</strong><br/>%s<br/>%s: %s%%",
-        mapData$areaName,
-        "Total",
-        "Employment rate",
-        round(mapData$value * 100)
-      ) %>% lapply(htmltools::HTML)
+      # if a percentage then format as %, else big number
+      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
+        sprintf(
+          "<strong>%s</strong><br/>%s<br/>%s: %s%%",
+          mapData$areaName,
+          if (currentMetric() %in% unname(unlist(lapply(metricChoices, unlist)))) {
+            "Total"
+          } else {
+            currentMetricSpaces()
+          },
+          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
+          round(mapData$value * 100)
+        ) %>% lapply(htmltools::HTML)
+      } else {
+        sprintf(
+          "<strong>%s</strong><br/>%s<br/>%s: %s",
+          mapData$areaName,
+          if (currentMetric() %in% unname(unlist(lapply(metricChoices, unlist)))) {
+            "Total"
+          } else {
+            currentMetricSpaces()
+          },
+          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
+          format(round(mapData$value), big.mark = ",")
+        ) %>% lapply(htmltools::HTML)
+      }
     # Find bounds
     bbox <- sf::st_bbox(mapData$geometry)
     bbox_list <- as.list(bbox)
@@ -1577,106 +1526,39 @@ server <- function(input, output, session) {
         lng2 = bbox_list$xmax,
         lat2 = bbox_list$ymax
       )
-  })
-
-  # Update LA map when interaction
-  observe({
-    # Filter to those LAs in that region
-    mapData <- C_Geog %>%
-      filter(
-        geog == "LADU",
-        eval(parse(text = tail(strsplit(input$geoChoice, split = " ")[[1]], 1))) == input$geoChoice
-      ) %>%
-      select(areaName, areaCode, geometry,
-        value = currentMetric()
-      )
-
-    proxy <- leafletProxy("mapLA")
-
-    # If there is no data in any of the LAs (as is the case for some of the subgroups) then create colours (only use grey)
-    if (!all(is.na(mapData$value))) {
-      pal <- colorNumeric("Blues", mapData$value)
-    }
-
-    labels <-
-      # if a percentage then format as %, else big number
-      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
-        sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s%%",
-          mapData$areaName,
-          if (currentMetric() %in% unname(unlist(lapply(metricChoices, unlist)))) {
-            "Total"
-          } else {
-            currentMetricSpaces()
-          },
-          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          round(mapData$value * 100)
-        ) %>% lapply(htmltools::HTML)
-      } else {
-        sprintf(
-          "<strong>%s</strong><br/>%s<br/>%s: %s",
-          mapData$areaName,
-          if (currentMetric() %in% unname(unlist(lapply(metricChoices, unlist)))) {
-            "Total"
-          } else {
-            currentMetricSpaces()
-          },
-          (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData$value), big.mark = ",")
-        ) %>% lapply(htmltools::HTML)
-      }
-    # Find bounds
-    bbox <- sf::st_bbox(mapData$geometry)
-    bbox_list <- as.list(bbox)
-
-    proxy %>%
-      clearShapes() %>%
-      addPolygons(
-        data = mapData,
-        fillColor = if (all(is.na(mapData$value))) {
-          "darkgrey"
-        } else {
-          ~ pal(mapData$value)
-        },
-        fillOpacity = 1,
-        color = "black",
-        layerId = ~areaCode,
-        weight = 1,
-        highlightOptions = highlightOptions(
-          weight = 2,
-          bringToFront = TRUE
-        ),
-        label = labels,
-        labelOptions = labelOptions(
-          style = list("font-weight" = "normal", padding = "3px 8px"),
-          textsize = "12px",
-          direction = "auto"
-        )
-      ) %>%
-      fitBounds(
-        lng1 = bbox_list$xmin,
-        lat1 = bbox_list$ymin,
-        lng2 = bbox_list$xmax,
-        lat2 = bbox_list$ymax
-      )
     # }
   })
 
-  #### 2.3.6.4 Map footnote ----
+  ### 5.6.4 Map footnote ----
   output$mapLaFoot <- renderUI({
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ". Click an area to update other charts with LA data."
     )
   })
 
-  ## 2.3.7 Time chart ----
+  ## 5.7 Time chart ----
   # create time header
   output$titleTime <- renderUI({
     paste0("How ", (I_DataText %>% filter(metric == input$splashMetric))$timeTitle, " over time?")
   })
 
-  #### 2.3.7.1 Comment ----
+  ### 5.7.1 Comment ----
   output$commentTime <- renderUI({
+    # ensure latest data is available for comparison
+    req(is.na((C_time %>%
+      filter(
+        geogConcat == input$geoChoice,
+        metric == currentMetric(),
+        latest == 1
+      ))$value) == FALSE)
+    # ensure there are at least two data points for comparison
+    req(nrow(C_time %>%
+      filter(
+        geogConcat == input$geoChoice,
+        metric == currentMetric(),
+        is.na(value) == FALSE # remove any rows with no data
+      )) >= 2)
+
     currentArea <- C_time %>%
       filter(
         geogConcat == input$geoChoice,
@@ -1736,7 +1618,7 @@ server <- function(input, output, session) {
     )
   })
 
-  #### 2.3.7.2 Chart ----
+  ### 5.7.2 Chart ----
   output$Splash_time <- renderPlotly({
     df <- C_time %>%
       filter(
@@ -1844,7 +1726,7 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
 
-  #### 2.3.7.3 Time footnote ----
+  ### 5.7.3 Time footnote ----
   output$timeFoot <- renderUI({
     if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
       "The definition of when a student is at the end of 16 to 18 study has changed last year and comparisons to previous cohorts should be treated with caution. See footnote below. Also NB non-zero axis."
@@ -1857,8 +1739,8 @@ server <- function(input, output, session) {
     }
   })
 
-  ## 2.3.8 Breakdown chart ----
-  #### 2.3.8.1 Title ----
+  ## 5.8 Breakdown chart ----
+  ### 5.8.1 Title ----
   output$titleBreakdown <- renderUI({
     if (input$splashMetric %in% distinctBreakdowns$metric) {
       paste0(
@@ -1871,7 +1753,7 @@ server <- function(input, output, session) {
     }
   })
 
-  #### 2.3.8.2 Comment ----
+  ### 5.8.2 Comment ----
   output$commentBreakdown <- renderUI({
     if (!input$splashMetric %in% distinctBreakdowns$metric) {
       paste0(
@@ -1933,7 +1815,7 @@ server <- function(input, output, session) {
     }
   })
 
-  #### 2.3.8.3 Bar chart ----
+  ### 5.8.3 Bar chart ----
   Splash_pc <- reactive({
     Splash_21 <- C_breakdown %>% filter(
       breakdown == input$barBreakdown,
@@ -2062,7 +1944,7 @@ server <- function(input, output, session) {
     # }
   })
 
-  #### 2.3.8.6 Bar footnote ----
+  ### 5.8.4 Bar footnote ----
   output$breakdownFoot <- renderUI({
     if (input$splashMetric %in% distinctBreakdowns$metric) {
       paste0(
@@ -2084,7 +1966,7 @@ server <- function(input, output, session) {
     }
   })
 
-  ### 2.3.9 Downloads local skills ----
+  ## 5.9 Downloads local skills ----
   # all areas
   listDownloadV1All <- reactive({
     list(
@@ -2147,8 +2029,8 @@ server <- function(input, output, session) {
     }
   )
 
-  ## 2.4 DataHub----
-  ### 2.4.1 Filters----
+  # 6 DataHub----
+  ## 6.1 Filters----
   output$hubAreaInput <- renderUI({
     selectizeInput(
       "hubArea",
@@ -2224,7 +2106,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ### 2.4.2 Table----
+  ## 6.2 Table----
   datahubDataset <- reactive({
     C_datahub %>%
       filter(
@@ -2291,7 +2173,8 @@ server <- function(input, output, session) {
     }
   )
 
-  ## 2.6 FE tools table----
+  # 7 Resource tables----
+  ## 7.1 FE tools table----
   output$toolsTable <- DT::renderDataTable({
     DT::datatable(
       I_ToolsTable,
@@ -2301,7 +2184,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ## 2.7 FE sources table----
+  ## 7.2 FE sources table----
   output$sourcesTable <- DT::renderDataTable({
     DT::datatable(
       I_SourcesTable,
@@ -2311,7 +2194,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ## 2.8 FE reports table----
+  ## 7.3 FE reports table----
   output$reportsTable <- DT::renderDataTable({
     DT::datatable(
       I_ReportsTable,
@@ -2319,10 +2202,5 @@ server <- function(input, output, session) {
       options = list(dom = "t", pageLength = 50),
       rownames = FALSE
     )
-  })
-
-  # 3.Stop app -----
-  session$onSessionEnded(function() {
-    stopApp()
   })
 }
