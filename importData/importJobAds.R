@@ -1,8 +1,7 @@
 ### 1 ONS job adverts by 3 digit SOC and LA----
-folder <- "2-12_OnsProf"
  sheet <- "Table 4"
- I_Ons3digLA <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
-
+ I_Ons3digLA <- openxlsx::read.xlsx("https://www.ons.gov.uk/file?uri=/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk/january2017tojuly2025/labourdemandbyoccupation.xlsx", sheet = sheet, skipEmptyRows = T)
+ 
  #Tidy up data
  tidydata<-I_Ons3digLA %>% 
    janitor::row_to_names(row_number = 4)%>% # set columns
@@ -34,7 +33,7 @@ folder <- "2-12_OnsProf"
  
  ### 2 ONS job adverts by LA----
  sheet <- "Table 2"
- I_OnsLA <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+ I_OnsLA <- openxlsx::read.xlsx("https://www.ons.gov.uk/file?uri=/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk/january2017tojuly2025/labourdemandbyoccupation.xlsx", sheet = sheet, skipEmptyRows = T)
  
  #Tidy up data
  tidyDataLA<-I_OnsLA %>% 
@@ -53,7 +52,7 @@ folder <- "2-12_OnsProf"
  
  ### 3 ONS job adverts England----
  sheet <- "Table 1"
- I_OnsEng <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+ I_OnsEng <- openxlsx::read.xlsx("https://www.ons.gov.uk/file?uri=/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk/january2017tojuly2025/labourdemandbyoccupation.xlsx", sheet = sheet, skipEmptyRows = T)
  
  #Tidy up data
  tidyDataEng<-I_OnsEng %>% 
@@ -68,12 +67,33 @@ folder <- "2-12_OnsProf"
                        names_to = "time_period", values_to = "value"
    )
  
+ ### 4 Quarterly ONS job adverts by 4-digit SOC and LA----
+ sheet <- "Table 5"
+ I_Ons4DigQuarterLA <- openxlsx::read.xlsx("https://www.ons.gov.uk/file?uri=/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk/january2017tojuly2025/labourdemandbyoccupation.xlsx", sheet = sheet, skipEmptyRows = T)
+ 
+ #Tidy up data
+ tidyData4DigQuarterLA<-I_Ons4DigQuarterLA %>% 
+   janitor::row_to_names(row_number = 4)%>% # set columns
+   filter(!(Region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown")))%>%
+   rename(area=`Local Authority District`,areaCode=`Local Authority Code`)%>%
+   mutate(geographic_level="Local authority district")%>%
+   mutate(areaCode=case_when(area=="London" ~ "E09000001", TRUE ~ areaCode))%>%#Online job ad data is not at LA level for London. To make the lookups for MCA/LSIP/LEP work, just add in City of London LA code
+   select(-Region,-ITL2)
+ 
+ #make long
+ La4DigitQuarterlyLong<-tidyData4DigQuarterLA %>%
+   tidyr::pivot_longer(!c("geographic_level", "area","areaCode","SOC 4 digit code","SOC 4 digit label"),
+                       names_to = "time_period", values_to = "value"
+   )%>%
+   filter(value>0,substr(time_period,1,4)>=2025)
+ 
  ### 4 Get all the other geographies by joining to the lookups----
  #add on MCA, LEP, LSIP
  geogs<-bind_rows(
    SOC2digitLong,
    LaLong,
-   EngLong)%>%
+   EngLong,
+   La4DigitQuarterlyLong)%>%
    addGeogs()%>% #repeat data for each geography
    filter(geogConcat!="City of London LADU") #remove the City of London data which was used just to get the london LSIP. LEP
  
