@@ -646,17 +646,44 @@ server <- function(input, output, session) {
   output$overviewJobTitle <- renderText({
     paste0(
       p("Demand: online job adverts", style = "font-weight: bold; font-size: 18px;"),
-      createOverviewTitle("vacancies")
+      if (input$geoChoiceOver %in% c(
+        "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
+        "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
+        "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
+        "Warwickshire LSIP",
+        "West London Alliance LSIP",
+        "West Midlands LSIP"
+      )) {
+        "The boundaries of this LSIP have changed since this data was published so there is no associated job advert data."
+      } else {
+        createOverviewTitle("vacancies")
+      }
     )
   })
 
   # Vacancy kpi
   output$overviewJobKPI <- renderText({
+    req(!input$geoChoiceOver %in% c(
+      "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
+      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
+      "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
+      "Warwickshire LSIP",
+      "West London Alliance LSIP",
+      "West Midlands LSIP"
+    ))
     createOverviewKPI("vacancies", "number")
   })
 
   # Vacancy chart
   output$jobLineChart <- renderPlotly({
+    req(!input$geoChoiceOver %in% c(
+      "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
+      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
+      "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
+      "Warwickshire LSIP",
+      "West London Alliance LSIP",
+      "West Midlands LSIP"
+    ))
     renderOverviewChart(createOverviewChart("vacancies", "number", "Online job adverts"))
   })
 
@@ -698,23 +725,34 @@ server <- function(input, output, session) {
   ## 4.5 Skills projections ----
   # Top projected jobs sentence
   output$summaryTopProjected <- renderUI({
-    paste0(
-      "From 2024 to 2035 ", input$geoChoiceOver, " is projected to grow ",
-      format((C_Geog %>%
-        filter(
-          geogConcat == input$geoChoiceOver
-        ))$employmentProjection * 100, digit = 1),
-      "% ",
-      ifelse(input$geoChoiceOver == "England", "", paste0(
-        "(compared to ",
+    if (input$geoChoiceOver %in% c(
+      "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
+      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
+      "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
+      "Warwickshire LSIP",
+      "West London Alliance LSIP",
+      "West Midlands LSIP"
+    )) {
+      "The boundaries of this LSIP have changed since this data was published so there is no associated employment projection data."
+    } else {
+      paste0(
+        "From 2024 to 2035 ", input$geoChoiceOver, " is projected to grow ",
         format((C_Geog %>%
           filter(
-            geogConcat == "England"
+            geogConcat == input$geoChoiceOver
           ))$employmentProjection * 100, digit = 1),
-        "% nationally)"
-      )),
-      ". These are the top projected growth occupations in the area:"
-    )
+        "% ",
+        ifelse(input$geoChoiceOver == "England", "", paste0(
+          "(compared to ",
+          format((C_Geog %>%
+            filter(
+              geogConcat == "England"
+            ))$employmentProjection * 100, digit = 1),
+          "% nationally)"
+        )),
+        ". These are the top projected growth occupations in the area:"
+      )
+    }
   })
 
   # get top growing occupations
@@ -744,6 +782,14 @@ server <- function(input, output, session) {
   })
 
   output$summaryTopProjectedListTable <- renderDataTable({
+    req(!input$geoChoiceOver %in% c(
+      "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
+      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
+      "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
+      "Warwickshire LSIP",
+      "West London Alliance LSIP",
+      "West Midlands LSIP"
+    ))
     DT::datatable(summaryTopProjectedList(),
       options = list(
         info = FALSE,

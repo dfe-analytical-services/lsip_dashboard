@@ -4,7 +4,7 @@
 # find cells we want
 cellsUseAps_emp <- cellsListAps %>% filter(description.en %like% "T01:" & description.en %like% "Aged 16-64" & description.en %like% "All People")
 # get data
-F_emp <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_emp$id)%>%
+  F_emp <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_emp$id)%>%
   
   # convert into format used in dashboard
   formatNomis() %>%
