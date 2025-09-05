@@ -479,16 +479,20 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("02 Sep 2025 (1.5.2)"),
+            p("08 Sep 2025 (1.5.3)"),
             tags$ul(
-              tags$li("Update to latest online job advert data."),
-              tags$li("Reorganise the filter methodology to speed up the dashboard."),
-              tags$li("Small bug fixes.")
+              tags$li("Update to latest LSIP geographies.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("02 Sep 2025 (1.5.2)"),
+                tags$ul(
+                  tags$li("Update to latest online job advert data."),
+                  tags$li("Reorganise the filter methodology to speed up the dashboard."),
+                  tags$li("Small bug fixes.")
+                ),
                 p("22 Aug 2025 (1.5.1)"),
                 tags$ul(
                   tags$li("Refresh of the summary page."),
