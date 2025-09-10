@@ -6,6 +6,35 @@ library(nomisr)
 geogUseAps <- nomisr::nomis_get_metadata(id = "NM_17_1", concept = "geography", type = "type") %>%
   filter(description.en %in% c("combined authorities (as of May 2025)","local authorities: district / unitary (as of April 2021)", "countries"))
 
+# now create the api string for the geographies we define (that are not stored in the NOMI geographies)
+userGeogString <- C_LADLSIP %>%
+  group_by(LSIPname) %>%
+  summarise(
+    make_geo = paste0(
+      "MAKE|", gsub(" ", "%20", first(LSIPname)), "|",
+      paste(unique(LAD23CD), collapse = ";")
+    ),
+    .groups = "drop"
+  )
+
+# Combine strings
+geo_param <- paste(userGeogString$make_geo, collapse = ",")
+
+#Also make GLA geography api string
+userGeogStringGLA <- C_mcalookup %>%
+  filter(CAUTH24NM=="Greater London Authority")%>%
+  group_by(CAUTH24NM) %>%
+  summarise(
+    make_geo = paste0(
+      "MAKE|", gsub(" ", "%20", first(CAUTH24NM)), "|",
+      paste(unique(LAD24CD), collapse = ";")
+    ),
+    .groups = "drop"
+  )
+
+# Combine strings
+geo_paramGLA <- paste(userGeogStringGLA$make_geo, collapse = ",")
+
 # list all the APS cells available
 cellsListAps <- nomisr::nomis_get_metadata(id = "NM_17_1", concept = "CELL")
 
