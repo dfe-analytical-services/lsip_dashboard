@@ -90,7 +90,8 @@ groupedStats <- feWithAreas %>%
                 "East Midlands MCA",
                 "North East MCA",
                 "South Yorkshire MCA",
-                "York and North Yorkshire MCA"
+                "York and North Yorkshire MCA",
+                "Devon and Torbay MCA", "Greater Lincolnshire MCA", "Hull and East Yorkshire MCA", "Lancashire MCA"
               ) |
               # since the ilr only publish the latest 2 years lsip we need to calculate the history of those as well
               (stringr::str_sub(geogConcat, -4, -1) == "LSIP" & !(chartPeriod %in% c("AY22/23","AY23/24")))

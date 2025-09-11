@@ -112,7 +112,7 @@ addGeogs <- function(x) {
     # addLSIPS
     left_join(C_LADLSIP, by = c("areaCode" = "LAD23CD")) %>%
     # addMCA
-    left_join(select(C_mcalookup, -CAUTH24CD, -LAD24NM), by = c("areaCode" = "LAD24CD")) %>%
+    left_join(select(C_mcalookup, -CAUTH25CD, -LAD25NM), by = c("areaCode" = "LAD25CD")) %>%
     # add national name
     mutate(area = case_when(
       geographic_level == "National" ~ "England",
@@ -130,10 +130,10 @@ addGeogs <- function(x) {
       filter(is.na(LSIPname) == FALSE) %>%
       mutate(geogConcat = paste0(LSIPname, " LSIP"), newArea = 1),
     withAreas %>%
-      filter(is.na(CAUTH24NM) == FALSE) %>%
-      mutate(geogConcat = paste0(CAUTH24NM, " MCA"), newArea = 1)
+      filter(is.na(CAUTH25NM) == FALSE) %>%
+      mutate(geogConcat = paste0(CAUTH25NM, " MCA"), newArea = 1)
   ) %>%
-    select(-area, -LSIPname, -CAUTH24NM, -areaCode, -geographic_level)
+    select(-area, -LSIPname, -CAUTH25NM, -areaCode, -geographic_level)
 }
 
 format_pm <- function(x) {

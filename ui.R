@@ -481,7 +481,8 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             h2("Latest update"),
             p("08 Sep 2025 (1.5.3)"),
             tags$ul(
-              tags$li("Update to latest LSIP geographies.")
+              tags$li("Update to latest LSIP geographies."),
+              tags$li("Add new MCAs.")
             ),
             details(
               label = "Previous updates",

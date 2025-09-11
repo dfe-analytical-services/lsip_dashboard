@@ -21,8 +21,8 @@ F_mcalookup <- read.csv(paste0("./Data/", folder, "/", list.files(path = paste0(
 C_mcalookup<-F_mcalookup%>%
   bind_rows(C_LADLSIP%>%
     filter(LSIPname %in% c("Central London Forward","Local London","South London Partnership","West London Alliance"))%>%
-      mutate(CAUTH24NM="Greater London Authority")%>%
-      rename(LAD24CD=LAD23CD)%>%
+      mutate(CAUTH25NM="Greater London Authority")%>%
+      rename(LAD25CD=LAD23CD)%>%
       select(-LSIPname)
   )
 
