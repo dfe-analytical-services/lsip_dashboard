@@ -49,7 +49,7 @@ groupedStats <- feSsaWithAreas %>%
   ungroup() %>%
   select(-newArea) %>%
   mutate_at(vars(achievements, enrolments), safe_numeric) %>% # Convert to numeric
-  group_by(chartPeriod, timePeriod, latest, geogConcat, subgroup, breakdown) %>% # sum for each LEP
+  group_by(chartPeriod, timePeriod, latest, geogConcat, subgroup, breakdown) %>% # sum for each geography
   summarise(across(everything(), \(x) sum(x, na.rm = TRUE))) %>%
   mutate(achievements = as.character(achievements), enrolments = as.character(enrolments))
 
