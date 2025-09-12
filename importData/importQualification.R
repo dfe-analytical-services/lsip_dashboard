@@ -4,11 +4,11 @@
 # find cells we want in NVQ
 cellsUseAps_qualNvq <- cellsListAps %>% filter(description.en %like% "T19:" & description.en %like% "Total")
 # get data
-I_qualAgeGenderNvq <- extractNomis("NM_17_1", "2020-12,2021-12", cellsUseAps_qualNvq$id)
+I_qualAgeGenderNvq <- extractNomis("NM_17_1", "2020-12,2021-12", cellsUseAps_qualNvq$id,geo_param,geo_paramGLA)
 # find cells we want in NVQ
 cellsUseAps_qualRqf <- cellsListAps %>% filter(description.en %like% "T19a:" & description.en %like% "Total")
 # get rqf data from 2022 onwards. only jan-dec data avaialable so input of date in manual
-I_qualAgeGenderRqf <- extractNomis("NM_17_1", "2022-12,2023-12,2024-12", cellsUseAps_qualRqf$id)
+I_qualAgeGenderRqf <- extractNomis("NM_17_1", "2022-12,2023-12,2024-12", cellsUseAps_qualRqf$id,geo_param,geo_paramGLA)
 
 ## Qualification level by age and gender ----
 C_qualAgeGender <- formatNomis(I_qualAgeGenderNvq %>%
