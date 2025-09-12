@@ -741,9 +741,9 @@ server <- function(input, output, session) {
           filter(
             geogConcat == input$geoChoiceOver
           ))$employmentProjection * 100, digit = 1),
-        "% ",
+        "%",
         ifelse(input$geoChoiceOver == "England", "", paste0(
-          "(compared to ",
+          " (compared to ",
           format((C_Geog %>%
             filter(
               geogConcat == "England"
@@ -896,6 +896,7 @@ server <- function(input, output, session) {
 
   # Businesses title top
   output$summaryBusinessesTop <- renderText({
+    req(input$geoChoiceOver != "England")
     paste0(
       "Percentage of businesses in ",
       (chartData() %>% filter(extremes == "top"))$subgroup[1]
@@ -904,6 +905,7 @@ server <- function(input, output, session) {
 
   # Businesses title bottom
   output$summaryBusinessesBottom <- renderText({
+    req(input$geoChoiceOver != "England")
     paste0(
       "Percentage of businesses in ",
       (chartData() %>% filter(extremes == "bottom"))$subgroup[1]
@@ -948,6 +950,7 @@ server <- function(input, output, session) {
   })
 
   output$summaryBusinessesChartTop <- renderPlotly({
+    req(input$geoChoiceOver != "England")
     ggplotly(summaryBusinessesPlotTop(), tooltip = "text") %>%
       layout(
         xaxis = list(fixedrange = TRUE),
@@ -994,6 +997,7 @@ server <- function(input, output, session) {
   })
 
   output$summaryBusinessesChartBottom <- renderPlotly({
+    req(input$geoChoiceOver != "England")
     ggplotly(summaryBusinessesPlotBottom(), tooltip = "text") %>%
       layout(
         xaxis = list(fixedrange = TRUE),
