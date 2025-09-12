@@ -1090,8 +1090,8 @@ server <- function(input, output, session) {
   observeEvent(input$splashMetric,
     {
       types <- distinctBreakdowns$breakdown[distinctBreakdowns$metric == input$splashMetric] # find subgroups in metric
-      # If there are no subgroups for the metric (or is a London LSIP on vacancies), then hide all the breakdown filters
-      if (length(types) == 0 | (input$splashMetric == "vacancies" & grepl("London", input$geoChoice))) {
+      # If there are no subgroups for the metric then hide all the breakdown filters
+      if (length(types) == 0) {
         shinyjs::hide("breakdownPage_wrapper")
         updateSelectInput(session, "breakdownPage", choices = "", selected = "")
         shinyjs::hide("subgroupPage_wrapper")
