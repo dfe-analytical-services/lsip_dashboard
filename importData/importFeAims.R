@@ -44,6 +44,7 @@ feWithAreas <- addGeogs(F_FeProvLevelAge)
 # Here we get those LSIPs and MCAs which have stayed consistent across the years so we can use the published data throughout
 feLsipsMcas <- F_FeProvLevelAge %>%
   filter((geographic_level == "Local skills improvement plan area" &
+            #The geographical area of these LSIPs have changed over time (or have been removed) so we ignore them here and calculate from LAs later
             !area %in% c("Greater London","Heart of the South-West","Greater Lincolnshire","Enterprise M3","Solent",
                          "Leicester and Leicestershire","North East","North of Tyne","West Midlands and Warwickshire")
   )
