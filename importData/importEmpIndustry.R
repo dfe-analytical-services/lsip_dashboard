@@ -4,7 +4,7 @@
 # find cells we want
 cellsUseAps_Ind <- cellsListAps %>% filter(description.en %like% "T13a:" & description.en %like% "All people")
 # get data
-C_empInd <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_Ind$id)%>%
+C_empInd <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_Ind$id,geo_param,geo_paramGLA)%>%
   #format into form used in dashboard
   formatNomis() %>%
   rename(subgroup = CELL_NAME) %>%

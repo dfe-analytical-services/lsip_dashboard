@@ -43,7 +43,11 @@ feWithAreas <- addGeogs(F_FeProvLevelAge)
 # Get LSIP and MCA groups (ILR now publish at that level). 
 # Here we get those LSIPs and MCAs which have stayed consistent across the years so we can use the published data throughout
 feLsipsMcas <- F_FeProvLevelAge %>%
-  filter(geographic_level == "Local skills improvement plan area"
+  filter((geographic_level == "Local skills improvement plan area" &
+            #The geographical area of these LSIPs have changed over time (or have been removed) so we ignore them here and calculate from LAs later
+            !area %in% c("Greater London","Heart of the South-West","Greater Lincolnshire","Enterprise M3","Solent",
+                         "Leicester and Leicestershire","North East","North of Tyne","West Midlands and Warwickshire")
+  )
          | (geographic_level == "English devolved area" &
               area %in% c("Cambridgeshire and Peterborough",
                           "Greater London Authority",
@@ -62,12 +66,26 @@ feLsipsMcas <- F_FeProvLevelAge %>%
     ),
     newArea = 0
   ) %>%
-  select(-geographic_level, -area, -areaCode)
+  select(-geographic_level, -area, -areaCode)%>%
+  #Change the name of some LSIPs
+  mutate(geogConcat = case_when(
+    geogConcat == "Derbyshire and Nottinghamshire LSIP" ~ "East Midlands LSIP",
+    geogConcat == "G First (Gloucestershire) LSIP" ~ "Gloucestershire LSIP",
+    geogConcat == "Essex, Southend-on-Sea and Thurrock LSIP" ~ "Greater Essex LSIP",
+    geogConcat == "New Anglia LSIP" ~ "Norfolk and Suffolk LSIP",
+    geogConcat == "Brighton and Hove, East Sussex, West Sussex LSIP" ~ "Sussex and Brighton LSIP",
+    TRUE ~ geogConcat
+  ))
 
 # group up all the stats for combined areas (including the new LAs)
 groupedStats <- feWithAreas %>%
   filter(newArea == 1 # areas that have been calculated
          & (stringr::str_sub(geogConcat, -4, -1) == "LADU" | # lads that have changed over time
+              #LSIPs that have changed their geography
+              geogConcat %in% c("Central London Forward LSIP", "Greater Devon LSIP","Greater Lincolnshire LSIP",
+                                "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
+                                "Local London LSIP", "North East LSIP","Somerset LSIP","South London Partnership LSIP",
+                                "Surrey LSIP","Warwickshire LSIP","West London Alliance LSIP","West Midlands LSIP") |
               # MCAs that have changed their geography over time or are newly formed
               geogConcat %in% c(
                 "East Midlands MCA",
@@ -80,16 +98,16 @@ groupedStats <- feWithAreas %>%
          )) %>%
   ungroup() %>%
   select(-newArea, -achievements_rate_per_100000_population, -starts_rate_per_100000_population, -participation_rate_per_100000_population) %>%
-  mutate_at(vars(starts, participation, achievements, population_estimate), as.numeric) %>% # Convert to numeric
+  mutate_at(vars(starts, participation, achievements, population_estimate), safe_numeric) %>% # Convert to numeric
   group_by(provision_type, level_or_type, age_summary, chartPeriod, timePeriod, latest, geogConcat) %>% # sum for each LEP
-  summarise(across(everything(), list(sum), na.rm = T)) %>%
+  summarise(across(everything(), \(x) sum(x, na.rm = TRUE))) %>%
   mutate(
-    starts_rate_per_100000_population = as.character(100000 * starts_1 / population_estimate_1),
-    participation_rate_per_100000_population = as.character(100000 * participation_1 / population_estimate_1),
-    achievements_rate_per_100000_population = as.character(100000 * achievements_1 / population_estimate_1)
+    starts_rate_per_100000_population = as.character(100000 * starts / population_estimate),
+    participation_rate_per_100000_population = as.character(100000 * participation / population_estimate),
+    achievements_rate_per_100000_population = as.character(100000 * achievements / population_estimate)
   ) %>%
-  mutate(starts = as.character(starts_1), participation = as.character(participation_1), achievements = as.character(achievements_1)) %>%
-  select(-starts_1, -participation_1, -achievements_1, -population_estimate_1)
+  mutate(starts = as.character(starts), participation = as.character(participation), achievements = as.character(achievements)) %>%
+  select(-population_estimate)
 
 # add back on original LADUs and format
 C_FeProvLevelAge <- bind_rows(
@@ -119,4 +137,4 @@ C_FeProvLevelAge <- bind_rows(
                       names_to = "metric",
                       values_to = "valueText"
   ) %>%
-  mutate(value = as.numeric(valueText))
+  mutate(value = safe_numeric(valueText))

@@ -15,7 +15,7 @@ C_SOC2020structure<-I_SOC2020structure%>%
 cellsUseAps_empOcc <- cellsListAps %>% filter(description.en %like% "T09b:" & description.en %like% "All people - ")
 # get data
 C_empOcc <-
-  extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_empOcc$id) %>%
+  extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_empOcc$id,geo_param,geo_paramGLA) %>%
   filter(stringr::str_sub(CELL_NAME, -12, -1) == "All people )") %>%# ignore part time
 # convert into format used in dashboard
 formatNomis() %>%
