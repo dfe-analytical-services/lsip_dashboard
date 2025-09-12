@@ -1,7 +1,7 @@
 {
   "input": {
-    "geoChoice": "Brighton and Hove, East Sussex, West Sussex LSIP",
-    "geoChoiceOver": "Brighton and Hove, East Sussex, West Sussex LSIP",
+    "geoChoice": "Buckinghamshire LSIP",
+    "geoChoiceOver": "Buckinghamshire LSIP",
     "hubComparators": null,
     "hubLA": null,
     "navbar": "Data sources",
@@ -9,16 +9,16 @@
     "splashMetric": "inemploymentRate"
   },
   "output": {
-    "overviewEmpRateKPI": "77%<br/><span style=\"font-size: 16px;color:black\">+0ppts  since  Apr 2023-Mar 2024<\/span>",
-    "overviewJobKPI": "45,319<br/><span style=\"font-size: 16px;color:green\">+4,549  since  Jul-24<\/span>",
+    "overviewEmpRateKPI": "82%<br/><span style=\"font-size: 16px;color:green\">+1ppts  since  Apr 2023-Mar 2024<\/span>",
+    "overviewJobKPI": "13,380<br/><span style=\"font-size: 16px;color:green\">+1,349  since  Jul-24<\/span>",
     "page0title": {
-      "html": "Brighton and Hove, East Sussex, West Sussex LSIP headline data",
+      "html": "Buckinghamshire LSIP headline data",
       "deps": [
 
       ]
     },
     "screenshotOverview": {
-      "html": "<button class=\"btn btn-default btn-capture btn-capture-screenshot\" data-selector=\"body\" data-filename=\"Brighton and Hove, East Sussex, West Sussex LSIP-overview.png\" data-options=\"{}\" data-loading=\"false\">\n  <i class=\"fas fa-camera\" role=\"presentation\" aria-label=\"camera icon\"><\/i>\n  Screenshot\n<\/button>",
+      "html": "<button class=\"btn btn-default btn-capture btn-capture-screenshot\" data-selector=\"body\" data-filename=\"Buckinghamshire LSIP-overview.png\" data-options=\"{}\" data-loading=\"false\">\n  <i class=\"fas fa-camera\" role=\"presentation\" aria-label=\"camera icon\"><\/i>\n  Screenshot\n<\/button>",
       "deps": [
         {
           "name": "font-awesome",

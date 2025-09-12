@@ -58,16 +58,6 @@ save(C_Geog, file = "Data\\AppData\\C_Geog.rdata")
 ## 4.2 C_time ----
 # This is used in the line charts and KPIs. It contains historic data for each metric and area.
 C_time <- C_localSkillsDataset %>%
-  # add on micro business rate for the overview tab
-  bind_rows(
-    C_localSkillsDataset %>%
-      filter(metric == "enterpriseCount", subgroup %in% c("Total", "Micro (0 to 9)")) %>%
-      select(-valueText, -breakdown) %>%
-      arrange(geogConcat, chartPeriod, timePeriod, latest, metric, subgroup) %>%
-      mutate(value = lag(value) / value) %>% # get % micro of total
-      filter(subgroup == "Total") %>%
-      mutate(metric = "enterprisePctMicro", breakdown = "Total", valueText = as.character(value))
-  ) %>%
   filter(
     !metric %in% c("economicallyactiveRate","employeesRate" ,"employmentProjectionGrowth2024to2035"), # time charts only use employmentProjectionAnnualGrowth metric
     !metric %in% dashboardMetricIgnore # remove metrics not used
@@ -350,8 +340,6 @@ areaChoicesUnique<-C_time%>%
   )%>%
   #filter out closed areas
   filter(!geogConcat %in% c("Black Country LEP", "Coventry and Warwickshire LEP", "Outside of an English Devolved Area and unknown MCA", "North of Tyne MCA", "NA LADU"))%>%
-  #temporarily filter out new MCAs
-  filter(!geogConcat %in% c("Devon and Torbay MCA", "Greater Lincolnshire MCA", "Hull and East Yorkshire MCA", "Lancashire MCA"))%>%
   arrange(geography,geogConcat)
 #check these aren;t in there
 

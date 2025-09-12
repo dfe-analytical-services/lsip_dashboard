@@ -82,7 +82,7 @@ groupedStats <- businessesWithAreas %>%
   ungroup() %>%
   select(-newArea) %>%
   group_by(chartPeriod, timePeriod, latest, geogConcat, metric) %>% # sum for each area
-  summarise(across(everything(), list(sum), na.rm = T)) %>%
+  summarise(across(everything(), \(x) sum(x, na.rm = TRUE))) %>%
   rename_with(~ gsub("_1", "", .))
 
 # add back on original LADUs and format
