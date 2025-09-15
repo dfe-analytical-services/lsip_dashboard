@@ -479,7 +479,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("15 Sep 2025 (1.6.0)"),
+            p("16 Sep 2025 (1.6.0)"),
             tags$ul(
               tags$li("Update to latest LSIP geographies."),
               tags$li("Add new MCAs.")
