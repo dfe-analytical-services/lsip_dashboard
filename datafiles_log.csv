@@ -20,6 +20,7 @@ Data/2-13_skillsImperative2035/CP_LSIP_MainTables.Main.xlsm,published
 Data/2-13_skillsImperative2035/CP_MCA_MainTables.Main.xlsm,published
 Data/2-13_skillsImperative2035/CU_LSIP_MainTables.Main.xlsm,published
 Data/2-13_skillsImperative2035/DN_LSIP_MainTables.Main.xlsm,published
+Data/2-13_skillsImperative2035/DO_LEP_MainTables.Main.xlsm,published
 Data/2-13_skillsImperative2035/DO_LSIP_MainTables.Main.xlsm,published
 Data/2-13_skillsImperative2035/EN_MainTables.Main.xlsm,published
 Data/2-13_skillsImperative2035/ES_LSIP_MainTables.Main.xlsm,published
@@ -62,6 +63,7 @@ Data/AppData/C_axisMinMax.csv,published
 Data/AppData/C_breakdown.csv,published
 Data/AppData/C_datahub.csv,published
 Data/AppData/C_detailLookup.csv,published
+Data/AppData/C_Geog.rdata,published
 Data/AppData/C_time1.csv,published
 Data/AppData/C_time2.csv,published
 Data/AppData/C_topTenEachBreakdown.csv,published
