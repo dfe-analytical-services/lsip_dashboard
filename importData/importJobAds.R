@@ -69,15 +69,15 @@ folder <- "2-12_OnsProf"
    )
  
  ### 4 Get all the other geographies by joining to the lookups----
- #add on MCA, LEP, LSIP
+ #add on MCA, LSIP
  geogs<-bind_rows(
    SOC2digitLong,
    LaLong,
    EngLong)%>%
    addGeogs()%>% #repeat data for each geography
-   filter(geogConcat!="City of London LADU", #remove the City of London data which was used just to get the london LSIP. LEP
+   filter(geogConcat!="City of London LADU", #remove the City of London data which was used just to get the london LSIP.
    geogConcat!="Central London Forward LSIP") # Also remove Central London Forward LSIP which has been joined via the City of London LA but there is no data for
- #group up MCA, LEP, LSIP
+ #group up MCA, LSIP
  geogsSummed <- geogs %>%
    filter(newArea == 1) %>% # no need to group LAs that haven't changed
    ungroup() %>%

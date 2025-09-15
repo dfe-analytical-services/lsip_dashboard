@@ -4,7 +4,7 @@
 # find cells we want
 cellsUseAps_emp <- cellsListAps %>% filter(description.en %like% "T01:" & description.en %like% "Aged 16-64" & description.en %like% "All People")
 # get data
-  F_emp <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_emp$id)%>%
+  F_emp <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_emp$id,geo_param,geo_paramGLA)%>%
   
   # convert into format used in dashboard
   formatNomis() %>%
@@ -27,7 +27,7 @@ C_emp <- F_emp %>%
 # find cells we want
 cellsUseAps_emp <- cellsListAps %>% filter(description.en %like% "T01:" & description.en %like% "All aged 16 & over" & description.en %like% "All People")
 # get data
-I_emp16plus <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_emp$id)
+I_emp16plus <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_emp$id,geo_param,geo_paramGLA)
 
 # we need the totals for 16plus to use as the denomintor of the bar charts
 F_emp16plus <- formatNomis(I_emp16plus) %>%

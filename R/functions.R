@@ -1,15 +1,15 @@
 # Function to get data from nomis and tidy given the table ID, the time periods wanted and the metric (cells) wanted
-extractNomis <- function(tableID, dates, cells) {
+extractNomis <- function(tableID, dates, cells, LSIPareas, GLAarea) {
   bind_rows(
     # user defined LSIPs
     nomisr::nomis_get_data(
-      id = tableID, date = dates, geography = geo_param,
+      id = tableID, date = dates, geography = LSIPareas,
       cell = cells
     ) %>%
       select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, CELL_NAME, OBS_VALUE, MEASURES_NAME),
     # user defined Greater London Authority
     nomisr::nomis_get_data(
-      id = tableID, date = dates, geography = geo_paramGLA,
+      id = tableID, date = dates, geography = GLAarea,
       cell = cells
     ) %>%
       select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, CELL_NAME, OBS_VALUE, MEASURES_NAME) %>%
