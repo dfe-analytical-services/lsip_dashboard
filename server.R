@@ -1264,7 +1264,8 @@ server <- function(input, output, session) {
     req(input$geoChoice %in% currentMapData()$geogConcat)
     # Ensure there is data in the latest year (sometimes not the case in small subgroups)
     req(is.na((currentMapData() %>% filter(geogConcat == input$geoChoice))$value) == FALSE)
-
+    # No need for sentence for England
+    req(input$geoChoice != "England")
     compareNational <-
       if ((currentMapData() %>% filter(geogConcat == input$geoChoice))$value
       >
@@ -1555,6 +1556,8 @@ server <- function(input, output, session) {
 
   ### 5.7.1 Comment ----
   output$commentTime <- renderUI({
+    # No need for sentence for England
+    req(input$geoChoice != "England")
     # ensure latest data is available for comparison
     req(is.na((C_time %>%
       filter(
@@ -1811,14 +1814,18 @@ server <- function(input, output, session) {
           "lower"
         }
       paste0(
-        input$geoChoice,
-        " has a ",
-        breakdownDirection,
-        " ",
-        (I_DataText %>% filter(metric == input$splashMetric))$breakdownComment,
-        " in ",
-        breakdownDiff$subgroup,
-        " than the national average. ",
+        if (input$geoChoice != "England") {
+          paste0(
+            input$geoChoice,
+            " has a ",
+            breakdownDirection,
+            " ",
+            (I_DataText %>% filter(metric == input$splashMetric))$breakdownComment,
+            " in ",
+            breakdownDiff$subgroup,
+            " than the national average. "
+          )
+        },
         if (nrow(C_breakdown %>%
           filter(breakdown == input$barBreakdown) %>%
           distinct(subgroup)) > 10) {
