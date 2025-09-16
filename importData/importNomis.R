@@ -22,12 +22,12 @@ geo_param <- paste(userGeogString$make_geo, collapse = ",")
 
 #Also make GLA geography api string
 userGeogStringGLA <- C_mcalookup %>%
-  filter(CAUTH24NM=="Greater London Authority")%>%
-  group_by(CAUTH24NM) %>%
+  filter(CAUTH25NM=="Greater London Authority")%>%
+  group_by(CAUTH25NM) %>%
   summarise(
     make_geo = paste0(
-      "MAKE|", gsub(" ", "%20", first(CAUTH24NM)), "|",
-      paste(unique(LAD24CD), collapse = ";")
+      "MAKE|", gsub(" ", "%20", first(CAUTH25NM)), "|",
+      paste(unique(LAD25CD), collapse = ";")
     ),
     .groups = "drop"
   )

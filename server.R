@@ -647,14 +647,9 @@ server <- function(input, output, session) {
     paste0(
       p("Demand: online job adverts", style = "font-weight: bold; font-size: 18px;"),
       if (input$geoChoiceOver %in% c(
-        "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
-        "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
-        "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
-        "Warwickshire LSIP",
-        "West London Alliance LSIP",
-        "West Midlands LSIP"
+        "Central London Forward LSIP", "Local London LSIP", "South London Partnership LSIP", "West London Alliance LSIP"
       )) {
-        "The boundaries of this LSIP have changed since this data was published so there is no associated job advert data."
+        "There is no London LA level job advert data so this LSIP cannot be calculated."
       } else {
         createOverviewTitle("vacancies")
       }
@@ -664,12 +659,7 @@ server <- function(input, output, session) {
   # Vacancy kpi
   output$overviewJobKPI <- renderText({
     req(!input$geoChoiceOver %in% c(
-      "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
-      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
-      "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
-      "Warwickshire LSIP",
-      "West London Alliance LSIP",
-      "West Midlands LSIP"
+      "Central London Forward LSIP", "Local London LSIP", "South London Partnership LSIP", "West London Alliance LSIP"
     ))
     createOverviewKPI("vacancies", "number")
   })
@@ -677,12 +667,7 @@ server <- function(input, output, session) {
   # Vacancy chart
   output$jobLineChart <- renderPlotly({
     req(!input$geoChoiceOver %in% c(
-      "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
-      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
-      "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
-      "Warwickshire LSIP",
-      "West London Alliance LSIP",
-      "West Midlands LSIP"
+      "Central London Forward LSIP", "Local London LSIP", "South London Partnership LSIP", "West London Alliance LSIP"
     ))
     renderOverviewChart(createOverviewChart("vacancies", "number", "Online job adverts"))
   })
@@ -729,11 +714,11 @@ server <- function(input, output, session) {
       "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
       "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
       "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
-      "Warwickshire LSIP",
-      "West London Alliance LSIP",
-      "West Midlands LSIP"
+      "Warwickshire LSIP", "West London Alliance LSIP", "West Midlands LSIP"
     )) {
       "The boundaries of this LSIP have changed since this data was published so there is no associated employment projection data."
+    } else if (input$geoChoiceOver %in% c("Devon and Torbay MCA", "Greater Lincolnshire MCA", "Hull and East Yorkshire MCA", "Lancashire MCA")) {
+      "This MCA was created after this data was published so there is no associated employment projection data."
     } else {
       paste0(
         "From 2024 to 2035 ", input$geoChoiceOver, " is projected to grow ",
@@ -786,9 +771,8 @@ server <- function(input, output, session) {
       "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
       "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
       "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
-      "Warwickshire LSIP",
-      "West London Alliance LSIP",
-      "West Midlands LSIP"
+      "Warwickshire LSIP", "West London Alliance LSIP", "West Midlands LSIP",
+      "Devon and Torbay MCA", "Greater Lincolnshire MCA", "Hull and East Yorkshire MCA", "Lancashire MCA"
     ))
     DT::datatable(summaryTopProjectedList(),
       options = list(
@@ -1020,6 +1004,26 @@ server <- function(input, output, session) {
   englandGeog <- C_Geog %>%
     filter(geog == "England" & areaName == "England")
 
+  # flag for if there is no data and write error message
+  noData <- reactive({
+    if (input$splashMetric == "vacancies" & grepl("London", input$geoChoice)) {
+      "There is no LA level job advert data available for London, so this LSIP cannot be calculated."
+    } else if (input$splashMetric == "employmentProjection" & input$geoChoice %in% c(
+      "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
+      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
+      "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
+      "Warwickshire LSIP", "West London Alliance LSIP", "West Midlands LSIP"
+    )) {
+      "The geography of this LSIP has changed since the Skills Imperative data was published, so no data is available here."
+    } else if (input$splashMetric == "employmentProjection" & input$geoChoice %in% c(
+      "Devon and Torbay MCA", "Greater Lincolnshire MCA", "Hull and East Yorkshire MCA", "Lancashire MCA"
+    )) {
+      "This MCA was created after the Skills Imperative data was published, so no data is available here."
+    } else {
+      ""
+    }
+  })
+
   ## 5.2 Screenshot----
   output$screenshotFile <- renderUI({
     capture::capture(
@@ -1090,7 +1094,7 @@ server <- function(input, output, session) {
   observeEvent(input$splashMetric,
     {
       types <- distinctBreakdowns$breakdown[distinctBreakdowns$metric == input$splashMetric] # find subgroups in metric
-      # If there are no subgroups for the metric, then hide all the breakdown filters
+      # If there are no subgroups for the metric then hide all the breakdown filters
       if (length(types) == 0) {
         shinyjs::hide("breakdownPage_wrapper")
         updateSelectInput(session, "breakdownPage", choices = "", selected = "")
@@ -1294,9 +1298,9 @@ server <- function(input, output, session) {
       suff,
       " of the ",
       if (str_sub(input$geoChoice, start = -3) == "MCA") {
-        "12 CAs (and GLA)."
+        "16 CAs (and GLA)."
       } else {
-        "38 LSIPs."
+        "43 LSIPs."
       }
     )
   })
@@ -1536,6 +1540,8 @@ server <- function(input, output, session) {
 
   ### 5.6.4 Map footnote ----
   output$mapLaFoot <- renderUI({
+    req(noData() == "")
+    req(input$splashMetric != "employmentProjection") # No LA level for skills imp
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ". Click an area to update other charts with LA data."
     )
@@ -1625,6 +1631,8 @@ server <- function(input, output, session) {
 
   ### 5.7.2 Chart ----
   output$Splash_time <- renderPlotly({
+    validate(need(noData() == "", noData()))
+
     df <- C_time %>%
       filter(
         # get lsip/mca areas
@@ -1733,6 +1741,7 @@ server <- function(input, output, session) {
 
   ### 5.7.3 Time footnote ----
   output$timeFoot <- renderUI({
+    req(noData() == "")
     if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
       "The definition of when a student is at the end of 16 to 18 study has changed last year and comparisons to previous cohorts should be treated with caution. See footnote below. Also NB non-zero axis."
     } else {
@@ -1760,6 +1769,7 @@ server <- function(input, output, session) {
 
   ### 5.8.2 Comment ----
   output$commentBreakdown <- renderUI({
+    validate(need(noData() == "", noData()))
     if (!input$splashMetric %in% distinctBreakdowns$metric) {
       paste0(
         str_to_sentence(currentMetricClean()),
@@ -1822,6 +1832,7 @@ server <- function(input, output, session) {
 
   ### 5.8.3 Bar chart ----
   Splash_pc <- reactive({
+    req(noData() == "")
     Splash_21 <- C_breakdown %>% filter(
       breakdown == input$barBreakdown,
       subgroup %in% input$barSubgroup,
@@ -1951,6 +1962,7 @@ server <- function(input, output, session) {
 
   ### 5.8.4 Bar footnote ----
   output$breakdownFoot <- renderUI({
+    req(noData() == "")
     if (input$splashMetric %in% distinctBreakdowns$metric) {
       paste0(
         (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ".",
