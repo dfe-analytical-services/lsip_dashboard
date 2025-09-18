@@ -915,6 +915,37 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         column(
           12,
           h2("Data information"),
+          h3("Boundary changes"),
+          p(
+            "Some LSIP boundaries have changed in advance of the next cycle of LSIP development, beginning October 2025. These boundaries were updated on the dashboard on 19/09/25 affecting the following LSIPs:"
+          ),
+          tags$ul(
+            tags$li("Greater Devon"),
+            tags$li("Greater Lincolnshire"),
+            tags$li("Hampshire and the Solent"),
+            tags$li("Leicester, Leicestershire and Rutland"),
+            tags$li("North East"),
+            tags$li("Somerset"),
+            tags$li("Surrey"),
+            tags$li("Warwickshire"),
+            tags$li("West Midlands")
+          ),
+          p(
+            "More information on boundary changes is available on the Local skills improvement plans and designated employer representative bodies ",
+            a(
+              href = "https://www.gov.uk/government/publications/designated-employer-representative-bodies/notice-of-designated-employer-representative-bodies",
+              "page on gov.uk",
+              .noWS = c("after")
+            ),
+            "."
+          ),
+          p("During this update the following changes were also made: London sub-areas were added as individual LSIP areas. Combined London data remains available as a Combined Authority area; the following newly created combined authorities were added:"),
+          tags$ul(
+            tags$li("Devon and Torbay"),
+            tags$li("Greater Lincolnshire"),
+            tags$li("Hull and East Yorkshire"),
+            tags$li("Lancashire")
+          ),
           h3("Annual Population Survey"),
           p(
             "The Annual Population Survey (APS) is a continuous household survey covering the UK.
