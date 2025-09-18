@@ -712,7 +712,7 @@ server <- function(input, output, session) {
   output$summaryTopProjected <- renderUI({
     if (input$geoChoiceOver %in% c(
       "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
-      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
+      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP", "North East LSIP",
       "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
       "Warwickshire LSIP", "West London Alliance LSIP", "West Midlands LSIP"
     )) {
@@ -769,7 +769,7 @@ server <- function(input, output, session) {
   output$summaryTopProjectedListTable <- renderDataTable({
     req(!input$geoChoiceOver %in% c(
       "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
-      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
+      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP", "North East LSIP",
       "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
       "Warwickshire LSIP", "West London Alliance LSIP", "West Midlands LSIP",
       "Devon and Torbay MCA", "Greater Lincolnshire MCA", "Hull and East Yorkshire MCA", "Lancashire MCA"
@@ -1010,7 +1010,7 @@ server <- function(input, output, session) {
       "There is no LA level job advert data available for London, so this LSIP cannot be calculated."
     } else if (input$splashMetric == "employmentProjection" & input$geoChoice %in% c(
       "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
-      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
+      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP", "North East LSIP",
       "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
       "Warwickshire LSIP", "West London Alliance LSIP", "West Midlands LSIP"
     )) {
@@ -1041,16 +1041,22 @@ server <- function(input, output, session) {
     req(input$geoChoice)
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$subheading,
-      if (input$splashMetric %in% c("vacancies", "employmentProjection")) {
-        if (input$geoChoice == "Dorset LSIP") {
-          " The data presented here for Dorset LSIP is correct, however for the Skills Imperative and Job Advert data, it does not match the published data. We are working to update the published data. "
-        } else if (input$geoChoice == "Enterprise M3 LEP (including all of Surrey) LSIP") {
-          " The published data for Skills Imperative and Job Advert for Enterprise M3 LEP (including all of Surrey) LSIP is incorrect due to the wrong LAs being included in the area. Presented here is an estimate for this LSIP compiled from other LEP and LSIP regions. As such there may be some rounding issues. We are working to update the published data. "
-        } else {
-          ""
-        }
-      } else {
-        ""
+      if (input$geoChoice == "Dorset LSIP" & input$splashMetric == "employmentProjection") {
+        " The data presented here for Dorset LSIP is correct, however for the Skills Imperative data, it does not match the published data. We are working to update the published data. "
+      } else if (input$geoChoice %in% c(
+        "Greater Devon LSIP", "Greater Lincolnshire LSIP",
+        "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP", "North East LSIP",
+        "Somerset LSIP", "Surrey LSIP",
+        "Warwickshire LSIP", "West Midlands LSIP"
+      )) {
+        " The boundaries for this LSIP area were updated in September 2025. See data sources page for more information."
+      } else if (input$geoChoice %in% c(
+        "Central London Forward LSIP", "Local London LSIP", "South London Partnership LSIP",
+        "West London Alliance LSIP"
+      )) {
+        " London wide data is available by choosing the Greater London Authority under Combined authorities."
+      } else if (input$geoChoice == "Greater London Authority MCA") {
+        " Data is available for 4 sub London areas as well. These can be chosen from the area filter under LSIPs)."
       }
     )
   })
