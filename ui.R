@@ -192,6 +192,13 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     </header>'
   ),
 
+  # Add banner note around new LSIPs
+  HTML(
+    '<div class="feedback-banner" id="feedback banner" >
+    <p style="color: #fff;">Some LSIP boundaries have been updated in line with the next cycle of LSIP development beginning October 2025, and new combined authorities have been added. See data sources page for more information.</p>
+</div>'
+  ),
+
   # Force page to scroll to top when links clicked
   tags$script(
     " $(document).ready(function () {
