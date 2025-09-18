@@ -717,8 +717,8 @@ server <- function(input, output, session) {
       "Warwickshire LSIP", "West London Alliance LSIP", "West Midlands LSIP"
     )) {
       "The boundaries of this LSIP have changed since this data was published so there is no associated employment projection data."
-    } else if (input$geoChoiceOver %in% c("Devon and Torbay MCA", "Greater Lincolnshire MCA", "Hull and East Yorkshire MCA", "Lancashire MCA")) {
-      "This MCA was created after this data was published so there is no associated employment projection data."
+    } else if (input$geoChoiceOver %in% c("Devon and Torbay CA", "Greater Lincolnshire CA", "Hull and East Yorkshire CA", "Lancashire CA")) {
+      "This CA was created after this data was published so there is no associated employment projection data."
     } else {
       paste0(
         "From 2024 to 2035 ", input$geoChoiceOver, " is projected to grow ",
@@ -772,7 +772,7 @@ server <- function(input, output, session) {
       "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP", "North East LSIP",
       "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
       "Warwickshire LSIP", "West London Alliance LSIP", "West Midlands LSIP",
-      "Devon and Torbay MCA", "Greater Lincolnshire MCA", "Hull and East Yorkshire MCA", "Lancashire MCA"
+      "Devon and Torbay CA", "Greater Lincolnshire CA", "Hull and East Yorkshire CA", "Lancashire CA"
     ))
     DT::datatable(summaryTopProjectedList(),
       options = list(
@@ -1016,9 +1016,9 @@ server <- function(input, output, session) {
     )) {
       "The geography of this LSIP has changed since the Skills Imperative data was published, so no data is available here."
     } else if (input$splashMetric == "employmentProjection" & input$geoChoice %in% c(
-      "Devon and Torbay MCA", "Greater Lincolnshire MCA", "Hull and East Yorkshire MCA", "Lancashire MCA"
+      "Devon and Torbay CA", "Greater Lincolnshire CA", "Hull and East Yorkshire CA", "Lancashire CA"
     )) {
-      "This MCA was created after the Skills Imperative data was published, so no data is available here."
+      "This CA was created after the Skills Imperative data was published, so no data is available here."
     } else {
       ""
     }
@@ -1055,7 +1055,7 @@ server <- function(input, output, session) {
         "West London Alliance LSIP"
       )) {
         " London wide data is available by choosing the Greater London Authority under Combined authorities."
-      } else if (input$geoChoice == "Greater London Authority MCA") {
+      } else if (input$geoChoice == "Greater London Authority CA") {
         " Data is available for 4 sub London areas as well. These can be chosen from the area filter under LSIPs)."
       }
     )
@@ -1304,7 +1304,7 @@ server <- function(input, output, session) {
       areaRank,
       suff,
       " of the ",
-      if (str_sub(input$geoChoice, start = -3) == "MCA") {
+      if (str_sub(input$geoChoice, start = -2) == "CA") {
         "16 CAs (and GLA)."
       } else {
         "42 areas (38 LSIPS and 4 sub-London LSIP areas)."
@@ -1644,7 +1644,7 @@ server <- function(input, output, session) {
 
     df <- C_time %>%
       filter(
-        # get lsip/mca areas
+        # get lsip/ca areas
         (geogConcat == input$geoChoice | geogConcat %in% if ("geoComps" %in% names(input)) {
           input$geoComps
         } else {
@@ -1850,7 +1850,7 @@ server <- function(input, output, session) {
       breakdown == input$barBreakdown,
       subgroup %in% input$barSubgroup,
       metric == input$splashMetric,
-      # get lsip/mca areas
+      # get lsip/ca areas
       (geogConcat == input$geoChoice | geogConcat %in% if ("geoComps" %in% names(input)) {
         input$geoComps
       } else {
@@ -2066,7 +2066,7 @@ server <- function(input, output, session) {
       "hubArea",
       multiple = TRUE,
       label = NULL,
-      options = list(placeholder = "Choose LSIPs, MCAs, LAs*"),
+      options = list(placeholder = "Choose LSIPs, CAs, LAs*"),
       choices = areaChoices
     )
   })
@@ -2148,7 +2148,7 @@ server <- function(input, output, session) {
           } |
             (if ("Yes" %in% input$hubLA) {
               Area %in% (
-                C_Geog %>% filter(geog == "LADU", (LSIP %in% input$hubArea | MCA %in% input$hubArea))
+                C_Geog %>% filter(geog == "LADU", (LSIP %in% input$hubArea | CA %in% input$hubArea))
                   %>% distinct(geogConcat)
               )$geogConcat
             } else {

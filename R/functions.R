@@ -77,7 +77,7 @@ formatNomis <- function(x) {
     )) %>%
     mutate(geogConcat = case_when(
       GEOGRAPHY_TYPE == "local authorities: district / unitary (as of April 2021)" ~ paste0(GEOGRAPHY_NAME, " LADU"),
-      GEOGRAPHY_TYPE == "combined authorities (as of May 2025)" ~ paste0(GEOGRAPHY_NAME, " MCA"),
+      GEOGRAPHY_TYPE == "combined authorities (as of May 2025)" ~ paste0(GEOGRAPHY_NAME, " CA"),
       GEOGRAPHY_TYPE == "User Defined Geography" ~ paste0(GEOGRAPHY_NAME, " LSIP"),
       TRUE ~ GEOGRAPHY_NAME
     )) %>%
@@ -85,7 +85,7 @@ formatNomis <- function(x) {
     rename(chartPeriod = DATE_NAME, value = OBS_VALUE)
 }
 
-# add on new LADUs/LEP/LSIP/MCA areas to all LAs. Used for those data withonly LAD data
+# add on new LADUs/LEP/LSIP/CA areas to all LAs. Used for those data withonly LAD data
 addGeogs <- function(x) {
   withAreas <- x %>%
     filter(
@@ -111,8 +111,8 @@ addGeogs <- function(x) {
     left_join(distinct(neatLA, areaCode, area = areaName), by = c("areaCode" = "areaCode")) %>% # use to get consistent LA names
     # addLSIPS
     left_join(C_LADLSIP, by = c("areaCode" = "LAD23CD")) %>%
-    # addMCA
-    left_join(select(C_mcalookup, -CAUTH25CD, -LAD25NM), by = c("areaCode" = "LAD25CD")) %>%
+    # addCA
+    left_join(select(C_calookup, -CAUTH25CD, -LAD25NM), by = c("areaCode" = "LAD25CD")) %>%
     # add national name
     mutate(area = case_when(
       geographic_level == "National" ~ "England",
@@ -131,7 +131,7 @@ addGeogs <- function(x) {
       mutate(geogConcat = paste0(LSIPname, " LSIP"), newArea = 1),
     withAreas %>%
       filter(is.na(CAUTH25NM) == FALSE) %>%
-      mutate(geogConcat = paste0(CAUTH25NM, " MCA"), newArea = 1)
+      mutate(geogConcat = paste0(CAUTH25NM, " CA"), newArea = 1)
   ) %>%
     select(-area, -LSIPname, -CAUTH25NM, -areaCode, -geographic_level)
 }

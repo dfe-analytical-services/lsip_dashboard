@@ -21,7 +21,7 @@ userGeogString <- C_LADLSIP %>%
 geo_param <- paste(userGeogString$make_geo, collapse = ",")
 
 #Also make GLA geography api string
-userGeogStringGLA <- C_mcalookup %>%
+userGeogStringGLA <- C_calookup %>%
   filter(CAUTH25NM=="Greater London Authority")%>%
   group_by(CAUTH25NM) %>%
   summarise(
