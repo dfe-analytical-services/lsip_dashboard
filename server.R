@@ -1301,7 +1301,7 @@ server <- function(input, output, session) {
       if (str_sub(input$geoChoice, start = -3) == "MCA") {
         "16 CAs (and GLA)."
       } else {
-        "43 LSIPs."
+        "42 areas (38 LSIPS and 4 sub-London LSIP areas)."
       }
     )
   })
