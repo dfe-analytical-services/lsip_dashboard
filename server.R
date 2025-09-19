@@ -1159,6 +1159,14 @@ server <- function(input, output, session) {
   distinctBreakdowns <- C_breakdown %>%
     distinct(metric, breakdown)
 
+  # Track whether we’re restoring from URL/bookmark
+  restoring <- reactiveVal(TRUE)
+
+  # Reset this once Shiny has finished restoring state
+  onRestored(function(state) {
+    restoring(FALSE)
+  })
+
   # set current metric (and a versions with spaces for printing) up as reactive var - it will change as users activate filters
   currentMetric <- reactiveVal(NULL)
   currentMetricSpaces <- reactiveVal(NULL)
@@ -1181,9 +1189,25 @@ server <- function(input, output, session) {
         updatePickerInput(inputId = "barSubgroup", choices = "", selected = "")
       } else { # if there are subgroups then show the subgroup type filters
         shinyjs::show("breakdownPage_wrapper")
-        updateSelectInput(session, "breakdownPage", choices = c("All", types), selected = "All")
+        # if restoring from url use current breakdown, else choose all
+        if (restoring()) {
+          updateSelectInput(session, "breakdownPage",
+            choices = c("All", types),
+            selected = input$breakdownPage
+          )
+        } else {
+          updateSelectInput(session, "breakdownPage",
+            choices = c("All", types),
+            selected = "All"
+          )
+        }
+        # if restoring from url use current subgroup
         shinyjs::show("breakdownBar_wrapper")
-        updateSelectInput(session, "barBreakdown", choices = types, selected = types[1])
+        if (restoring()) {
+          updateSelectInput(session, "barBreakdown", choices = types, selected = input$barBreakdown)
+        } else {
+          updateSelectInput(session, "barBreakdown", choices = types, selected = types[1])
+        }
       }
       # Update currentMetric to just the main metric (no subgroups are chosen when a user changes metric)
       currentMetric(input$splashMetric)
