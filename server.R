@@ -9,6 +9,51 @@ server <- function(input, output, session) {
   )
   show("app-content")
 
+  # We use bookmarking to store input choices in the url.
+  # We exclude these inputs:
+  observe({
+    setBookmarkExclude(c(
+      "link_to_tabpanel_accessibility", "link_to_tabpanel_supportandfeedback", "cookies",
+      "navbar", ".clientValue-default-plotlyCrosstalkOpts", "plotly_afterplot-A",
+      "plotly_relayout-A", "plotly_hover-A", "plotly_click-A", "DataTbl_rows_selected",
+      "DataTbl_columns_selected", "DataTbl_cells_selected", "DataTbl_rows_current",
+      "DataTbl_rows_all", "DataTbl_state", "DataTbl_search", "DataTbl_cell_clicked",
+      "DataTbl_row_last_clicked", "mapLA_bounds", "mapLA_center", "mapLA_zoom", "map_bounds",
+      "map_center", "map_zoom", "mapLA_shape_click", "mapLA_click",
+      "link_to_tabpanel_data", "link_to_tabpanel_furtherresources", "link_to_tabpanel_localskills2",
+      "link_to_tabpanel_localskills", "link_to_tabpanel_overview", "cookies_banner-cookies_reject",
+      "cookies_banner-cookies_accept", "cookies_banner-cookies_link", "link_to_tabpanel_employment",
+      "link_to_tabpanel_vacancies", "link_to_tabpanel_enterprise", "link_to_tabpanel_FE", "link_to_tabpanel_destinations",
+      "link_to_tabpanel_wf1", "link_to_tabpanel_empRate", "link_to_tabpanel_vacancies2", "link_to_tabpanel_FE2",
+      "link_to_tabpanel_wf", "link_to_tabpanel_enterprise2", "link_to_tabpanel_LS", "cookies_panel-submit_btn",
+      "cookies_panel-cookies_analytics", "summaryTopProjectedListTable_rows_selected", "summaryTopProjectedListTable_columns_selected",
+      "summaryTopProjectedListTable_cells_selected", "summaryTopProjectedListTable_rows_current",
+      "summaryTopProjectedListTable_rows_all", "summaryTopProjectedListTable_state", "summaryTopProjectedListTable_search",
+      "summaryTopProjectedListTable_cell_clicked", "summaryTopProjectedListTable_row_last_clicked",
+      "map_shape_mouseover", "map_shape_mouseout", "map_shape_click", "map_click", "barSubgroup_open",
+      "mapLA_shape_mouseover", "mapLA_shape_mouseout", "hubTable_rows_selected", "hubTable_columns_selected",
+      "hubTable_cells_selected", "hubTable_rows_current", "hubTable_rows_all", "hubTable_state",
+      "hubTable_search", "hubTable_cell_clicked", "hubTable_row_last_clicked", "reportsTable_rows_selected",
+      "reportsTable_columns_selected", "reportsTable_cells_selected", "reportsTable_rows_current",
+      "reportsTable_rows_all", "reportsTable_state", "reportsTable_search", "reportsTable_cell_clicked",
+      "sourcesTable_rows_selected", "sourcesTable_columns_selected", "sourcesTable_cells_selected",
+      "sourcesTable_rows_current", "sourcesTable_rows_all", "sourcesTable_state", "sourcesTable_search",
+      "sourcesTable_cell_clicked", "toolsTable_rows_selected", "toolsTable_columns_selected",
+      "toolsTable_cells_selected", "toolsTable_rows_current", "toolsTable_rows_all", "toolsTable_state",
+      "toolsTable_search", "toolsTable_cell_clicked", "reportsTable_row_last_clicked", "sourcesTable_row_last_clicked",
+      "toolsTable_row_last_clicked"
+    ))
+  })
+
+  observe({
+    # Trigger this observer every time an input changes
+    reactiveValuesToList(input)
+    session$doBookmark()
+  })
+  onBookmarked(function(url) {
+    updateQueryString(url)
+  })
+
   ## 1.2 Load chart colours ----
   # https://analysisfunction.civilservice.gov.uk/policy-store/data-visualisation-colours-in-charts/
   # England, geo1, geo2, then any others

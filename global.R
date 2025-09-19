@@ -32,6 +32,9 @@ shhh(library(quarto)) # map colours
 shhh(library(dfeshiny)) # map colours
 shhh(library(bslib)) # Value boxes
 
+# This line enables bookmarking such that input choices are shown in the url.
+enableBookmarking("url")
+
 site_title <- "Local skills dashboard"
 google_analytics_key <- "MMB6NG2FE1"
 
