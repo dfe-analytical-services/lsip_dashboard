@@ -192,6 +192,13 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     </header>'
   ),
 
+  # Add banner note around new LSIPs
+  HTML(
+    '<div class="feedback-banner" id="feedback banner" >
+    <p style="color: #fff;">Some LSIP boundaries have been updated in line with the next cycle of LSIP development beginning October 2025, and new combined authorities have been added. See data sources page for more information.</p>
+</div>'
+  ),
+
   # Force page to scroll to top when links clicked
   tags$script(
     " $(document).ready(function () {
@@ -360,7 +367,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           "The Local Skills dashboard provides published local data from a variety of sources in an easy to navigate format. To support local skills planning, the dashboard covers topics such as employment, qualifications, and education outcomes across England."
         ),
         p(
-          "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, Mayoral Combined Authority (MCA) and national."
+          "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, Combined Authority (CA) and national."
         ),
         p(
           "This dashboard is produced by ",
@@ -403,7 +410,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             ),
             h2("Local skills metrics"),
             p(
-              "Where published figures are not available, area totals for LSIP or MCA are either taken from a matching geographical area or are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
+              "Where published figures are not available, area totals for LSIP or CA are either taken from a matching geographical area or are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
             ),
             p(
               "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS ",
@@ -479,16 +486,21 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           div(
             class = "panel-body",
             h2("Latest update"),
-            p("02 Sep 2025 (1.5.2)"),
+            p("19 Sep 2025 (1.6.0)"),
             tags$ul(
-              tags$li("Update to latest online job advert data."),
-              tags$li("Reorganise the filter methodology to speed up the dashboard."),
-              tags$li("Small bug fixes.")
+              tags$li("Update to latest LSIP geographies."),
+              tags$li("Add new CAs.")
             ),
             details(
               label = "Previous updates",
               inputId = "PreviousUpdate",
               p(
+                p("02 Sep 2025 (1.5.2)"),
+                tags$ul(
+                  tags$li("Update to latest online job advert data."),
+                  tags$li("Reorganise the filter methodology to speed up the dashboard."),
+                  tags$li("Small bug fixes.")
+                ),
                 p("22 Aug 2025 (1.5.1)"),
                 tags$ul(
                   tags$li("Refresh of the summary page."),
@@ -730,7 +742,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           selectizeInput(
             "geoChoice",
             multiple = FALSE,
-            label = "Choose an LSIP, MCA or England",
+            label = "Choose an LSIP, CA or England",
             choices = areaChoices[1:3],
             options = list(
               persist = TRUE, # keep selected value
@@ -745,7 +757,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             choices = areaChoices,
             options = list(
               maxItems = 7,
-              placeholder = "Comparison areas (LA/LSIP/MCA/National"
+              placeholder = "Comparison areas (LA/LSIP/CA/National"
             )
           )
         ),
@@ -793,7 +805,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           h3(uiOutput("titleMap")),
           radioGroupButtons(
             inputId = "splashGeoType",
-            choices = c("LSIP", "MCA", "England")
+            choices = c("LSIP", "CA", "England")
           ),
           p(uiOutput("commentMap")),
           withSpinner(leafletOutput("map")),
@@ -859,7 +871,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         ),
         column(
           width = 9,
-          "Download metric data for all geographies (LSIP, MCA areas, LAs, regions and England)",
+          "Download metric data for all geographies (LSIP, CA areas, LAs, regions and England)",
         )
       ),
       fluidRow(
@@ -903,6 +915,37 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         column(
           12,
           h2("Data information"),
+          h3("Boundary changes"),
+          p(
+            "Some LSIP boundaries have changed in advance of the next cycle of LSIP development, beginning October 2025. These boundaries were updated on the dashboard on 19/09/25 affecting the following LSIPs:"
+          ),
+          tags$ul(
+            tags$li("Greater Devon"),
+            tags$li("Greater Lincolnshire"),
+            tags$li("Hampshire and the Solent"),
+            tags$li("Leicester, Leicestershire and Rutland"),
+            tags$li("North East"),
+            tags$li("Somerset"),
+            tags$li("Surrey"),
+            tags$li("Warwickshire"),
+            tags$li("West Midlands")
+          ),
+          p(
+            "More information on boundary changes is available on the Local skills improvement plans and designated employer representative bodies ",
+            a(
+              href = "https://www.gov.uk/government/publications/designated-employer-representative-bodies/notice-of-designated-employer-representative-bodies",
+              "page on gov.uk",
+              .noWS = c("after")
+            ),
+            "."
+          ),
+          p("During this update the following changes were also made: London sub-areas were added as individual LSIP areas. Combined London data remains available as a Combined Authority area; the following newly created combined authorities were added:"),
+          tags$ul(
+            tags$li("Devon and Torbay"),
+            tags$li("Greater Lincolnshire"),
+            tags$li("Hull and East Yorkshire"),
+            tags$li("Lancashire")
+          ),
           h3("Annual Population Survey"),
           p(
             "The Annual Population Survey (APS) is a continuous household survey covering the UK.
@@ -980,7 +1023,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           p("
             For LSIPs, only the most recent year's data is published. We therefore compile the statistics from LAs for all years except the most recent."),
           p("Rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
-Per 100,000 figures for LSIP/MCA areas are based on subgroup populations calculated from the ILR dataset."),
+Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculated from the ILR dataset."),
           h3("KS4 and KS5 destinations"),
           p(
             "Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education, employment or an apprenticeship
@@ -995,7 +1038,7 @@ Per 100,000 figures for LSIP/MCA areas are based on subgroup populations calcula
             )
           ),
           p(
-            "LSIP and MCA area totals are calculated by adding up the relevant local authorities,
+            "LSIP and CA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
             Some new local authorities due to boundary changes are not included due to these changes not being updated in data publications."
           ),
@@ -1016,7 +1059,7 @@ Per 100,000 figures for LSIP/MCA areas are based on subgroup populations calcula
             The reference period is December, and therefore the 2021 publication measures businesses that were active between December 2020 and December 2021."
           ),
           p(
-            "LSIP and MCA area totals are calculated by adding up the relevant local authorities,
+            "LSIP and CA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."
           ),
           h3("Skills Imperative 2035 employment projections"),
