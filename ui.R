@@ -194,16 +194,16 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     ),
 
 
-  # Add banner note around new LSIPs
-  HTML(
-    '<div class="feedback-banner" id="feedback banner" >
+    # Add banner note around new LSIPs
+    HTML(
+      '<div class="feedback-banner" id="feedback banner" >
     <p style="color: #fff;">Some LSIP boundaries have been updated in line with the next cycle of LSIP development beginning October 2025, and new combined authorities have been added. See data sources page for more information.</p>
 </div>'
-  ),
+    ),
 
-  # Force page to scroll to top when links clicked
-  tags$script(
-    " $(document).ready(function () {
+    # Force page to scroll to top when links clicked
+    tags$script(
+      " $(document).ready(function () {
          $('#navbar a[data-toggle=\"tab\"]').on('click', function (e) {
           window.scrollTo(0, 0)
                });
@@ -477,91 +477,95 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         # end of dashboard contents row
 
         ### 2.1.3 Version control ----
-      fluidRow(column(
-        12,
-        div(
-          class = "panel panel-info",
+        fluidRow(column(
+          12,
           div(
-            class = "panel-heading",
-            style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
-            h2("Update history")
-          ),
-          div(
-            class = "panel-body",
-            h2("Latest update"),
-            p("19 Sep 2025 (1.6.0)"),
-            tags$ul(
-              tags$li("Update to latest LSIP geographies."),
-              tags$li("Add new CAs.")
+            class = "panel panel-info",
+            div(
+              class = "panel-heading",
+              style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
+              h2("Update history")
             ),
-            details(
-              label = "Previous updates",
-              inputId = "PreviousUpdate",
-              p(
-                p("02 Sep 2025 (1.5.2)"),
-                tags$ul(
-                  tags$li("Update to latest online job advert data."),
-                  tags$li("Reorganise the filter methodology to speed up the dashboard."),
-                  tags$li("Small bug fixes.")
-                ),
-                p("22 Aug 2025 (1.5.1)"),
-                tags$ul(
-                  tags$li("Refresh of the summary page."),
-                  tags$li("Remove LEP maps and add in National picture."),
-                  tags$li("Add in page wide subgroup filters to the Local Skills data page."),
-                  tags$li("Update Skills Imperative projection long term growth metric to 2024 to 2035."),
-                  tags$li("Utilise the populations published in FE data to calculate grouped FE per 100k statistics.")
-                ),
-                p("5 Aug 2025 (1.4.17)"),
-                tags$ul(
-                  tags$li("Update to latest online job advert data.")
-                ),
-                p("28 Jul 2025 (1.4.16)"),
-                tags$ul(
-                  tags$li("Add in North Yorkshire LAD to the comparison drop down list."),
-                  tags$li("Correction to Enterprise M3 employment projections to 2035. Previous versions used the incorrect published figures. See Data information tab for more information on the correction.")
-                ),
-                p("18 Jul 2025 (1.4.15)"),
-                tags$ul(
-                  tags$li("Update to latest APS data.")
-                ),
-                p("11 Jul 2025 (1.4.14)"),
-                tags$ul(
-                  tags$li("Update to latest online job advert data.")
-                ),
-                p("14 May 2025 (1.4.13)"),
-                tags$ul(
-                  tags$li("Update to latest online job advert data."),
-                  tags$li("Update to latest qualification data.")
-                ),
-                p("25 Apr 2025 (1.4.12)"),
-                tags$ul(
-                  tags$li("Updated APS employment to latest data."),
-                  tags$li("Update to latest online job advert data.")
-                ),
-                p("27 Mar 2025 (1.4.11)"),
-                tags$ul(
-                  tags$li("Update to latest revised destination data."),
-                  tags$li("Update to latest online job advert data.")
-                ),
-                p("17 Feb 2025 (1.4.10)"),
-                tags$ul(
-                  tags$li("Update to latest online job advert data.")
-                ),
-                p("6 Feb 2025 (1.4.9)"),
-                tags$ul(
-                  tags$li("Updated the MCA map to include the new combined authorities (East Midlands, York and North Yorkshire) and the combination of North East MCA and North of Tyne MCA into North East MCA.")
-                ),
-                p("30 Jan 2025 (1.4.8)"),
-                tags$ul(
-                  tags$li("Updated business demography to latest data."),
-                  tags$li("Updated further education enrolments and achievements to latest data."),
-                  tags$li("Updated APS employment to latest data.")
-                ),
-                p("12 Dec 2024 (1.4.7)"),
-                tags$ul(
-                  tags$li("Updated job adverts to latest, Nov24"),
-                  tags$li("Added comment that explains North of Tyne and North East MCA have been temporarily
+            div(
+              class = "panel-body",
+              h2("Latest update"),
+              p("23 Sep 2025 (1.6.1)"),
+              tags$ul(
+                tags$li("Add dynamic URLs.")
+              ),
+              details(
+                label = "Previous updates",
+                inputId = "PreviousUpdate",
+                p(
+                  p("19 Sep 2025 (1.6.0)"),
+                  tags$ul(
+                    tags$li("Update to latest LSIP geographies."),
+                    tags$li("Add new CAs.")
+                  ),
+                  p("02 Sep 2025 (1.5.2)"),
+                  tags$ul(
+                    tags$li("Update to latest online job advert data."),
+                    tags$li("Reorganise the filter methodology to speed up the dashboard."),
+                    tags$li("Small bug fixes.")
+                  ),
+                  p("22 Aug 2025 (1.5.1)"),
+                  tags$ul(
+                    tags$li("Refresh of the summary page."),
+                    tags$li("Remove LEP maps and add in National picture."),
+                    tags$li("Add in page wide subgroup filters to the Local Skills data page."),
+                    tags$li("Update Skills Imperative projection long term growth metric to 2024 to 2035."),
+                    tags$li("Utilise the populations published in FE data to calculate grouped FE per 100k statistics.")
+                  ),
+                  p("5 Aug 2025 (1.4.17)"),
+                  tags$ul(
+                    tags$li("Update to latest online job advert data.")
+                  ),
+                  p("28 Jul 2025 (1.4.16)"),
+                  tags$ul(
+                    tags$li("Add in North Yorkshire LAD to the comparison drop down list."),
+                    tags$li("Correction to Enterprise M3 employment projections to 2035. Previous versions used the incorrect published figures. See Data information tab for more information on the correction.")
+                  ),
+                  p("18 Jul 2025 (1.4.15)"),
+                  tags$ul(
+                    tags$li("Update to latest APS data.")
+                  ),
+                  p("11 Jul 2025 (1.4.14)"),
+                  tags$ul(
+                    tags$li("Update to latest online job advert data.")
+                  ),
+                  p("14 May 2025 (1.4.13)"),
+                  tags$ul(
+                    tags$li("Update to latest online job advert data."),
+                    tags$li("Update to latest qualification data.")
+                  ),
+                  p("25 Apr 2025 (1.4.12)"),
+                  tags$ul(
+                    tags$li("Updated APS employment to latest data."),
+                    tags$li("Update to latest online job advert data.")
+                  ),
+                  p("27 Mar 2025 (1.4.11)"),
+                  tags$ul(
+                    tags$li("Update to latest revised destination data."),
+                    tags$li("Update to latest online job advert data.")
+                  ),
+                  p("17 Feb 2025 (1.4.10)"),
+                  tags$ul(
+                    tags$li("Update to latest online job advert data.")
+                  ),
+                  p("6 Feb 2025 (1.4.9)"),
+                  tags$ul(
+                    tags$li("Updated the MCA map to include the new combined authorities (East Midlands, York and North Yorkshire) and the combination of North East MCA and North of Tyne MCA into North East MCA.")
+                  ),
+                  p("30 Jan 2025 (1.4.8)"),
+                  tags$ul(
+                    tags$li("Updated business demography to latest data."),
+                    tags$li("Updated further education enrolments and achievements to latest data."),
+                    tags$li("Updated APS employment to latest data.")
+                  ),
+                  p("12 Dec 2024 (1.4.7)"),
+                  tags$ul(
+                    tags$li("Updated job adverts to latest, Nov24"),
+                    tags$li("Added comment that explains North of Tyne and North East MCA have been temporarily
                       removed")
                   ),
                   p("18 Oct 2024 (1.4.5)"),
@@ -734,47 +738,34 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       ## 2.2 Overview ----
       summaryTab(),
 
-    ## 2.3 Local skills ----
-    tabPanel(
-      "Local skills data",
-      br(),
-      ### 2.3.1 Filters ----
-      fluidRow(
-        column(
-          5,
-          selectizeInput(
-            "geoChoice",
-            multiple = FALSE,
-            label = "Choose an LSIP, CA or England",
-            choices = areaChoices[1:3],
-            options = list(
-              persist = TRUE, # keep selected value
-              create = FALSE, # disallow new values
-              onDelete = I("function(values) { return false; }")
-            )
-          ),
-          selectizeInput(
-            "geoComps",
-            multiple = TRUE,
-            label = NULL,
-            choices = areaChoices,
-            options = list(
-              maxItems = 7,
-              placeholder = "Comparison areas (LA/LSIP/CA/National"
-            )
-          )
-        ),
-        column(
-          5,
-          selectizeInput(
-            inputId = "splashMetric",
-            choices = metricChoices,
-            multiple = FALSE,
-            label = "What are you interested in?",
-            options = list(
-              persist = TRUE, # keep selected value
-              create = FALSE, # disallow new values
-              onDelete = I("function(values) { return false; }")
+      ## 2.3 Local skills ----
+      tabPanel(
+        "Local skills data",
+        br(),
+        ### 2.3.1 Filters ----
+        fluidRow(
+          column(
+            5,
+            selectizeInput(
+              "geoChoice",
+              multiple = FALSE,
+              label = "Choose an LSIP, CA or England",
+              choices = areaChoices[1:3],
+              options = list(
+                persist = TRUE, # keep selected value
+                create = FALSE, # disallow new values
+                onDelete = I("function(values) { return false; }")
+              )
+            ),
+            selectizeInput(
+              "geoComps",
+              multiple = TRUE,
+              label = NULL,
+              choices = areaChoices,
+              options = list(
+                maxItems = 7,
+                placeholder = "Comparison areas (LA/LSIP/CA/National"
+              )
             )
           ),
           column(
@@ -783,7 +774,12 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               inputId = "splashMetric",
               choices = metricChoices,
               multiple = FALSE,
-              label = "What are you interested in?"
+              label = "What are you interested in?",
+              options = list(
+                persist = TRUE, # keep selected value
+                create = FALSE, # disallow new values
+                onDelete = I("function(values) { return false; }")
+              )
             ),
             hidden(
               div(
@@ -808,19 +804,19 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             12,
             p(uiOutput("subheading"))
           )
-      ),
-      ### 2.3.2 Visuals row 1 ----
-      fluidRow(
-        column(
-          6,
-          h3(uiOutput("titleMap")),
-          radioGroupButtons(
-            inputId = "splashGeoType",
-            choices = c("LSIP", "CA", "England")
-          ),
-          p(uiOutput("commentMap")),
-          withSpinner(leafletOutput("map")),
-          p(uiOutput("mapFoot"))
+        ),
+        ### 2.3.2 Visuals row 1 ----
+        fluidRow(
+          column(
+            6,
+            h3(uiOutput("titleMap")),
+            radioGroupButtons(
+              inputId = "splashGeoType",
+              choices = c("LSIP", "CA", "England")
+            ),
+            p(uiOutput("commentMap")),
+            withSpinner(leafletOutput("map")),
+            p(uiOutput("mapFoot"))
           ),
           column(
             6,
@@ -880,9 +876,9 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               class = "downloadButton"
             )
           ),
-        column(
-          width = 9,
-          "Download metric data for all geographies (LSIP, CA areas, LAs, regions and England)",
+          column(
+            width = 9,
+            "Download metric data for all geographies (LSIP, CA areas, LAs, regions and England)",
           )
         ),
         fluidRow(
@@ -925,41 +921,41 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
         fluidRow(
           column(
             12,
-          h2("Data information"),
-          h3("Boundary changes"),
-          p(
-            "Some LSIP boundaries have changed in advance of the next cycle of LSIP development, beginning October 2025. These boundaries were updated on the dashboard on 19/09/25 affecting the following LSIPs:"
-          ),
-          tags$ul(
-            tags$li("Greater Devon"),
-            tags$li("Greater Lincolnshire"),
-            tags$li("Hampshire and the Solent"),
-            tags$li("Leicester, Leicestershire and Rutland"),
-            tags$li("North East"),
-            tags$li("Somerset"),
-            tags$li("Surrey"),
-            tags$li("Warwickshire"),
-            tags$li("West Midlands")
-          ),
-          p(
-            "More information on boundary changes is available on the Local skills improvement plans and designated employer representative bodies ",
-            a(
-              href = "https://www.gov.uk/government/publications/designated-employer-representative-bodies/notice-of-designated-employer-representative-bodies",
-              "page on gov.uk",
-              .noWS = c("after")
+            h2("Data information"),
+            h3("Boundary changes"),
+            p(
+              "Some LSIP boundaries have changed in advance of the next cycle of LSIP development, beginning October 2025. These boundaries were updated on the dashboard on 19/09/25 affecting the following LSIPs:"
             ),
-            "."
-          ),
-          p("During this update the following changes were also made: London sub-areas were added as individual LSIP areas. Combined London data remains available as a Combined Authority area; the following newly created combined authorities were added:"),
-          tags$ul(
-            tags$li("Devon and Torbay"),
-            tags$li("Greater Lincolnshire"),
-            tags$li("Hull and East Yorkshire"),
-            tags$li("Lancashire")
-          ),
-          h3("Annual Population Survey"),
-          p(
-            "The Annual Population Survey (APS) is a continuous household survey covering the UK.
+            tags$ul(
+              tags$li("Greater Devon"),
+              tags$li("Greater Lincolnshire"),
+              tags$li("Hampshire and the Solent"),
+              tags$li("Leicester, Leicestershire and Rutland"),
+              tags$li("North East"),
+              tags$li("Somerset"),
+              tags$li("Surrey"),
+              tags$li("Warwickshire"),
+              tags$li("West Midlands")
+            ),
+            p(
+              "More information on boundary changes is available on the Local skills improvement plans and designated employer representative bodies ",
+              a(
+                href = "https://www.gov.uk/government/publications/designated-employer-representative-bodies/notice-of-designated-employer-representative-bodies",
+                "page on gov.uk",
+                .noWS = c("after")
+              ),
+              "."
+            ),
+            p("During this update the following changes were also made: London sub-areas were added as individual LSIP areas. Combined London data remains available as a Combined Authority area; the following newly created combined authorities were added:"),
+            tags$ul(
+              tags$li("Devon and Torbay"),
+              tags$li("Greater Lincolnshire"),
+              tags$li("Hull and East Yorkshire"),
+              tags$li("Lancashire")
+            ),
+            h3("Annual Population Survey"),
+            p(
+              "The Annual Population Survey (APS) is a continuous household survey covering the UK.
           Topics included cover employment and unemployment, and education as well as housing, ethnicity and religion.
             This dashboard currently shows employment volumes and rates for each geographic area and by occupation (SOC2020) and industry (SIC 2007)."
             ),
@@ -1024,7 +1020,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
               ),
               tags$li(
                 "When job location information is limited, the centroid of the region is used. This may lead to clustering of job counts."
-              ),
+              )
             ),
             h3("Individualised Learner Record"),
             p(
@@ -1033,11 +1029,11 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             ),
             p("
             For LSIPs, only the most recent year's data is published. We therefore compile the statistics from LAs for all years except the most recent."),
-          p("Rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
+            p("Rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
 Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculated from the ILR dataset."),
-          h3("KS4 and KS5 destinations"),
-          p(
-            "Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education, employment or an apprenticeship
+            h3("KS4 and KS5 destinations"),
+            p(
+              "Statistics compiled from the National Pupil Database (NPD) showing the number of young people going into education, employment or an apprenticeship
             in the academic year following completion of their qualification:"
             ),
             tags$ul(
@@ -1049,7 +1045,7 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
               )
             ),
             p(
-            "LSIP and CA area totals are calculated by adding up the relevant local authorities,
+              "LSIP and CA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed.
             Some new local authorities due to boundary changes are not included due to these changes not being updated in data publications."
             ),
@@ -1068,9 +1064,9 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
             p(
               "The dashboard currently shows the number of new and no longer trading enterprises from 2016 to 2021. Business demography measures businesses that were active throughout the reference year.
             The reference period is December, and therefore the 2021 publication measures businesses that were active between December 2020 and December 2021."
-          ),
-          p(
-            "LSIP and CA area totals are calculated by adding up the relevant local authorities,
+            ),
+            p(
+              "LSIP and CA area totals are calculated by adding up the relevant local authorities,
             rounding errors may be present in these geographic areas as local authority total volumes are rounded and small volumes are suppressed."
             ),
             h3("Skills Imperative 2035 employment projections"),
