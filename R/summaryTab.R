@@ -11,7 +11,7 @@ summaryTab <- function() {
           fluidRow(
             column(
               width = 9,
-              p("Choose an LSIP, MCA or England"),
+              p("Choose an LSIP, CA or England"),
               selectizeInput(
                 "geoChoiceOver",
                 multiple = FALSE,
@@ -35,7 +35,12 @@ summaryTab <- function() {
     ), # end of filters row
 
     h1(uiOutput("page0title")),
-    #    h2("Headline data"),
+    fluidRow(
+      column(
+        12,
+        p(uiOutput("subheadingSummary"))
+      )
+    ),
     fluidRow(
       column(
         4,
@@ -126,7 +131,7 @@ summaryTab <- function() {
       ),
       column(
         width = 9,
-        "Download all data for all geographies (LSIPs, MCA areas, LAs and England)",
+        "Download all data for all geographies (LSIPs, CA areas, LAs and England)",
       )
     ),
     fluidRow(

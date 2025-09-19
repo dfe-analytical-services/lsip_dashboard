@@ -405,6 +405,28 @@ server <- function(input, output, session) {
     paste0(input$geoChoiceOver, " headline data")
   })
 
+  # create subheading
+  output$subheadingSummary <- renderUI({
+    req(input$geoChoiceOver)
+    paste0(
+      if (input$geoChoiceOver %in% c(
+        "Greater Devon LSIP", "Greater Lincolnshire LSIP",
+        "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP", "North East LSIP",
+        "Somerset LSIP", "Surrey LSIP",
+        "Warwickshire LSIP", "West Midlands LSIP"
+      )) {
+        " The boundaries for this LSIP area were updated in September 2025. See data sources page for more information."
+      } else if (input$geoChoiceOver %in% c(
+        "Central London Forward LSIP", "Local London LSIP", "South London Partnership LSIP",
+        "West London Alliance LSIP"
+      )) {
+        " London wide data is available by choosing the Greater London Authority under Combined authorities."
+      } else if (input$geoChoiceOver == "Greater London Authority CA") {
+        " Data is available for 4 sub London areas as well. These can be chosen from the area filter under LSIPs."
+      }
+    )
+  })
+
   ## 4.1 Filter ----
   # alter area dropdown if changed on other tab
   observeEvent(input$geoChoice, {
@@ -691,17 +713,29 @@ server <- function(input, output, session) {
   output$overviewJobTitle <- renderText({
     paste0(
       p("Demand: online job adverts", style = "font-weight: bold; font-size: 18px;"),
-      createOverviewTitle("vacancies")
+      if (input$geoChoiceOver %in% c(
+        "Central London Forward LSIP", "Local London LSIP", "South London Partnership LSIP", "West London Alliance LSIP"
+      )) {
+        "There is no London LA level job advert data so this LSIP cannot be calculated."
+      } else {
+        createOverviewTitle("vacancies")
+      }
     )
   })
 
   # Vacancy kpi
   output$overviewJobKPI <- renderText({
+    req(!input$geoChoiceOver %in% c(
+      "Central London Forward LSIP", "Local London LSIP", "South London Partnership LSIP", "West London Alliance LSIP"
+    ))
     createOverviewKPI("vacancies", "number")
   })
 
   # Vacancy chart
   output$jobLineChart <- renderPlotly({
+    req(!input$geoChoiceOver %in% c(
+      "Central London Forward LSIP", "Local London LSIP", "South London Partnership LSIP", "West London Alliance LSIP"
+    ))
     renderOverviewChart(createOverviewChart("vacancies", "number", "Online job adverts"))
   })
 
@@ -743,23 +777,34 @@ server <- function(input, output, session) {
   ## 4.5 Skills projections ----
   # Top projected jobs sentence
   output$summaryTopProjected <- renderUI({
-    paste0(
-      "From 2024 to 2035 ", input$geoChoiceOver, " is projected to grow ",
-      format((C_Geog %>%
-        filter(
-          geogConcat == input$geoChoiceOver
-        ))$employmentProjection * 100, digit = 1),
-      "% ",
-      ifelse(input$geoChoiceOver == "England", "", paste0(
-        "(compared to ",
+    if (input$geoChoiceOver %in% c(
+      "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
+      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP", "North East LSIP",
+      "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
+      "Warwickshire LSIP", "West London Alliance LSIP", "West Midlands LSIP"
+    )) {
+      "The boundaries of this LSIP have changed since this data was published so there is no associated employment projection data."
+    } else if (input$geoChoiceOver %in% c("Devon and Torbay CA", "Greater Lincolnshire CA", "Hull and East Yorkshire CA", "Lancashire CA")) {
+      "This CA was created after this data was published so there is no associated employment projection data."
+    } else {
+      paste0(
+        "From 2024 to 2035 ", input$geoChoiceOver, " is projected to grow ",
         format((C_Geog %>%
           filter(
-            geogConcat == "England"
+            geogConcat == input$geoChoiceOver
           ))$employmentProjection * 100, digit = 1),
-        "% nationally)"
-      )),
-      ". These are the top projected growth occupations in the area:"
-    )
+        "%",
+        ifelse(input$geoChoiceOver == "England", "", paste0(
+          " (compared to ",
+          format((C_Geog %>%
+            filter(
+              geogConcat == "England"
+            ))$employmentProjection * 100, digit = 1),
+          "% nationally)"
+        )),
+        ". These are the top projected growth occupations in the area:"
+      )
+    }
   })
 
   # get top growing occupations
@@ -789,6 +834,13 @@ server <- function(input, output, session) {
   })
 
   output$summaryTopProjectedListTable <- renderDataTable({
+    req(!input$geoChoiceOver %in% c(
+      "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
+      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP", "North East LSIP",
+      "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
+      "Warwickshire LSIP", "West London Alliance LSIP", "West Midlands LSIP",
+      "Devon and Torbay CA", "Greater Lincolnshire CA", "Hull and East Yorkshire CA", "Lancashire CA"
+    ))
     DT::datatable(summaryTopProjectedList(),
       options = list(
         info = FALSE,
@@ -895,6 +947,7 @@ server <- function(input, output, session) {
 
   # Businesses title top
   output$summaryBusinessesTop <- renderText({
+    req(input$geoChoiceOver != "England")
     paste0(
       "Percentage of businesses in ",
       (chartData() %>% filter(extremes == "top"))$subgroup[1]
@@ -903,6 +956,7 @@ server <- function(input, output, session) {
 
   # Businesses title bottom
   output$summaryBusinessesBottom <- renderText({
+    req(input$geoChoiceOver != "England")
     paste0(
       "Percentage of businesses in ",
       (chartData() %>% filter(extremes == "bottom"))$subgroup[1]
@@ -947,6 +1001,7 @@ server <- function(input, output, session) {
   })
 
   output$summaryBusinessesChartTop <- renderPlotly({
+    req(input$geoChoiceOver != "England")
     ggplotly(summaryBusinessesPlotTop(), tooltip = "text") %>%
       layout(
         xaxis = list(fixedrange = TRUE),
@@ -993,6 +1048,7 @@ server <- function(input, output, session) {
   })
 
   output$summaryBusinessesChartBottom <- renderPlotly({
+    req(input$geoChoiceOver != "England")
     ggplotly(summaryBusinessesPlotBottom(), tooltip = "text") %>%
       layout(
         xaxis = list(fixedrange = TRUE),
@@ -1015,6 +1071,26 @@ server <- function(input, output, session) {
   englandGeog <- C_Geog %>%
     filter(geog == "England" & areaName == "England")
 
+  # flag for if there is no data and write error message
+  noData <- reactive({
+    if (input$splashMetric == "vacancies" & grepl("London", input$geoChoice)) {
+      "There is no LA level job advert data available for London, so this LSIP cannot be calculated."
+    } else if (input$splashMetric == "employmentProjection" & input$geoChoice %in% c(
+      "Central London Forward LSIP", "Greater Devon LSIP", "Greater Lincolnshire LSIP",
+      "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP", "North East LSIP",
+      "Local London LSIP", "Somerset LSIP", "South London Partnership LSIP", "Surrey LSIP",
+      "Warwickshire LSIP", "West London Alliance LSIP", "West Midlands LSIP"
+    )) {
+      "The geography of this LSIP has changed since the Skills Imperative data was published, so no data is available here."
+    } else if (input$splashMetric == "employmentProjection" & input$geoChoice %in% c(
+      "Devon and Torbay CA", "Greater Lincolnshire CA", "Hull and East Yorkshire CA", "Lancashire CA"
+    )) {
+      "This CA was created after the Skills Imperative data was published, so no data is available here."
+    } else {
+      ""
+    }
+  })
+
   ## 5.2 Screenshot----
   output$screenshotFile <- renderUI({
     capture::capture(
@@ -1032,16 +1108,22 @@ server <- function(input, output, session) {
     req(input$geoChoice)
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$subheading,
-      if (input$splashMetric %in% c("vacancies", "employmentProjection")) {
-        if (input$geoChoice == "Dorset LSIP") {
-          " The data presented here for Dorset LSIP is correct, however for the Skills Imperative and Job Advert data, it does not match the published data. We are working to update the published data. "
-        } else if (input$geoChoice == "Enterprise M3 LEP (including all of Surrey) LSIP") {
-          " The published data for Skills Imperative and Job Advert for Enterprise M3 LEP (including all of Surrey) LSIP is incorrect due to the wrong LAs being included in the area. Presented here is an estimate for this LSIP compiled from other LEP and LSIP regions. As such there may be some rounding issues. We are working to update the published data. "
-        } else {
-          ""
-        }
-      } else {
-        ""
+      if (input$geoChoice == "Dorset LSIP" & input$splashMetric == "employmentProjection") {
+        " The data presented here for Dorset LSIP is correct, however for the Skills Imperative data, it does not match the published data. We are working to update the published data. "
+      } else if (input$geoChoice %in% c(
+        "Greater Devon LSIP", "Greater Lincolnshire LSIP",
+        "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP", "North East LSIP",
+        "Somerset LSIP", "Surrey LSIP",
+        "Warwickshire LSIP", "West Midlands LSIP"
+      )) {
+        " The boundaries for this LSIP area were updated in September 2025. See data sources page for more information."
+      } else if (input$geoChoice %in% c(
+        "Central London Forward LSIP", "Local London LSIP", "South London Partnership LSIP",
+        "West London Alliance LSIP"
+      )) {
+        " London wide data is available by choosing the Greater London Authority under Combined authorities."
+      } else if (input$geoChoice == "Greater London Authority CA") {
+        " Data is available for 4 sub London areas as well. These can be chosen from the area filter under LSIPs."
       }
     )
   })
@@ -1085,7 +1167,7 @@ server <- function(input, output, session) {
   observeEvent(input$splashMetric,
     {
       types <- distinctBreakdowns$breakdown[distinctBreakdowns$metric == input$splashMetric] # find subgroups in metric
-      # If there are no subgroups for the metric, then hide all the breakdown filters
+      # If there are no subgroups for the metric then hide all the breakdown filters
       if (length(types) == 0) {
         shinyjs::hide("breakdownPage_wrapper")
         updateSelectInput(session, "breakdownPage", choices = "", selected = "")
@@ -1255,7 +1337,8 @@ server <- function(input, output, session) {
     req(input$geoChoice %in% currentMapData()$geogConcat)
     # Ensure there is data in the latest year (sometimes not the case in small subgroups)
     req(is.na((currentMapData() %>% filter(geogConcat == input$geoChoice))$value) == FALSE)
-
+    # No need for sentence for England
+    req(input$geoChoice != "England")
     compareNational <-
       if ((currentMapData() %>% filter(geogConcat == input$geoChoice))$value
       >
@@ -1288,10 +1371,10 @@ server <- function(input, output, session) {
       areaRank,
       suff,
       " of the ",
-      if (str_sub(input$geoChoice, start = -3) == "MCA") {
-        "12 CAs (and GLA)."
+      if (str_sub(input$geoChoice, start = -2) == "CA") {
+        "16 CAs (and GLA)."
       } else {
-        "38 LSIPs."
+        "42 areas (38 LSIPS and 4 sub-London LSIP areas)."
       }
     )
   })
@@ -1531,6 +1614,8 @@ server <- function(input, output, session) {
 
   ### 5.6.4 Map footnote ----
   output$mapLaFoot <- renderUI({
+    req(noData() == "")
+    req(input$splashMetric != "employmentProjection") # No LA level for skills imp
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ". Click an area to update other charts with LA data."
     )
@@ -1544,6 +1629,8 @@ server <- function(input, output, session) {
 
   ### 5.7.1 Comment ----
   output$commentTime <- renderUI({
+    # No need for sentence for England
+    req(input$geoChoice != "England")
     # ensure latest data is available for comparison
     req(is.na((C_time %>%
       filter(
@@ -1620,9 +1707,11 @@ server <- function(input, output, session) {
 
   ### 5.7.2 Chart ----
   output$Splash_time <- renderPlotly({
+    validate(need(noData() == "", noData()))
+
     df <- C_time %>%
       filter(
-        # get lsip/mca areas
+        # get lsip/ca areas
         (geogConcat == input$geoChoice | geogConcat %in% if ("geoComps" %in% names(input)) {
           input$geoComps
         } else {
@@ -1728,6 +1817,7 @@ server <- function(input, output, session) {
 
   ### 5.7.3 Time footnote ----
   output$timeFoot <- renderUI({
+    req(noData() == "")
     if (input$splashMetric == "sustainedPositiveDestinationKS5Rate") {
       "The definition of when a student is at the end of 16 to 18 study has changed last year and comparisons to previous cohorts should be treated with caution. See footnote below. Also NB non-zero axis."
     } else {
@@ -1755,6 +1845,7 @@ server <- function(input, output, session) {
 
   ### 5.8.2 Comment ----
   output$commentBreakdown <- renderUI({
+    validate(need(noData() == "", noData()))
     if (!input$splashMetric %in% distinctBreakdowns$metric) {
       paste0(
         str_to_sentence(currentMetricClean()),
@@ -1796,14 +1887,18 @@ server <- function(input, output, session) {
           "lower"
         }
       paste0(
-        input$geoChoice,
-        " has a ",
-        breakdownDirection,
-        " ",
-        (I_DataText %>% filter(metric == input$splashMetric))$breakdownComment,
-        " in ",
-        breakdownDiff$subgroup,
-        " than the national average. ",
+        if (input$geoChoice != "England") {
+          paste0(
+            input$geoChoice,
+            " has a ",
+            breakdownDirection,
+            " ",
+            (I_DataText %>% filter(metric == input$splashMetric))$breakdownComment,
+            " in ",
+            breakdownDiff$subgroup,
+            " than the national average. "
+          )
+        },
         if (nrow(C_breakdown %>%
           filter(breakdown == input$barBreakdown) %>%
           distinct(subgroup)) > 10) {
@@ -1817,11 +1912,12 @@ server <- function(input, output, session) {
 
   ### 5.8.3 Bar chart ----
   Splash_pc <- reactive({
+    req(noData() == "")
     Splash_21 <- C_breakdown %>% filter(
       breakdown == input$barBreakdown,
       subgroup %in% input$barSubgroup,
       metric == input$splashMetric,
-      # get lsip/mca areas
+      # get lsip/ca areas
       (geogConcat == input$geoChoice | geogConcat %in% if ("geoComps" %in% names(input)) {
         input$geoComps
       } else {
@@ -1946,6 +2042,7 @@ server <- function(input, output, session) {
 
   ### 5.8.4 Bar footnote ----
   output$breakdownFoot <- renderUI({
+    req(noData() == "")
     if (input$splashMetric %in% distinctBreakdowns$metric) {
       paste0(
         (I_DataText %>% filter(metric == input$splashMetric))$LatestPeriod, ".",
@@ -2036,7 +2133,7 @@ server <- function(input, output, session) {
       "hubArea",
       multiple = TRUE,
       label = NULL,
-      options = list(placeholder = "Choose LSIPs, MCAs, LAs*"),
+      options = list(placeholder = "Choose LSIPs, CAs, LAs*"),
       choices = areaChoices
     )
   })
@@ -2118,7 +2215,7 @@ server <- function(input, output, session) {
           } |
             (if ("Yes" %in% input$hubLA) {
               Area %in% (
-                C_Geog %>% filter(geog == "LADU", (LSIP %in% input$hubArea | MCA %in% input$hubArea))
+                C_Geog %>% filter(geog == "LADU", (LSIP %in% input$hubArea | CA %in% input$hubArea))
                   %>% distinct(geogConcat)
               )$geogConcat
             } else {
