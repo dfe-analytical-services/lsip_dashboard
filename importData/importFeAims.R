@@ -37,12 +37,12 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
   filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
   select(-time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name, -local_enterprise_partnership_code, -local_enterprise_partnership_name, -lsip_code, -lsip_name)
 
-# add on new LADUs/LSIP/MCA areas
+# add on new LADUs/LSIP/CA areas
 feWithAreas <- addGeogs(F_FeProvLevelAge)
 
-# Get LSIP and MCA groups (ILR now publish at that level). 
-# Here we get those LSIPs and MCAs which have stayed consistent across the years so we can use the published data throughout
-feLsipsMcas <- F_FeProvLevelAge %>%
+# Get LSIP and CA groups (ILR now publish at that level). 
+# Here we get those LSIPs and CAs which have stayed consistent across the years so we can use the published data throughout
+feLsipsCas <- F_FeProvLevelAge %>%
   filter((geographic_level == "Local skills improvement plan area" &
             #The geographical area of these LSIPs have changed over time (or have been removed) so we ignore them here and calculate from LAs later
             !area %in% c("Greater London","Heart of the South-West","Greater Lincolnshire","Enterprise M3","Solent",
@@ -61,7 +61,7 @@ feLsipsMcas <- F_FeProvLevelAge %>%
   mutate(
     geogConcat = case_when(
       geographic_level == "Local skills improvement plan area" ~ paste0(area, " LSIP"),
-      geographic_level == "English devolved area" ~ paste0(area, " MCA"),
+      geographic_level == "English devolved area" ~ paste0(area, " CA"),
       TRUE ~ "NA"
     ),
     newArea = 0
@@ -86,13 +86,13 @@ groupedStats <- feWithAreas %>%
                                 "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
                                 "Local London LSIP", "North East LSIP","Somerset LSIP","South London Partnership LSIP",
                                 "Surrey LSIP","Warwickshire LSIP","West London Alliance LSIP","West Midlands LSIP") |
-              # MCAs that have changed their geography over time or are newly formed
+              # CAs that have changed their geography over time or are newly formed
               geogConcat %in% c(
-                "East Midlands MCA",
-                "North East MCA",
-                "South Yorkshire MCA",
-                "York and North Yorkshire MCA",
-                "Devon and Torbay MCA", "Greater Lincolnshire MCA", "Hull and East Yorkshire MCA", "Lancashire MCA"
+                "East Midlands CA",
+                "North East CA",
+                "South Yorkshire CA",
+                "York and North Yorkshire CA",
+                "Devon and Torbay CA", "Greater Lincolnshire CA", "Hull and East Yorkshire CA", "Lancashire CA"
               ) |
               # since the ilr only publish the latest 2 years lsip we need to calculate the history of those as well
               (stringr::str_sub(geogConcat, -4, -1) == "LSIP" & !(chartPeriod %in% c("AY22/23","AY23/24")))
@@ -113,7 +113,7 @@ groupedStats <- feWithAreas %>%
 # add back on original LADUs and format
 C_FeProvLevelAge <- bind_rows(
   groupedStats,
-  feLsipsMcas,
+  feLsipsCas,
   feWithAreas %>%
     filter(newArea == 0)
 ) %>%

@@ -9,7 +9,7 @@ folder <- "2-12_OnsProf"
    filter(!(Region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown")))%>%
    rename(area=`Local Authority District`,areaCode=`Local Authority Code`)%>%
    mutate(geographic_level="Local authority district")%>%
-   mutate(areaCode=case_when(area=="London" ~ "E09000001", TRUE ~ areaCode))%>%#Online job ad data is not at LA level for London. To make the lookups for MCA work, just add in City of London LA code
+   mutate(areaCode=case_when(area=="London" ~ "E09000001", TRUE ~ areaCode))%>%#Online job ad data is not at LA level for London. To make the lookups for CA work, just add in City of London LA code
  select(-Region,-ITL2,-`SOC 3 digit label`)
  
  #turn into 2 digit SOC
@@ -42,7 +42,7 @@ folder <- "2-12_OnsProf"
    filter(!(Region %in% c("Scotland", "Wales", "Northern Ireland", "Unknown")))%>%
    rename(area=`Local Authority District`,areaCode=`Local Authority Code`)%>%
    mutate(geographic_level="Local authority district")%>%
-   mutate(areaCode=case_when(area=="London" ~ "E09000001", TRUE ~ areaCode))%>%#Online job ad data is not at LA level for London. To make the lookups for MCA work, just add in City of London LA code
+   mutate(areaCode=case_when(area=="London" ~ "E09000001", TRUE ~ areaCode))%>%#Online job ad data is not at LA level for London. To make the lookups for CA work, just add in City of London LA code
    select(-Region,-ITL2)
  
  #make long
@@ -69,7 +69,7 @@ folder <- "2-12_OnsProf"
    )
  
  ### 4 Get all the other geographies by joining to the lookups----
- #add on MCA, LSIP
+ #add on CA, LSIP
  geogs<-bind_rows(
    SOC2digitLong,
    LaLong,
@@ -77,7 +77,7 @@ folder <- "2-12_OnsProf"
    addGeogs()%>% #repeat data for each geography
    filter(geogConcat!="City of London LADU", #remove the City of London data which was used just to get the london LSIP.
    geogConcat!="Central London Forward LSIP") # Also remove Central London Forward LSIP which has been joined via the City of London LA but there is no data for
- #group up MCA, LSIP
+ #group up CA, LSIP
  geogsSummed <- geogs %>%
    filter(newArea == 1) %>% # no need to group LAs that haven't changed
    ungroup() %>%

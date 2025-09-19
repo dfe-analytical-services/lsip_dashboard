@@ -38,10 +38,10 @@ feSsaTidy <- I_FeSsa %>%
   filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
   select(-time_period, -ssa_tier_1, -notional_nvq_level, -lad_code, -country_code, -lad_name, -country_name, -sex, -ethnicity_major, -english_devolved_area_code, -english_devolved_area_name, -time_identifier, -region_code, -region_name)
 
-#Get the LSIP groups from the LADs (MCAs are given in the data)
+#Get the LSIP groups from the LADs (CAs are given in the data)
 feSsaWithAreas<-feSsaTidy%>%
   addGeogs()%>%
-  filter(substr(geogConcat,nchar(geogConcat)-(2),nchar(geogConcat))!="MCA")#get rid of the MCAs calculated since we have those in the data already
+  filter(substr(geogConcat,nchar(geogConcat)-(1),nchar(geogConcat))!="CA")#get rid of the CAs calculated since we have those in the data already
 
 # group up areas
 groupedStats <- feSsaWithAreas %>%
@@ -53,16 +53,16 @@ groupedStats <- feSsaWithAreas %>%
   summarise(across(everything(), \(x) sum(x, na.rm = TRUE))) %>%
   mutate(achievements = as.character(achievements), enrolments = as.character(enrolments))
 
-# add back on original LADUs and MCAs and format
+# add back on original LADUs and CAs and format
 C_FeSsa <- bind_rows(
   groupedStats,
   #LAs
   feSsaWithAreas %>%
     filter(newArea == 0),
-  #MCAs
+  #CAs
   feSsaTidy%>%
     filter(geographic_level=="English devolved area")%>%
-    mutate(geogConcat=paste0(area," MCA"))
+    mutate(geogConcat=paste0(area," CA"))
 ) %>%
   select(-geographic_level,-areaCode,-area,-newArea) %>%
   rename(achievementsAims = achievements, enrolmentsAims = enrolments) %>%

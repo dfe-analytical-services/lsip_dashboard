@@ -13,12 +13,12 @@ folder <- "1-2_OldLas"
 sheetNum <- 2
 I_missingLAD <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheetNum, skipEmptyRows = T)
 
-# 3 MCA lookup ----
-folder <- "1-3_MCA_lookup"
-F_mcalookup <- read.csv(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))%>% 
+# 3 CA lookup ----
+folder <- "1-3_CA_lookup"
+F_calookup <- read.csv(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))%>% 
   select(-ObjectId)
-# Add on Greater London Authority built from the LOndon LSIPs
-C_mcalookup<-F_mcalookup%>%
+# Add on Greater London Authority built from the London LSIPs
+C_calookup<-F_calookup%>%
   bind_rows(C_LADLSIP%>%
     filter(LSIPname %in% c("Central London Forward","Local London","South London Partnership","West London Alliance"))%>%
       mutate(CAUTH25NM="Greater London Authority")%>%

@@ -15,7 +15,7 @@ C_localSkillsDatasetBind <- bind_rows(
   C_adverts,
   C_businesses
 )
-# add in GLA as an MCA because people expect it be there (no need in FE data because it is published as GLA)
+# add in GLA as an CA because people expect it be there (no need in FE data because it is published as GLA)
 C_localSkillsDataset <- bind_rows(
   C_localSkillsDatasetBind 
   ,C_localSkillsDatasetBind %>%
@@ -23,7 +23,7 @@ C_localSkillsDataset <- bind_rows(
                           "achievements_rate_per_100000_population","starts",                                 
                           "participation","achievements", "achievementsAims","enrolmentsAims"),
            geogConcat == "Greater London LSIP") %>%
-    mutate(geogConcat = "Greater London Authority MCA")
+    mutate(geogConcat = "Greater London Authority CA")
 )
 
 # 4. Create datasets used by the app----
@@ -332,14 +332,13 @@ writexl::write_xlsx(list_of_datasets0, "Data\\AppData\\CoreIndicators.xlsx")
 areaChoicesUnique<-C_time%>%
   distinct(geogConcat)%>%
   mutate(geography=case_when(stringr::str_sub(geogConcat, -4, -1) == "LSIP" ~ "Local skills partnership area",
-                             stringr::str_sub(geogConcat, -4, -1) == " LEP" ~ "Local enterprise partnership",
                              stringr::str_sub(geogConcat, -4, -1) == "LADU" ~ "Local authority",
-                             stringr::str_sub(geogConcat, -4, -1) == " MCA" ~ "Mayoral combined authority",
+                             stringr::str_sub(geogConcat, -2, -1) == "CA" ~ "Combined authority",
                              TRUE ~ "Country"),
          areaClean=gsub("\\s+\\w*$", "", geogConcat)
   )%>%
   #filter out closed areas
-  filter(!geogConcat %in% c("Black Country LEP", "Coventry and Warwickshire LEP", "Outside of an English Devolved Area and unknown MCA", "North of Tyne MCA", "NA LADU"))%>%
+  filter(!geogConcat %in% c("Black Country LEP", "Coventry and Warwickshire LEP", "Outside of an English Devolved Area and unknown CA", "North of Tyne CA", "NA LADU"))%>%
   arrange(geography,geogConcat)
 #check these aren;t in there
 
@@ -349,6 +348,6 @@ areaChoices <- areaChoicesUnique %>%
   { setNames(.$mapping, .$geography) }
 
 # Reorder nested_list according to desired_order
-areaChoices <- areaChoices[c("Local skills partnership area", "Mayoral combined authority", "Country", "Local authority")]
+areaChoices <- areaChoices[c("Local skills partnership area", "Combined authority", "Country", "Local authority")]
 
 saveRDS(areaChoices, file = "Data/AppData/areaChoices.rds")
