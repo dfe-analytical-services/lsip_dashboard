@@ -35,7 +35,12 @@ summaryTab <- function() {
     ), # end of filters row
 
     h1(uiOutput("page0title")),
-    #    h2("Headline data"),
+    fluidRow(
+      column(
+        12,
+        p(uiOutput("subheadingSummary"))
+      )
+    ),
     fluidRow(
       column(
         4,

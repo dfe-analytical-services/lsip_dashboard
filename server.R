@@ -360,6 +360,28 @@ server <- function(input, output, session) {
     paste0(input$geoChoiceOver, " headline data")
   })
 
+  # create subheading
+  output$subheadingSummary <- renderUI({
+    req(input$geoChoiceOver)
+    paste0(
+      if (input$geoChoiceOver %in% c(
+        "Greater Devon LSIP", "Greater Lincolnshire LSIP",
+        "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP", "North East LSIP",
+        "Somerset LSIP", "Surrey LSIP",
+        "Warwickshire LSIP", "West Midlands LSIP"
+      )) {
+        " The boundaries for this LSIP area were updated in September 2025. See data sources page for more information."
+      } else if (input$geoChoiceOver %in% c(
+        "Central London Forward LSIP", "Local London LSIP", "South London Partnership LSIP",
+        "West London Alliance LSIP"
+      )) {
+        " London wide data is available by choosing the Greater London Authority under Combined authorities."
+      } else if (input$geoChoiceOver == "Greater London Authority CA") {
+        " Data is available for 4 sub London areas as well. These can be chosen from the area filter under LSIPs."
+      }
+    )
+  })
+
   ## 4.1 Filter ----
   # alter area dropdown if changed on other tab
   observeEvent(input$geoChoice, {
@@ -1056,7 +1078,7 @@ server <- function(input, output, session) {
       )) {
         " London wide data is available by choosing the Greater London Authority under Combined authorities."
       } else if (input$geoChoice == "Greater London Authority CA") {
-        " Data is available for 4 sub London areas as well. These can be chosen from the area filter under LSIPs)."
+        " Data is available for 4 sub London areas as well. These can be chosen from the area filter under LSIPs."
       }
     )
   })
