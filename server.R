@@ -41,7 +41,7 @@ server <- function(input, output, session) {
       "sourcesTable_cell_clicked", "toolsTable_rows_selected", "toolsTable_columns_selected",
       "toolsTable_cells_selected", "toolsTable_rows_current", "toolsTable_rows_all", "toolsTable_state",
       "toolsTable_search", "toolsTable_cell_clicked", "reportsTable_row_last_clicked", "sourcesTable_row_last_clicked",
-      "toolsTable_row_last_clicked", "barSubgroup", "splashGeoType", "geoComps", "breakdownPage",
+      "toolsTable_row_last_clicked", "barSubgroup", "geoComps", "breakdownPage",
       "subgroupPage", "barBreakdown", "barProfession", "hubLA", "hubComparators", "hubYears", "hubBreakdowns",
       "hubMetric", "hubArea"
     ))
