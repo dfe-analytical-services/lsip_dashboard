@@ -1173,7 +1173,6 @@ server <- function(input, output, session) {
 
   # Updates that occur when the metric changes
   observeEvent(input$splashMetric,
-    ignoreInit = TRUE,
     {
       types <- distinctBreakdowns$breakdown[distinctBreakdowns$metric == input$splashMetric] # find subgroups in metric
       # If there are no subgroups for the metric then hide all the breakdown filters
@@ -1213,7 +1212,7 @@ server <- function(input, output, session) {
       # Update currentMetric to just the main metric (no subgroups are chosen when a user changes metric)
       currentMetric(input$splashMetric)
     },
-    ignoreInit = FALSE # <-- ensure it runs at startup
+    ignoreInit = TRUE # <-- ensure it runs at startup
   )
 
   # Updates that occur when the top breakdown filter changes
