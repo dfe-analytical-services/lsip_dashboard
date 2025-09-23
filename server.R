@@ -14,7 +14,7 @@ server <- function(input, output, session) {
   observe({
     setBookmarkExclude(c(
       "link_to_tabpanel_accessibility", "link_to_tabpanel_supportandfeedback", "cookies",
-      "navbar", ".clientValue-default-plotlyCrosstalkOpts", "plotly_afterplot-A",
+      ".clientValue-default-plotlyCrosstalkOpts", "plotly_afterplot-A",
       "plotly_relayout-A", "plotly_hover-A", "plotly_click-A", "DataTbl_rows_selected",
       "DataTbl_columns_selected", "DataTbl_cells_selected", "DataTbl_rows_current",
       "DataTbl_rows_all", "DataTbl_state", "DataTbl_search", "DataTbl_cell_clicked",
@@ -880,7 +880,7 @@ server <- function(input, output, session) {
         TRUE ~ subgroup
       )) %>%
       dplyr::mutate(subgroup = gsub("[[:digit:]]+ - ", "", subgroup)) %>%
-      dplyr::mutate(geogOrder = str_trim(str_sub(geogConcat, start = -4)))
+      dplyr::mutate(geogOrder = tail(strsplit(geogConcat, split = " ")[[1]], 1))
 
     # get England
     englandData <- areaBreakdownData %>%
@@ -890,7 +890,7 @@ server <- function(input, output, session) {
         geogConcat == "England"
       ) %>%
       left_join(lsipData %>% select(subgroup, extremes), by = join_by(subgroup)) %>%
-      dplyr::mutate(geogOrder = "England")
+      dplyr::mutate(geogOrder = " England")
 
     bind_rows(lsipData, englandData) %>%
       filter(extremes %in% c("top", "bottom"))
