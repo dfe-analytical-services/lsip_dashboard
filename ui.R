@@ -489,7 +489,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("23 Sep 2025 (1.6.1)"),
+              p("30 Sep 2025 (1.6.1)"),
               tags$ul(
                 tags$li("Add dynamic URLs.")
               ),
