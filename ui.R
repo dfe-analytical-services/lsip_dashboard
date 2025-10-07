@@ -107,7 +107,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     padding: 5px 8px 4px;
 }
 
-#version control box colours
+/* version control box colours*/
 .govuk-details {
     background-color: #c5cdd7;
     color: black;
@@ -122,7 +122,51 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 .govuk-details {
     background-color: #c5cdd7;
     color: black;
+}
 
+/* Button styling */
+.nav-btn {
+  background-color: #774b99 !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.nav-btn:hover {
+  background-color: #653e82 !important;
+  transform: translateY(-2px);
+}
+
+/* Card styling */
+.action-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 16px;
+}
+.action-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Icon circle styling */
+.icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f2ebf9;
+  color: #774b99;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  font-size: 32px;
+}
+
+/* Responsive stacking */
+@media (max-width: 768px) {
+  .bslib-layout-cols {
+    flex-direction: column;
+  }
+}
 "
         )
       ),
@@ -403,7 +447,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       <li style="margin-left:20px;">
         <a href="#" class="govuk-service-navigation__link"
         style="font-size:18px;"
-           onclick="Shiny.setInputValue(\'nav_click\', \'summary\', {priority: \'event\'}); return false;">
+           onclick="Shiny.setInputValue(\'nav_click\', \'user_guide\', {priority: \'event\'}); return false;">
           Local skills dashboard
         </a>
       </li>
@@ -427,36 +471,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
            onclick="Shiny.setInputValue(\'nav_click\', \'data_download\', {priority: \'event\'}); return false;">
           Data download
         </a>
-      </li>
-
-      <!-- Info dropdown -->
-      <li id="infoDropdownLi" style="margin-left:20px; position:relative;">
-        <a href="#" id="infoToggle" class="govuk-service-navigation__link">
-          Info &#9662;
-        </a>
-        <ul id="infoMenu"
-            style="display:none; position:absolute; right:0; top:100%; background:#fff;
-                   border:1px solid #dcdcdc; list-style:none; padding:6px 0; margin:0;
-                   min-width:220px; z-index:9999;">
-          <li style="padding:4px 16px;">
-            <a href="#" class="govuk-service-navigation__link"
-               onclick="Shiny.setInputValue(\'nav_click\', \'user_guide\', {priority: \'event\'}); return false;">
-              User guide
-            </a>
-          </li>
-          <li style="padding:4px 16px;">
-            <a href="#" class="govuk-service-navigation__link"
-               onclick="Shiny.setInputValue(\'nav_click\', \'data_sources\', {priority: \'event\'}); return false;">
-              Data sources
-            </a>
-          </li>
-          <li style="padding:4px 16px;">
-            <a href="#" class="govuk-service-navigation__link"
-               onclick="Shiny.setInputValue(\'nav_click\', \'further_resources\', {priority: \'event\'}); return false;">
-              Further resources
-            </a>
-          </li>
-        </ul>
       </li>
 
     </ul>
@@ -493,25 +507,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
   .govuk-service-navigation__list {
     flex-direction: column;
     width: 100%;
-  }
-
-  /* Force dropdown items visible on mobile */
-  #infoMenu {
-    display: block !important;
-    position: static !important;
-    width: 100% !important;
-  }
-
-  #infoMenu a {
-    display: block !important;
-    width: 100% !important;
-    text-align: left !important;
-    padding: 10px 0 !important;
-    border-top: 1px solid #e0e0e0;
-  }
-
-  #infoMenu a:first-child {
-    border-top: none;
   }
 }
 ")),
@@ -552,15 +547,30 @@ document.addEventListener('DOMContentLoaded', function(){
 });
 ")),
     # Add banner note around new LSIPs
-    HTML(
-      '<div class="feedback-banner" id="feedback banner" >
-    <p ">Some LSIP boundaries have been updated in line with the next cycle of LSIP development beginning October 2025, and new combined authorities have been added. See data sources page for more information.</p>
-</div>'
+    shinyGovstyle::banner(
+      "update banner",
+      "Update",
+      "Some LSIP boundaries have been updated in line with the next cycle of LSIP development beginning October 2025, and new combined authorities have been added. See data sources page for more information."
     ),
+    # CSS for navigation
+    tags$style(HTML("
+/* --- Minimise margin --- */
+    .govuk-phase-banner {
+      margin-left: 0px;
+      background-color: #c5cdd7;
+    }
+    .govuk-phase-banner__content__tag {
+        background-color: #774b99;
+        color: white;
+        margin-left: 10px;
+}
+}
+    ")),
+
     # 2 Main page ----
     bslib::navset_hidden(
       id = "navbar",
-      selected = "summary",
+      selected = "user_guide",
 
       ## 2.1 User guide ----
       bslib::nav_panel(
@@ -569,6 +579,7 @@ document.addEventListener('DOMContentLoaded', function(){
         ### 2.1.1 Intro ----
         fluidRow(column(
           12,
+          br(),
           p(
             "The Local Skills dashboard provides published local data from a variety of sources in an easy to navigate format. To support local skills planning, the dashboard covers topics such as employment, qualifications, and education outcomes across England."
           ),
@@ -590,7 +601,47 @@ document.addEventListener('DOMContentLoaded', function(){
             )
           )
         )),
+        h2("Explore local skills and employment data.", class = "text-center"),
+        br(),
         # end intro text row
+        bslib::layout_column_wrap(
+          width = 1 / 3,
+          class = "text-center mt-5 g-4",
+          card(
+            class = "action-card",
+            style = "cursor:pointer;",
+            onclick = "Shiny.setInputValue('go_summary', Math.random())",
+            card_body(
+              div(class = "icon-circle mb-3", icon("chart-bar")),
+              h4("Summary", class = "mb-2"),
+              p("Explore key employment and skills data in your area."),
+              tags$button("Go to Summary", class = "btn nav-btn mt-2")
+            )
+          ),
+          card(
+            class = "action-card",
+            style = "cursor:pointer;",
+            onclick = "Shiny.setInputValue('go_skills', Math.random())",
+            card_body(
+              div(class = "icon-circle mb-3", icon("line-chart")),
+              h4("Local skills data", class = "mb-2"),
+              p("Dive deeper into your area with additional metric and breakdowns."),
+              tags$button("Explore Metrics", class = "btn nav-btn mt-2")
+            )
+          ),
+          card(
+            class = "action-card",
+            style = "cursor:pointer;",
+            onclick = "Shiny.setInputValue('go_download', Math.random())",
+            card_body(
+              div(class = "icon-circle mb-3", icon("download")),
+              h4("Download Data", class = "mb-2"),
+              p("Access, filter and download data for further analysis."),
+              tags$button("Download", class = "btn nav-btn mt-2")
+            )
+          )
+        ),
+        br(),
 
         ### 2.1.2 Contents ----
         fluidRow(column(
@@ -604,12 +655,10 @@ document.addEventListener('DOMContentLoaded', function(){
             ),
             div(
               class = "panel-body",
-              p("Use the navigation bar on the left to select the tab you want to view."),
+              p("Use the navigation bar above to select the tab you want to view, or access further information via the links below."),
               h2("Dashboard structure"),
               tags$ul(
-                tags$li(actionLink("link_to_tabpanel_overview", "Summary"), " - this tab provides a summary of some of the key metrics for the selected geographic area."),
-                tags$li(actionLink("link_to_tabpanel_localskills", "Local skills data"), " - the Local skills data tab provides additional metrics and breakdowns for the selected geographic area."),
-                tags$li(actionLink("link_to_tabpanel_data", "Data sources and Data download"), "- the sources tab includes details on the sources of data used in this dashboard, and the download tab includes options to download some or all of the data."),
+                tags$li(actionLink("link_to_tabpanel_dataSources", "Data sources"), "- includes details on the sources of data used in this dashboard."),
                 tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of local labour market and education system."),
                 tags$li(actionLink("link_to_tabpanel_accessibility", "Accessibility"), "- provides the Local Skills dashboard accessibility statement, compliance requirmeents, limitations and opportunity to feedback on accessibility of the dashboard."),
                 tags$li(actionLink("link_to_tabpanel_supportandfeedback", "Support and feedback"), " - provides links to the Skills England and Department for Education Statistics Development inboxes for feedback and if you hve any questions about the dashboard or the data it contains. There is also a link to the GitHub repository if you wish to view the dashboard source code.")
