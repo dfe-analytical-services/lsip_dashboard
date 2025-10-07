@@ -48,7 +48,7 @@ ui <- function(input, output, session) {
           "
 /*style filter row grey background*/
 .filterRow{
-background-color: #f3f2f1; /*#1d70b8*/
+background-color: #c5cdd7;
 border-radius: 4px;
 padding: 15px 15px 0px 15px;
 }
@@ -76,51 +76,6 @@ padding-top:15px
   visibility: hidden;
 }
 
-/* styles for menu button*/
-    #menuButton {
-      display: none;
-      width: auto;
-    }
-
-    .menuBtn {
-      color: #fff;
-      float: left;
-      padding: 10px;
-    }
-
-        .menuBtn:focus {
-      color: #fff;
-      background-color: #000;
-    }
-
-/* for mobile*/
-    @media (max-width: 767px) {
-      .nav-stacked {
-        display: none;
-      }
-      .nav-stacked.active {
-        display: block;
-      }
-
-      #menuButton {
-        display: block;
-      }
-
-      .menuBtn.active {
-        background-color: #fff;
-        color: #000;
-      }
-    }
-
-    /* style KPI boxes. Here are some colour options for easy access
-    #12436D - govt analytical function blue
-    #AAE3F0 - dfe corp turquoise 40% tint
-    #28A197 - govt analytical function turquoise
-    #DAEEBF - dfe corp lime 40% tint
-    #718ea7 - govt analytical function blue 40% tint
-    #7ec7c1 - govt analytical function turquoise 40% tint
-    */
-
 .small-box.bg-geo1{
     background-color: #12436D !important;
     color: #fff;
@@ -147,60 +102,31 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 
  /* increase banner size*/
 .feedback-banner {
-    background-color: #d53880;
-    font-size: 16px;
+    background-color: #c5cdd7;
     line-height: 1.5;
     padding: 5px 8px 4px;
 }
 
+#version control box colours
+.govuk-details {
+    background-color: #c5cdd7;
+    color: black;
+}
+.govuk-details__summary {
+    color: black;
+}
+.panel-info {
+    border-color: #c5cdd7;
+}
+
+.govuk-details {
+    background-color: #c5cdd7;
+    color: black;
+
 "
         )
       ),
-      ## 1.3. Javascript and HTML banner----
-      # Collapsible menu js
-      tags$script(
-        HTML(
-          '
-    /* javascript function for menu button */
-    function collapseMenu() {
-      var x = document.getElementById("navbar");
-      x.classList.toggle("active");
-
-      var x = document.getElementById("menuButton");
-      x.classList.toggle("active");
-    }
-    '
-        )
-      )
     ),
-    # Force the top nav bar to left align and centre the title
-    HTML(
-      '<header class="govuk-header" role="banner">
-    <div class="govuk-header__container">
-    <div class="govuk-header__logo" style="margin-left: 15px">
-    <a href="https://www.gov.uk/government/organisations/department-for-education" class="govuk-header__link govuk-header__link--homepage">
-    <span class="govuk-header__logotype">
-     <img src="images/DfE_logo_landscape.png" class="govuk-header__logotype-crown-fallback-image" width="133px"/>
-    </span>
-    </a>
-    </div>
-    <div class="govuk-header__content" style="width: 70%; text-align: center;float:left;">
-    <a href="https://www.gov.uk/government/collections/skills-england" class="govuk-header__link govuk-header__link--service-name" style="font-size: 24px;">Local Skills Dashboard</a>
-    </div>
-        <a href="javascript:void(0);" id="menuButton" class="menuBtn" onclick="collapseMenu()">
-    <i class="fa fa-bars" style="font-size:24px;"></i></a>
-    </div>
-    </header>'
-    ),
-
-
-    # Add banner note around new LSIPs
-    HTML(
-      '<div class="feedback-banner" id="feedback banner" >
-    <p style="color: #fff;">Some LSIP boundaries have been updated in line with the next cycle of LSIP development beginning October 2025, and new combined authorities have been added. See data sources page for more information.</p>
-</div>'
-    ),
-
     # Force page to scroll to top when links clicked
     tags$script(
       " $(document).ready(function () {
@@ -349,23 +275,300 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
                 });
                 });"
     ),
+    tags$script(
+      " $(document).ready(function () {
+                $('#accessibility_footer_link').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+    ),
+    tags$script(
+      " $(document).ready(function () {
+                $('#cookies_footer_link').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+    ),
+    tags$script(
+      " $(document).ready(function () {
+                $('#support_footer_link').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+    ),
+    # Header
+    HTML('
+<header class="govuk-header" role="banner">
+  <div class="govuk-header__container">
+    <!-- Left logo -->
+    <div class="govuk-header__logo">
+      <a href="https://www.gov.uk/government/organisations/skills-england"
+         class="govuk-header__link govuk-header__link--homepage">
+        <span class="govuk-header__logotype">
+          <img src="images/Skills England_Lesser_Arms_Landscape-SElogoWhite.svg"
+               class="govuk-header__logotype-crown-fallback-image"
+               width="300px"/>
+        </span>
+      </a>
+    </div>
 
+    <!-- Right navigation -->
+    <nav class="govuk-header__navigation">
+      <ul class="govuk-header__navigation-list">
+        <li class="govuk-header__navigation-item">
+          <a href="https://skillsengland.education.gov.uk/qualifications/" class="govuk-header__link header-link">Qualification finder</a>
+        </li>
+        <li class="govuk-header__navigation-item">
+          <a href="https://skillsengland.education.gov.uk/apprenticeships/" class="govuk-header__link header-link">Apprenticeship finder</a>
+        </li>
+        <li class="govuk-header__navigation-item">
+          <a href="https://occupational-maps.skillsengland.education.gov.uk/" class="govuk-header__link header-link">Occupational maps</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+/* --- Header --- */
+.govuk-header {
+  background-color: #183860;
+  border-bottom: none;
+}
+
+/* Header container */
+.govuk-header__container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px 20px;
+    border-bottom: none;
+}
+
+/* Logo */
+.govuk-header__logo {
+    padding-top: 10px;
+}
+.govuk-header__link--homepage:hover,
+.govuk-header__link--homepage:focus {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+/* Desktop header links */
+.govuk-header__navigation {
+    display: flex;
+    align-items: center;
+    margin-left: auto; /* push to right */
+}
+
+/* Desktop header links spacing*/
+.govuk-header__navigation-item a {
+  margin-left: 30px;
+}
+
+.header-link:hover {
+    text-decoration: underline;
+}
+
+/* Header links under logo when <=1000px */
+@media (max-width: 950px) {
+    .govuk-header__navigation {
+        width: 100%;       /* full width */
+    }
+      /* Header links vertical under logo */
+  .govuk-header__navigation-list {
+    justify-content: flex-start !important;
+  }
+
+  .govuk-header__navigation-item a {
+    margin-left: 0;
+  }
+}
+
+/* Stack header links vertically under logo when mobile */
+@media (max-width: 768px) {
+.govuk-header__navigation-list {
+        flex-direction: column;
+    }
+}
+</style>
+'),
+
+    # ---- NavPanel (replacing shinyGovstyle::service_navigation)
+    HTML('
+<nav class="govuk-service-navigation desktop-only">
+  <div class="govuk-service-navigation__container">
+    <ul class="govuk-service-navigation__list">
+
+      <li style="margin-left:20px;">
+        <a href="#" class="govuk-service-navigation__link"
+        style="font-size:18px;"
+           onclick="Shiny.setInputValue(\'nav_click\', \'summary\', {priority: \'event\'}); return false;">
+          Local skills dashboard
+        </a>
+      </li>
+
+      <li style="margin-left:20px;">
+        <a href="#" class="govuk-service-navigation__link"
+           onclick="Shiny.setInputValue(\'nav_click\', \'summary\', {priority: \'event\'}); return false;">
+          Summary
+        </a>
+      </li>
+
+      <li style="margin-left:20px;">
+        <a href="#" class="govuk-service-navigation__link"
+           onclick="Shiny.setInputValue(\'nav_click\', \'local_skills_data\', {priority: \'event\'}); return false;">
+          Local skills data
+        </a>
+      </li>
+
+      <li style="margin-left:20px;">
+        <a href="#" class="govuk-service-navigation__link"
+           onclick="Shiny.setInputValue(\'nav_click\', \'data_download\', {priority: \'event\'}); return false;">
+          Data download
+        </a>
+      </li>
+
+      <!-- Info dropdown -->
+      <li id="infoDropdownLi" style="margin-left:20px; position:relative;">
+        <a href="#" id="infoToggle" class="govuk-service-navigation__link">
+          Info &#9662;
+        </a>
+        <ul id="infoMenu"
+            style="display:none; position:absolute; right:0; top:100%; background:#fff;
+                   border:1px solid #dcdcdc; list-style:none; padding:6px 0; margin:0;
+                   min-width:220px; z-index:9999;">
+          <li style="padding:4px 16px;">
+            <a href="#" class="govuk-service-navigation__link"
+               onclick="Shiny.setInputValue(\'nav_click\', \'user_guide\', {priority: \'event\'}); return false;">
+              User guide
+            </a>
+          </li>
+          <li style="padding:4px 16px;">
+            <a href="#" class="govuk-service-navigation__link"
+               onclick="Shiny.setInputValue(\'nav_click\', \'data_sources\', {priority: \'event\'}); return false;">
+              Data sources
+            </a>
+          </li>
+          <li style="padding:4px 16px;">
+            <a href="#" class="govuk-service-navigation__link"
+               onclick="Shiny.setInputValue(\'nav_click\', \'further_resources\', {priority: \'event\'}); return false;">
+              Further resources
+            </a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+'),
+
+    # CSS for navigation
+    tags$style(HTML("
+.govuk-header__navigation-item a:hover {
+  text-decoration: underline;
+}
+
+/* --- Service navigation --- */
+.govuk-service-navigation {
+  background-color: white;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.govuk-service-navigation__link {
+  color: black !important;
+  padding: 12px 0px;
+  display: block;
+  font-size: 16px;
+  font-weight:700;
+}
+
+/* --- Mobile view: stack vertically, left-aligned --- */
+@media (max-width: 768px) {
+
+    /* Nav bar vertical */
+  .govuk-service-navigation__list {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  /* Force dropdown items visible on mobile */
+  #infoMenu {
+    display: block !important;
+    position: static !important;
+    width: 100% !important;
+  }
+
+  #infoMenu a {
+    display: block !important;
+    width: 100% !important;
+    text-align: left !important;
+    padding: 10px 0 !important;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  #infoMenu a:first-child {
+    border-top: none;
+  }
+}
+")),
+
+
+    # JS for dropdown (desktop only)
+    tags$script(HTML("
+document.addEventListener('DOMContentLoaded', function(){
+  var li = document.getElementById('infoDropdownLi');
+  var menu = document.getElementById('infoMenu');
+  var toggle = document.getElementById('infoToggle');
+  if(!li) return;
+
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  // Hover to show/hide (desktop only)
+  li.addEventListener('mouseenter', function(){
+    if(!isMobile()) menu.style.display = 'block';
+  });
+  li.addEventListener('mouseleave', function(){
+    if(!isMobile()) menu.style.display = 'none';
+  });
+
+  // Click toggle (desktop only)
+  toggle.addEventListener('click', function(e){
+    if(isMobile()) return;
+    e.preventDefault();
+    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+  });
+
+  // Close if clicked outside (desktop only)
+  document.addEventListener('click', function(e){
+    if(isMobile()) return;
+    if(!li.contains(e.target)) menu.style.display = 'none';
+  });
+});
+")),
+    # Add banner note around new LSIPs
+    HTML(
+      '<div class="feedback-banner" id="feedback banner" >
+    <p ">Some LSIP boundaries have been updated in line with the next cycle of LSIP development beginning October 2025, and new combined authorities have been added. See data sources page for more information.</p>
+</div>'
+    ),
     # 2 Main page ----
-    navlistPanel(
+    bslib::navset_hidden(
       id = "navbar",
-      widths = c(2, 10),
-      well = FALSE,
-      selected = "Summary",
+      selected = "summary",
 
       ## 2.1 User guide ----
-
-
-      tabPanel(
+      bslib::nav_panel(
         "User guide",
+        value = "user_guide",
         ### 2.1.1 Intro ----
         fluidRow(column(
           12,
-          h1("Local Skills Dashboard"),
           p(
             "The Local Skills dashboard provides published local data from a variety of sources in an easy to navigate format. To support local skills planning, the dashboard covers topics such as employment, qualifications, and education outcomes across England."
           ),
@@ -396,7 +599,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             class = "panel panel-info",
             div(
               class = "panel-heading",
-              style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
+              style = "color: black;font-size: 18px;font-style: bold; background-color: #c5cdd7; border-color: #c5cdd7;",
               h2("How to use this dashboard")
             ),
             div(
@@ -483,7 +686,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             class = "panel panel-info",
             div(
               class = "panel-heading",
-              style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
+              style = "color: black;font-size: 18px;font-style: bold; background-color: #c5cdd7; border-color: #c5cdd7;",
               h2("Update history")
             ),
             div(
@@ -739,8 +942,9 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       summaryTab(),
 
       ## 2.3 Local skills ----
-      tabPanel(
+      bslib::nav_panel(
         "Local skills data",
+        value = "local_skills_data",
         br(),
         ### 2.3.1 Filters ----
         fluidRow(
@@ -907,8 +1111,9 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       ),
 
       ## 2.5 Data information ----
-      tabPanel(
+      bslib::nav_panel(
         "Data sources",
+        value = "data_sources",
         ### 2.5.1 Data sources table ----
         fluidRow(column(
           12,
@@ -1084,8 +1289,9 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
         )
       ),
       ## 2.4 Download hub ----
-      tabPanel(
-        "Data download (experimental)",
+      bslib::nav_panel(
+        "Data download",
+        value = "data_download",
         fluidRow(column(
           12,
           h1("Data download"),
@@ -1157,8 +1363,9 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
       ),
 
       ## 2.6 FE interventions and sources ----
-      tabPanel(
+      bslib::nav_panel(
         "Further resources",
+        value = "further_resources",
         fluidRow(
           column(
             12,
@@ -1195,8 +1402,8 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
         br()
       ),
       ## 2.8 Accessibility ----
-      tabPanel(
-        "Accessibility",
+      bslib::nav_panel(
+        "accessibility",
         fluidRow(
           column(
             width = 12,
@@ -1251,17 +1458,17 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
       ),
       # End of accessibility tab
 
-      ## 2.9 Support ----
-      tabPanel(
-        "Cookie information",
+      ## 2.9 Cookies ----
+      bslib::nav_panel(
+        "cookie_information",
         dfeshiny::cookies_panel_ui(
           id = "cookies_panel",
           google_analytics_key = google_analytics_key
         )
       ),
       ## 2.10 Support ----
-      tabPanel(
-        "Support and feedback",
+      bslib::nav_panel(
+        "support_and_feedback",
         dfeshiny::support_panel(
           team_email = "skills.england@education.gov.uk",
           repo_name = "https://github.com/dfe-analytical-services/lsip_dashboard",
@@ -1273,6 +1480,10 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
     # End of navBarPage
     # 3 Footer ----
 
-    shinyGovstyle::footer(TRUE)
+    shinyGovstyle::footer(TRUE, links = c(
+      `Accessibility statement` = "accessibility_footer_link",
+      `Cookies` = "cookies_footer_link",
+      `Support and feedback` = "support_footer_link"
+    ))
   )
 }

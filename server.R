@@ -97,6 +97,12 @@ server <- function(input, output, session) {
     google_analytics_key = google_analytics_key
   )
 
+  # Manage page naviogation
+  observeEvent(input$summary, bslib::nav_select("navbar", "summary"))
+  observeEvent(input$local_skills_data, bslib::nav_select("navbar", "local_skills_data"))
+  observeEvent(input$data_download, bslib::nav_select("navbar", "data_download"))
+  observeEvent(input$user_guide, bslib::nav_select("navbar", "user_guide"))
+
   # 2 User guide ----
   ## 2.1 Make links ----
   # Create link to overview tab from user guide
@@ -396,6 +402,12 @@ server <- function(input, output, session) {
   })
 
   # 4 Summary ----
+
+  observeEvent(input$nav_click, {
+    req(input$nav_click)
+    # select the matching nav_panel in the navset with id = "navbar"
+    bslib::nav_select(id = "navbar", selected = input$nav_click, session = session)
+  })
 
   # Add link to local skills data
   observeEvent(input$link_to_tabpanel_LS, {
@@ -2301,5 +2313,20 @@ server <- function(input, output, session) {
       options = list(dom = "t", pageLength = 50),
       rownames = FALSE
     )
+  })
+
+  # 8 Footer----
+  # Create link to accessibility tab
+  observeEvent(input$accessibility_footer_link, {
+    updateTabsetPanel(session, "navbar", "accessibility")
+  })
+
+  # Create link to support and feedback tab
+  observeEvent(input$cookies_footer_link, {
+    updateTabsetPanel(session, "navbar", "cookie_information")
+  })
+  # Create link to support and feedback tab
+  observeEvent(input$support_footer_link, {
+    updateTabsetPanel(session, "navbar", "support_and_feedback")
   })
 }

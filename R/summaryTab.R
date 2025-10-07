@@ -1,6 +1,7 @@
 summaryTab <- function() {
-  tabPanel(
+  bslib::nav_panel(
     "Summary",
+    value = "summary",
     # 1 Filters ----
     fluidRow(
       column(
