@@ -677,14 +677,18 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("30 Sep 2025 (1.6.1)"),
+              p("10 Oct 2025 (1.6.2)"),
               tags$ul(
-                tags$li("Add dynamic URLs.")
+                tags$li("Rebrand to Skills England layout.")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("30 Sep 2025 (1.6.1)"),
+                  tags$ul(
+                    tags$li("Add dynamic URLs.")
+                  ),
                   p("19 Sep 2025 (1.6.0)"),
                   tags$ul(
                     tags$li("Update to latest LSIP geographies."),
