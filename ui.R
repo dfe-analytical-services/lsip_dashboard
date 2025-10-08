@@ -64,7 +64,7 @@ background-color:#f3f2f1;
 border-right: 5px solid white;
 }
 
-/*right allign links*/
+/*right align links*/
 .rightAlignLinks{
 text-align: right;
 padding-right:15px;
@@ -76,35 +76,15 @@ padding-top:15px
   visibility: hidden;
 }
 
-.small-box.bg-geo1{
-    background-color: #12436D !important;
-    color: #fff;
-    padding: 2px 2px 4px 12px;
-}
-
-.small-box.bg-geo2{
-    background-color: #28A197 !important;
-    color: #fff;
-    padding: 2px 2px 4px 12px;
-}
-
-.small-box.bg-geo3{
-    background-color: #BFBFBF !important;
-    color: #fff;
-    padding: 2px 2px 4px 12px;
+/*extra padding now no left nav bar*/
+.tabbable {
+  padding: 10px;
 }
 
 /* map popup styling*/
 div.myspecial-popup div.leaflet-popup-content-wrapper {
           padding: 0px 0px 1px 0px;
 
-}
-
- /* increase banner size*/
-.feedback-banner {
-    background-color: #c5cdd7;
-    line-height: 1.5;
-    padding: 5px 8px 4px;
 }
 
 /* version control box colours*/
@@ -124,7 +104,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     color: black;
 }
 
-/* Button styling */
+/* Landing page button styling */
 .nav-btn {
   background-color: #774b99 !important;
   border: none !important;
@@ -142,15 +122,17 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 .action-card {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   border-radius: 16px;
+  border: 1px solid #774b99;
 }
 .action-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  border-color: #653e82; /* Darker purple border on hover */
 }
 
 /* Icon circle styling */
 .icon-circle {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   background-color: #f2ebf9;
@@ -159,6 +141,13 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
   height: 70px;
   border-radius: 50%;
   font-size: 32px;
+  margin: 5px auto 0px auto;
+}
+
+/* Hover: make the icon circle pop */
+.action-card:hover .icon-circle {
+  background-color: #e8dbf4; /* Slightly darker lilac */
+  color: #653e82;           /* Darker purple icon */
 }
 
 /* Responsive stacking */
@@ -340,7 +329,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
                 });
                 });"
     ),
-    # Header
+    ## 1.3 Header ----
     HTML('
 <header class="govuk-header" role="banner">
   <div class="govuk-header__container">
@@ -374,71 +363,61 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 </header>
 
 <style>
-/* --- Header --- */
+/* --- Header background --- */
 .govuk-header {
   background-color: #183860;
   border-bottom: none;
 }
 
-/* Header container */
+/* Header container: flex layout to allign and avoid overlaps */
 .govuk-header__container {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 10px 20px;
-    border-bottom: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: none;
+  width: 100%;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-/* Logo */
+/* --- Logo align --- */
 .govuk-header__logo {
-    padding-top: 10px;
-}
-.govuk-header__link--homepage:hover,
-.govuk-header__link--homepage:focus {
-  text-decoration: none !important;
-  border-bottom: none !important;
+  margin: 0 !important;
+  display: flex;
 }
 
-/* Desktop header links */
+
+/* --- header external links keep to right --- */
 .govuk-header__navigation {
-    display: flex;
-    align-items: center;
-    margin-left: auto; /* push to right */
+  margin-left: auto;
 }
 
-/* Desktop header links spacing*/
+/* Nav items a bit more spacing and keep font size in mobile*/
 .govuk-header__navigation-item a {
   margin-left: 30px;
+  font-size: 16px;
 }
 
-.header-link:hover {
-    text-decoration: underline;
-}
+/* --- Smaller screens --- */
 
-/* Header links under logo when <=1000px */
-@media (max-width: 950px) {
-    .govuk-header__navigation {
-        width: 100%;       /* full width */
-    }
-      /* Header links vertical under logo */
-  .govuk-header__navigation-list {
-    justify-content: flex-start !important;
+/* move header links under logo */
+@media (max-width: 1000px) {
+  .govuk-header__navigation {
+    width: 100%;
   }
 
   .govuk-header__navigation-item a {
     margin-left: 0;
+    margin-right: 20px;
   }
 }
 
-/* Stack header links vertically under logo when mobile */
-@media (max-width: 768px) {
-.govuk-header__navigation-list {
-        flex-direction: column;
-    }
-}
 </style>
 '),
 
-    # ---- NavPanel (replacing shinyGovstyle::service_navigation)
+    ## 1.4 Navigation bar ####
     HTML('
 <nav class="govuk-service-navigation desktop-only">
   <div class="govuk-service-navigation__container">
@@ -480,79 +459,36 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 
     # CSS for navigation
     tags$style(HTML("
-.govuk-header__navigation-item a:hover {
-  text-decoration: underline;
-}
 
-/* --- Service navigation --- */
+/* --- Set background white, add padding for some room --- */
 .govuk-service-navigation {
   background-color: white;
-  padding-right: 30px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
-
+/* --- Set font black and size --- */
 .govuk-service-navigation__link {
   color: black !important;
-  padding: 12px 0px;
-  display: block;
   font-size: 16px;
   font-weight:700;
 }
 
-/* --- Mobile view: stack vertically, left-aligned --- */
+/* --- Mobile view: add some padding between elements --- */
 @media (max-width: 768px) {
-
-    /* Nav bar vertical */
-  .govuk-service-navigation__list {
-    flex-direction: column;
-    width: 100%;
-  }
+  .govuk-service-navigation__link {
+  padding-top: 10px;
+  display: block;
+}
 }
 ")),
 
-
-    # JS for dropdown (desktop only)
-    tags$script(HTML("
-document.addEventListener('DOMContentLoaded', function(){
-  var li = document.getElementById('infoDropdownLi');
-  var menu = document.getElementById('infoMenu');
-  var toggle = document.getElementById('infoToggle');
-  if(!li) return;
-
-  function isMobile() {
-    return window.innerWidth <= 768;
-  }
-
-  // Hover to show/hide (desktop only)
-  li.addEventListener('mouseenter', function(){
-    if(!isMobile()) menu.style.display = 'block';
-  });
-  li.addEventListener('mouseleave', function(){
-    if(!isMobile()) menu.style.display = 'none';
-  });
-
-  // Click toggle (desktop only)
-  toggle.addEventListener('click', function(e){
-    if(isMobile()) return;
-    e.preventDefault();
-    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-  });
-
-  // Close if clicked outside (desktop only)
-  document.addEventListener('click', function(e){
-    if(isMobile()) return;
-    if(!li.contains(e.target)) menu.style.display = 'none';
-  });
-});
-")),
     # Add banner note around new LSIPs
     shinyGovstyle::banner(
       "update banner",
       "Update",
       "Some LSIP boundaries have been updated in line with the next cycle of LSIP development beginning October 2025, and new combined authorities have been added. See data sources page for more information."
     ),
-    # CSS for navigation
+    # CSS for banner
     tags$style(HTML("
 /* --- Minimise margin --- */
     .govuk-phase-banner {
@@ -563,7 +499,7 @@ document.addEventListener('DOMContentLoaded', function(){
         background-color: #774b99;
         color: white;
         margin-left: 10px;
-}
+    }
 }
     ")),
 
@@ -1170,6 +1106,7 @@ document.addEventListener('DOMContentLoaded', function(){
           dataTableOutput("DataTbl"),
           uiOutput("hidden_downloads")
         )),
+        p("*The online job advert data for August did not contain the snapshot data used in this dashboard. The dashboard will be updated when the snapshot data is released."),
         # end of data table row
         ### 2.5.2 Data details text ----
         fluidRow(
