@@ -12,7 +12,7 @@
     -   [Fixing bugs](#fixing-bugs)
 -   [Troubleshooting](#troubleshooting)
 -   [Monitoring dashboard usage](#monitoring-dashboard-usage)
-- ANNEX??? Check lists???
+-   [Annex: QA checklists](#annex-qa-checklists)
 
 ## Introduction {#introduction}
 
@@ -36,10 +36,11 @@ following agreed practice.
 
 ### Use of Git {#use-of-git}
 
-This project uses Git, a version control software package, and GitHub,
+This project uses Git, a version control software package, and GitHub, 
+a developer platform.
 
-These tools allow all project members to collaborate effectively on the
-project, and record the project history.
+These tools allows contributors to collaborate effectively on the
+project, as well as manage version control and document the QA process.
 
 > [!IMPORTANT] If you have not used Git before, you should undertake
 some basic Git training before you read on. For example, 
@@ -56,7 +57,7 @@ There are two core branches in the project repository:
   
   -   **Development** is the pre-production (preprod) branch - any pushes
       to this will be live on the private preprod site. This allows us to
-      test changes before they go live. Commits should never be made
+      test changes before they are made public. Commits should never be made
       directly to this branch.
 
 All other branches should follow this naming convention:
@@ -100,69 +101,206 @@ When committing work to a branch, follow these best practice tips:
 
 Project management is recorded on GitHub as follows:
 
-1. New work is recorded [on the project board as a GitHub issue](https://github.com/orgs/dfe-analytical-services/projects/10) 
-for the project, and added to the project board as either an issue to be scoped (ideas that need to be translated
+1. New work is recorded [on the project board as a GitHub issue](https://github.com/orgs/dfe-analytical-services/projects/10), 
+and added to the project board as either an issue to be scoped (ideas that need to be translated
 into clearly defined changes to the dashboard) or an issue for the backlog (a 
 clear and coherent feature or change that can be made on the dashboard.)
 
-2. Once an issue has been scoped, the existing issue should be marked as complete
-and new issue(s) added to backlog. Scoped issues may result in several new issues
-on the backlog, in order to break up the work into coherent features or changes.
+2. Once an issue has been scoped, the scoping issue should be marked as complete
+and new issue(s) added to backlog to reflect the required work. 
+Scoped issues may result in several new issues on the backlog, in order to break 
+up the work into distinct features or changes.
 
 3. The project board is reviewed weekly by the project team and work from
 the backlog is assigned to team members for the next 'sprint' 
-(a period of work with a target end data for the updates to be completed and live
+(a period of work with a target end date for the updates to be completed and live
 on the dashboard). The length of sprints may vary, for example to align with
-the release of a new data update.
+the release of a new data update, or due to team capacity.
 
 4. Each issue on the backlog should be completed on one branch. The branch should
 be linked to the issue once created.
 
 5. A new [milestone](https://github.com/dfe-analytical-services/lsip_dashboard/milestones) 
 is created for each sprint, named with the next dashboard 
-version number, which loosely follows the major.minor.patch system, i.e.
+version number, which loosely follows the major.minor.patch system, e.g.
 
-  v1.0.0 Launch of the dashboard
-  v.1.1.0 Minor re-design of the dashboard or substantial new feature
-  v.1.1.1 Routine data update, bug fix or small new feature
-  v2.0.0 Major re-design of the dashboard
+    - v1.0.0 Launch of the dashboard
+    - v.1.1.0 Minor re-design of the dashboard or substantial new feature
+    - v.1.1.1 Routine data update, bug fix or small new feature
+    - v2.0.0 Major re-design of the dashboard
 
-All issues and pull requests relating to the sprint are tagged with the milestone. 
+6. All issues and pull requests relating to the sprint are tagged with the milestone. 
 
-6. As sprint the is in progress, issues should be moved across the planner board 
-columns to show their progress. 
+7. As sprint the is in progress, issues should be moved across the planner board 
+columns to show their progress, and contributors assigned to them to show who
+is working on them. 
 
-7. Once a sprint is complete (updates live on the dashboard), the milestone 
+8. Once a sprint is complete (updates live on the dashboard), the milestone 
 should be checked to ensure all associated issues and pull requests have been 
 closed (or unassigned from the milestone), and the milestone should be closed. 
 Any merged or redundant branches should be deleted.
 
-TO VIEW PAST QA....???
+> [!TIP] You can read more about GitHub issues  
+[here](https://docs.github.com/en/issues/tracking-your-work-with-issues) and 
+about GitHub milestones [here](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work)
 
 ### Workflow and quality assurance {#workflow-and-quality-assurance}
 
+This section describes the steps that project contributors should follow when
+starting any new piece of work on the dashboard, or QA'ing someone else's work.
+
 #### Deploying changes into pre-production (our test site)
 
-For this stage, the analysis should be... the QA'er should be...
+ All changes on the dashboard will first be merged onto the development branch, 
+ which deployed them into pre-production. This section should be followed for 
+ any new piece of work. 
 
-2.	Analyst: Create a new branch for your work, link it to the issue on the planner board and tag it with the next milestone. Remember to follow branch naming convention and best practice [link]
-3.	Analyst: Start work on your branch. If multiple updates are made to the development branch while you are still working on your branch, use rebase or merge [link to guidance] to update your branch with the latest changes as you go. This will make it easier to merge your changes into development when you are finished.
-4.	Analyst: When you have completed your work, create a pull request. Add a description to the pull request summarising the change and including a list of QA tasks, using the checkbox formatting (see annex for example QA checklists for different types of analysis, which you can paste into the description).
-5.	Analyst: Assign a reviewer to QA the work. This should be someone trained to work on the dashboard, who has had minimal involvement with the work to be QA’d. Speak to Jane or Paul if you are not sure who can QA.
-6.	QA’er: Checkout the branch and complete the QA tasks on the list. When you have complete each task, check it off on the checklist. 
-7.	QA’er: If you identify issues as part of the QA process, add a comment on the most relevant script. To do this, go to the ‘Files changed’ tab on the pull request, click on the relevant file, find the line of code and click the plus icon next to that line of code.
-NOTE: you should always add a comment on a script, even if the comment is not clearly linked to a specific line of code. This is because allows helpful features, like marking the comment as resolved. If you’re not sure, add you’re comment to the first line of the ui.R script.
-NOTE: you can post comments as you go through the QA, or when you write a comment you can click ‘start a review’ /  ’add to review’ and post them all at the end. This can sometimes be helpful, as you may want to go back and edit comments as you complete further QA.
-8.	QA’er: When you have completed your QA, finish your review. To do this, go to the changes tab, click the green ‘Review changes’ button in the top right hand corner, add a comment and choose whether to approve the PR (if not issues identified) or request changes (if issues identified). In your comment you should confirm that you have completed all listed QA, note any additional QA you have done, confirm the methods you used (e.g. ran dashboard locally for visual inspection, ran code to check for errors, ran changed code line by line to sense check). Also confirm here if there are issues to resolve before you are happy to approve. 
-NOTE: This step will release all other comments, if you have been adding them to your review instead of posting them as you go.
-9.	Analyst: Address any issues identified. It will usually be easiest to address each issue as a separate commit (unless they are connected). Once you have addressed each issue, reply to the comment confirming what you have done and linking to the commit that addresses the problem.
-10.	QA’er: Review each change that has been made in response to issues you have raised. If you are happy with the resolution, reply to or thumbs up the comment to confirm, and mark the comment as resolved. If you think the change does not resolve the issue, reply to say so.
-11.	Analyst and QA’er: repeat steps 9 and 10 until all issues have been resolved. 
-12.	QA’er: When you are happy that all issues have been resolved, go again to the ‘review changes’ button on the changes tab, click to approve the PR and add a brief comment to confirm. 
-NOTE: if there are any merge conflicts on the PR, these will need to be resolved and a final QA completed before you approve the changes. Where possible it is best to resolve merge conflicts before QA begins for this reason.
-13.	QA’er: Click the merge button to merge the changes into the development branch. 
+1.	**Analyst:** Create a new branch for your work, by branching off of
+the development branch (make sure you have pulled the latest version first!). 
+Remember to follow branch naming convention and best practice (see [Use of Git](#use-of-git) section), 
+link your branch to the relevant issue on the planner board and tag it with the 
+next milestone. 
+
+3.	**Analyst:** Start work on your branch. If multiple updates are made to the 
+development branch while you are still working on your branch, use rebase or 
+merge to update your branch with the latest changes as you go (see [Use of Git](#use-of-git) section). 
+This will make it easier to merge your changes into development when the work is complete.
+
+4.	**Analyst:** When you have completed your work, create a pull request (PR) to
+merge your branch into the development branch. Add a description to the pull 
+request summarising the change and including a list of QA tasks, using check box 
+formatting (see annex [ADD!!!] for example QA checklists for different types of 
+analysis, which you can paste into the PR description).
+
+> [!IMPORTANT] After you create a PR, check whether there are any merge conflicts.
+These will be noted towards the bottom of the PR. If there are merge conflicts,
+resolve these before proceeding to the next step. Ask another member of the
+project team if you are not sure how to resolve the conflicts.
+
+5.	**Analyst:** Assign a reviewer to QA the work. This should be someone trained 
+to work on the dashboard, who has had minimal involvement with the work to 
+be QA’d. Speak to the project leads if you are not sure who can QA.
+
+6.	**Analyst:** Checkout the branch and complete the QA tasks on the list. 
+When you have complete each task, check it off on the checklist on the PR.
+
+7.	**Analyst:** If you identify issues as part of the QA process, add a comment 
+on the most relevant script. To do this, go to the ‘Files changed’ tab on the 
+pull request, click on the relevant file in the side menu, find the line of 
+code and click the plus icon that appears when you hover over it.
+
+> [!IMPORTANT] You should always comment on a script, even if the comment 
+is not clearly linked to a specific line of code. This is because it allows 
+helpful features, like marking the comment as resolved. If you’re not sure what
+code is causing the issue, add your comment to the first line of any script
+that has changed.
+
+> [!TIP] It's sometimes helpful to wait until you've finished your QA 
+before you post any comments, as you may want to go back and edit comments as 
+you complete further QA. To do this, When you write a comment click 'start a 
+review' or 'add to review'. This will save the comment and When submit your 
+review (more on that below) all comments will be posted. 
+
+8.	**Analyst:** When you have completed your QA, finish your review. To do this, 
+go to the changes tab, click the green ‘Review changes’ button in the top right 
+corner, add a comment and choose whether to approve the PR (if no issues 
+identified) or request changes (if issues identified). In your comment you 
+should:
+
+   - confirm that you have completed all listed QA
+   - note any additional QA you have done 
+   - confirm the methods you used (e.g. ran dashboard locally for visual 
+   inspection, ran code to check for errors, ran amended code line by line to 
+   sense check). 
+   - Confirm here if there are issues to resolve before you are happy to approve 
+
+9.	**Analyst:** Address any issues identified by adding further commits to the
+same branch. It will usually be easiest to address each issue as a separate 
+commit (unless they are connected). Once you have addressed each issue, 
+reply to the comment confirming what you have done and linking to the commit 
+that addresses the problem.
+
+10.	**QA'er:** Review each change that has been made in response to issues you 
+have raised. If you are happy with the resolution, reply to or thumbs-up the 
+comment to confirm, and mark the comment as resolved. Or, if you think the 
+change does not resolve the issue, reply to say so.
+
+11.	**Analyst and QA’er:** repeat steps 9 and 10 until all issues have been 
+resolved. 
+
+12.	**QA’er:** When you are happy that all issues have been resolved, 
+go again to the ‘review changes’ button on the changes tab, click to approve 
+the PR and add a brief comment to confirm. 
+
+13.	**QA’er:** Click the merge button to merge the changes into the development 
+branch. It will take some time (~1hr) to deploy to the preprod site. You can 
+monitor progress on the 'Actions' tab at the top of the GitHub repo. If the 
+deployment fails, see the troubleshooting section. [LINK]
 
 #### Deploying changes to the live site
+
+Work is merged into the main branch at the end of each sprint, which will deploy
+it to the live dashboard site. This will usually include several different 
+pieces of work that have been merged into the development branch during the sprint.
+
+1.	**Analyst:** The project lead will ask you to create a pull request from 
+development into main. The name of the pull request should be the version number 
+for the update (e.g. V1.5.1). In the description for the PR, summarise the 
+changes that are included in this update (you should be able to find this out by 
+looking at closed pull requests that have been merged to development and tagged with the 
+version number). Also add the ‘Update to main’ checklist from the annex [[ADD!!]]. 
+
+> [!IMPORTANT] You will sometimes get a warning on the PR that the branch is out 
+of date with main. If you see this warning, click the button next to it to update
+the branch. This does not produce any meaninful changes, it just updates the
+commit history to include a 'merge commit' of the previous merge into main.
+
+3.	**Analyst:** Assign two reviewers to the branch:
+      1. Any member of the project team, ideally someone with minimal 
+      involvement in the changes included in this update.
+      2. Either the G7 project lead (if not they are not QA’er 1, and if changes 
+      are routine updates or small), OR the G6 project lead (if there are
+      any larger changes included in the update.)
+      
+      Ask the G7 project lead if you are unsure.
+      
+4.	**QA’er 1:** Follow the same process described in the pre-production section 
+above to either approve the PR or add comments with required changes.
+
+5.	 **Analyst:** If there are issues to resolve, treat this as a new piece of work
+rather them resolving them directly on the development branch. I.e., create a new
+issue for them on the planner board and address them on a new branch to be merged 
+into development, following the usual process described in the section above. You
+may want to ask those involved in the original changes to pick up the issue, instead
+of addressing it yourself. Once all issues have been fixed and related changes 
+merged into the development branch, reply to any comments on the original PR 
+into main to confirm.
+
+6.	**QA'er 1:** Review each change that has been made in response to issues you 
+have raised. If you are happy with the resolution, reply to or thumbs-up the 
+comment to confirm, and mark the comment as resolved. Or, if you think the 
+change does not resolve the issue, reply to say so.
+
+7.	**Analyst and QA’er:** repeat steps 9 and 10 until all issues have been 
+resolved. 
+
+8.	**QA’er:** When you are happy that all issues have been resolved, 
+go again to the ‘review changes’ button on the changes tab, click to approve 
+the PR and add a brief comment to confirm. 
+
+9.	**QA’er 2:** Complete a visual inspection of the dashboard on the
+pre-production site. Follow the same cycle as above to approve the PR or 
+add comments with required changes.
+
+10.	**Analyst:** Once appovals have been given from both QA'ers, merge the branch.
+It will take some time (~1hr) to deploy to the live site. You can monitor 
+progress on the 'Actions' tab at the top of the GitHub repo. If the deployment
+fails, see the troubleshooting section. [LINK]
+
+
+#### QA documentation
+
+(look at the milestone, go into associated PRs)
 
 ## Contributing {#contributing}
 
@@ -628,3 +766,5 @@ event within Google Analytics.
 In Google Analytics we have started creating custom reports to collect
 some interesting data. You can see these (and create these) by clicking
 the “Explore” tab in the left of the Google Analytics page.
+
+## Annex: QA checklists {#annex-qa-checklists}
