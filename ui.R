@@ -345,6 +345,9 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       </a>
     </div>
 
+    <!-- Add hamburger button -->
+<button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
+
     <!-- Right navigation -->
     <nav class="govuk-header__navigation">
       <ul class="govuk-header__navigation-list">
@@ -414,8 +417,66 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
   }
 }
 
+/* --- Hamburger toggle button --- */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* --- Mobile behaviour --- */
+@media (max-width: 768px) {
+  /* Show hamburger, hide links initially */
+  .menu-toggle {
+    display: block;
+  }
+
+  .govuk-header__navigation,
+  .govuk-service-navigation {
+    display: none;
+    width: 100%;
+  }
+
+  /* Show them when active */
+  .govuk-header__navigation.active,
+  .govuk-service-navigation.active {
+    display: block;
+  }
+
+  /* Keep vertical alignment tidy */
+  .govuk-header__navigation-list,
+  .govuk-service-navigation__list {
+    display: block;
+    padding: 10px 20px;
+  }
+
+  .govuk-header__navigation-item,
+  .govuk-service-navigation__link {
+    display: block;
+    padding: 10px 0;
+  }
+}
 </style>
 '),
+    # Hamburger javascript
+    HTML('
+         <script>
+document.addEventListener("DOMContentLoaded", function() {
+  const menuToggle = document.querySelector(".menu-toggle");
+  const headerLinks = document.querySelector(".govuk-header__navigation");
+  const navLinks = document.querySelector(".govuk-service-navigation");
+
+  menuToggle.addEventListener("click", function() {
+    headerLinks.classList.toggle("active");
+    navLinks.classList.toggle("active");
+  });
+});
+</script>
+         '),
 
     ## 1.4 Navigation bar ####
     HTML('
