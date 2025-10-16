@@ -239,21 +239,23 @@ deployment fails, see the troubleshooting section. [LINK]
 
 #### Deploying changes to the live site
 
-Work is merged into the main branch at the end of each sprint, which will deploy
-it to the live dashboard site. This will usually include several different 
-pieces of work that have been merged into the development branch during the sprint.
+The development branch will be merged into the main branch at the end of each 
+sprint, which will deploy all changes on that branch to the live dashboard site. 
+This will usually include several different pieces of work that have been merged 
+into the development branch during the sprint.
 
-1.	**Analyst:** The project lead will ask you to create a pull request from 
+1.	**Analyst:** The project lead will ask an analyst to create a pull request from 
 development into main. The name of the pull request should be the version number 
 for the update (e.g. V1.5.1). In the description for the PR, summarise the 
 changes that are included in this update (you should be able to find this out by 
 looking at closed pull requests that have been merged to development and tagged with the 
-version number). Also add the ‘Update to main’ checklist from the annex [[ADD!!]]. 
+version number). Also add the ‘Update to main’ checklist into the PR description
+(found in the annex [[ADD!!]].) 
 
 > [!IMPORTANT] You will sometimes get a warning on the PR that the branch is out 
 of date with main. If you see this warning, click the button next to it to update
 the branch. This does not produce any meaninful changes, it just updates the
-commit history to include a 'merge commit' of the previous merge into main.
+commit history to include a record of the previous merge into main.
 
 3.	**Analyst:** Assign two reviewers to the branch:
       1. Any member of the project team, ideally someone with minimal 
@@ -271,7 +273,7 @@ above to either approve the PR or add comments with required changes.
 rather them resolving them directly on the development branch. I.e., create a new
 issue for them on the planner board and address them on a new branch to be merged 
 into development, following the usual process described in the section above. You
-may want to ask those involved in the original changes to pick up the issue, instead
+may want to ask those involved in the original changes to pick up this work, instead
 of addressing it yourself. Once all issues have been fixed and related changes 
 merged into the development branch, reply to any comments on the original PR 
 into main to confirm.
@@ -281,28 +283,38 @@ have raised. If you are happy with the resolution, reply to or thumbs-up the
 comment to confirm, and mark the comment as resolved. Or, if you think the 
 change does not resolve the issue, reply to say so.
 
-7.	**Analyst and QA’er:** repeat steps 9 and 10 until all issues have been 
+7.	**Analyst and QA’er:** repeat steps 5 and 6 until all issues have been 
 resolved. 
 
 8.	**QA’er:** When you are happy that all issues have been resolved, 
-go again to the ‘review changes’ button on the changes tab, click to approve 
-the PR and add a brief comment to confirm. 
+go again to the ‘review changes’ button on the 'files changed' tab, click to 
+approve the PR and add a brief comment to confirm. 
 
-9.	**QA’er 2:** Complete a visual inspection of the dashboard on the
-pre-production site. Follow the same cycle as above to approve the PR or 
-add comments with required changes.
+9.	**QA’er 2:** One the first QA'er has completed their work, complete a visual 
+inspection of the dashboard on the pre-production site. Follow the same cycle as 
+above to approve the PR or add comments with required changes.
 
-10.	**Analyst:** Once appovals have been given from both QA'ers, merge the branch.
+10.	**Analyst:** Once approvals have been given from both QA'ers, merge the branch.
 It will take some time (~1hr) to deploy to the live site. You can monitor 
 progress on the 'Actions' tab at the top of the GitHub repo. If the deployment
-fails, see the troubleshooting section. [LINK]
+fails, see the [Troubleshooting](#troubleshooting) section.
 
+#### Keeping and revieweing a record of QA
 
-#### QA documentation
-
-(look at the milestone, go into associated PRs)
+By following the steps above, a record of QA will be captured on the pull 
+requests. To review all the QA for a particular dashboard version, click on the 
+'issues' tab at the top of the GitHub Repo, then click on 'milestones' and 
+choose 'closed' to see past versions. Find the version number you are interested
+in and click on 'closed' again. This will list all the pull requests associated
+with that version, which you can click on to review a record of the QA.
 
 ## Contributing {#contributing}
+
+This section provides technical information on how to update the dashboard. It
+should be read alongside the information above which explains the processes to
+follow.
+
+This section covers more detailed instructions on 
 
 ### Run the dashboard in R
 
@@ -715,6 +727,8 @@ To add one of these into the dashboard:
 [CONTENT]
 
 ## Troubleshooting {#troubleshooting}
+
+[[ADD WHAT TO DO IF DEPLOYMENT FAILS]]
 
 The most common problems occur when something changes in an input data
 set. That might be :
