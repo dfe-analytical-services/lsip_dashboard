@@ -43,7 +43,7 @@ server <- function(input, output, session) {
       "toolsTable_search", "toolsTable_cell_clicked", "reportsTable_row_last_clicked", "sourcesTable_row_last_clicked",
       "toolsTable_row_last_clicked", "barSubgroup", "geoComps", "breakdownPage",
       "subgroupPage", "barBreakdown", "barProfession", "hubLA", "hubComparators", "hubYears", "hubBreakdowns",
-      "hubMetric", "hubArea"
+      "hubMetric", "hubArea", "accessibility_footer_link", "cookies_footer_link", "support_footer_link"
     ))
   })
 

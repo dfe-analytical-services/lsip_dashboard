@@ -581,7 +581,7 @@ document.addEventListener("DOMContentLoaded", function() {
             "The Local Skills dashboard provides published local data from a variety of sources in an easy to navigate format. To support local skills planning, the dashboard covers topics such as employment, qualifications, and education outcomes across England."
           ),
           p(
-            "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, Mayoral Combined Authority (MCA) and national."
+            "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, Combined Authority (CA) and national."
           ),
           p(
             "This dashboard is produced by ",
@@ -622,7 +622,7 @@ document.addEventListener("DOMContentLoaded", function() {
             card_body(
               div(class = "icon-circle mb-3", icon("line-chart")),
               h4("Local skills data", class = "mb-2"),
-              p("Dive deeper into your area with additional metric and breakdowns."),
+              p("Dive deeper into your area with additional metrics and breakdowns."),
               tags$button("Explore Metrics", class = "btn nav-btn mt-2")
             )
           ),
@@ -634,7 +634,7 @@ document.addEventListener("DOMContentLoaded", function() {
               div(class = "icon-circle mb-3", icon("download")),
               h4("Download Data", class = "mb-2"),
               p("Access, filter and download data for further analysis."),
-              tags$button("Download", class = "btn nav-btn mt-2")
+              tags$button("Go to Downloads", class = "btn nav-btn mt-2")
             )
           )
         ),
@@ -653,26 +653,14 @@ document.addEventListener("DOMContentLoaded", function() {
             div(
               class = "panel-body",
               p("Use the navigation bar above to select the tab you want to view, or access further information via the links below."),
-              h2("Dashboard structure"),
+              h2("Dashboard information"),
               tags$ul(
                 tags$li(actionLink("link_to_tabpanel_dataSources", "Data sources"), "- includes details on the sources of data used in this dashboard."),
-                tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of local labour market and education system."),
+                tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of the local labour market and education system."),
                 tags$li(actionLink("link_to_tabpanel_accessibility", "Accessibility"), "- provides the Local Skills dashboard accessibility statement, compliance requirmeents, limitations and opportunity to feedback on accessibility of the dashboard."),
                 tags$li(actionLink("link_to_tabpanel_supportandfeedback", "Support and feedback"), " - provides links to the Skills England and Department for Education Statistics Development inboxes for feedback and if you hve any questions about the dashboard or the data it contains. There is also a link to the GitHub repository if you wish to view the dashboard source code.")
               ),
               h2("Local skills metrics"),
-              p(
-                "Where published figures are not available, area totals for LSIP or MCA are either taken from a matching geographical area or are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
-              ),
-              p(
-                "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS ",
-                a(
-                  href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
-                  "article",
-                  .noWS = c("after")
-                ),
-                "."
-              ),
               h3(actionLink(
                 "link_to_tabpanel_localskills2", "Local skills data"
               )),
@@ -689,36 +677,49 @@ document.addEventListener("DOMContentLoaded", function() {
                 "link_to_tabpanel_employment", "Employment"
               )),
               p(
-                "This group of metrics provide information on employment, self-employment and inactivity for the selected geographic area including data on employment rates over time, the share of employment by occupation, and the share of employment by industry."
+                "This group of metrics provide information on employment, self-employment and inactivity, as well as their rates, with breakdowns by occupation and industry."
               ),
               h3(
                 actionLink("link_to_tabpanel_vacancies", "Jobs")
               ),
               p(
-                "This is an experimental metric of online job advert data, split by SOC2020 Sub-Major groups, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "
+                "This group of metrics provide information on online job adverts data and employment projections, with breakdowns by occupation, industry, broad sector and qualification."
               ),
               h3(actionLink(
                 "link_to_tabpanel_enterprise", "Businesses"
               )),
               p(
-                "This group of metrics provide data on the count of new and no longer trading enterprises and count of enterprises by employment size and industry for the selected geographic area, and the option to compare against another area in England at the same geographic level."
+                "This group of metrics provide information on business counts and business birth and death rates, with breakdowns by employment size and industry."
               ),
               h3(actionLink("link_to_tabpanel_FE", "Skills")),
               p(
-                "This group of metrics provide information on training activity for the selected geographic area including data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period."
+                "This group of metrics provide information on further education achievements and participation, as well as qualifications at level 3, level 4 and above, with breakdowns by level, age, subject area, provision and gender."
               ),
               h3(actionLink(
                 "link_to_tabpanel_destinations", "Destinations"
               )),
               p(
-                "These two metrics provide information on the destinations of young people after Key Stage 4 and Key Stage 5 education for the selected geographic area.
-                It includes data on destinations, with breakdowns by level and key stage group."
+                "These two metrics provide information on the destinations of young people after Key Stage 4 and Key Stage 5 education, with breakdowns by outcome."
               ),
               h3(actionLink(
                 "link_to_tabpanel_wf1", "Employment projections"
               )),
               p(
                 "Projected employment growth until 2035. Sector, industry, occupation and qualification projected growths are available. LA level data is not available for this dataset."
+              ),
+              h3("Data notice"
+              ),
+              p(
+                "Where published figures are not available, area totals for LSIP or MCA are either taken from a matching geographical area or are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
+              ),
+              p(
+                "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS ",
+                a(
+                  href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
+                  "article",
+                  .noWS = c("after")
+                ),
+                "."
               )
             )
           )
