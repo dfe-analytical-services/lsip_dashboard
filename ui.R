@@ -699,15 +699,9 @@ document.addEventListener("DOMContentLoaded", function() {
                 "link_to_tabpanel_destinations", "Destinations"
               )),
               p(
-                "These two metrics provide information on the destinations of young people after Key Stage 4 and Key Stage 5 education, with breakdowns by outcome."
+                "These two metrics provide information on the destinations of learners after Key Stage 4 and Key Stage 5 education, with breakdowns by outcome."
               ),
-              h3(actionLink(
-                "link_to_tabpanel_wf1", "Employment projections"
-              )),
-              p(
-                "Projected employment growth until 2035. Sector, industry, occupation and qualification projected growths are available. LA level data is not available for this dataset."
-              ),
-              h3("Data notice"),
+              h3("Data notices"),
               p(
                 "Where published figures are not available, area totals for LSIP or MCA are either taken from a matching geographical area or are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
               ),
