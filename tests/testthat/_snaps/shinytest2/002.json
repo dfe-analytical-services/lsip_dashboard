@@ -4,52 +4,11 @@
     "geoChoiceOver": "Buckinghamshire LSIP",
     "hubComparators": null,
     "hubLA": null,
-    "navbar": "User guide",
+    "navbar": "user_guide",
     "splashGeoType": "LSIP",
     "splashMetric": "inemploymentRate"
   },
   "output": {
-    "overviewEmpRateKPI": "82%<br/><span style=\"font-size: 16px;color:green\">+1ppts  since  Apr 2023-Mar 2024<\/span>",
-    "overviewJobKPI": "13,380<br/><span style=\"font-size: 16px;color:green\">+1,349  since  Jul-24<\/span>",
-    "page0title": {
-      "html": "Buckinghamshire LSIP headline data",
-      "deps": [
 
-      ]
-    },
-    "screenshotOverview": {
-      "html": "<button class=\"btn btn-default btn-capture btn-capture-screenshot\" data-selector=\"body\" data-filename=\"Buckinghamshire LSIP-overview.png\" data-options=\"{}\" data-loading=\"false\">\n  <i class=\"fas fa-camera\" role=\"presentation\" aria-label=\"camera icon\"><\/i>\n  Screenshot\n<\/button>",
-      "deps": [
-        {
-          "name": "font-awesome",
-          "version": "6.5.2",
-          "src": {
-            "href": "font-awesome-6.5.2"
-          },
-          "meta": null,
-          "script": null,
-          "stylesheet": [
-            "css/all.min.css",
-            "css/v4-shims.min.css"
-          ],
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        },
-        {
-          "name": "capture",
-          "version": "0.1.0",
-          "src": {
-            "href": "capture-0.1.0"
-          },
-          "meta": null,
-          "script": "capture-image.js",
-          "stylesheet": null,
-          "head": null,
-          "attachment": null,
-          "all_files": true
-        }
-      ]
-    }
   }
 }
