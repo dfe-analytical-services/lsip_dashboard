@@ -707,8 +707,7 @@ document.addEventListener("DOMContentLoaded", function() {
               p(
                 "Projected employment growth until 2035. Sector, industry, occupation and qualification projected growths are available. LA level data is not available for this dataset."
               ),
-              h3("Data notice"
-              ),
+              h3("Data notice"),
               p(
                 "Where published figures are not available, area totals for LSIP or MCA are either taken from a matching geographical area or are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
               ),
