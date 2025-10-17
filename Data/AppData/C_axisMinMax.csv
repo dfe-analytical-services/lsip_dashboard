@@ -156,40 +156,40 @@
 "enrolmentsAimsSSAScience and Mathematics",170,36980
 "enrolmentsAimsSSASocial Sciences",0,2860
 "enterpriseCount",17450,2408040
-"enterpriseCountIndustryAccommodation & food services",1055,146105
-"enterpriseCountIndustryAgriculture, forestry & fishing",100,99425
-"enterpriseCountIndustryArts, entertainment, recreation & other services",1250,163065
-"enterpriseCountIndustryBusiness administration & support services",1365,211430
-"enterpriseCountIndustryConstruction",2430,332020
-"enterpriseCountIndustryEducation",295,43575
-"enterpriseCountIndustryFinancial & insurance",255,55635
-"enterpriseCountIndustryHealth",640,99535
-"enterpriseCountIndustryInformation & communication",530,208550
-"enterpriseCountIndustryManufacturing",955,120005
-"enterpriseCountIndustryMining, quarrying & utilities",110,13070
-"enterpriseCountIndustryMotor trades",655,69750
-"enterpriseCountIndustryProfessional, scientific & technical",2095,418630
-"enterpriseCountIndustryProperty",480,105500
-"enterpriseCountIndustryPublic administration & defence",5,7170
-"enterpriseCountIndustryRetail",1340,195395
-"enterpriseCountIndustryTransport & storage",625,122760
-"enterpriseCountIndustryWholesale",475,96705
-"enterpriseCountSizeLarge (250+)",55,9995
-"enterpriseCountSizeMedium-sized (50 to 249)",300,37925
+"enterpriseCountIndustryAccommodation & food services",1130,147605
+"enterpriseCountIndustryAgriculture, forestry & fishing",100,93190
+"enterpriseCountIndustryArts, entertainment, recreation & other services",1295,166575
+"enterpriseCountIndustryBusiness administration & support services",1380,206035
+"enterpriseCountIndustryConstruction",2460,335965
+"enterpriseCountIndustryEducation",295,44575
+"enterpriseCountIndustryFinancial & insurance",255,55115
+"enterpriseCountIndustryHealth",640,102650
+"enterpriseCountIndustryInformation & communication",520,196980
+"enterpriseCountIndustryManufacturing",925,120005
+"enterpriseCountIndustryMining, quarrying & utilities",115,13755
+"enterpriseCountIndustryMotor trades",680,70805
+"enterpriseCountIndustryProfessional, scientific & technical",2095,406280
+"enterpriseCountIndustryProperty",490,109580
+"enterpriseCountIndustryPublic administration & defence",5,7265
+"enterpriseCountIndustryRetail",1400,195395
+"enterpriseCountIndustryTransport & storage",655,122760
+"enterpriseCountIndustryWholesale",465,96705
+"enterpriseCountSizeLarge (250+)",55,10120
+"enterpriseCountSizeMedium-sized (50 to 249)",300,38510
 "enterpriseCountSizeMicro (0 to 9)",15275,2161050
-"enterpriseCountSizeSmall (10 to 49)",1640,209555
-"inactive",48600,7486800
-"inactiveRate",0.13980764719681,0.264788126478813
-"inemployment",226200,27984600
+"enterpriseCountSizeSmall (10 to 49)",1655,209555
+"inactive",49800,7525800
+"inactiveRate",0.139365452408931,0.265386509108813
+"inemployment",223600,28062200
 "inemploymentIndustryAgricuture and fishing",NA,NA
-"inemploymentIndustryBanking finance and insurance etc.",24500,5354600
-"inemploymentIndustryConstruction",12900,1851500
-"inemploymentIndustryDistribution, hotels and restaurants",30900,4495100
-"inemploymentIndustryEnergy and water",900,417500
-"inemploymentIndustryManufacturing",13500,2343700
-"inemploymentIndustryOther services",7200,1653200
-"inemploymentIndustryPublic admin education and health",59900,9086900
-"inemploymentIndustryTransport and Communication",11500,2870800
+"inemploymentIndustryBanking finance and insurance etc.",25600,5364400
+"inemploymentIndustryConstruction",11300,1831300
+"inemploymentIndustryDistribution, hotels and restaurants",30800,4489600
+"inemploymentIndustryEnergy and water",1500,418900
+"inemploymentIndustryManufacturing",15200,2338900
+"inemploymentIndustryOther services",7000,1663700
+"inemploymentIndustryPublic admin education and health",60700,9122900
+"inemploymentIndustryTransport and Communication",11800,2903900
 "inemploymentOccupation (SOC2020 Sub-Major Group)11 - Corporate managers and directors",NA,NA
 "inemploymentOccupation (SOC2020 Sub-Major Group)12 - Other managers and proprietors",NA,NA
 "inemploymentOccupation (SOC2020 Sub-Major Group)21 - Science, research, engineering and technology professionals",NA,NA
@@ -216,7 +216,7 @@
 "inemploymentOccupation (SOC2020 Sub-Major Group)82 - Transport and mobile machine drivers and operatives",NA,NA
 "inemploymentOccupation (SOC2020 Sub-Major Group)91 - Elementary trades and related occupations",NA,NA
 "inemploymentOccupation (SOC2020 Sub-Major Group)92 - Elementary administration and service occupations",NA,NA
-"inemploymentRate",0.685685093568509,0.835092657752756
+"inemploymentRate",0.688084687346135,0.839952996474736
 "participation",11700,1830650
 "participationAge19-24",2940,459590
 "participationAge25+",8500,1377180
@@ -247,8 +247,8 @@
 "participation_rate_per_100000_populationProvisionApprenticeships",1029.83606010574,3210
 "participation_rate_per_100000_populationProvisionCommunity Learning",223.839818470296,1699.71592646331
 "participation_rate_per_100000_populationProvisionEducation and training",1270.25364838689,5534
-"selfemployed",26200,3848000
-"selfemployedRate",0.0577017114914425,0.164257151645647
+"selfemployed",26200,3903700
+"selfemployedRate",0.055767446654984,0.148884870403858
 "sustainedPositiveDestinationKS4Rate",0.909560002789206,0.965726827621138
 "sustainedPositiveDestinationKS4RateOutcomeApprenticeships",0.00469886594677631,0.105771293713795
 "sustainedPositiveDestinationKS4RateOutcomeEducation",0.775014571595104,0.942290215086337
@@ -260,8 +260,8 @@
 "sustainedPositiveDestinationKS5RateOutcomeApprenticeships",0.0204702918328784,0.190007765984986
 "sustainedPositiveDestinationKS5RateOutcomeEducation",0.317780580075662,0.684967457484778
 "sustainedPositiveDestinationKS5RateOutcomeEmployment",0.102089019525509,0.383774695250105
-"unemployed",3900,1419100
-"unemployedRate",0.0141358869129047,0.0748244912467786
+"unemployed",3500,1449900
+"unemployedRate",0.0123066104078762,0.0717246224095539
 "vacancies",4549,2188576
 "vacanciesOccupation (SOC2020 Major Group)1 - Managers, directors and senior officials",262,105511
 "vacanciesOccupation (SOC2020 Major Group)2 - Professional occupations",1019,436569
