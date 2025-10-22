@@ -130,7 +130,7 @@ C_breakdown <- bind_rows(
         )
     ) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
-    mutate(value = round(value / total, 3)) %>%
+    mutate(value = round(value / total, 4)) %>%
     mutate(valueText = as.character(value)) %>%
     mutate(metric = case_when(
       metric == "achievementsAims" ~ "achievements",
