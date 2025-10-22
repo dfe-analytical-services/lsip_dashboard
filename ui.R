@@ -732,7 +732,7 @@ document.addEventListener("DOMContentLoaded", function() {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("10 Oct 2025 (1.6.2)"),
+              p("22 Oct 2025 (1.6.2)"),
               tags$ul(
                 tags$li("Rebrand to Skills England layout."),
                 tags$li("Update business count data to March 2025."),
