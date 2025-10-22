@@ -249,17 +249,17 @@
 "participation_rate_per_100000_populationProvisionEducation and training",1270.25364838689,5534
 "selfemployed",26200,3903700
 "selfemployedRate",0.055767446654984,0.148884870403858
-"sustainedPositiveDestinationKS4Rate",0.909560002789206,0.965726827621138
-"sustainedPositiveDestinationKS4RateOutcomeApprenticeships",0.00469886594677631,0.105771293713795
-"sustainedPositiveDestinationKS4RateOutcomeEducation",0.775014571595104,0.942290215086337
-"sustainedPositiveDestinationKS4RateOutcomeEmployment",0.00646094067681742,0.0703898514851485
-"sustainedPositiveDestinationKS5Rate",0.755417807890058,0.875350140056022
-"sustainedPositiveDestinationKS5RateLevelAll other qualifications",0.44874022589053,0.708841463414634
-"sustainedPositiveDestinationKS5RateLevelLevel 2",0.541636495293266,0.814814814814815
-"sustainedPositiveDestinationKS5RateLevelLevel 3",0.831951089845827,0.917450126117863
-"sustainedPositiveDestinationKS5RateOutcomeApprenticeships",0.0204702918328784,0.190007765984986
-"sustainedPositiveDestinationKS5RateOutcomeEducation",0.317780580075662,0.684967457484778
-"sustainedPositiveDestinationKS5RateOutcomeEmployment",0.102089019525509,0.383774695250105
+"sustainedPositiveDestinationKS4Rate",0.883649252581291,0.960690480259785
+"sustainedPositiveDestinationKS4RateOutcomeApprenticeships",0.00469886594677631,0.119056822574411
+"sustainedPositiveDestinationKS4RateOutcomeEducation",0.756474681097797,0.942290215086337
+"sustainedPositiveDestinationKS4RateOutcomeEmployment",0.00411150770342927,0.0506378044066486
+"sustainedPositiveDestinationKS5Rate",0.73958999065926,0.869089407392112
+"sustainedPositiveDestinationKS5RateLevelAll other qualifications",0.466348448687351,0.695278969957081
+"sustainedPositiveDestinationKS5RateLevelLevel 2",0.532853285328533,0.784017278617711
+"sustainedPositiveDestinationKS5RateLevelLevel 3",0.81968803038875,0.910614525139665
+"sustainedPositiveDestinationKS5RateOutcomeApprenticeships",0.0238019169329073,0.194891443167305
+"sustainedPositiveDestinationKS5RateOutcomeEducation",0.295118949958983,0.657355396994079
+"sustainedPositiveDestinationKS5RateOutcomeEmployment",0.121139510117146,0.399712879409352
 "unemployed",3500,1449900
 "unemployedRate",0.0123066104078762,0.0717246224095539
 "vacancies",4549,2188576

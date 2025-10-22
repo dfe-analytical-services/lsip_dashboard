@@ -18,10 +18,10 @@ destinationsWithAreas <-
   bind_rows(
     I_KS4 %>% mutate(metric = "sustainedPositiveDestinationKS4Rate")%>%filter(institution_group=="State-funded mainstream schools"),#just schools to match the headline stats in the publication
     I_KS4National %>% mutate(metric = "sustainedPositiveDestinationKS4Rate")%>%filter(institution_group=="State-funded mainstream schools",institution_type=="Total")%>%mutate_at(c('cohort','education','appren','all_work','all_notsust','all_unknown'), as.character)%>%select(-overall,-fe, -ssf,-sfc,-other_edu,-appl3,-appl2,-he),#just schools to match the headline stats in the publication
-    I_KS5 %>% mutate(metric = "sustainedPositiveDestinationKS5Rate")%>%filter(institution_group=="State-funded mainstream schools & colleges",level_methodology=="16-18 Provider location"),
+    I_KS5 %>% mutate(metric = "sustainedPositiveDestinationKS5Rate")%>%filter(institution_group=="State-funded mainstream schools & colleges"),
     I_KS5National %>% mutate(metric = "sustainedPositiveDestinationKS5Rate")%>%filter(institution_group=="State-funded mainstream schools & colleges",cohort_level=="Total")%>%mutate_at(c('cohort','education','appren','all_work','all_notsust','all_unknown'), as.character)%>%select(-overall,-fe, -ssf,-sfc,-other_edu,-appl3,-appl2,-he)
   ) %>%
-  filter(data_type=="Number of pupils",breakdown_topic=="Total")%>%
+  filter(data_type=="Number of students",breakdown_topic=="Total")%>%
   select(time_period,geographic_level,lad_code,lad_name,cohort,education,appren,all_work, all_notsust,all_unknown,metric,cohort_level_group) %>% # remove unused columns
   rename(areaCode = lad_code, area = lad_name, timePeriod = time_period) %>%
   # add dates

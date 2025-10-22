@@ -14,6 +14,7 @@
 # Load libraries ----
 library(dplyr)
 library(data.table) # use %like%
+library(stringr)
 
 # For QA purposes we compare the old data with any updated data. This is done here before any data changes so we can compare the data as it was to the updated data. This is used with QAdataload.R
 # C_timeOld <- bind_rows(readr::read_csv("Data/AppData/C_time1.csv"), readr::read_csv("Data/AppData/C_time2.csv"))
