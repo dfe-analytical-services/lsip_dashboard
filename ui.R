@@ -734,7 +734,8 @@ document.addEventListener("DOMContentLoaded", function() {
               h2("Latest update"),
               p("10 Oct 2025 (1.6.2)"),
               tags$ul(
-                tags$li("Rebrand to Skills England layout.")
+                tags$li("Rebrand to Skills England layout."),
+                tags$li("Update business count data to March 2025.")
               ),
               details(
                 label = "Previous updates",
