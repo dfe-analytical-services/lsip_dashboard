@@ -737,6 +737,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 tags$li("Rebrand to Skills England layout."),
                 tags$li("Update business count data to March 2025."),
                 tags$li("Update destinations data AY23/24. There has been a change to this data: 'The rules that determine if a student is at the end of 16-18 study changed for the 2021 and 2022 cohort of leavers compared to earlier years.  In previous releases this caused a discontinuity in the time series.  For this statistical release we have recalculated the data from 2016/17 cohort onwards on a consistent basis so all students are deemed to be at the end of 16-18 study using the new rules.  This ensures a consistent timeseries in the statistical release.  Full details of the change are covered in the methodology document'."),
+                tags$li("Update to latest APS data.")
               ),
               details(
                 label = "Previous updates",
