@@ -156,6 +156,13 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     flex-direction: column;
   }
 }
+
+/* Limit max width */
+.tab-content {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
 "
         )
       ),
@@ -381,8 +388,10 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
   padding: 20px 20px;
   border-bottom: none;
   width: 100%;
-  margin: 0;
   box-sizing: border-box;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* --- Logo align --- */
@@ -408,6 +417,14 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 @media (max-width: 1000px) {
   .govuk-header__navigation {
     width: 100%;
+    display: flex;
+    justify-content: flex-end;  /* push links to the right */
+  }
+
+  .govuk-header__navigation-list {
+    display: flex;              /* keep items horizontal, or vertical if needed */
+    flex-wrap: wrap;
+    justify-content: flex-end;  /* ensure list items stay right */
   }
 
   .govuk-header__navigation-item a {
@@ -483,7 +500,7 @@ document.addEventListener("DOMContentLoaded", function() {
   <div class="govuk-service-navigation__container">
     <ul class="govuk-service-navigation__list">
 
-      <li style="margin-left:20px;">
+      <li>
         <a href="#" id="nav_user_guide" class="govuk-service-navigation__link" style="font-size:18px;"
            onclick="Shiny.setInputValue(\'nav_click\', \'user_guide\', {priority:\'event\'}); return false;">
           Local skills dashboard
@@ -533,6 +550,13 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
   padding-top: 15px;
   border-bottom: none;
 }
+
+/* Max width */
+.govuk-service-navigation__container {
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 
 /* Links styling */
 .govuk-service-navigation__link {
@@ -1548,9 +1572,9 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
       padding-right: 20px;
     }
     .govuk-width-container {
-    width: auto !important;
-    margin-right: 0px;
-    margin-left: 0px;
+    max-width: 1200px !important;
+    margin-left: auto;
+    margin-right: auto;
     "))
   )
 }
