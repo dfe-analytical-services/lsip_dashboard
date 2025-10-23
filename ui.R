@@ -652,7 +652,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             card_body(
               div(class = "icon-circle mb-3", icon("line-chart")),
               h4("Local skills data", class = "mb-2"),
-              p("Dive deeper into your area with additional metrics and breakdowns."),
+              p("Dive deeper with additional metrics and breakdowns."),
               tags$button("Explore local skills data", class = "btn nav-btn mt-2")
             )
           ),
