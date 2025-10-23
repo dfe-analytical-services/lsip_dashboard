@@ -580,6 +580,11 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
     box-shadow: 0 -2px #e6e6e6, 0 4px #0b0c0c;
 }
 
+.govuk-service-navigation__link:hover {
+    background-color: #e6e6e6 !important;
+    text-decoration: none;
+}
+
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .govuk-service-navigation__link {
