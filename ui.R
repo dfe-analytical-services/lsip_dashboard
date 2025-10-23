@@ -577,7 +577,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
 /* Override GOVUK yellow highlight */
 .govuk-service-navigation__link:focus {
     background-color: #e6e6e6;
-    box-shadow: 0 -2px #e6e6e6, 0 4px #0b0c0c;
+    box-shadow: none;
 }
 
 .govuk-service-navigation__link:hover {
