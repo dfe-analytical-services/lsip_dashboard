@@ -113,6 +113,11 @@ server <- function(input, output, session) {
     bslib::nav_select("navbar", "data_download")
   })
 
+  # Note which is the active tab
+  observeEvent(input$nav_click, {
+    session$sendCustomMessage("updateActiveNav", input$nav_click)
+  })
+
   # 2 User guide ----
   ## 2.1 Make links ----
   # Create link to overview tab from user guide
@@ -415,7 +420,7 @@ server <- function(input, output, session) {
     )
   })
 
-  # 4 Summary ----
+  # 4 Area summary ----
 
   observeEvent(input$nav_click, {
     req(input$nav_click)

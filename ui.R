@@ -156,6 +156,13 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     flex-direction: column;
   }
 }
+
+/* Limit max width */
+.tab-content {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
 "
         )
       ),
@@ -378,11 +385,13 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
+  padding: 20px 20px;
   border-bottom: none;
   width: 100%;
-  margin: 0;
   box-sizing: border-box;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* --- Logo align --- */
@@ -390,7 +399,6 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
   margin: 0 !important;
   display: flex;
 }
-
 
 /* --- header external links keep to right --- */
 .govuk-header__navigation {
@@ -409,6 +417,14 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 @media (max-width: 1000px) {
   .govuk-header__navigation {
     width: 100%;
+    display: flex;
+    justify-content: flex-end;  /* push links to the right */
+  }
+
+  .govuk-header__navigation-list {
+    display: flex;              /* keep items horizontal, or vertical if needed */
+    flex-wrap: wrap;
+    justify-content: flex-end;  /* ensure list items stay right */
   }
 
   .govuk-header__navigation-item a {
@@ -484,31 +500,30 @@ document.addEventListener("DOMContentLoaded", function() {
   <div class="govuk-service-navigation__container">
     <ul class="govuk-service-navigation__list">
 
-      <li style="margin-left:20px;">
-        <a href="#" class="govuk-service-navigation__link"
-        style="font-size:18px;"
-           onclick="Shiny.setInputValue(\'nav_click\', \'user_guide\', {priority: \'event\'}); return false;">
+      <li>
+        <a href="#" id="nav_user_guide" class="govuk-service-navigation__link" style="font-size:18px;"
+           onclick="Shiny.setInputValue(\'nav_click\', \'user_guide\', {priority:\'event\'}); return false;">
           Local skills dashboard
         </a>
       </li>
 
       <li style="margin-left:20px;">
-        <a href="#" class="govuk-service-navigation__link"
-           onclick="Shiny.setInputValue(\'nav_click\', \'summary\', {priority: \'event\'}); return false;">
-          Summary
+        <a href="#" id="nav_summary" class="govuk-service-navigation__link"
+           onclick="Shiny.setInputValue(\'nav_click\', \'summary\', {priority:\'event\'}); return false;">
+          Area summary
         </a>
       </li>
 
       <li style="margin-left:20px;">
-        <a href="#" class="govuk-service-navigation__link"
-           onclick="Shiny.setInputValue(\'nav_click\', \'local_skills_data\', {priority: \'event\'}); return false;">
+        <a href="#" id="nav_local_skills_data" class="govuk-service-navigation__link"
+           onclick="Shiny.setInputValue(\'nav_click\', \'local_skills_data\', {priority:\'event\'}); return false;">
           Local skills data
         </a>
       </li>
 
       <li style="margin-left:20px;">
-        <a href="#" class="govuk-service-navigation__link"
-           onclick="Shiny.setInputValue(\'nav_click\', \'data_download\', {priority: \'event\'}); return false;">
+        <a href="#" id="nav_data_download" class="govuk-service-navigation__link"
+           onclick="Shiny.setInputValue(\'nav_click\', \'data_download\', {priority:\'event\'}); return false;">
           Data download
         </a>
       </li>
@@ -516,53 +531,68 @@ document.addEventListener("DOMContentLoaded", function() {
     </ul>
   </div>
 </nav>
+
+<script>
+// JavaScript handler to apply the "active" class
+Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
+  document.querySelectorAll(\'.govuk-service-navigation__link\').forEach(function(link){
+    link.classList.remove(\'active\');
+  });
+  var activeLink = document.getElementById(\'nav_\' + activeId);
+  if (activeLink) activeLink.classList.add(\'active\');
+});
+</script>
 '),
-
-    # CSS for navigation
     tags$style(HTML("
-
-/* --- Set background white, add padding for some room --- */
+/* Navigation container */
 .govuk-service-navigation {
   background-color: white;
   padding-top: 15px;
-  padding-bottom: 15px;
+  border-bottom: none;
 }
-/* --- Set font black and size --- */
+
+/* Max width */
+.govuk-service-navigation__container {
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+/* Links styling */
 .govuk-service-navigation__link {
   color: black !important;
   font-size: 16px;
-  font-weight:700;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
 }
 
-/* --- Mobile view: add some padding between elements --- */
+/* Active link highlight (persists even after clicking elsewhere) */
+.govuk-service-navigation__link.active {
+  background-color: #e6e6e6 !important;
+  color: #000 !important;
+}
+
+/* Override GOVUK yellow highlight */
+.govuk-service-navigation__link:focus {
+    background-color: #e6e6e6;
+    box-shadow: none;
+}
+
+.govuk-service-navigation__link:hover {
+    background-color: #e6e6e6 !important;
+    text-decoration: none;
+}
+
+/* Mobile adjustments */
 @media (max-width: 768px) {
   .govuk-service-navigation__link {
-  padding-top: 10px;
-  display: block;
-}
+    display: block;
+    padding-top: 10px;
+  }
 }
 ")),
-
-    # Add banner note around new LSIPs
-    shinyGovstyle::banner(
-      "update banner",
-      "Update",
-      "Some LSIP boundaries have been updated in line with the next cycle of LSIP development beginning October 2025, and new combined authorities have been added. See data sources page for more information."
-    ),
-    # CSS for banner
-    tags$style(HTML("
-/* --- Minimise margin --- */
-    .govuk-phase-banner {
-      margin-left: 0px;
-      background-color: #c5cdd7;
-    }
-    .govuk-phase-banner__content__tag {
-        background-color: #774b99;
-        color: white;
-        margin-left: 10px;
-    }
-}
-    ")),
 
     # 2 Main page ----
     bslib::navset_hidden(
@@ -610,9 +640,9 @@ document.addEventListener("DOMContentLoaded", function() {
             onclick = "Shiny.setInputValue('go_summary', Math.random())",
             card_body(
               div(class = "icon-circle mb-3", icon("chart-bar")),
-              h4("Summary", class = "mb-2"),
+              h4("Area summary", class = "mb-2"),
               p("Explore key employment and skills data in your area."),
-              tags$button("Go to Summary", class = "btn nav-btn mt-2")
+              tags$button("Go to area summary", class = "btn nav-btn mt-2")
             )
           ),
           card(
@@ -622,8 +652,8 @@ document.addEventListener("DOMContentLoaded", function() {
             card_body(
               div(class = "icon-circle mb-3", icon("line-chart")),
               h4("Local skills data", class = "mb-2"),
-              p("Dive deeper into your area with additional metrics and breakdowns."),
-              tags$button("Explore Metrics", class = "btn nav-btn mt-2")
+              p("Dive deeper with additional metrics and breakdowns."),
+              tags$button("Explore local skills data", class = "btn nav-btn mt-2")
             )
           ),
           card(
@@ -632,9 +662,9 @@ document.addEventListener("DOMContentLoaded", function() {
             onclick = "Shiny.setInputValue('go_download', Math.random())",
             card_body(
               div(class = "icon-circle mb-3", icon("download")),
-              h4("Download Data", class = "mb-2"),
+              h4("Data Download", class = "mb-2"),
               p("Access, filter and download data for further analysis."),
-              tags$button("Go to Downloads", class = "btn nav-btn mt-2")
+              tags$button("Go to data download", class = "btn nav-btn mt-2")
             )
           )
         ),
@@ -732,7 +762,7 @@ document.addEventListener("DOMContentLoaded", function() {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("22 Oct 2025 (1.6.2)"),
+              p("23 Oct 2025 (1.6.2)"),
               tags$ul(
                 tags$li("Rebrand to Skills England layout."),
                 tags$li("Update business count data to March 2025."),
@@ -994,60 +1024,63 @@ document.addEventListener("DOMContentLoaded", function() {
         value = "local_skills_data",
         br(),
         ### 2.3.1 Filters ----
-        fluidRow(
-          column(
-            5,
-            selectizeInput(
-              "geoChoice",
-              multiple = FALSE,
-              label = "Choose an LSIP, CA or England",
-              choices = areaChoices[1:3],
-              options = list(
-                persist = TRUE, # keep selected value
-                create = FALSE, # disallow new values
-                onDelete = I("function(values) { return false; }")
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              5,
+              selectizeInput(
+                "geoChoice",
+                multiple = FALSE,
+                label = "Choose an LSIP, CA or England",
+                choices = areaChoices[1:3],
+                options = list(
+                  persist = TRUE, # keep selected value
+                  create = FALSE, # disallow new values
+                  onDelete = I("function(values) { return false; }")
+                )
+              ),
+              selectizeInput(
+                "geoComps",
+                multiple = TRUE,
+                label = NULL,
+                choices = areaChoices,
+                options = list(
+                  maxItems = 7,
+                  placeholder = "Comparison areas (LA/LSIP/CA/National"
+                )
               )
             ),
-            selectizeInput(
-              "geoComps",
-              multiple = TRUE,
-              label = NULL,
-              choices = areaChoices,
-              options = list(
-                maxItems = 7,
-                placeholder = "Comparison areas (LA/LSIP/CA/National"
+            column(
+              5,
+              selectizeInput(
+                inputId = "splashMetric",
+                choices = metricChoices,
+                multiple = FALSE,
+                label = "What are you interested in?",
+                options = list(
+                  persist = TRUE, # keep selected value
+                  create = FALSE, # disallow new values
+                  onDelete = I("function(values) { return false; }")
+                )
+              ),
+              hidden(
+                div(
+                  id = "breakdownPage_wrapper",
+                  selectInput("breakdownPage", "Limit to subgroup:", choices = "")
+                )
+              ),
+              hidden(
+                div(
+                  id = "subgroupPage_wrapper",
+                  selectInput("subgroupPage", "Subgroup:", choices = "")
+                )
               )
+            ),
+            column(
+              2,
+              uiOutput("screenshotFile")
             )
-          ),
-          column(
-            5,
-            selectizeInput(
-              inputId = "splashMetric",
-              choices = metricChoices,
-              multiple = FALSE,
-              label = "What are you interested in?",
-              options = list(
-                persist = TRUE, # keep selected value
-                create = FALSE, # disallow new values
-                onDelete = I("function(values) { return false; }")
-              )
-            ),
-            hidden(
-              div(
-                id = "breakdownPage_wrapper",
-                selectInput("breakdownPage", "Limit to subgroup:", choices = "")
-              )
-            ),
-            hidden(
-              div(
-                id = "subgroupPage_wrapper",
-                selectInput("subgroupPage", "Subgroup:", choices = "")
-              )
-            )
-          ),
-          column(
-            2,
-            uiOutput("screenshotFile")
           )
         ),
         fluidRow(
@@ -1342,53 +1375,55 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
         value = "data_download",
         fluidRow(column(
           12,
-          h1("Data download"),
           p(
             "Use the filters to create a bespoke dataset. * fields are mandatory."
             # Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want."
           )
         )),
         ### 2.4.1 Datahub filters ----
-        fluidRow(column(12, h2("Geography"))),
-        fluidRow(
-          column(
-            4,
-            uiOutput("hubAreaInput")
-          ),
-          column(
-            4,
-            selectizeInput(
-              "hubLA",
-              choices = c("Yes", "No"),
-              label = NULL,
-              multiple = TRUE,
-              options = list(maxItems = 1, placeholder = "Include LA level data?")
+        div(
+          class = "filterRow",
+          fluidRow(column(12, h4("Geography"))),
+          fluidRow(
+            column(
+              4,
+              uiOutput("hubAreaInput")
+            ),
+            column(
+              4,
+              selectizeInput(
+                "hubLA",
+                choices = c("Yes", "No"),
+                label = NULL,
+                multiple = TRUE,
+                options = list(maxItems = 1, placeholder = "Include LA level data?")
+              )
+            ),
+            column(
+              4,
+              selectizeInput(
+                "hubComparators",
+                label = NULL,
+                choices = c("National"),
+                multiple = TRUE,
+                options = list(placeholder = "Include national data?")
+              )
             )
           ),
-          column(
-            4,
-            selectizeInput(
-              "hubComparators",
-              label = NULL,
-              choices = c("National"),
-              multiple = TRUE,
-              options = list(placeholder = "Include national data?")
+          fluidRow(column(12, h4("Data"))),
+          fluidRow(
+            column(
+              4,
+              uiOutput("hubMetricInput")
+            ),
+            column(
+              4,
+              uiOutput("hubBreakdownInput")
+            ),
+            column(
+              4,
+              uiOutput("hubYearInput")
             )
-          )
-        ),
-        fluidRow(column(12, h2("Data"))),
-        fluidRow(
-          column(
-            4,
-            uiOutput("hubMetricInput")
-          ),
-          column(
-            4,
-            uiOutput("hubBreakdownInput")
-          ),
-          column(
-            4,
-            uiOutput("hubYearInput")
           )
         ),
         fluidRow(column(12, h2("Output"))),
@@ -1532,6 +1567,19 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
       `Accessibility statement` = "accessibility_footer_link",
       `Cookies` = "cookies_footer_link",
       `Support and feedback` = "support_footer_link"
-    ))
+    )),
+    # CSS for footer
+    tags$style(HTML("
+
+/* --- Add some left and right padding --- */
+    .govuk-footer {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .govuk-width-container {
+    max-width: 1200px !important;
+    margin-left: auto;
+    margin-right: auto;
+    "))
   )
 }
