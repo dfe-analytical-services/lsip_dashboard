@@ -3305,6 +3305,45 @@
       "Maintainer": "Yihui Xie <xie@yihui.name>",
       "Repository": "CRAN"
     },
+    "minty": {
+      "Package": "minty",
+      "Version": "0.0.5",
+      "Source": "Repository",
+      "Title": "Minimal Type Guesser",
+      "Authors@R": "c( person(\"Chung-hong\", \"Chan\", role = c(\"aut\", \"cre\"), email = \"chainsawtiney@gmail.com\", comment = c(ORCID = \"0000-0002-6232-7530\")), person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = \"aut\", comment = \"author of the ported code from readr\"), person(\"Jim\", \"Hester\", role = \"aut\", comment = \"author of the ported code from readr\"), person(\"Romain\", \"Francois\", role = \"ctb\", comment = \"author of the ported code from readr\"), person(\"Jennifer\", \"Bryan\", , \"jenny@posit.co\", role = c(\"aut\"), comment = \"author of the ported code from readr\"), person(\"Shelby\", \"Bearrows\", role = \"ctb\", comment = \"author of the ported code from readr\"), person(\"Posit Software, PBC\", role = \"cph\", comment = \"copyright holder of readr\"), person(\"David\", \"Olson\", role = \"aut\", comment = \"author of src/tzfile.h\") )",
+      "Description": "Port the type guesser from 'readr' (so-called 'readr' first edition parsing engine, now superseded by 'vroom').",
+      "License": "MIT + file LICENSE",
+      "URL": "https://gesistsa.github.io/minty/, https://github.com/gesistsa/minty",
+      "BugReports": "https://github.com/gesistsa/minty/issues",
+      "Depends": [
+        "R (>= 3.6)"
+      ],
+      "LinkingTo": [
+        "cpp11 (>= 0.5.0)",
+        "tzdb (>= 0.1.1)"
+      ],
+      "Config/testthat/edition": "3",
+      "Config/testthat/parallel": "false",
+      "Encoding": "UTF-8",
+      "Language": "en-US",
+      "RoxygenNote": "7.3.2",
+      "Imports": [
+        "tzdb"
+      ],
+      "Suggests": [
+        "knitr",
+        "stringi",
+        "testthat",
+        "withr",
+        "hms",
+        "readr"
+      ],
+      "Config/Needs/website": "gesistsa/tsatemplate",
+      "NeedsCompilation": "yes",
+      "Author": "Chung-hong Chan [aut, cre] (<https://orcid.org/0000-0002-6232-7530>), Hadley Wickham [aut] (author of the ported code from readr), Jim Hester [aut] (author of the ported code from readr), Romain Francois [ctb] (author of the ported code from readr), Jennifer Bryan [aut] (author of the ported code from readr), Shelby Bearrows [ctb] (author of the ported code from readr), Posit Software, PBC [cph] (copyright holder of readr), David Olson [aut] (author of src/tzfile.h)",
+      "Maintainer": "Chung-hong Chan <chainsawtiney@gmail.com>",
+      "Repository": "CRAN"
+    },
     "modelr": {
       "Package": "modelr",
       "Version": "0.1.11",
@@ -4379,6 +4418,51 @@
       "Maintainer": "Greg Lin <glin@glin.io>",
       "Repository": "CRAN"
     },
+    "readODS": {
+      "Package": "readODS",
+      "Version": "2.3.2",
+      "Source": "Repository",
+      "Type": "Package",
+      "Title": "Read and Write ODS Files",
+      "Authors@R": "c(person(\"Gerrit-Jan\", \"Schutten\", role = c(\"aut\"), email = \"phonixor@gmail.com\"), person(\"Chung-hong\", \"Chan\", role = c(\"aut\", \"cre\"), email = \"chainsawtiney@gmail.com\", comment = c(ORCID = \"0000-0002-6232-7530\")), person(\"Peter\", \"Brohan\", role = c(\"aut\"), email = \"peter.brohan@gmail.com\"), person(\"Detlef\", \"Steuer\", role = c(\"aut\"), email = \"steuer@hsu-hh.de\", comment = c(ORCID = \"0000-0003-2676-5290\")), person(\"Thomas J.\", \"Leeper\", role = c(\"aut\"), email = \"thosjleeper@gmail.com\", comment = c(ORCID = \"0000-0003-4097-6326\")), person(\"John\", \"Foster\", role = c(\"ctb\"), email = \"john.x.foster@nab.com.au\"), person(\"Sergio\", \"Oller\", role = c(\"ctb\")), person(\"Jim\", \"Hester\", role = c(\"ctb\"), email = \"jim.hester@rstudio.com\", comment = c(ORCID = \"0000-0002-2739-7082\")), person(\"Stephen\", \"Watts\", role = c(\"ctb\")), person(\"Arthur\", \"Katossky\", role = c(\"ctb\")), person(\"Stas\", \"Malavin\", role = c(\"ctb\")), person(\"Duncan\", \"Garmonsway\", role = c(\"ctb\")), person(\"Mehrad\", \"Mahmoudian\", role = c(\"ctb\")), person(\"Matt\", \"Kerlogue\", role = c(\"ctb\")), person(\"Michal\", \"Lauer\", role = c(\"ctb\"), email = \"michal.lauer.25@gmail.com\"), person(\"Till\", \"Straube\", role = c(\"ctb\"), email = \"straube@geo.uni-frankfurt.de\"), person(\"Marcin\", \"Kalicinski\", role = c(\"ctb\", \"cph\"), comment = \"Author of included RapidXML code\"))",
+      "Description": "Read ODS (OpenDocument Spreadsheet) into R as data frame. Also support writing data frame into ODS file.",
+      "URL": "https://docs.ropensci.org/readODS/, https://github.com/ropensci/readODS",
+      "BugReports": "https://github.com/ropensci/readODS/issues",
+      "Imports": [
+        "cellranger",
+        "minty (>= 0.0.5)",
+        "stringi",
+        "tibble",
+        "vctrs (>= 0.4.2)",
+        "zip",
+        "tools"
+      ],
+      "LinkingTo": [
+        "cpp11 (>= 0.5.0)"
+      ],
+      "Suggests": [
+        "spelling",
+        "testthat",
+        "datasets",
+        "covr",
+        "knitr",
+        "rmarkdown",
+        "withr",
+        "readr (>= 1.2.1)"
+      ],
+      "License": "GPL-3",
+      "RoxygenNote": "7.3.2",
+      "Encoding": "UTF-8",
+      "VignetteBuilder": "knitr",
+      "Depends": [
+        "R (>= 4.0)"
+      ],
+      "Language": "en-GB",
+      "NeedsCompilation": "yes",
+      "Author": "Gerrit-Jan Schutten [aut], Chung-hong Chan [aut, cre] (<https://orcid.org/0000-0002-6232-7530>), Peter Brohan [aut], Detlef Steuer [aut] (<https://orcid.org/0000-0003-2676-5290>), Thomas J. Leeper [aut] (<https://orcid.org/0000-0003-4097-6326>), John Foster [ctb], Sergio Oller [ctb], Jim Hester [ctb] (<https://orcid.org/0000-0002-2739-7082>), Stephen Watts [ctb], Arthur Katossky [ctb], Stas Malavin [ctb], Duncan Garmonsway [ctb], Mehrad Mahmoudian [ctb], Matt Kerlogue [ctb], Michal Lauer [ctb], Till Straube [ctb], Marcin Kalicinski [ctb, cph] (Author of included RapidXML code)",
+      "Maintainer": "Chung-hong Chan <chainsawtiney@gmail.com>",
+      "Repository": "CRAN"
+    },
     "readr": {
       "Package": "readr",
       "Version": "2.1.5",
@@ -5177,35 +5261,47 @@
     },
     "shinyGovstyle": {
       "Package": "shinyGovstyle",
-      "Version": "0.1.0",
-      "Source": "Repository",
+      "Version": "0.1.0.9000",
+      "Source": "GitHub",
       "Title": "Custom Gov Style Inputs for Shiny",
       "Authors@R": "c( person(\"Ross\", \"Wyatt\", , \"ross.wyatt@justice.gov.uk\", role = c(\"aut\", \"cre\")), person(\"Cameron\", \"Race\", , \"cameron.race@education.gov.uk\", role = \"ctb\"), person(\"Sarah\", \"Wong\", role = \"ctb\"), person(\"Richard\", \"Bielby\", , \"richard.bielby@education.gov.uk\", role = \"ctb\"), person(\"Charlotte\", \"Foster\", , \"charlotte.foster@education.gov.uk\", role = \"ctb\"), person(\"Jeni\", \"Martin\", role = \"ctb\") )",
       "Description": "Collection of 'shiny' application styling that are the based on the GOV.UK Design System.  See <https://design-system.service.gov.uk/components/> for details.",
-      "License": "GPL-3",
+      "License": "GPL (>= 3)",
       "URL": "https://github.com/moj-analytical-services/shinyGovstyle",
       "BugReports": "https://github.com/moj-analytical-services/shinyGovstyle/issues",
       "Depends": [
-        "R (>= 3.1.0)"
+        "R (>= 3.5)"
       ],
       "Imports": [
         "htmltools",
         "jsonlite",
         "magrittr",
         "purrr",
+        "reactable",
+        "readr",
+        "readODS",
         "shiny (>= 0.14)",
         "shinyjs",
-        "stringr"
+        "stringr",
+        "writexl"
       ],
       "Suggests": [
+        "bslib",
+        "shinytest2",
         "testthat"
       ],
       "Encoding": "UTF-8",
-      "RoxygenNote": "7.3.2",
-      "NeedsCompilation": "no",
+      "RoxygenNote": "7.3.3",
+      "LazyData": "true",
+      "Config/testthat/edition": "3",
       "Author": "Ross Wyatt [aut, cre], Cameron Race [ctb], Sarah Wong [ctb], Richard Bielby [ctb], Charlotte Foster [ctb], Jeni Martin [ctb]",
       "Maintainer": "Ross Wyatt <ross.wyatt@justice.gov.uk>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "dfe-analytical-services",
+      "RemoteRepo": "shinyGovstyle",
+      "RemoteRef": "service-navigation-rmb",
+      "RemoteSha": "56dd4cba381471ec84537105227e8b87ce88421c"
     },
     "shinyWidgets": {
       "Package": "shinyWidgets",

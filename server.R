@@ -20,7 +20,7 @@ server <- function(input, output, session) {
       "DataTbl_rows_all", "DataTbl_state", "DataTbl_search", "DataTbl_cell_clicked",
       "DataTbl_row_last_clicked", "mapLA_bounds", "mapLA_center", "mapLA_zoom", "map_bounds",
       "map_center", "map_zoom", "mapLA_shape_click", "mapLA_click",
-      "link_to_tabpanel_data", "link_to_tabpanel_furtherresources", "link_to_tabpanel_localskills2",
+      "link_to_tabpanel_data", "link_to_tabpanel_dataSources", "link_to_tabpanel_furtherresources", "link_to_tabpanel_localskills2",
       "link_to_tabpanel_localskills", "link_to_tabpanel_overview", "cookies_banner-cookies_reject",
       "cookies_banner-cookies_accept", "cookies_banner-cookies_link", "link_to_tabpanel_employment",
       "link_to_tabpanel_vacancies", "link_to_tabpanel_enterprise", "link_to_tabpanel_FE", "link_to_tabpanel_destinations",
@@ -43,7 +43,7 @@ server <- function(input, output, session) {
       "toolsTable_search", "toolsTable_cell_clicked", "reportsTable_row_last_clicked", "sourcesTable_row_last_clicked",
       "toolsTable_row_last_clicked", "barSubgroup", "geoComps", "breakdownPage",
       "subgroupPage", "barBreakdown", "barProfession", "hubLA", "hubComparators", "hubYears", "hubBreakdowns",
-      "hubMetric", "hubArea"
+      "hubMetric", "hubArea", "accessibility_footer_link", "cookies_footer_link", "support_footer_link"
     ))
   })
 
@@ -97,39 +97,60 @@ server <- function(input, output, session) {
     google_analytics_key = google_analytics_key
   )
 
+  # Manage page naviogation
+  observeEvent(input$summary, bslib::nav_select("navbar", "summary"))
+  observeEvent(input$local_skills_data, bslib::nav_select("navbar", "local_skills_data"))
+  observeEvent(input$data_download, bslib::nav_select("navbar", "data_download"))
+  observeEvent(input$user_guide, bslib::nav_select("navbar", "user_guide"))
+
+  observeEvent(input$go_summary, {
+    bslib::nav_select("navbar", "summary")
+  })
+  observeEvent(input$go_skills, {
+    bslib::nav_select("navbar", "local_skills_data")
+  })
+  observeEvent(input$go_download, {
+    bslib::nav_select("navbar", "data_download")
+  })
+
+  # Note which is the active tab
+  observeEvent(input$nav_click, {
+    session$sendCustomMessage("updateActiveNav", input$nav_click)
+  })
+
   # 2 User guide ----
   ## 2.1 Make links ----
   # Create link to overview tab from user guide
   observeEvent(input$link_to_tabpanel_overview, {
-    updateTabsetPanel(session, "navbar", "Summary")
+    bslib::nav_select("navbar", "summary")
   })
 
   # Create links to local skills tab from user guide
   observeEvent(input$link_to_tabpanel_localskills, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
   })
   observeEvent(input$link_to_tabpanel_localskills2, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
   })
 
   # Create link to further resources tab
   observeEvent(input$link_to_tabpanel_furtherresources, {
-    updateTabsetPanel(session, "navbar", "Further resources")
+    bslib::nav_select("navbar", "further_resources")
   })
 
   # Create link to accessibility tab
   observeEvent(input$link_to_tabpanel_accessibility, {
-    updateTabsetPanel(session, "navbar", "Accessibility")
+    bslib::nav_select("navbar", "accessibility")
   })
 
   # Create link to support and feedback tab
   observeEvent(input$link_to_tabpanel_supportandfeedback, {
-    updateTabsetPanel(session, "navbar", "Support and feedback")
+    bslib::nav_select("navbar", "support_and_feedback")
   })
 
   # Create link to employment data
   observeEvent(input$link_to_tabpanel_employment, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
       selected = "inemploymentRate"
     )
@@ -137,63 +158,67 @@ server <- function(input, output, session) {
 
   # Create link to job advert
   observeEvent(input$link_to_tabpanel_vacancies, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
       selected = "vacancies"
     )
   })
   # Create link to skills data tab
   observeEvent(input$link_to_tabpanel_FE, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
       selected = "achievements_rate_per_100000_population"
     )
   })
   # Create link to enterprises from user guide
   observeEvent(input$link_to_tabpanel_enterprise, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
       selected = "enterpriseCount"
     )
   })
   # Create link to enterprises from summary
   observeEvent(input$link_to_tabpanel_enterprise2, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
       selected = "enterpriseCount"
     )
   })
   # Create link to qualification
   observeEvent(input$link_to_tabpanel_qualification, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
       selected = "L3PlusRate"
     )
   })
   # Create link to destinations
   observeEvent(input$link_to_tabpanel_destinations, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
       selected = "sustainedPositiveDestinationKS4Rate"
     )
   })
   # Create link to working futures user guide
   observeEvent(input$link_to_tabpanel_wf1, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
       selected = "employmentProjection"
     )
   })
   # Create link to working futures from Summary
   observeEvent(input$link_to_tabpanel_wf, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
       selected = "employmentProjection"
     )
   })
   # Create link to data tab
   observeEvent(input$link_to_tabpanel_data, {
-    updateTabsetPanel(session, "navbar", "Data sources")
+    bslib::nav_select("navbar", "data_download")
+  })
+  # Create link to data tab
+  observeEvent(input$link_to_tabpanel_dataSources, {
+    bslib::nav_select("navbar", "data_sources")
   })
   # 3 Data sources ----
   ## 3.1 Data table download links----
@@ -395,11 +420,17 @@ server <- function(input, output, session) {
     )
   })
 
-  # 4 Summary ----
+  # 4 Area summary ----
+
+  observeEvent(input$nav_click, {
+    req(input$nav_click)
+    # select the matching nav_panel in the navset with id = "navbar"
+    bslib::nav_select(id = "navbar", selected = input$nav_click, session = session)
+  })
 
   # Add link to local skills data
   observeEvent(input$link_to_tabpanel_LS, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
   })
 
   # define page title
@@ -704,7 +735,7 @@ server <- function(input, output, session) {
   })
   # Add link to employment rate
   observeEvent(input$link_to_tabpanel_empRate, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
       selected = "inemploymentRate"
     )
@@ -743,7 +774,7 @@ server <- function(input, output, session) {
 
   # Add link to vacancy data
   observeEvent(input$link_to_tabpanel_vacancies2, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
       selected = "vacancies"
     )
@@ -770,7 +801,7 @@ server <- function(input, output, session) {
 
   # Add link to skills data
   observeEvent(input$link_to_tabpanel_FE2, {
-    updateTabsetPanel(session, "navbar", "Local skills data")
+    bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
       selected = "achievements_rate_per_100000_population"
     )
@@ -1108,7 +1139,8 @@ server <- function(input, output, session) {
   # create subheading
   output$subheading <- renderUI({
     req(input$geoChoice)
-    paste0(
+    HTML(paste0(
+      "<p>",
       (I_DataText %>% filter(metric == input$splashMetric))$subheading,
       if (input$geoChoice == "Dorset LSIP" & input$splashMetric == "employmentProjection") {
         " The data presented here for Dorset LSIP is correct, however for the Skills Imperative data, it does not match the published data. We are working to update the published data. "
@@ -1126,8 +1158,9 @@ server <- function(input, output, session) {
         " London wide data is available by choosing the Greater London Authority under Combined authorities."
       } else if (input$geoChoice == "Greater London Authority CA") {
         " Data is available for 4 sub London areas as well. These can be chosen from the area filter under LSIPs."
-      }
-    )
+      },
+      "</p>"
+    ))
   })
 
   # create data source
@@ -2301,5 +2334,20 @@ server <- function(input, output, session) {
       options = list(dom = "t", pageLength = 50),
       rownames = FALSE
     )
+  })
+
+  # 8 Footer----
+  # Create link to accessibility tab
+  observeEvent(input$accessibility_footer_link, {
+    bslib::nav_select("navbar", "accessibility")
+  })
+
+  # Create link to support and feedback tab
+  observeEvent(input$cookies_footer_link, {
+    bslib::nav_select("navbar", "cookie_information")
+  })
+  # Create link to support and feedback tab
+  observeEvent(input$support_footer_link, {
+    bslib::nav_select("navbar", "support_and_feedback")
   })
 }

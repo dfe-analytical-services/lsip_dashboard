@@ -1,6 +1,7 @@
 summaryTab <- function() {
-  tabPanel(
-    "Summary",
+  bslib::nav_panel(
+    "Area summary",
+    value = "summary",
     # 1 Filters ----
     fluidRow(
       column(
@@ -114,9 +115,7 @@ summaryTab <- function() {
       )
     ),
     p(""),
-    fluidRow(
-      h4(actionLink("link_to_tabpanel_LS", "Explore more data and metrics on the Local skills data page."))
-    ),
+    h4(actionLink("link_to_tabpanel_LS", "Explore more data and metrics on the Local skills data page.")),
     ### Downloads-------------
     br(),
     fluidRow(

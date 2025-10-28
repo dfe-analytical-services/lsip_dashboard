@@ -48,7 +48,7 @@ ui <- function(input, output, session) {
           "
 /*style filter row grey background*/
 .filterRow{
-background-color: #f3f2f1; /*#1d70b8*/
+background-color: #c5cdd7;
 border-radius: 4px;
 padding: 15px 15px 0px 15px;
 }
@@ -64,7 +64,7 @@ background-color:#f3f2f1;
 border-right: 5px solid white;
 }
 
-/*right allign links*/
+/*right align links*/
 .rightAlignLinks{
 text-align: right;
 padding-right:15px;
@@ -76,67 +76,9 @@ padding-top:15px
   visibility: hidden;
 }
 
-/* styles for menu button*/
-    #menuButton {
-      display: none;
-      width: auto;
-    }
-
-    .menuBtn {
-      color: #fff;
-      float: left;
-      padding: 10px;
-    }
-
-        .menuBtn:focus {
-      color: #fff;
-      background-color: #000;
-    }
-
-/* for mobile*/
-    @media (max-width: 767px) {
-      .nav-stacked {
-        display: none;
-      }
-      .nav-stacked.active {
-        display: block;
-      }
-
-      #menuButton {
-        display: block;
-      }
-
-      .menuBtn.active {
-        background-color: #fff;
-        color: #000;
-      }
-    }
-
-    /* style KPI boxes. Here are some colour options for easy access
-    #12436D - govt analytical function blue
-    #AAE3F0 - dfe corp turquoise 40% tint
-    #28A197 - govt analytical function turquoise
-    #DAEEBF - dfe corp lime 40% tint
-    #718ea7 - govt analytical function blue 40% tint
-    #7ec7c1 - govt analytical function turquoise 40% tint
-    */
-
-.small-box.bg-geo1{
-    background-color: #12436D !important;
-    color: #fff;
-    padding: 2px 2px 4px 12px;
-}
-
-.small-box.bg-geo2{
-    background-color: #28A197 !important;
-    color: #fff;
-    padding: 2px 2px 4px 12px;
-}
-
-.small-box.bg-geo3{
-    background-color: #BFBFBF !important;
-    color: #fff;
-    padding: 2px 2px 4px 12px;
+/*extra padding now no left nav bar*/
+.tabbable {
+  padding: 10px;
 }
 
 /* map popup styling*/
@@ -145,62 +87,86 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 
 }
 
- /* increase banner size*/
-.feedback-banner {
-    background-color: #d53880;
-    font-size: 16px;
-    line-height: 1.5;
-    padding: 5px 8px 4px;
+/* version control box colours*/
+.govuk-details {
+    background-color: #c5cdd7;
+    color: black;
+}
+.govuk-details__summary {
+    color: black;
+}
+.panel-info {
+    border-color: #c5cdd7;
 }
 
+.govuk-details {
+    background-color: #c5cdd7;
+    color: black;
+}
+
+/* Landing page button styling */
+.nav-btn {
+  background-color: #774b99 !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.nav-btn:hover {
+  background-color: #653e82 !important;
+  transform: translateY(-2px);
+}
+
+/* Card styling */
+.action-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 16px;
+  border: 1px solid #774b99;
+}
+.action-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  border-color: #653e82; /* Darker purple border on hover */
+}
+
+/* Icon circle styling */
+.icon-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f2ebf9;
+  color: #774b99;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  font-size: 32px;
+  margin: 5px auto 0px auto;
+}
+
+/* Hover: make the icon circle pop */
+.action-card:hover .icon-circle {
+  background-color: #e8dbf4; /* Slightly darker lilac */
+  color: #653e82;           /* Darker purple icon */
+}
+
+/* Responsive stacking */
+@media (max-width: 768px) {
+  .bslib-layout-cols {
+    flex-direction: column;
+  }
+}
+
+/* Limit max width */
+.tab-content {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
 "
         )
       ),
-      ## 1.3. Javascript and HTML banner----
-      # Collapsible menu js
-      tags$script(
-        HTML(
-          '
-    /* javascript function for menu button */
-    function collapseMenu() {
-      var x = document.getElementById("navbar");
-      x.classList.toggle("active");
-
-      var x = document.getElementById("menuButton");
-      x.classList.toggle("active");
-    }
-    '
-        )
-      )
     ),
-    # Force the top nav bar to left align and centre the title
-    HTML(
-      '<header class="govuk-header" role="banner">
-    <div class="govuk-header__container">
-    <div class="govuk-header__logo" style="margin-left: 15px">
-    <a href="https://www.gov.uk/government/organisations/department-for-education" class="govuk-header__link govuk-header__link--homepage">
-    <span class="govuk-header__logotype">
-     <img src="images/DfE_logo_landscape.png" class="govuk-header__logotype-crown-fallback-image" width="133px"/>
-    </span>
-    </a>
-    </div>
-    <div class="govuk-header__content" style="width: 70%; text-align: center;float:left;">
-    <a href="https://www.gov.uk/government/collections/skills-england" class="govuk-header__link govuk-header__link--service-name" style="font-size: 24px;">Local Skills Dashboard</a>
-    </div>
-        <a href="javascript:void(0);" id="menuButton" class="menuBtn" onclick="collapseMenu()">
-    <i class="fa fa-bars" style="font-size:24px;"></i></a>
-    </div>
-    </header>'
-    ),
-
-
-    # Add banner note around new LSIPs
-    HTML(
-      '<div class="feedback-banner" id="feedback banner" >
-    <p style="color: #fff;">Some LSIP boundaries have been updated in line with the next cycle of LSIP development beginning October 2025, and new combined authorities have been added. See data sources page for more information.</p>
-</div>'
-    ),
-
     # Force page to scroll to top when links clicked
     tags$script(
       " $(document).ready(function () {
@@ -349,28 +315,303 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
                 });
                 });"
     ),
+    tags$script(
+      " $(document).ready(function () {
+                $('#accessibility_footer_link').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+    ),
+    tags$script(
+      " $(document).ready(function () {
+                $('#cookies_footer_link').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+    ),
+    tags$script(
+      " $(document).ready(function () {
+                $('#support_footer_link').on('click', function (e) {
+                window.scrollTo(0, 0)
+                });
+                });"
+    ),
+    ## 1.3 Header ----
+    HTML('
+<header class="govuk-header" role="banner">
+  <div class="govuk-header__container">
+    <!-- Left logo -->
+    <div class="govuk-header__logo">
+      <a href="https://www.gov.uk/government/organisations/skills-england"
+         class="govuk-header__link govuk-header__link--homepage">
+        <span class="govuk-header__logotype">
+          <img src="images/Skills England_Lesser_Arms_Landscape-SElogoWhite.svg"
+               class="govuk-header__logotype-crown-fallback-image"
+               width="300px"/>
+        </span>
+      </a>
+    </div>
+
+    <!-- Add hamburger button -->
+<button class="menu-toggle" aria-label="Toggle menu">&#9776;</button>
+
+    <!-- Right navigation -->
+    <nav class="govuk-header__navigation">
+      <ul class="govuk-header__navigation-list">
+        <li class="govuk-header__navigation-item">
+          <a href="https://skillsengland.education.gov.uk/qualifications/" class="govuk-header__link header-link">Qualification finder</a>
+        </li>
+        <li class="govuk-header__navigation-item">
+          <a href="https://skillsengland.education.gov.uk/apprenticeships/" class="govuk-header__link header-link">Apprenticeship finder</a>
+        </li>
+        <li class="govuk-header__navigation-item">
+          <a href="https://occupational-maps.skillsengland.education.gov.uk/" class="govuk-header__link header-link">Occupational maps</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+/* --- Header background --- */
+.govuk-header {
+  background-color: #183860;
+  border-bottom: none;
+}
+
+/* Header container: flex layout to allign and avoid overlaps */
+.govuk-header__container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px;
+  border-bottom: none;
+  width: 100%;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* --- Logo align --- */
+.govuk-header__logo {
+  margin: 0 !important;
+  display: flex;
+}
+
+/* --- header external links keep to right --- */
+.govuk-header__navigation {
+  margin-left: auto;
+}
+
+/* Nav items a bit more spacing and keep font size in mobile*/
+.govuk-header__navigation-item a {
+  margin-left: 30px;
+  font-size: 16px;
+}
+
+/* --- Smaller screens --- */
+
+/* move header links under logo */
+@media (max-width: 1000px) {
+  .govuk-header__navigation {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;  /* push links to the right */
+  }
+
+  .govuk-header__navigation-list {
+    display: flex;              /* keep items horizontal, or vertical if needed */
+    flex-wrap: wrap;
+    justify-content: flex-end;  /* ensure list items stay right */
+  }
+
+  .govuk-header__navigation-item a {
+    margin-left: 0;
+    margin-right: 20px;
+  }
+}
+
+/* --- Hamburger toggle button --- */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* --- Mobile behaviour --- */
+@media (max-width: 768px) {
+  /* Show hamburger, hide links initially */
+  .menu-toggle {
+    display: block;
+  }
+
+  .govuk-header__navigation,
+  .govuk-service-navigation {
+    display: none;
+    width: 100%;
+  }
+
+  /* Show them when active */
+  .govuk-header__navigation.active,
+  .govuk-service-navigation.active {
+    display: block;
+  }
+
+  /* Keep vertical alignment tidy */
+  .govuk-header__navigation-list,
+  .govuk-service-navigation__list {
+    display: block;
+    padding: 10px 20px;
+  }
+
+  .govuk-header__navigation-item,
+  .govuk-service-navigation__link {
+    display: block;
+    padding: 10px 0;
+  }
+}
+</style>
+'),
+    # Hamburger javascript
+    HTML('
+         <script>
+document.addEventListener("DOMContentLoaded", function() {
+  const menuToggle = document.querySelector(".menu-toggle");
+  const headerLinks = document.querySelector(".govuk-header__navigation");
+  const navLinks = document.querySelector(".govuk-service-navigation");
+
+  menuToggle.addEventListener("click", function() {
+    headerLinks.classList.toggle("active");
+    navLinks.classList.toggle("active");
+  });
+});
+</script>
+         '),
+
+    ## 1.4 Navigation bar ####
+    HTML('
+<nav class="govuk-service-navigation desktop-only">
+  <div class="govuk-service-navigation__container">
+    <ul class="govuk-service-navigation__list">
+
+      <li>
+        <a href="#" id="nav_user_guide" class="govuk-service-navigation__link" style="font-size:18px;"
+           onclick="Shiny.setInputValue(\'nav_click\', \'user_guide\', {priority:\'event\'}); return false;">
+          Local skills dashboard
+        </a>
+      </li>
+
+      <li style="margin-left:20px;">
+        <a href="#" id="nav_summary" class="govuk-service-navigation__link"
+           onclick="Shiny.setInputValue(\'nav_click\', \'summary\', {priority:\'event\'}); return false;">
+          Area summary
+        </a>
+      </li>
+
+      <li style="margin-left:20px;">
+        <a href="#" id="nav_local_skills_data" class="govuk-service-navigation__link"
+           onclick="Shiny.setInputValue(\'nav_click\', \'local_skills_data\', {priority:\'event\'}); return false;">
+          Local skills data
+        </a>
+      </li>
+
+      <li style="margin-left:20px;">
+        <a href="#" id="nav_data_download" class="govuk-service-navigation__link"
+           onclick="Shiny.setInputValue(\'nav_click\', \'data_download\', {priority:\'event\'}); return false;">
+          Data download
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+
+<script>
+// JavaScript handler to apply the "active" class
+Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
+  document.querySelectorAll(\'.govuk-service-navigation__link\').forEach(function(link){
+    link.classList.remove(\'active\');
+  });
+  var activeLink = document.getElementById(\'nav_\' + activeId);
+  if (activeLink) activeLink.classList.add(\'active\');
+});
+</script>
+'),
+    tags$style(HTML("
+/* Navigation container */
+.govuk-service-navigation {
+  background-color: white;
+  padding-top: 15px;
+  border-bottom: none;
+}
+
+/* Max width */
+.govuk-service-navigation__container {
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+/* Links styling */
+.govuk-service-navigation__link {
+  color: black !important;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: background-color 0.2s ease;
+}
+
+/* Active link highlight (persists even after clicking elsewhere) */
+.govuk-service-navigation__link.active {
+  background-color: #e6e6e6 !important;
+  color: #000 !important;
+}
+
+/* Override GOVUK yellow highlight */
+.govuk-service-navigation__link:focus {
+    background-color: #e6e6e6;
+    box-shadow: none;
+}
+
+.govuk-service-navigation__link:hover {
+    background-color: #e6e6e6 !important;
+    text-decoration: none;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .govuk-service-navigation__link {
+    display: block;
+    padding-top: 10px;
+  }
+}
+")),
 
     # 2 Main page ----
-    navlistPanel(
+    bslib::navset_hidden(
       id = "navbar",
-      widths = c(2, 10),
-      well = FALSE,
-      selected = "Summary",
+      selected = "user_guide",
 
       ## 2.1 User guide ----
-
-
-      tabPanel(
+      bslib::nav_panel(
         "User guide",
+        value = "user_guide",
         ### 2.1.1 Intro ----
         fluidRow(column(
           12,
-          h1("Local Skills Dashboard"),
+          br(),
           p(
             "The Local Skills dashboard provides published local data from a variety of sources in an easy to navigate format. To support local skills planning, the dashboard covers topics such as employment, qualifications, and education outcomes across England."
           ),
           p(
-            "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, Mayoral Combined Authority (MCA) and national."
+            "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, Combined Authority (CA) and national."
           ),
           p(
             "This dashboard is produced by ",
@@ -387,7 +628,47 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             )
           )
         )),
+        h2("Explore local skills and employment data.", class = "text-center"),
+        br(),
         # end intro text row
+        bslib::layout_column_wrap(
+          width = 1 / 3,
+          class = "text-center mt-5 g-4",
+          card(
+            class = "action-card",
+            style = "cursor:pointer;",
+            onclick = "Shiny.setInputValue('go_summary', Math.random())",
+            card_body(
+              div(class = "icon-circle mb-3", icon("chart-bar")),
+              h4("Area summary", class = "mb-2"),
+              p("Explore key employment and skills data in your area."),
+              tags$button("Go to area summary", class = "btn nav-btn mt-2")
+            )
+          ),
+          card(
+            class = "action-card",
+            style = "cursor:pointer;",
+            onclick = "Shiny.setInputValue('go_skills', Math.random())",
+            card_body(
+              div(class = "icon-circle mb-3", icon("line-chart")),
+              h4("Local skills data", class = "mb-2"),
+              p("Dive deeper with additional metrics and breakdowns."),
+              tags$button("Explore local skills data", class = "btn nav-btn mt-2")
+            )
+          ),
+          card(
+            class = "action-card",
+            style = "cursor:pointer;",
+            onclick = "Shiny.setInputValue('go_download', Math.random())",
+            card_body(
+              div(class = "icon-circle mb-3", icon("download")),
+              h4("Data Download", class = "mb-2"),
+              p("Access, filter and download data for further analysis."),
+              tags$button("Go to data download", class = "btn nav-btn mt-2")
+            )
+          )
+        ),
+        br(),
 
         ### 2.1.2 Contents ----
         fluidRow(column(
@@ -396,34 +677,20 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             class = "panel panel-info",
             div(
               class = "panel-heading",
-              style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
+              style = "color: black;font-size: 18px;font-style: bold; background-color: #c5cdd7; border-color: #c5cdd7;",
               h2("How to use this dashboard")
             ),
             div(
               class = "panel-body",
-              p("Use the navigation bar on the left to select the tab you want to view."),
-              h2("Dashboard structure"),
+              p("Use the navigation bar above to select the tab you want to view, or access further information via the links below."),
+              h2("Dashboard information"),
               tags$ul(
-                tags$li(actionLink("link_to_tabpanel_overview", "Summary"), " - this tab provides a summary of some of the key metrics for the selected geographic area."),
-                tags$li(actionLink("link_to_tabpanel_localskills", "Local skills data"), " - the Local skills data tab provides additional metrics and breakdowns for the selected geographic area."),
-                tags$li(actionLink("link_to_tabpanel_data", "Data sources and Data download"), "- the sources tab includes details on the sources of data used in this dashboard, and the download tab includes options to download some or all of the data."),
-                tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of local labour market and education system."),
+                tags$li(actionLink("link_to_tabpanel_dataSources", "Data sources"), "- includes details on the sources of data used in this dashboard."),
+                tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of the local labour market and education system."),
                 tags$li(actionLink("link_to_tabpanel_accessibility", "Accessibility"), "- provides the Local Skills dashboard accessibility statement, compliance requirmeents, limitations and opportunity to feedback on accessibility of the dashboard."),
                 tags$li(actionLink("link_to_tabpanel_supportandfeedback", "Support and feedback"), " - provides links to the Skills England and Department for Education Statistics Development inboxes for feedback and if you hve any questions about the dashboard or the data it contains. There is also a link to the GitHub repository if you wish to view the dashboard source code.")
               ),
               h2("Local skills metrics"),
-              p(
-                "Where published figures are not available, area totals for LSIP or MCA are either taken from a matching geographical area or are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
-              ),
-              p(
-                "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS ",
-                a(
-                  href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
-                  "article",
-                  .noWS = c("after")
-                ),
-                "."
-              ),
               h3(actionLink(
                 "link_to_tabpanel_localskills2", "Local skills data"
               )),
@@ -440,36 +707,42 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
                 "link_to_tabpanel_employment", "Employment"
               )),
               p(
-                "This group of metrics provide information on employment, self-employment and inactivity for the selected geographic area including data on employment rates over time, the share of employment by occupation, and the share of employment by industry."
+                "This group of metrics provide information on employment, self-employment and inactivity, as well as their rates, with breakdowns by occupation and industry."
               ),
               h3(
                 actionLink("link_to_tabpanel_vacancies", "Jobs")
               ),
               p(
-                "This is an experimental metric of online job advert data, split by SOC2020 Sub-Major groups, for the selected geographic area, and the option to compare against another area in England at the same geographic level. "
+                "This group of metrics provide information on online job adverts data and employment projections, with breakdowns by occupation, industry, broad sector and qualification."
               ),
               h3(actionLink(
                 "link_to_tabpanel_enterprise", "Businesses"
               )),
               p(
-                "This group of metrics provide data on the count of new and no longer trading enterprises and count of enterprises by employment size and industry for the selected geographic area, and the option to compare against another area in England at the same geographic level."
+                "This group of metrics provide information on business counts and business birth and death rates, with breakdowns by employment size and industry."
               ),
               h3(actionLink("link_to_tabpanel_FE", "Skills")),
               p(
-                "This group of metrics provide information on training activity for the selected geographic area including data on achievements for further education and skills training, with breakdowns for type of training over time and subject area for the latest time period."
+                "This group of metrics provide information on further education achievements and participation, as well as qualifications at level 3, level 4 and above, with breakdowns by level, age, subject area, provision and gender."
               ),
               h3(actionLink(
                 "link_to_tabpanel_destinations", "Destinations"
               )),
               p(
-                "These two metrics provide information on the destinations of young people after Key Stage 4 and Key Stage 5 education for the selected geographic area.
-                It includes data on destinations, with breakdowns by level and key stage group."
+                "These two metrics provide information on the destinations of learners after Key Stage 4 and Key Stage 5 education, with breakdowns by outcome."
               ),
-              h3(actionLink(
-                "link_to_tabpanel_wf1", "Employment projections"
-              )),
+              h3("Data notices"),
               p(
-                "Projected employment growth until 2035. Sector, industry, occupation and qualification projected growths are available. LA level data is not available for this dataset."
+                "Where published figures are not available, area totals for LSIP or MCA are either taken from a matching geographical area or are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
+              ),
+              p(
+                "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS ",
+                a(
+                  href = "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/articles/theimpactofmiscodingofoccupationaldatainofficefornationalstatisticssocialsurveysuk/2022-09-26",
+                  "article",
+                  .noWS = c("after")
+                ),
+                "."
               )
             )
           )
@@ -483,20 +756,27 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
             class = "panel panel-info",
             div(
               class = "panel-heading",
-              style = "color: white;font-size: 18px;font-style: bold; background-color: #1d70b8;",
+              style = "color: black;font-size: 18px;font-style: bold; background-color: #c5cdd7; border-color: #c5cdd7;",
               h2("Update history")
             ),
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("30 Sep 2025 (1.6.1)"),
+              p("28 Oct 2025 (1.6.2)"),
               tags$ul(
-                tags$li("Add dynamic URLs.")
+                tags$li("Rebrand to Skills England layout."),
+                tags$li("Update business count data to March 2025."),
+                tags$li("Update destinations data AY23/24. There has been a change to this data: 'The rules that determine if a student is at the end of 16-18 study changed for the 2021 and 2022 cohort of leavers compared to earlier years.  In previous releases this caused a discontinuity in the time series.  For this statistical release we have recalculated the data from 2016/17 cohort onwards on a consistent basis so all students are deemed to be at the end of 16-18 study using the new rules.  This ensures a consistent timeseries in the statistical release.  Full details of the change are covered in the methodology document'."),
+                tags$li("Update to latest APS data.")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("30 Sep 2025 (1.6.1)"),
+                  tags$ul(
+                    tags$li("Add dynamic URLs.")
+                  ),
                   p("19 Sep 2025 (1.6.0)"),
                   tags$ul(
                     tags$li("Update to latest LSIP geographies."),
@@ -739,64 +1019,68 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       summaryTab(),
 
       ## 2.3 Local skills ----
-      tabPanel(
+      bslib::nav_panel(
         "Local skills data",
+        value = "local_skills_data",
         br(),
         ### 2.3.1 Filters ----
-        fluidRow(
-          column(
-            5,
-            selectizeInput(
-              "geoChoice",
-              multiple = FALSE,
-              label = "Choose an LSIP, CA or England",
-              choices = areaChoices[1:3],
-              options = list(
-                persist = TRUE, # keep selected value
-                create = FALSE, # disallow new values
-                onDelete = I("function(values) { return false; }")
+        div(
+          class = "filterRow",
+          fluidRow(
+            column(
+              5,
+              selectizeInput(
+                "geoChoice",
+                multiple = FALSE,
+                label = "Choose an LSIP, CA or England",
+                choices = areaChoices[1:3],
+                options = list(
+                  persist = TRUE, # keep selected value
+                  create = FALSE, # disallow new values
+                  onDelete = I("function(values) { return false; }")
+                )
+              ),
+              selectizeInput(
+                "geoComps",
+                multiple = TRUE,
+                label = NULL,
+                choices = areaChoices,
+                options = list(
+                  maxItems = 7,
+                  placeholder = "Comparison areas (LA/LSIP/CA/National"
+                )
               )
             ),
-            selectizeInput(
-              "geoComps",
-              multiple = TRUE,
-              label = NULL,
-              choices = areaChoices,
-              options = list(
-                maxItems = 7,
-                placeholder = "Comparison areas (LA/LSIP/CA/National"
+            column(
+              5,
+              selectizeInput(
+                inputId = "splashMetric",
+                choices = metricChoices,
+                multiple = FALSE,
+                label = "What are you interested in?",
+                options = list(
+                  persist = TRUE, # keep selected value
+                  create = FALSE, # disallow new values
+                  onDelete = I("function(values) { return false; }")
+                )
+              ),
+              hidden(
+                div(
+                  id = "breakdownPage_wrapper",
+                  selectInput("breakdownPage", "Limit to subgroup:", choices = "")
+                )
+              ),
+              hidden(
+                div(
+                  id = "subgroupPage_wrapper",
+                  selectInput("subgroupPage", "Subgroup:", choices = "")
+                )
               )
+            ),
+            column(
+              2,
+              uiOutput("screenshotFile")
             )
-          ),
-          column(
-            5,
-            selectizeInput(
-              inputId = "splashMetric",
-              choices = metricChoices,
-              multiple = FALSE,
-              label = "What are you interested in?",
-              options = list(
-                persist = TRUE, # keep selected value
-                create = FALSE, # disallow new values
-                onDelete = I("function(values) { return false; }")
-              )
-            ),
-            hidden(
-              div(
-                id = "breakdownPage_wrapper",
-                selectInput("breakdownPage", "Limit to subgroup:", choices = "")
-              )
-            ),
-            hidden(
-              div(
-                id = "subgroupPage_wrapper",
-                selectInput("subgroupPage", "Subgroup:", choices = "")
-              )
-            )
-          ),
-          column(
-            2,
-            uiOutput("screenshotFile")
           )
         ),
         fluidRow(
@@ -907,8 +1191,9 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       ),
 
       ## 2.5 Data information ----
-      tabPanel(
+      bslib::nav_panel(
         "Data sources",
+        value = "data_sources",
         ### 2.5.1 Data sources table ----
         fluidRow(column(
           12,
@@ -916,6 +1201,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
           dataTableOutput("DataTbl"),
           uiOutput("hidden_downloads")
         )),
+        HTML("<p>*ONS have temporarily paused publication of the snapshot metric for online job adverts so the latest data available covers up to July 2025. More up to date data on new adverts is still available directly from the  <a href='https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk'>ONS website</a>.</p>"),
         # end of data table row
         ### 2.5.2 Data details text ----
         fluidRow(
@@ -1084,57 +1370,60 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
         )
       ),
       ## 2.4 Download hub ----
-      tabPanel(
-        "Data download (experimental)",
+      bslib::nav_panel(
+        "Data download",
+        value = "data_download",
         fluidRow(column(
           12,
-          h1("Data download"),
           p(
             "Use the filters to create a bespoke dataset. * fields are mandatory."
             # Once you have set your filters, make a note of your unique code and you can recreate your filters whenever you want."
           )
         )),
         ### 2.4.1 Datahub filters ----
-        fluidRow(column(12, h2("Geography"))),
-        fluidRow(
-          column(
-            4,
-            uiOutput("hubAreaInput")
-          ),
-          column(
-            4,
-            selectizeInput(
-              "hubLA",
-              choices = c("Yes", "No"),
-              label = NULL,
-              multiple = TRUE,
-              options = list(maxItems = 1, placeholder = "Include LA level data?")
+        div(
+          class = "filterRow",
+          fluidRow(column(12, h4("Geography"))),
+          fluidRow(
+            column(
+              4,
+              uiOutput("hubAreaInput")
+            ),
+            column(
+              4,
+              selectizeInput(
+                "hubLA",
+                choices = c("Yes", "No"),
+                label = NULL,
+                multiple = TRUE,
+                options = list(maxItems = 1, placeholder = "Include LA level data?")
+              )
+            ),
+            column(
+              4,
+              selectizeInput(
+                "hubComparators",
+                label = NULL,
+                choices = c("National"),
+                multiple = TRUE,
+                options = list(placeholder = "Include national data?")
+              )
             )
           ),
-          column(
-            4,
-            selectizeInput(
-              "hubComparators",
-              label = NULL,
-              choices = c("National"),
-              multiple = TRUE,
-              options = list(placeholder = "Include national data?")
+          fluidRow(column(12, h4("Data"))),
+          fluidRow(
+            column(
+              4,
+              uiOutput("hubMetricInput")
+            ),
+            column(
+              4,
+              uiOutput("hubBreakdownInput")
+            ),
+            column(
+              4,
+              uiOutput("hubYearInput")
             )
-          )
-        ),
-        fluidRow(column(12, h2("Data"))),
-        fluidRow(
-          column(
-            4,
-            uiOutput("hubMetricInput")
-          ),
-          column(
-            4,
-            uiOutput("hubBreakdownInput")
-          ),
-          column(
-            4,
-            uiOutput("hubYearInput")
           )
         ),
         fluidRow(column(12, h2("Output"))),
@@ -1157,8 +1446,9 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
       ),
 
       ## 2.6 FE interventions and sources ----
-      tabPanel(
+      bslib::nav_panel(
         "Further resources",
+        value = "further_resources",
         fluidRow(
           column(
             12,
@@ -1195,8 +1485,8 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
         br()
       ),
       ## 2.8 Accessibility ----
-      tabPanel(
-        "Accessibility",
+      bslib::nav_panel(
+        "accessibility",
         fluidRow(
           column(
             width = 12,
@@ -1251,17 +1541,17 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
       ),
       # End of accessibility tab
 
-      ## 2.9 Support ----
-      tabPanel(
-        "Cookie information",
+      ## 2.9 Cookies ----
+      bslib::nav_panel(
+        "cookie_information",
         dfeshiny::cookies_panel_ui(
           id = "cookies_panel",
           google_analytics_key = google_analytics_key
         )
       ),
       ## 2.10 Support ----
-      tabPanel(
-        "Support and feedback",
+      bslib::nav_panel(
+        "support_and_feedback",
         dfeshiny::support_panel(
           team_email = "skills.england@education.gov.uk",
           repo_name = "https://github.com/dfe-analytical-services/lsip_dashboard",
@@ -1273,6 +1563,23 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
     # End of navBarPage
     # 3 Footer ----
 
-    shinyGovstyle::footer(TRUE)
+    shinyGovstyle::footer(TRUE, links = c(
+      `Accessibility statement` = "accessibility_footer_link",
+      `Cookies` = "cookies_footer_link",
+      `Support and feedback` = "support_footer_link"
+    )),
+    # CSS for footer
+    tags$style(HTML("
+
+/* --- Add some left and right padding --- */
+    .govuk-footer {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .govuk-width-container {
+    max-width: 1200px !important;
+    margin-left: auto;
+    margin-right: auto;
+    "))
   )
 }
