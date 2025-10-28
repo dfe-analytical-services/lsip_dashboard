@@ -1139,7 +1139,8 @@ server <- function(input, output, session) {
   # create subheading
   output$subheading <- renderUI({
     req(input$geoChoice)
-    paste0(
+    HTML(paste0(
+      "<p>",
       (I_DataText %>% filter(metric == input$splashMetric))$subheading,
       if (input$geoChoice == "Dorset LSIP" & input$splashMetric == "employmentProjection") {
         " The data presented here for Dorset LSIP is correct, however for the Skills Imperative data, it does not match the published data. We are working to update the published data. "
@@ -1157,8 +1158,9 @@ server <- function(input, output, session) {
         " London wide data is available by choosing the Greater London Authority under Combined authorities."
       } else if (input$geoChoice == "Greater London Authority CA") {
         " Data is available for 4 sub London areas as well. These can be chosen from the area filter under LSIPs."
-      }
-    )
+      },
+      "</p>"
+    ))
   })
 
   # create data source
