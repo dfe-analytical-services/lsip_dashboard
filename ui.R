@@ -1201,7 +1201,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
           dataTableOutput("DataTbl"),
           uiOutput("hidden_downloads")
         )),
-        p("*The online job advert data for August did not contain the snapshot data used in this dashboard. The dashboard will be updated when the snapshot data is released."),
+        HTML("<p>*ONS have temporarily paused publication of the snapshot metric for online job adverts so the latest data available covers up to July 2025. More up to date data on new adverts is still available directly from the  <a href='https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk'>ONS website</a>.</p>"),
         # end of data table row
         ### 2.5.2 Data details text ----
         fluidRow(
