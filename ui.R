@@ -762,17 +762,21 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("28 Oct 2025 (1.6.2)"),
+              p("13 Nov 2025 (1.6.3)"),
               tags$ul(
-                tags$li("Rebrand to Skills England layout."),
-                tags$li("Update business count data to March 2025."),
-                tags$li("Update destinations data AY23/24. There has been a change to this data: 'The rules that determine if a student is at the end of 16-18 study changed for the 2021 and 2022 cohort of leavers compared to earlier years.  In previous releases this caused a discontinuity in the time series.  For this statistical release we have recalculated the data from 2016/17 cohort onwards on a consistent basis so all students are deemed to be at the end of 16-18 study using the new rules.  This ensures a consistent timeseries in the statistical release.  Full details of the change are covered in the methodology document'."),
-                tags$li("Update to latest APS data.")
+                tags$li("Correction to online job adverts occupational breakdowns for England. Previous version did not include data for London in England rates.")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("28 Oct 2025 (1.6.2)"),
+                  tags$ul(
+                    tags$li("Rebrand to Skills England layout."),
+                    tags$li("Update business count data to March 2025."),
+                    tags$li("Update destinations data AY23/24. There has been a change to this data: 'The rules that determine if a student is at the end of 16-18 study changed for the 2021 and 2022 cohort of leavers compared to earlier years.  In previous releases this caused a discontinuity in the time series.  For this statistical release we have recalculated the data from 2016/17 cohort onwards on a consistent basis so all students are deemed to be at the end of 16-18 study using the new rules.  This ensures a consistent timeseries in the statistical release.  Full details of the change are covered in the methodology document'."),
+                    tags$li("Update to latest APS data.")
+                  ),
                   p("30 Sep 2025 (1.6.1)"),
                   tags$ul(
                     tags$li("Add dynamic URLs.")
