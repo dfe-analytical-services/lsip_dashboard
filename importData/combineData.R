@@ -96,18 +96,34 @@ C_breakdown <- bind_rows(
     select(geogConcat, metric, breakdown, subgroup, value) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
     filter(breakdown != "Provision") %>%
-    # get totals for the denominator
+    # get totals for the denominator (except vacancies)
     left_join(
       C_localSkillsDataset %>%
         filter(
           breakdown == "Total", subgroup == "Total", latest == 1,
-          metric %in% c("vacancies", "enterpriseCount", "achievements", "achievementsAims", "participation", "starts")
+          metric %in% c("enterpriseCount", "achievements", "achievementsAims", "participation", "starts")
         ) %>%
         # add on the 16 plus totals
         bind_rows(F_emp16plus %>%
                     filter(
                       breakdown == "Total", subgroup == "Total", latest == 1
                     )) %>%
+        # Add on vacancies totals
+        # Sum of breakdowns differs to published total for some geographies
+          # So these total need to be derived from the sum of breakdowns
+        bind_rows(
+          C_localSkillsDataset %>%
+            filter(
+              breakdown == "Occupation (SOC2020 Sub-Major Group)", latest == 1,
+              metric %in% c("vacancies")
+            ) %>%
+            group_by(geogConcat) %>% 
+            mutate(value = sum(value),
+                   valueText = as.character(value),
+                   breakdown = "Total",
+                   subgroup = "Total") %>% 
+            distinct()
+        ) %>%
         select(geogConcat, metric, total = value)
     ) %>%
     ## add in provision split as the sub groups include under 19 apps where the total doesn't
