@@ -86,9 +86,10 @@ folder <- "2-12_OnsProf"
    summarise(value=sum(as.numeric(value))) %>%
    mutate(value = as.character(value)) # so we can merge
  
- # get england soc stats summed from LSIPs
+ # get england soc stats summed from LSIPs, plus GLA for London (as no london LSIPs)
  SOC2digitEngland<-geogsSummed %>%
-   filter(stringr::str_sub(geogConcat, -4, -1)=="LSIP",is.na(SOC2digit)==FALSE )%>%
+   filter((stringr::str_sub(geogConcat, -4, -1)=="LSIP" | 
+             geogConcat == "Greater London Authority CA"),is.na(SOC2digit)==FALSE )%>%
    group_by(SOC2digit, time_period) %>%
    summarise(value = as.character(sum(as.numeric(value), na.rm = T))) %>%
    mutate(geogConcat = "England")
