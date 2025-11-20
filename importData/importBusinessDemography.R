@@ -6,33 +6,33 @@ firstRow <- 4
 
 # births
 sheet <- "Table 1.1a"
-I_births_ONS1618 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 1.1b"
 I_births_ONS19 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 1.1c"
+sheet <- "Table 1.1b"
 I_births_ONS20 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
+sheet <- "Table 1.1c"
+I_births_ONS2123 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 sheet <- "Table 1.1d"
-I_births_ONS21 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
+I_births_ONS24 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 
 # deaths
 sheet <- "Table 2.1a"
-I_deaths_ONS1618 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 2.1b"
 I_deaths_ONS19 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 2.1c"
+sheet <- "Table 2.1b"
 I_deaths_ONS20 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
+sheet <- "Table 2.1c"
+I_deaths_ONS2123 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 sheet <- "Table 2.1d"
-I_deaths_ONS21 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
+I_deaths_ONS24 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 
 # active
 sheet <- "Table 3.1a"
-I_active_ONS1618 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 3.1b"
 I_active_ONS19 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 3.1c"
+sheet <- "Table 3.1b"
 I_active_ONS20 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
+sheet <- "Table 3.1c"
+I_active_ONS2123 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 sheet <- "Table 3.1d"
-I_active_ONS21 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
+I_active_ONS24 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
 
 formatBusiness <- function(x, y) {
   colnames(x)[1] <- "areaCode"
@@ -52,18 +52,18 @@ formatBusiness <- function(x, y) {
 businessesWithAreas <-
   # combine all datasets
   bind_rows(
-    formatBusiness(I_births_ONS1618, "births"),
     formatBusiness(I_births_ONS19, "births"),
     formatBusiness(I_births_ONS20, "births"),
-    formatBusiness(I_births_ONS21, "births"),
-    formatBusiness(I_deaths_ONS1618, "deaths"),
+    formatBusiness(I_births_ONS2123, "births"),
+    formatBusiness(I_births_ONS24, "births"),
     formatBusiness(I_deaths_ONS19, "deaths"),
     formatBusiness(I_deaths_ONS20, "deaths"),
-    formatBusiness(I_deaths_ONS21, "deaths"),
-    formatBusiness(I_active_ONS1618, "active"),
+    formatBusiness(I_deaths_ONS2123, "deaths"),
+    formatBusiness(I_deaths_ONS24, "deaths"),
     formatBusiness(I_active_ONS19, "active"),
     formatBusiness(I_active_ONS20, "active"),
-    formatBusiness(I_active_ONS21, "active")
+    formatBusiness(I_active_ONS2123, "active"),
+    formatBusiness(I_active_ONS24, "active")
   ) %>%
   # add dates
   mutate(timePeriod = as.Date(paste("01", "Jan", chartPeriod, sep = " "), format = "%d %b %Y")) %>%
