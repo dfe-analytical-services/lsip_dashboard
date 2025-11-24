@@ -762,7 +762,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("20 Nov 2025 (1.6.4)"),
+              p("24 Nov 2025 (1.6.4)"),
               tags$ul(
                 tags$li("Update to latest business demography data.")
               ),
