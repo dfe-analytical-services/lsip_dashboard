@@ -762,14 +762,18 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("13 Nov 2025 (1.6.3)"),
+              p("24 Nov 2025 (1.6.4)"),
               tags$ul(
-                tags$li("Correction to online job adverts occupational breakdowns for England. Previous version did not include data for London in England rates.")
+                tags$li("Update to latest business demography data.")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("13 Nov 2025 (1.6.3)"),
+                  tags$ul(
+                    tags$li("Correction to online job adverts occupational breakdowns for England. Previous version did not include data for London in England rates.")
+                  ),
                   p("28 Oct 2025 (1.6.2)"),
                   tags$ul(
                     tags$li("Rebrand to Skills England layout."),
