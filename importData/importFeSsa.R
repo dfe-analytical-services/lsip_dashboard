@@ -48,10 +48,10 @@ groupedStats <- feSsaWithAreas %>%
   filter(newArea == 1) %>% # no need to group national or LAs that haven't changed
   ungroup() %>%
   select(-newArea) %>%
-  mutate_at(vars(achievements, enrolments), safe_numeric) %>% # Convert to numeric
+  mutate_at(vars(aim_achievements, enrolments), safe_numeric) %>% # Convert to numeric
   group_by(chartPeriod, timePeriod, latest, geogConcat, subgroup, breakdown) %>% # sum for each geography
   summarise(across(everything(), \(x) sum(x, na.rm = TRUE))) %>%
-  mutate(achievements = as.character(achievements), enrolments = as.character(enrolments))
+  mutate(aim_achievements = as.character(aim_achievements), enrolments = as.character(enrolments))
 
 # add back on original LADUs and CAs and format
 C_FeSsa <- bind_rows(
@@ -65,7 +65,7 @@ C_FeSsa <- bind_rows(
     mutate(geogConcat=paste0(area," CA"))
 ) %>%
   select(-geographic_level,-areaCode,-area,-newArea) %>%
-  rename(achievementsAims = achievements, enrolmentsAims = enrolments) %>%
+  rename(achievementsAims = aim_achievements, enrolmentsAims = enrolments) %>%
   # make long
   tidyr::pivot_longer(!c("geogConcat", "timePeriod", "chartPeriod", "latest", "breakdown", "subgroup"),
                       names_to = "metric",

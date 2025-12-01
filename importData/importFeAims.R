@@ -1,7 +1,25 @@
 ### 2.2.2 Achievements/starts/part by LAD and provision, level and age------------
 ## Download "Further education and skills geography - detailed summary " from https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22
+
+###  DO ONCE ON RELEASE OF DATA, THEN IGNORE ###
+
+# Read original csv file
+#folder <- "2-8_ILRach"
+#I_FeProvLevelAge <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+
+# Save a copy as RDS
+#saveRDS(I_FeProvLevelAge, paste0("./Data/", folder, "/", gsub(".csv", ".RDS", list.files(path = paste0("./Data/", folder)))))
+
+# Remove the csv copy
+#file.remove(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder), pattern = "*.csv")))
+
+# Remove the R object, to ensure code runs correctly
+#rm(I_FeProvLevelAge)
+
+#################################################
+
 folder <- "2-8_ILRach"
-I_FeProvLevelAge <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+I_FeProvLevelAge <- readRDS(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
 
 # tidy up data
 F_FeProvLevelAge <- I_FeProvLevelAge %>%
@@ -9,7 +27,8 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
   filter(
     geographic_level %in% c("Local authority district", "National", "Local skills improvement plan area","English devolved area"), # just keep area used
     # keep only the combinations shown in dashboard
-    (((provision_type == "Further education and skills" | stringr::str_sub(level_or_type, -5, -1) == "Total") & age_summary == "Total") | level_or_type == "Further education and skills: Total"),
+    (((provision_type == "Further education and skills" | stringr::str_sub(level_or_type, -5, -1) == "Total") & age_summary == "Total" & regulated_status == "Total") | 
+       level_or_type == "Further education and skills: Total"),
     lad_code != "z" # ignore Outside of England and unknown
   ) %>%
   mutate(area = case_when(
@@ -35,7 +54,10 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
   )) %>%
   #filter to last 5 years
   filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
-  select(-time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name, -local_enterprise_partnership_code, -local_enterprise_partnership_name, -lsip_code, -lsip_name)
+  #rename cols
+  rename(achievements = learner_achievements, achievements_rate_per_100000_population = learner_achievements_rate_per_100000_population) %>% 
+  #remove unused cols
+  select(-regulated_status, -time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name, -local_enterprise_partnership_code, -local_enterprise_partnership_name, -lsip_code, -lsip_name)
 
 # add on new LADUs/LSIP/CA areas
 feWithAreas <- addGeogs(F_FeProvLevelAge)
@@ -43,11 +65,7 @@ feWithAreas <- addGeogs(F_FeProvLevelAge)
 # Get LSIP and CA groups (ILR now publish at that level). 
 # Here we get those LSIPs and CAs which have stayed consistent across the years so we can use the published data throughout
 feLsipsCas <- F_FeProvLevelAge %>%
-  filter((geographic_level == "Local skills improvement plan area" &
-            #The geographical area of these LSIPs have changed over time (or have been removed) so we ignore them here and calculate from LAs later
-            !area %in% c("Greater London","Heart of the South-West","Greater Lincolnshire","Enterprise M3","Solent",
-                         "Leicester and Leicestershire","North East","North of Tyne","West Midlands and Warwickshire")
-  )
+  filter(geographic_level == "Local skills improvement plan area" 
          | (geographic_level == "English devolved area" &
               area %in% c("Cambridgeshire and Peterborough",
                           "Greater London Authority",
@@ -66,26 +84,12 @@ feLsipsCas <- F_FeProvLevelAge %>%
     ),
     newArea = 0
   ) %>%
-  select(-geographic_level, -area, -areaCode)%>%
-  #Change the name of some LSIPs
-  mutate(geogConcat = case_when(
-    geogConcat == "Derbyshire and Nottinghamshire LSIP" ~ "East Midlands LSIP",
-    geogConcat == "G First (Gloucestershire) LSIP" ~ "Gloucestershire LSIP",
-    geogConcat == "Essex, Southend-on-Sea and Thurrock LSIP" ~ "Greater Essex LSIP",
-    geogConcat == "New Anglia LSIP" ~ "Norfolk and Suffolk LSIP",
-    geogConcat == "Brighton and Hove, East Sussex, West Sussex LSIP" ~ "Sussex and Brighton LSIP",
-    TRUE ~ geogConcat
-  ))
+  select(-geographic_level, -area, -areaCode)
 
 # group up all the stats for combined areas (including the new LAs)
 groupedStats <- feWithAreas %>%
   filter(newArea == 1 # areas that have been calculated
          & (stringr::str_sub(geogConcat, -4, -1) == "LADU" | # lads that have changed over time
-              #LSIPs that have changed their geography
-              geogConcat %in% c("Central London Forward LSIP", "Greater Devon LSIP","Greater Lincolnshire LSIP",
-                                "Hampshire and the Solent LSIP", "Leicester, Leicestershire and Rutland LSIP",
-                                "Local London LSIP", "North East LSIP","Somerset LSIP","South London Partnership LSIP",
-                                "Surrey LSIP","Warwickshire LSIP","West London Alliance LSIP","West Midlands LSIP") |
               # CAs that have changed their geography over time or are newly formed
               geogConcat %in% c(
                 "East Midlands CA",
@@ -94,8 +98,8 @@ groupedStats <- feWithAreas %>%
                 "York and North Yorkshire CA",
                 "Devon and Torbay CA", "Greater Lincolnshire CA", "Hull and East Yorkshire CA", "Lancashire CA"
               ) |
-              # since the ilr only publish the latest 2 years lsip we need to calculate the history of those as well
-              (stringr::str_sub(geogConcat, -4, -1) == "LSIP" & !(chartPeriod %in% c("AY22/23","AY23/24")))
+              # since the ilr only publish the latest 3 years lsip we need to calculate the history of those as well
+              (stringr::str_sub(geogConcat, -4, -1) == "LSIP" & !(chartPeriod %in% c("AY22/23","AY23/24", "AY24/25")))
          )) %>%
   ungroup() %>%
   select(-newArea, -achievements_rate_per_100000_population, -starts_rate_per_100000_population, -participation_rate_per_100000_population) %>%
@@ -138,4 +142,6 @@ C_FeProvLevelAge <- bind_rows(
                       names_to = "metric",
                       values_to = "valueText"
   ) %>%
-  mutate(value = safe_numeric(valueText))
+  mutate(value = safe_numeric(valueText)) %>% 
+  # Remove invalid value text for NA values, e.g. Inf, NaN, z
+  mutate(valueText = ifelse(is.na(value), "NA", valueText))
