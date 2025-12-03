@@ -1,5 +1,6 @@
 ### 2.2.2 Achievements/starts/part by LAD and provision, level and age------------
-## Download "Further education and skills geography - detailed summary " from https://explore-education-statistics.service.gov.uk/data-catalogue/further-education-and-skills/2021-22
+## Download "Geography Region, LA, LAD, PCON - Participation, Achievement by provision type (rates per 100,000 population)" 
+## From https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills/2024-25
 
 ###  DO ONCE ON RELEASE OF DATA, THEN IGNORE ###
 
