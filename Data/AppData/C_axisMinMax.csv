@@ -18,52 +18,52 @@
 "L4PlusRateGenderFemales",0.320110701107011,0.680616174582798
 "L4PlusRateGenderMales",0.271812080536913,0.697739618012967
 "achievements",7200,1252510
-"achievementsAge19-24",1400,260550
+"achievementsAge19-24",1520,272540
 "achievementsAge25+",5140,991710
 "achievementsAgeUnknown",NA,NA
-"achievementsLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",650,295680
-"achievementsLevelFurther education and skills: Essential Skills - English and maths",930,294330
-"achievementsLevelFurther education and skills: Full Level 2",280,64700
-"achievementsLevelFurther education and skills: Full Level 3",640,105180
-"achievementsLevelFurther education and skills: Level 2",2200,381500
-"achievementsLevelFurther education and skills: Level 3",770,159400
-"achievementsLevelFurther education and skills: Level 4+",180,64560
-"achievementsLevelFurther education and skills: No Level Assigned",1040,374370
-"achievementsProvisionApprenticeships",1000,178220
-"achievementsProvisionCommunity Learning",930,326940
-"achievementsProvisionEducation and training",3430,783410
-"achievementsSSAAgriculture, Horticulture and Animal Care",80,17930
-"achievementsSSAArts, Media and Publishing",110,42230
-"achievementsSSABusiness, Administration and Law",640,91050
-"achievementsSSAConstruction, Planning and the Built Environment",230,70100
-"achievementsSSAEducation and Training",150,31600
-"achievementsSSAEngineering and Manufacturing Technologies",60,52580
-"achievementsSSAHealth, Public Services and Care",1290,206150
+"achievementsLevelFurther education and skills: Entry level",340,260930
+"achievementsLevelFurther education and skills: Full level 2",200,57370
+"achievementsLevelFurther education and skills: Full level 3",640,103080
+"achievementsLevelFurther education and skills: Level 1",720,224740
+"achievementsLevelFurther education and skills: Level 2",2290,381500
+"achievementsLevelFurther education and skills: Level 3",770,178770
+"achievementsLevelFurther education and skills: Level 4+",260,76890
+"achievementsLevelFurther education and skills: No level assigned",1040,392360
+"achievementsProvisionApprenticeships",1140,198330
+"achievementsProvisionEducation and training",5400,1030480
+"achievementsProvisionTailored learning",1720,336500
+"achievementsSSAAgriculture, Horticulture and Animal Care",70,16790
+"achievementsSSAArts, Media and Publishing",70,20530
+"achievementsSSABusiness, Administration and Law",640,83690
+"achievementsSSAConstruction, Planning and the Built Environment",230,73130
+"achievementsSSADigital Technology",190,65880
+"achievementsSSAEducation and Training",170,35510
+"achievementsSSAEngineering and Manufacturing Technologies",150,63980
+"achievementsSSAHealth, Public Services and Care",1560,194190
 "achievementsSSAHistory, Philosophy and Theology",NA,NA
-"achievementsSSAInformation and Communication Technology",200,69820
-"achievementsSSALanguages, Literature and Culture",70,24060
-"achievementsSSALeisure, Travel and Tourism",40,12680
-"achievementsSSANot Applicable/ Not Known",140,41790
-"achievementsSSAPreparation for Life and Work",2050,758450
-"achievementsSSARetail and Commercial Enterprise",270,66640
-"achievementsSSAScience and Mathematics",100,26950
-"achievementsSSASocial Sciences",0,1920
-"achievementsTotalTotal",7840,1514280
-"achievements_rate_per_100000_population",2090.28374569841,6243
-"achievements_rate_per_100000_populationAge19-24",3004,13405
-"achievements_rate_per_100000_populationAge25+",1691.94712171486,5382
+"achievementsSSALanguages, Literature and Culture",50,20480
+"achievementsSSALeisure, Travel and Tourism",30,9400
+"achievementsSSANot Applicable/ Not Known",3070,626390
+"achievementsSSAPreparation for Life and Work",1820,674190
+"achievementsSSARetail and Commercial Enterprise",280,74170
+"achievementsSSAScience and Mathematics",100,26000
+"achievementsSSASocial Sciences",0,1870
+"achievementsTotalTotal",10240,1986480
+"achievements_rate_per_100000_population",2134.76342391944,6221
+"achievements_rate_per_100000_populationAge19-24",3007,13266
+"achievements_rate_per_100000_populationAge25+",1691.94712171486,5368
 "achievements_rate_per_100000_populationAgeUnknown",NA,NA
-"achievements_rate_per_100000_populationLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",190.153556310319,1752
-"achievements_rate_per_100000_populationLevelFurther education and skills: Essential Skills - English and maths",328.348091344321,1487.21720645646
-"achievements_rate_per_100000_populationLevelFurther education and skills: Full Level 2",68.6792971164507,465.643198060199
-"achievements_rate_per_100000_populationLevelFurther education and skills: Full Level 3",154.072380103345,514
+"achievements_rate_per_100000_populationLevelFurther education and skills: Entry level",111.506485413968,1379
+"achievements_rate_per_100000_populationLevelFurther education and skills: Full level 2",39,431.97367501604
+"achievements_rate_per_100000_populationLevelFurther education and skills: Full level 3",108,514
+"achievements_rate_per_100000_populationLevelFurther education and skills: Level 1",202.205328755749,1583
 "achievements_rate_per_100000_populationLevelFurther education and skills: Level 2",446,2593
-"achievements_rate_per_100000_populationLevelFurther education and skills: Level 3",222.725470022589,883
-"achievements_rate_per_100000_populationLevelFurther education and skills: Level 4+",43.4495778511432,232.76981154598
-"achievements_rate_per_100000_populationLevelFurther education and skills: No Level Assigned",260.132992992667,1940.79150732599
-"achievements_rate_per_100000_populationProvisionApprenticeships",173.724031731737,810
-"achievements_rate_per_100000_populationProvisionCommunity Learning",204.089246252329,1573
-"achievements_rate_per_100000_populationProvisionEducation and training",959.874928871543,4742
+"achievements_rate_per_100000_populationLevelFurther education and skills: Level 3",226.009259272421,941
+"achievements_rate_per_100000_populationLevelFurther education and skills: Level 4+",66.8940579898772,288
+"achievements_rate_per_100000_populationLevelFurther education and skills: No level assigned",260.132992992667,1930.87086889189
+"achievements_rate_per_100000_populationProvisionApprenticeships",194.053478078217,810
+"achievements_rate_per_100000_populationProvisionEducation and training",1561,5475
+"achievements_rate_per_100000_populationProvisionTailored learning",389,1714
 "birthRate",0.072972972972973,0.124654864382004
 "deathRate",0.0669328769728085,0.162919008952738
 "employmentProjection",0.00198127112003949,0.0112500180868454
@@ -138,23 +138,23 @@
 "employmentProjectionQualificationRQF6 First degree",-0.00982297886682659,0.031393486849192
 "employmentProjectionQualificationRQF7 Other higher degree",0.0126128060637572,0.0603723274349088
 "employmentProjectionQualificationRQF8 Doctorate",0.015990754398624,0.0595853507680592
-"enrolmentsAims",10380,1910840
-"enrolmentsAimsSSAAgriculture, Horticulture and Animal Care",80,22090
-"enrolmentsAimsSSAArts, Media and Publishing",130,48480
-"enrolmentsAimsSSABusiness, Administration and Law",880,118080
-"enrolmentsAimsSSAConstruction, Planning and the Built Environment",300,83600
-"enrolmentsAimsSSAEducation and Training",200,40510
-"enrolmentsAimsSSAEngineering and Manufacturing Technologies",90,62940
-"enrolmentsAimsSSAHealth, Public Services and Care",1930,282290
+"enrolmentsAims",12820,2356260
+"enrolmentsAimsSSAAgriculture, Horticulture and Animal Care",90,20660
+"enrolmentsAimsSSAArts, Media and Publishing",100,25140
+"enrolmentsAimsSSABusiness, Administration and Law",830,107190
+"enrolmentsAimsSSAConstruction, Planning and the Built Environment",350,86090
+"enrolmentsAimsSSADigital Technology",260,88100
+"enrolmentsAimsSSAEducation and Training",210,43460
+"enrolmentsAimsSSAEngineering and Manufacturing Technologies",240,79090
+"enrolmentsAimsSSAHealth, Public Services and Care",1970,254560
 "enrolmentsAimsSSAHistory, Philosophy and Theology",NA,NA
-"enrolmentsAimsSSAInformation and Communication Technology",310,94290
-"enrolmentsAimsSSALanguages, Literature and Culture",100,31290
-"enrolmentsAimsSSALeisure, Travel and Tourism",60,16020
-"enrolmentsAimsSSANot Applicable/ Not Known",230,69560
-"enrolmentsAimsSSAPreparation for Life and Work",3100,915620
-"enrolmentsAimsSSARetail and Commercial Enterprise",330,85810
-"enrolmentsAimsSSAScience and Mathematics",170,36980
-"enrolmentsAimsSSASocial Sciences",0,2860
+"enrolmentsAimsSSALanguages, Literature and Culture",80,27030
+"enrolmentsAimsSSALeisure, Travel and Tourism",40,12540
+"enrolmentsAimsSSANot Applicable/ Not Known",3400,673430
+"enrolmentsAimsSSAPreparation for Life and Work",2680,810990
+"enrolmentsAimsSSARetail and Commercial Enterprise",350,89930
+"enrolmentsAimsSSAScience and Mathematics",150,34930
+"enrolmentsAimsSSASocial Sciences",0,2750
 "enterpriseCount",17450,2408040
 "enterpriseCountIndustryAccommodation & food services",1130,147605
 "enterpriseCountIndustryAgriculture, forestry & fishing",100,93190
@@ -218,35 +218,35 @@
 "inemploymentOccupation (SOC2020 Sub-Major Group)92 - Elementary administration and service occupations",NA,NA
 "inemploymentRate",0.688084687346135,0.839952996474736
 "participation",11700,1830650
-"participationAge19-24",2940,459590
+"participationAge19-24",3200,461780
 "participationAge25+",8500,1377180
 "participationAgeUnknown",NA,NA
-"participationLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",730,323560
-"participationLevelFurther education and skills: Essential Skills - English and maths",2180,479250
-"participationLevelFurther education and skills: Full Level 2",630,180640
-"participationLevelFurther education and skills: Full Level 3",2180,339390
-"participationLevelFurther education and skills: Level 2",3420,585160
+"participationLevelFurther education and skills: Entry level",510,293220
+"participationLevelFurther education and skills: Full level 2",560,153190
+"participationLevelFurther education and skills: Full level 3",2180,331700
+"participationLevelFurther education and skills: Level 1",790,243560
+"participationLevelFurther education and skills: Level 2",3650,585160
 "participationLevelFurther education and skills: Level 3",2570,404950
-"participationLevelFurther education and skills: Level 4+",1360,280210
-"participationLevelFurther education and skills: No Level Assigned",1190,414800
-"participationProvisionApprenticeships",5310,752150
-"participationProvisionCommunity Learning",1020,358510
-"participationProvisionEducation and training",4680,992060
-"participation_rate_per_100000_population",3481.42792105193,8478
-"participation_rate_per_100000_populationAge19-24",5675,19925
-"participation_rate_per_100000_populationAge25+",2795.67698236416,7102
+"participationLevelFurther education and skills: Level 4+",1720,310610
+"participationLevelFurther education and skills: No level assigned",1190,430550
+"participationProvisionApprenticeships",5470,761480
+"participationProvisionEducation and training",6990,1233930
+"participationProvisionTailored learning",1900,360120
+"participation_rate_per_100000_population",3543.61253443585,8448
+"participation_rate_per_100000_populationAge19-24",5661,20018
+"participation_rate_per_100000_populationAge25+",2857.21809659241,7083
 "participation_rate_per_100000_populationAgeUnknown",NA,NA
-"participation_rate_per_100000_populationLevelFurther education and skills: Below Level 2 (excluding Essential Skills)",213.557070933127,1871
-"participation_rate_per_100000_populationLevelFurther education and skills: Essential Skills - English and maths",689.792646322803,2369
-"participation_rate_per_100000_populationLevelFurther education and skills: Full Level 2",162.587723785883,1310.59917686675
-"participation_rate_per_100000_populationLevelFurther education and skills: Full Level 3",450.918200754917,1728.22780669605
-"participation_rate_per_100000_populationLevelFurther education and skills: Level 2",762,3525
-"participation_rate_per_100000_populationLevelFurther education and skills: Level 3",721.342413930083,1909
-"participation_rate_per_100000_populationLevelFurther education and skills: Level 4+",360.631496164489,1080
-"participation_rate_per_100000_populationLevelFurther education and skills: No Level Assigned",290.327001107888,2016.96591802309
-"participation_rate_per_100000_populationProvisionApprenticeships",1029.83606010574,3210
-"participation_rate_per_100000_populationProvisionCommunity Learning",223.839818470296,1699.71592646331
-"participation_rate_per_100000_populationProvisionEducation and training",1270.25364838689,5534
+"participation_rate_per_100000_populationLevelFurther education and skills: Entry level",167.259728120952,1536
+"participation_rate_per_100000_populationLevelFurther education and skills: Full level 2",155,1310.59917686675
+"participation_rate_per_100000_populationLevelFurther education and skills: Full level 3",450,1728.22780669605
+"participation_rate_per_100000_populationLevelFurther education and skills: Level 1",207,1725
+"participation_rate_per_100000_populationLevelFurther education and skills: Level 2",757,3456.20639590909
+"participation_rate_per_100000_populationLevelFurther education and skills: Level 3",720,1911
+"participation_rate_per_100000_populationLevelFurther education and skills: Level 4+",468.985515255117,1121
+"participation_rate_per_100000_populationLevelFurther education and skills: No level assigned",290.327001107888,2006.65590299516
+"participation_rate_per_100000_populationProvisionApprenticeships",1077,3341
+"participation_rate_per_100000_populationProvisionEducation and training",1932,6261
+"participation_rate_per_100000_populationProvisionTailored learning",432,1844
 "selfemployed",26200,3903700
 "selfemployedRate",0.055767446654984,0.148884870403858
 "sustainedPositiveDestinationKS4Rate",0.883649252581291,0.960690480259785
