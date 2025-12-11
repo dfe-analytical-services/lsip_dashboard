@@ -1982,8 +1982,6 @@ server <- function(input, output, session) {
         subgroup == input$subgroupPage ~ paste0("<b>", subgroup, "</b>"),
         TRUE ~ subgroup
       ))
-    } else {
-      "x"
     }
     # get rid of soc codes
     Splash_21 <- Splash_21 %>% mutate(subgroup = gsub("[0-9]+ - ", "", subgroup))
@@ -2064,7 +2062,7 @@ server <- function(input, output, session) {
 
   output$Splash_pc <- renderPlotly({
     # check it exists
-    req(Splash_pc() != "x")
+    req(!identical(Splash_pc(), "x"))
     ggplotly(Splash_pc(),
       tooltip = c("text")
     ) %>%
