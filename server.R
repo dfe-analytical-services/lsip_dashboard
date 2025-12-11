@@ -1417,7 +1417,11 @@ server <- function(input, output, session) {
   ### 5.5.4 Map ----
   output$map <- renderLeaflet({
     mapData <- currentMapData() %>% filter(geog == input$splashGeoType)
-    pal <- colorNumeric("Blues", mapData$value)
+    if (sum(!is.na(mapData$value) > 0)) {
+      pal <- colorNumeric("Blues", mapData$value)
+    } else {
+      pal <- colorNumeric("Blues", 0)
+    }
     labels <-
       # if a percentage then format as %, else big number
       if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
@@ -1585,7 +1589,11 @@ server <- function(input, output, session) {
         value = currentMetric()
       )
 
-    pal <- colorNumeric("Blues", mapData$value)
+    if (sum(!is.na(mapData$value) > 0)) {
+      pal <- colorNumeric("Blues", mapData$value)
+    } else {
+      pal <- colorNumeric("Blues", 0)
+    }
 
     labels <-
       # if a percentage then format as %, else big number
@@ -1818,6 +1826,8 @@ server <- function(input, output, session) {
         # Style labels. If a rate style as %, If bigger than 1m style as x.xxM, else use cut_short_scale to append a k for bigger than 1000
         labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
           scales::percent
+        } else if (sum(!is.na(SplashTime$value) == 0)) {
+          label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
         } else if ((max(SplashTime$value, na.rm = TRUE) >= 1000000 & (max(SplashTime$value, na.rm = TRUE) - min(SplashTime$value, na.rm = TRUE)) < 600000) | (max(SplashTime$value, na.rm = TRUE) >= 1000 & (max(SplashTime$value, na.rm = TRUE) - min(SplashTime$value, na.rm = TRUE)) < 600)) {
           label_number(accuracy = 0.01, scale_cut = append(scales::cut_short_scale(), 1, 1))
         } else if ((max(SplashTime$value, na.rm = TRUE) >= 1000000 & (max(SplashTime$value, na.rm = TRUE) - min(SplashTime$value, na.rm = TRUE)) < 6000000) | (max(SplashTime$value, na.rm = TRUE) >= 1000 & (max(SplashTime$value, na.rm = TRUE) - min(SplashTime$value, na.rm = TRUE)) < 6000)) {
@@ -1972,8 +1982,6 @@ server <- function(input, output, session) {
         subgroup == input$subgroupPage ~ paste0("<b>", subgroup, "</b>"),
         TRUE ~ subgroup
       ))
-    } else {
-      "x"
     }
     # get rid of soc codes
     Splash_21 <- Splash_21 %>% mutate(subgroup = gsub("[0-9]+ - ", "", subgroup))
@@ -2054,7 +2062,7 @@ server <- function(input, output, session) {
 
   output$Splash_pc <- renderPlotly({
     # check it exists
-    req(Splash_pc() != "x")
+    req(!identical(Splash_pc(), "x"))
     ggplotly(Splash_pc(),
       tooltip = c("text")
     ) %>%
