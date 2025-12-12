@@ -528,6 +528,13 @@ document.addEventListener("DOMContentLoaded", function() {
         </a>
       </li>
 
+            <li style="margin-left:20px;">
+        <a href="#" id="nav_job_ad_tab" class="govuk-service-navigation__link"
+           onclick="Shiny.setInputValue(\'nav_click\', \'job_ad_tab\', {priority:\'event\'}); return false;">
+          Job adverts
+        </a>
+      </li>
+
     </ul>
   </div>
 </nav>
@@ -1201,6 +1208,9 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
         )),
         br()
       ),
+
+      ## 2.4 Job ads page ----
+      jobAdTab(),
 
       ## 2.5 Data information ----
       bslib::nav_panel(
