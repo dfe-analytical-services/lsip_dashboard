@@ -6,10 +6,9 @@
     -   [Project management](#project-management)
     -   [workflow and quality assurance](#workflow-and-quality-assurance)
 -   [Contributing](#contributing)
-    -   [Run the dashboard in R](#run-the-dahsboard-in-r)
+    -   [Run the dashboard in R](#run-the-dashboard-in-r)
     -   [Routine data updates](#routine-data-updates)
     -   [Adding new features](#adding-new-features)
-    -   [Fixing bugs](#fixing-bugs)
 -   [Troubleshooting](#troubleshooting)
 -   [Monitoring dashboard usage](#monitoring-dashboard-usage)
 -   [Annex: QA checklists](#annex-qa-checklists)
@@ -24,7 +23,7 @@ employment, qualifications, and education outcomes across England.
 This guide is for developers to update data or change the dashboard.
 
 > [!IMPORTANT] If you are new to the project, you should follow the 
-[Getting started guide](https://github.com/dfe-analytical-services/lsip_dashboard/blob/main/DeveloperGuide/LocalSkillsDeveloperGuide.md) 
+[Getting started guide](https://github.com/dfe-analytical-services/lsip_dashboard/blob/main/DeveloperGuide/) 
 before returning here.
 
 ## Working practices {#working-practices}
@@ -32,7 +31,7 @@ before returning here.
 This section describes some important ways of working employed on this
 project. You should read this section before you work on the dashboard
 for the first time, and refer back to it regularly to ensure you are
-following agreed practice.
+following agreed practices.
 
 ### Use of Git {#use-of-git}
 
@@ -57,12 +56,12 @@ There are two core branches in the project repository:
   
   -   **Development** is the pre-production (preprod) branch - any pushes
       to this will be live on the private preprod site. This allows us to
-      test changes before they are made public. Commits should never be made
-      directly to this branch.
+      test changes before they are made public. Commits should not normally be 
+      made directly to this branch.
 
 All other branches should follow this naming convention:
 
-  -   **For data updates:** ‘update/nameOfDatasetMMYY’ (where MMYY is
+  -   **For data updates:** ‘update/nameOfDatasetMMYY’ (where MMYY is the
       numeric month and year of the data release, e.g.
       update/onlineJobAds0825)
   -   **For problems that need fixing:** bug/summaryOfBug (e.g.
@@ -107,7 +106,7 @@ into clearly defined changes to the dashboard) or an issue for the backlog (a
 clear and coherent feature or change that can be made on the dashboard.)
 
 2. Once an issue has been scoped, the scoping issue should be marked as complete
-and new issue(s) added to backlog to reflect the required work. 
+and new issue(s) added to the backlog to reflect the required work. 
 Scoped issues may result in several new issues on the backlog, in order to break 
 up the work into distinct features or changes.
 
@@ -131,7 +130,7 @@ version number, which loosely follows the major.minor.patch system, e.g.
 
 6. All issues and pull requests relating to the sprint are tagged with the milestone. 
 
-7. As sprint the is in progress, issues should be moved across the planner board 
+7. As the sprint is in progress, issues should be moved across the planner board 
 columns to show their progress, and contributors assigned to them to show who
 is working on them. 
 
@@ -152,11 +151,11 @@ starting any new piece of work on the dashboard, or QA'ing someone else's work.
 #### Deploying changes into pre-production (our test site)
 
  All changes on the dashboard will first be merged onto the development branch, 
- which deployed them into pre-production. This section should be followed for 
+ which deploys them into pre-production. This section should be followed for 
  any new piece of work. 
 
 1.	**Analyst:** Create a new branch for your work, by branching off of
-the development branch (make sure you have pulled the latest version first!). 
+the development branch (make sure you have pulled the latest version first!) 
 Remember to follow branch naming convention and best practice (see [Use of Git](#use-of-git) section), 
 link your branch to the relevant issue on the planner board and tag it with the 
 next milestone. 
@@ -169,7 +168,7 @@ This will make it easier to merge your changes into development when the work is
 4.	**Analyst:** When you have completed your work, create a pull request (PR) to
 merge your branch into the development branch. Add a description to the pull 
 request summarising the change and including a list of QA tasks, using check box 
-formatting (see annex [ADD!!!] for example QA checklists for different types of 
+formatting (see [Annex: QA checklists](#annex-qa-checklists) for example QA checklists for different types of 
 analysis, which you can paste into the PR description).
 
 > [!IMPORTANT] After you create a PR, check whether there are any merge conflicts.
@@ -198,7 +197,7 @@ that has changed.
 > [!TIP] It's sometimes helpful to wait until you've finished your QA 
 before you post any comments, as you may want to go back and edit comments as 
 you complete further QA. To do this, When you write a comment click 'start a 
-review' or 'add to review'. This will save the comment and When submit your 
+review' or 'add to review'. This will save the comment and when submit your 
 review (more on that below) all comments will be posted. 
 
 8.	**Analyst:** When you have completed your QA, finish your review. To do this, 
@@ -212,7 +211,7 @@ should:
    - confirm the methods you used (e.g. ran dashboard locally for visual 
    inspection, ran code to check for errors, ran amended code line by line to 
    sense check). 
-   - Confirm here if there are issues to resolve before you are happy to approve 
+   - confirm if there are issues to resolve before you are happy to approve 
 
 9.	**Analyst:** Address any issues identified by adding further commits to the
 same branch. It will usually be easiest to address each issue as a separate 
@@ -234,8 +233,8 @@ the PR and add a brief comment to confirm.
 
 13.	**QA’er:** Click the merge button to merge the changes into the development 
 branch. It will take some time (~1hr) to deploy to the preprod site. You can 
-monitor progress on the 'Actions' tab at the top of the GitHub repo. If the 
-deployment fails, see the troubleshooting section. [LINK]
+monitor progress on the [Actions](https://github.com/dfe-analytical-services/lsip_dashboard/actions) 
+tab at the top of the GitHub repo. If the deployment fails, see the [Troubleshooting](#troubleshooting) section.
 
 #### Deploying changes to the live site
 
@@ -249,11 +248,11 @@ development into main. The name of the pull request should be the version number
 for the update (e.g. V1.5.1). In the description for the PR, summarise the 
 changes that are included in this update (you should be able to find this out by 
 looking at closed pull requests that have been merged to development and tagged with the 
-version number). Also add the ‘Update to main’ checklist into the PR description
-(found in the annex [[ADD!!]].) 
+version number). Also add the ‘deployment to main’ checklist into the PR description
+(found in [Annex: QA checklists](#annex-qa-checklists)) 
 
-> [!IMPORTANT] You will sometimes get a warning on the PR that the branch is out 
-of date with main. If you see this warning, click the button next to it to update
+> [!IMPORTANT] You will usually get a warning on the PR that the branch is out 
+of date with main. Click the button next to it to update
 the branch. This does not produce any meaninful changes, it just updates the
 commit history to include a record of the previous merge into main.
 
@@ -290,7 +289,7 @@ resolved.
 go again to the ‘review changes’ button on the 'files changed' tab, click to 
 approve the PR and add a brief comment to confirm. 
 
-9.	**QA’er 2:** One the first QA'er has completed their work, complete a visual 
+9.	**QA’er 2:** Once the first QA'er has completed their work, complete a visual 
 inspection of the dashboard on the pre-production site. Follow the same cycle as 
 above to approve the PR or add comments with required changes.
 
@@ -311,14 +310,17 @@ with that version, which you can click on to review a record of the QA.
 ## Contributing {#contributing}
 
 This section provides technical information on how to update the dashboard. It
-should be read alongside the information above which explains the processes to
-follow.
+should be read alongside the information above which explains the overarching 
+processes to follow. If this is your first time working on the dashboard, follow
+the [Getting started guide](https://github.com/dfe-analytical-services/lsip_dashboard/blob/main/DeveloperGuide/) 
+first.
 
-This section covers more detailed instructions on 
+The github page is here:
+<https://github.com/dfe-analytical-services/lsip_dashboard>.
 
-### Run the dashboard in R
+### Run the dashboard in R {#run-the-dashboard-in-r}
 
-1.  Connect to the git hub branch you want to run and pull to ensure you
+1.  Checkout the branch you want to run and pull to ensure you
     have the latest version:
 
     -   **Main** is the public facing branch - any pushes to this will
@@ -329,17 +331,14 @@ This section covers more detailed instructions on
 
     -   Or any other branch you would like to run.
 
-The github page is here:
-<https://github.com/dfe-analytical-services/lsip_dashboard>.
-
 2.  Align your packages with the dashboards packages in your branch
     using renv: `renv::restore()`
 
 3.  Run the dashboard. The dashboard will open in a new window:
-    `runApp()`
+    `shiny::runApp()`
 
 The dashboard runs off the data held within /Data/AppData, so will just
-run without having to have data within your local Environment.
+run without having to have data within your local environment.
 
 There may be times when you want to look at the dashboard in a browser
 (checking formatting across browsers or window sizes, or checking
@@ -348,7 +347,7 @@ the top of the dashboard pop up window.
 
 ### Routine data updates {#routine-data-updates}
 
-The Data Sources tab of the dashboard has a list of all the datasets and
+The Data Sources page of the dashboard has a list of all the datasets and
 their next release date.
 
 **Update schedule**
@@ -361,10 +360,10 @@ revisions to any of the datasets throughout the year.
     by industry at every release. However:
 
     -   Highest qualification is only updated in the APS once a year in
-        the Apr release.
+        the April release.
 
 -   *Individualised learner record* is updated quarterly but we only
-    update with the final data, usually release in November (the in year
+    update with the final data, usually released in November (the in-year
     data is provisional and subject to lag).
 
 -   *UK business count* is released and updated in the dashboard once a
@@ -376,57 +375,70 @@ revisions to any of the datasets throughout the year.
 -   *Destination measures* are released and updated in the dashboard
     once a year in Oct.
 
--   *Job adverts* were released for the first time in Feb 23. No release
-    schedule has been announced.
+-   *Job adverts* are released monthly.
 
--   *Skills Imperative 2035* was released in Mar 23. No release schedule
-    has been announced.
+-   *Skills Imperative 2035* was released in Mar 23. This was a one-off
+    release and will not need to be updated unless new projections are
+    commissioned and published.
 
-| Month | Release        |             |              |
-|-------|----------------|-------------|--------------|
-| Jan   | APS emp vols   | APS emp ind |              |
-| Feb   |                |             |              |
-| Mar   |                |             |              |
-| Apr   | APS emp vols   | APS emp ind | APS emp qual |
-| May   |                |             |              |
-| Jun   |                |             |              |
-| Jul   | APS emp vols   | APS emp ind |              |
-| Aug   |                |             |              |
-| Sep   | Business count |             |              |
-| Oct   | APS emp vols   | APS emp ind | Destinations |
-| Nov   | ILR            |             |              |
-| Dec   |                |             |              |
+| Month | Release        |             |              |             |
+|-------|----------------|-------------|--------------|-------------|
+| Jan   | APS emp vols   | APS emp ind |              | Job adverts |
+| Feb   |                |             |              | Job adverts |             
+| Mar   |                |             |              | Job adverts |
+| Apr   | APS emp vols   | APS emp ind | APS emp qual | Job adverts |
+| May   |                |             |              | Job adverts |
+| Jun   |                |             |              | Job adverts |
+| Jul   | APS emp vols   | APS emp ind |              | Job adverts |
+| Aug   |                |             |              | Job adverts |
+| Sep   | Business count |             |              | Job adverts |
+| Oct   | APS emp vols   | APS emp ind | Destinations | Job adverts |
+| Nov   | ILR            |             |              | Job adverts |
+| Dec   |                |             |              | Job adverts |
+
+The following datasets are updated using the Nomis API, meaning data does
+not need to be manually downloaded prior to running an update:
+
+-   *Annual population survey* (including highest qualification)
+-   *UK business count*
 
 **Update process**
 
-1.  Make yourself a new github branch off (probably) the latest public
-    version, so off Main. Pull and run `renv::restore()` to align
-    packages with the dashboard.
+1.  Make yourself a new github branch off of development. 
+    Pull and run `renv::restore()` to align packages with the dashboard.
 
 *For non-NOMIS datasets:*
 
 2a. Download the latest version of the dataset. If you need help finding
-the dataset source, have a look at the “Data Sources” tab in the
+the dataset source, have a look at the “Data Sources” page in the
 dashboard - this gives info and links to data sources.
 
-2b. Navigate to /Data folder (either in R Files or in Windows Explorer).
+2b. Navigate to the /Data folder (either in R Files or in Windows Explorer).
 All raw datasets are held in /Data. They are the numbered datasets.
 
--   1-x are geographical files (look ups and boundary files)
+-   1-x are look-up files (including geographical boundary files)
 
 -   2-x are the raw local skills data files
 
--   3-x are excel files which populate tables within the dashboard and a
-    3-2_dataText helps populates the dynamic text in the Local Skills
+-   3-x are excel files which populate tables within the dashboard, including
+    3-2_dataText which helps populates the dynamic text in the Local Skills
     tab
 
 2c. Once you have figured out where the dataset you want to update is
 currently kept, navigate to that folder
 
-2d. Delete the currently held dataset(s) in that folder. The folder
+2d. Do some preliminary checks on the format of the new data file you have 
+downloaded, compared with the existing version in the folder. If there are 
+changes to the format, you may need to adapt the script that imports the data.
+You can find all import scripts in /importData.
+
+2e. Delete the currently held dataset(s) in the folder. The folder
 should now be empty.
 
-2e. Paste the new dataset in that folder.
+2f. Paste the new dataset in that folder. If the file name has changed, update
+it in datafiles_log.csv.
+
+2g. Test that the import script runs correctly with the new file.
 
 *For Nomis Datasets:*
 
@@ -470,56 +482,21 @@ This takes about 20 mins. You should see your environment is populated
 with new, clean datasets and your Data/AppData folder has been updated
 with the updated versions of the files the dashboard uses.
 
-6.  Check any changes to the data used in the dashboard. As a step in
-    the QA run this file and have a look at the outputs:
+6.  Run the dashboard: `shiny::runApp()`
 
-    `source("~/RProjects/lsip_dashboard/checkUpdateChanges.R", echo=TRUE)`
-
-    This will show you if there has been any changes to the geography
-    names, the metric names, the time periods and also check for any
-    changes in the NAs within the data (a sign that something has gone
-    awry).
-
-7.  Run the dashboard: `runApp()`
-
-8.  Update the shiny tests by running `shinytest2::test_app()` and
+7.  Update the shiny tests by running `shinytest2::test_app()` and
     checking that any newly generated snapshots look as expected.
 
-9.  QA. Create a new QA log in “Analytical Projects\Analysis\S005 LSIP
-    dashboard\Documentation\QA”. Follow the structure of one already in
-    there. Some checks you may do:
+8.  Follow the process for QA and deployment in the [workflow and quality assurance](#workflow-and-quality-assurance)
+    section.
 
--   Check that your dataset has been updated correctly (by comparing
-    with the version you branched off of and cross checking with the raw
-    data).
--   Check the Data Sources table has been updated correctly
--   Check the text in the Local Skills tab makes sense for your updated
-    metric.
--   Get sign off Hannah Cox and/or Harris (see
-    [here](https://educationgovuk.sharepoint.com/:w:/r/sites/UnitforFutureSkills/Shared%20Documents/Analytical%20Projects/Analysis/S005%20LSIP%20dashboard/Documentation/Local%20skills%20dashboard%20update%20principles.docx?d=wbd95fecb97144a348a73a34520212d75&csf=1&web=1&e=InX9xM)
-    and
-    [here](https://educationgovuk.sharepoint.com/:w:/r/sites/UnitforFutureSkills/Shared%20Documents/Analytical%20Projects/Analysis/S005%20LSIP%20dashboard/Documentation/QA/QA%20plan_Local%20Skills%20dashboard_UFS.docx?d=wa17c64605c7f4a3fb2b8bf35f4bec670&csf=1&web=1&e=Z66Jas)
-    for process)
-
-10. If everything looks ok, commit, push and merge to Development. Wait
-    for that to deploy (can take 15mins or more - you can track this in
-    [Actions · dfe-analytical-services/lsip_dashboard
-    (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)).
-    Again check everything looks ok in the preprod environment:
-    <https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/>
-    13 If you have done sufficient QA and you are satisfied, merge to
-    Main and wait for that to deploy. Check again everything looks ok in
-    the live environment:
-    <https://department-for-education.shinyapps.io/local-skills-dashboard/>
-
-11. Consider communicating the change to the wider Team or other
+9. Consider communicating the change to the wider team or other
     stakeholders.
 
 ### Adding new features {#adding-new-features}
 
-Make yourself a new github branch off (probably) the latest public
-version, so off Main. Pull and run `renv::restore()` to align packages
-with the dashboard.
+Make yourself a new github branch off of development.Pull and run 
+`renv::restore()` to align packages with the dashboard.
 
 #### It's a metric that already exists in the data
 
@@ -544,54 +521,32 @@ To add one of these into the dashboard:
 
 4.  Run extractLoadData.R
 
-5.  Run `runApp()` and check the metric is available in the Local Skills
+5.  Run `shiny::runApp()` and check the metric is available in the Local Skills
     tab.
 
 6.  Update the shiny tests by running `shinytest2::test_app()` and
     checking that any newly generated snapshots look as expected.
 
-7.  QA. Create a new QA log in “Analytical Projects\Analysis\S005 LSIP
-    dashboard\Documentation\QA”. Follow the structure of one already in
-    there. Some checks you may do:
+7.  Follow the process for QA and deployment in the [workflow and quality assurance](#workflow-and-quality-assurance)
+    section.
 
-    -   Check that your dataset has been added correctly (by comparing
-        with the version you branched off of and cross checking with the
-        raw data).
-    -   Check the Data Sources table has been updated correctly
-    -   Check the text in the Local Skills tab makes sense for your
-        updated metric.
-    -   Check the charts are in the format you want especially looking
-        at whether it needs to be a percentage or volume
-
-8.  If everything looks ok, commit, push and merge to Development. Wait
-    for that to deploy (can take 15mins or more - you can track this in
-    [Actions · dfe-analytical-services/lsip_dashboard
-    (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)).
-    Again check everything looks ok in the preprod environment:
-    <https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/>
-
-9.  If you have done sufficient QA and you are satisfied, merge to Main
-    and wait for that to deploy. Check again everything looks ok in the
-    live environment:
-    <https://department-for-education.shinyapps.io/local-skills-dashboard/>
-
-10. Consider communicating the change to the wider Team or other
+8. Consider communicating the change to the wider team or other
     stakeholders.
 
 **Optional extras/troubleshooting**
 
 -   You might need to make some adjustments to how it is presented in
-    the charts ie percentage vs vol. If the problem is in the time chart
+    the charts, i.e. percentage vs vol. If the problem is in the time chart
     or map, check server.R where there are a few if statements to assign
     a metric to either % or vol. If the problem is in the breakdown
     chart check the server and combineData.R where some metrics are
     split into proportions and some are not.
 
--   If you want it to appear in the Data Explorer tab, remove it from
+-   If you want it to appear in the Data Download tab, remove it from
     the exclusion list in combineData.r/4.4 C_dataHub and give it a good
     name in there as well.
 
--   You may want to add to the Overview page. If so, add to ui.R
+-   You may want to add to the Area Summary page. If so, add to ui.R
     wherever you want and create KPIs and charts in server.R using the
     following function: createOverviewKPI, createOverviewChart,
     renderOverviewChart.
@@ -605,24 +560,26 @@ To add one of these into the dashboard:
 
 3.  Dashboard admin:
 
-    1.  You need to update the dashboard’s Data Sources tab with
+    1.  Add the new file to datafiles_log.csv
+
+    2.  You need to update the dashboard’s Data Sources page with
         information about your new data. Open
         /Data/3-1_DataTable/DataTable.xlsx in Excel. Add a new row with
         new dates, links and information. You also need to add some
         information about the dataset on this page. You can do this in
         ui.R/2.5.2 Data details text.
 
-    2.  Update the dashboard’s Version Log. This is done in ui.R under
-        the “2.1.3 Version control” header. Move the current Latest
-        Version text down into the Previous Version area, and repopulate
-        the Current Version with new details.
-
     3.  Populate a new row in /Data/3-2_dataText/dataText.xlsx file.
         These are used to populate dynamic text on the dashboard’s Local
-        Skills tab.
-
-    4.  Add some overview information about the dataset on the User
-        Guide page of the dashboard. an do this in ui.R/2.1.2 Contents
+        Skills data tab.
+        
+    4.  Add some overview information about the dataset on the home page of 
+        the dashboard. an do this in ui.R/2.1.2 Contents
+        
+    5.  Update the dashboard’s Version Log. This is done in ui.R under
+        the “2.1.3 Version control” header. Move the current Latest
+        Version text down into the Previous Version area, and repopulate
+        the Current Version with new details.        
 
 4.  Add a new script to /importData to extract and clean the data and
     add the script to the run list in ExtractLoadData.R (copy one of the
@@ -636,13 +593,13 @@ To add one of these into the dashboard:
     formatLong puts data into long format)
 
     b\. Ensure you have data for all the geographic areas used in the
-    dashboard: LADUs, LSIPs, LEPs, MCAs, and national.
+    dashboard: LADUs, LSIPs, CAs, and national.
 
-    If your data only comes in LADU form, you can groups these up to get
+    If your data only comes in LADU form, you can group these up to get
     the bigger geographcal areas. The function addGeos will help with
     this, but might not always be exacly what you want, so check. If you
     are grouping up, there will likely be some rounding errors so make
-    sure to add that caveat to the Data Sources tab.
+    sure to add that caveat to the Data Sources page.
 
     c\. You then need to manipulate your now clean data into the
     following form:
@@ -669,66 +626,37 @@ To add one of these into the dashboard:
 9.  Add your metric into metricChoices in global.R and assign it a more
     user friendly name for use in the dashboard.
 
-10. Give your metric a good name for the Data Explorer tab in
+10. Give your metric a good name for the Data Download tab in
     combineData.r/4.4 C_dataHub.
 
-11. Run the app `runApp()`.
+11. Run the app `shiny::runApp()`.
 
 12. Update the shiny tests by running `shinytest2::test_app()` and
     checking that any newly generated snapshots look as expected.
 
-13. QA. Create a new QA log in “Analytical Projects\Analysis\S005 LSIP
-    dashboard\Documentation\QA”. Follow the structure of one already in
-    there. Some checks you may do:
+13.  Follow the process for QA and deployment in the [workflow and quality assurance](#workflow-and-quality-assurance)
+    section.
 
-    -   Check that your dataset has been added correctly (by comparing
-        with the version you branched off of and cross checking with the
-        raw data).
-    -   Check the Data Sources table has been updated correctly
-    -   Check the text in the Local Skills tab makes sense for your
-        updated metric.
-    -   Check the charts are in the format you want especially looking
-        at whether it needs to be a percentage or volume
-
-14. Take a renv snapshot to help future users allign to any packages you
-    have changed/added:`renv::snapshot()`
-
-15. If everything looks ok, commit, push and merge to Development. Wait
-    for that to deploy (can take 15mins or more - you can track this in
-    [Actions · dfe-analytical-services/lsip_dashboard
-    (github.com)](https://github.com/dfe-analytical-services/lsip_dashboard/actions)).
-    Again check everything looks ok in the preprod environment:
-    <https://department-for-education.shinyapps.io/local-skills-dashboard-preprod/>
-
-16. If you have done sufficient QA and you are satisfied, merge to Main
-    and wait for that to deploy. Check again everything looks ok in the
-    live environment:
-    <https://department-for-education.shinyapps.io/local-skills-dashboard/>
-
-17. Consider communicating the change to the wider Team or other
+14. Consider communicating the change to the wider team or other
     stakeholders.
 
 **Optional extras/troubleshooting**
 
 -   You might need to make some adjustments to how it is presented in
-    the charts ie percentage vs vol. If the problem is in the time chart
+    the charts, i.e. percentage vs vol. If the problem is in the time chart
     or map, check server.R where there are a few if statements to assign
     a metric to either % or vol. If the problem is in the breakdown
     chart check the server and combineData.R where some metrics are
     split into proportions and some are not.
 
--   You may want to add to the Overview page. If so, add to ui.R
+-   You may want to add to the Area Summary page. If so, add to ui.R
     wherever you want and create KPIs and charts in server.R using the
     following function: createOverviewKPI, createOverviewChart,
     renderOverviewChart
 
-### Fixing bugs {#fixing-bugs}
-
-[CONTENT]
-
 ## Troubleshooting {#troubleshooting}
 
-[[ADD WHAT TO DO IF DEPLOYMENT FAILS]]
+### Errors when running the dashboard code, or in the dashboard display
 
 The most common problems occur when something changes in an input data
 set. That might be :
@@ -745,12 +673,12 @@ Another source of problem is changing geographical areas:
 
 -   updating boundaries (pages like this are good to keep an eye on
     <https://en.wikipedia.org/wiki/2019%E2%80%932023_structural_changes_to_local_government_in_England>
-    but changes to LSIPs, MCAs and LEPs you are better off looking at
+    but changes to LSIPs and CAs you are better off looking at
     the latest data on <https://geoportal.statistics.gov.uk/>)
 
 -   area name changes. These can be random eg typos, or genuine updates
     to names. In the /importData files there are a number of bits of
-    correcting code to allign names. We attempt to use codes where
+    correcting code to align names. We attempt to use codes where
     possible but some data sets do not have them.
 
 -   some data sets use the boundaries at the time in their historical
@@ -765,10 +693,33 @@ the charts and maps.
 We are looking to implement more QA tests to check these things
 automatically.
 
+### Errors when deploying via Github
+
+Sometimes the dashboard will fail to deploy (when updating the pre-prod or
+live dashboard, by merging into the development or main branch). 
+
+This will be due to changes related to the shiny servers which host the dashboard, 
+which are maintained by the Statistics Development team. 
+
+If this happens, you can find some information about the problem by looking at
+the failed action on the [actions tab on Github](https://github.com/dfe-analytical-services/lsip_dashboard/actions). 
+Often you will see a message relating to a failed package installation. This
+means the shiny server has failed to load a package required for the dashboard.
+
+Something you can fix this by updating all packages used in the dashboard. You
+can do this by running `renv::update()`. You should then run all dashboard code 
+to verify that it still works (or make any changes needed to get it working). 
+Then run `renv::snapshot()` to record the new versions in the lockfile. Commit
+and push this change and try the merge again.
+
+If updating packages does not work, or the problem seems to be something else,
+contact the Statistics Development team.
+
 ## Monitoring dashboard usage {#monitoring-dashboard-usage}
 
 We use Google Analytics to see a range of metrics on dashboard users.
-Log in here (you may need access):
+Log in here (contact the dashboard owner for access, who will be able to
+request this from the Statistics Development team):
 <https://analytics.google.com/analytics/web/>.
 
 As well as the more generic metrics (users, new users, event clicks,
@@ -782,3 +733,55 @@ some interesting data. You can see these (and create these) by clicking
 the “Explore” tab in the left of the Google Analytics page.
 
 ## Annex: QA checklists {#annex-qa-checklists}
+
+Copy-paste and edit the code chunks below to create a QA checklist in the description
+of your pull request. Add any additional checks specific to your work.
+
+### Checklist for a routine data update:
+
+```
+- [] Data inputs correctly updated to latest release
+- [] Code changes are logical, coherent and run without error
+- [] Data displayed on the dashboard matches source data (spot check)
+- [] Meta data (dataText and dataTable) is correct and appearing correctly on dashboard (footnotes beneath graphs and bottom of page)
+- [] Version log updated
+```
+
+### Checklist for a bug fix:
+
+```
+- [] [checks specific to the performance being corrected]
+- [] Code changes are logical, coherent and run without error
+- [] General spotcheck accross dashboard for unintended changes
+- [] Version log updated
+```
+
+### Checklist for a major update:
+
+```
+- [] Do all visuals have the right fields applied to them?
+- [] Are all the filters applied to the visuals correctly? 
+- [] Do custom filters use the correct measures and/or formulas?
+- [] Do the visuals interact with each other as intended? (cross-filtering and cross-highlighting)
+- [] Is drillthrough functionality being applied correctly?
+- [] Are all visuals providing the desired insight in an effective manner?
+- [] Are multiple series easily distinguished when plotted together on a visual?
+- [] Is data plotted on the correct axis on each visual?
+- [] Is the ordering of columns on all visuals correct?
+- [] Are headings and axis labels clear and meaningful?
+- [] Is the use of colour consistent across visuals?
+- [] Are sequences of colours applied in a logical order?
+- [] Are all tooltips showing the correct contextual information? 
+- [] Do the calculated columns/measures make sense? Is the formula/coding correct?
+- [] Do actions assigned to visuals work correctly? (e.g. do buttons navigate to the correct page)
+- [] Are filters in a consistent location throughout the dashboard
+
+```
+
+### Checklist for deployment to main:
+
+```
+- [] Visual spot check of dashboard, focusing on areas that have changed
+- [] Version log updated and reflects all changes
+```
+
