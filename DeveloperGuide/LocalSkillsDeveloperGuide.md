@@ -13,7 +13,7 @@
 -   [Monitoring dashboard usage](#monitoring-dashboard-usage)
 -   [Annex: QA checklists](#annex-qa-checklists)
 
-## Introduction {#introduction}
+## Introduction
 
 The Local Skills dashboard is an R Shiny dashboard displaying published
 local data from a variety of sources, in an easy to navigate format. To
@@ -26,14 +26,14 @@ This guide is for developers to update data or change the dashboard.
 [Getting started guide](https://github.com/dfe-analytical-services/lsip_dashboard/blob/main/DeveloperGuide/) 
 before returning here.
 
-## Working practices {#working-practices}
+## Working practices
 
 This section describes some important ways of working employed on this
 project. You should read this section before you work on the dashboard
 for the first time, and refer back to it regularly to ensure you are
 following agreed practices.
 
-### Use of Git {#use-of-git}
+### Use of Git
 
 This project uses Git, a version control software package, and GitHub, 
 a developer platform.
@@ -96,7 +96,7 @@ When committing work to a branch, follow these best practice tips:
   -   Use the imperative tense (as if giving an order), e.g. ‘Fix typos in
       developer guide’ or ‘Update APS data to Jan 25 release’
 
-### Project management {#project-management}
+### Project management
 
 Project management is recorded on GitHub as follows:
 
@@ -143,7 +143,7 @@ Any merged or redundant branches should be deleted.
 [here](https://docs.github.com/en/issues/tracking-your-work-with-issues) and 
 about GitHub milestones [here](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work)
 
-### Workflow and quality assurance {#workflow-and-quality-assurance}
+### Workflow and quality assurance
 
 This section describes the steps that project contributors should follow when
 starting any new piece of work on the dashboard, or QA'ing someone else's work.
@@ -307,7 +307,7 @@ choose 'closed' to see past versions. Find the version number you are interested
 in and click on 'closed' again. This will list all the pull requests associated
 with that version, which you can click on to review a record of the QA.
 
-## Contributing {#contributing}
+## Contributing
 
 This section provides technical information on how to update the dashboard. It
 should be read alongside the information above which explains the overarching 
@@ -318,7 +318,7 @@ first.
 The github page is here:
 <https://github.com/dfe-analytical-services/lsip_dashboard>.
 
-### Run the dashboard in R {#run-the-dashboard-in-r}
+### Run the dashboard in R
 
 1.  Checkout the branch you want to run and pull to ensure you
     have the latest version:
@@ -345,7 +345,7 @@ There may be times when you want to look at the dashboard in a browser
 download functions). To do this click on the “Open in Browser” button at
 the top of the dashboard pop up window.
 
-### Routine data updates {#routine-data-updates}
+### Routine data updates
 
 The Data Sources page of the dashboard has a list of all the datasets and
 their next release date.
@@ -493,7 +493,7 @@ with the updated versions of the files the dashboard uses.
 9. Consider communicating the change to the wider team or other
     stakeholders.
 
-### Adding new features {#adding-new-features}
+### Adding new features
 
 Make yourself a new github branch off of development.Pull and run 
 `renv::restore()` to align packages with the dashboard.
@@ -654,7 +654,7 @@ To add one of these into the dashboard:
     following function: createOverviewKPI, createOverviewChart,
     renderOverviewChart
 
-## Troubleshooting {#troubleshooting}
+## Troubleshooting
 
 ### Errors when running the dashboard code, or in the dashboard display
 
@@ -715,7 +715,7 @@ and push this change and try the merge again.
 If updating packages does not work, or the problem seems to be something else,
 contact the Statistics Development team.
 
-## Monitoring dashboard usage {#monitoring-dashboard-usage}
+## Monitoring dashboard usage
 
 We use Google Analytics to see a range of metrics on dashboard users.
 Log in here (contact the dashboard owner for access, who will be able to
@@ -732,7 +732,7 @@ In Google Analytics we have started creating custom reports to collect
 some interesting data. You can see these (and create these) by clicking
 the “Explore” tab in the left of the Google Analytics page.
 
-## Annex: QA checklists {#annex-qa-checklists}
+## Annex: QA checklists
 
 Copy-paste and edit the code chunks below to create a QA checklist in the description
 of your pull request. Add any additional checks specific to your work.
