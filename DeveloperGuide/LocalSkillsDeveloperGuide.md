@@ -747,48 +747,48 @@ of your pull request. Add any additional checks specific to your work.
 ### Checklist for a routine data update:
 
 ```
-- [] Data inputs correctly updated to latest release
-- [] Code changes are logical, coherent and run without error
-- [] Data displayed on the dashboard matches source data (spot check)
-- [] Meta data (dataText and dataTable) is correct and appearing correctly on dashboard (footnotes beneath graphs and bottom of page)
-- [] Version log updated
+  - [ ] Data inputs correctly updated to latest release
+  - [ ] Code changes are logical, coherent and run without error
+  - [ ] Data displayed on the dashboard matches source data (spot check)
+  - [ ] Meta data (dataText and dataTable) is correct and appearing correctly on dashboard (footnotes beneath graphs and bottom of page)
+  - [ ] Version log updated
 ```
 
 ### Checklist for a bug fix:
 
 ```
-- [] [checks specific to the performance being corrected]
-- [] Code changes are logical, coherent and run without error
-- [] General spotcheck accross dashboard for unintended changes
-- [] Version log updated
+  - [ ] [checks specific to the performance being corrected]
+  - [ ] Code changes are logical, coherent and run without error
+  - [ ] General spotcheck accross dashboard for unintended changes
+  - [ ] Version log updated
 ```
 
 ### Checklist for a major update:
 
 ```
-- [] Do all visuals have the right fields applied to them?
-- [] Are all the filters applied to the visuals correctly? 
-- [] Do custom filters use the correct measures and/or formulas?
-- [] Do the visuals interact with each other as intended? (cross-filtering and cross-highlighting)
-- [] Is drillthrough functionality being applied correctly?
-- [] Are all visuals providing the desired insight in an effective manner?
-- [] Are multiple series easily distinguished when plotted together on a visual?
-- [] Is data plotted on the correct axis on each visual?
-- [] Is the ordering of columns on all visuals correct?
-- [] Are headings and axis labels clear and meaningful?
-- [] Is the use of colour consistent across visuals?
-- [] Are sequences of colours applied in a logical order?
-- [] Are all tooltips showing the correct contextual information? 
-- [] Do the calculated columns/measures make sense? Is the formula/coding correct?
-- [] Do actions assigned to visuals work correctly? (e.g. do buttons navigate to the correct page)
-- [] Are filters in a consistent location throughout the dashboard
+  - [ ] Do all visuals have the right fields applied to them?
+  - [ ] Are all the filters applied to the visuals correctly? 
+  - [ ] Do custom filters use the correct measures and/or formulas?
+  - [ ] Do the visuals interact with each other as intended? (cross-filtering and cross-highlighting)
+  - [ ] Is drillthrough functionality being applied correctly?
+  - [ ] Are all visuals providing the desired insight in an effective manner?
+  - [ ] Are multiple series easily distinguished when plotted together on a visual?
+  - [ ] Is data plotted on the correct axis on each visual?
+  - [ ] Is the ordering of columns on all visuals correct?
+  - [ ] Are headings and axis labels clear and meaningful?
+  - [ ] Is the use of colour consistent across visuals?
+  - [ ] Are sequences of colours applied in a logical order?
+  - [ ] Are all tooltips showing the correct contextual information? 
+  - [ ] Do the calculated columns/measures make sense? Is the formula/coding correct?
+  - [ ] Do actions assigned to visuals work correctly? (e.g. do buttons navigate to the correct page)
+  - [ ] Are filters in a consistent location throughout the dashboard
 
 ```
 
 ### Checklist for deployment to main:
 
 ```
-- [] Visual spot check of dashboard, focusing on areas that have changed
-- [] Version log updated and reflects all changes
+  - [ ] Visual spot check of dashboard, focusing on areas that have changed
+  - [ ] Version log updated and reflects all changes
 ```
 
