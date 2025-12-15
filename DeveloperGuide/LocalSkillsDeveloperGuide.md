@@ -22,7 +22,8 @@ employment, qualifications, and education outcomes across England.
 
 This guide is for developers to update data or change the dashboard.
 
-> [!IMPORTANT] If you are new to the project, you should follow the 
+> [!IMPORTANT] 
+> If you are new to the project, you should follow the 
 [Getting started guide](https://github.com/dfe-analytical-services/lsip_dashboard/blob/main/DeveloperGuide/) 
 before returning here.
 
@@ -41,7 +42,8 @@ a developer platform.
 These tools allows contributors to collaborate effectively on the
 project, as well as manage version control and document the QA process.
 
-> [!IMPORTANT] If you have not used Git before, you should undertake
+> [!IMPORTANT] 
+> If you have not used Git before, you should undertake
 some basic Git training before you read on. For example, 
 [Introduction to Git on the ONS Learning Hub](https://analysisfunction.civilservice.gov.uk/training/introduction-to-git/) 
 or [Git and GitHub courses on datacamp](https://www.datacamp.com/courses-all?q=git)
@@ -139,7 +141,8 @@ should be checked to ensure all associated issues and pull requests have been
 closed (or unassigned from the milestone), and the milestone should be closed. 
 Any merged or redundant branches should be deleted.
 
-> [!TIP] You can read more about GitHub issues  
+> [!TIP] 
+> You can read more about GitHub issues  
 [here](https://docs.github.com/en/issues/tracking-your-work-with-issues) and 
 about GitHub milestones [here](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work)
 
@@ -171,7 +174,8 @@ request summarising the change and including a list of QA tasks, using check box
 formatting (see [Annex: QA checklists](#annex-qa-checklists) for example QA checklists for different types of 
 analysis, which you can paste into the PR description).
 
-> [!IMPORTANT] After you create a PR, check whether there are any merge conflicts.
+> [!IMPORTANT] 
+> After you create a PR, check whether there are any merge conflicts.
 These will be noted towards the bottom of the PR. If there are merge conflicts,
 resolve these before proceeding to the next step. Ask another member of the
 project team if you are not sure how to resolve the conflicts.
@@ -188,13 +192,15 @@ on the most relevant script. To do this, go to the ‘Files changed’ tab on th
 pull request, click on the relevant file in the side menu, find the line of 
 code and click the plus icon that appears when you hover over it.
 
-> [!IMPORTANT] You should always comment on a script, even if the comment 
+> [!IMPORTANT] 
+> You should always comment on a script, even if the comment 
 is not clearly linked to a specific line of code. This is because it allows 
 helpful features, like marking the comment as resolved. If you’re not sure what
 code is causing the issue, add your comment to the first line of any script
 that has changed.
 
-> [!TIP] It's sometimes helpful to wait until you've finished your QA 
+> [!TIP] 
+> It's sometimes helpful to wait until you've finished your QA 
 before you post any comments, as you may want to go back and edit comments as 
 you complete further QA. To do this, When you write a comment click 'start a 
 review' or 'add to review'. This will save the comment and when submit your 
@@ -251,7 +257,8 @@ looking at closed pull requests that have been merged to development and tagged 
 version number). Also add the ‘deployment to main’ checklist into the PR description
 (found in [Annex: QA checklists](#annex-qa-checklists)) 
 
-> [!IMPORTANT] You will usually get a warning on the PR that the branch is out 
+> [!IMPORTANT] 
+> You will usually get a warning on the PR that the branch is out 
 of date with main. Click the button next to it to update
 the branch. This does not produce any meaninful changes, it just updates the
 commit history to include a record of the previous merge into main.
