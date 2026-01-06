@@ -93,26 +93,35 @@ folder <- "2-12_OnsProf"
    group_by(SOC2digit, time_period) %>%
    summarise(value = as.character(sum(as.numeric(value), na.rm = T))) %>%
    mutate(geogConcat = "England")
-
-# Format all other area types
-F_adverts <- bind_rows(
-  SOC2digitEngland,#SOC 2 digit for england
-  geogsSummed, #summed up geographies
-  geogs %>% filter(newArea == 0)#LAs
-)%>%
-  mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
-  rename(chartPeriod = time_period) %>%
-  mutate(latest = case_when(
-    timePeriod == max(timePeriod) ~ 1,
-    timePeriod == (max(timePeriod) - lubridate::years(1)) ~ -1,
-    TRUE ~ 0
-  )) %>%
-  #filter to last 5 years
-  filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
-  mutate(valueText = value)%>%
-  mutate(value = as.numeric(valueText))%>%
-  select(-newArea)
-
+ 
+ # Format all other area types
+ F_adverts <- bind_rows(
+   SOC2digitEngland,#SOC 2 digit for england
+   geogsSummed, #summed up geographies
+   geogs %>% filter(newArea == 0)#LAs
+ )%>%
+   mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y"),
+          value =  as.numeric(value)) %>%
+   rename(chartPeriod = time_period) %>%
+   mutate(latest = case_when(
+     timePeriod == max(timePeriod) ~ 1,
+     timePeriod == (max(timePeriod) - lubridate::years(1)) ~ -1,
+     TRUE ~ 0
+   )) %>%
+   # calculate the number of job adverts as a 3-month rolling average
+   # filter to the last 5 years to prevent NAs at the start of the average
+   filter(timePeriod>=(max(timePeriod) - lubridate::years(5)))%>%
+   arrange(SOC2digit, geogConcat, timePeriod) %>%
+   group_by(SOC2digit, geogConcat) %>%
+   mutate(value_roll = round(slide_dbl(value, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE), 0)) %>%
+   ungroup() %>%
+   select(-value) %>%
+   rename(value = value_roll) %>%
+   #filter to last 4 years
+   filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
+   mutate(valueText = as.character(value))%>%
+   select(-newArea)
+ 
 # Get summaries
 C_adverts <- bind_rows(
   # soc 2 digit
