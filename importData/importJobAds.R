@@ -26,9 +26,8 @@ folder <- "2-12_OnsProf"
    tidyr::pivot_longer(!c("geographic_level", "area","areaCode","SOC2digit"),
                        names_to = "time_period", values_to = "value"
    )%>%
-   mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
    group_by(geographic_level,area,areaCode,SOC2digit,time_period)%>%
-   summarise(value=sum(as.numeric(value)))%>%
+   summarise(value=sum(as.numeric(value), na.rm = T))%>%
    mutate(value = as.character(value))%>% # so we can merge
    ungroup()
  
@@ -83,7 +82,7 @@ folder <- "2-12_OnsProf"
    ungroup() %>%
    select(-newArea) %>%
    group_by(geogConcat, SOC2digit, time_period) %>% # sum for each area
-   summarise(value=sum(as.numeric(value))) %>%
+   summarise(value=sum(as.numeric(value), na.rm = T)) %>%
    mutate(value = as.character(value)) # so we can merge
  
  # get england soc stats summed from LSIPs, plus GLA for London (as no london LSIPs)
