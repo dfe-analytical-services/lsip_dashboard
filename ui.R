@@ -762,14 +762,19 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("11 Dec 2025 (1.6.5)"),
+              p("13 Jan 2026 (1.6.6)"),
               tags$ul(
-                tags$li("Update to latest Further Education data.")
+                tags$li("Switch to new job adverts data."),
+                tags$li("Update to latest online job advert data.")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("11 Dec 2025 (1.6.5)"),
+                  tags$ul(
+                    tags$li("Update to latest Further Education data.")
+                  ),
                   p("24 Nov 2025 (1.6.4)"),
                   tags$ul(
                     tags$li("Update to latest business demography data.")
@@ -1213,7 +1218,6 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
           dataTableOutput("DataTbl"),
           uiOutput("hidden_downloads")
         )),
-        HTML("<p>*ONS have temporarily paused publication of the snapshot metric for online job adverts so the latest data available covers up to July 2025. More up to date data on new adverts is still available directly from the  <a href='https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk'>ONS website</a>.</p>"),
         # end of data table row
         ### 2.5.2 Data details text ----
         fluidRow(
@@ -1301,7 +1305,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             h3("ONS-Textkernel online job adverts"),
             p(
               "These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.
-            The dashboard shows the monthly average number of live adverts."
+            The dashboard shows the number of new adverts that have gone online in the month, presented as a three-month rolling average. The total across geographies may not sum to the England total. The data includes minor instances of suppression. Where this has occured, only the unsuppressed data is included in the rolling average, resulting in a drop in numbers over the months that include June and July 2025 in their rolling average calculation. Prior to December 2026 the dashboard showed the monthly average number of live adverts, which ONS have temporarily paused publication of. However, the dashboard may be reverted to using this snapshot metric in the future."
             ),
             p(
               "Advert volumes are shown split by SOC2020 Major and Sub-Major groups. Textkernel have derived these codes from the job advert job title."
