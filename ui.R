@@ -606,6 +606,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
 /* --- Minimise margin --- */
     .govuk-phase-banner {
       margin-left: 0px;
+      margin-top: 10px;
       background-color: #c5cdd7;
     }
     .govuk-phase-banner__content__tag {
