@@ -595,7 +595,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
 ")),
 
     # 2 Main page ----
-    # Add banner note around new adverts instead of snapshots
+    # Add banner note around using new adverts instead of snapshots
     shinyGovstyle::banner(
       "update banner",
       "Update",

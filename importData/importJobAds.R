@@ -134,7 +134,7 @@ folder <- "2-12_OnsProf"
      timePeriod == (max(timePeriod) - lubridate::years(1)) ~ -1,
      TRUE ~ 0
    )) %>%
-   #filter to last 5 years
+   #filter to last 4 years
    filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
    mutate(valueText = value)%>%
    mutate(value = as.numeric(valueText))%>%
