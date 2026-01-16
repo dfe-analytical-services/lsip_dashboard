@@ -782,7 +782,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("15 Jan 2026 (1.6.6)"),
+              p("16 Jan 2026 (1.6.6)"),
               tags$ul(
                 tags$li("Switch to new job adverts data."),
                 tags$li("Update to latest online job advert data.")
@@ -1325,13 +1325,13 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             h3("ONS-Textkernel online job adverts"),
             p(
               "These data tables are based on experimental data based on Textkernel online job adverts. Textkernel data is web-scraped from job advert information from approximately 90,000 job boards and recruitment pages.
-            The dashboard shows the number of new adverts that have gone online in the month, presented as a three-month rolling average. Prior to December 2026 the dashboard showed the monthly average number of live adverts, which ONS have temporarily paused publication of. However, the dashboard may be reverted to using this snapshot metric in the future. The data includes minor instances of suppression. Where this has occured, only the unsuppressed data is included in the rolling average. The total across geographies may not sum to the England total."
+            The dashboard shows the number of new adverts that have gone online in the month, presented as a three-month rolling average. Prior to December 2026 the dashboard showed the monthly average number of live adverts, which ONS have temporarily paused publication of. However, the dashboard may be reverted to using this snapshot metric in the future. The data includes minor instances of suppression. Where this has occurred, only the data containing no suppression is included in the rolling average. The total across geographies may not sum to the England total."
             ),
             p(
               "Advert volumes are shown split by SOC2020 Major and Sub-Major groups. Textkernel have derived these codes from the job advert job title."
             ),
             p(
-              "Counts have been rounded to the nearest 5 and so totals may not add due to this rounding. The scope of online job adverts does not fully capture the scope of UK economic activity because of differing advertising methods, for example, casual work may be advertised by word-of-mouth or in shop windows as opposed to online."
+              "The scope of online job adverts does not fully capture the scope of UK economic activity because of differing advertising methods, for example, casual work may be advertised by word-of-mouth or in shop windows as opposed to online."
             ),
             p(
               "As this data is experimental, there are some quality issues with the data. The ONS dataset has a full rundown on its cover sheet (link on downloads page). In brief:"

@@ -26,8 +26,6 @@ folder <- "2-12_OnsProf"
    tidyr::pivot_longer(!c("geographic_level", "area","areaCode","SOC2digit"),
                        names_to = "time_period", values_to = "value"
    )%>%
-   # replace [x] suppression with 0
-   mutate(value = gsub("\\[x\\]", "0", value)) %>%
    group_by(geographic_level,area,areaCode,SOC2digit,time_period)%>%
    summarise(value=sum(as.numeric(value)))%>%
    ungroup() %>%
