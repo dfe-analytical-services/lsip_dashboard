@@ -26,11 +26,18 @@ folder <- "2-12_OnsProf"
    tidyr::pivot_longer(!c("geographic_level", "area","areaCode","SOC2digit"),
                        names_to = "time_period", values_to = "value"
    )%>%
-   mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
    group_by(geographic_level,area,areaCode,SOC2digit,time_period)%>%
    summarise(value=sum(as.numeric(value)))%>%
-   mutate(value = as.character(value))%>% # so we can merge
-   ungroup()
+   ungroup() %>%
+   # calculate the number of job adverts as a 3-month rolling average
+   mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
+   arrange(geographic_level, area, areaCode, SOC2digit, timePeriod) %>%
+   group_by(geographic_level, area, areaCode, SOC2digit) %>%
+   mutate(value_roll = round(slide_dbl(value, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE), 0)) %>%
+   ungroup() %>%
+   select(-c(value, timePeriod)) %>%
+   rename(value = value_roll) %>%
+   mutate(value = as.character(value)) # so we can merge
  
  ### 2 ONS job adverts by LA----
  sheet <- "Table 2"
@@ -49,7 +56,17 @@ folder <- "2-12_OnsProf"
  LaLong<-tidyDataLA %>%
    tidyr::pivot_longer(!c("geographic_level", "area","areaCode"),
                        names_to = "time_period", values_to = "value"
-   )
+   ) %>%
+   # calculate the number of job adverts as a 3-month rolling average
+   mutate(value = as.numeric(value)) %>%
+   mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
+   arrange(area, areaCode, geographic_level, timePeriod) %>%
+   group_by(area, areaCode, geographic_level) %>%
+   mutate(value_roll = round(slide_dbl(value, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE), 0)) %>%
+   ungroup() %>%
+   select(-c(value, timePeriod)) %>%
+   rename(value = value_roll) %>%
+   mutate(value = as.character(value))
  
  ### 3 ONS job adverts England----
  sheet <- "Table 1"
@@ -66,7 +83,17 @@ folder <- "2-12_OnsProf"
  EngLong<-tidyDataEng %>%
    tidyr::pivot_longer(!c("geographic_level", "area"),
                        names_to = "time_period", values_to = "value"
-   )
+   ) %>%
+   # calculate the number of job adverts as a 3-month rolling average
+   mutate(value = as.numeric(value)) %>%
+   mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
+   arrange(area, geographic_level, timePeriod) %>%
+   group_by(area, geographic_level) %>%
+   mutate(value_roll = round(slide_dbl(value, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE), 0)) %>%
+   ungroup() %>%
+   select(-c(value, timePeriod)) %>%
+   rename(value = value_roll) %>%
+   mutate(value = as.character(value))
  
  ### 4 Get all the other geographies by joining to the lookups----
  #add on CA, LSIP
@@ -93,26 +120,26 @@ folder <- "2-12_OnsProf"
    group_by(SOC2digit, time_period) %>%
    summarise(value = as.character(sum(as.numeric(value), na.rm = T))) %>%
    mutate(geogConcat = "England")
-
-# Format all other area types
-F_adverts <- bind_rows(
-  SOC2digitEngland,#SOC 2 digit for england
-  geogsSummed, #summed up geographies
-  geogs %>% filter(newArea == 0)#LAs
-)%>%
-  mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
-  rename(chartPeriod = time_period) %>%
-  mutate(latest = case_when(
-    timePeriod == max(timePeriod) ~ 1,
-    timePeriod == (max(timePeriod) - lubridate::years(1)) ~ -1,
-    TRUE ~ 0
-  )) %>%
-  #filter to last 5 years
-  filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
-  mutate(valueText = value)%>%
-  mutate(value = as.numeric(valueText))%>%
-  select(-newArea)
-
+ 
+ # Format all other area types
+ F_adverts <- bind_rows(
+   SOC2digitEngland,#SOC 2 digit for england
+   geogsSummed, #summed up geographies
+   geogs %>% filter(newArea == 0)#LAs
+ )%>%
+   mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
+   rename(chartPeriod = time_period) %>%
+   mutate(latest = case_when(
+     timePeriod == max(timePeriod) ~ 1,
+     timePeriod == (max(timePeriod) - lubridate::years(1)) ~ -1,
+     TRUE ~ 0
+   )) %>%
+   #filter to last 4 years
+   filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
+   mutate(valueText = value)%>%
+   mutate(value = as.numeric(valueText))%>%
+   select(-newArea)
+ 
 # Get summaries
 C_adverts <- bind_rows(
   # soc 2 digit
