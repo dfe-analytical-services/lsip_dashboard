@@ -178,18 +178,18 @@
 "enterpriseCountSizeMedium-sized (50 to 249)",300,38510
 "enterpriseCountSizeMicro (0 to 9)",15275,2161050
 "enterpriseCountSizeSmall (10 to 49)",1655,209555
-"inactive",49800,7525800
-"inactiveRate",0.139365452408931,0.265386509108813
-"inemployment",223600,28062200
+"inactive",50100,7507200
+"inactiveRate",0.143226716839135,0.265790065183187
+"inemployment",223000,28164200
 "inemploymentIndustryAgricuture and fishing",NA,NA
-"inemploymentIndustryBanking finance and insurance etc.",25600,5364400
-"inemploymentIndustryConstruction",11300,1831300
-"inemploymentIndustryDistribution, hotels and restaurants",30800,4489600
-"inemploymentIndustryEnergy and water",1500,418900
-"inemploymentIndustryManufacturing",15200,2338900
-"inemploymentIndustryOther services",7000,1663700
-"inemploymentIndustryPublic admin education and health",60700,9122900
-"inemploymentIndustryTransport and Communication",11800,2903900
+"inemploymentIndustryBanking finance and insurance etc.",25100,5370500
+"inemploymentIndustryConstruction",10600,1812000
+"inemploymentIndustryDistribution, hotels and restaurants",26400,4455500
+"inemploymentIndustryEnergy and water",1500,417200
+"inemploymentIndustryManufacturing",14200,2323900
+"inemploymentIndustryOther services",6100,1692900
+"inemploymentIndustryPublic admin education and health",61900,9226300
+"inemploymentIndustryTransport and Communication",11400,2931000
 "inemploymentOccupation (SOC2020 Sub-Major Group)11 - Corporate managers and directors",NA,NA
 "inemploymentOccupation (SOC2020 Sub-Major Group)12 - Other managers and proprietors",NA,NA
 "inemploymentOccupation (SOC2020 Sub-Major Group)21 - Science, research, engineering and technology professionals",NA,NA
@@ -216,7 +216,7 @@
 "inemploymentOccupation (SOC2020 Sub-Major Group)82 - Transport and mobile machine drivers and operatives",NA,NA
 "inemploymentOccupation (SOC2020 Sub-Major Group)91 - Elementary trades and related occupations",NA,NA
 "inemploymentOccupation (SOC2020 Sub-Major Group)92 - Elementary administration and service occupations",NA,NA
-"inemploymentRate",0.688084687346135,0.839952996474736
+"inemploymentRate",0.689045745999246,0.835841956726247
 "participation",11700,1830650
 "participationAge19-24",3200,461780
 "participationAge25+",8500,1377180
@@ -247,8 +247,8 @@
 "participation_rate_per_100000_populationProvisionApprenticeships",1077,3341
 "participation_rate_per_100000_populationProvisionEducation and training",1932,6261
 "participation_rate_per_100000_populationProvisionTailored learning",432,1844
-"selfemployed",26200,3903700
-"selfemployedRate",0.055767446654984,0.148884870403858
+"selfemployed",27800,3916100
+"selfemployedRate",0.064000824487272,0.149878640776699
 "sustainedPositiveDestinationKS4Rate",0.883649252581291,0.960690480259785
 "sustainedPositiveDestinationKS4RateOutcomeApprenticeships",0.00469886594677631,0.119056822574411
 "sustainedPositiveDestinationKS4RateOutcomeEducation",0.756474681097797,0.942290215086337
@@ -260,8 +260,8 @@
 "sustainedPositiveDestinationKS5RateOutcomeApprenticeships",0.0238019169329073,0.194891443167305
 "sustainedPositiveDestinationKS5RateOutcomeEducation",0.295118949958983,0.657355396994079
 "sustainedPositiveDestinationKS5RateOutcomeEmployment",0.121139510117146,0.399712879409352
-"unemployed",3500,1449900
-"unemployedRate",0.0123066104078762,0.0717246224095539
+"unemployed",4400,1389300
+"unemployedRate",0.0124562937062937,0.0762666187567373
 "vacancies",2804,1075362
 "vacanciesOccupation (SOC2020 Major Group)1 - Managers, directors and senior officials",145,75126
 "vacanciesOccupation (SOC2020 Major Group)2 - Professional occupations",547,288993
