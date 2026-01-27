@@ -782,14 +782,18 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("22 Jan 2026 (1.6.7)"),
+              p("22 Jan 2026 (1.6.8)"),
               tags$ul(
-                tags$li("Update to latest APS data.")
+                tags$li("Correct APS data for some updated LAD areas (Westmorland and Furness, Cumberland and Somerset LADs).")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("22 Jan 2026 (1.6.7)"),
+                  tags$ul(
+                    tags$li("Update to latest APS data.")
+                  ),
                   p("19 Jan 2026 (1.6.6)"),
                   tags$ul(
                     tags$li("Switch to new job adverts data."),
