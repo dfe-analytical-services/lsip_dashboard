@@ -782,7 +782,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("22 Jan 2026 (1.6.8)"),
+              p("3 Feb 2026 (1.6.8)"),
               tags$ul(
                 tags$li("Correct APS data for some updated LAD areas (Westmorland and Furness, Cumberland and Somerset LADs).")
               ),
