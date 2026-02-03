@@ -20,34 +20,9 @@ I_entIndSize <-
     ) %>%
       select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, INDUSTRY_NAME, EMPLOYMENT_SIZEBAND_NAME, OBS_VALUE)%>%
       mutate(GEOGRAPHY_TYPE = "combined authorities (as of May 2025)"),
-    # user defined new LAs
-    nomisr::nomis_get_data(
-      "NM_142_1",
-      geography =
-        "MAKE|Westmorland%20and%20Furness|1811939350,1811939353,1811939354,MAKE|Cumberland|1811939349,1811939351,1811939352,MAKE|North%20Yorkshire|1811939387...1811939393,MAKE|Somerset|1811939662,1811939663,1811939667,1811939664",
-      industry = 37748736, date = "latestMINUS4-latest", employment_sizeband = "0,10,20,30,40", industry = "163577857...163577874", legal_status = "0", measures = "20100"
-    ) %>%
-      select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, INDUSTRY_NAME, EMPLOYMENT_SIZEBAND_NAME, OBS_VALUE) %>%
-      mutate(
-        GEOGRAPHY_TYPE = "local authorities: district / unitary (as of April 2021)",
-        GEOGRAPHY_CODE = case_when(
-          GEOGRAPHY_NAME == "Cumberland" ~ "E06000063",
-          GEOGRAPHY_NAME == "Westmorland and Furness" ~ "E06000064",
-          GEOGRAPHY_NAME == "Somerset" ~ "E06000066",
-          GEOGRAPHY_NAME == "North Yorkshire" ~ "E06000065",
-          TRUE ~ "NA"
-        )
-      ),
     # other geogs
     nomisr::nomis_get_data("NM_142_1", geography = geogUseAps$id, industry = 37748736, date = "latestMINUS4-latest", employment_sizeband = "0,10,20,30,40", industry = "163577857...163577874", legal_status = "0", measures = "20100") %>%
       select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, INDUSTRY_NAME, EMPLOYMENT_SIZEBAND_NAME, OBS_VALUE),
-  ) %>%
-  filter(
-    !GEOGRAPHY_NAME %in% c(
-      "Allerdale", "Carlisle", "Copeland", "Barrow-in-Furness", "Eden", "South Lakeland",
-      "Craven", "Hambleton", "Harrogate", "Richmondshire", "Ryedale", "Scarborough", "Selby",
-      "Mendip", "Sedgemoor", "South Somerset", "Somerset West and Taunton"
-    ) # remove old LADUs
   )
 
 # Enterprise by industry ----
