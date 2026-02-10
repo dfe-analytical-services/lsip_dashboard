@@ -33,7 +33,7 @@ folder <- "2-12_OnsProf"
    mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
    arrange(geographic_level, area, areaCode, SOC2digit, timePeriod) %>%
    group_by(geographic_level, area, areaCode, SOC2digit) %>%
-   mutate(value_roll = round(slide_dbl(value, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE), 0)) %>%
+   mutate(value_roll = round2(slide_dbl(value, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE), 0)) %>%
    ungroup() %>%
    select(-c(value, timePeriod)) %>%
    rename(value = value_roll) %>%
@@ -62,7 +62,7 @@ folder <- "2-12_OnsProf"
    mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
    arrange(area, areaCode, geographic_level, timePeriod) %>%
    group_by(area, areaCode, geographic_level) %>%
-   mutate(value_roll = round(slide_dbl(value, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE), 0)) %>%
+   mutate(value_roll = round2(slide_dbl(value, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE), 0)) %>%
    ungroup() %>%
    select(-c(value, timePeriod)) %>%
    rename(value = value_roll) %>%
@@ -89,7 +89,7 @@ folder <- "2-12_OnsProf"
    mutate(timePeriod = as.Date(paste0("01 ", gsub("-", " ", time_period)), "%d %b %y")) %>%
    arrange(area, geographic_level, timePeriod) %>%
    group_by(area, geographic_level) %>%
-   mutate(value_roll = round(slide_dbl(value, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE), 0)) %>%
+   mutate(value_roll = round2(slide_dbl(value, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE), 0)) %>%
    ungroup() %>%
    select(-c(value, timePeriod)) %>%
    rename(value = value_roll) %>%
