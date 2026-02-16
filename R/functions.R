@@ -140,3 +140,14 @@ safe_numeric <- function(x) {
   out[good] <- as.numeric(x[good])
   out
 }
+
+# R round function rounds to the nearest even number on .5 values. Most people expect a round up, so
+# this function rounds up on 0.5
+round2 <- function(x, digits) {
+  posneg <- sign(x)
+  z <- abs(x) * 10^digits
+  z <- z + 0.5 + sqrt(.Machine$double.eps)
+  z <- trunc(z)
+  z <- z / 10^digits
+  z * posneg
+}
