@@ -14,23 +14,6 @@ extractNomis <- function(tableID, dates, cells, LSIPareas, GLAarea) {
     ) %>%
       select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, CELL_NAME, OBS_VALUE, MEASURES_NAME) %>%
       mutate(GEOGRAPHY_TYPE = "combined authorities (as of May 2025)"),
-    # user defined new LAs aggregated from old LAs
-    nomisr::nomis_get_data(
-      id = tableID, date = dates, geography =
-        "MAKE|Westmorland%20and%20Furness|1811939350,1811939353,1811939354,MAKE|Cumberland|1811939349,1811939351,1811939352,MAKE|North%20Yorkshire|1811939387...1811939393,MAKE|Somerset|1811939662,1811939663,1811939667,1811939664",
-      cell = cells
-    ) %>%
-      select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, CELL_NAME, OBS_VALUE, MEASURES_NAME) %>%
-      mutate(
-        GEOGRAPHY_TYPE = "local authorities: district / unitary (as of April 2021)",
-        GEOGRAPHY_CODE = case_when(
-          GEOGRAPHY_NAME == "Cumberland" ~ "E06000063",
-          GEOGRAPHY_NAME == "Westmorland and Furness" ~ "E06000064",
-          GEOGRAPHY_NAME == "Somerset" ~ "E06000066",
-          GEOGRAPHY_NAME == "North Yorkshire" ~ "E06000065",
-          TRUE ~ "NA"
-        )
-      ),
     # other geogs
     nomisr::nomis_get_data(
       id = tableID, date = dates, geography = geogUseAps$id,
@@ -39,13 +22,7 @@ extractNomis <- function(tableID, dates, cells, LSIPareas, GLAarea) {
       select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, CELL_NAME, OBS_VALUE, MEASURES_NAME)
   ) %>%
     filter(
-      MEASURES_NAME == "Value",
-      # remove old LADUs no longer in use
-      !GEOGRAPHY_NAME %in% c(
-        "Allerdale", "Carlisle", "Copeland", "Barrow-in-Furness", "Eden", "South Lakeland",
-        "Craven", "Hambleton", "Harrogate", "Richmondshire", "Ryedale", "Scarborough", "Selby",
-        "Mendip", "Sedgemoor", "South Somerset", "Somerset West and Taunton"
-      )
+      MEASURES_NAME == "Value"
     ) %>%
     select(-MEASURES_NAME)
 }
@@ -76,7 +53,7 @@ formatNomis <- function(x) {
       TRUE ~ 0
     )) %>%
     mutate(geogConcat = case_when(
-      GEOGRAPHY_TYPE == "local authorities: district / unitary (as of April 2021)" ~ paste0(GEOGRAPHY_NAME, " LADU"),
+      GEOGRAPHY_TYPE == "local authorities: district / unitary (as of April 2023)" ~ paste0(GEOGRAPHY_NAME, " LADU"),
       GEOGRAPHY_TYPE == "combined authorities (as of May 2025)" ~ paste0(GEOGRAPHY_NAME, " CA"),
       GEOGRAPHY_TYPE == "User Defined Geography" ~ paste0(GEOGRAPHY_NAME, " LSIP"),
       TRUE ~ GEOGRAPHY_NAME
@@ -162,4 +139,15 @@ safe_numeric <- function(x) {
   good <- grepl("^[0-9.]+$", x)
   out[good] <- as.numeric(x[good])
   out
+}
+
+# R round function rounds to the nearest even number on .5 values. Most people expect a round up, so
+# this function rounds up on 0.5
+round2 <- function(x, digits) {
+  posneg <- sign(x)
+  z <- abs(x) * 10^digits
+  z <- z + 0.5 + sqrt(.Machine$double.eps)
+  z <- trunc(z)
+  z <- z / 10^digits
+  z * posneg
 }

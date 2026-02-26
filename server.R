@@ -1434,7 +1434,7 @@ server <- function(input, output, session) {
             currentMetricSpaces()
           },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          round(mapData$value * 100)
+          round2(mapData$value * 100, 0)
         ) %>% lapply(htmltools::HTML)
       } else {
         sprintf(
@@ -1446,7 +1446,7 @@ server <- function(input, output, session) {
             currentMetricSpaces()
           },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData$value), big.mark = ",")
+          format(round2(mapData$value, 0), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
     mapDataPopup <- currentMapData() %>%
@@ -1464,7 +1464,7 @@ server <- function(input, output, session) {
             currentMetricSpaces()
           },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          round(mapDataPopup$value * 100)
+          round2(mapDataPopup$value * 100, 0)
         ) %>% lapply(htmltools::HTML)
       } else {
         sprintf(
@@ -1476,7 +1476,7 @@ server <- function(input, output, session) {
             currentMetricSpaces()
           },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapDataPopup$value), big.mark = ",")
+          format(round2(mapDataPopup$value, 0), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
 
@@ -1607,7 +1607,7 @@ server <- function(input, output, session) {
             currentMetricSpaces()
           },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          round(mapData$value * 100)
+          round2(mapData$value * 100, 0)
         ) %>% lapply(htmltools::HTML)
       } else {
         sprintf(
@@ -1619,7 +1619,7 @@ server <- function(input, output, session) {
             currentMetricSpaces()
           },
           (I_DataText %>% filter(metric == input$splashMetric))$mapPop,
-          format(round(mapData$value), big.mark = ",")
+          format(round2(mapData$value, 0), big.mark = ",")
         ) %>% lapply(htmltools::HTML)
       }
     # Find bounds
@@ -1738,7 +1738,7 @@ server <- function(input, output, session) {
         paste0(
           " in the last ",
           if (input$splashMetric == "vacancies") {
-            round(((nrow(currentArea) - 1) / 12))
+            round2(((nrow(currentArea) - 1) / 12), 0)
           } else {
             nrow(currentArea) - 1
           }, # count number of years of change
@@ -1805,9 +1805,9 @@ server <- function(input, output, session) {
           ifelse(input$splashMetric == "employmentProjection", "Projected annual employment growth", (I_DataText %>% filter(metric == input$splashMetric))$mapPop),
           ": ",
           if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
-            scales::percent(round(value, 3))
+            scales::percent(round2(value, 3))
           } else {
-            format(round(value), big.mark = ",")
+            format(round2(value, 0), big.mark = ",")
           },
           "<br>"
         )
@@ -2019,9 +2019,9 @@ server <- function(input, output, session) {
               input$splashMetric == "participation" |
               input$splashMetric == "employmentProjection" |
               input$splashMetric == "starts") {
-              scales::percent(round(value, 3))
+              scales::percent(round2(value, 3))
             } else {
-              round(value, 0)
+              round2(value, 0)
             },
             "<br>"
           )
