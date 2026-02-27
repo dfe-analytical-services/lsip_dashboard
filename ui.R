@@ -784,7 +784,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
               h2("Latest update"),
               p("2 Mar 2026 (1.6.10)"),
               tags$ul(
-                tags$li("Change rounding from the default R rounding to more the more commonly understood method that rounds up at 0.5.")
+                tags$li("Update to the latest online job advert data (Jan 2026).")
               ),
               details(
                 label = "Previous updates",
