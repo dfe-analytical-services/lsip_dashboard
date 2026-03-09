@@ -149,7 +149,9 @@ new_ads_SOC_growth <- new_ads_SOC_roll %>%
 
 # Population rate of job ads by SOC across England
 new_ads_SOC_pop <- new_ads_SOC_roll %>%
+  group_by(soc_4_digit_code, soc_4_digit_label) %>%
   mutate(n_jobs_yr_sum = slide_dbl(n_jobs, ~ sum(.x, na.rm = TRUE), .before = 11, .complete = TRUE)) %>%
+  ungroup() %>%
   filter(!is.na(n_jobs_yr_sum)) %>%
   filter(month(timePeriod) %in% c(3, 6, 9, 12)) %>%
   mutate(start_date = timePeriod %m-% months(11),
@@ -162,7 +164,9 @@ new_ads_SOC_pop <- new_ads_SOC_roll %>%
 
 # Population rate of job ads by SOC across regions (for map)
 new_ads_region_SOC_pop <- I_Ons4digReg_clean %>%
+  group_by(region, soc_4_digit_code, soc_4_digit_label) %>%
   mutate(n_jobs_yr_sum = slide_dbl(n_jobs, ~ sum(.x, na.rm = TRUE), .before = 11, .complete = TRUE)) %>%
+  ungroup() %>%
   filter(!is.na(n_jobs_yr_sum)) %>%
   filter(month(timePeriod) %in% c(3, 6, 9, 12)) %>%
   mutate(start_date = timePeriod %m-% months(11),
@@ -297,25 +301,32 @@ output_national <- bind_rows(
     select(timePeriod, n_jobs_3m_avg) %>%
     rename(value = n_jobs_3m_avg) %>%
     filter(timePeriod >= make_date(year(latest_date) - 4, 1, 1)) %>%
-    mutate(metric = "national_3m_avg"),
+    mutate(metric = "volume"),
   
   new_ads_national_growth  %>%
     select(timePeriod, growth_perc_from_base) %>%
     rename(value = growth_perc_from_base) %>%
-    mutate(metric = "national_growth"),
+    mutate(metric = "growthRate"),
   
   new_ads_national_pop  %>%
     select(timePeriod, pop_rate) %>%
     rename(value = pop_rate) %>%
     filter(timePeriod >= make_date(year(latest_date) - 4, 1, 1)) %>%
-    mutate(metric = "national_pop"),
+    mutate(metric = "popRate"),
   
   new_ads_national_job  %>%
     select(timePeriod, job_rate) %>%
     rename(value = job_rate) %>%
     filter(timePeriod >= make_date(year(latest_date) - 4, 1, 1)) %>%
-    mutate(metric = "national_job")
+    mutate(metric = "jobRate")
   )
+
+output_national <- output_national %>%
+  mutate(geogConcat = "England",
+         chartPeriod = format(timePeriod, "%b-%y"),
+         timePeriod = as.character(timePeriod),
+         valueText = as.character(round2(value, 0))) %>%
+  select(geogConcat, metric, timePeriod, chartPeriod, value, valueText)
 
 # Occupations summary table
 output_occupations <- bind_rows(
