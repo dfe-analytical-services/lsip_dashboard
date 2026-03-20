@@ -21,7 +21,7 @@ jobAdTab <- function() {
       background-color: #c5cdd7;
       text-align: left;
     }
-    
+
     .govuk-phase-banner__content {
         text-align: left;
         display: flex;
