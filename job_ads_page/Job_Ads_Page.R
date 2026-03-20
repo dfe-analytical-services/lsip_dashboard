@@ -10,37 +10,66 @@ library(sf)
 
 # Load the data ======================================================
 
-# Job ads by region and 4-digit SOC
+# ONS job ads by region
+folder <- "2-12_OnsProf"
+sheet <- "Table 1"
+startRow <- 5
+new_ads_national <- openxlsx::read.xlsx(xlsxFile = file.path("Data", folder, list.files(path = file.path("Data", folder))),
+                                   sheet = sheet, startRow = startRow)
+
+# ONS job ads by region and 4-digit SOC
 folder <- "2-12_OnsProf"
 sheet <- "Table 3"
 startRow <- 5
-I_Ons4digReg <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, startRow = startRow)
+new_ads_SOC <- openxlsx::read.xlsx(xlsxFile = file.path("Data", folder, list.files(path = file.path("Data", folder))),
+                                   sheet = sheet, startRow = startRow)
 
-# APS economic activity data from NOMIS (to be used as population estimates)
-F_econ_Aps <- read.csv("https://www.nomisweb.co.uk/api/v01/dataset/NM_17_1.data.csv?geography=2092957699,2013265926,2013265924,2013265927,2013265921,2013265922,2013265928,2013265929,2013265925,2013265923&cell=402720769&measures=20100,20701&select=date_name,geography_name,geography_code,cell_name,measures_name,obs_value,obs_status_name")
+# APS economic activity data from NOMIS (to be used as population estimates). NOMIS filtered for:
+# Dataset = annual population survey
+# Geography = England and 9 English regions
+# Date = All dates
+# Cell = Table T01 Economic activity by age > Aged 16-64 > All
+APS_econ_activity <- read.csv("https://www.nomisweb.co.uk/api/v01/dataset/NM_17_1.data.csv?geography=2092957699,2013265926,2013265924,2013265927,2013265921,2013265922,2013265928,2013265929,2013265925,2013265923&cell=402720769&measures=20100,20701&select=date_name,geography_name,geography_code,cell_name,measures_name,obs_value,obs_status_name")
 
-# APS employment data from NOMIS
-F_emp_Aps <- read.csv("https://www.nomisweb.co.uk/api/v01/dataset/NM_17_1.data.csv?geography=2092957699&cell=402721281&measures=20100,20701&select=date_name,geography_name,geography_code,cell_name,measures_name,obs_value,obs_status_name")
+# APS employment data from NOMIS. NOMIS filtered for:
+# Dataset = annual population survey
+# Geography = England
+# Date = All dates
+# Cell = Table T01 Economic activity by age > Aged 16-64 > In employment
+APS_employment <- read.csv("https://www.nomisweb.co.uk/api/v01/dataset/NM_17_1.data.csv?geography=2092957699&cell=402721281&measures=20100,20701&select=date_name,geography_name,geography_code,cell_name,measures_name,obs_value,obs_status_name")
 
-# APS employment data by SOC 2020 from NOMIS
-F_emp_soc_Aps <- read.csv("https://www.nomisweb.co.uk/api/v01/dataset/NM_218_1.data.csv?geography=2092957699&jtype=0&ftpt=0&etype=0&c_sex=0&soc2020_full=1...412&measure=1&measures=20100,20701&select=date_name,geography_name,geography_code,jtype_name,ftpt_name,etype_name,c_sex_name,soc2020_full_name,measure_name,measures_name,obs_value,obs_status_name")
+# APS employment data by SOC 2020 from NOMIS. NOMIS filtered for:
+# Dataset = annual population survey - regional - occupation
+# Geography = England
+# Date = All dates
+# occupation (SOC2020) = All 4-digit SOC codes
+APS_employment_soc <- read.csv("https://www.nomisweb.co.uk/api/v01/dataset/NM_218_1.data.csv?geography=2092957699&jtype=0&ftpt=0&etype=0&c_sex=0&soc2020_full=1...412&measure=1&measures=20100,20701&select=date_name,geography_name,geography_code,jtype_name,ftpt_name,etype_name,c_sex_name,soc2020_full_name,measure_name,measures_name,obs_value,obs_status_name")
 
 # geojson file for map
-I_mapRegion <- sf::st_read("./job_ads_page/Regions_December_2024_Boundaries_EN_BFC_1195854647342073399.geojson",
+map_region <- sf::st_read("./job_ads_page/Regions_December_2024_Boundaries_EN_BFC_1195854647342073399.geojson",
                            stringsAsFactors = F)
 
 # Clean the data =====================================================
 
 # Reshape job ads data into tidy format
-I_Ons4digReg_clean <- I_Ons4digReg %>%
+new_ads_national_clean <- new_ads_national %>%
   janitor::clean_names() %>%
+  # Filter to England only
+  filter((country %in% "England")) %>%
+  mutate(across(jan_17:last_col(), as.numeric)) %>%
+  pivot_longer(jan_17:last_col(), names_to = "timePeriod", values_to = "n_jobs") %>%
+  mutate(timePeriod = as.Date(paste0("01-", timePeriod), format = "%d-%b_%y"))
+
+new_ads_SOC_clean <- new_ads_SOC %>%
+  janitor::clean_names() %>%
+  # Filter to England only
   filter(!(region %in% c("Northern Ireland", "Scotland", "Total UK", "Wales"))) %>%
   mutate(across(jan_17:last_col(), as.numeric)) %>%
   pivot_longer(jan_17:last_col(), names_to = "timePeriod", values_to = "n_jobs") %>%
   mutate(timePeriod = as.Date(paste0("01-", timePeriod), format = "%d-%b_%y"))
 
 # Clean APS economic activity data
-F_econ_Aps_clean <- F_econ_Aps %>%
+APS_econ_activity_clean <- APS_econ_activity %>%
   janitor::clean_names() %>%
   select(date_name, geography_name, geography_code, measures_name, obs_value) %>%
   filter(measures_name == "Value") %>%
@@ -51,7 +80,7 @@ F_econ_Aps_clean <- F_econ_Aps %>%
   mutate(region = if_else(region == "East", "East of England", region))
 
 # Clean APS employment data
-F_emp_Aps_clean <- F_emp_Aps %>%
+APS_employment_clean <- APS_employment %>%
   janitor::clean_names() %>%
   select(date_name, geography_name, measures_name, obs_value) %>%
   filter(measures_name == "Value") %>%
@@ -59,29 +88,34 @@ F_emp_Aps_clean <- F_emp_Aps %>%
          employment = obs_value)
 
 # Clean APS employment by SOC data
-F_emp_soc_Aps_clean <- F_emp_soc_Aps %>%
+APS_employment_soc_clean <- APS_employment_soc %>%
   janitor::clean_names() %>%
   # split out soc2020_full_name into SOC code and label
-  mutate(soc_4_digit_code = substr(soc2020_full_name, 1, 4),
-         soc_4_digit_label = substring(soc2020_full_name, 8)) %>%
+  separate(soc2020_full_name,
+           into = c("soc_4_digit_code", "soc_4_digit_label"),
+           sep = " : ",
+           remove = TRUE) %>%
   select(date_name, geography_name, soc_4_digit_code, soc_4_digit_label, measures_name, obs_value) %>%
   filter(measures_name == "Value") %>%
   rename(chartPeriod = date_name,
          employment = obs_value)
 
 # Clean geojson file
-I_mapRegion_clean <- I_mapRegion %>%
+map_region_clean <- map_region %>%
   select(RGN24CD, RGN24NM, geometry)
 
 # Find the latest date in the job ads data
-latest_date <- max(I_Ons4digReg_clean$timePeriod, na.rm = TRUE)
+latest_date <- max(new_ads_SOC_clean$timePeriod, na.rm = TRUE)
+
+# Set the base date for the growth rate calculations (currently set to January 2022)
+base_date <- make_date(2022, 1, 1)
 
 # Three-month rolling average ========================================
 
 # Calculate the number of job ads as a three-month rolling average to smooth the data
 
 # Three-month rolling average by SOC
-new_ads_SOC_roll <- I_Ons4digReg_clean %>%
+new_ads_SOC_roll <- new_ads_SOC_clean %>%
   group_by(soc_4_digit_code, soc_4_digit_label, timePeriod) %>%
   summarise(n_jobs = sum(n_jobs)) %>%
   mutate(n_jobs_3m_avg = slide_dbl(n_jobs, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE)) %>%
@@ -90,29 +124,34 @@ new_ads_SOC_roll <- I_Ons4digReg_clean %>%
 # National summary ===================================================
 
 # Volume of job ads across England
-new_ads_national_roll <- I_Ons4digReg_clean %>%
+new_ads_national_roll <- new_ads_national_clean %>%
   group_by(timePeriod) %>%
   summarise(n_jobs = sum(n_jobs, na.rm = TRUE)) %>%
   mutate(n_jobs_3m_avg = slide_dbl(n_jobs, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE)) %>%
   ungroup()
 
 # Volume of job ads across regions (for map)
-new_ads_region_vol <- I_Ons4digReg_clean %>%
+new_ads_region_vol <- new_ads_SOC_clean %>%
   group_by(region, timePeriod) %>%
   summarise(n_jobs = sum(n_jobs, na.rm = TRUE)) %>%
   ungroup()
 
-# Growth rate of job ads across England since base (i.e. the first January 4 years prior to the latest date)
+# Growth rate of job ads across England since base
 new_ads_national_growth <- new_ads_national_roll %>%
   # filter the data to the base date and onwards
-  filter(timePeriod >= make_date(year(latest_date) - 4, 1, 1)) %>%
+  filter(timePeriod >= base_date) %>%
   mutate(n_jobs_base = if_else(is.na(n_jobs_3m_avg), NA_real_, first(na.omit(n_jobs_3m_avg))),
-         growth_rate = (n_jobs_3m_avg - n_jobs_base) / n_jobs_base,
-         growth_perc_from_base = round2(growth_rate * 100, 2)) %>%
+         growth_rate = (n_jobs_3m_avg - n_jobs_base) / n_jobs_base) %>%
   ungroup() %>%
-  select(-n_jobs_base, -growth_rate)
+  select(-n_jobs_base)
 
 # Population rate of job ads across England
+
+# Filter APS economic activity data to England
+APS_econ_activity_national <- APS_econ_activity_clean %>%
+  filter(region == "England") %>%
+  select(chartPeriod, population)
+
 new_ads_national_pop <- new_ads_national_roll %>%
   # Calculate 12-month rolling sum
   mutate(n_jobs_yr_sum = slide_dbl(n_jobs, ~ sum(.x, na.rm = TRUE), .before = 11, .complete = TRUE)) %>%
@@ -124,28 +163,25 @@ new_ads_national_pop <- new_ads_national_roll %>%
   mutate(start_date = timePeriod %m-% months(11),
          chartPeriod = str_c(format(start_date, "%b %Y"), "-", format(timePeriod, "%b %Y"))) %>%
   # Join on APS economic activity data
-  left_join(F_econ_Aps_clean %>% filter(region == "England") %>% select(chartPeriod, population), by = "chartPeriod") %>%
-  mutate(pop_rate = n_jobs_yr_sum / population,
-         pop_rate = round2(pop_rate * 100, 2))
+  left_join(APS_econ_activity_national, by = "chartPeriod") %>%
+  mutate(pop_rate = n_jobs_yr_sum / population)
 
 # Employment rate of job ads across England
 new_ads_national_job <- new_ads_national_pop %>%
   # Join on APS employment data
-  left_join(F_emp_Aps_clean %>% select(chartPeriod, employment), by = "chartPeriod") %>%
-  mutate(job_rate = n_jobs_yr_sum / employment,
-         job_rate = round2(job_rate * 100, 2))
+  left_join(APS_employment_clean %>% select(chartPeriod, employment), by = "chartPeriod") %>%
+  mutate(job_rate = n_jobs_yr_sum / employment)
 
 # Occupations summary ================================================
 
 # Growth rate of job ads by SOC
 new_ads_SOC_growth <- new_ads_SOC_roll %>%
-  filter(timePeriod >= make_date(year(latest_date) - 4, 1, 1)) %>%
+  filter(timePeriod >= base_date) %>%
   group_by(soc_4_digit_code, soc_4_digit_label) %>%
   mutate(n_jobs_base = if_else(is.na(n_jobs_3m_avg), NA_real_, first(na.omit(n_jobs_3m_avg))),
-         growth_rate = (n_jobs_3m_avg - n_jobs_base) / n_jobs_base,
-         growth_perc_from_base = round2(growth_rate * 100, 2)) %>%
+         growth_rate = (n_jobs_3m_avg - n_jobs_base) / n_jobs_base) %>%
   ungroup() %>%
-  select(-n_jobs_base, -growth_rate)
+  select(-n_jobs_base)
 
 # Population rate of job ads by SOC across England
 new_ads_SOC_pop <- new_ads_SOC_roll %>%
@@ -158,12 +194,17 @@ new_ads_SOC_pop <- new_ads_SOC_roll %>%
          chartPeriod = str_c(format(start_date, "%b %Y"), "-", format(timePeriod, "%b %Y"))) %>%
   ungroup() %>%
   # Join on APS economic activity data
-  left_join(F_econ_Aps_clean %>% filter(region == "England") %>% select(chartPeriod, population), by = "chartPeriod") %>%
+  left_join(APS_econ_activity_national, by = "chartPeriod") %>%
   mutate(pop_rate = n_jobs_yr_sum / population,
          pop_rate = round2(pop_rate * 100000, 2)) # Per 100,000 population
 
 # Population rate of job ads by SOC across regions (for map)
-new_ads_region_SOC_pop <- I_Ons4digReg_clean %>%
+
+# Filter APS economic activity data
+APS_econ_activity_regional <- APS_econ_activity_clean %>%
+  select(chartPeriod, region, geography_code, population)
+
+new_ads_region_SOC_pop <- new_ads_SOC_clean %>%
   group_by(region, soc_4_digit_code, soc_4_digit_label) %>%
   mutate(n_jobs_yr_sum = slide_dbl(n_jobs, ~ sum(.x, na.rm = TRUE), .before = 11, .complete = TRUE)) %>%
   ungroup() %>%
@@ -173,7 +214,7 @@ new_ads_region_SOC_pop <- I_Ons4digReg_clean %>%
          chartPeriod = str_c(format(start_date, "%b %Y"), "-", format(timePeriod, "%b %Y"))) %>%
   ungroup() %>%
   # Join on APS economic activity data
-  left_join(F_econ_Aps_clean %>% select(chartPeriod, region, geography_code, population), by = c("chartPeriod", "region")) %>%
+  left_join(APS_econ_activity_regional, by = c("chartPeriod", "region")) %>%
   mutate(pop_rate = n_jobs_yr_sum / population,
          pop_rate = round2(pop_rate * 100000, 2)) # Per 100,000 population
 
@@ -181,21 +222,22 @@ new_ads_region_SOC_pop <- I_Ons4digReg_clean %>%
 new_ads_SOC_job <- new_ads_SOC_pop %>%
   group_by(soc_4_digit_code, soc_4_digit_label, timePeriod) %>%
   # Join on employment data
-  left_join(F_emp_soc_Aps_clean %>% select(chartPeriod, employment, soc_4_digit_code, soc_4_digit_label), by = c("chartPeriod", "soc_4_digit_code", "soc_4_digit_label")) %>%
+  left_join(APS_employment_soc_clean %>% select(chartPeriod, employment, soc_4_digit_code, soc_4_digit_label), by = c("chartPeriod", "soc_4_digit_code", "soc_4_digit_label")) %>%
   # Filter out rows with missing employment data (APS employment data by SOC starts from 2021)
   filter(!is.na(employment)) %>%
-  mutate(job_rate = n_jobs_yr_sum / employment,
-         job_rate = round2(job_rate * 100, 2))
+  mutate(job_rate = n_jobs_yr_sum / employment)
 
 # Add geometry data for map ==========================================
 
-new_ads_region_vol_map <- new_ads_region_vol %>%
-  filter(timePeriod == max(timePeriod)) %>%
-  left_join(I_mapRegion_clean, by = c("region" = "RGN24NM"))
+new_ads_region_vol_map <- map_region_clean %>%
+  left_join(new_ads_region_vol %>% filter(timePeriod == max(timePeriod)), by = c("RGN24NM" = "region")) %>%
+  rename(areaCode = RGN24CD,
+         areaName = RGN24NM,
+         value = n_jobs)
 
 new_ads_region_SOC_map <- new_ads_region_SOC_pop %>%
   filter(timePeriod == max(timePeriod)) %>%
-  left_join(I_mapRegion_clean, by = c("geography_code" = "RGN24CD", "region" = "RGN24NM"))
+  left_join(map_region_clean, by = c("geography_code" = "RGN24CD", "region" = "RGN24NM"))
 
 # Constant high demand ===============================================
 
@@ -221,9 +263,29 @@ new_ads_SOC_constant <- new_ads_SOC_constant %>%
   filter(if_all(c(-soc_4_digit_code, -soc_4_digit_label), ~ .x == TRUE)) %>%
   select(soc_4_digit_code, soc_4_digit_label)
 
+# Calculate percentage change for these occupations
+new_ads_SOC_constant_output <- new_ads_SOC_roll %>%
+  filter(timePeriod %in% c(latest_date, latest_date %m-% years(1))) %>%
+  mutate(period = if_else(timePeriod == latest_date, 
+                          "n_jobs_latest", 
+                          "n_jobs_previous")) %>%
+  select(soc_4_digit_code, period, n_jobs) %>%
+  pivot_wider(names_from = period, values_from = n_jobs) %>%
+  # Join on the constant data
+  right_join(new_ads_SOC_constant, by = "soc_4_digit_code") %>%
+  arrange(desc(n_jobs_latest)) %>%
+  # Percentage change will be the latest month compared to the same month in the previous year
+  mutate(`Percentage change` = (n_jobs_latest - n_jobs_previous) / n_jobs_previous,
+         `Number of new job adverts` = format(n_jobs_latest, big.mark = ",")) %>%
+  select(Occupation = soc_4_digit_label,
+         `Number of new job adverts`,
+         `Percentage change`)
+
 # Emerging high demand ===============================================
 
 # Find which occupations have been in the top 15% in the latest 3-months but not in the top 15% in the previous 9-months
+
+# First calculate percentage change for the latest month compared to the same month in the previous year
 
 # Filter data for the previous 3-months and then the 9-months prior to that
 new_ads_SOC_3months <- new_ads_SOC_roll %>%
@@ -247,11 +309,28 @@ new_ads_SOC_9months <- new_ads_SOC_roll %>%
 new_ads_SOC_emerging <- new_ads_SOC_3months %>%
   anti_join(new_ads_SOC_9months, by = "soc_4_digit_code")
 
+# Calculate percentage change for these occupations
+new_ads_SOC_emerging_output <- new_ads_SOC_roll %>%
+  filter(timePeriod %in% c(latest_date, latest_date %m-% years(1))) %>%
+  mutate(period = if_else(timePeriod == latest_date, 
+                          "n_jobs_latest", 
+                          "n_jobs_previous")) %>%
+  select(soc_4_digit_code, period, n_jobs) %>%
+  pivot_wider(names_from = period, values_from = n_jobs) %>%
+  # Join on the emerging data
+  right_join(new_ads_SOC_emerging, by = "soc_4_digit_code") %>%
+  # Percentage change will be the latest month compared to the same month in the previous year
+  mutate(`Percentage change` = (n_jobs_latest - n_jobs_previous) / n_jobs_previous,
+         `Number of new job adverts` = format(n_jobs_latest, big.mark = ",")) %>%
+  select(Occupation = soc_4_digit_label,
+         `Number of new job adverts`,
+         `Percentage change`)
+
 # Rank of occupations ================================================
 
-# Filter the data for the previous one year
+# Filter the data for the latest month
 new_ads_SOC_ranking <- new_ads_SOC_roll %>%
-  filter(timePeriod >= (latest_date - months(11))) %>%
+  filter(timePeriod == latest_date) %>%
   # Sum up job ads for each occupation
   group_by(soc_4_digit_code, soc_4_digit_label) %>% 
   summarise(n_jobs_sum = sum(n_jobs, na.rm = TRUE)) %>%
@@ -292,6 +371,14 @@ for (i in occupation_codes) {
   
 }
 
+# Final formatted table for the dashboard page
+new_ads_SOC_ranking <- new_ads_SOC_ranking %>%
+  select(rank, soc_4_digit_label, n_jobs_sum) %>%
+  mutate(n_jobs_sum = format(n_jobs_sum, big.mark = ",")) %>%
+  rename(Rank = rank,
+         Occupation = soc_4_digit_label,
+         `Number of new job adverts` = n_jobs_sum)
+
 # Summaries ==========================================================
 
 # National summary table
@@ -304,8 +391,8 @@ output_national <- bind_rows(
     mutate(metric = "volume"),
   
   new_ads_national_growth  %>%
-    select(timePeriod, growth_perc_from_base) %>%
-    rename(value = growth_perc_from_base) %>%
+    select(timePeriod, growth_rate) %>%
+    rename(value = growth_rate) %>%
     mutate(metric = "growthRate"),
   
   new_ads_national_pop  %>%
@@ -324,9 +411,8 @@ output_national <- bind_rows(
 output_national <- output_national %>%
   mutate(geogConcat = "England",
          chartPeriod = format(timePeriod, "%b-%y"),
-         timePeriod = as.character(timePeriod),
-         valueText = as.character(round2(value, 0))) %>%
-  select(geogConcat, metric, timePeriod, chartPeriod, value, valueText)
+         timePeriod = as.character(timePeriod)) %>%
+  select(geogConcat, metric, timePeriod, chartPeriod, value)
 
 # Occupations summary table
 output_occupations <- bind_rows(
@@ -338,8 +424,8 @@ output_occupations <- bind_rows(
     mutate(metric = "soc_3m_avg"),
   
   new_ads_SOC_growth  %>%
-    select(timePeriod, soc_4_digit_code, soc_4_digit_label, growth_perc_from_base) %>%
-    rename(value = growth_perc_from_base) %>%
+    select(timePeriod, soc_4_digit_code, soc_4_digit_label, growth_rate) %>%
+    rename(value = growth_rate) %>%
     mutate(metric = "soc_growth"),
   
   new_ads_SOC_pop  %>%
@@ -356,7 +442,15 @@ output_occupations <- bind_rows(
 
 # Write out Summaries ================================================
 
-saveRDS(output_national, "./job_ads_page/job_ads_page_national_output.rds")
+saveRDS(output_national, "./job_ads_page/job_ads_page_national.rds")
 
-saveRDS(output_occupations, "./job_ads_page/job_ads_page_occupations_output.rds")
+saveRDS(output_occupations, "./job_ads_page/job_ads_page_occupations.rds")
+
+saveRDS(new_ads_region_vol_map, "./job_ads_page/job_ads_page_map.rds")
+
+saveRDS(new_ads_SOC_constant_output, "./job_ads_page/job_ads_page_constant.rds")
+
+saveRDS(new_ads_SOC_emerging_output, "./job_ads_page/job_ads_page_emerging.rds")
+
+saveRDS(new_ads_SOC_ranking, "./job_ads_page/job_ads_page_ranking.rds")
 

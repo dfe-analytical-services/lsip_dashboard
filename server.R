@@ -2168,7 +2168,288 @@ server <- function(input, output, session) {
       write_xlsx(listDownloadV1Current(), path = file)
     }
   )
-
+  
+  ### x.x.x Job Ads Dynamic Text ----
+  output$jobDynamicText <- renderUI({
+    req(jobAdsNational)
+    
+    jobTextData <- jobAdsNational %>%
+      mutate(date = as.Date(timePeriod)) %>%
+      arrange(dplyr::desc(date))
+    
+    jobTextData <- jobTextData %>%
+      filter(date == max(jobTextData$date, na.rm = TRUE), metric %in% c("volume", "growthRate", "popRate", "jobRate")) %>%
+      tidyr::pivot_wider(names_from = metric,
+                         values_from = value)
+    
+    
+    HTML(paste0(
+      "<p>",
+      "In ",
+      jobTextData$chartPeriod,
+      ", there were ",
+      format(round2(jobTextData$volume, 0), big.mark = ","),
+      " new online job adverts in ",
+      jobTextData$geogConcat,
+      ", which represents a change of ",
+      scales::percent(round2(jobTextData$growthRate, 3), accuracy = 0.01, trim = FALSE),
+      " compared to January 2022",
+      "</p>"
+    ))
+  })
+  
+  ### x.x.x Job Ads Map ----
+  # Output either map or table, depending on toggle selected
+  output$jobMapUI <- renderUI({
+    req(input$jobMapSwitch)
+    
+    if (input$jobMapSwitch == "Map") {
+      leafletOutput("jobMap")
+    } else {
+      DT::dataTableOutput("jobMapTable")
+    }
+  })
+  
+  # Render table
+  output$jobMapTable <- DT::renderDataTable({
+    # Only render table if 'List' toggle is selected
+    req(input$jobMapSwitch == "List")
+    
+    DT::datatable(
+      jobAdsGeog %>%
+        # Remove geometry column from sf object
+        sf::st_drop_geometry() %>%
+        mutate(value = format(value, big.mark = ",")) %>%
+        arrange(desc(value)) %>%
+        select(Region = areaName,
+               `Number of new job adverts` = value),
+      rownames = FALSE,
+      options = list(
+        pageLength = 20,
+        dom = "t", # Only show table (no search box etc.)
+        columnDefs = list(
+          list(
+            targets = c("Number of new job adverts"), # Right align the values column
+            className = "dt-right"
+          )
+        )
+      )
+    )
+  })
+  
+  # Simplify map for quicker loading
+  jobAdsGeogSimple <- rmapshaper::ms_simplify(jobAdsGeog, keep = 0.01, keep_shapes = TRUE)
+  
+  # Render map
+  output$jobMap <- renderLeaflet({
+    jobMapData <- jobAdsGeogSimple
+    
+    if (sum(!is.na(jobMapData$value)) > 0) {
+      pal <- colorNumeric("Blues", jobMapData$value)
+    } else {
+      pal <- colorNumeric("Blues", 0)
+    }
+    # Create hover label
+    labels <- sprintf(
+      "<strong>%s</strong><br/>%s<br/>%s: %s",
+      jobMapData$areaName,
+      "Total",
+      "online job adverts",
+      format(round2(jobMapData$value, 0), big.mark = ",")
+    ) %>% lapply(htmltools::HTML)
+    
+    # Create map
+    leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
+      addProviderTiles(providers$CartoDB.Positron) %>%
+      setView(
+        lng = -1.6,
+        lat = 52.8,
+        zoom = 5.7
+      ) %>%
+      addPolygons(
+        data = jobMapData,
+        fillColor = ~ pal(jobMapData$value),
+        fillOpacity = 1,
+        color = "black",
+        layerId = ~areaCode,
+        weight = 1,
+        highlightOptions = highlightOptions(
+          weight = 2,
+          bringToFront = TRUE
+        ),
+        label = labels,
+        labelOptions = labelOptions(
+          style = list("font-weight" = "normal", padding = "3px 8px"),
+          textsize = "12px",
+          direction = "auto"
+        ),
+      )
+  })
+  
+  ### x.x.x Job Ads Chart ----
+  output$jobTime <- renderPlotly({
+    # Filter the job ads data to region selected
+    jobTimeData <- jobAdsNational %>%
+      filter(geogConcat == input$jobGeoChoice)
+    
+    # Filter the data to the current metric selected
+    jobTimeData <- jobTimeData %>%
+      filter(metric == input$jobMetric) %>%
+      # add an extra column so the colours work in ggplot when sorting alphabetically (this will be expanded when regions are added)
+      mutate(Areas = factor("England"))
+    
+    # Create a label for the metric to be used within the hover label
+    metricLabel <- case_when(input$jobMetric == "volume" ~ "volume",
+                             input$jobMetric == "growthRate" ~ "growth rate",
+                             input$jobMetric == "popRate"    ~ "adverts per population",
+                             input$jobMetric == "jobRate"    ~ "adverts per job")
+    
+    # Render line chart
+    jobTimePlot <- ggplot(
+      jobTimeData,
+      aes(
+        x = as.Date(timePeriod),
+        y = value,
+        color = Areas,
+        group = Areas,
+        text = paste0(
+          "Period: ",
+          chartPeriod,
+          "<br>",
+          "Area: ",
+          Areas,
+          "<br>",
+          "Total ",
+          metricLabel,
+          ": ",
+          if (str_sub(input$jobMetric, start = -4) == "Rate") {
+            scales::percent(round2(value, 3))
+          } else {
+            format(round2(value, 0), big.mark = ",")
+          },
+          "<br>"
+        )
+      )
+    ) +
+      geom_line() +
+      geom_point() +
+      theme_minimal() +
+      theme(
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        legend.position = "bottom",
+        legend.title = element_blank()
+      ) +
+      scale_y_continuous(
+        # Style labels. If a rate style as %, If bigger than 1m style as x.xxM, else use cut_short_scale to append a k for bigger than 1000
+        labels = if (str_sub(input$jobMetric, start = -4) == "Rate") {
+          scales::percent
+        } else if (all(is.na(jobTimeData$value))) {
+          label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
+        } else if ((max(jobTimeData$value, na.rm = TRUE) >= 1000000 & (max(jobTimeData$value, na.rm = TRUE) - min(jobTimeData$value, na.rm = TRUE)) < 600000) | (max(jobTimeData$value, na.rm = TRUE) >= 1000 & (max(jobTimeData$value, na.rm = TRUE) - min(jobTimeData$value, na.rm = TRUE)) < 600)) {
+          label_number(accuracy = 0.01, scale_cut = append(scales::cut_short_scale(), 1, 1))
+        } else if ((max(jobTimeData$value, na.rm = TRUE) >= 1000000 & (max(jobTimeData$value, na.rm = TRUE) - min(jobTimeData$value, na.rm = TRUE)) < 6000000) | (max(jobTimeData$value, na.rm = TRUE) >= 1000 & (max(jobTimeData$value, na.rm = TRUE) - min(jobTimeData$value, na.rm = TRUE)) < 6000)) {
+          label_number(accuracy = 0.1, scale_cut = append(scales::cut_short_scale(), 1, 1))
+        } else {
+          label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
+        }
+      ) +
+      labs(colour = "") +
+      scale_color_manual(values = c("England" = "#12436D")) +
+      scale_x_date(
+        name = "My date axis title",
+        date_breaks = "1 years",
+        date_labels = "%Y"
+      )
+    ggplotly(jobTimePlot, tooltip = "text") %>%
+      layout(
+        legend = list(
+          orientation = "h",
+          x = 0,
+          y = -0.1
+        ),
+        xaxis = list(fixedrange = TRUE),
+        yaxis = list(fixedrange = TRUE)
+      ) %>% # disable zooming because it's awful on mobile
+      config(displayModeBar = FALSE)
+  })
+  
+  ### x.x.x Job Ads Ranking Table ----
+  output$jobRankTable <- DT::renderDataTable({
+    DT::datatable(
+      jobAdsRanking,
+      options = list(
+        scrollY = "300px",  # Create a scrolling table
+        paging = FALSE,
+        info = FALSE,
+        columnDefs = list(
+          list(
+            targets = c("Number of new job adverts"), # Right align the values column
+            className = "dt-right"
+          )
+        )
+      ),
+      rownames = FALSE
+    )
+  })
+  
+  ### x.x.x Job Ads Demand Table ----
+  output$jobDemandTable <- renderUI({
+    req(input$jobTableSwitch)
+    
+    if (input$jobTableSwitch == "Emerging Demand") {
+      DTOutput("emergingTable")
+    } else {
+      DTOutput("constantTable")
+    }
+  })
+  
+  # Render emerging demand table
+  output$emergingTable <- DT::renderDataTable({
+    DT::datatable(
+      jobAdsEmerging %>%
+        dplyr::mutate(
+          # Format the percentage change column
+          `Percentage change` = scales::percent(round2(`Percentage change`, 3), accuracy = 0.01, trim = FALSE
+          )
+        ),
+      options = list(dom = "t",
+                     ordering = FALSE,
+                     scrollY = "300px",
+                     columnDefs = list(
+                       list(
+                         targets = c("Number of new job adverts", "Percentage change"),  # Right align the values columns
+                         className = "dt-right"
+                       )
+                     )
+      ),
+      rownames = FALSE
+    )
+  })
+  
+  # Render constant demand table
+  output$constantTable <- DT::renderDataTable({
+    DT::datatable(
+      jobAdsConstant |>
+        dplyr::mutate(
+          # Format the percentage change column
+          `Percentage change` = scales::percent(round2(`Percentage change`, 3), accuracy = 0.01, trim = FALSE
+          )
+        ),
+      options = list(dom = "t",
+                     ordering = FALSE,
+                     scrollY = "300px",
+                     columnDefs = list(
+                       list(
+                         targets = c("Number of new job adverts", "Percentage change"),  # Right align the values columns
+                         className = "dt-right"
+                       )
+                     )
+      ),
+      rownames = FALSE
+    )
+  })
+  
   # 6 DataHub----
   ## 6.1 Filters----
   output$hubAreaInput <- renderUI({
