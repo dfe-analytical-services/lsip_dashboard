@@ -23,9 +23,6 @@ jobs:
 
       - name: Install git2r dependencies
         run: sudo apt-get install -y libgit2-dev
-        
-      - name: Install fontconfig library (systemfonts dependencies)
-        run: sudo apt-get install -y libfontconfig1-dev
 
       - name: Install proj library (terra depdencies)
         run: sudo apt-get install libproj-dev
