@@ -128,6 +128,7 @@ jobAdTab <- function() {
     fluidRow(
       column(
         12,
+        p(uiOutput("jobCaveatText")),
         p(uiOutput("jobDynamicText"))
       )
     ),
@@ -135,15 +136,18 @@ jobAdTab <- function() {
     fluidRow(
       column(
         6,
+        h3("Where are new job adverts focussed across England?"),
         p(uiOutput("jobMapComment")),
         radioGroupButtons(
           inputId = "jobMapSwitch",
           choices = c("Map", "List")
         ),
-        withSpinner(uiOutput("jobMapUI"))
+        withSpinner(uiOutput("jobMapUI")),
+        p(uiOutput("jobMapFooter"))
       ),
       column(
         6,
+        h3(uiOutput("jobTimeHeading")),
         p(uiOutput("jobTimeComment")),
         withSpinner(plotlyOutput("jobTime"))
       )
@@ -153,12 +157,16 @@ jobAdTab <- function() {
     fluidRow(
       column(
         6,
-        p(uiOutput("jobTableComment")),
-        withSpinner(DT::dataTableOutput("jobRankTable"))
+        h3("Which occupations have the highest volumes of online job adverts?"),
+        p(uiOutput("jobRankComment")),
+        withSpinner(DT::dataTableOutput("jobRankTable")),
+        br(),
+        p(uiOutput("jobRankFooter"))
       ),
       column(
         6,
-        p(uiOutput("jobTableComment")),
+        h3(uiOutput("jobDemandHeading")),
+        p(uiOutput("jobDemandComment")),
         div(
           style = "text-align: right;",
           radioGroupButtons(
@@ -166,7 +174,9 @@ jobAdTab <- function() {
             choices = c("Emerging Demand", "Constant Demand")
           )
         ),
-        withSpinner(uiOutput("jobDemandTable"))
+        withSpinner(uiOutput("jobDemandTable")),
+        br(),
+        p(uiOutput("jobDemandFooter"))
       )
     ),
     br(),
@@ -202,7 +212,10 @@ jobAdTab <- function() {
     fluidRow(column(
       12,
       h2("Data notes"),
-      p("XXX."),
+      p("Any NAs or missing data in the charts or maps are due to supressed data."),
+      p(uiOutput("jobDataSource")),
+      p("Caveats:"),
+      p(uiOutput("jobDataCaveat"))
     )),
     br()
   )

@@ -531,7 +531,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <li style="margin-left:20px;">
         <a href="#" id="nav_job_ad_tab" class="govuk-service-navigation__link"
            onclick="Shiny.setInputValue(\'nav_click\', \'job_ad_tab\', {priority:\'event\'}); return false;">
-          Job adverts
+          Job adverts (Pilot)
         </a>
       </li>
 

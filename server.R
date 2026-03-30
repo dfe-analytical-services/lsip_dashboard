@@ -2170,37 +2170,73 @@ server <- function(input, output, session) {
   )
 
   ### x.x.x Job Ads Dynamic Text ----
+
+  # Create data caveat at the top
+  output$jobCaveatText <- renderUI({
+    "These statistics should be treated as official statistics in development (previously known as experimental statistics. The data includes minor instances of suppression in June and July 2025 due to quality concerns. Where this has occurred, only the data containing no suppression is included in the rolling average. ONS have partially imputed the data for October and November 2025 in response to the source data presenting a larger level of duplicate adverts which are not being identified as such. As such, month-on-month trends during the affected period should be treated with caution. Additionally, a source of jobs was missing from the December 2025 data, and so some data has been supressed in this month."
+  })
+
+  # Create dynamic text
   output$jobDynamicText <- renderUI({
     req(jobAdsNational)
 
     jobTextData <- jobAdsNational %>%
       mutate(date = as.Date(timePeriod)) %>%
-      arrange(dplyr::desc(date))
-
-    jobTextData <- jobTextData %>%
-      filter(date == max(jobTextData$date, na.rm = TRUE), metric %in% c("volume", "growthRate", "popRate", "jobRate")) %>%
+      group_by(metric) %>%
+      filter(date == max(date, na.rm = TRUE)) %>%
+      ungroup() %>%
+      filter(metric %in% c("volume", "growthRate", "popRate", "jobRate")) %>%
       tidyr::pivot_wider(
         names_from = metric,
-        values_from = value
+        values_from = c(timePeriod, chartPeriod, value, date)
       )
-
 
     HTML(paste0(
       "<p>",
-      "In ",
-      jobTextData$chartPeriod,
+      "In the three months to ",
+      format(jobTextData$date_volume, "%B %Y"),
       ", there were ",
-      format(round2(jobTextData$volume, 0), big.mark = ","),
+      format(round2(jobTextData$value_volume, 0), big.mark = ","),
       " new online job adverts in ",
       jobTextData$geogConcat,
-      ", which represents a change of ",
-      scales::percent(round2(jobTextData$growthRate, 3), accuracy = 0.01, trim = FALSE),
-      " compared to January 2022",
+      ", which represents ",
+      if (jobTextData$value_growthRate > 0) "an increase" else "a decrease",
+      " of ",
+      scales::percent(round2(abs(jobTextData$value_growthRate), 2), trim = FALSE),
+      " compared to the three months to January 2022.",
+      "</p>",
+      "In ",
+      format(jobTextData$date_popRate, "%B %Y"),
+      ", there were ",
+      round2(jobTextData$value_popRate * 100, 0),
+      " online job adverts per 100 adults and ",
+      round2(jobTextData$value_jobRate * 100, 0),
+      " adverts per 100 jobs.",
       "</p>"
     ))
   })
 
   ### x.x.x Job Ads Map ----
+
+  # Create commentary for map
+  output$jobMapComment <- renderUI({
+    highest_area <- jobAdsGeog %>%
+      filter(value == max(value)) %>%
+      pull(areaName)
+
+    lowest_area <- jobAdsGeog %>%
+      filter(value == min(value)) %>%
+      pull(areaName)
+
+    paste0(
+      "Over the last three months, the number of online job adverts has been highest in ",
+      highest_area,
+      " and lowest in ",
+      lowest_area,
+      "."
+    )
+  })
+
   # Output either map or table, depending on toggle selected
   output$jobMapUI <- renderUI({
     req(input$jobMapSwitch)
@@ -2221,7 +2257,7 @@ server <- function(input, output, session) {
       jobAdsGeog %>%
         # Remove geometry column from sf object
         sf::st_drop_geometry() %>%
-        mutate(value = format(value, big.mark = ",")) %>%
+        mutate(value = format(round2(value, 0), big.mark = ",")) %>%
         arrange(desc(value)) %>%
         select(
           Region = areaName,
@@ -2290,7 +2326,68 @@ server <- function(input, output, session) {
       )
   })
 
+  # Create data date footnote
+  output$jobMapFooter <- renderUI({
+    req(jobAdsNational)
+
+    dates <- jobAdsNational %>%
+      filter(metric == "volume") %>%
+      mutate(date = as.Date(timePeriod)) %>%
+      arrange(date) %>%
+      pull(date)
+
+    end_date <- max(dates, na.rm = TRUE)
+    start_date <- max(dates[dates <= end_date %m-% months(2)])
+
+    paste0(
+      format(start_date, "%B %Y"),
+      " to ",
+      format(end_date, "%B %Y"),
+      " data"
+    )
+  })
+
   ### x.x.x Job Ads Chart ----
+
+  # Headings for chart
+  output$jobTimeHeading <- renderUI({
+    case_when(
+      input$jobMetric == "volume" ~ "How are online job adverts changing over time?",
+      input$jobMetric == "growthRate" ~ "How have online job adverts changed since January 2022?",
+      input$jobMetric == "popRate" ~ "How has the rate of online job adverts per 100 adults changed over time?",
+      input$jobMetric == "jobRate" ~ "How has the rate of online job adverts per 100 employees changed over time?"
+    )
+  })
+
+  # Commentary for chart
+  output$jobTimeComment <- renderUI({
+    req(jobAdsNational)
+
+    jobTextData <- jobAdsNational %>%
+      mutate(date = as.Date(timePeriod)) %>%
+      group_by(metric) %>%
+      filter(date == max(date, na.rm = TRUE)) %>%
+      ungroup() %>%
+      filter(metric %in% c("volume", "growthRate", "popRate", "jobRate")) %>%
+      tidyr::pivot_wider(
+        names_from = metric,
+        values_from = c(timePeriod, chartPeriod, value, date)
+      )
+
+    case_when(
+      input$jobMetric == "volume" ~ "This chart shows the trend in online job adverts across all occupations over time, presented as a 3-month rolling average.",
+      input$jobMetric == "growthRate" ~ paste0(
+        "This chart shows the change in online job adverts since January 2022, presented as a 3-month rolling average. Compared to January 2022, there were ",
+        scales::percent(round2(abs(jobTextData$value_growthRate), 2), trim = FALSE),
+        " fewer online job adverts in the three months to ",
+        format(jobTextData$date_growthRate, "%B %Y"),
+        " ."
+      ),
+      input$jobMetric == "popRate" ~ "This chart shows the number of job adverts per 100 adults, presented as a 12-month rolling sum per quarter. Since mid-2024, the rate has remained fairly stable.",
+      input$jobMetric == "jobRate" ~ "This chart shows the number of job adverts per 100 employees, presented as a 12-month rolling sum per quarter. Since mid-2024, the rate has remained fairly stable."
+    )
+  })
+
   output$jobTime <- renderPlotly({
     # Filter the job ads data to region selected
     jobTimeData <- jobAdsNational %>%
@@ -2304,10 +2401,10 @@ server <- function(input, output, session) {
 
     # Create a label for the metric to be used within the hover label
     metricLabel <- case_when(
-      input$jobMetric == "volume" ~ "volume",
-      input$jobMetric == "growthRate" ~ "growth rate",
-      input$jobMetric == "popRate" ~ "adverts per population",
-      input$jobMetric == "jobRate" ~ "adverts per job"
+      input$jobMetric == "volume" ~ "Total volume",
+      input$jobMetric == "growthRate" ~ "Change since January 2022",
+      input$jobMetric == "popRate" ~ "Job adverts per 100 adults",
+      input$jobMetric == "jobRate" ~ "Job adverts per 100 employees"
     )
 
     # Render line chart
@@ -2325,11 +2422,10 @@ server <- function(input, output, session) {
           "Area: ",
           Areas,
           "<br>",
-          "Total ",
           metricLabel,
           ": ",
           if (str_sub(input$jobMetric, start = -4) == "Rate") {
-            scales::percent(round2(value, 3))
+            scales::percent(round2(value, 3), accuracy = 0.1, trim = FALSE)
           } else {
             format(round2(value, 0), big.mark = ",")
           },
@@ -2381,6 +2477,26 @@ server <- function(input, output, session) {
   })
 
   ### x.x.x Job Ads Ranking Table ----
+
+  # Commentary for ranking table
+  output$jobRankComment <- renderUI({
+    req(jobAdsNational)
+
+    dates <- jobAdsNational %>%
+      filter(metric == "volume") %>%
+      mutate(date = as.Date(timePeriod)) %>%
+      arrange(date) %>%
+      pull(date)
+
+    end_date <- max(dates, na.rm = TRUE)
+
+    paste0(
+      "Volume of online job adverts by occupation in ",
+      format(end_date, "%B %Y"),
+      "."
+    )
+  })
+
   output$jobRankTable <- DT::renderDataTable({
     DT::datatable(
       jobAdsRanking,
@@ -2399,7 +2515,47 @@ server <- function(input, output, session) {
     )
   })
 
+  # Create data date footnote
+  output$jobRankFooter <- renderUI({
+    req(jobAdsNational)
+
+    dates <- jobAdsNational %>%
+      filter(metric == "volume") %>%
+      mutate(date = as.Date(timePeriod)) %>%
+      arrange(date) %>%
+      pull(date)
+
+    end_date <- max(dates, na.rm = TRUE)
+    start_date <- max(dates[dates <= end_date %m-% months(2)])
+
+    paste0(
+      format(start_date, "%B %Y"),
+      " to ",
+      format(end_date, "%B %Y"),
+      " data"
+    )
+  })
+
   ### x.x.x Job Ads Demand Table ----
+
+  # Commentary for demand table
+  output$jobDemandHeading <- renderUI({
+    if (input$jobTableSwitch == "Emerging Demand") {
+      "Which occupations are seeing emerging demand?"
+    } else {
+      "Which occupations are constantly in demand?"
+    }
+  })
+
+  # Commentary for demand table
+  output$jobDemandComment <- renderUI({
+    if (input$jobTableSwitch == "Emerging Demand") {
+      "Occupations which have been in the top 15% in the latest 3-months, but not so in the 9-months prior to that."
+    } else {
+      "Occupations which have been in the top 5% for every month over the past year."
+    }
+  })
+
   output$jobDemandTable <- renderUI({
     req(input$jobTableSwitch)
 
@@ -2416,12 +2572,13 @@ server <- function(input, output, session) {
       jobAdsEmerging %>%
         dplyr::mutate(
           # Format the percentage change column
-          `Percentage change` = scales::percent(round2(`Percentage change`, 3), accuracy = 0.01, trim = FALSE)
+          `Percentage change` = scales::percent(round2(`Percentage change`, 3), accuracy = 0.1, trim = FALSE)
         ),
       options = list(
-        dom = "t",
-        ordering = FALSE,
+        dom = "lrtip",
         scrollY = "300px",
+        paging = FALSE,
+        info = FALSE,
         columnDefs = list(
           list(
             targets = c("Number of new job adverts", "Percentage change"), # Right align the values columns
@@ -2439,12 +2596,13 @@ server <- function(input, output, session) {
       jobAdsConstant |>
         dplyr::mutate(
           # Format the percentage change column
-          `Percentage change` = scales::percent(round2(`Percentage change`, 3), accuracy = 0.01, trim = FALSE)
+          `Percentage change` = scales::percent(round2(`Percentage change`, 3), accuracy = 0.1, trim = FALSE)
         ),
       options = list(
-        dom = "t",
-        ordering = FALSE,
+        dom = "lrtip",
         scrollY = "300px",
+        paging = FALSE,
+        info = FALSE,
         columnDefs = list(
           list(
             targets = c("Number of new job adverts", "Percentage change"), # Right align the values columns
@@ -2453,6 +2611,49 @@ server <- function(input, output, session) {
         )
       ),
       rownames = FALSE
+    )
+  })
+
+  # Create data date footnote
+  output$jobDemandFooter <- renderUI({
+    req(jobAdsNational)
+
+    dates <- jobAdsNational %>%
+      filter(metric == "volume") %>%
+      mutate(date = as.Date(timePeriod)) %>%
+      arrange(date) %>%
+      pull(date)
+
+    end_date <- max(dates, na.rm = TRUE)
+    start_date <- max(dates[dates <= end_date %m-% months(2)])
+
+    paste0(
+      format(start_date, "%B %Y"),
+      " to ",
+      format(end_date, "%B %Y"),
+      " data"
+    )
+  })
+
+  ### x.x.x Job Ads Data Notes ----
+  # Create data source
+  output$jobDataSource <- renderUI({
+    HTML(paste0(
+      "<p>Sources: ",
+      '<a href="https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk" target="_blank">ONS Textkernal</a>',
+      " and ",
+      '<a href="https://www.nomisweb.co.uk/datasets/apsnew" target="_blank">Annual Population Survey</a>',
+      "</p>"
+    ))
+  })
+
+  # Create data caveat
+  output$jobDataCaveat <- renderUI({
+    tags$ol(
+      tags$li("These statistics should be treated as official statistics in development (previously known as experimental statistics), as they are still subject to testing the ability to meet user needs and may be modified in the future."),
+      tags$li("Where the same job is identified as being advertised through multiple adverts it is only counted once."),
+      tags$li("The method for allocating jobs to occupations (SOC 2020) is based on the job title of the advert and will be developed further in future releases."),
+      tags$li("Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.")
     )
   })
 

@@ -81,8 +81,8 @@ metricChoices <- list(
 jobMetricChoices <- list(
   "Volume" = "volume",
   "Change since January 2022" = "growthRate",
-  "Per population" = "popRate",
-  "Per job" = "jobRate"
+  "Job adverts per 100 adults" = "popRate",
+  "Job adverts per 100 employees" = "jobRate"
 )
 # Functions ---------------------------------------------------------------------------------
 

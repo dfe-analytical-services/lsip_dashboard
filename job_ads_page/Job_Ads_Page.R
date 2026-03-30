@@ -183,6 +183,7 @@ APS_econ_activity_national <- APS_econ_activity_clean %>%
 new_ads_national_pop <- population_data(new_ads_national_roll) %>%
   # Join on APS economic activity data
   left_join(APS_econ_activity_national, by = "chartPeriod") %>%
+  filter(!is.na(population)) %>%
   mutate(pop_rate = n_jobs_yr_sum / population)
 
 # Employment rate of job ads across England
@@ -211,6 +212,7 @@ new_ads_SOC_growth <- new_ads_SOC_roll %>%
 new_ads_SOC_pop <- population_data (new_ads_SOC_roll, soc_4_digit_code, soc_4_digit_label) %>%
   # Join on APS economic activity data
   left_join(APS_econ_activity_national, by = "chartPeriod") %>%
+  filter(!is.na(population)) %>%
   mutate(pop_rate = n_jobs_yr_sum / population,
          pop_rate = round2(pop_rate * 100000, 2)) # Per 100,000 population
 
@@ -223,6 +225,7 @@ APS_econ_activity_regional <- APS_econ_activity_clean %>%
 new_ads_region_SOC_pop <- population_data (new_ads_SOC_clean, region, soc_4_digit_code, soc_4_digit_label) %>%
   # Join on APS economic activity data
   left_join(APS_econ_activity_regional, by = c("chartPeriod", "region")) %>%
+  filter(!is.na(population)) %>%
   mutate(pop_rate = n_jobs_yr_sum / population,
          pop_rate = round2(pop_rate * 100000, 2)) # Per 100,000 population
 
