@@ -2173,7 +2173,7 @@ server <- function(input, output, session) {
 
   # Create data caveat at the top
   output$jobCaveatText <- renderUI({
-    "These statistics should be treated as official statistics in development (previously known as experimental statistics. The data includes minor instances of suppression in June and July 2025 due to quality concerns. Where this has occurred, only the data containing no suppression is included in the rolling average. ONS have partially imputed the data for October and November 2025 in response to the source data presenting a larger level of duplicate adverts which are not being identified as such. As such, month-on-month trends during the affected period should be treated with caution. Additionally, a source of jobs was missing from the December 2025 data, and so some data has been supressed in this month."
+    "These statistics should be treated as official statistics in development (previously known as experimental statistics). The data includes minor instances of suppression in June and July 2025 due to quality concerns. Where this has occurred, only the data containing no suppression is included in the rolling average. ONS have partially imputed the data since October 2025 in response to the source data presenting a larger level of duplicate adverts which are not being identified as such. As such, month-on-month trends during the affected period should be treated with caution. Additionally, a source of jobs was missing from the December 2025 data, and so some data has been supressed in this month."
   })
 
   # Create dynamic text
@@ -2205,7 +2205,7 @@ server <- function(input, output, session) {
       scales::percent(round2(abs(jobTextData$value_growthRate), 2), trim = FALSE),
       " compared to the three months to January 2022.",
       "</p>",
-      "In ",
+      "In the year ending ",
       format(jobTextData$date_popRate, "%B %Y"),
       ", there were ",
       round2(jobTextData$value_popRate * 100, 0),
@@ -2337,13 +2337,13 @@ server <- function(input, output, session) {
       pull(date)
 
     end_date <- max(dates, na.rm = TRUE)
-    start_date <- max(dates[dates <= end_date %m-% months(2)])
+    start_date <- end_date %m-% months(2)
 
     paste0(
+      "Average monthly new job adverts between ",
       format(start_date, "%B %Y"),
-      " to ",
-      format(end_date, "%B %Y"),
-      " data"
+      " and ",
+      format(end_date, "%B %Y")
     )
   })
 
@@ -2377,11 +2377,11 @@ server <- function(input, output, session) {
     case_when(
       input$jobMetric == "volume" ~ "This chart shows the trend in online job adverts across all occupations over time, presented as a 3-month rolling average.",
       input$jobMetric == "growthRate" ~ paste0(
-        "This chart shows the change in online job adverts since January 2022, presented as a 3-month rolling average. Compared to January 2022, there were ",
+        "This chart shows the change in online job adverts since January 2022, presented as a 3-month rolling average. Compared to the three months to January 2022, there were ",
         scales::percent(round2(abs(jobTextData$value_growthRate), 2), trim = FALSE),
         " fewer online job adverts in the three months to ",
         format(jobTextData$date_growthRate, "%B %Y"),
-        " ."
+        "."
       ),
       input$jobMetric == "popRate" ~ "This chart shows the number of job adverts per 100 adults, presented as a 12-month rolling sum per quarter. Since mid-2024, the rate has remained fairly stable.",
       input$jobMetric == "jobRate" ~ "This chart shows the number of job adverts per 100 employees, presented as a 12-month rolling sum per quarter. Since mid-2024, the rate has remained fairly stable."
@@ -2424,8 +2424,10 @@ server <- function(input, output, session) {
           "<br>",
           metricLabel,
           ": ",
-          if (str_sub(input$jobMetric, start = -4) == "Rate") {
+          if (input$jobMetric == "growthRate") {
             scales::percent(round2(value, 3), accuracy = 0.1, trim = FALSE)
+          } else if (input$jobMetric %in% c("popRate", "jobRate")) {
+            round2(value * 100, 1)
           } else {
             format(round2(value, 0), big.mark = ",")
           },
@@ -2526,11 +2528,8 @@ server <- function(input, output, session) {
       pull(date)
 
     end_date <- max(dates, na.rm = TRUE)
-    start_date <- max(dates[dates <= end_date %m-% months(2)])
 
     paste0(
-      format(start_date, "%B %Y"),
-      " to ",
       format(end_date, "%B %Y"),
       " data"
     )
@@ -2625,7 +2624,9 @@ server <- function(input, output, session) {
       pull(date)
 
     end_date <- max(dates, na.rm = TRUE)
-    start_date <- max(dates[dates <= end_date %m-% months(2)])
+
+    end_date %m-% months(3)
+    start_date <- end_date %m-% months(11)
 
     paste0(
       format(start_date, "%B %Y"),
@@ -2640,7 +2641,7 @@ server <- function(input, output, session) {
   output$jobDataSource <- renderUI({
     HTML(paste0(
       "<p>Sources: ",
-      '<a href="https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk" target="_blank">ONS Textkernal</a>',
+      '<a href="https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk" target="_blank">ONS Textkernel</a>',
       " and ",
       '<a href="https://www.nomisweb.co.uk/datasets/apsnew" target="_blank">Annual Population Survey</a>',
       "</p>"
