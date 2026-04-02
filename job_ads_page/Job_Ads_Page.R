@@ -1,33 +1,3 @@
-# Load the dependencies ==============================================
-
-######### This will need to be added to ExtractLoadData.R #########
-######### The geojson file below will need to be saved in the data folder #########
-
-library(tidyverse)
-library(lubridate)
-library(openxlsx)
-library(sf)
-
-# Custom functions ===================================================
-
-######### This will need to be added to functions.R #########
-
-population_data <- function(data, ...) {
-  
-  data %>%
-    group_by(...) %>%
-    # Calculate 12-month rolling sum
-    mutate(n_jobs_yr_sum = slide_dbl(n_jobs, ~ sum(.x, na.rm = TRUE), .before = 11, .complete = TRUE)) %>%
-    ungroup() %>%
-    # Only keep rows with a full 12-month rolling period
-    filter(!is.na(n_jobs_yr_sum)) %>%
-    # Filter the 12-month rolling period into quarters to line up with the APS data
-    filter(month(timePeriod) %in% c(3, 6, 9, 12)) %>%
-    # Add in a chart period column to allow joining of the APS data
-    mutate(start_date = timePeriod %m-% months(11),
-           chartPeriod = str_c(format(start_date, "%b %Y"), "-", format(timePeriod, "%b %Y")))
-  }
-
 # Set inputs =========================================================
 
 # Set the base date for the growth rate calculations (currently set to January 2022)
