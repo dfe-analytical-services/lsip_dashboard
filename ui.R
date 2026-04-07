@@ -789,7 +789,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("2 Apr 2026 (1.6.11)"),
+              p("10 Apr 2026 (1.6.11)"),
               tags$ul(
                 tags$li("Update to the latest online job advert data (Feb 2026)."),
                 tags$li("Update to latest revised destination data.")
@@ -1246,7 +1246,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
         fluidRow(column(
           12,
           h2("Data notes"),
-          p("Any NAs or missing data in the charts or maps are due to supressed data."),
+          p("Any NAs or missing data in the charts or maps are due to suppressed data."),
           p(uiOutput("dataSource")),
           p(uiOutput("dataNote")),
           p("Caveats:"),

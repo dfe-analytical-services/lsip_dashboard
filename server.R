@@ -2173,7 +2173,7 @@ server <- function(input, output, session) {
 
   # Create data caveat at the top
   output$jobCaveatText <- renderUI({
-    "These statistics should be treated as official statistics in development (previously known as experimental statistics). The data includes minor instances of suppression in June and July 2025 due to quality concerns. Where this has occurred, only the data containing no suppression is included in the rolling average. ONS have partially imputed the data since October 2025 in response to the source data presenting a larger level of duplicate adverts which are not being identified as such. As such, month-on-month trends during the affected period should be treated with caution. Additionally, a source of jobs was missing from the December 2025 and February 2026 data, and so some data has been supressed in these months."
+    "These statistics should be treated as official statistics in development (previously known as experimental statistics). The data includes minor instances of suppression in June and July 2025 due to quality concerns. Where this has occurred, only the data containing no suppression is included in the rolling average. ONS have partially imputed the data since October 2025 in response to the source data presenting a larger level of duplicate adverts which are not being identified as such. As such, month-on-month trends during the affected period should be treated with caution. Additionally, a source of jobs was missing from the December 2025 and February 2026 data, and so some data has been suppressed in these months."
   })
 
   # Create dynamic text
