@@ -8,7 +8,7 @@ jobAdTab <- function() {
       "Note",
       paste0(
         "This page is in development and will change. Please contact us at ",
-        "<a href='mailto:skills.england@education.gov.uk'>skills.england@education.gov.uk</a>",
+        "<a href='mailto:skillsengland.analysisandinsight@dwp.gov.uk'>skillsengland.analysisandinsight@dwp.gov.uk</a>",
         " to provide feedback."
       )
     ),
@@ -129,6 +129,7 @@ jobAdTab <- function() {
       column(
         12,
         p(uiOutput("jobCaveatText")),
+        hr(),
         p(uiOutput("jobDynamicText"))
       )
     ),
