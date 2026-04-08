@@ -8,7 +8,7 @@ jobAdTab <- function() {
       "Note",
       paste0(
         "This page is in development and will change. Please contact us at ",
-        "<a href='mailto:skillsengland.analysisandinsight@dwp.gov.uk'>skillsengland.analysisandinsight@dwp.gov.uk</a>",
+        "<a href='mailto:skills.england@dwp.gov.uk'>skills.england@dwp.gov.uk</a>",
         " to provide feedback."
       )
     ),
