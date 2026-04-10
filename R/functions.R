@@ -151,3 +151,21 @@ round2 <- function(x, digits) {
   z <- z / 10^digits
   z * posneg
 }
+
+# Function to create job adverts per population data for Job_Ads_Page.R
+population_data <- function(data, ...) {
+  data %>%
+    group_by(...) %>%
+    # Calculate 12-month rolling sum
+    mutate(n_jobs_yr_sum = slide_dbl(n_jobs, ~ sum(.x, na.rm = TRUE), .before = 11, .complete = TRUE)) %>%
+    ungroup() %>%
+    # Only keep rows with a full 12-month rolling period
+    filter(!is.na(n_jobs_yr_sum)) %>%
+    # Filter the 12-month rolling period into quarters to line up with the APS data
+    filter(month(timePeriod) %in% c(3, 6, 9, 12)) %>%
+    # Add in a chart period column to allow joining of the APS data
+    mutate(
+      start_date = timePeriod %m-% months(11),
+      chartPeriod = str_c(format(start_date, "%b %Y"), "-", format(timePeriod, "%b %Y"))
+    )
+}

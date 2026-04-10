@@ -78,6 +78,12 @@ metricChoices <- list(
   # "Mismatch" = list("Supply vs demand TO COME" = "mismatch")
 )
 
+jobMetricChoices <- list(
+  "Volume" = "volume",
+  "Change since January 2022" = "growthRate",
+  "Job adverts per 100 adults" = "popRate",
+  "Job adverts per 100 employees" = "jobRate"
+)
 # Functions ---------------------------------------------------------------------------------
 
 # Here's an example function for simplifying the code needed to commas separate numbers:
