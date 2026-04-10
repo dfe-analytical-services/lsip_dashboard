@@ -2173,7 +2173,7 @@ server <- function(input, output, session) {
 
   # Create data caveat at the top
   output$jobCaveatText <- renderUI({
-    "These statistics should be treated as official statistics in development (previously known as experimental statistics). The data includes minor instances of suppression in June and July 2025 due to quality concerns. Where this has occurred, only the data containing no suppression is included in the rolling average. ONS have partially imputed the data since October 2025 in response to the source data presenting a larger level of duplicate adverts which are not being identified as such. As such, month-on-month trends during the affected period should be treated with caution. Additionally, a source of jobs was missing from the December 2025 and February 2026 data, and so some data has been suppressed in these months."
+    "These statistics should be treated as official statistics in development (previously known as experimental statistics). The data includes minor instances of suppression in June and July 2025 due to quality concerns. Where this has occurred, only the data containing no suppression is included in the rolling average. In addition, ONS have partially imputed the data since October 2025 in response to the source data presenting a larger level of duplicate adverts which are not being identified as such. As such, month-on-month trends during the affected period should be treated with caution. Additionally, a source of jobs was missing from the December 2025 and February 2026 data, and so some data has been suppressed in these months."
   })
 
   # Create dynamic text
@@ -2193,19 +2193,23 @@ server <- function(input, output, session) {
 
     HTML(paste0(
       "<p>",
-      "In the three months to ",
+      "Between ",
+      format(jobTextData$date_volume %m-% months(2), "%B %Y"),
+      " and ",
       format(jobTextData$date_volume, "%B %Y"),
-      ", there were ",
+      ", there were an average of ",
       format(round2(jobTextData$value_volume, 0), big.mark = ","),
-      " new online job adverts in ",
+      " new online job adverts per month in ",
       jobTextData$geogConcat,
       ", which represents ",
       if (jobTextData$value_growthRate > 0) "an increase" else "a decrease",
       " of ",
       scales::percent(round2(abs(jobTextData$value_growthRate), 2), trim = FALSE),
-      " compared to the three months to January 2022.",
+      " compared to the number of job adverts between November 2021 and January 2022.",
       "</p>",
-      "In the year ending ",
+      "Between ",
+      format(jobTextData$date_popRate %m-% months(11), "%B %Y"),
+      " and ",
       format(jobTextData$date_popRate, "%B %Y"),
       ", there were ",
       round2(jobTextData$value_popRate * 100, 0),
@@ -2377,9 +2381,11 @@ server <- function(input, output, session) {
     case_when(
       input$jobMetric == "volume" ~ "This chart shows the trend in online job adverts across all occupations over time, presented as a 3-month rolling average.",
       input$jobMetric == "growthRate" ~ paste0(
-        "This chart shows the change in online job adverts since January 2022, presented as a 3-month rolling average. Compared to the three months to January 2022, there were ",
+        "This chart shows the change in online job adverts since January 2022, presented as a 3-month rolling average. Compared to the number of job adverts between November 2021 and January 2022, there were ",
         scales::percent(round2(abs(jobTextData$value_growthRate), 2), trim = FALSE),
-        " fewer online job adverts in the three months to ",
+        " fewer online job adverts between ",
+        format(jobTextData$date_growthRate %m-% months(2), "%B %Y"),
+        " and ",
         format(jobTextData$date_growthRate, "%B %Y"),
         "."
       ),
@@ -2451,7 +2457,7 @@ server <- function(input, output, session) {
         } else if (all(is.na(jobTimeData$value))) {
           label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
         } else if ((max(jobTimeData$value, na.rm = TRUE) >= 1000000 & (max(jobTimeData$value, na.rm = TRUE) - min(jobTimeData$value, na.rm = TRUE)) < 600000) | (max(jobTimeData$value, na.rm = TRUE) >= 1000 & (max(jobTimeData$value, na.rm = TRUE) - min(jobTimeData$value, na.rm = TRUE)) < 600)) {
-          label_number(accuracy = 0.01, scale_cut = append(scales::cut_short_scale(), 1, 1))
+          label_number(accuracy = 0.1, scale_cut = append(scales::cut_short_scale(), 1, 1))
         } else if ((max(jobTimeData$value, na.rm = TRUE) >= 1000000 & (max(jobTimeData$value, na.rm = TRUE) - min(jobTimeData$value, na.rm = TRUE)) < 6000000) | (max(jobTimeData$value, na.rm = TRUE) >= 1000 & (max(jobTimeData$value, na.rm = TRUE) - min(jobTimeData$value, na.rm = TRUE)) < 6000)) {
           label_number(accuracy = 0.1, scale_cut = append(scales::cut_short_scale(), 1, 1))
         } else {
@@ -2549,9 +2555,9 @@ server <- function(input, output, session) {
   # Commentary for demand table
   output$jobDemandComment <- renderUI({
     if (input$jobTableSwitch == "Emerging Demand") {
-      "Occupations which have been in the top 15% in the latest 3-months, but not so in the 9-months prior to that."
+      "Occupations in emerging demand are those which have been in the top 15% in the latest 3-months, but not so in the 9-months prior to that."
     } else {
-      "Occupations which have been in the top 5% for every month over the past year."
+      "Occupations in constant demand are those which have been in the top 5% for every month over the past year."
     }
   })
 
