@@ -13,7 +13,14 @@ ui <- function(input, output, session) {
         rel = "stylesheet",
         type = "text/css",
         href = "dfe_shiny_gov_style.css"
-      )
+      ),
+      tags$script(HTML("
+    Shiny.addCustomMessageHandler('triggerResize', function(message) {
+      setTimeout(function() {
+        window.dispatchEvent(new Event('resize'));
+      }, 150);
+    });
+  "))
     ),
     dfeshiny::dfe_cookies_script(),
     dfeshiny::cookies_banner_ui(name = site_title),
