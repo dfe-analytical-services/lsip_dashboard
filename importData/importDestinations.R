@@ -35,7 +35,9 @@ destinationsWithAreas <-
   #filter to last 5 years
   filter(timePeriod>=(max(timePeriod) - lubridate::years(4)))%>%
   mutate_at(c('cohort','education','appren','all_work','all_notsust','all_unknown'), as.numeric)%>%#convert to numeric to sum
-  addGeogs()
+  addGeogs() %>%
+  group_by(chartPeriod, timePeriod, latest, geogConcat, cohort_level_group, metric, newArea) %>%
+  summarise(across(everything(), \(x) sum(x, na.rm = TRUE)))
 
 groupedStats <- destinationsWithAreas %>%
   filter(newArea == 1) %>% # no need to group national or LAs that haven't changed

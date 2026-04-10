@@ -2169,11 +2169,11 @@ server <- function(input, output, session) {
     }
   )
 
-  ### x.x.x Job Ads Dynamic Text ----
+  ### 5.10.1 Job Ads Dynamic Text ----
 
   # Create data caveat at the top
   output$jobCaveatText <- renderUI({
-    "These statistics should be treated as official statistics in development (previously known as experimental statistics). The data includes minor instances of suppression in June and July 2025 due to quality concerns. Where this has occurred, only the data containing no suppression is included in the rolling average. In addition, ONS have partially imputed the data since October 2025 in response to the source data presenting a larger level of duplicate adverts which are not being identified as such. As such, month-on-month trends during the affected period should be treated with caution. Additionally, a source of jobs was missing from the December 2025 data, and so some data has been supressed in this month."
+    "These statistics should be treated as official statistics in development (previously known as experimental statistics). The data includes minor instances of suppression in June and July 2025 due to quality concerns. Where this has occurred, only the data containing no suppression is included in the rolling average. In addition, ONS have partially imputed the data since October 2025 in response to the source data presenting a larger level of duplicate adverts which are not being identified as such. As such, month-on-month trends during the affected period should be treated with caution. Additionally, a source of jobs was missing from the December 2025 and February 2026 data, and so some data has been suppressed in these months."
   })
 
   # Create dynamic text
@@ -2220,7 +2220,7 @@ server <- function(input, output, session) {
     ))
   })
 
-  ### x.x.x Job Ads Map ----
+  ### 5.10.2 Job Ads Map ----
 
   # Create commentary for map
   output$jobMapComment <- renderUI({
@@ -2351,7 +2351,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ### x.x.x Job Ads Chart ----
+  ### 5.10.3 Job Ads Chart ----
 
   # Headings for chart
   output$jobTimeHeading <- renderUI({
@@ -2484,7 +2484,7 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
 
-  ### x.x.x Job Ads Ranking Table ----
+  ### 5.10.4 Job Ads Ranking Table ----
 
   # Commentary for ranking table
   output$jobRankComment <- renderUI({
@@ -2541,7 +2541,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ### x.x.x Job Ads Demand Table ----
+  ### 5.10.5 Job Ads Demand Table ----
 
   # Commentary for demand table
   output$jobDemandHeading <- renderUI({
@@ -2642,7 +2642,7 @@ server <- function(input, output, session) {
     )
   })
 
-  ### x.x.x Job Ads Data Notes ----
+  ### 5.10.6 Job Ads Data Notes ----
   # Create data source
   output$jobDataSource <- renderUI({
     HTML(paste0(

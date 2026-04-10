@@ -213,7 +213,7 @@ jobAdTab <- function() {
     fluidRow(column(
       12,
       h2("Data notes"),
-      p("Any NAs or missing data in the charts or maps are due to supressed data."),
+      p("Any NAs or missing data in the charts or maps are due to suppressed data."),
       p(uiOutput("jobDataSource")),
       p("Caveats:"),
       p(uiOutput("jobDataCaveat"))
