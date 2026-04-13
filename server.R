@@ -2525,7 +2525,8 @@ server <- function(input, output, session) {
         "Calculated using APS data available up to ",
         format(jobTextData$date_jobRate, "%B %Y"),
         "."
-      )
+      ),
+      TRUE ~ ""
     )
   })
 
