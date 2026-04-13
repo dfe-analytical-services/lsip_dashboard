@@ -43,7 +43,19 @@ server <- function(input, output, session) {
       "toolsTable_search", "toolsTable_cell_clicked", "reportsTable_row_last_clicked", "sourcesTable_row_last_clicked",
       "toolsTable_row_last_clicked", "barSubgroup", "geoComps", "breakdownPage",
       "subgroupPage", "barBreakdown", "barProfession", "hubLA", "hubComparators", "hubYears", "hubBreakdowns",
-      "hubMetric", "hubArea", "accessibility_footer_link", "cookies_footer_link", "support_footer_link"
+      "hubMetric", "hubArea", "accessibility_footer_link", "cookies_footer_link", "support_footer_link",
+      "jobRankTable_rows_selected", "jobRankTable_columns_selected", "jobRankTable_cells_selected",
+      "jobRankTable_rows_current", "jobRankTable_rows_all", "jobRankTable_state", "jobRankTable_cell_clicked",
+      "emergingTable_rows_selected", "emergingTable_columns_selected", "emergingTable_cells_selected",
+      "emergingTable_rows_current", "emergingTable_rows_all", "emergingTable_state", "emergingTable_search",
+      "emergingTable_cell_clicked", "constantTable_rows_selected", "constantTable_columns_selected",
+      "constantTable_cells_selected", "constantTable_rows_current", "constantTable_rows_all", "constantTable_state",
+      "constantTable_search", "constantTable_cell_clicked", "jobMap_bounds", "jobMap_center", "jobMap_zoom",
+      "jobMap_shape_mouseover", "jobMap_shape_mouseout", "jobMap_shape_click", "jobMap_click",
+      "jobMapTable_rows_current", "jobMapTable_state", "jobMapTable_search", "jobMapTable_cell_clicked",
+      "undefined_shape_mouseover", "undefined_shape_click", "jobMapTable_rows_selected", "jobMapTable_columns_selected",
+      "jobMapTable_cells_selected", "jobMapTable_rows_all", "jobMapTable_row_last_clicked", "undefined_shape_mouseout",
+      "jobRankTable_row_last_clicked", "emergingTable_row_last_clicked", "constantTable_row_last_clicked"
     ))
   })
 
@@ -54,6 +66,11 @@ server <- function(input, output, session) {
   })
   onBookmarked(function(url) {
     updateQueryString(url)
+  })
+
+
+  observeEvent(input$navbar, {
+    session$sendCustomMessage("triggerResize", list())
   })
 
   ## 1.2 Load chart colours ----
@@ -2484,6 +2501,35 @@ server <- function(input, output, session) {
       config(displayModeBar = FALSE)
   })
 
+  # Footnote for chart
+  output$jobTimeFooter <- renderUI({
+    req(jobAdsNational)
+
+    jobTextData <- jobAdsNational %>%
+      mutate(date = as.Date(timePeriod)) %>%
+      filter(metric %in% c("popRate", "jobRate")) %>%
+      group_by(metric) %>%
+      filter(date == max(date, na.rm = TRUE)) %>%
+      tidyr::pivot_wider(
+        names_from = metric,
+        values_from = c(timePeriod, chartPeriod, value, date)
+      )
+
+    case_when(
+      input$jobMetric == "popRate" ~ paste0(
+        "Calculated using APS data available up to ",
+        format(jobTextData$date_popRate, "%B %Y"),
+        "."
+      ),
+      input$jobMetric == "jobRate" ~ paste0(
+        "Calculated using APS data available up to ",
+        format(jobTextData$date_jobRate, "%B %Y"),
+        "."
+      ),
+      TRUE ~ ""
+    )
+  })
+
   ### 5.10.4 Job Ads Ranking Table ----
 
   # Commentary for ranking table
@@ -2635,10 +2681,11 @@ server <- function(input, output, session) {
     start_date <- end_date %m-% months(11)
 
     paste0(
-      format(start_date, "%B %Y"),
-      " to ",
+      "Volume of new job adverts sourced from ",
       format(end_date, "%B %Y"),
-      " data"
+      " data. Percentage change calculated relative to ",
+      format(end_date %m-% years(1), "%B %Y"),
+      " data."
     )
   })
 

@@ -18,6 +18,13 @@ startRow <- 5
 new_ads_national <- openxlsx::read.xlsx(xlsxFile = file.path("Data", folder, list.files(path = file.path("Data", folder))),
                                    sheet = sheet, startRow = startRow)
 
+# ONS job ads by Local Authority District
+folder <- "2-12_OnsProf"
+sheet <- "Table 2"
+startRow <- 5
+new_ads_LAD <- openxlsx::read.xlsx(xlsxFile = file.path("Data", folder, list.files(path = file.path("Data", folder))),
+                                        sheet = sheet, startRow = startRow)
+
 # ONS job ads by region and 4-digit SOC
 folder <- "2-12_OnsProf"
 sheet <- "Table 3"
@@ -57,6 +64,14 @@ new_ads_national_clean <- new_ads_national %>%
   janitor::clean_names() %>%
   # Filter to England only
   filter((country %in% "England")) %>%
+  mutate(across(jan_17:last_col(), as.numeric)) %>%
+  pivot_longer(jan_17:last_col(), names_to = "timePeriod", values_to = "n_jobs") %>%
+  mutate(timePeriod = as.Date(paste0("01-", timePeriod), format = "%d-%b_%y"))
+
+new_ads_LAD_clean <- new_ads_LAD %>%
+  janitor::clean_names() %>%
+  # Filter to England only
+  filter(!(region %in% c("Northern Ireland", "Scotland", "Wales"))) %>%
   mutate(across(jan_17:last_col(), as.numeric)) %>%
   pivot_longer(jan_17:last_col(), names_to = "timePeriod", values_to = "n_jobs") %>%
   mutate(timePeriod = as.Date(paste0("01-", timePeriod), format = "%d-%b_%y"))
@@ -129,7 +144,7 @@ new_ads_national_roll <- new_ads_national_clean %>%
   ungroup()
 
 # Volume of job ads across regions (for map)
-new_ads_region_vol <- new_ads_SOC_clean %>%
+new_ads_region_vol <- new_ads_LAD_clean %>%
   group_by(region, timePeriod) %>%
   summarise(n_jobs = sum(n_jobs)) %>%
   mutate(n_jobs_3m_avg = slide_dbl(n_jobs, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE)) %>%

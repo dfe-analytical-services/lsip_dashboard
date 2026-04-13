@@ -150,7 +150,8 @@ jobAdTab <- function() {
         6,
         h3(uiOutput("jobTimeHeading")),
         p(uiOutput("jobTimeComment")),
-        withSpinner(plotlyOutput("jobTime"))
+        withSpinner(plotlyOutput("jobTime")),
+        p(uiOutput("jobTimeFooter"))
       )
     ),
     br(),

@@ -13,7 +13,14 @@ ui <- function(input, output, session) {
         rel = "stylesheet",
         type = "text/css",
         href = "dfe_shiny_gov_style.css"
-      )
+      ),
+      tags$script(HTML("
+    Shiny.addCustomMessageHandler('triggerResize', function(message) {
+      setTimeout(function() {
+        window.dispatchEvent(new Event('resize'));
+      }, 50);
+    });
+  "))
     ),
     dfeshiny::dfe_cookies_script(),
     dfeshiny::cookies_banner_ui(name = site_title),
@@ -789,7 +796,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("10 Apr 2026 (1.6.11)"),
+              p("13 Apr 2026 (1.6.11)"),
               tags$ul(
                 tags$li("Addition of 'Job adverts (Pilot)' page."),
                 tags$li("Update to the latest online job advert data (Feb 2026)."),
