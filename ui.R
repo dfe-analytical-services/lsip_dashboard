@@ -13,7 +13,14 @@ ui <- function(input, output, session) {
         rel = "stylesheet",
         type = "text/css",
         href = "dfe_shiny_gov_style.css"
-      )
+      ),
+      tags$script(HTML("
+    Shiny.addCustomMessageHandler('triggerResize', function(message) {
+      setTimeout(function() {
+        window.dispatchEvent(new Event('resize'));
+      }, 50);
+    });
+  "))
     ),
     dfeshiny::dfe_cookies_script(),
     dfeshiny::cookies_banner_ui(name = site_title),
@@ -528,6 +535,13 @@ document.addEventListener("DOMContentLoaded", function() {
         </a>
       </li>
 
+            <li style="margin-left:20px;">
+        <a href="#" id="nav_job_ad_tab" class="govuk-service-navigation__link"
+           onclick="Shiny.setInputValue(\'nav_click\', \'job_ad_tab\', {priority:\'event\'}); return false;">
+          Job adverts (Pilot)
+        </a>
+      </li>
+
     </ul>
   </div>
 </nav>
@@ -782,14 +796,20 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("2 Mar 2026 (1.6.10)"),
+              p("14 Apr 2026 (1.6.11)"),
               tags$ul(
-                tags$li("Update to the latest online job advert data (Jan 2026).")
+                tags$li("Addition of 'Job adverts (Pilot)' page."),
+                tags$li("Update to the latest online job advert data (Feb 2026)."),
+                tags$li("Update to latest revised destination data.")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("2 Mar 2026 (1.6.10)"),
+                  tags$ul(
+                    tags$li("Update to the latest online job advert data (Jan 2026).")
+                  ),
                   p("16 Feb 2026 (1.6.9)"),
                   tags$ul(
                     tags$li("Change rounding from the default R rounding to more the more commonly understood method that rounds up at 0.5.")
@@ -1234,7 +1254,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
         fluidRow(column(
           12,
           h2("Data notes"),
-          p("Any NAs or missing data in the charts or maps are due to supressed data."),
+          p("Any NAs or missing data in the charts or maps are due to suppressed data."),
           p(uiOutput("dataSource")),
           p(uiOutput("dataNote")),
           p("Caveats:"),
@@ -1242,6 +1262,9 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
         )),
         br()
       ),
+
+      ## 2.4 Job ads page ----
+      jobAdTab(),
 
       ## 2.5 Data information ----
       bslib::nav_panel(

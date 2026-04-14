@@ -12,6 +12,11 @@ C_topTenEachBreakdown <- read.csv(file = "./Data/AppData/C_topTenEachBreakdown.c
 C_datahub <- read.csv(file = "./Data/AppData/C_datahub.csv", check.names = FALSE)
 C_axisMinMax <- read.csv(file = "./Data/AppData/C_axisMinMax.csv", check.names = FALSE)
 areaChoices <- readRDS("Data/AppData/areaChoices.rds")
+jobAdsGeog <- readRDS("job_ads_page/job_ads_page_map.rds")
+jobAdsNational <- readRDS("job_ads_page/job_ads_page_national.rds")
+jobAdsEmerging <- readRDS("job_ads_page/job_ads_page_emerging.rds")
+jobAdsConstant <- readRDS("job_ads_page/job_ads_page_constant.rds")
+jobAdsRanking <- readRDS("job_ads_page/job_ads_page_ranking.rds")
 
 ## Intervention table ----
 # I_InterventionTable <- read.csv(file = "./Data/AppData/I_InterventionTable.csv", check.names = FALSE)
