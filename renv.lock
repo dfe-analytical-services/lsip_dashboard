@@ -1615,7 +1615,7 @@
     },
     "dfeshiny": {
       "Package": "dfeshiny",
-      "Version": "0.6.0",
+      "Version": "0.5.3.9000",
       "Source": "GitHub",
       "Title": "DfE R Shiny Standards",
       "Authors@R": "c( person(\"Rich\", \"Bielby\", , \"richard.bielby@education.gov.uk\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0001-9070-9969\")), person(\"Charlotte\", \"Foster\", , \"charlotte.foster@education.gov.uk\", role = \"aut\"), person(\"Cam\", \"Race\", , \"cameron.race@education.gov.uk\", role = \"aut\") )",
@@ -1623,15 +1623,13 @@
       "License": "GPL (>= 3)",
       "URL": "https://dfe-analytical-services.github.io/dfeshiny/ https://www.github.com/dfe-analytical-services/dfeshiny/",
       "Depends": [
-        "R (>= 4.1.0)"
+        "R (>= 2.10)"
       ],
       "Imports": [
         "dplyr",
         "checkmate",
-        "chromote",
         "glue",
         "htmltools",
-        "lifecycle",
         "lubridate",
         "magrittr",
         "shiny",
@@ -1640,6 +1638,7 @@
         "stringr",
         "styler",
         "xfun",
+        "reactable",
         "readr"
       ],
       "Suggests": [
@@ -1657,16 +1656,15 @@
       "Language": "en-US",
       "LazyData": "true",
       "Roxygen": "list(markdown = TRUE)",
-      "RoxygenNote": "7.3.3",
+      "RoxygenNote": "7.3.2",
       "Author": "Rich Bielby [aut, cre] (ORCID: <https://orcid.org/0000-0001-9070-9969>), Charlotte Foster [aut], Cam Race [aut]",
       "Maintainer": "Rich Bielby <richard.bielby@education.gov.uk>",
       "RemoteType": "github",
       "RemoteUsername": "dfe-analytical-services",
       "RemoteRepo": "dfeshiny",
       "RemoteRef": "main",
-      "RemoteSha": "8393337050c184f7f59d5698b68aea4d88083160",
-      "RemoteHost": "api.github.com",
-      "Remotes": "dfe-analytical-services/shinyGovstyle"
+      "RemoteSha": "ea43bf8586295b4c6f27a57487ff1a2246cc341e",
+      "RemoteHost": "api.github.com"
     },
     "diffobj": {
       "Package": "diffobj",
@@ -5584,25 +5582,25 @@
     },
     "shinyGovstyle": {
       "Package": "shinyGovstyle",
-      "Version": "0.2.0",
+      "Version": "0.1.0.9000",
       "Source": "GitHub",
       "Title": "Custom Gov Style Inputs for Shiny",
-      "Authors@R": "c( person(\"Ross\", \"Wyatt\", , \"ross.wyatt@justice.gov.uk\", role = \"aut\"), person(\"Cam\", \"Race\", , \"camrace8@gmail.com\", role = c(\"aut\", \"cre\")), person(\"Sarah\", \"Wong\", role = \"aut\"), person(\"Richard\", \"Bielby\", , \"richard.bielby@education.gov.uk\", role = \"ctb\"), person(\"Charlotte\", \"Foster\", , \"charlotte.foster@education.gov.uk\", role = \"ctb\"), person(\"Jeni\", \"Martin\", role = \"ctb\"), person(\"Andrew\", \"Baker\", , \"andrew.baker1@dhsc.gov.uk\", role = \"ctb\") )",
-      "Description": "Collection of 'shiny' application styling that are based on the GOV.UK Design System. See <https://design-system.service.gov.uk/components/> for details.",
+      "Authors@R": "c( person(\"Ross\", \"Wyatt\", , \"ross.wyatt@justice.gov.uk\", role = c(\"aut\", \"cre\")), person(\"Cameron\", \"Race\", , \"cameron.race@education.gov.uk\", role = \"ctb\"), person(\"Sarah\", \"Wong\", role = \"ctb\"), person(\"Richard\", \"Bielby\", , \"richard.bielby@education.gov.uk\", role = \"ctb\"), person(\"Charlotte\", \"Foster\", , \"charlotte.foster@education.gov.uk\", role = \"ctb\"), person(\"Jeni\", \"Martin\", role = \"ctb\") )",
+      "Description": "Collection of 'shiny' application styling that are the based on the GOV.UK Design System.  See <https://design-system.service.gov.uk/components/> for details.",
       "License": "GPL (>= 3)",
-      "URL": "https://github.com/dfe-analytical-services/shinyGovstyle",
-      "BugReports": "https://github.com/dfe-analytical-services/shinyGovstyle/issues",
+      "URL": "https://github.com/moj-analytical-services/shinyGovstyle",
+      "BugReports": "https://github.com/moj-analytical-services/shinyGovstyle/issues",
       "Depends": [
-        "R (>= 4.1.0)"
+        "R (>= 3.5)"
       ],
       "Imports": [
         "htmltools",
         "jsonlite",
-        "lifecycle",
+        "magrittr",
         "purrr",
         "reactable",
-        "readODS",
         "readr",
+        "readODS",
         "shiny (>= 0.14)",
         "shinyjs",
         "stringr",
@@ -5610,26 +5608,21 @@
       ],
       "Suggests": [
         "bslib",
-        "knitr",
-        "rlang",
-        "rmarkdown",
         "shinytest2",
         "testthat"
       ],
-      "VignetteBuilder": "knitr",
-      "Config/testthat/edition": "3",
       "Encoding": "UTF-8",
-      "LazyData": "true",
-      "Roxygen": "list(markdown = TRUE)",
       "RoxygenNote": "7.3.3",
-      "Author": "Ross Wyatt [aut], Cam Race [aut, cre], Sarah Wong [aut], Richard Bielby [ctb], Charlotte Foster [ctb], Jeni Martin [ctb], Andrew Baker [ctb]",
-      "Maintainer": "Cam Race <camrace8@gmail.com>",
+      "LazyData": "true",
+      "Config/testthat/edition": "3",
+      "Author": "Ross Wyatt [aut, cre], Cameron Race [ctb], Sarah Wong [ctb], Richard Bielby [ctb], Charlotte Foster [ctb], Jeni Martin [ctb]",
+      "Maintainer": "Ross Wyatt <ross.wyatt@justice.gov.uk>",
       "RemoteType": "github",
+      "RemoteHost": "api.github.com",
       "RemoteUsername": "dfe-analytical-services",
       "RemoteRepo": "shinyGovstyle",
-      "RemoteRef": "main",
-      "RemoteSha": "be3dfec7073256101c6a861cbc391890a2c9df21",
-      "RemoteHost": "api.github.com"
+      "RemoteRef": "service-navigation-rmb",
+      "RemoteSha": "56dd4cba381471ec84537105227e8b87ce88421c"
     },
     "shinyWidgets": {
       "Package": "shinyWidgets",
