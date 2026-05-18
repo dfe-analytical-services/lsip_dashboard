@@ -1,8 +1,11 @@
-### 1 ONS job adverts by 3 digit SOC and LA----
-folder <- "2-12_OnsProf"
- sheet <- "Table 4"
- I_Ons3digLA <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+#Download data
+url<-"https://www.ons.gov.uk/file?uri=/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk/january2017tofebruary2026/labourdemandbyoccupation.xlsx"
+tmp <- tempfile(fileext = ".xlsx")
+download.file(url, tmp, mode = "wb")
 
+### 1 ONS job adverts by 3 digit SOC and LA----
+I_Ons3digLA<-read.xlsx(tmp, sheet = "Table 4", skipEmptyRows = T)
+ 
  #Tidy up data
  tidydata<-I_Ons3digLA %>% 
    janitor::row_to_names(row_number = 4)%>% # set columns
@@ -40,8 +43,7 @@ folder <- "2-12_OnsProf"
    mutate(value = as.character(value)) # so we can merge
  
  ### 2 ONS job adverts by LA----
- sheet <- "Table 2"
- I_OnsLA <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+ I_OnsLA<-read.xlsx(tmp, sheet = "Table 2", skipEmptyRows = T)
  
  #Tidy up data
  tidyDataLA<-I_OnsLA %>% 
@@ -69,8 +71,7 @@ folder <- "2-12_OnsProf"
    mutate(value = as.character(value))
  
  ### 3 ONS job adverts England----
- sheet <- "Table 1"
- I_OnsEng <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T)
+ I_OnsEng<-read.xlsx(tmp, sheet = "Table 1", skipEmptyRows = T)
  
  #Tidy up data
  tidyDataEng<-I_OnsEng %>% 
