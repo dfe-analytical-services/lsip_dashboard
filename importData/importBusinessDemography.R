@@ -1,38 +1,30 @@
 ### 2.3.1 Business demography, UK ----
 # Number of enterprise births, deaths and active
 # Geography: England and LADS (as of April 2021)
-folder <- "2-11_bussdemo"
 firstRow <- 4
 
+#Download data
+url<-"https://www.ons.gov.uk/file?uri=/businessindustryandtrade/business/activitysizeandlocation/datasets/businessdemographyreferencetable/current/businessdemographyexceltables2024.xlsx"
+tmp <- tempfile(fileext = ".xlsx")
+download.file(url, tmp, mode = "wb")
+
 # births
-sheet <- "Table 1.1a"
-I_births_ONS19 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 1.1b"
-I_births_ONS20 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 1.1c"
-I_births_ONS2123 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 1.1d"
-I_births_ONS24 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
+I_births_ONS19<-read.xlsx(tmp, sheet = "Table 1.1a", skipEmptyRows = T, startRow = firstRow)
+I_births_ONS20<-read.xlsx(tmp, sheet = "Table 1.1b", skipEmptyRows = T, startRow = firstRow)
+I_births_ONS2123<-read.xlsx(tmp, sheet = "Table 1.1c", skipEmptyRows = T, startRow = firstRow)
+I_births_ONS24<-read.xlsx(tmp, sheet = "Table 1.1d", skipEmptyRows = T, startRow = firstRow)
 
 # deaths
-sheet <- "Table 2.1a"
-I_deaths_ONS19 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 2.1b"
-I_deaths_ONS20 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 2.1c"
-I_deaths_ONS2123 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 2.1d"
-I_deaths_ONS24 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
+I_deaths_ONS19<-read.xlsx(tmp, sheet = "Table 2.1a", skipEmptyRows = T, startRow = firstRow)
+I_deaths_ONS20<-read.xlsx(tmp, sheet = "Table 2.1b", skipEmptyRows = T, startRow = firstRow)
+I_deaths_ONS2123<-read.xlsx(tmp, sheet = "Table 2.1c", skipEmptyRows = T, startRow = firstRow)
+I_deaths_ONS24<-read.xlsx(tmp, sheet = "Table 2.1d", skipEmptyRows = T, startRow = firstRow)
 
 # active
-sheet <- "Table 3.1a"
-I_active_ONS19 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 3.1b"
-I_active_ONS20 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 3.1c"
-I_active_ONS2123 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
-sheet <- "Table 3.1d"
-I_active_ONS24 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))), sheet = sheet, skipEmptyRows = T, startRow = firstRow)
+I_active_ONS19<-read.xlsx(tmp, sheet = "Table 3.1a", skipEmptyRows = T, startRow = firstRow)
+I_active_ONS20<-read.xlsx(tmp, sheet = "Table 3.1b", skipEmptyRows = T, startRow = firstRow)
+I_active_ONS2123<-read.xlsx(tmp, sheet = "Table 3.1c", skipEmptyRows = T, startRow = firstRow)
+I_active_ONS24<-read.xlsx(tmp, sheet = "Table 3.1d", skipEmptyRows = T, startRow = firstRow)
 
 formatBusiness <- function(x, y) {
   colnames(x)[1] <- "areaCode"
