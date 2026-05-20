@@ -129,3 +129,6 @@ C_FeProvLevelAge <- bind_rows(
   mutate(value = safe_numeric(valueText)) %>% 
   # Remove invalid value text for NA values, e.g. Inf, NaN, z
   mutate(valueText = ifelse(is.na(value), "NA", valueText))
+
+#save output
+saveRDS(C_FeProvLevelAge, "Data/processing/C_FeProvLevelAge.rds")

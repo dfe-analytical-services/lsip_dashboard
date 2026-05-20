@@ -74,3 +74,6 @@ C_FeSsa <- bind_rows(
                       values_to = "valueText"
   ) %>%
   mutate(value = safe_numeric(valueText))
+
+#save output
+saveRDS(C_FeSsa, "Data/processing/C_FeSsa.rds")

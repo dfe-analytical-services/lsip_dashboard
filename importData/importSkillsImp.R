@@ -170,3 +170,6 @@ C_skillsImperative <- bind_rows(
   empGrowth2024_2035
 ) %>%
   mutate(valueText = as.character(value))
+
+#save output
+saveRDS(C_skillsImperative, "Data/processing/C_skillsImperative.rds")

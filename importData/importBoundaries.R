@@ -85,3 +85,6 @@ neatGeog <- bind_rows(
     areaName == "England" ~ "England",
     TRUE ~ paste0(areaName, " ", geog)
   ))
+
+#save data
+save(neatGeog, file = "Data/processing/neatGeog.rdata")

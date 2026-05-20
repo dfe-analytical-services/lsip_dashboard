@@ -54,3 +54,7 @@ C_entSize <- I_entIndSize %>%
     TRUE ~ "Size"
   ))%>%
   mutate(valueText = as.character(value))
+
+#save output
+saveRDS(C_entInd, "Data/processing/C_entInd.rds")
+saveRDS(C_entSize, "Data/processing/C_entSize.rds")

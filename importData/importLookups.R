@@ -28,5 +28,10 @@ LAD21_to_LAD23 <- openxlsx::read.xlsx(xlsxFile = paste0("./Data/", folder, "/", 
 # https://geoportal.statistics.gov.uk/datasets/ons::local-authority-district-2024-to-local-authority-district-2025-lookup-in-the-uk-v2/about
 LAD24_to_LAD25 <- st_read("https://services1.arcgis.com/ESMARspQHYMw9BZ9/arcgis/rest/services/LAD24_LAD25_UK_LU_v2/FeatureServer/0/query?where=1%3D1&outFields=*&outSR=4326&f=json")
 
-I_LaLookup <-LAD21_to_LAD23 |>  
+C_LaLookup <-LAD21_to_LAD23 |>  
   left_join(LAD24_to_LAD25, by=c("LAD23CD" = "LAD24CD"))
+
+#save output
+saveRDS(C_LADLSIP, "Data/processing/C_LADLSIP.rds")
+saveRDS(C_calookup, "Data/processing/C_calookup.rds")
+saveRDS(C_LaLookup, "Data/processing/C_LaLookup.rds")
