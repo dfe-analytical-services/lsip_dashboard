@@ -8,11 +8,11 @@ geogUseAps <- nomisr::nomis_get_metadata(id = "NM_17_1", concept = "geography", 
 
 # now create the api string for the geographies we define (that are not stored in the NOMI geographies)
 userGeogString <- C_LADLSIP %>%
-  group_by(LSIPname) %>%
+  group_by(LSIP25NM) %>%
   summarise(
     make_geo = paste0(
-      "MAKE|", gsub(" ", "%20", first(LSIPname)), "|",
-      paste(unique(LAD23CD), collapse = ";")
+      "MAKE|", gsub(" ", "%20", first(LSIP25NM)), "|",
+      paste(unique(LAD25CD), collapse = ";")
     ),
     .groups = "drop"
   )

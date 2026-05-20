@@ -1,10 +1,10 @@
 #Download data
 url<-"https://www.ons.gov.uk/file?uri=/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk/january2017tofebruary2026/labourdemandbyoccupation.xlsx"
-tmp <- tempfile(fileext = ".xlsx")
-download.file(url, tmp, mode = "wb")
+job_ads_raw <- tempfile(fileext = ".xlsx")
+download.file(url, job_ads_raw, mode = "wb")
 
 ### 1 ONS job adverts by 3 digit SOC and LA----
-I_Ons3digLA<-read.xlsx(tmp, sheet = "Table 4", skipEmptyRows = T)
+I_Ons3digLA<-read.xlsx(job_ads_raw, sheet = "Table 4", skipEmptyRows = T)
  
  #Tidy up data
  tidydata<-I_Ons3digLA %>% 
@@ -43,7 +43,7 @@ I_Ons3digLA<-read.xlsx(tmp, sheet = "Table 4", skipEmptyRows = T)
    mutate(value = as.character(value)) # so we can merge
  
  ### 2 ONS job adverts by LA----
- I_OnsLA<-read.xlsx(tmp, sheet = "Table 2", skipEmptyRows = T)
+ I_OnsLA<-read.xlsx(job_ads_raw, sheet = "Table 2", skipEmptyRows = T)
  
  #Tidy up data
  tidyDataLA<-I_OnsLA %>% 
@@ -71,7 +71,7 @@ I_Ons3digLA<-read.xlsx(tmp, sheet = "Table 4", skipEmptyRows = T)
    mutate(value = as.character(value))
  
  ### 3 ONS job adverts England----
- I_OnsEng<-read.xlsx(tmp, sheet = "Table 1", skipEmptyRows = T)
+ I_OnsEng<-read.xlsx(job_ads_raw, sheet = "Table 1", skipEmptyRows = T)
  
  #Tidy up data
  tidyDataEng<-I_OnsEng %>% 

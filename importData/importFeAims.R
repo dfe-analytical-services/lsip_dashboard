@@ -1,6 +1,6 @@
 ### 2.2.2 Achievements/starts/part by LAD and provision, level and age------------
-## Download "Geography Region, LA, LAD, PCON - Participation, Achievement by provision type (rates per 100,000 population)" 
-## From https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills/2025-26
+# Download "Geography Region, LA, LAD, PCON - Participation, Achievement by provision type (rates per 100,000 population)" 
+# From https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills/2025-26
 
 I_FeProvLevelAge<-read.csv("https://explore-education-statistics.service.gov.uk/data-catalogue/data-set/66fd40a0-74f2-4683-bdb8-5eb95012bcdc/csv")|> 
   filter(time_period<=202425) #filter to whole years only ignoring provisional data

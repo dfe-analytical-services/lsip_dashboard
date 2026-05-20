@@ -10,27 +10,15 @@ constant_cutoff <- 0.05
 emerging_cutoff <- 0.15
 
 # Load the data ======================================================
-
+# see importJobAds.R for import code if you need to import this file out of sequence
 # ONS job ads by region
-folder <- "2-12_OnsProf"
-sheet <- "Table 1"
-startRow <- 5
-new_ads_national <- openxlsx::read.xlsx(xlsxFile = file.path("Data", folder, list.files(path = file.path("Data", folder))),
-                                   sheet = sheet, startRow = startRow)
+new_ads_national<-read.xlsx(job_ads_raw, sheet = "Table 1", startRow = 5)
 
 # ONS job ads by Local Authority District
-folder <- "2-12_OnsProf"
-sheet <- "Table 2"
-startRow <- 5
-new_ads_LAD <- openxlsx::read.xlsx(xlsxFile = file.path("Data", folder, list.files(path = file.path("Data", folder))),
-                                        sheet = sheet, startRow = startRow)
+new_ads_LAD<-read.xlsx(job_ads_raw, sheet = "Table 2", startRow = 5)
 
 # ONS job ads by region and 4-digit SOC
-folder <- "2-12_OnsProf"
-sheet <- "Table 3"
-startRow <- 5
-new_ads_SOC <- openxlsx::read.xlsx(xlsxFile = file.path("Data", folder, list.files(path = file.path("Data", folder))),
-                                   sheet = sheet, startRow = startRow)
+new_ads_SOC<-read.xlsx(job_ads_raw, sheet = "Table 3", startRow = 5)
 
 # APS economic activity data from NOMIS (to be used as population estimates). NOMIS filtered for:
 # Dataset = annual population survey

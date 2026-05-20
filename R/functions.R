@@ -69,25 +69,28 @@ addGeogs <- function(x) {
       geographic_level %in% c("Local authority district", "National")
     ) %>%
     # Use new LA names from 2011 areas
-    left_join(I_LaLookup %>% distinct(LAD11CD, LAD23CD_11 = LAD23CD), by = c("areaCode" = "LAD11CD")) %>% # make new LAs
+    left_join(I_LaLookup %>% distinct(LAD11CD, LAD23CD_11 = LAD25CD), by = c("areaCode" = "LAD11CD")) %>% # make new LAs
     # Use new LA names from 2021 areas
-    left_join(I_LaLookup %>% distinct(LAD21CD, LAD23CD_21 = LAD23CD), by = c("areaCode" = "LAD21CD")) %>% # make new LAs
+    left_join(I_LaLookup %>% distinct(LAD21CD, LAD23CD_21 = LAD25CD), by = c("areaCode" = "LAD21CD")) %>% # make new LAs
+    # Use new LA names from 2021 areas
+    left_join(I_LaLookup %>% distinct(LAD21CD, LAD23CD_23 = LAD25CD), by = c("areaCode" = "LAD21CD")) %>% # make new LAs
     # create flag for when the lad code has changed
     mutate(
       newArea = case_when(
-        (LAD23CD_11 != areaCode) | (LAD23CD_21 != areaCode) ~ 1, TRUE ~ 0
+        (LAD23CD_11 != areaCode) | (LAD23CD_21 != areaCode) | (LAD23CD_23 != areaCode) ~ 1, TRUE ~ 0
       ),
       areaCode = case_when(
         is.na(LAD23CD_11) == FALSE ~ LAD23CD_11,
         is.na(LAD23CD_21) == FALSE ~ LAD23CD_21,
+        is.na(LAD23CD_23) == FALSE ~ LAD23CD_23,
         TRUE ~ areaCode
       )
     ) %>%
     # select new name
-    select(-area, -LAD23CD_11, -LAD23CD_21) %>%
+    select(-area, -LAD23CD_11, -LAD23CD_21, -LAD23CD_23) %>%
     left_join(distinct(neatLA, areaCode, area = areaName), by = c("areaCode" = "areaCode")) %>% # use to get consistent LA names
     # addLSIPS
-    left_join(C_LADLSIP, by = c("areaCode" = "LAD23CD")) %>%
+    left_join(C_LADLSIP, by = c("areaCode" = "LAD25CD")) %>%
     # addCA
     left_join(select(C_calookup, -CAUTH25CD, -LAD25NM), by = c("areaCode" = "LAD25CD")) %>%
     # add national name
@@ -104,13 +107,13 @@ addGeogs <- function(x) {
         TRUE ~ paste0(area, " LADU")
       )),
     withAreas %>%
-      filter(is.na(LSIPname) == FALSE) %>%
-      mutate(geogConcat = paste0(LSIPname, " LSIP"), newArea = 1),
+      filter(is.na(LSIP25NM) == FALSE) %>%
+      mutate(geogConcat = paste0(LSIP25NM, " LSIP"), newArea = 1),
     withAreas %>%
       filter(is.na(CAUTH25NM) == FALSE) %>%
       mutate(geogConcat = paste0(CAUTH25NM, " CA"), newArea = 1)
   ) %>%
-    select(-area, -LSIPname, -CAUTH25NM, -areaCode, -geographic_level)
+    select(-area, -LSIP25NM, -CAUTH25NM, -areaCode, -geographic_level)
 }
 
 format_pm <- function(x) {
