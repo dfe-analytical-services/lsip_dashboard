@@ -87,7 +87,7 @@ write.csv(C_axisMinMax, file = "Data\\AppData\\C_axisMinMax.csv", row.names = FA
 ## 4.3 C_breakdown ----
 # This is used in the bar chart. It contains the latest data with all splits available.
 C_breakdown <- bind_rows(
-  # Metric where the proportion needs to be calculated. get proprtion of the total
+  # Metric where the proportion needs to be calculated. get proportion of the total
   C_localSkillsDataset %>%
     filter(
       breakdown != "Total", subgroup != "Total", latest == 1,
@@ -146,6 +146,7 @@ C_breakdown <- bind_rows(
         )
     ) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
+    mutate(vol_value=value) |> #keep volume to show in hover
     mutate(value = round2(value / total, 4)) %>%
     mutate(valueText = as.character(value)) %>%
     mutate(metric = case_when(

@@ -2026,36 +2026,27 @@ server <- function(input, output, session) {
             "Area: ",
             Area,
             "<br>",
-            currentMetricClean(),
+            str_to_sentence(currentMetricClean()),
             ": ",
-            if (str_sub(input$splashMetric, start = -4) == "Rate" |
-              input$splashMetric == "inemployment" |
-              input$splashMetric == "vacancies" |
-              input$splashMetric == "enterpriseCount" |
-              input$splashMetric == "achievements" |
-              input$splashMetric == "participation" |
-              input$splashMetric == "employmentProjection" |
-              input$splashMetric == "starts") {
-              scales::percent(round2(value, 3))
+            if (input$splashMetric %in% c("achievements_rate_per_100000_population", "participation_rate_per_100000_population")) {
+              format(round2(value, 0), big.mark = ",")
             } else {
-              round2(value, 0)
+              if (str_sub(input$splashMetric, start = -4) == "Rate" |
+                input$splashMetric == "employmentProjection") {
+                scales::percent(round2(value, 3))
+              } else {
+                paste0(scales::percent(round2(value, 3)), " (", format(round2(vol_value, 0), big.mark = ","), ")")
+              }
             },
             "<br>"
           )
         )
       ) +
         geom_col(position = "dodge") +
-        scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" |
-          input$splashMetric == "inemployment" |
-          input$splashMetric == "vacancies" |
-          input$splashMetric == "enterpriseCount" |
-          input$splashMetric == "achievements" |
-          input$splashMetric == "participation" |
-          input$splashMetric == "employmentProjection" |
-          input$splashMetric == "starts") {
-          scales::percent
-        } else {
+        scale_y_continuous(labels = if (input$splashMetric %in% c("achievements_rate_per_100000_population", "participation_rate_per_100000_population")) {
           label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
+        } else {
+          scales::percent
         }) +
         scale_x_discrete(
           labels = function(x) {
