@@ -12,10 +12,13 @@ C_SOC2020structure<-I_SOC2020structure%>%
   distinct(code=`SOC2020.Sub-Major.Group`,cleanName=stringr::str_to_lower(`SOC2020.Group.Title`))%>%
   filter(is.na(code)==FALSE)
 
-cellsUseAps_empOcc <- cellsListAps %>% filter(description.en %like% "T09b:" & description.en %like% "All people - ")
-# get data
-C_empOcc <-
-  extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_empOcc$id,geo_param,geo_paramGLA) %>%
+cellsUseAps_empOcc <- cellsListAps %>% filter(CELL_NAME %like% "T09b:" & CELL_NAME %like% "All people - ")
+C_empOcc <- fetch_nomis(
+    "NM_17_1",
+    c("latestMINUS16","latestMINUS12","latestMINUS8","latestMINUS4","latest"),
+    geog_all,
+    cellsUseAps_empOcc$CELL
+  ) |> 
   filter(stringr::str_sub(CELL_NAME, -12, -1) == "All people )") %>%# ignore part time
 # convert into format used in dashboard
 formatNomis() %>%

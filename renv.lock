@@ -3546,54 +3546,6 @@
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
       "Repository": "CRAN"
     },
-    "nomisr": {
-      "Package": "nomisr",
-      "Version": "0.4.7",
-      "Source": "GitHub",
-      "Type": "Package",
-      "Title": "Access 'Nomis' UK Labour Market Data",
-      "Authors@R": "c( person( \"Evan\", \"Odell\", email = \"evanodell91@gmail.com\", role = c(\"aut\", \"cre\"), comment = c(ORCID='0000-0003-1845-808X')), person( \"Paul\", \"Egeler\", email = \"paulegeler@gmail.com\", role = c(\"rev\", \"ctb\")), person( \"Christophe\", \"Dervieux\", role = \"rev\",  comment = c(ORCID='0000-0003-4474-2498')), person( \"Nina\", \"Robery\", role = \"ctb\", comment = \"Work and Health Indicators with nomisr vignette\") )",
-      "Description": "Access UK official statistics from the 'Nomis' database.  'Nomis' includes data from the Census, the Labour Force Survey, DWP benefit  statistics and other economic and demographic data from the Office for  National Statistics, based around statistical geographies. See  <https://www.nomisweb.co.uk/api/v01/help> for full API documentation.",
-      "URL": "https://github.com/ropensci/nomisr, https://docs.evanodell.com/nomisr",
-      "BugReports": "https://github.com/ropensci/nomisr/issues",
-      "License": "MIT + file LICENSE",
-      "Depends": [
-        "R (>= 3.4.0)"
-      ],
-      "Imports": [
-        "jsonlite",
-        "tibble",
-        "dplyr",
-        "httr",
-        "utils",
-        "rsdmx",
-        "rlang",
-        "snakecase"
-      ],
-      "RoxygenNote": "7.2.0",
-      "Suggests": [
-        "knitr",
-        "rmarkdown",
-        "testthat",
-        "purrr",
-        "tidyr",
-        "magrittr",
-        "ggplot2",
-        "scales",
-        "readr"
-      ],
-      "VignetteBuilder": "knitr",
-      "Encoding": "UTF-8",
-      "Roxygen": "list(markdown = TRUE)",
-      "Author": "Evan Odell [aut, cre] (ORCID: <https://orcid.org/0000-0003-1845-808X>), Paul Egeler [rev, ctb], Christophe Dervieux [rev] (ORCID: <https://orcid.org/0000-0003-4474-2498>), Nina Robery [ctb] (Work and Health Indicators with nomisr vignette)",
-      "Maintainer": "Evan Odell <evanodell91@gmail.com>",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteUsername": "evanodell",
-      "RemoteRepo": "nomisr",
-      "RemoteRef": "master",
-      "RemoteSha": "e4e8b66e8e09fab840e8d1d5c9e9a5e999210810"
-    },
     "openssl": {
       "Package": "openssl",
       "Version": "2.4.1",
@@ -4834,7 +4786,7 @@
       "NeedsCompilation": "no",
       "Author": "Kevin Ushey [aut, cre] (ORCID: <https://orcid.org/0000-0003-2880-7407>), Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Posit Software, PBC [cph, fnd]",
       "Maintainer": "Kevin Ushey <kevin@rstudio.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "reprex": {
       "Package": "reprex",
