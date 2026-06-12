@@ -1399,12 +1399,15 @@ server <- function(input, output, session) {
       } else {
         "lower"
       }
-    areaRank <- (currentMapData() %>% filter(geog == input$splashGeoType) %>%
-      mutate(ranking = ifelse(input$splashMetric %in% c("unemployedRate", "inactiveRate", "unemployed", "inactive", "deathRate"),
-        rank(value, ties.method = c("first")),
-        rank(desc(value), ties.method = c("first"))
-      )) %>%
-      filter(geogConcat == input$geoChoice))$ranking
+    areaRank <- if (input$splashMetric %in% c("unemployedRate", "inactiveRate", "unemployed", "inactive", "deathRate")) {
+      (currentMapData() %>% filter(geog == input$splashGeoType) %>%
+        mutate(ranking = rank(value, ties.method = c("first"))) %>%
+        filter(geogConcat == input$geoChoice))$ranking
+    } else {
+      (currentMapData() %>% filter(geog == input$splashGeoType) %>%
+        mutate(ranking = rank(desc(value), ties.method = c("first"))) %>%
+        filter(geogConcat == input$geoChoice))$ranking
+    }
     suff <- case_when(
       areaRank %in% c(11, 12, 13) ~ "th",
       areaRank %% 10 == 1 ~ "st",
