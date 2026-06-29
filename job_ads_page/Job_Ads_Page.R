@@ -139,7 +139,7 @@ new_ads_SOC_roll <- new_ads_SOC_clean %>%
 # Volume of job ads across England
 new_ads_national_roll <- new_ads_national_clean %>%
   group_by(timePeriod) %>%
-  summarise(n_jobs = sum(n_jobs, na.rm = TRUE)) %>%
+  summarise(n_jobs = sum(n_jobs)) %>%
   mutate(n_jobs_3m_avg = slide_dbl(n_jobs, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE)) %>%
   ungroup()
 
