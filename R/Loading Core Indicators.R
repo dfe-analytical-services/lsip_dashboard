@@ -1,16 +1,12 @@
 # load app data
 
 load(file = "./Data/AppData/C_Geog.rdata")
-C_time1 <- read.csv(file = "./Data/AppData/C_time1.csv", check.names = FALSE) %>%
-  mutate(valueText = as.character(valueText)) # sometimes if all value are values this column is read in as numeric then the bind fails
-C_time2 <- read.csv(file = "./Data/AppData/C_time2.csv", check.names = FALSE) %>%
-  mutate(valueText = as.character(valueText))
-C_time <- bind_rows(C_time1, C_time2)
-C_breakdown <- read.csv(file = "./Data/AppData/C_breakdown.csv", check.names = FALSE)
-C_detailLookup <- read.csv(file = "./Data/AppData/C_detailLookup.csv", check.names = FALSE)
-C_topTenEachBreakdown <- read.csv(file = "./Data/AppData/C_topTenEachBreakdown.csv", check.names = FALSE)
-C_datahub <- read.csv(file = "./Data/AppData/C_datahub.csv", check.names = FALSE)
-C_axisMinMax <- read.csv(file = "./Data/AppData/C_axisMinMax.csv", check.names = FALSE)
+C_time <- readRDS("Data/AppData/C_time.rds")
+C_breakdown <- readRDS("Data/AppData/C_breakdown.rds")
+C_detailLookup <- readRDS("Data/AppData/C_detailLookup.rds")
+C_topTenEachBreakdown <- readRDS("Data/AppData/C_topTenEachBreakdown.rds")
+C_datahub <- readRDS("Data/AppData/C_datahub.rds")
+C_axisMinMax <- readRDS("Data/AppData/C_axisMinMax.rds")
 areaChoices <- readRDS("Data/AppData/areaChoices.rds")
 jobAdsGeog <- readRDS("job_ads_page/job_ads_page_map.rds")
 jobAdsNational <- readRDS("job_ads_page/job_ads_page_national.rds")

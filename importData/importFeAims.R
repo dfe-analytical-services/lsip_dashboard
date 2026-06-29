@@ -1,26 +1,9 @@
 ### 2.2.2 Achievements/starts/part by LAD and provision, level and age------------
-## Download "Geography Region, LA, LAD, PCON - Participation, Achievement by provision type (rates per 100,000 population)" 
-## From https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills/2024-25
+# Download "Geography Region, LA, LAD, PCON - Participation, Achievement by provision type (rates per 100,000 population)" 
+# From https://explore-education-statistics.service.gov.uk/find-statistics/further-education-and-skills/2025-26
 
-###  DO ONCE ON RELEASE OF DATA, THEN IGNORE ###
-
-# Read original csv file
-#folder <- "2-8_ILRach"
-#I_FeProvLevelAge <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
-
-# Save a copy as RDS
-#saveRDS(I_FeProvLevelAge, paste0("./Data/", folder, "/", gsub(".csv", ".RDS", list.files(path = paste0("./Data/", folder)))))
-
-# Remove the csv copy
-#file.remove(paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder), pattern = "*.csv")))
-
-# Remove the R object, to ensure code runs correctly
-#rm(I_FeProvLevelAge)
-
-#################################################
-
-folder <- "2-8_ILRach"
-I_FeProvLevelAge <- readRDS(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+I_FeProvLevelAge<-read.csv("https://explore-education-statistics.service.gov.uk/data-catalogue/data-set/66fd40a0-74f2-4683-bdb8-5eb95012bcdc/csv")|> 
+  filter(time_period<=202425) #filter to whole years only ignoring provisional data
 
 # tidy up data
 F_FeProvLevelAge <- I_FeProvLevelAge %>%
@@ -58,7 +41,7 @@ F_FeProvLevelAge <- I_FeProvLevelAge %>%
   #rename cols
   rename(achievements = learner_achievements, achievements_rate_per_100000_population = learner_achievements_rate_per_100000_population) %>% 
   #remove unused cols
-  select(-regulated_status, -time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name, -local_enterprise_partnership_code, -local_enterprise_partnership_name, -lsip_code, -lsip_name)
+  select(-regulated_status, -time_identifier, -time_period, -country_code, -country_name, -region_code, -region_name, -new_la_code, -old_la_code, -la_name, -pcon_code, -pcon_name, -lad_code, -lad_name, -english_devolved_area_code, -english_devolved_area_name, -lsip_code, -lsip_name)
 
 # add on new LADUs/LSIP/CA areas
 feWithAreas <- addGeogs(F_FeProvLevelAge)
@@ -146,3 +129,6 @@ C_FeProvLevelAge <- bind_rows(
   mutate(value = safe_numeric(valueText)) %>% 
   # Remove invalid value text for NA values, e.g. Inf, NaN, z
   mutate(valueText = ifelse(is.na(value), "NA", valueText))
+
+#save output
+saveRDS(C_FeProvLevelAge, "Data/processing/C_FeProvLevelAge.rds")

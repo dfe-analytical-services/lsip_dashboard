@@ -36,3 +36,6 @@ formatNomis() %>%
   left_join(C_SOC2020structure) %>%
   mutate(subgroup = paste0(code, " - ", stringr::str_to_sentence(cleanName))) %>%
   select(-code, -cleanName)
+
+#save output
+saveRDS(C_empOcc, "Data/processing/C_empOcc.rds")

@@ -7,11 +7,11 @@ nomis_geog_types <- as.data.frame(readSDMX("https://www.nomisweb.co.uk/api/v01/c
 
 # now create the string for the geographies we define (that are not stored in the NOMIS geographies)
 userGeogString <- C_LADLSIP %>%
-  group_by(LSIPname) %>%
+  group_by(LSIP25NM) %>%
   summarise(
     make_geo = paste0(
-      "MAKE|", gsub(" ", "%20", first(LSIPname)), "|",
-      paste(unique(LAD23CD), collapse = ";")
+      "MAKE|", gsub(" ", "%20", first(LSIP25NM)), "|",
+      paste(unique(LAD25CD), collapse = ";")
     ),
     .groups = "drop"
   )

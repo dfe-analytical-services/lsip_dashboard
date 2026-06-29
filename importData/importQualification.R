@@ -77,3 +77,8 @@ C_qualL4PlusAgeGender <- C_qualAgeGender %>%
   mutate(metric = "L4PlusRate", value = qualL4Plus / allQuals) %>%
   select(-qualL4Plus, -allQuals) %>%
   mutate(valueText = case_when(value == 0 ~ "c", TRUE ~ as.character(value)))
+
+#save output
+saveRDS(C_qualAgeGender, "Data/processing/C_qualAgeGender.rds")
+saveRDS(C_qualL3PlusAgeGender, "Data/processing/C_qualL3PlusAgeGender.rds")
+saveRDS(C_qualL4PlusAgeGender, "Data/processing/C_qualL4PlusAgeGender.rds")

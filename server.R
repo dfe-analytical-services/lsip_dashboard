@@ -715,15 +715,15 @@ server <- function(input, output, session) {
         margin = list(
           l = 0,
           r = 4,
-          # increase this margin a bit to prevent the last lable dissapearing
+          # increase this margin a bit to prevent the last label dissapearing
           b = 0,
-          t = 0,
+          t = 40,
           pad = 0
         ),
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+      config(displayModeBar = TRUE, displaylogo = FALSE, modeBarButtonsToRemove = c("zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "toggleSpikelines"))
   }
 
   createOverviewTitle <- function(metricName) {
@@ -1057,7 +1057,16 @@ server <- function(input, output, session) {
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+      config(
+        displayModeBar = TRUE,
+        displaylogo = FALSE,
+        modeBarButtonsToRemove = c(
+          "zoom2d", "pan2d", "select2d", "lasso2d",
+          "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d",
+          "hoverCompareCartesian", "hoverClosestCartesian",
+          "toggleSpikelines"
+        )
+      )
   })
 
   summaryBusinessesPlotBottom <- eventReactive(input$geoChoiceOver, {
@@ -1104,7 +1113,7 @@ server <- function(input, output, session) {
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+      config(displayModeBar = TRUE, displaylogo = FALSE, modeBarButtonsToRemove = c("zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "toggleSpikelines"))
   })
 
   # 5 Local skills----
@@ -1874,7 +1883,7 @@ server <- function(input, output, session) {
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+      config(displayModeBar = TRUE, displaylogo = FALSE, modeBarButtonsToRemove = c("zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "toggleSpikelines"))
   })
 
   ### 5.7.3 Time footnote ----
@@ -2092,7 +2101,7 @@ server <- function(input, output, session) {
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+      config(displayModeBar = TRUE, displaylogo = FALSE, modeBarButtonsToRemove = c("zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "toggleSpikelines"))
   })
 
   output$breadownPlot <- renderUI({
@@ -2190,7 +2199,7 @@ server <- function(input, output, session) {
 
   # Create data caveat at the top
   output$jobCaveatText <- renderUI({
-    "These statistics should be treated as official statistics in development (previously known as experimental statistics). The data includes minor instances of suppression in June and July 2025 due to quality concerns. Where this has occurred, only the data containing no suppression is included in the rolling average. In addition, ONS have partially imputed the data since October 2025 in response to the source data presenting a larger level of duplicate adverts which are not being identified as such. As such, month-on-month trends during the affected period should be treated with caution. Additionally, a source of jobs was missing from the December 2025 and February 2026 data, and so some data has been suppressed in these months."
+    "These statistics should be treated as official statistics in development (previously known as experimental statistics). The data includes minor instances of suppression in June and July 2025 due to quality concerns. Where this has occurred, only the data containing no suppression is included in the rolling average. In addition, ONS have partially imputed the data since October 2025 in response to the source data presenting a larger level of duplicate adverts which are not being identified as such. As such, month-on-month trends during the affected period should be treated with caution. Additionally, a source of jobs was missing from the December 2025 and February 2026 data, and so some data has been suppressed in these months.  Finally, the entirety of the March 2026 data is currently supressed so is excluded from any three-month averages."
   })
 
   # Create dynamic text
@@ -2498,7 +2507,7 @@ server <- function(input, output, session) {
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+      config(displayModeBar = TRUE, displaylogo = FALSE, modeBarButtonsToRemove = c("zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "toggleSpikelines"))
   })
 
   # Footnote for chart

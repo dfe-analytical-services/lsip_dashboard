@@ -20,3 +20,6 @@ C_empInd <- fetch_nomis(
   mutate(subgroup = gsub("&", "and", subgroup)) %>%
   mutate(valueText = as.character(value)) %>%
   mutate(breakdown = "Industry", metric = "inemployment")
+
+#save output
+saveRDS(C_empInd, "Data/processing/C_empInd.rds")
