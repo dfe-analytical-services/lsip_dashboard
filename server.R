@@ -2044,7 +2044,7 @@ server <- function(input, output, session) {
                 input$splashMetric == "employmentProjection") {
                 scales::percent(round2(value, 3))
               } else {
-                paste0(scales::percent(round2(value, 3)), " (", format(round2(vol_value, 0), big.mark = ","), ")")
+                paste0(scales::percent(round2(value, 3)), " (", format(round2(vol_value, 0), big.mark = ",", trim = T), ")")
               }
             },
             "<br>"
