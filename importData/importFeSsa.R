@@ -1,10 +1,12 @@
 ### 2.2.1 Achievements by SSAt1, LAD, gender, level------------
-folder <- "2-7_ILRachSSA"
-I_FeSsa <- read.csv(file = paste0("./Data/", folder, "/", list.files(path = paste0("./Data/", folder))))
+
+#An old publication might need to be used here to get a full years data (ie not part year provisional in the latest release)
+I_FeSsa<-read.csv("https://explore-education-statistics.service.gov.uk/data-catalogue/data-set/7ffc6f6f-cc7a-4f78-8224-7a91984c8782/csv")
 
 #Tidy up the data
 feSsaTidy <- I_FeSsa %>%
-  filter(notional_nvq_level == "Total", sex == "Total", ethnicity_major == "Total") %>%
+  filter(notional_nvq_level == "Total", sex == "Total", ethnicity_major == "Total",
+         geographic_level %in% c("Local authority district","English devolved area","National")) %>%
   mutate(
     subgroup = ssa_tier_1,
     breakdown = case_when(
