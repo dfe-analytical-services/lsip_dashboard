@@ -170,6 +170,11 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     margin-left: auto;
     margin-right: auto;
 }
+
+/* Tighter bottom fit for valueboxes */
+.bslib-value-box .value-box-area {
+    padding: 0rem 1rem;
+}
 "
         )
       ),
