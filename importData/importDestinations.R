@@ -69,3 +69,6 @@ C_destinations <- bind_rows(
   ungroup() |> 
   select(-cohort_level_group,-destination_description,-pupil_count) |> 
   mutate(valueText = as.character(value))
+
+#save output
+saveRDS(C_destinations, "Data/processing/C_destinations.rds")

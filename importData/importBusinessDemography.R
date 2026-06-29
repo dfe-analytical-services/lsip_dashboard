@@ -93,3 +93,6 @@ C_businesses <- bind_rows(
   # pivot back
   tidyr::pivot_longer(!c("chartPeriod", "timePeriod", "latest", "geogConcat"), names_to = "metric", values_to = "value") %>%
   mutate(valueText = as.character(value), breakdown = "Total", subgroup = "Total")
+
+#save output
+saveRDS(C_businesses, "Data/processing/C_businesses.rds")

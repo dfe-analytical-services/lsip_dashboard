@@ -69,11 +69,11 @@ addGeogs <- function(x) {
       geographic_level %in% c("Local authority district", "National")
     ) %>%
     # Use new LA names from 2011 areas
-    left_join(I_LaLookup %>% distinct(LAD11CD, LAD23CD_11 = LAD25CD), by = c("areaCode" = "LAD11CD")) %>% # make new LAs
+    left_join(C_LaLookup %>% distinct(LAD11CD, LAD23CD_11 = LAD25CD), by = c("areaCode" = "LAD11CD")) %>% # make new LAs
     # Use new LA names from 2021 areas
-    left_join(I_LaLookup %>% distinct(LAD21CD, LAD23CD_21 = LAD25CD), by = c("areaCode" = "LAD21CD")) %>% # make new LAs
+    left_join(C_LaLookup %>% distinct(LAD21CD, LAD23CD_21 = LAD25CD), by = c("areaCode" = "LAD21CD")) %>% # make new LAs
     # Use new LA names from 2021 areas
-    left_join(I_LaLookup %>% distinct(LAD21CD, LAD23CD_23 = LAD25CD), by = c("areaCode" = "LAD21CD")) %>% # make new LAs
+    left_join(C_LaLookup %>% distinct(LAD21CD, LAD23CD_23 = LAD25CD), by = c("areaCode" = "LAD21CD")) %>% # make new LAs
     # create flag for when the lad code has changed
     mutate(
       newArea = case_when(

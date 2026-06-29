@@ -15,3 +15,6 @@ C_empInd <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,la
   mutate(subgroup = gsub("&", "and", subgroup)) %>%
   mutate(valueText = as.character(value)) %>%
   mutate(breakdown = "Industry", metric = "inemployment")
+
+#save output
+saveRDS(C_empInd, "Data/processing/C_empInd.rds")

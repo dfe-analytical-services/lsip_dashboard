@@ -179,3 +179,5 @@ C_adverts <- bind_rows(
   select(-SOC2digit, -SOC1digit) %>%
   mutate(metric = "vacancies")
 
+#save output
+saveRDS(C_adverts, "Data/processing/C_adverts.rds")

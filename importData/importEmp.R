@@ -30,7 +30,7 @@ cellsUseAps_emp <- cellsListAps %>% filter(description.en %like% "T01:" & descri
 I_emp16plus <- extractNomis("NM_17_1", "latestMINUS16,latestMINUS12,latestMINUS8,latestMINUS4,latest", cellsUseAps_emp$id,geo_param,geo_paramGLA)
 
 # we need the totals for 16plus to use as the denomintor of the bar charts
-F_emp16plus <- formatNomis(I_emp16plus) %>%
+C_emp16plus <- formatNomis(I_emp16plus) %>%
   rename(metric = CELL_NAME) %>%
   mutate(metric = gsub(" : All People )", "", metric)) %>%
   mutate(metric = gsub("[[:digit:]]+", "", metric)) %>%
@@ -39,9 +39,9 @@ F_emp16plus <- formatNomis(I_emp16plus) %>%
   mutate(breakdown = "Total", subgroup = "Total")
 
 # Create rates for unemployment (base is 16+ economically active)
-C_unemp <- F_emp16plus %>%
+C_unemp <- C_emp16plus %>%
   filter(metric == "unemployed") %>%
-  left_join(F_emp16plus %>% filter(metric == "economicallyactive") %>% rename(economicallyactive = value) %>% select(-metric)) %>%
+  left_join(C_emp16plus %>% filter(metric == "economicallyactive") %>% rename(economicallyactive = value) %>% select(-metric)) %>%
   mutate(value = value / economicallyactive, metric = paste0(metric, "Rate")) %>%
   select(-economicallyactive)
 
@@ -49,7 +49,11 @@ C_unemp <- F_emp16plus %>%
 C_emp <- bind_rows(
   C_emp,
   C_unemp,
-  F_emp16plus %>% filter(metric != "inactive"),
+  C_emp16plus %>% filter(metric != "inactive"),
   F_emp %>% filter(metric == "inactive")
 ) %>%
   mutate(valueText = as.character(value))
+
+#save data
+saveRDS(C_emp16plus, "Data/processing/C_emp16plus.rds")
+saveRDS(C_emp, "Data/processing/C_emp.rds")
