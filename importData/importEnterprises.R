@@ -5,25 +5,17 @@
 # Date: 12 months to Dec 2018-2022
 # Cell: UK Business Counts - enterprises by industry and employment size band
 # Enterprise by employment size and industry
-I_entIndSize <-
-  bind_rows(
-    # user defined LSIPs
-    nomisr::nomis_get_data("NM_142_1",
-                           geography = geo_param,
-                           industry = 37748736, date = "latestMINUS4-latest", employment_sizeband = "0,10,20,30,40", industry = "163577857...163577874", legal_status = "0", measures = "20100"
-    ) %>%
-      select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, INDUSTRY_NAME, EMPLOYMENT_SIZEBAND_NAME, OBS_VALUE),
-    # user defined Greater London Authority
-    nomisr::nomis_get_data("NM_142_1",
-                           geography = geo_paramGLA,
-                           industry = 37748736, date = "latestMINUS4-latest", employment_sizeband = "0,10,20,30,40", industry = "163577857...163577874", legal_status = "0", measures = "20100"
-    ) %>%
-      select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, INDUSTRY_NAME, EMPLOYMENT_SIZEBAND_NAME, OBS_VALUE)%>%
-      mutate(GEOGRAPHY_TYPE = "combined authorities (as of May 2025)"),
-    # other geogs
-    nomisr::nomis_get_data("NM_142_1", geography = geogUseAps$id, industry = 37748736, date = "latestMINUS4-latest", employment_sizeband = "0,10,20,30,40", industry = "163577857...163577874", legal_status = "0", measures = "20100") %>%
-      select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, INDUSTRY_NAME, EMPLOYMENT_SIZEBAND_NAME, OBS_VALUE),
-  )
+
+# This has so much data it goes over the nomis api call limit, so it must be chucked into two industries at a time
+I_entIndSize <-  fetch_nomis(
+  "NM_142_1",
+  "latestMINUS4,latestMINUS3,latestMINUS2,latestMINUS1,latest",
+  geog_all,
+  cell="",
+"&industry=37748736,163577857,163577858,163577859,163577860,163577861,163577862,163577863,163577864,163577865,163577866,163577867,163577868,163577869,163577870,163577871,163577872,163577873,163577874&employment_sizeband=0,10,20,30,40&legal_status=0",
+  19*5*1,
+  c("DATE_NAME", "GEOGRAPHY_NAME", "GEOGRAPHY_CODE","GEOGRAPHY_TYPE", "INDUSTRY_NAME", "EMPLOYMENT_SIZEBAND_NAME", "OBS_VALUE")
+)
 
 # Enterprise by industry ----
 C_entInd <- I_entIndSize %>% 

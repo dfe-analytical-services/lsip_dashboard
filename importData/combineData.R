@@ -1,5 +1,5 @@
 # 3. Combine datasets ----
-C_localSkillsDatasetBind <- bind_rows(
+C_localSkillsDataset <- bind_rows(
   C_emp,
   C_empOcc,
   C_empInd,
@@ -14,16 +14,6 @@ C_localSkillsDatasetBind <- bind_rows(
   C_destinations,
   C_adverts,
   C_businesses
-)
-# add in GLA as an CA because people expect it be there (no need in FE data because it is published as GLA)
-C_localSkillsDataset <- bind_rows(
-  C_localSkillsDatasetBind 
-  ,C_localSkillsDatasetBind %>%
-    filter(!metric %in% c("starts_rate_per_100000_population","participation_rate_per_100000_population",
-                          "achievements_rate_per_100000_population","starts",                                 
-                          "participation","achievements", "achievementsAims","enrolmentsAims"),
-           geogConcat == "Greater London LSIP") %>%
-    mutate(geogConcat = "Greater London Authority CA")
 )
 
 # 4. Create datasets used by the app----

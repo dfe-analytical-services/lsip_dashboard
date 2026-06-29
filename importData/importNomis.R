@@ -1,12 +1,11 @@
 # Nomis datasets
-# get all APS data that comes via the nomis API
-library(nomisr)
+library(purrr)
+library(rsdmx)
 
-# First list of all the geographies we need (excluding the user defined which are added in the function)
-geogUseAps <- nomisr::nomis_get_metadata(id = "NM_17_1", concept = "geography", type = "type") %>%
-  filter(description.en %in% c("combined authorities (as of May 2025)","local authorities: district / unitary (as of April 2023)", "countries"))
+# Get IDs of LADUs (TYPE424), CAs (TYPE442), countries (TYPE499)
+nomis_geog_types <- as.data.frame(readSDMX("https://www.nomisweb.co.uk/api/v01/codelist/CL_17_1_GEOGRAPHY/TYPE424,TYPE442,TYPE499.def.sdmx.xml"))
 
-# now create the api string for the geographies we define (that are not stored in the NOMI geographies)
+# now create the string for the geographies we define (that are not stored in the NOMIS geographies)
 userGeogString <- C_LADLSIP %>%
   group_by(LSIP25NM) %>%
   summarise(
@@ -16,9 +15,6 @@ userGeogString <- C_LADLSIP %>%
     ),
     .groups = "drop"
   )
-
-# Combine strings
-geo_param <- paste(userGeogString$make_geo, collapse = ",")
 
 #Also make GLA geography api string
 userGeogStringGLA <- C_calookup %>%
@@ -32,11 +28,12 @@ userGeogStringGLA <- C_calookup %>%
     .groups = "drop"
   )
 
-# Combine strings
-geo_paramGLA <- paste(userGeogStringGLA$make_geo, collapse = ",")
+#combine all into one long geography string
+geog_all <- paste0(paste(nomis_geog_types$id, collapse = ","),",",paste(userGeogStringGLA$make_geo, collapse = ","),",",paste(userGeogString$make_geo, collapse = ","))
 
-# list all the APS cells available
-cellsListAps <- nomisr::nomis_get_metadata(id = "NM_17_1", concept = "CELL")
+#get a list of cells available to filter later for each dataset
+cellsListAps <- readr::read_csv(paste0("https://www.nomisweb.co.uk/api/v01/dataset/NM_17_1.data.csv?date=latest&geography=E92000001&measures=20100"))  |> #just pick England and one measure to get a row per cell
+  select(CELL,CELL_NAME)
 
 ### 1 Employment level and rate ------------
 source("importData/importEmp.R", echo=TRUE)

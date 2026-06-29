@@ -1,30 +1,50 @@
 # Function to get data from nomis and tidy given the table ID, the time periods wanted and the metric (cells) wanted
-extractNomis <- function(tableID, dates, cells, LSIPareas, GLAarea) {
-  bind_rows(
-    # user defined LSIPs
-    nomisr::nomis_get_data(
-      id = tableID, date = dates, geography = LSIPareas,
-      cell = cells
-    ) %>%
-      select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, CELL_NAME, OBS_VALUE, MEASURES_NAME),
-    # user defined Greater London Authority
-    nomisr::nomis_get_data(
-      id = tableID, date = dates, geography = GLAarea,
-      cell = cells
-    ) %>%
-      select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, CELL_NAME, OBS_VALUE, MEASURES_NAME) %>%
-      mutate(GEOGRAPHY_TYPE = "combined authorities (as of May 2025)"),
-    # other geogs
-    nomisr::nomis_get_data(
-      id = tableID, date = dates, geography = geogUseAps$id,
-      cell = cells
-    ) %>%
-      select(DATE_NAME, GEOGRAPHY_NAME, GEOGRAPHY_CODE, GEOGRAPHY_TYPE, CELL_NAME, OBS_VALUE, MEASURES_NAME)
-  ) %>%
-    filter(
-      MEASURES_NAME == "Value"
-    ) %>%
-    select(-MEASURES_NAME)
+fetch_nomis <- function(tableID, date, geog, cells, other_variables = NULL, other_variables_size = 1, select_cols = c("DATE_NAME", "GEOGRAPHY_NAME", "GEOGRAPHY_CODE", "GEOGRAPHY_TYPE", "CELL_NAME", "OBS_VALUE")) {
+  # Most api calls go over the nomis limit, so run in chunks of geography areas
+  n_cells <- length(cells)
+  n_dates <- length(strsplit(date, ",")[[1]])
+
+  # automatically compute safe chunk size
+  geog_chunk_size <- floor(25000 / (n_cells * n_dates * other_variables_size * 2)) # times two for both value and confidence interval measures
+
+  if (geog_chunk_size < 1) {
+    stop("Too many cells/dates — even one geography exceeds Nomis limit")
+  }
+
+  message("Using geography chunk size: ", geog_chunk_size)
+
+  geo_vec <- unlist(strsplit(geog, ","))
+
+  geo_chunks <- split(
+    geo_vec,
+    ceiling(seq_along(geo_vec) / geog_chunk_size)
+  ) |>
+    lapply(paste, collapse = ",")
+
+  # Get data from nomis
+  map_dfr(geo_chunks, function(g_chunk) {
+    base_url <- "https://www.nomisweb.co.uk/api/v01/dataset"
+
+    url <- paste0(
+      base_url, "/", tableID, ".data.csv?",
+      "date=", date,
+      "&geography=", paste(g_chunk, collapse = ","),
+      "&cell=", paste(cells, collapse = ","),
+      "&measures=20100,20701",
+      other_variables
+    )
+
+    df <- readr::read_csv(url, show_col_types = FALSE)
+
+    df <- df |>
+      filter(MEASURES == 20100) |> # keep only values
+      select(select_cols)
+
+    if (nrow(df) == 25000) {
+      message("ERROR! NOMIS API limit reached (25000 rows). Try chunking your request.")
+    }
+    return(df)
+  })
 }
 
 ## 2.0 cleaning functions ----
@@ -54,7 +74,7 @@ formatNomis <- function(x) {
     )) %>%
     mutate(geogConcat = case_when(
       GEOGRAPHY_TYPE == "local authorities: district / unitary (as of April 2023)" ~ paste0(GEOGRAPHY_NAME, " LADU"),
-      GEOGRAPHY_TYPE == "combined authorities (as of May 2025)" ~ paste0(GEOGRAPHY_NAME, " CA"),
+      (GEOGRAPHY_TYPE == "combined authorities (as of May 2025)" | GEOGRAPHY_NAME == "Greater London Authority") ~ paste0(GEOGRAPHY_NAME, " CA"),
       GEOGRAPHY_TYPE == "User Defined Geography" ~ paste0(GEOGRAPHY_NAME, " LSIP"),
       TRUE ~ GEOGRAPHY_NAME
     )) %>%
@@ -62,7 +82,7 @@ formatNomis <- function(x) {
     rename(chartPeriod = DATE_NAME, value = OBS_VALUE)
 }
 
-# add on new LADUs/LEP/LSIP/CA areas to all LAs. Used for those data withonly LAD data
+# add on new LADUs/CA areas to all LAs. Used for those data with only LAD data
 addGeogs <- function(x) {
   withAreas <- x %>%
     filter(
