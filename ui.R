@@ -416,6 +416,31 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 .govuk-header__navigation-item a {
   margin-left: 30px;
   font-size: 16px;
+  font-weight: 700;
+}
+
+.govuk-header__navigation-item .govuk-header__link {
+  border-bottom: 3px solid transparent;
+}
+
+.govuk-header__navigation-item .govuk-header__link:hover {
+  border-bottom: 3px solid #ffffff;
+}
+
+.govuk-header__link:link, .govuk-header__link:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
+.govuk-header__navigation-list {
+  display: flex;
+  flex-direction: row;     /* force horizontal */
+  flex-wrap: nowrap;      /* prevent wrapping into a column */
+  justify-content: flex-end;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 /* --- Smaller screens --- */
@@ -432,6 +457,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     display: flex;              /* keep items horizontal, or vertical if needed */
     flex-wrap: wrap;
     justify-content: flex-end;  /* ensure list items stay right */
+    list-style: none;
   }
 
   .govuk-header__navigation-item a {
@@ -796,7 +822,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("14 May 2026 (1.6.12)"),
+              p("21 May 2026 (1.6.12)"),
               tags$ul(
                 tags$li("Update to latest APS employment data.")
               ),
