@@ -827,14 +827,20 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("10 Jun 2026 (1.6.13)"),
+              p("2 Jul 2026 (1.6.14)"),
               tags$ul(
-                tags$li("Update to latest online job advert data data. NB The entirety of March 2026 data is supressed due to issues with a major data source.")
+                tags$li("Add in download buttons for charts and add volumes to hovers where appropriate."),
+                tags$li("Improve efficency of data import code."),
+                tags$li("Update to latest boundaries and lookups.")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("10 Jun 2026 (1.6.13)"),
+                  tags$ul(
+                    tags$li("Update to latest online job advert data data. NB The entirety of March 2026 data is supressed due to issues with a major data source.")
+                  ),
                   p("21 May 2026 (1.6.12)"),
                   tags$ul(
                     tags$li("Update to latest APS employment data.")
