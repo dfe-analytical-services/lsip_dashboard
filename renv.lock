@@ -409,7 +409,7 @@
     },
     "V8": {
       "Package": "V8",
-      "Version": "8.0.1",
+      "Version": "8.2.0",
       "Source": "Repository",
       "Type": "Package",
       "Title": "Embedded JavaScript and WebAssembly Engine for R",
@@ -5523,11 +5523,11 @@
       "Author": "Ross Wyatt [aut], Cam Race [aut, cre], Sarah Wong [aut], Richard Bielby [ctb], Charlotte Foster [ctb], Jeni Martin [ctb], Andrew Baker [ctb]",
       "Maintainer": "Cam Race <camrace8@gmail.com>",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
       "RemoteUsername": "dfe-analytical-services",
       "RemoteRepo": "shinyGovstyle",
       "RemoteRef": "main",
-      "RemoteSha": "3e5518175b06c3fe8a6df029d554b559d0aca276"
+      "RemoteSha": "fcca6ea3b9b4f9dba2a7b1ddea568a854f8a1535",
+      "RemoteHost": "api.github.com"
     },
     "shinyWidgets": {
       "Package": "shinyWidgets",
