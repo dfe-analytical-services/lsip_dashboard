@@ -715,15 +715,15 @@ server <- function(input, output, session) {
         margin = list(
           l = 0,
           r = 4,
-          # increase this margin a bit to prevent the last lable dissapearing
+          # increase this margin a bit to prevent the last label dissapearing
           b = 0,
-          t = 0,
+          t = 40,
           pad = 0
         ),
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+      config(displayModeBar = TRUE, displaylogo = FALSE, modeBarButtonsToRemove = c("zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "toggleSpikelines"))
   }
 
   createOverviewTitle <- function(metricName) {
@@ -1057,7 +1057,16 @@ server <- function(input, output, session) {
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+      config(
+        displayModeBar = TRUE,
+        displaylogo = FALSE,
+        modeBarButtonsToRemove = c(
+          "zoom2d", "pan2d", "select2d", "lasso2d",
+          "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d",
+          "hoverCompareCartesian", "hoverClosestCartesian",
+          "toggleSpikelines"
+        )
+      )
   })
 
   summaryBusinessesPlotBottom <- eventReactive(input$geoChoiceOver, {
@@ -1104,7 +1113,7 @@ server <- function(input, output, session) {
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+      config(displayModeBar = TRUE, displaylogo = FALSE, modeBarButtonsToRemove = c("zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "toggleSpikelines"))
   })
 
   # 5 Local skills----
@@ -1874,7 +1883,7 @@ server <- function(input, output, session) {
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+      config(displayModeBar = TRUE, displaylogo = FALSE, modeBarButtonsToRemove = c("zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "toggleSpikelines"))
   })
 
   ### 5.7.3 Time footnote ----
@@ -2026,36 +2035,27 @@ server <- function(input, output, session) {
             "Area: ",
             Area,
             "<br>",
-            currentMetricClean(),
+            str_to_sentence(currentMetricClean()),
             ": ",
-            if (str_sub(input$splashMetric, start = -4) == "Rate" |
-              input$splashMetric == "inemployment" |
-              input$splashMetric == "vacancies" |
-              input$splashMetric == "enterpriseCount" |
-              input$splashMetric == "achievements" |
-              input$splashMetric == "participation" |
-              input$splashMetric == "employmentProjection" |
-              input$splashMetric == "starts") {
-              scales::percent(round2(value, 3))
+            if (input$splashMetric %in% c("achievements_rate_per_100000_population", "participation_rate_per_100000_population")) {
+              format(round2(value, 0), big.mark = ",")
             } else {
-              round2(value, 0)
+              if (str_sub(input$splashMetric, start = -4) == "Rate" |
+                input$splashMetric == "employmentProjection") {
+                scales::percent(round2(value, 3))
+              } else {
+                paste0(scales::percent(round2(value, 3)), " (", format(round2(vol_value, 0), big.mark = ",", trim = T), ")")
+              }
             },
             "<br>"
           )
         )
       ) +
         geom_col(position = "dodge") +
-        scale_y_continuous(labels = if (str_sub(input$splashMetric, start = -4) == "Rate" |
-          input$splashMetric == "inemployment" |
-          input$splashMetric == "vacancies" |
-          input$splashMetric == "enterpriseCount" |
-          input$splashMetric == "achievements" |
-          input$splashMetric == "participation" |
-          input$splashMetric == "employmentProjection" |
-          input$splashMetric == "starts") {
-          scales::percent
-        } else {
+        scale_y_continuous(labels = if (input$splashMetric %in% c("achievements_rate_per_100000_population", "participation_rate_per_100000_population")) {
           label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
+        } else {
+          scales::percent
         }) +
         scale_x_discrete(
           labels = function(x) {
@@ -2092,7 +2092,7 @@ server <- function(input, output, session) {
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+      config(displayModeBar = TRUE, displaylogo = FALSE, modeBarButtonsToRemove = c("zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "toggleSpikelines"))
   })
 
   output$breadownPlot <- renderUI({
@@ -2498,7 +2498,7 @@ server <- function(input, output, session) {
         xaxis = list(fixedrange = TRUE),
         yaxis = list(fixedrange = TRUE)
       ) %>% # disable zooming because it's awful on mobile
-      config(displayModeBar = FALSE)
+      config(displayModeBar = TRUE, displaylogo = FALSE, modeBarButtonsToRemove = c("zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "toggleSpikelines"))
   })
 
   # Footnote for chart

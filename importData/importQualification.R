@@ -2,13 +2,25 @@
 # Geog and date as above
 # Cell: T19	Qualification by age and gender. All people aged 16-64. only updated every Jan-Dec. NVQ data is available until 2021 - then on rcf
 # find cells we want in NVQ
-cellsUseAps_qualNvq <- cellsListAps %>% filter(description.en %like% "T19:" & description.en %like% "Total")
-# get data
-I_qualAgeGenderNvq <- extractNomis("NM_17_1", "2021-12", cellsUseAps_qualNvq$id,geo_param,geo_paramGLA)
+cellsUseAps_qualNvq <- cellsListAps %>% filter(CELL_NAME %like% "T19:" & CELL_NAME %like% "Total")
+
+I_qualAgeGenderNvq <- 
+  fetch_nomis(
+    "NM_17_1",
+    "2021-12",
+    geog_all,
+    cellsUseAps_qualNvq$CELL
+  )
+
 # find cells we want in NVQ
-cellsUseAps_qualRqf <- cellsListAps %>% filter(description.en %like% "T19a:" & description.en %like% "Total")
+cellsUseAps_qualRqf <- cellsListAps %>% filter(CELL_NAME %like% "T19a:" & CELL_NAME %like% "Total")
 # get rqf data from 2022 onwards. only jan-dec data avaialable so input of date in manual
-I_qualAgeGenderRqf <- extractNomis("NM_17_1", "2022-12,2023-12,2024-12,2025-12", cellsUseAps_qualRqf$id,geo_param,geo_paramGLA)
+I_qualAgeGenderRqf <-  fetch_nomis(
+      "NM_17_1",
+      "2022-12,2023-12,2024-12,2025-12",
+      geog_all,
+      cellsUseAps_qualRqf$CELL
+    )
 
 ## Qualification level by age and gender ----
 C_qualAgeGender <- formatNomis(I_qualAgeGenderNvq %>%
@@ -65,3 +77,8 @@ C_qualL4PlusAgeGender <- C_qualAgeGender %>%
   mutate(metric = "L4PlusRate", value = qualL4Plus / allQuals) %>%
   select(-qualL4Plus, -allQuals) %>%
   mutate(valueText = case_when(value == 0 ~ "c", TRUE ~ as.character(value)))
+
+#save output
+saveRDS(C_qualAgeGender, "Data/processing/C_qualAgeGender.rds")
+saveRDS(C_qualL3PlusAgeGender, "Data/processing/C_qualL3PlusAgeGender.rds")
+saveRDS(C_qualL4PlusAgeGender, "Data/processing/C_qualL4PlusAgeGender.rds")
