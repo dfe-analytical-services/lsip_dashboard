@@ -1408,9 +1408,15 @@ server <- function(input, output, session) {
       } else {
         "lower"
       }
-    areaRank <- (currentMapData() %>% filter(geog == input$splashGeoType) %>%
-      mutate(ranking = rank(desc(value), ties.method = c("first"))) %>%
-      filter(geogConcat == input$geoChoice))$ranking
+    areaRank <- if (input$splashMetric %in% c("unemployedRate", "inactiveRate", "unemployed", "inactive", "deathRate")) {
+      (currentMapData() %>% filter(geog == input$splashGeoType) %>%
+        mutate(ranking = rank(value, ties.method = c("first"))) %>%
+        filter(geogConcat == input$geoChoice))$ranking
+    } else {
+      (currentMapData() %>% filter(geog == input$splashGeoType) %>%
+        mutate(ranking = rank(desc(value), ties.method = c("first"))) %>%
+        filter(geogConcat == input$geoChoice))$ranking
+    }
     suff <- case_when(
       areaRank %in% c(11, 12, 13) ~ "th",
       areaRank %% 10 == 1 ~ "st",
@@ -1433,10 +1439,15 @@ server <- function(input, output, session) {
       suff,
       " of the ",
       if (str_sub(input$geoChoice, start = -2) == "CA") {
-        "16 CAs (and GLA)."
+        "16 CAs (and GLA"
       } else {
-        "42 areas (38 LSIPS and 4 sub-London LSIP areas)."
-      }
+        "42 areas (38 LSIPS and 4 sub-London LSIP areas"
+      },
+      ifelse(input$splashMetric %in% c("unemployedRate", "inactiveRate", "unemployed", "inactive", "deathRate"),
+        ", where first place has the lowest value",
+        ""
+      ),
+      ")."
     )
   })
 
