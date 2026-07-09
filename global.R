@@ -84,6 +84,13 @@ jobMetricChoices <- list(
   "Job adverts per 100 adults" = "popRate",
   "Job adverts per 100 employees" = "jobRate"
 )
+
+jobOccsMetricChoices <- list(
+  "Volume" = "volume",
+  "Change since January 2022" = "growthRate",
+  "Job adverts per 100,000 adults" = "popRate",
+  "Job adverts per 100 employees" = "jobRate"
+)
 # Functions ---------------------------------------------------------------------------------
 
 # tidy_code_function -------------------------------------------------------------------------------

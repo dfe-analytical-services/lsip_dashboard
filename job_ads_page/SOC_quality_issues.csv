@@ -1,0 +1,414 @@
+"soc_4_digit_code","occupation_label_4_digit","high_semantic_mismatch","high_prop_mismatch","high_lightcast_mismatch","all_issues","any_issues","sum","remove"
+1111,"Chief executives and senior officials",0,1,0,FALSE,TRUE,1,0
+1112,"Elected officers and representatives",1,0,0,FALSE,TRUE,1,1
+1121,"Production managers and directors in manufacturing",0,0,0,FALSE,FALSE,0,0
+1122,"Production managers and directors in construction",0,0,0,FALSE,FALSE,0,0
+1123,"Production managers and directors in mining and energy",0,0,0,FALSE,FALSE,0,0
+1131,"Financial managers and directors",0,0,0,FALSE,FALSE,0,0
+1132,"Marketing, sales and advertising directors",0,0,1,FALSE,TRUE,1,0
+1133,"Public relations and communications directors",0,0,0,FALSE,FALSE,0,0
+1134,"Purchasing managers and directors",0,0,0,FALSE,FALSE,0,0
+1135,"Charitable organisation managers and directors",0,1,0,FALSE,TRUE,1,0
+1136,"Human resource managers and directors",0,0,0,FALSE,FALSE,0,0
+1137,"Information technology directors",0,0,0,FALSE,FALSE,0,0
+1139,"Functional managers and directors n.e.c.",0,0,0,FALSE,FALSE,0,0
+1140,"Directors in logistics, warehousing and transport",0,0,0,FALSE,FALSE,0,0
+1150,"Managers and directors in retail and wholesale",0,0,0,FALSE,FALSE,0,0
+1161,"Officers in armed forces",1,0,0,FALSE,TRUE,1,1
+1162,"Senior police officers",1,1,0,FALSE,TRUE,2,1
+1163,"Senior officers in fire, ambulance, prison and related services",1,0,0,FALSE,TRUE,1,1
+1171,"Health services and public health managers and directors",0,0,0,FALSE,FALSE,0,0
+1172,"Social services managers and directors",0,0,0,FALSE,FALSE,0,0
+1211,"Managers and proprietors in agriculture and horticulture",1,0,0,FALSE,TRUE,1,1
+1212,"Managers and proprietors in forestry, fishing and related services",0,0,1,FALSE,TRUE,1,0
+1221,"Hotel and accommodation managers and proprietors",0,0,0,FALSE,FALSE,0,0
+1222,"Restaurant and catering establishment managers and proprietors",0,0,0,FALSE,FALSE,0,0
+1223,"Publicans and managers of licensed premises",0,0,0,FALSE,FALSE,0,0
+1224,"Leisure and sports managers and proprietors",0,0,1,FALSE,TRUE,1,0
+1225,"Travel agency managers and proprietors",0,0,0,FALSE,FALSE,0,0
+1231,"Health care practice managers",0,0,0,FALSE,FALSE,0,0
+1232,"Residential, day and domiciliary care managers and proprietors",0,0,0,FALSE,FALSE,0,0
+1233,"Early education and childcare services proprietors",0,1,1,FALSE,TRUE,2,1
+1241,"Managers in transport and distribution",0,0,0,FALSE,FALSE,0,0
+1242,"Managers in storage and warehousing",0,0,0,FALSE,FALSE,0,0
+1243,"Managers in logistics",0,0,0,FALSE,FALSE,0,0
+1251,"Property, housing and estate managers",0,0,0,FALSE,FALSE,0,0
+1252,"Garage managers and proprietors",0,0,0,FALSE,FALSE,0,0
+1253,"Hairdressing and beauty salon managers and proprietors",0,0,0,FALSE,FALSE,0,0
+1254,"Waste disposal and environmental services managers",0,0,0,FALSE,FALSE,0,0
+1255,"Managers and directors in the creative industries",0,0,0,FALSE,FALSE,0,0
+1256,"Betting shop and gambling establishment managers",0,1,1,FALSE,TRUE,2,1
+1257,"Hire services managers and proprietors",0,0,0,FALSE,FALSE,0,0
+1258,"Directors in consultancy services",0,1,1,FALSE,TRUE,2,1
+1259,"Managers and proprietors in other services n.e.c.",0,0,1,FALSE,TRUE,1,0
+2111,"Chemical scientists",0,0,0,FALSE,FALSE,0,0
+2112,"Biological scientists",0,0,0,FALSE,FALSE,0,0
+2113,"Biochemists and biomedical scientists",0,0,0,FALSE,FALSE,0,0
+2114,"Physical scientists",0,0,0,FALSE,FALSE,0,0
+2115,"Social and humanities scientists",1,0,0,FALSE,TRUE,1,1
+2119,"Natural and social science professionals n.e.c.",0,0,0,FALSE,FALSE,0,0
+2121,"Civil engineers",0,0,0,FALSE,FALSE,0,0
+2122,"Mechanical engineers",0,0,0,FALSE,FALSE,0,0
+2123,"Electrical engineers",0,0,0,FALSE,FALSE,0,0
+2124,"Electronics engineers",0,0,0,FALSE,FALSE,0,0
+2125,"Production and process engineers",0,0,0,FALSE,FALSE,0,0
+2126,"Aerospace engineers",0,1,1,FALSE,TRUE,2,1
+2127,"Engineering project managers and project engineers",0,0,0,FALSE,FALSE,0,0
+2129,"Engineering professionals n.e.c.",0,0,0,FALSE,FALSE,0,0
+2131,"IT project managers",0,0,0,FALSE,FALSE,0,0
+2132,"IT managers",0,0,1,FALSE,TRUE,1,0
+2133,"IT business analysts, architects and systems designers",0,0,0,FALSE,FALSE,0,0
+2134,"Programmers and software development professionals",0,0,0,FALSE,FALSE,0,0
+2135,"Cyber security professionals",0,0,0,FALSE,FALSE,0,0
+2136,"IT quality and testing professionals",0,0,0,FALSE,FALSE,0,0
+2137,"IT network professionals",0,0,0,FALSE,FALSE,0,0
+2139,"Information technology professionals n.e.c.",0,0,0,FALSE,FALSE,0,0
+2141,"Web design professionals",0,0,0,FALSE,FALSE,0,0
+2142,"Graphic and multimedia designers",0,0,0,FALSE,FALSE,0,0
+2151,"Conservation professionals",0,0,0,FALSE,FALSE,0,0
+2152,"Environment professionals",0,0,0,FALSE,FALSE,0,0
+2161,"Research and development (R&D) managers",0,0,0,FALSE,FALSE,0,0
+2162,"Other researchers, unspecified discipline",0,1,0,FALSE,TRUE,1,0
+2211,"Generalist medical practitioners",0,0,0,FALSE,FALSE,0,0
+2212,"Specialist medical practitioners",0,0,0,FALSE,FALSE,0,0
+2221,"Physiotherapists",0,0,0,FALSE,FALSE,0,0
+2222,"Occupational therapists",0,0,0,FALSE,FALSE,0,0
+2223,"Speech and language therapists",0,0,0,FALSE,FALSE,0,0
+2224,"Psychotherapists and cognitive behaviour therapists",0,0,0,FALSE,FALSE,0,0
+2225,"Clinical psychologists",0,0,0,FALSE,FALSE,0,0
+2226,"Other psychologists",0,0,0,FALSE,FALSE,0,0
+2229,"Therapy professionals n.e.c.",0,0,0,FALSE,FALSE,0,0
+2231,"Midwifery nurses",0,0,0,FALSE,FALSE,0,0
+2232,"Registered community nurses",0,0,0,FALSE,FALSE,0,0
+2233,"Registered specialist nurses",0,0,0,FALSE,FALSE,0,0
+2234,"Registered nurse practitioners",0,0,0,FALSE,FALSE,0,0
+2235,"Registered mental health nurses",0,0,0,FALSE,FALSE,0,0
+2236,"Registered children's nurses",0,0,0,FALSE,FALSE,0,0
+2237,"Other registered nursing professionals",0,0,0,FALSE,FALSE,0,0
+2240,"Veterinarians",0,0,0,FALSE,FALSE,0,0
+2240,"Veterinarians",0,0,0,FALSE,FALSE,0,0
+2251,"Pharmacists",0,0,0,FALSE,FALSE,0,0
+2252,"Optometrists",0,0,0,FALSE,FALSE,0,0
+2253,"Dental practitioners",0,0,0,FALSE,FALSE,0,0
+2254,"Medical radiographers",0,0,0,FALSE,FALSE,0,0
+2255,"Paramedics",0,0,0,FALSE,FALSE,0,0
+2256,"Podiatrists",0,0,0,FALSE,FALSE,0,0
+2259,"Other health professionals n.e.c.",0,0,0,FALSE,FALSE,0,0
+2311,"Higher education teaching professionals",0,0,0,FALSE,FALSE,0,0
+2312,"Further education teaching professionals",0,1,0,FALSE,TRUE,1,0
+2313,"Secondary education teaching professionals",0,0,0,FALSE,FALSE,0,0
+2314,"Primary education teaching professionals",0,0,0,FALSE,FALSE,0,0
+2315,"Nursery education teaching professionals",1,0,0,FALSE,TRUE,1,1
+2316,"Special and additional needs education teaching professionals",0,0,0,FALSE,FALSE,0,0
+2317,"Teachers of English as a foreign language",0,1,0,FALSE,TRUE,1,0
+2319,"Teaching professionals n.e.c.",0,0,0,FALSE,FALSE,0,0
+2321,"Head teachers and principals",0,0,0,FALSE,FALSE,0,0
+2322,"Education managers",0,0,0,FALSE,FALSE,0,0
+2323,"Education advisers and school inspectors",0,0,0,FALSE,FALSE,0,0
+2324,"Early education and childcare services managers",0,0,0,FALSE,FALSE,0,0
+2329,"Other educational professionals n.e.c",0,0,0,FALSE,FALSE,0,0
+2411,"Barristers and judges",0,0,0,FALSE,FALSE,0,0
+2412,"Solicitors and lawyers",0,0,0,FALSE,FALSE,0,0
+2419,"Legal professionals n.e.c.",0,0,0,FALSE,FALSE,0,0
+2421,"Chartered and certified accountants",0,0,0,FALSE,FALSE,0,0
+2422,"Finance and investment analysts and advisers",0,0,0,FALSE,FALSE,0,0
+2423,"Taxation experts",0,0,0,FALSE,FALSE,0,0
+2431,"Management consultants and business analysts",0,0,0,FALSE,FALSE,0,0
+2432,"Marketing and commercial managers",0,0,1,FALSE,TRUE,1,0
+2433,"Actuaries, economists and statisticians",0,0,0,FALSE,FALSE,0,0
+2434,"Business and related research professionals",0,0,0,FALSE,FALSE,0,0
+2435,"Professional/Chartered company secretaries",0,0,1,FALSE,TRUE,1,0
+2439,"Business, research and administrative professionals n.e.c.",0,0,0,FALSE,FALSE,0,0
+2440,"Business and financial project management professionals",0,0,0,FALSE,FALSE,0,0
+2451,"Architects",0,0,0,FALSE,FALSE,0,0
+2452,"Chartered architectural technologists, planning officers and consultants",0,0,0,FALSE,FALSE,0,0
+2453,"Quantity surveyors",0,0,0,FALSE,FALSE,0,0
+2454,"Chartered surveyors",0,0,0,FALSE,FALSE,0,0
+2455,"Construction project managers and related professionals",0,0,0,FALSE,FALSE,0,0
+2461,"Social workers",0,0,0,FALSE,FALSE,0,0
+2462,"Probation officers",0,0,0,FALSE,FALSE,0,0
+2463,"Clergy",1,0,0,FALSE,TRUE,1,1
+2464,"Youth work professionals",0,0,0,FALSE,FALSE,0,0
+2469,"Welfare professionals n.e.c.",0,0,1,FALSE,TRUE,1,0
+2471,"Librarians",0,0,0,FALSE,FALSE,0,0
+2472,"Archivists, conservators and curators",0,0,0,FALSE,FALSE,0,0
+2481,"Quality control and planning engineers",0,0,0,FALSE,FALSE,0,0
+2482,"Quality assurance and regulatory professionals",0,0,0,FALSE,FALSE,0,0
+2483,"Environmental health professionals",0,0,1,FALSE,TRUE,1,0
+2491,"Newspaper, periodical and broadcast editors",0,0,0,FALSE,FALSE,0,0
+2492,"Newspaper and periodical broadcast journalists and reporters",0,0,0,FALSE,FALSE,0,0
+2493,"Public relations professionals",0,0,0,FALSE,FALSE,0,0
+2494,"Advertising accounts managers and creative directors",0,0,0,FALSE,FALSE,0,0
+3111,"Laboratory technicians",0,0,0,FALSE,FALSE,0,0
+3112,"Electrical and electronics technicians",0,0,0,FALSE,FALSE,0,0
+3113,"Engineering technicians",0,0,0,FALSE,FALSE,0,0
+3114,"Building and civil engineering technicians",0,0,0,FALSE,FALSE,0,0
+3115,"Quality assurance technicians",0,0,0,FALSE,FALSE,0,0
+3116,"Planning, process and production technicians",0,0,0,FALSE,FALSE,0,0
+3119,"Science, engineering and production technicians n.e.c.",0,0,0,FALSE,FALSE,0,0
+3120,"CAD, drawing and architectural technicians",0,0,0,FALSE,FALSE,0,0
+3131,"IT operations technicians",0,0,0,FALSE,FALSE,0,0
+3132,"IT user support technicians",0,0,0,FALSE,FALSE,0,0
+3133,"Database administrators and web content technicians",0,0,0,FALSE,FALSE,0,0
+3211,"Dispensing opticians",0,0,0,FALSE,FALSE,0,0
+3212,"Pharmaceutical technicians",0,0,0,FALSE,FALSE,0,0
+3213,"Medical and dental technicians",0,0,0,FALSE,FALSE,0,0
+3214,"Complementary health associate professionals",0,0,0,FALSE,FALSE,0,0
+3219,"Health associate professionals n.e.c.",0,0,0,FALSE,FALSE,0,0
+3221,"Youth and community workers",0,0,0,FALSE,FALSE,0,0
+3222,"Child and early years officers",0,0,0,FALSE,FALSE,0,0
+3223,"Housing officers",0,0,0,FALSE,FALSE,0,0
+3224,"Counsellors",0,0,0,FALSE,FALSE,0,0
+3229,"Welfare and housing associate professionals n.e.c.",0,0,0,FALSE,FALSE,0,0
+3231,"Higher level teaching assistants",0,0,0,FALSE,FALSE,0,0
+3232,"Early education and childcare practitioners",0,0,0,FALSE,FALSE,0,0
+3240,"Veterinary nurses",0,0,0,FALSE,FALSE,0,0
+3311,"Non-commissioned officers and other ranks",1,0,0,FALSE,TRUE,1,1
+3312,"Police officers (sergeant and below)",0,1,1,FALSE,TRUE,2,1
+3313,"Fire service officers (watch manager and below)",0,0,0,FALSE,FALSE,0,0
+3314,"Prison service officers (below principal officer)",0,0,0,FALSE,FALSE,0,0
+3319,"Protective service associate professionals n.e.c.",0,0,0,FALSE,FALSE,0,0
+3411,"Artists",0,1,0,FALSE,TRUE,1,0
+3412,"Authors, writers and translators",0,0,0,FALSE,FALSE,0,0
+3413,"Actors, entertainers and presenters",0,0,0,FALSE,FALSE,0,0
+3414,"Dancers and choreographers",1,1,1,TRUE,TRUE,3,1
+3415,"Musicians",0,1,0,FALSE,TRUE,1,0
+3416,"Arts officers, producers and directors",1,0,0,FALSE,TRUE,1,1
+3417,"Photographers, audio-visual and broadcasting equipment operators",0,0,0,FALSE,FALSE,0,0
+3421,"Interior designers",0,0,0,FALSE,FALSE,0,0
+3422,"Clothing, fashion and accessories designers",0,0,0,FALSE,FALSE,0,0
+3429,"Design occupations n.e.c.",0,0,0,FALSE,FALSE,0,0
+3431,"Sports players",0,0,0,FALSE,FALSE,0,0
+3432,"Sports coaches, instructors and officials",0,0,0,FALSE,FALSE,0,0
+3433,"Fitness and wellbeing instructors",0,0,0,FALSE,FALSE,0,0
+3511,"Aircraft pilots and air traffic controllers",0,1,0,FALSE,TRUE,1,0
+3512,"Ship and hovercraft officers",0,0,0,FALSE,FALSE,0,0
+3520,"Legal associate professionals",0,0,0,FALSE,FALSE,0,0
+3531,"Brokers",0,0,0,FALSE,FALSE,0,0
+3532,"Insurance underwriters",0,0,0,FALSE,FALSE,0,0
+3533,"Financial and accounting technicians",0,0,1,FALSE,TRUE,1,0
+3534,"Financial accounts managers",0,0,0,FALSE,FALSE,0,0
+3541,"Estimators, valuers and assessors",0,0,0,FALSE,FALSE,0,0
+3542,"Importers and exporters",0,0,0,FALSE,FALSE,0,0
+3543,"Project support officers",0,0,0,FALSE,FALSE,0,0
+3544,"Data analysts",0,0,0,FALSE,FALSE,0,0
+3549,"Business associate professionals n.e.c.",0,0,0,FALSE,FALSE,0,0
+3551,"Buyers and procurement officers",0,0,0,FALSE,FALSE,0,0
+3552,"Business sales executives",0,0,0,FALSE,FALSE,0,0
+3553,"Merchandisers",0,0,0,FALSE,FALSE,0,0
+3554,"Advertising and marketing associate professionals",0,0,0,FALSE,FALSE,0,0
+3555,"Estate agents and auctioneers",0,0,0,FALSE,FALSE,0,0
+3556,"Sales accounts and business development managers",0,0,0,FALSE,FALSE,0,0
+3557,"Events managers and organisers",0,0,0,FALSE,FALSE,0,0
+3560,"Public services associate professionals",0,0,0,FALSE,FALSE,0,0
+3571,"Human resources and industrial relations officers",0,0,0,FALSE,FALSE,0,0
+3572,"Careers advisers and vocational guidance specialists",1,0,0,FALSE,TRUE,1,1
+3573,"Information technology trainers",1,0,0,FALSE,TRUE,1,1
+3574,"Other vocational and industrial trainers",1,0,0,FALSE,TRUE,1,1
+3581,"Inspectors of standards and regulations",0,0,0,FALSE,FALSE,0,0
+3582,"Health and safety managers and officers",0,0,0,FALSE,FALSE,0,0
+4111,"National government administrative occupations",0,1,0,FALSE,TRUE,1,0
+4112,"Local government administrative occupations",1,1,0,FALSE,TRUE,2,1
+4113,"Officers of non-governmental organisations",0,0,1,FALSE,TRUE,1,0
+4121,"Credit controllers",0,0,0,FALSE,FALSE,0,0
+4122,"Book-keepers, payroll managers and wages clerks",0,0,0,FALSE,FALSE,0,0
+4123,"Bank and post office clerks",0,0,0,FALSE,FALSE,0,0
+4124,"Finance officers",0,0,1,FALSE,TRUE,1,0
+4129,"Financial administrative occupations n.e.c.",0,0,0,FALSE,FALSE,0,0
+4131,"Records clerks and assistants",0,0,0,FALSE,FALSE,0,0
+4132,"Pensions and insurance clerks and assistants",0,0,0,FALSE,FALSE,0,0
+4133,"Stock control clerks and assistants",0,0,0,FALSE,FALSE,0,0
+4134,"Transport and distribution clerks and assistants",0,0,0,FALSE,FALSE,0,0
+4135,"Library clerks and assistants",0,0,0,FALSE,FALSE,0,0
+4136,"Human resources administrative occupations",0,0,0,FALSE,FALSE,0,0
+4141,"Office managers",0,0,0,FALSE,FALSE,0,0
+4142,"Office supervisors",0,0,0,FALSE,FALSE,0,0
+4143,"Customer service managers",0,0,0,FALSE,FALSE,0,0
+4151,"Sales administrators",0,0,0,FALSE,FALSE,0,0
+4152,"Data entry administrators",0,0,0,FALSE,FALSE,0,0
+4159,"Other administrative occupations n.e.c.",0,0,0,FALSE,FALSE,0,0
+4211,"Medical secretaries",0,0,0,FALSE,FALSE,0,0
+4212,"Legal secretaries",0,0,0,FALSE,FALSE,0,0
+4213,"School secretaries",0,0,0,FALSE,FALSE,0,0
+4214,"Company secretaries and administrators",0,0,1,FALSE,TRUE,1,0
+4215,"Personal assistants and other secretaries",0,0,0,FALSE,FALSE,0,0
+4216,"Receptionists",0,0,0,FALSE,FALSE,0,0
+4217,"Typists and related keyboard occupations",0,0,0,FALSE,FALSE,0,0
+5111,"Farmers",0,1,0,FALSE,TRUE,1,0
+5112,"Horticultural trades",0,0,0,FALSE,FALSE,0,0
+5113,"Gardeners and landscape gardeners",0,0,0,FALSE,FALSE,0,0
+5114,"Groundsmen and greenkeepers",0,0,1,FALSE,TRUE,1,0
+5119,"Agricultural and fishing trades n.e.c.",0,0,0,FALSE,FALSE,0,0
+5211,"Sheet metal workers",0,0,0,FALSE,FALSE,0,0
+5212,"Metal plate workers, smiths, moulders and related occupations",0,0,0,FALSE,FALSE,0,0
+5213,"Welding trades",0,0,0,FALSE,FALSE,0,0
+5214,"Pipe fitters",0,0,0,FALSE,FALSE,0,0
+5221,"Metal machining setters and setter-operators",0,0,0,FALSE,FALSE,0,0
+5222,"Tool makers, tool fitters and markers-out",0,0,0,FALSE,FALSE,0,0
+5223,"Metal working production and maintenance fitters",0,0,0,FALSE,FALSE,0,0
+5224,"Precision instrument makers and repairers",0,0,0,FALSE,FALSE,0,0
+5225,"Air-conditioning and refrigeration installers and repairers",0,0,0,FALSE,FALSE,0,0
+5231,"Vehicle technicians, mechanics and electricians",0,0,0,FALSE,FALSE,0,0
+5232,"Vehicle body builders and repairers",0,0,0,FALSE,FALSE,0,0
+5233,"Vehicle paint technicians",0,0,0,FALSE,FALSE,0,0
+5234,"Aircraft maintenance and related trades",0,1,0,FALSE,TRUE,1,0
+5235,"Boat and ship builders and repairers",1,0,0,FALSE,TRUE,1,1
+5236,"Rail and rolling stock builders and repairers",0,0,1,FALSE,TRUE,1,0
+5241,"Electricians and electrical fitters",0,0,0,FALSE,FALSE,0,0
+5242,"Telecoms and related network installers and repairers",0,0,0,FALSE,FALSE,0,0
+5243,"TV, video and audio servicers and repairers",0,0,0,FALSE,FALSE,0,0
+5244,"Computer system and equipment installers and servicers",0,0,0,FALSE,FALSE,0,0
+5245,"Security system installers and repairers",0,0,0,FALSE,FALSE,0,0
+5246,"Electrical service and maintenance mechanics and repairers",0,0,0,FALSE,FALSE,0,0
+5249,"Electrical and electronic trades n.e.c.",0,1,0,FALSE,TRUE,1,0
+5250,"Skilled metal, electrical and electronic trades supervisors",0,0,0,FALSE,FALSE,0,0
+5311,"Steel erectors",0,0,0,FALSE,FALSE,0,0
+5312,"Stonemasons and related trades",0,0,0,FALSE,FALSE,0,0
+5313,"Bricklayers",0,0,0,FALSE,FALSE,0,0
+5314,"Roofers, roof tilers and slaters",0,0,0,FALSE,FALSE,0,0
+5315,"Plumbers and heating and ventilating installers and repairers",0,0,0,FALSE,FALSE,0,0
+5316,"Carpenters and joiners",0,0,0,FALSE,FALSE,0,0
+5317,"Glaziers, window fabricators and fitters",0,0,0,FALSE,FALSE,0,0
+5319,"Construction and building trades n.e.c.",0,0,0,FALSE,FALSE,0,0
+5321,"Plasterers",0,0,0,FALSE,FALSE,0,0
+5322,"Floorers and wall tilers",0,0,0,FALSE,FALSE,0,0
+5323,"Painters and decorators",0,0,0,FALSE,FALSE,0,0
+5330,"Construction and building trades supervisors",0,0,0,FALSE,FALSE,0,0
+5411,"Upholsterers",0,0,0,FALSE,FALSE,0,0
+5412,"Footwear and leather working trades",0,0,0,FALSE,FALSE,0,0
+5413,"Tailors and dressmakers",1,0,0,FALSE,TRUE,1,1
+5419,"Textiles, garments and related trades n.e.c.",1,0,0,FALSE,TRUE,1,1
+5421,"Pre-press technicians",1,0,0,FALSE,TRUE,1,1
+5422,"Printers",0,0,0,FALSE,FALSE,0,0
+5423,"Print finishing and binding workers",0,0,0,FALSE,FALSE,0,0
+5431,"Butchers",0,0,0,FALSE,FALSE,0,0
+5432,"Bakers and flour confectioners",0,0,0,FALSE,FALSE,0,0
+5433,"Fishmongers and poultry dressers",0,0,0,FALSE,FALSE,0,0
+5434,"Chefs",0,0,0,FALSE,FALSE,0,0
+5435,"Cooks",0,0,0,FALSE,FALSE,0,0
+5436,"Catering and bar managers",0,0,0,FALSE,FALSE,0,0
+5441,"Glass and ceramics makers, decorators and finishers",1,0,0,FALSE,TRUE,1,1
+5442,"Furniture makers and other craft woodworkers",0,0,0,FALSE,FALSE,0,0
+5443,"Florists",0,0,0,FALSE,FALSE,0,0
+5449,"Other skilled trades n.e.c.",0,0,0,FALSE,FALSE,0,0
+6111,"Early education and childcare assistants",0,0,0,FALSE,FALSE,0,0
+6112,"Teaching assistants",0,0,0,FALSE,FALSE,0,0
+6113,"Educational support assistants",0,0,0,FALSE,FALSE,0,0
+6114,"Childminders",0,1,0,FALSE,TRUE,1,0
+6116,"Nannies and au pairs",0,0,0,FALSE,FALSE,0,0
+6117,"Playworkers",0,0,0,FALSE,FALSE,0,0
+6121,"Pest control officers",0,0,0,FALSE,FALSE,0,0
+6129,"Animal care services occupations n.e.c.",0,0,0,FALSE,FALSE,0,0
+6131,"Nursing auxiliaries and assistants",0,0,0,FALSE,FALSE,0,0
+6132,"Ambulance staff (excluding paramedics)",0,0,0,FALSE,FALSE,0,0
+6133,"Dental nurses",0,0,0,FALSE,FALSE,0,0
+6134,"Houseparents and residential wardens",0,0,0,FALSE,FALSE,0,0
+6135,"Care workers and home carers",0,0,0,FALSE,FALSE,0,0
+6136,"Senior care workers",0,0,0,FALSE,FALSE,0,0
+6137,"Care escorts",0,0,1,FALSE,TRUE,1,0
+6138,"Undertakers, mortuary and crematorium assistants",0,0,0,FALSE,FALSE,0,0
+6211,"Sports and leisure assistants",0,0,0,FALSE,FALSE,0,0
+6212,"Travel agents",0,0,0,FALSE,FALSE,0,0
+6213,"Air travel assistants",0,0,1,FALSE,TRUE,1,0
+6214,"Rail travel assistants",0,0,1,FALSE,TRUE,1,0
+6219,"Leisure and travel service occupations n.e.c.",0,0,0,FALSE,FALSE,0,0
+6221,"Hairdressers and barbers",0,0,0,FALSE,FALSE,0,0
+6222,"Beauticians and related occupations",0,0,0,FALSE,FALSE,0,0
+6231,"Housekeepers and related occupations",0,0,0,FALSE,FALSE,0,0
+6232,"Caretakers",0,0,0,FALSE,FALSE,0,0
+6240,"Cleaning and housekeeping managers and supervisors",0,0,0,FALSE,FALSE,0,0
+6250,"Bed and breakfast and guest house owners and proprietors",0,1,1,FALSE,TRUE,2,1
+6311,"Police community support officers",0,1,0,FALSE,TRUE,1,0
+6312,"Parking and civil enforcement occupations",0,0,0,FALSE,FALSE,0,0
+7111,"Sales and retail assistants",0,0,0,FALSE,FALSE,0,0
+7112,"Retail cashiers and check-out operators",0,1,0,FALSE,TRUE,1,0
+7113,"Telephone salespersons",0,0,0,FALSE,FALSE,0,0
+7114,"Pharmacy and optical dispensing assistants",0,0,1,FALSE,TRUE,1,0
+7115,"Vehicle and parts salespersons and advisers",0,0,0,FALSE,FALSE,0,0
+7121,"Collector salespersons and credit agents",0,1,0,FALSE,TRUE,1,0
+7122,"Debt, rent and other cash collectors",0,0,0,FALSE,FALSE,0,0
+7123,"Roundspersons and van salespersons",0,0,0,FALSE,FALSE,0,0
+7124,"Market and street traders and assistants",0,0,0,FALSE,FALSE,0,0
+7125,"Visual merchandisers and related occupations",0,0,0,FALSE,FALSE,0,0
+7129,"Sales related occupations n.e.c.",0,0,1,FALSE,TRUE,1,0
+7131,"Shopkeepers and owners - retail and wholesale",0,0,0,FALSE,FALSE,0,0
+7132,"Sales supervisors - retail and wholesale",0,0,0,FALSE,FALSE,0,0
+7211,"Call and contact centre occupations",0,0,0,FALSE,FALSE,0,0
+7212,"Telephonists",0,0,0,FALSE,FALSE,0,0
+7213,"Communication operators",0,0,0,FALSE,FALSE,0,0
+7214,"Market research interviewers",0,0,0,FALSE,FALSE,0,0
+7219,"Customer service occupations n.e.c.",0,0,0,FALSE,FALSE,0,0
+7220,"Customer service supervisors",0,0,0,FALSE,FALSE,0,0
+8111,"Food, drink and tobacco process operatives",0,0,1,FALSE,TRUE,1,0
+8112,"Textile process operatives",1,1,0,FALSE,TRUE,2,1
+8113,"Chemical and related process operatives",0,0,0,FALSE,FALSE,0,0
+8114,"Plastics process operatives",0,0,0,FALSE,FALSE,0,0
+8115,"Metal making and treating process operatives",1,1,0,FALSE,TRUE,2,1
+8119,"Process operatives n.e.c.",0,0,1,FALSE,TRUE,1,0
+8120,"Metal working machine operatives",1,0,0,FALSE,TRUE,1,1
+8131,"Paper and wood machine operatives",0,0,0,FALSE,FALSE,0,0
+8132,"Mining and quarry workers and related operatives",1,1,1,TRUE,TRUE,3,1
+8133,"Energy plant operatives",1,0,0,FALSE,TRUE,1,1
+8134,"Water and sewerage plant operatives",0,0,0,FALSE,FALSE,0,0
+8135,"Printing machine assistants",0,0,1,FALSE,TRUE,1,0
+8139,"Plant and machine operatives n.e.c.",0,0,0,FALSE,FALSE,0,0
+8141,"Assemblers (electrical and electronic products)",0,0,0,FALSE,FALSE,0,0
+8142,"Assemblers (vehicles and metal goods)",0,0,0,FALSE,FALSE,0,0
+8143,"Routine inspectors and testers",0,0,1,FALSE,TRUE,1,0
+8144,"Weighers, graders and sorters",0,0,0,FALSE,FALSE,0,0
+8145,"Tyre, exhaust and windscreen fitters",0,0,0,FALSE,FALSE,0,0
+8146,"Sewing machinists",0,0,0,FALSE,FALSE,0,0
+8149,"Assemblers and routine operatives n.e.c.",0,0,0,FALSE,FALSE,0,0
+8151,"Scaffolders, stagers and riggers",0,0,0,FALSE,FALSE,0,0
+8152,"Road construction operatives",0,0,0,FALSE,FALSE,0,0
+8153,"Rail construction and maintenance operatives",0,0,0,FALSE,FALSE,0,0
+8159,"Construction operatives n.e.c.",0,0,0,FALSE,FALSE,0,0
+8160,"Production, factory and assembly supervisors",1,0,0,FALSE,TRUE,1,1
+8211,"Heavy and large goods vehicle drivers",0,0,0,FALSE,FALSE,0,0
+8212,"Bus and coach drivers",0,0,0,FALSE,FALSE,0,0
+8213,"Taxi and cab drivers and chauffeurs",1,1,0,FALSE,TRUE,2,1
+8214,"Delivery drivers and couriers",0,0,0,FALSE,FALSE,0,0
+8215,"Driving instructors",0,0,0,FALSE,FALSE,0,0
+8219,"Road transport drivers n.e.c.",0,0,0,FALSE,FALSE,0,0
+8221,"Crane drivers",1,1,1,TRUE,TRUE,3,1
+8222,"Fork-lift truck drivers",0,0,0,FALSE,FALSE,0,0
+8229,"Mobile machine drivers and operatives n.e.c.",0,0,0,FALSE,FALSE,0,0
+8231,"Train and tram drivers",1,1,0,FALSE,TRUE,2,1
+8232,"Marine and waterways transport operatives",1,0,1,FALSE,TRUE,2,1
+8233,"Air transport operatives",0,0,0,FALSE,FALSE,0,0
+8234,"Rail transport operatives",0,0,0,FALSE,FALSE,0,0
+8239,"Other drivers and transport operatives n.e.c.",0,0,0,FALSE,FALSE,0,0
+9111,"Farm workers",1,0,0,FALSE,TRUE,1,1
+9112,"Forestry and related workers",1,0,0,FALSE,TRUE,1,1
+9119,"Fishing and other elementary agriculture occupations n.e.c.",0,0,0,FALSE,FALSE,0,0
+9121,"Groundworkers",0,1,1,FALSE,TRUE,2,1
+9129,"Elementary construction occupations n.e.c.",1,0,0,FALSE,TRUE,1,1
+9131,"Industrial cleaning process occupations",0,0,1,FALSE,TRUE,1,0
+9132,"Packers, bottlers, canners and fillers",0,0,0,FALSE,FALSE,0,0
+9139,"Elementary process plant occupations n.e.c.",0,0,0,FALSE,FALSE,0,0
+9211,"Postal workers, mail sorters and messengers",0,0,0,FALSE,FALSE,0,0
+9219,"Elementary administration occupations n.e.c.",0,0,0,FALSE,FALSE,0,0
+9221,"Window cleaners",0,0,1,FALSE,TRUE,1,0
+9222,"Street cleaners",0,0,0,FALSE,FALSE,0,0
+9223,"Cleaners and domestics",0,0,0,FALSE,FALSE,0,0
+9224,"Launderers, dry cleaners and pressers",0,0,1,FALSE,TRUE,1,0
+9225,"Refuse and salvage occupations",0,0,0,FALSE,FALSE,0,0
+9226,"Vehicle valeters and cleaners",0,0,0,FALSE,FALSE,0,0
+9229,"Elementary cleaning occupations n.e.c.",0,0,0,FALSE,FALSE,0,0
+9231,"Security guards and related occupations",0,0,0,FALSE,FALSE,0,0
+9232,"School midday and crossing patrol occupations",0,0,0,FALSE,FALSE,0,0
+9233,"Exam invigilators",0,0,0,FALSE,FALSE,0,0
+9241,"Shelf fillers",0,0,1,FALSE,TRUE,1,0
+9249,"Elementary sales occupations n.e.c.",0,1,0,FALSE,TRUE,1,0
+9251,"Elementary storage supervisors",0,0,0,FALSE,FALSE,0,0
+9252,"Warehouse operatives",0,0,0,FALSE,FALSE,0,0
+9253,"Delivery operatives",0,0,0,FALSE,FALSE,0,0
+9259,"Elementary storage occupations n.e.c.",0,0,0,FALSE,FALSE,0,0
+9261,"Bar and catering supervisors",0,0,0,FALSE,FALSE,0,0
+9262,"Hospital porters",0,1,0,FALSE,TRUE,1,0
+9263,"Kitchen and catering assistants",0,0,0,FALSE,FALSE,0,0
+9264,"Waiters and waitresses",0,0,0,FALSE,FALSE,0,0
+9265,"Bar staff",0,0,0,FALSE,FALSE,0,0
+9266,"Coffee shop workers",0,0,0,FALSE,FALSE,0,0
+9267,"Leisure and theme park attendants",1,0,1,FALSE,TRUE,2,1
+9269,"Other elementary services occupations n.e.c.",0,0,0,FALSE,FALSE,0,0
