@@ -2724,19 +2724,43 @@ server <- function(input, output, session) {
   })
 
   output$hubMetricInput <- renderUI({
-    selectizeInput(
-      "hubMetric",
-      choices = C_datahub %>% filter(
-        if (is.null(input$hubArea) == TRUE) {
+    hub_metrics <- C_datahub %>%
+      filter(
+        if (is.null(input$hubArea)) {
           TRUE
         } else {
           Area %in% input$hubArea
         }
-      ) %>%
-        distinct(Metrics = metricNeat),
-      multiple = TRUE,
-      label = NULL,
-      options = list(placeholder = "Choose metrics*")
+      )
+
+    if (isTRUE(input$groupHub == "Yes")) {
+      hub_metrics <- hub_metrics %>%
+        filter(
+          !metric %in% c(
+            "achievements_rate_per_100000_population",
+            "participation_rate_per_100000_population",
+            "sustainedPositiveDestinationKS4Rate",
+            "sustainedPositiveDestinationKS5Rate"
+          )
+        )
+    }
+
+    tagList(
+      selectizeInput(
+        "hubMetric",
+        choices = hub_metrics %>%
+          distinct(Metrics = metricNeat),
+        multiple = TRUE,
+        label = NULL,
+        options = list(
+          placeholder = "Choose metrics*"
+        )
+      ),
+      if (isTRUE(input$groupHub == "Yes")) {
+        helpText(
+          "Grouped areas exclude FE achievement rate per 100,000 population, FE participation rate per 100,000 population, KS4 sustained positive destination rate and KS5 sustained positive destination rate because these are rates and cannot be aggregated."
+        )
+      }
     )
   })
 
@@ -2790,7 +2814,7 @@ server <- function(input, output, session) {
 
   ## 6.2 Table----
   datahubDataset <- reactive({
-    C_datahub %>%
+    dat <- C_datahub %>%
       filter(
         (if (is.null(input$hubArea) == TRUE) {
           TRUE
@@ -2836,6 +2860,25 @@ server <- function(input, output, session) {
         Subgroup,
         Value = valueText
       )
+
+    if (
+      isTRUE(input$groupHub == "Yes") &&
+        !is.null(input$hubArea) &&
+        length(input$hubArea) > 1
+    ) {
+      dat <- dat %>%
+        mutate(Area = "Grouped Area") %>%
+        group_by(Area, Period, Data, Breakdown, Subgroup) %>%
+        summarise(
+          Value = round(
+            sum(suppressWarnings(as.numeric(Value)), na.rm = TRUE),
+            0
+          ),
+          .groups = "drop"
+        )
+    }
+
+    dat
   })
 
   output$hubTable <- renderDataTable({
