@@ -2723,6 +2723,14 @@ server <- function(input, output, session) {
     )
   })
 
+  output$hubGroupOverlapWarning <- renderUI({
+    if (isTRUE(input$groupHub == "Yes")) {
+      helpText(
+        "NB Overlapping geographies will still be grouped."
+      )
+    }
+  })
+
   output$hubMetricInput <- renderUI({
     hub_metrics <- C_datahub %>%
       filter(
@@ -2866,7 +2874,8 @@ server <- function(input, output, session) {
         !is.null(input$hubArea) &&
         length(input$hubArea) > 1
     ) {
-      dat <- dat %>%
+      grouped <- dat %>%
+        filter(Area %in% input$hubArea) %>% # only group the chosen areas (not sub LA or national if chosen)
         mutate(Area = "Grouped Area") %>%
         group_by(Area, Period, Data, Breakdown, Subgroup) %>%
         summarise(
@@ -2875,7 +2884,13 @@ server <- function(input, output, session) {
             0
           ),
           .groups = "drop"
-        )
+        ) %>%
+        mutate(Value = as.character(Value))
+
+      # add back on LA and national choices
+      dat <- dat %>%
+        filter(!Area %in% input$hubArea) %>%
+        bind_rows(grouped)
     }
 
     dat

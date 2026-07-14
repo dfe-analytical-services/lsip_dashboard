@@ -1542,6 +1542,7 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
               )
             )
           ),
+          uiOutput("hubGroupOverlapWarning"),
           fluidRow(column(12, h4("Data"))),
           fluidRow(
             column(
