@@ -2190,7 +2190,8 @@ server <- function(input, output, session) {
 
   # Get list of occupations for the dropdown
   jobOccupationsList <- jobAdsLineChart %>%
-    filter(soc_4_digit_group != "All occupations") %>%
+    filter(soc_4_digit_group != "All occupations",
+           soc_4_digit_group != "Unknown - Unknown") %>%
     pull(soc_4_digit_group) %>%
     unique() %>%
     sort()
@@ -2321,7 +2322,7 @@ server <- function(input, output, session) {
           values_from = c(timePeriod, chartPeriod, value, date)
         )
 
-      dynamic_text <- "<h4>Key statistics</h4><ul>"
+      dynamic_text <- ""
 
       for (selected_occupation in seq_len(nrow(jobTextData))) {
         dynamic_text <- paste0(
@@ -2357,6 +2358,18 @@ server <- function(input, output, session) {
   })
 
   ### 5.10.4 Job Ads Map ----
+  
+  # Filter dataframe based on dropdown choice
+  filtered_data <- reactive({
+    
+    req(input$jobOccupationChoice)
+    
+    jobAdsMap %>%
+      filter(soc_4_digit_group %in% input$jobOccupationChoice) %>%
+      group_by(region) %>%
+      summarise(value = sum(value, na.rm = TRUE)) %>%
+      ungroup()
+  })
 
   # Create commentary for map
   output$jobMapComment <- renderUI({
@@ -2381,17 +2394,11 @@ server <- function(input, output, session) {
     } else {
       req(input$jobOccupationChoice)
 
-      region_occupation_combined <- jobAdsMap %>%
-        filter(soc_4_digit_group %in% input$jobOccupationChoice) %>%
-        group_by(region) %>%
-        summarise(value = sum(value, na.rm = TRUE)) %>%
-        ungroup()
-
-      highest_area <- region_occupation_combined %>%
+      highest_area <- filtered_data() %>%
         filter(value == max(value, na.rm = TRUE)) %>%
         pull(region)
 
-      lowest_area <- region_occupation_combined %>%
+      lowest_area <- filtered_data() %>%
         filter(value == min(value, na.rm = TRUE)) %>%
         pull(region)
 
@@ -2407,22 +2414,21 @@ server <- function(input, output, session) {
 
   # Create a dataframe that updates based on the dropdown choice
   jobMapData <- reactive({
-    if (input$jobOccupationGroup == "All occupations") {
-      filtered_data <- jobAdsMap %>%
-        filter(soc_4_digit_group == "All occupations")
+    
+    map_data_filtered <- if (input$jobOccupationGroup == "All occupations") {
+      
+      jobAdsMap %>% filter(soc_4_digit_group == "All occupations")
+
     } else {
+      
       req(input$jobOccupationChoice)
 
-      filtered_data <- jobAdsMap %>%
-        filter(soc_4_digit_group %in% input$jobOccupationChoice) %>%
-        group_by(region) %>%
-        summarise(value = sum(value, na.rm = TRUE)) %>%
-        ungroup()
+      filtered_data()
     }
 
     # Join the geometry data on
     jobAdsGeog %>%
-      left_join(filtered_data,
+      left_join(map_data_filtered,
         by = c("areaName" = "region")
       )
   })
@@ -2542,7 +2548,8 @@ server <- function(input, output, session) {
 
     if (input$jobOccupationGroup != "All occupations") {
       selected_occupations <- input$jobOccupationChoice %>%
-        paste(collapse = ", ")
+        str_remove(" - \\d{4}$") %>%
+        paste(collapse = "; ")
 
       footer_text <- paste0(
         footer_text,
@@ -2603,7 +2610,7 @@ server <- function(input, output, session) {
       case_when(
         input$jobMetric == "volume" ~ "This chart shows the trend in online job adverts for the selected occupation(s) over time, presented as a 3-month rolling average.",
         input$jobMetric == "growthRate" ~ "This chart shows the change in online job adverts since January 2022 for the selected occupation(s), presented as a 3-month rolling average.",
-        input$jobMetric == "popRate" ~ "This chart shows the number of job adverts per 100 adults for the selected occupation(s), presented as a 12-month rolling sum per quarter.",
+        input$jobMetric == "popRate" ~ "This chart shows the number of job adverts per 100,000 adults for the selected occupation(s), presented as a 12-month rolling sum per quarter.",
         input$jobMetric == "jobRate" ~ "This chart shows the number of job adverts per 100 employees for the selected occupation(s), presented as a 12-month rolling sum per quarter."
       )
     }
@@ -2648,15 +2655,23 @@ server <- function(input, output, session) {
       jobTimeData,
       aes(
         x = as.Date(timePeriod),
-        y = value,
-        color = soc_4_digit_group,
+        # Scale y-axis to 100,000
+        y = if (
+          input$jobMetric == "popRate" &&
+          input$jobOccupationGroup != "All occupations"
+        ) {
+          value * 100
+        } else {
+          value
+        },
+        color = soc_4_digit_group %>% str_remove(" - \\d{4}$"),
         group = soc_4_digit_group,
         text = paste0(
           "Period: ",
           chartPeriod,
           "<br>",
           "Occupation: ",
-          soc_4_digit_group,
+          soc_4_digit_group %>% str_remove(" - \\d{4}$"),
           "<br>",
           metricLabel,
           ": ",
@@ -2682,7 +2697,9 @@ server <- function(input, output, session) {
       ) +
       scale_y_continuous(
         # Style labels. If a rate style as %, If bigger than 1m style as x.xxM, else use cut_short_scale to append a k for bigger than 1000
-        labels = if (str_sub(input$jobMetric, start = -4) == "Rate") {
+        labels = if (input$jobMetric == "popRate" && input$jobOccupationGroup != "All occupations") {
+          label_number(accuracy = 0.1)
+        } else if (str_sub(input$jobMetric, start = -4) == "Rate") {
           scales::percent
         } else if (all(is.na(jobTimeData$value))) {
           label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
@@ -2695,7 +2712,7 @@ server <- function(input, output, session) {
         }
       ) +
       labs(colour = "") +
-      scale_color_manual(values = chartColors6) +
+      scale_color_manual(values = chartColors5) +
       scale_x_date(
         name = "My date axis title",
         date_breaks = "1 years",
@@ -2755,6 +2772,17 @@ server <- function(input, output, session) {
   })
 
   ### 5.10.6 Job Ads Ranking Table ----
+  
+  # Headings for ranking table
+  output$jobRankHeading <- renderUI({
+    # Hide if 'All occupations' is selected
+    if (input$jobOccupationGroup == "All occupations") {
+      "Which occupations have the highest volumes of online job adverts?"
+    }
+     else {
+      "How do the selected occupations rank by volume relative to other occupations?"
+    }
+  })
 
   # Commentary for ranking table
   output$jobRankComment <- renderUI({
@@ -2783,23 +2811,19 @@ server <- function(input, output, session) {
     } else {
       req(input$jobOccupationChoice)
 
-      # Remove the SOC code from the selected occupations list in order to match on the ranking table occupations list
+      # Filter the ranking table for the chosen occupations and remove the SOC code to
+      # line up with the ranking table occupations list
       selected_occupations <- input$jobOccupationChoice %>%
         str_remove(" - \\d{4}$")
-
-      # Filter the ranking table for the chosen occupations
-      occupation_codes <- jobAdsRanking %>%
-        filter(Occupation %in% selected_occupations) %>%
-        pull(Occupation)
 
       # For loop to filter the ranking table for the chosen occupations
       ranking_table <- data.frame()
       loop_iteration <- 1
 
-      for (selected_occupation in occupation_codes) {
+      for (occupation in selected_occupations) {
         # Get the ranking value for the specified occupation
         ranking_value <- jobAdsRanking %>%
-          filter(Occupation == selected_occupation) %>%
+          filter(Occupation == occupation) %>%
           pull(Rank)
 
         # Filter the data for rows +/- 2 of ranking_value
@@ -2811,7 +2835,7 @@ server <- function(input, output, session) {
         ranking_table <- bind_rows(ranking_table, filtered_data)
 
         # Add blank rows between ranked occupation groups (but not at the end)
-        if (loop_iteration < length(occupation_codes)) {
+        if (loop_iteration < length(selected_occupations)) {
           ranking_table <- ranking_table %>%
             add_row() %>%
             add_row() %>%
@@ -2883,7 +2907,7 @@ server <- function(input, output, session) {
 
   # Headings for demand table
   output$jobDemandHeading <- renderUI({
-    # Hide if 'All occupations' is selected
+    # Hide if 'All occupations' is not selected
     if (input$jobOccupationGroup != "All occupations") {
       return(NULL)
     }

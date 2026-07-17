@@ -153,6 +153,7 @@ jobAdTab <- function() {
     fluidRow(
       column(
         12,
+        h4("Key statistics"),
         p(uiOutput("jobDynamicText"))
       )
     ),
@@ -182,7 +183,7 @@ jobAdTab <- function() {
     fluidRow(
       column(
         6,
-        h3("Which occupations have the highest volumes of online job adverts?"),
+        h3(uiOutput("jobRankHeading")),
         p(uiOutput("jobRankComment")),
         withSpinner(DT::dataTableOutput("jobRankTable")),
         br(),
