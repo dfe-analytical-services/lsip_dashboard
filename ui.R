@@ -827,6 +827,9 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
+              p("21 Jul 2026 (1.6.15)"),
+              tags$ul(
+                tags$li("Addition of occupations to 'Job adverts (Pilot)' page.")
               p("14 Jul 2026 (1.6.15)"),
               tags$ul(
                 tags$li("Add grouped geography feature to Datahub to allow the download of data combined over multiple, user chosen areas.")
