@@ -2248,12 +2248,15 @@ server <- function(input, output, session) {
       return(NULL)
     }
 
+    flagged_occupations <- flagged_occupations %>%
+      str_remove(" - \\d{4}$")
+
     shinyGovstyle::banner(
       "occupation banner",
       "Note",
       paste0(
         "The data for the following occupation(s) should be interpreted with caution due to lower confidence in the data quality: ",
-        paste(flagged_occupations, collapse = ", ")
+        paste(flagged_occupations, collapse = "; ")
       )
     )
   })
@@ -2330,7 +2333,7 @@ server <- function(input, output, session) {
         dynamic_text <- paste0(
           dynamic_text,
           "<li><strong>",
-          jobTextData$soc_4_digit_group[selected_occupation],
+          jobTextData$soc_4_digit_group[selected_occupation] %>% str_remove(" - \\d{4}$"),
           "</strong>: ",
           format(round2(jobTextData$value_volume[selected_occupation], 0), big.mark = ","),
           " average monthly job adverts (",
