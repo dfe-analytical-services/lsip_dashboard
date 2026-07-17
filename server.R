@@ -2190,8 +2190,10 @@ server <- function(input, output, session) {
 
   # Get list of occupations for the dropdown
   jobOccupationsList <- jobAdsLineChart %>%
-    filter(soc_4_digit_group != "All occupations",
-           soc_4_digit_group != "Unknown - Unknown") %>%
+    filter(
+      soc_4_digit_group != "All occupations",
+      soc_4_digit_group != "Unknown - Unknown"
+    ) %>%
     pull(soc_4_digit_group) %>%
     unique() %>%
     sort()
@@ -2358,12 +2360,11 @@ server <- function(input, output, session) {
   })
 
   ### 5.10.4 Job Ads Map ----
-  
+
   # Filter dataframe based on dropdown choice
   filtered_data <- reactive({
-    
     req(input$jobOccupationChoice)
-    
+
     jobAdsMap %>%
       filter(soc_4_digit_group %in% input$jobOccupationChoice) %>%
       group_by(region) %>%
@@ -2414,13 +2415,9 @@ server <- function(input, output, session) {
 
   # Create a dataframe that updates based on the dropdown choice
   jobMapData <- reactive({
-    
     map_data_filtered <- if (input$jobOccupationGroup == "All occupations") {
-      
       jobAdsMap %>% filter(soc_4_digit_group == "All occupations")
-
     } else {
-      
       req(input$jobOccupationChoice)
 
       filtered_data()
@@ -2658,7 +2655,7 @@ server <- function(input, output, session) {
         # Scale y-axis to 100,000
         y = if (
           input$jobMetric == "popRate" &&
-          input$jobOccupationGroup != "All occupations"
+            input$jobOccupationGroup != "All occupations"
         ) {
           value * 100
         } else {
@@ -2772,14 +2769,13 @@ server <- function(input, output, session) {
   })
 
   ### 5.10.6 Job Ads Ranking Table ----
-  
+
   # Headings for ranking table
   output$jobRankHeading <- renderUI({
     # Hide if 'All occupations' is selected
     if (input$jobOccupationGroup == "All occupations") {
       "Which occupations have the highest volumes of online job adverts?"
-    }
-     else {
+    } else {
       "How do the selected occupations rank by volume relative to other occupations?"
     }
   })
