@@ -830,6 +830,9 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
               p("21 Jul 2026 (1.6.15)"),
               tags$ul(
                 tags$li("Addition of occupations to 'Job adverts (Pilot)' page.")
+              p("14 Jul 2026 (1.6.15)"),
+              tags$ul(
+                tags$li("Add grouped geography feature to Datahub to allow the download of data combined over multiple, user chosen areas.")
               ),
               details(
                 label = "Previous updates",
@@ -1512,7 +1515,14 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
           fluidRow(
             column(
               4,
-              uiOutput("hubAreaInput")
+              uiOutput("hubAreaInput"),
+              selectizeInput(
+                "groupHub",
+                choices = c("Yes", "No"),
+                label = NULL,
+                multiple = TRUE,
+                options = list(maxItems = 1, placeholder = "Group areas together?")
+              )
             ),
             column(
               4,
@@ -1535,6 +1545,7 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
               )
             )
           ),
+          uiOutput("hubGroupOverlapWarning"),
           fluidRow(column(12, h4("Data"))),
           fluidRow(
             column(
