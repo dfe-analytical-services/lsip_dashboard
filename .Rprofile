@@ -12,28 +12,12 @@ cat("Sourcing .Rprofile.", fill = TRUE)
 
 source("renv/activate.R")
 
+renv::status()
+
 if (system.file(package = "dfeshiny") != "") {
   library(dfeshiny)
 } else {
   warning("dfeshiny package is not installed, please run renv::restore() to set up the necessary package environment")
-}
-
-# Function to run tests
-run_tests_locally <- function() {
-  Sys.unsetenv("http_proxy")
-  Sys.unsetenv("https_proxy")
-  source("global.r")
-  # message("================================================================================")
-  # message("== testthat ====================================================================")
-  # message("")
-  # testthat::test_dir("tests/testthat")
-  # message("")
-  message("================================================================================")
-  message("== shinytest ==================================================================")
-  message("")
-  shinytest::testApp()
-  message("")
-  message("================================================================================")
 }
 
 # Install commit-hooks locally

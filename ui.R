@@ -13,7 +13,14 @@ ui <- function(input, output, session) {
         rel = "stylesheet",
         type = "text/css",
         href = "dfe_shiny_gov_style.css"
-      )
+      ),
+      tags$script(HTML("
+    Shiny.addCustomMessageHandler('triggerResize', function(message) {
+      setTimeout(function() {
+        window.dispatchEvent(new Event('resize'));
+      }, 50);
+    });
+  "))
     ),
     dfeshiny::dfe_cookies_script(),
     dfeshiny::cookies_banner_ui(name = site_title),
@@ -162,6 +169,11 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+}
+
+/* Tighter bottom fit for valueboxes */
+.bslib-value-box .value-box-area {
+    padding: 0rem 1rem;
 }
 "
         )
@@ -409,6 +421,31 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
 .govuk-header__navigation-item a {
   margin-left: 30px;
   font-size: 16px;
+  font-weight: 700;
+}
+
+.govuk-header__navigation-item .govuk-header__link {
+  border-bottom: 3px solid transparent;
+}
+
+.govuk-header__navigation-item .govuk-header__link:hover {
+  border-bottom: 3px solid #ffffff;
+}
+
+.govuk-header__link:link, .govuk-header__link:visited {
+    color: #fff;
+    text-decoration: none;
+}
+
+.govuk-header__navigation-list {
+  display: flex;
+  flex-direction: row;     /* force horizontal */
+  flex-wrap: nowrap;      /* prevent wrapping into a column */
+  justify-content: flex-end;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 /* --- Smaller screens --- */
@@ -425,6 +462,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
     display: flex;              /* keep items horizontal, or vertical if needed */
     flex-wrap: wrap;
     justify-content: flex-end;  /* ensure list items stay right */
+    list-style: none;
   }
 
   .govuk-header__navigation-item a {
@@ -531,7 +569,7 @@ document.addEventListener("DOMContentLoaded", function() {
             <li style="margin-left:20px;">
         <a href="#" id="nav_job_ad_tab" class="govuk-service-navigation__link"
            onclick="Shiny.setInputValue(\'nav_click\', \'job_ad_tab\', {priority:\'event\'}); return false;">
-          Job adverts
+          Job adverts (Pilot)
         </a>
       </li>
 
@@ -789,14 +827,44 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("16 Feb 2026 (1.6.9)"),
+              p("22 Jul 2026 (1.6.15)"),
               tags$ul(
-                tags$li("Change rounding from the default R rounding to more the more commonly understood method that rounds up at 0.5.")
+                tags$li("Add grouped geography feature to Datahub to allow the download of data combined over multiple, user chosen areas."),
+                tags$li("Addition of occupations to 'Job adverts (Pilot)' page.")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("2 Jul 2026 (1.6.14)"),
+                  tags$ul(
+                    tags$li("Update to latest job advert data (May 2026)."),
+                    tags$li("Add in download buttons for charts and add volumes to hovers where appropriate."),
+                    tags$li("Improve efficency of data import code."),
+                    tags$li("Update to latest boundaries and lookups.")
+                  ),
+                  p("10 Jun 2026 (1.6.13)"),
+                  tags$ul(
+                    tags$li("Update to latest online job advert data data. NB The entirety of March 2026 data is supressed due to issues with a major data source.")
+                  ),
+                  p("21 May 2026 (1.6.12)"),
+                  tags$ul(
+                    tags$li("Update to latest APS employment data.")
+                  ),
+                  p("14 Apr 2026 (1.6.11)"),
+                  tags$ul(
+                    tags$li("Addition of 'Job adverts (Pilot)' page."),
+                    tags$li("Update to the latest online job advert data (Feb 2026)."),
+                    tags$li("Update to latest revised destination data.")
+                  ),
+                  p("2 Mar 2026 (1.6.10)"),
+                  tags$ul(
+                    tags$li("Update to the latest online job advert data (Jan 2026).")
+                  ),
+                  p("16 Feb 2026 (1.6.9)"),
+                  tags$ul(
+                    tags$li("Change rounding from the default R rounding to more the more commonly understood method that rounds up at 0.5.")
+                  ),
                   p("3 Feb 2026 (1.6.8)"),
                   tags$ul(
                     tags$li("Correct APS data for some updated LAD areas (Westmorland and Furness, Cumberland and Somerset LADs).")
@@ -1237,7 +1305,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
         fluidRow(column(
           12,
           h2("Data notes"),
-          p("Any NAs or missing data in the charts or maps are due to supressed data."),
+          p("Any NAs or missing data in the charts or maps are due to suppressed data."),
           p(uiOutput("dataSource")),
           p(uiOutput("dataNote")),
           p("Caveats:"),
@@ -1445,7 +1513,14 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
           fluidRow(
             column(
               4,
-              uiOutput("hubAreaInput")
+              uiOutput("hubAreaInput"),
+              selectizeInput(
+                "groupHub",
+                choices = c("Yes", "No"),
+                label = NULL,
+                multiple = TRUE,
+                options = list(maxItems = 1, placeholder = "Group areas together?")
+              )
             ),
             column(
               4,
@@ -1468,6 +1543,7 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
               )
             )
           ),
+          uiOutput("hubGroupOverlapWarning"),
           fluidRow(column(12, h4("Data"))),
           fluidRow(
             column(

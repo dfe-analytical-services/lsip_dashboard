@@ -16,12 +16,26 @@ library(dplyr)
 library(data.table) # use %like%
 library(stringr)
 library(slider)
+library(tidyverse)
+library(lubridate)
+library(openxlsx)
+library(sf)
 
 # For QA purposes we compare the old data with any updated data. This is done here before any data changes so we can compare the data as it was to the updated data. This is used with QAdataload.R
 # C_timeOld <- bind_rows(readr::read_csv("Data/AppData/C_time1.csv"), readr::read_csv("Data/AppData/C_time2.csv"))
 
+# Load in all the current data.
+files_rds <- list.files("./Data/processing", pattern = "\\.rds$", full.names = TRUE)
+for (f in files_rds) {
+  obj_name <- tools::file_path_sans_ext(basename(f))
+  assign(obj_name, readRDS(f), envir = .GlobalEnv)
+}
+load("./Data/processing/neatGeog.RData")
+
 # 1. Load functions ----
 source("R/functions.R", echo = TRUE)
+
+# Now just run the updates you need to from below. You MUST run combineData.R after to splice all the data together into the files the dashboard uses.
 
 # 2. Load lookups ----
 source("importData/importLookups.R", echo = TRUE)
@@ -47,6 +61,9 @@ source("importData/importDashboardText.R", echo = TRUE)
 
 # 6 Combine data ----
 source("importData/combineData.R", echo = TRUE)
+
+# 7 Job ads page ----
+source("job_ads_page/Job_Ads_Page.R", echo = TRUE)
 
 # Run tests to assess changes
 shinytest2::test_app()
