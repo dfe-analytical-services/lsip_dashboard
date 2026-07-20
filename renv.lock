@@ -1631,18 +1631,19 @@
     },
     "diffobj": {
       "Package": "diffobj",
-      "Version": "0.3.8",
+      "Version": "0.3.6",
       "Source": "Repository",
       "Type": "Package",
       "Title": "Diffs for R Objects",
       "Description": "Generate a colorized diff of two R objects for an intuitive visualization of their differences.",
       "Authors@R": "c( person( \"Brodie\", \"Gaslam\", email=\"brodie.gaslam@yahoo.com\", role=c(\"aut\", \"cre\")), person( \"Michael B.\", \"Allen\", email=\"ioplex@gmail.com\", role=c(\"ctb\", \"cph\"), comment=\"Original C implementation of Myers Diff Algorithm\"))",
       "Depends": [
-        "R (>= 4.1.0)"
+        "R (>= 3.1.0)"
       ],
       "License": "GPL-2 | GPL-3",
       "URL": "https://github.com/brodieG/diffobj",
       "BugReports": "https://github.com/brodieG/diffobj/issues",
+      "RoxygenNote": "7.2.3",
       "VignetteBuilder": "knitr",
       "Encoding": "UTF-8",
       "Suggests": [
@@ -1657,11 +1658,10 @@
         "utils",
         "stats"
       ],
-      "Config/roxygen2/version": "8.0.0",
       "NeedsCompilation": "yes",
       "Author": "Brodie Gaslam [aut, cre], Michael B. Allen [ctb, cph] (Original C implementation of Myers Diff Algorithm)",
       "Maintainer": "Brodie Gaslam <brodie.gaslam@yahoo.com>",
-      "Repository": "CRAN"
+      "Repository": "https://packagemanager.posit.co/cran/latest"
     },
     "diffviewer": {
       "Package": "diffviewer",
