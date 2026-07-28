@@ -1162,6 +1162,19 @@ server <- function(input, output, session) {
   })
 
   ## 5.3 Dynamic text----
+
+  # LSIP URL ----
+  output$lsipUrl <- renderUI({
+    validate(need(input$splashGeoType == "LSIP", ""))
+    lsipUrlRow <- C_lsipUrls %>%
+      filter(LSIP == input$geoChoice)
+    p("The LSIP can be found here: ", a(
+      href = lsipUrlRow$URL,
+      lsipUrlRow$ERB,
+      .noWS = c("after")
+    ), br())
+  })
+
   # create subheading
   output$subheading <- renderUI({
     req(input$geoChoice)
