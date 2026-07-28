@@ -106,7 +106,9 @@ APS_employment_soc_clean <- APS_employment_soc %>%
 
 # Clean geojson file
 map_region_clean <- map_region %>%
-  select(RGN24CD, RGN24NM, geometry)
+  select(RGN24CD, RGN24NM, geometry) %>%
+  rename(areaCode = RGN24CD,
+         areaName = RGN24NM)
 
 # Find the latest date in the job ads data
 latest_date <- max(new_ads_SOC_clean$timePeriod, na.rm = TRUE)
@@ -136,7 +138,11 @@ new_ads_region_vol <- new_ads_LAD_clean %>%
   group_by(region, timePeriod) %>%
   summarise(n_jobs = sum(n_jobs)) %>%
   mutate(n_jobs_3m_avg = slide_dbl(n_jobs, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE)) %>%
-  ungroup()
+  ungroup() %>%
+  filter(timePeriod == max(timePeriod)) %>%
+  mutate(soc_4_digit_group = "All occupations") %>%
+  rename(value = n_jobs_3m_avg) %>%
+  select(region, soc_4_digit_group, timePeriod, value)
 
 # Growth rate of job ads across England since base
 new_ads_national_growth <- new_ads_national_roll %>%
@@ -172,6 +178,17 @@ new_ads_national_job <- new_ads_national_pop %>%
 
 # Occupations summary ================================================
 
+# Volume of job ads across regions by SOC (for map)
+new_ads_region_SOC_vol <- new_ads_SOC_clean %>%
+  group_by(region, soc_4_digit_code, soc_4_digit_label, timePeriod) %>%
+  summarise(n_jobs = sum(n_jobs)) %>%
+  mutate(n_jobs_3m_avg = slide_dbl(n_jobs, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE)) %>%
+  ungroup() %>%
+  filter(timePeriod == max(timePeriod)) %>%
+  mutate(soc_4_digit_group = paste(soc_4_digit_label, soc_4_digit_code, sep = " - ")) %>%
+  rename(value = n_jobs_3m_avg) %>%
+  select(region, soc_4_digit_group, timePeriod, value)
+
 # Growth rate of job ads by SOC
 new_ads_SOC_growth <- new_ads_SOC_roll %>%
   filter(timePeriod >= base_date) %>%
@@ -187,7 +204,7 @@ new_ads_SOC_pop <- population_data (new_ads_SOC_roll, soc_4_digit_code, soc_4_di
   left_join(APS_econ_activity_national, by = "chartPeriod") %>%
   filter(!is.na(population)) %>%
   mutate(pop_rate = n_jobs_yr_sum / population,
-         pop_rate = round2(pop_rate * 100000, 2)) # Per 100,000 population
+         pop_rate = round2(pop_rate * 1000, 3)) # Per 100,000 population (will be converted to %)
 
 # Population rate of job ads by SOC across regions (for map)
 
@@ -215,19 +232,6 @@ new_ads_SOC_job <- new_ads_SOC_pop %>%
   # Filter out rows with missing employment data (APS employment data by SOC starts from 2021)
   filter(!is.na(employment)) %>%
   mutate(job_rate = n_jobs_yr_sum / employment)
-
-# Add geometry data for map ==========================================
-
-new_ads_region_vol_map <- map_region_clean %>%
-  left_join(new_ads_region_vol %>% filter(timePeriod == max(timePeriod)), by = c("RGN24NM" = "region")) %>%
-  rename(areaCode = RGN24CD,
-         areaName = RGN24NM,
-         value = n_jobs_3m_avg) %>%
-  select(-n_jobs)
-
-new_ads_region_SOC_map <- new_ads_region_SOC_pop %>%
-  filter(timePeriod == max(timePeriod)) %>%
-  left_join(map_region_clean, by = c("geography_code" = "RGN24CD", "region" = "RGN24NM"))
 
 # Constant high demand ===============================================
 
@@ -366,9 +370,12 @@ new_ads_SOC_ranking <- new_ads_SOC_ranking %>%
          Occupation = soc_4_digit_label,
          `Number of new job adverts` = n_jobs)
 
-# Summaries ==========================================================
+# Format tables to output ============================================
 
-# National summary table
+# Simplify geojson file for quicker loading
+map_region_simple <- rmapshaper::ms_simplify(map_region_clean, keep = 0.01, keep_shapes = TRUE)
+
+# National output table
 output_national <- bind_rows(
   
   new_ads_national_roll %>%
@@ -398,47 +405,60 @@ output_national <- bind_rows(
 
 output_national <- output_national %>%
   mutate(geogConcat = "England",
+         soc_4_digit_group = "All occupations",
          chartPeriod = format(timePeriod, "%b-%y"),
          timePeriod = as.character(timePeriod)) %>%
-  select(geogConcat, metric, timePeriod, chartPeriod, value)
+  select(geogConcat, soc_4_digit_group, metric, timePeriod, chartPeriod, value)
 
-# Occupations summary table
+# Occupations output table
 output_occupations <- bind_rows(
   
   new_ads_SOC_roll %>%
     select(timePeriod, soc_4_digit_code, soc_4_digit_label, n_jobs_3m_avg) %>%
     rename(value = n_jobs_3m_avg) %>%
     filter(timePeriod >= make_date(year(latest_date) - 4, 1, 1)) %>%
-    mutate(metric = "soc_3m_avg"),
+    mutate(metric = "volume"),
   
   new_ads_SOC_growth  %>%
     select(timePeriod, soc_4_digit_code, soc_4_digit_label, growth_rate) %>%
     rename(value = growth_rate) %>%
-    mutate(metric = "soc_growth"),
+    mutate(metric = "growthRate"),
   
   new_ads_SOC_pop  %>%
     select(timePeriod, soc_4_digit_code, soc_4_digit_label, pop_rate) %>%
     rename(value = pop_rate) %>%
     filter(timePeriod >= make_date(year(latest_date) - 4, 1, 1)) %>%
-    mutate(metric = "soc_pop"),
+    mutate(metric = "popRate"),
   
   new_ads_SOC_job  %>%
     select(timePeriod, soc_4_digit_code, soc_4_digit_label, job_rate) %>%
     rename(value = job_rate) %>%
-    mutate(metric = "soc_job")
+    mutate(metric = "jobRate")
 )
 
-# Write out Summaries ================================================
+output_occupations <- output_occupations %>%
+  mutate(geogConcat = "England",
+         soc_4_digit_group = paste(soc_4_digit_label, soc_4_digit_code, sep = " - "),
+         chartPeriod = format(timePeriod, "%b-%y"),
+         timePeriod = as.character(timePeriod)) %>%
+  select(geogConcat, soc_4_digit_group, metric, timePeriod, chartPeriod, value)
 
-saveRDS(output_national, "./job_ads_page/job_ads_page_national.rds")
+# Combine tables ===================================================
 
-saveRDS(output_occupations, "./job_ads_page/job_ads_page_occupations.rds")
+output_line_chart <- bind_rows(output_national, output_occupations)
 
-saveRDS(new_ads_region_vol_map, "./job_ads_page/job_ads_page_map.rds")
+output_map <- bind_rows(new_ads_region_vol, new_ads_region_SOC_vol)
+
+# Write out ==========================================================
+
+saveRDS(map_region_simple, "./job_ads_page/job_ads_page_geog.rds")
+
+saveRDS(output_line_chart, "./job_ads_page/job_ads_page_line_chart.rds")
+
+saveRDS(output_map, "./job_ads_page/job_ads_page_map.rds")
 
 saveRDS(new_ads_SOC_constant_output, "./job_ads_page/job_ads_page_constant.rds")
 
 saveRDS(new_ads_SOC_emerging_output, "./job_ads_page/job_ads_page_emerging.rds")
 
 saveRDS(new_ads_SOC_ranking, "./job_ads_page/job_ads_page_ranking.rds")
-

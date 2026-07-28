@@ -827,17 +827,22 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("2 Jul 2026 (1.6.14)"),
+              p("22 Jul 2026 (1.6.15)"),
               tags$ul(
-                tags$li("Update to latest job advert data (May 2026)."),
-                tags$li("Add in download buttons for charts and add volumes to hovers where appropriate."),
-                tags$li("Improve efficency of data import code."),
-                tags$li("Update to latest boundaries and lookups.")
+                tags$li("Add grouped geography feature to Datahub to allow the download of data combined over multiple, user chosen areas."),
+                tags$li("Addition of occupations to 'Job adverts (Pilot)' page.")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("2 Jul 2026 (1.6.14)"),
+                  tags$ul(
+                    tags$li("Update to latest job advert data (May 2026)."),
+                    tags$li("Add in download buttons for charts and add volumes to hovers where appropriate."),
+                    tags$li("Improve efficency of data import code."),
+                    tags$li("Update to latest boundaries and lookups.")
+                  ),
                   p("10 Jun 2026 (1.6.13)"),
                   tags$ul(
                     tags$li("Update to latest online job advert data data. NB The entirety of March 2026 data is supressed due to issues with a major data source.")
@@ -1508,7 +1513,14 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
           fluidRow(
             column(
               4,
-              uiOutput("hubAreaInput")
+              uiOutput("hubAreaInput"),
+              selectizeInput(
+                "groupHub",
+                choices = c("Yes", "No"),
+                label = NULL,
+                multiple = TRUE,
+                options = list(maxItems = 1, placeholder = "Group areas together?")
+              )
             ),
             column(
               4,
@@ -1531,6 +1543,7 @@ Per 100,000 figures for LSIP/CA areas are based on subgroup populations calculat
               )
             )
           ),
+          uiOutput("hubGroupOverlapWarning"),
           fluidRow(column(12, h4("Data"))),
           fluidRow(
             column(

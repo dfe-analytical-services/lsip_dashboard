@@ -95,20 +95,32 @@ jobAdTab <- function() {
           #   )
           # )
         ),
-        # column(
-        #   4,
-        #   selectizeInput(
-        #     inputId = "jobOccupationChoice",
-        #     choices = c("Add occupation list"),
-        #     multiple = FALSE,
-        #     label = "Choose occupation(s)",
-        #     options = list(
-        #       persist = TRUE, # keep selected value
-        #       create = FALSE, # disallow new values
-        #       onDelete = I("function(values) { return false; }")
-        #     )
-        #   ),
-        # ),
+        column(
+          4,
+          selectInput(
+            inputId = "jobOccupationGroup",
+            label = "Choose an occupation group",
+            choices = c(
+              "All occupations",
+              "4-digit occupations"
+            ),
+            selected = "All occupations"
+          ),
+          conditionalPanel(
+            # Only show occupations drop down if '4-digit occupations' is selected
+            condition = "input.jobOccupationGroup == '4-digit occupations'",
+            selectizeInput(
+              inputId = "jobOccupationChoice",
+              label = "Choose an occupation(s)",
+              choices = NULL,
+              multiple = TRUE,
+              options = list(
+                maxItems = 4, # limit choices to 4
+                placeholder = "Select up to 4 occupations"
+              )
+            )
+          )
+        ),
         column(
           4,
           selectizeInput(
@@ -129,7 +141,19 @@ jobAdTab <- function() {
       column(
         12,
         p(uiOutput("jobCaveatText")),
-        hr(),
+        hr()
+      )
+    ),
+    fluidRow(
+      column(
+        12,
+        uiOutput("jobOccupationBanner")
+      )
+    ),
+    fluidRow(
+      column(
+        12,
+        h4("Key statistics"),
         p(uiOutput("jobDynamicText"))
       )
     ),
@@ -159,7 +183,7 @@ jobAdTab <- function() {
     fluidRow(
       column(
         6,
-        h3("Which occupations have the highest volumes of online job adverts?"),
+        h3(uiOutput("jobRankHeading")),
         p(uiOutput("jobRankComment")),
         withSpinner(DT::dataTableOutput("jobRankTable")),
         br(),
@@ -169,11 +193,14 @@ jobAdTab <- function() {
         6,
         h3(uiOutput("jobDemandHeading")),
         p(uiOutput("jobDemandComment")),
-        div(
-          style = "text-align: right;",
-          radioGroupButtons(
-            inputId = "jobTableSwitch",
-            choices = c("Emerging Demand", "Constant Demand")
+        conditionalPanel(
+          condition = "input.jobOccupationGroup == 'All occupations'",
+          div(
+            style = "text-align: right;",
+            radioGroupButtons(
+              inputId = "jobTableSwitch",
+              choices = c("Emerging Demand", "Constant Demand")
+            )
           )
         ),
         withSpinner(uiOutput("jobDemandTable")),
