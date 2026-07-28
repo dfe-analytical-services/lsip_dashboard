@@ -8,7 +8,7 @@
     gtag('config', 'G-MMB6NG2FE1');
     
         /*
-Adding tracking for the main downlaod button*/
+Adding tracking for the main download button*/
      $(document).on('click', 'a#hubDownload', function(e) {
     gtag('event', 'DownloadHub', {'event_category' : 'Download button click'
     });
@@ -143,5 +143,56 @@ Adding tracking for the hub metric filter*/
     });
   });
   
+        /*
+Adding tracking for the job ads geog filter*/
+    $(document).on('change', 'select#jobGeoChoice', function(e) {
+    gtag('event', 'job_ad_geog', {'event_category' : 'choose Area',
+    'event_label' : document.querySelector('select#jobGeoChoice').value
+    });
+  });
   
+          /*
+Adding tracking for the job ads comparison geog filter*/
+    $(document).on('change', 'select#jobComparisonChoice', function(e) {
+    gtag('event', 'job_ad_comparison_area', {'event_category' : 'choose Area',
+    'event_label' : document.querySelector('select#jobComparisonChoice').value
+    });
+  });
+  
+            /*
+Adding tracking for the job ads occupation group filter*/
+    $(document).on('change', 'select#jobOccupationGroup', function(e) {
+    gtag('event', 'job_ad_occ_group', {'event_category' : 'choose Area',
+    'event_label' : document.querySelector('select#jobOccupationGroup').value
+    });
+  });
+  
+              /*
+Adding tracking for the job ads occupation filter*/
+    $(document).on('change', 'select#jobOccupationChoice', function(e) {
+    gtag('event', 'job_ad_occ_choice', {'event_category' : 'choose Area',
+    'event_label' : document.querySelector('select#jobOccupationChoice').value
+    });
+  });
+  
+                /*
+Adding tracking for the job ads metric filter*/
+    $(document).on('change', 'select#jobMetric', function(e) {
+    gtag('event', 'job_ad_metric', {'event_category' : 'choose Area',
+    'event_label' : document.querySelector('select#jobMetric').value
+    });
+  });
+  
+                  /*
+Adding tracking for the tab choice*/
+  $(document).on('shown.bs.tab', 'a[data-bs-toggle="tab"]', function (e) {
+
+  const tabValue = $(e.target).attr('data-value');
+
+  gtag('event', 'TabChange', {
+    'event_category': 'Navigation',
+    'event_label': tabValue
+  });
+
+});
     </script>
