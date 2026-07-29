@@ -2787,19 +2787,7 @@ server <- function(input, output, session) {
   output$jobRankComment <- renderUI({
     req(jobAdsLineChart)
 
-    dates <- jobAdsLineChart %>%
-      filter(metric == "volume") %>%
-      mutate(date = as.Date(timePeriod)) %>%
-      arrange(date) %>%
-      pull(date)
-
-    end_date <- max(dates, na.rm = TRUE)
-
-    paste0(
-      "Volume of online job adverts by occupation in ",
-      format(end_date, "%B %Y"),
-      "."
-    )
+    "Volume of online job adverts by occupation, presented as a 3-month rolling average."
   })
 
   # Create a dataframe that updates based on the dropdown choice
