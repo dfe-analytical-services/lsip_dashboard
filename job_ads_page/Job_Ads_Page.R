@@ -324,8 +324,8 @@ new_ads_SOC_emerging_output <- new_ads_SOC_roll %>%
 new_ads_SOC_ranking <- new_ads_SOC_roll %>%
   filter(timePeriod == latest_date) %>%
   # Create ranking column
-  mutate(rank = dense_rank(desc(n_jobs))) %>%
-  select(-c(timePeriod, n_jobs_3m_avg)) %>%
+  mutate(rank = dense_rank(desc(n_jobs_3m_avg))) %>%
+  select(-c(timePeriod, n_jobs)) %>%
   arrange(rank)
 
 # For loop to filter the ranked data for specific occupations
@@ -364,11 +364,11 @@ for (selected_occupation in occupation_codes) {
 
 # Final formatted table for the dashboard page
 new_ads_SOC_ranking <- new_ads_SOC_ranking %>%
-  select(rank, soc_4_digit_label, n_jobs) %>%
-  mutate(n_jobs = format(n_jobs, big.mark = ",")) %>%
+  select(rank, soc_4_digit_label, n_jobs_3m_avg) %>%
+  mutate(n_jobs_3m_avg = format(round2(n_jobs_3m_avg, 0), big.mark = ",")) %>%
   rename(Rank = rank,
          Occupation = soc_4_digit_label,
-         `Number of new job adverts` = n_jobs)
+         `Number of new job adverts` = n_jobs_3m_avg)
 
 # Format tables to output ============================================
 
