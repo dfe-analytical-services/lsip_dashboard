@@ -2800,19 +2800,7 @@ server <- function(input, output, session) {
   output$jobRankComment <- renderUI({
     req(jobAdsLineChart)
 
-    dates <- jobAdsLineChart %>%
-      filter(metric == "volume") %>%
-      mutate(date = as.Date(timePeriod)) %>%
-      arrange(date) %>%
-      pull(date)
-
-    end_date <- max(dates, na.rm = TRUE)
-
-    paste0(
-      "Volume of online job adverts by occupation in ",
-      format(end_date, "%B %Y"),
-      "."
-    )
+    "Volume of online job adverts by occupation, presented as a 3-month rolling average."
   })
 
   # Create a dataframe that updates based on the dropdown choice
@@ -2908,10 +2896,13 @@ server <- function(input, output, session) {
       pull(date)
 
     end_date <- max(dates, na.rm = TRUE)
+    start_date <- end_date %m-% months(2)
 
     paste0(
-      format(end_date, "%B %Y"),
-      " data"
+      "Average monthly new job adverts between ",
+      format(start_date, "%B %Y"),
+      " and ",
+      format(end_date, "%B %Y")
     )
   })
 
@@ -3023,15 +3014,21 @@ server <- function(input, output, session) {
       pull(date)
 
     end_date <- max(dates, na.rm = TRUE)
+    start_date <- end_date %m-% months(2)
 
-    start_date <- end_date %m-% months(11)
+    end_date_prev <- end_date %m-% years(1)
+    start_date_prev <- start_date %m-% years(1)
 
     paste0(
-      "Volume of new job adverts sourced from ",
+      "Average monthly new job adverts between ",
+      format(start_date, "%B %Y"),
+      " and ",
       format(end_date, "%B %Y"),
-      " data. Percentage change calculated relative to ",
-      format(end_date %m-% years(1), "%B %Y"),
-      " data."
+      ". Percentage change calculated relative to average monthly new job adverts between ",
+      format(start_date_prev, "%B %Y"),
+      " and ",
+      format(end_date_prev, "%B %Y"),
+      "."
     )
   })
 

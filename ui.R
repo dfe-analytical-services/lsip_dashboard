@@ -829,6 +829,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
               h2("Latest update"),
               p("30 Jul 2026 (1.6.16)"),
               tags$ul(
+                tags$li("Update to July 2026 online job advert data."),
                 tags$li("Add LSIP websites.")
               ),
               details(

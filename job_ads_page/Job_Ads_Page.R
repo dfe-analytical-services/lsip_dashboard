@@ -265,14 +265,14 @@ new_ads_SOC_constant_output <- new_ads_SOC_roll %>%
   mutate(period = if_else(timePeriod == latest_date, 
                           "n_jobs_latest", 
                           "n_jobs_previous")) %>%
-  select(soc_4_digit_code, period, n_jobs) %>%
-  pivot_wider(names_from = period, values_from = n_jobs) %>%
+  select(soc_4_digit_code, period, n_jobs_3m_avg) %>%
+  pivot_wider(names_from = period, values_from = n_jobs_3m_avg) %>%
   # Join on the constant data
   right_join(new_ads_SOC_constant, by = "soc_4_digit_code") %>%
   arrange(desc(n_jobs_latest)) %>%
   # Percentage change will be the latest month compared to the same month in the previous year
   mutate(`Percentage change` = (n_jobs_latest - n_jobs_previous) / n_jobs_previous,
-         `Number of new job adverts` = format(n_jobs_latest, big.mark = ",")) %>%
+         `Number of new job adverts` = format(round2(n_jobs_latest, 0), big.mark = ",")) %>%
   select(Occupation = soc_4_digit_label,
          `Number of new job adverts`,
          `Percentage change`)
@@ -281,9 +281,9 @@ new_ads_SOC_constant_output <- new_ads_SOC_roll %>%
 
 # Find which occupations have been in the top 15% in the latest 3-months but not in the top 15% in the previous 9-months
 
-# First calculate percentage change for the latest month compared to the same month in the previous year
-
 # Filter data for the previous 3-months and then the 9-months prior to that
+
+# Use the 3-month average from the latest month (as it would just be scaled down by 3)
 new_ads_SOC_3months <- new_ads_SOC_roll %>%
   filter(timePeriod == latest_date) %>%
   # Pull out the occupations that are in the top 15%
@@ -307,13 +307,13 @@ new_ads_SOC_emerging_output <- new_ads_SOC_roll %>%
   mutate(period = if_else(timePeriod == latest_date, 
                           "n_jobs_latest", 
                           "n_jobs_previous")) %>%
-  select(soc_4_digit_code, period, n_jobs) %>%
-  pivot_wider(names_from = period, values_from = n_jobs) %>%
+  select(soc_4_digit_code, period, n_jobs_3m_avg) %>%
+  pivot_wider(names_from = period, values_from = n_jobs_3m_avg) %>%
   # Join on the emerging data
   right_join(new_ads_SOC_emerging, by = "soc_4_digit_code") %>%
   # Percentage change will be the latest month compared to the same month in the previous year
   mutate(`Percentage change` = (n_jobs_latest - n_jobs_previous) / n_jobs_previous,
-         `Number of new job adverts` = format(n_jobs_latest, big.mark = ",")) %>%
+         `Number of new job adverts` = format(round2(n_jobs_latest, 0), big.mark = ",")) %>%
   select(Occupation = soc_4_digit_label,
          `Number of new job adverts`,
          `Percentage change`)
@@ -324,8 +324,8 @@ new_ads_SOC_emerging_output <- new_ads_SOC_roll %>%
 new_ads_SOC_ranking <- new_ads_SOC_roll %>%
   filter(timePeriod == latest_date) %>%
   # Create ranking column
-  mutate(rank = dense_rank(desc(n_jobs))) %>%
-  select(-c(timePeriod, n_jobs_3m_avg)) %>%
+  mutate(rank = dense_rank(desc(n_jobs_3m_avg))) %>%
+  select(-c(timePeriod, n_jobs)) %>%
   arrange(rank)
 
 # For loop to filter the ranked data for specific occupations
@@ -364,11 +364,11 @@ for (selected_occupation in occupation_codes) {
 
 # Final formatted table for the dashboard page
 new_ads_SOC_ranking <- new_ads_SOC_ranking %>%
-  select(rank, soc_4_digit_label, n_jobs) %>%
-  mutate(n_jobs = format(n_jobs, big.mark = ",")) %>%
+  select(rank, soc_4_digit_label, n_jobs_3m_avg) %>%
+  mutate(n_jobs_3m_avg = format(round2(n_jobs_3m_avg, 0), big.mark = ",")) %>%
   rename(Rank = rank,
          Occupation = soc_4_digit_label,
-         `Number of new job adverts` = n_jobs)
+         `Number of new job adverts` = n_jobs_3m_avg)
 
 # Format tables to output ============================================
 
