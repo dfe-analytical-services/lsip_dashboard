@@ -827,15 +827,20 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("22 Jul 2026 (1.6.15)"),
+              p("30 Jul 2026 (1.6.16)"),
               tags$ul(
-                tags$li("Add grouped geography feature to Datahub to allow the download of data combined over multiple, user chosen areas."),
-                tags$li("Addition of occupations to 'Job adverts (Pilot)' page.")
+                tags$li("Update to July 2026 online job advert data."),
+                tags$li("Add LSIP websites.")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("22 Jul 2026 (1.6.15)"),
+                  tags$ul(
+                    tags$li("Add grouped geography feature to Datahub to allow the download of data combined over multiple, user chosen areas."),
+                    tags$li("Addition of occupations to 'Job adverts (Pilot)' page.")
+                  ),
                   p("2 Jul 2026 (1.6.14)"),
                   tags$ul(
                     tags$li("Update to latest job advert data (May 2026)."),
@@ -1205,6 +1210,12 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
               2,
               uiOutput("screenshotFile")
             )
+          )
+        ),
+        fluidRow(
+          column(
+            12,
+            p(uiOutput("lsipUrl"))
           )
         ),
         fluidRow(
