@@ -108,7 +108,7 @@ addGeogs <- function(x) {
     ) %>%
     # select new name
     select(-area, -LAD23CD_11, -LAD23CD_21, -LAD23CD_23) %>%
-    left_join(distinct(neatLA, areaCode, area = areaName), by = c("areaCode" = "areaCode")) %>% # use to get consistent LA names
+    left_join(distinct(neatGeog |> filter(geog == "LADU"), areaCode, area = areaName), by = c("areaCode" = "areaCode")) %>% # use to get consistent LA names
     # addLSIPS
     left_join(C_LADLSIP, by = c("areaCode" = "LAD25CD")) %>%
     # addCA

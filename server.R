@@ -1116,6 +1116,18 @@ server <- function(input, output, session) {
       config(displayModeBar = TRUE, displaylogo = FALSE, modeBarButtonsToRemove = c("zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "toggleSpikelines"))
   })
 
+  ## 4.7 Dynamic Text----
+  output$page0lsipUrl <- renderUI({
+    validate(need(input$splashGeoType == "LSIP", ""))
+    lsipUrlRow <- C_lsipUrls %>%
+      filter(LSIP == input$geoChoiceOver)
+    p("The LSIP can be found here: ", a(
+      href = lsipUrlRow$URL,
+      lsipUrlRow$ERB,
+      .noWS = c("after")
+    ), br())
+  })
+
   # 5 Local skills----
 
   ## 5.1 Reusable variables----
@@ -1162,6 +1174,19 @@ server <- function(input, output, session) {
   })
 
   ## 5.3 Dynamic text----
+
+  # LSIP URL ----
+  output$lsipUrl <- renderUI({
+    validate(need(input$splashGeoType == "LSIP", ""))
+    lsipUrlRow <- C_lsipUrls %>%
+      filter(LSIP == input$geoChoice)
+    p("The LSIP can be found here: ", a(
+      href = lsipUrlRow$URL,
+      lsipUrlRow$ERB,
+      .noWS = c("after")
+    ), br())
+  })
+
   # create subheading
   output$subheading <- renderUI({
     req(input$geoChoice)
@@ -2787,19 +2812,7 @@ server <- function(input, output, session) {
   output$jobRankComment <- renderUI({
     req(jobAdsLineChart)
 
-    dates <- jobAdsLineChart %>%
-      filter(metric == "volume") %>%
-      mutate(date = as.Date(timePeriod)) %>%
-      arrange(date) %>%
-      pull(date)
-
-    end_date <- max(dates, na.rm = TRUE)
-
-    paste0(
-      "Volume of online job adverts by occupation in ",
-      format(end_date, "%B %Y"),
-      "."
-    )
+    "Volume of online job adverts by occupation, presented as a 3-month rolling average."
   })
 
   # Create a dataframe that updates based on the dropdown choice
@@ -2895,10 +2908,13 @@ server <- function(input, output, session) {
       pull(date)
 
     end_date <- max(dates, na.rm = TRUE)
+    start_date <- end_date %m-% months(2)
 
     paste0(
-      format(end_date, "%B %Y"),
-      " data"
+      "Average monthly new job adverts between ",
+      format(start_date, "%B %Y"),
+      " and ",
+      format(end_date, "%B %Y")
     )
   })
 
@@ -3010,15 +3026,21 @@ server <- function(input, output, session) {
       pull(date)
 
     end_date <- max(dates, na.rm = TRUE)
+    start_date <- end_date %m-% months(2)
 
-    start_date <- end_date %m-% months(11)
+    end_date_prev <- end_date %m-% years(1)
+    start_date_prev <- start_date %m-% years(1)
 
     paste0(
-      "Volume of new job adverts sourced from ",
+      "Average monthly new job adverts between ",
+      format(start_date, "%B %Y"),
+      " and ",
       format(end_date, "%B %Y"),
-      " data. Percentage change calculated relative to ",
-      format(end_date %m-% years(1), "%B %Y"),
-      " data."
+      ". Percentage change calculated relative to average monthly new job adverts between ",
+      format(start_date_prev, "%B %Y"),
+      " and ",
+      format(end_date_prev, "%B %Y"),
+      "."
     )
   })
 

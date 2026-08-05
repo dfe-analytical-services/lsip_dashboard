@@ -20,6 +20,8 @@ library(tidyverse)
 library(lubridate)
 library(openxlsx)
 library(sf)
+library(rvest)
+library(purrr)
 
 # For QA purposes we compare the old data with any updated data. This is done here before any data changes so we can compare the data as it was to the updated data. This is used with QAdataload.R
 # C_timeOld <- bind_rows(readr::read_csv("Data/AppData/C_time1.csv"), readr::read_csv("Data/AppData/C_time2.csv"))
@@ -64,6 +66,9 @@ source("importData/combineData.R", echo = TRUE)
 
 # 7 Job ads page ----
 source("job_ads_page/Job_Ads_Page.R", echo = TRUE)
+
+# 8 LSIP urls
+source("importData/importLsipUrls.R", echo = TRUE)
 
 # Run tests to assess changes
 shinytest2::test_app()

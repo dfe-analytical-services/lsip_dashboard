@@ -38,4 +38,5 @@ formatNomis() %>%
   select(-code, -cleanName)
 
 #save output
+saveRDS(C_SOC2020structure, "Data/processing/C_SOC2020structure.rds")
 saveRDS(C_empOcc, "Data/processing/C_empOcc.rds")
