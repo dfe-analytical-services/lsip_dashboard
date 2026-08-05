@@ -131,7 +131,7 @@ C_breakdown <- bind_rows(
         )
     ) %>%
     mutate_all(~ replace(., is.na(.), 0)) %>%
-    mutate(vol_value=value) |> #keep volume to show in hover
+    mutate(vol_value=value) %>% #keep volume to show in hover
     mutate(value = round2(value / total, 4)) %>%
     mutate(valueText = as.character(value)) %>%
     mutate(metric = case_when(

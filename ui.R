@@ -357,7 +357,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       <a href="https://www.gov.uk/government/organisations/skills-england"
          class="govuk-header__link govuk-header__link--homepage">
         <span class="govuk-header__logotype">
-          <img src="images/Skills England_Lesser_Arms_Landscape-SElogoWhite.svg"
+          <img src="images/Skills_England_Lesser_Arms_Landscape_SElogoWhite.svg"
                class="govuk-header__logotype-crown-fallback-image"
                width="300px"/>
         </span>
