@@ -1214,8 +1214,12 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
         ),
         fluidRow(
           column(
-            12,
+            5,
             p(uiOutput("lsipUrl"))
+          ),
+          column(
+            7,
+            p(uiOutput("lsipcaUrl"))
           )
         ),
         fluidRow(

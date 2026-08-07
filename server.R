@@ -1121,11 +1121,29 @@ server <- function(input, output, session) {
     validate(need(input$splashGeoType == "LSIP", ""))
     lsipUrlRow <- C_lsipUrls %>%
       filter(LSIP == input$geoChoiceOver)
-    p("The LSIP can be found here: ", a(
-      href = lsipUrlRow$URL,
-      lsipUrlRow$ERB,
-      .noWS = c("after")
-    ), br())
+    p(
+      "The LSIP can be found here: ", a(
+        href = lsipUrlRow$URL,
+        lsipUrlRow$ERB,
+        .noWS = c("after")
+      ),
+      br()
+    )
+  })
+
+  output$page0lsipcaUrl <- renderUI({
+    validate(need(input$splashGeoType == "LSIP" &
+      filter(C_lsipUrls, LSIP == input$geoChoiceOver)$CA_Name != "No Overlap", ""))
+    lsipUrlRow <- C_lsipUrls %>%
+      filter(LSIP == input$geoChoiceOver)
+    p(
+      "This LSIP covers the same geography as ", a(
+        href = lsipUrlRow$CA_Link,
+        lsipUrlRow$CA_Name,
+        .noWS = c("after")
+      ),
+      br()
+    )
   })
 
   # 5 Local skills----
@@ -1185,6 +1203,21 @@ server <- function(input, output, session) {
       lsipUrlRow$ERB,
       .noWS = c("after")
     ), br())
+  })
+
+  output$lsipcaUrl <- renderUI({
+    validate(need(input$splashGeoType == "LSIP" &
+      filter(C_lsipUrls, LSIP == input$geoChoiceOver)$CA_Name != "No Overlap", ""))
+    lsipUrlRow <- C_lsipUrls %>%
+      filter(LSIP == input$geoChoiceOver)
+    p(
+      "This LSIP covers the same geography as ", a(
+        href = lsipUrlRow$CA_Link,
+        lsipUrlRow$CA_Name,
+        .noWS = c("after")
+      ),
+      br()
+    )
   })
 
   # create subheading
