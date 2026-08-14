@@ -117,16 +117,8 @@ summaryTab <- function() {
     p(""),
     h4(actionLink("link_to_tabpanel_LS", "Explore more data and metrics on the Local skills data page.")),
     br(),
-    fluidRow(
-      column(
-        width = 5,
-        uiOutput("page0lsipUrl")
-      ),
-      column(
-        width = 7,
-        uiOutput("page0lsipcaUrl")
-      )
-    ),
+    uiOutput("page0lsipUrl"),
+    uiOutput("page0caUrl"),
     ### Downloads-------------
     br(),
     fluidRow(
