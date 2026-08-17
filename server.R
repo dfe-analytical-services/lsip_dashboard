@@ -1115,7 +1115,7 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = TRUE, displaylogo = FALSE, modeBarButtonsToRemove = c("zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "toggleSpikelines"))
   })
-  
+
   ## 4.7 Dynamic Text----
   output$page0lsipUrl <- renderUI({
     validate(need(input$splashGeoType == "LSIP", ""))
@@ -2148,6 +2148,42 @@ server <- function(input, output, session) {
     }
   })
 
+  # Render apprenticeships associated with chosen SOC 1 and 2 digits chosen
+  output$jobAppsLsTable <- DT::renderDataTable({
+    print(input$subgroupPage)
+    soc_codes <- as.numeric(
+      sub(" -.*", "", input$subgroupPage)
+    )
+    print(soc_codes)
+
+    tbl <- C_STD_SOC_lookup |>
+      filter(soc2020_code_2 %in% soc_codes)
+    print(tbl)
+
+    if (length(soc_codes) == 1) {
+      tbl <- tbl |>
+        select(Standard = st_name, Code = st_code)
+    } else {
+      tbl <- tbl |>
+        select(
+          SOC = soc2020_description,
+          Standard = st_name,
+          Code = st_code
+        ) |>
+        arrange(SOC)
+    }
+
+    DT::datatable(
+      tbl,
+      rownames = FALSE,
+      options = list(
+        searching = FALSE,
+        lengthChange = FALSE,
+        info = FALSE
+      )
+    )
+  })
+
   ## 5.9 Downloads local skills ----
   # all areas
   listDownloadV1All <- reactive({
@@ -3063,6 +3099,47 @@ server <- function(input, output, session) {
       tags$li("Where the same job is identified as being advertised through multiple adverts it is only counted once."),
       tags$li("The method for allocating jobs to occupations (SOC 2020) is based on the job title of the advert and will be developed further in future releases."),
       tags$li("Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.")
+    )
+  })
+
+  # Render apprenticeships associated with chosen SOC
+  output$jobAppsTable <- DT::renderDataTable({
+    if (input$jobOccupationGroup == "All occupations") {
+      return(NULL)
+    }
+
+    if (is.null(input$jobOccupationChoice) == TRUE) {
+      return(NULL)
+    }
+
+    soc_codes <- as.numeric(
+      sub(".*-\\s*", "", input$jobOccupationChoice)
+    )
+
+    tbl <- C_STD_SOC_lookup |>
+      filter(soc2020_code %in% soc_codes)
+
+    if (length(soc_codes) == 1) {
+      tbl <- tbl |>
+        select(Standard = st_name, Code = st_code)
+    } else {
+      tbl <- tbl |>
+        select(
+          SOC = soc2020_description,
+          Standard = st_name,
+          Code = st_code
+        ) |>
+        arrange(SOC)
+    }
+
+    DT::datatable(
+      tbl,
+      rownames = FALSE,
+      options = list(
+        searching = FALSE,
+        lengthChange = FALSE,
+        info = FALSE
+      )
     )
   })
 

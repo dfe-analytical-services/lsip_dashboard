@@ -206,9 +206,20 @@ jobAdTab <- function() {
         withSpinner(uiOutput("jobDemandTable")),
         br(),
         p(uiOutput("jobDemandFooter"))
-      )
+      ),
     ),
     br(),
+    ### 2.3.3 Visuals row 3 ----
+    fluidRow(
+      column(
+        6,
+        conditionalPanel(
+          condition = "input.jobOccupationGroup != 'All occupations'",
+          h3("Related apprenticeships"),
+          withSpinner(DT::dataTableOutput("jobAppsTable"))
+        )
+      )
+    ),
     ### 2.3.3 Downloads ----
     # fluidRow(
     #   column(

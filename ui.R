@@ -1284,6 +1284,18 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             p(uiOutput("mapLaFoot"))
           )
         ),
+
+        ### 2.3.3 Visuals row 3 ----
+        fluidRow(
+          column(
+            6,
+            conditionalPanel(
+              condition = "input.breakdownPage == 'Occupation (SOC2020 Sub-Major Group)'",
+              h3("Related apprenticeships"),
+              withSpinner(DT::dataTableOutput("jobAppsLsTable"))
+            )
+          )
+        ),
         ### 2.3.3 Downloads ----
         fluidRow(
           column(
