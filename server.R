@@ -1460,7 +1460,6 @@ server <- function(input, output, session) {
 
   ### 5.5.2 Map data----
   currentMapData <- reactive({
-    print(currentMetric())
     C_Geog %>%
       filter(geog == input$splashGeoType | geog == "England") %>%
       select(areaName, areaCode, geogConcat, geog,
@@ -1519,7 +1518,6 @@ server <- function(input, output, session) {
   ### 5.5.4 Map ----
   output$map <- renderLeaflet({
     mapData <- currentMapData() %>% filter(geog == input$splashGeoType)
-    print(mapData)
     if (sum(!is.na(mapData$value) > 0)) {
       pal <- colorNumeric("Blues", mapData$value)
     } else {
@@ -2087,7 +2085,7 @@ server <- function(input, output, session) {
       ))
     }
     # get rid of soc codes
-    Splash_21 <- Splash_21 %>% mutate(subgroup = gsub("[0-9]+ - ", "", subgroup))
+    Splash_21 <- Splash_21 %>% mutate(subgroup = sub("^.*? - ", "", subgroup))
 
     # if no rows (because of filter lag) then don't plot
     if (nrow(Splash_21) == 0) {
@@ -2198,6 +2196,39 @@ server <- function(input, output, session) {
         }
       )
     }
+  })
+
+  # Render apprenticeships associated with chosen SOC 1 and 2 digits chosen
+  output$jobAppsLsTable <- DT::renderDataTable({
+    soc_codes <- as.numeric(
+      sub(" -.*", "", input$subgroupPage)
+    )
+
+    tbl <- C_STD_SOC_lookup |>
+      filter(soc2020_code_2 %in% soc_codes)
+
+    if (length(soc_codes) == 1) {
+      tbl <- tbl |>
+        select(Standard = st_name, Code = st_code)
+    } else {
+      tbl <- tbl |>
+        select(
+          SOC = soc2020_description,
+          Standard = st_name,
+          Code = st_code
+        ) |>
+        arrange(SOC)
+    }
+
+    DT::datatable(
+      tbl,
+      rownames = FALSE,
+      options = list(
+        searching = FALSE,
+        lengthChange = FALSE,
+        info = FALSE
+      )
+    )
   })
 
   ## 5.9 Downloads local skills ----

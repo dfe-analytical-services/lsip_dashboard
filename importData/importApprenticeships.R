@@ -20,8 +20,8 @@ I_app_detail <- read.csv(csv_files[1])
 F_app_detail <- I_app_detail |> 
   # select needed columns and rows
   select(time_period=year,area=learner_home_lad
-,areaCode=learner_home_lad_code,age_summary,apps_level,ssa_tier_1,st_code,std_fwk_name,value = achievements) |> 
-  mutate(st_code = paste0(st_code," - ",std_fwk_name)) |> 
+,areaCode=learner_home_lad_code,Age=age_summary,Level=apps_level,SSA=ssa_tier_1,Standard=st_code,std_fwk_name,value = achievements) |> 
+  mutate(Standard = paste0(Standard," - ",std_fwk_name)) |> 
   mutate(geographic_level="Local authority district") |> 
   # add dates
   mutate(chartPeriod = paste("AY", substr(time_period, 3, 4), "/", substr(time_period, 5, 6), sep = "")) %>%
@@ -37,7 +37,7 @@ F_app_detail <- I_app_detail |>
 
 #Create England volumes
 app_detail_England<-F_app_detail |> 
-  group_by(age_summary,apps_level,ssa_tier_1,st_code,chartPeriod,timePeriod,latest) |> 
+  group_by(Age,Level,SSA,Standard,chartPeriod,timePeriod,latest) |> 
   summarise(value=sum(value)) |> 
   mutate(geographic_level="National",area="England",areaCode="E92000001")
 
@@ -50,7 +50,7 @@ groupedStats <- appsWithAreas %>%
   ungroup() %>%
   select(-newArea) %>%
   mutate_at(vars(value), safe_numeric) %>% # Convert to numeric
-  group_by(age_summary,apps_level,ssa_tier_1,st_code, chartPeriod, timePeriod, latest, geogConcat) %>%
+  group_by(Age,Level,SSA,Standard, chartPeriod, timePeriod, latest, geogConcat) %>%
   summarise(across(everything(), \(x) sum(x, na.rm = TRUE))) 
 
 # add back on original LADUs and format long
@@ -61,7 +61,7 @@ C_app_detail<- bind_rows(
 ) %>%
   mutate(Total="Total") |> 
   pivot_longer(
-    cols = c(Total,age_summary, apps_level, ssa_tier_1, st_code),
+    cols = c(Total,Age, Level, SSA, Standard),
     names_to = "breakdown",
     values_to = "subgroup",
     values_transform = list(subgroup = as.character)
