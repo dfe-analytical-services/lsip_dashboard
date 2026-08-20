@@ -10,15 +10,25 @@
 
 cat("Sourcing .Rprofile.", fill = TRUE)
 
-source("renv/activate.R")
+if (file.exists("renv/activate.R")) {
+  source("renv/activate.R")
+}
 
-renv::status()
+if (requireNamespace("renv", quietly = TRUE)) {
+  renv::status()
+}
 
 if (system.file(package = "dfeshiny") != "") {
   library(dfeshiny)
 } else {
-  warning("dfeshiny package is not installed, please run renv::restore() to set up the necessary package environment")
+  warning(
+    "dfeshiny package is not installed, please run renv::restore() to set up the necessary package environment"
+  )
 }
 
 # Install commit-hooks locally
-statusWriteCommit <- file.copy(".hooks/pre-commit.R", ".git/hooks/pre-commit", overwrite = TRUE)
+statusWriteCommit <- file.copy(
+  ".hooks/pre-commit.R",
+  ".git/hooks/pre-commit",
+  overwrite = TRUE
+)
