@@ -827,15 +827,20 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("30 Jul 2026 (1.6.16)"),
+              p("30 Jul 2026 (1.6.17)"),
               tags$ul(
-                tags$li("Update to July 2026 online job advert data."),
-                tags$li("Add LSIP websites.")
+                tags$li("Add in apprenticeship metric to the Local Skills page. This allows further breakdowns of the apprenticeship data."),
+                tags$li("Add in occupational map lookups to show related apprenticeships when a SOC subgroup in chosen (in the employment and job advert metrics and on the job ads page), and related occupations when the standard subgroup is chosen (apprenticeships metric).")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("30 Jul 2026 (1.6.16)"),
+                  tags$ul(
+                    tags$li("Update to July 2026 online job advert data."),
+                    tags$li("Add LSIP websites.")
+                  ),
                   p("22 Jul 2026 (1.6.15)"),
                   tags$ul(
                     tags$li("Add grouped geography feature to Datahub to allow the download of data combined over multiple, user chosen areas."),
@@ -1282,6 +1287,23 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             p(uiOutput("commentLA")),
             withSpinner(leafletOutput("mapLA")),
             p(uiOutput("mapLaFoot"))
+          )
+        ),
+
+        ### 2.3.3 Visuals row 3 ----
+        fluidRow(
+          column(
+            6,
+            conditionalPanel(
+              condition = "input.breakdownPage == 'Occupation (SOC2020 Sub-Major Group)'",
+              h3("Related apprenticeships"),
+              withSpinner(DT::dataTableOutput("LsAppsTable"))
+            ),
+            conditionalPanel(
+              condition = "input.breakdownPage == 'Standard'",
+              h3("Related occupations"),
+              withSpinner(DT::dataTableOutput("LsOccsTable"))
+            )
           )
         ),
         ### 2.3.3 Downloads ----

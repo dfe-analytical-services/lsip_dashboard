@@ -5,5 +5,8 @@ source("importData/importFeSsa.R", echo=TRUE)
 ### 2.2.2 Achievements/starts/part by LAD and provision, level and age------------
 source("importData/importFeAims.R", echo=TRUE)
 
-### 2.2.3 KS4 destinations----
+### 2.2.3 Apprenticeships detail ----
+source("importData/importApprenticeships.R", echo=TRUE)
+
+### 2.2.4 KS4 destinations----
 source("importData/importDestinations.R", echo=TRUE)
