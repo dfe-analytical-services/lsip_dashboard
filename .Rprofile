@@ -14,21 +14,24 @@ if (file.exists("renv/activate.R")) {
   source("renv/activate.R")
 }
 
-if (requireNamespace("renv", quietly = TRUE)) {
-  renv::status()
-}
+# Only run development-time checks when not deployed on Posit Connect
+if (!nzchar(Sys.getenv("RSTUDIO_PRODUCT"))) {
+  if (requireNamespace("renv", quietly = TRUE)) {
+    renv::status()
+  }
 
-if (system.file(package = "dfeshiny") != "") {
-  library(dfeshiny)
-} else {
-  warning(
-    "dfeshiny package is not installed, please run renv::restore() to set up the necessary package environment"
+  if (system.file(package = "dfeshiny") != "") {
+    library(dfeshiny)
+  } else {
+    warning(
+      "dfeshiny package is not installed, please run renv::restore() to set up the necessary package environment"
+    )
+  }
+
+  # Install commit-hooks locally
+  statusWriteCommit <- file.copy(
+    ".hooks/pre-commit.R",
+    ".git/hooks/pre-commit",
+    overwrite = TRUE
   )
 }
-
-# Install commit-hooks locally
-statusWriteCommit <- file.copy(
-  ".hooks/pre-commit.R",
-  ".git/hooks/pre-commit",
-  overwrite = TRUE
-)
