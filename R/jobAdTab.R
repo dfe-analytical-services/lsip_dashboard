@@ -34,29 +34,6 @@ jobAdTab <- function() {
         margin-left: 10px;
     }
 ")),
-    # Bespoke code to disable 'Area' dropdown and hide arrow - this will be removed once regions are added in
-    tags$head(
-      tags$style(HTML("
-        /* Disable clicking on the #jobGeoChoice dropdown */
-        #jobGeoChoice + .selectize-control {
-          pointer-events: none;                /* block mouse events (no open) */
-        }
-        /* Make the field look read-only */
-        #jobGeoChoice + .selectize-control .selectize-input {
-          background-color: #f5f5f5;           /* subtle grey background */
-          cursor: default;
-        }
-        /* Hide the arrow */
-        #jobGeoChoice + .selectize-control .selectize-input:after {
-          display: none !important;
-        }
-        /* Ensure no dropdown menu appears */
-        #jobGeoChoice + .selectize-control .selectize-dropdown {
-          display: none !important;
-        }
-      "))
-    ),
-    # End of bespoke code to disable 'Area' dropdown
     # Set the font within the search box to normal (i.e. not bold as is the default)
     tags$head(
       tags$style(HTML("
@@ -72,16 +49,26 @@ jobAdTab <- function() {
       fluidRow(
         column(
           4,
-          selectizeInput(
-            "jobGeoChoice",
-            multiple = FALSE,
-            label = "Area",
-            choices = c("England"),
-            selected = "England", # Default to England but this will be updated when regions are added
-            options = list(
-              persist = TRUE, # keep selected value
-              create = FALSE, # disallow new values
-              onDelete = I("function(values) { return false; }")
+          selectInput(
+            inputId = "jobGeoGroup",
+            label = "Choose an area group",
+            choices = c(
+              "National",
+              "Regional"
+            ),
+            selected = "National"
+          ),
+          conditionalPanel(
+            condition = "input.jobGeoGroup == 'Regional'",
+            selectizeInput(
+              inputId = "jobGeoChoice",
+              label = "Choose a region(s)",
+              choices = NULL,
+              multiple = TRUE,
+              options = list(
+                maxItems = 4, # limit choices to 4
+                placeholder = "Select up to 4 regions"
+              )
             )
           ),
           # selectizeInput(
@@ -129,7 +116,6 @@ jobAdTab <- function() {
             multiple = FALSE,
             label = "Choose a metric for the time series",
             options = list(
-              persist = TRUE, # keep selected value
               create = FALSE, # disallow new values
               onDelete = I("function(values) { return false; }")
             )
