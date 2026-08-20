@@ -1410,6 +1410,7 @@ server <- function(input, output, session) {
 
   ### 5.5.2 Map data----
   currentMapData <- reactive({
+    print(currentMetric())
     C_Geog %>%
       filter(geog == input$splashGeoType | geog == "England") %>%
       select(areaName, areaCode, geogConcat, geog,
@@ -1468,6 +1469,7 @@ server <- function(input, output, session) {
   ### 5.5.4 Map ----
   output$map <- renderLeaflet({
     mapData <- currentMapData() %>% filter(geog == input$splashGeoType)
+    print(mapData)
     if (sum(!is.na(mapData$value) > 0)) {
       pal <- colorNumeric("Blues", mapData$value)
     } else {

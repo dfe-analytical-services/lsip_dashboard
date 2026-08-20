@@ -10,6 +10,7 @@ C_localSkillsDataset <- bind_rows(
   C_qualL4PlusAgeGender,
   C_FeProvLevelAge,
   C_FeSsa,
+  C_app_detail,
   C_skillsImperative,
   C_destinations,
   C_adverts,

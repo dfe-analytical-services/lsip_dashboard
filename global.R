@@ -64,6 +64,7 @@ metricChoices <- list(
     "FE achievement" = "achievements",
     "FE participation" = "participation",
     # "FE starts" = "starts",
+    "FE apprenticeships" = "apprenticeships",
     "FE achievement rate per 100,000" = "achievements_rate_per_100000_population",
     "FE participation rate per 100,000" = "participation_rate_per_100000_population",
     # "FE start rate" = "starts_rate_per_100000_population",

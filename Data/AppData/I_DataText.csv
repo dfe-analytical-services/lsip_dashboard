@@ -210,3 +210,12 @@ Achievements are the number of learners who successfully complete an individual 
  <li>Years shown represent academic years.</li>
 <li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
 </ol>",NA,NA,NA,NA,NA,NA,NA
+"apprenticeships","AY24/25 data","This indicator shows apprenticeship achievements. ","<a href='https://explore-education-statistics.service.gov.uk/find-statistics/apprenticeships/2024-25'>Individualised Learner Record</a>","Include all age apprenticeships.
+Apprenticeships are paid jobs that incorporate on-the-job and off-the-job training leading to nationally recognised qualifications.
+Achievements are the number of learners who successfully complete an individual aim in an academic year.","<ol>
+  <li>Total achievements is the count of learners that completed their qualification at any point during the stated academic period.</li>
+ <li>Learners achieving more than one course will appear only once in the grand total.</li>
+ <li>Years shown represent academic years.</li>
+<li>Use caution when interpreting this data. A difference between subgroups does not necessarily imply any causality. There could be other contributing factors at work.</li>
+<li>Figures for LSIP and CAs have been calculated from Local Authority District data to create a back series. There may be small differences to the published data for these geographies due to rounding errors.</li>
+</ol>","Apprenticeships in","are apprenticeship volumes changing","The number of apprenticeships in","Apprenticeships","apprenticeships","share of apprenticeships","Apprenticeships are"
