@@ -673,25 +673,8 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
           12,
           br(),
           p(
-            "The Local Skills dashboard provides published local data from a variety of sources in an easy to navigate format. To support local skills planning, the dashboard covers topics such as employment, qualifications, and education outcomes across England."
+            "If you are a new user of the Dashboard, please read the 'How to use this dashboard' notes below. If you are an experienced user, the links below will take you to what you need."
           ),
-          p(
-            "Data is available to view and download for various geographies, including: local authority (LA), local skills improvement plan (LSIP) area, Combined Authority (CA) and national."
-          ),
-          p(
-            "This dashboard is produced by ",
-            a(
-              href = "https://www.gov.uk/government/collections/skills-england",
-              "Skills England",
-              .noWS = c("after")
-            ),
-            ", a body that brings together key partners to meet the skills needs of the next decade across all regions. For more information on Skills England's aims and our work, visit our",
-            a(
-              href = "https://www.gov.uk/government/collections/skills-england",
-              "webpage.",
-              .noWS = c("after")
-            )
-          )
         )),
         h2("Explore local skills and employment data.", class = "text-center"),
         br(),
@@ -747,59 +730,68 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             ),
             div(
               class = "panel-body",
-              p("Use the navigation bar above to select the tab you want to view, or access further information via the links below."),
-              h2("Dashboard information"),
+              h3("Background"),
+              p("The Local Skills Dashboard brings together published data from variety of sources to support local skills planning. The dashboard covers topics such as employment, qualifications, and education outcomes across England."),
+              p("Data is available to view and download at different levels of geography. The main geography we use is the LSIP (Local Skills Improvement Plan) area, which are groups of local councils with a common plan for skills policy, working with local employer groups. The data is also available at the level of Combined Authority, which often overlaps with LSIPs and England-wide level. Individual Local Authority data can be viewed for comparison where available."),
+              p(
+                "This dashboard is produced by Skills England, a body that brings together key partners to meet the skills needs of the next decade across all regions. For more information on Skills England's aims and our work, visit our",
+                a(
+                  href = "https://www.gov.uk/government/collections/skills-england",
+                  "webpage.",
+                  .noWS = c("after")
+                )
+              ),
+              h3("Sections of the Dashboard"),
+              p(
+                actionLink("go_summary", "Area summary"),
+                " provides an overview of key Skills-related statistics and trends for a given LSIP area, Combined Authority, or all of England."
+              ),
+              p(
+                actionLink("go_skills", "Local skills data"),
+                " gives you a second drop-down menu to explore detailed statistics on an area, including comparisons to the rest of England and differences between district councils within an area."
+              ),
+              p(
+                actionLink("go_download", "Data download"),
+                " provides expert users with a tool to download an extract of specific data for specific areas for their own use. You may also total the chosen areas to produce a 'custom' area for data download."
+              ),
+              h3("Local skills metrics"),
+              p("The metrics available on the Local skills data tab provide insights into local Skills supply and demand from different angles."),
+              p(
+                "The ",
+                actionLink("link_to_tabpanel_employment", "Employment"),
+                " variables give the number and rate of working-age people in the area in employment, self-employment, unemployment, and inactivity. This can generally be understood as an indication of labour market strength (and hence demand), but the numbers in unemployment and inactivity are a measure of labour supply. All variables are available as a rate instead of a number, but due to reliability of data they can only be broken down by occupation group and industry when presented as a number."
+              ),
+              h4("Demand"),
+              p(
+                "The ",
+                actionLink("link_to_tabpanel_vacancies", "Jobs"),
+                " variables use two different measures to show local demand for jobs, broken down by occupation group. Online job adverts are based on web scraping data to determine where location and nature of current job advert postings. Employment projections are based on the Skills Imperative report which estimated future demand for jobs, including at a local level, but are not based on the most up-to-date data."
+              ),
+              p(
+                "The ",
+                actionLink("link_to_tabpanel_enterprise", "Businesses"),
+                " variables are not based on any modelling, showing the simple number of businesses, and the number of new and closing businesses (births and deaths) in the area. This gives a crude but less assumptions-based indicator of demand, and can be broken down by industry."
+              ),
+              h4("Supply"),
+              p(
+                "The ",
+                actionLink("link_to_tabpanel_FE", "Skills"),
+                " variables show the number of people in the area in or completing Further Education courses, with the number (but not rate, as with Employment above) of achievements available broken down by subject area. They also show in general how many people are qualified at the key Levels 3 and 4 of the Regulated Qualification Framework."
+              ),
+              p(
+                "The ",
+                actionLink("link_to_tabpanel_destinations", "Destinations"),
+                " variables show the number of graduates from KS4 and KS5 education are in employment or training in the area, giving a broad impression of the supply of graduates with a general level of skill."
+              ),
+              h3("Further information and data quality notes"),
+              p("Use the links below to find further details on the Dashboard's data sources and related tools and publications:"),
               tags$ul(
-                tags$li(actionLink("link_to_tabpanel_dataSources", "Data sources"), "- includes details on the sources of data used in this dashboard."),
+                tags$li(actionLink("link_to_tabpanel_dataSources", "Data sources"), "- includes details on the sources of data used in this dashboard, including important caveats and notes on their use."),
                 tags$li(actionLink("link_to_tabpanel_furtherresources", "Further resources"), " - provides information and links to additional data sources and cross-government tools for exploration of the local labour market and education system."),
-                tags$li(actionLink("link_to_tabpanel_accessibility", "Accessibility"), "- provides the Local Skills dashboard accessibility statement, compliance requirmeents, limitations and opportunity to feedback on accessibility of the dashboard."),
+                tags$li(actionLink("link_to_tabpanel_accessibility", "Accessibility"), "- provides the Local Skills dashboard accessibility statement, compliance requirements, limitations and opportunity to feedback on accessibility of the dashboard."),
                 tags$li(actionLink("link_to_tabpanel_supportandfeedback", "Support and feedback"), " - provides links to the Skills England and Department for Education Statistics Development inboxes for feedback and if you hve any questions about the dashboard or the data it contains. There is also a link to the GitHub repository if you wish to view the dashboard source code.")
               ),
-              h2("Local skills metrics"),
-              h3(actionLink(
-                "link_to_tabpanel_localskills2", "Local skills data"
-              )),
-              p(
-                "The Local skills data tab provides additional metrics and breakdowns for the selected geographic area. Using the various filters you can select the metric of interest, primary area from the England map, and multiple comparison areas alongside the default England comparator. The chart in the bottom left provides additional breakdowns specific to the metric, for example:"
-              ),
-              tags$ul(
-                tags$li("Occupation and industry for employment volumes"),
-                tags$li("Size and industry for business count"),
-                tags$li("Learner age, level, provision and sector subject area for further education achievement rates")
-              ),
-              p(""),
-              h3(actionLink(
-                "link_to_tabpanel_employment", "Employment"
-              )),
-              p(
-                "This group of metrics provide information on employment, self-employment and inactivity, as well as their rates, with breakdowns by occupation and industry."
-              ),
-              h3(
-                actionLink("link_to_tabpanel_vacancies", "Jobs")
-              ),
-              p(
-                "This group of metrics provide information on online job adverts data and employment projections, with breakdowns by occupation, industry, broad sector and qualification."
-              ),
-              h3(actionLink(
-                "link_to_tabpanel_enterprise", "Businesses"
-              )),
-              p(
-                "This group of metrics provide information on business counts and business birth and death rates, with breakdowns by employment size and industry."
-              ),
-              h3(actionLink("link_to_tabpanel_FE", "Skills")),
-              p(
-                "This group of metrics provide information on further education achievements and participation, as well as qualifications at level 3, level 4 and above, with breakdowns by level, age, subject area, provision and gender."
-              ),
-              h3(actionLink(
-                "link_to_tabpanel_destinations", "Destinations"
-              )),
-              p(
-                "These two metrics provide information on the destinations of learners after Key Stage 4 and Key Stage 5 education, with breakdowns by outcome."
-              ),
-              h3("Data notices"),
-              p(
-                "Where published figures are not available, area totals for LSIP or MCA are either taken from a matching geographical area or are calculated by adding up the relevant local authorities - rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."
-              ),
+              p("Across all data sources, readers should note how area data is calculated when not directly available. Where there is data available for an area which completely overlaps (for example, the Tees Valley LSIP with the Tees Valley Combined Authority), that data is used. Otherwise, the totals are calculated through adding up the values of the local authorities in the area. This means that rounding errors may be present in these geographic areas where local authority total volumes are rounded and small volumes are suppressed."),
               p(
                 "The ONS have announced that, due to a coding error, their occupational data should be used with caution. For more information see this ONS ",
                 a(
@@ -808,7 +800,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
                   .noWS = c("after")
                 ),
                 "."
-              )
+              ),
             )
           )
         )),
