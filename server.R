@@ -2149,7 +2149,7 @@ server <- function(input, output, session) {
   })
 
   # Render apprenticeships associated with chosen SOC 1 and 2 digits chosen
-  output$jobAppsLsTable <- DT::renderDataTable({
+  output$LsAppsTable <- DT::renderDataTable({
     soc_codes <- as.numeric(
       sub(" -.*", "", input$subgroupPage)
     )
@@ -2168,6 +2168,40 @@ server <- function(input, output, session) {
           Code = st_code
         ) |>
         arrange(SOC)
+    }
+
+    DT::datatable(
+      tbl,
+      rownames = FALSE,
+      options = list(
+        searching = FALSE,
+        lengthChange = FALSE,
+        info = FALSE
+      )
+    )
+  })
+
+  # Render occupations associated with chosen standard
+  output$LsOccsTable <- DT::renderDataTable({
+    std_codes <- sub(" -.*", "", input$subgroupPage)
+
+    tbl <- C_STD_SOC_lookup |>
+      filter(st_code %in% std_codes) |>
+      mutate(
+        SOC = paste0(soc2020_code, " - ", soc2020_description),
+        Standard = paste0(st_code, " - ", st_name)
+      )
+
+    if (length(std_codes) == 1) {
+      tbl <- tbl |>
+        select(SOC)
+    } else {
+      tbl <- tbl |>
+        select(
+          Standard,
+          SOC
+        ) |>
+        arrange(Standard)
     }
 
     DT::datatable(
