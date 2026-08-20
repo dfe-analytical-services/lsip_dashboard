@@ -10,12 +10,11 @@
 
 cat("Sourcing .Rprofile.", fill = TRUE)
 
-if (file.exists("renv/activate.R")) {
-  source("renv/activate.R")
-}
-
 # Only run development-time checks when not deployed on Posit Connect
 if (!nzchar(Sys.getenv("RSTUDIO_PRODUCT"))) {
+  if (file.exists("renv/activate.R")) {
+    source("renv/activate.R")
+  }
   if (requireNamespace("renv", quietly = TRUE)) {
     renv::status()
   }
