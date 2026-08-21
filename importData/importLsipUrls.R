@@ -50,9 +50,22 @@ london_subs <- tibble(
   URL = london_row$URL
 )
 
+#Add in three rows for CAs which aren't LSIPs (won't create any new 'LSIP links' because this is just a lookup)
+#The NA for ERB and URL here is relevant because it stops them from referring back to the LSIP
+extra_cas <- tibble(
+  LSIP = c(
+    "Devon and Torbay",
+    "Greater London Authority",
+    "West of England"
+  ),
+  ERB = c("NA","NA","NA"),
+  URL = c("NA","NA","NA")
+)
+
 C_lsipUrls <- lsipUrls |> 
   filter(LSIP != "Greater London") |> 
   bind_rows(london_subs) |> 
+  bind_rows(extra_cas) |>
 #Get rid of bracketed parts of names in webpage so names match
   mutate(
     LSIP = gsub(" \\(.*\\)$", "", LSIP)
@@ -75,11 +88,14 @@ C_lsipUrls <- lsipUrls |>
                              LSIP == "York and North Yorkshire" ~ "York and North Yorkshire Combined Authority",
                              LSIP == "East Midlands" ~ "East Midlands Combined County Authority",
                              LSIP == "Greater Lincolnshire" ~ "Greater Lincolnshire Combined County Authority",
-                             LSIP == "Warwickshire" ~ "Warwickshire County Council",
+                             LSIP == "Warwickshire" ~ "Warwickshire County Council Local Authority",
                              LSIP == "West Midlands" ~ "West Midlands Combined Authority",
                              LSIP == "Cambridgeshire and Peterborough" ~ "Cambridgeshire and Peterborough Combined Authority",
-                             LSIP == "Buckinghamshire" ~ "Buckinghamshire Council",
-                             LSIP == "Surrey" ~ "Surrey County Council",
+                             LSIP == "Buckinghamshire" ~ "Buckinghamshire Council Local Authority",
+                             LSIP == "Surrey" ~ "Surrey County Council Local Authority",
+                             LSIP == "Devon and Torbay" ~ "Devon and Torbay Combined Authority",
+                             LSIP == "Greater London Authority" ~ "Greater London Authority",
+                             LSIP == "West of England" ~ "West of England Combined Authority",
                              TRUE ~ "No Overlap"),
          CA_Link = case_when(LSIP == "North East" ~ "https://www.northeast-ca.gov.uk/",
                              LSIP == "Tees Valley" ~ "https://teesvalley-ca.gov.uk/",
@@ -97,6 +113,9 @@ C_lsipUrls <- lsipUrls |>
                              LSIP == "Cambridgeshire and Peterborough" ~ "https://cambridgeshirepeterborough-ca.gov.uk/",
                              LSIP == "Buckinghamshire" ~ "https://www.buckinghamshire.gov.uk/",
                              LSIP == "Surrey" ~ "https://www.surreycc.gov.uk/",
+                             LSIP == "Devon and Torbay" ~ "https://www.devonandtorbay-cca.gov.uk/",
+                             LSIP == "Greater London Authority" ~ "https://www.london.gov.uk/who-we-are/what-london-assembly-does/london-assembly-research-unit-publications/greater-london-authority-powers-and-functions",
+                             LSIP == "West of England" ~ "https://www.westofengland-ca.gov.uk/",
                              TRUE ~ "No Overlap")) |>
   mutate(LSIP=paste0(LSIP," LSIP"))
 

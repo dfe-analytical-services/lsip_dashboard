@@ -1145,7 +1145,7 @@ server <- function(input, output, session) {
         lsipUrlRow$CA_Name,
         .noWS = c("after")
       ),
-      ifelse(lsipUrlRow$CA_Name != "No Overlap",
+      ifelse(lsipUrlRow$ERB != "NA",
         paste0(". This CA covers the same geography as ", lsipUrlRow$LSIP, "."),
         ""
       ),
@@ -1229,7 +1229,7 @@ server <- function(input, output, session) {
         lsipUrlRow$CA_Name,
         .noWS = c("after")
       ),
-      ifelse(lsipUrlRow$CA_Name != "No Overlap",
+      ifelse(lsipUrlRow$ERB != "NA",
         paste0(". This CA covers the same geography as ", lsipUrlRow$LSIP, "."),
         ""
       ),
