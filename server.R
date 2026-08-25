@@ -1115,17 +1115,42 @@ server <- function(input, output, session) {
       ) %>% # disable zooming because it's awful on mobile
       config(displayModeBar = TRUE, displaylogo = FALSE, modeBarButtonsToRemove = c("zoom2d", "pan2d", "select2d", "lasso2d", "zoomIn2d", "zoomOut2d", "autoScale2d", "resetScale2d", "hoverCompareCartesian", "hoverClosestCartesian", "toggleSpikelines"))
   })
-  
+
   ## 4.7 Dynamic Text----
   output$page0lsipUrl <- renderUI({
     validate(need(input$splashGeoType == "LSIP", ""))
     lsipUrlRow <- C_lsipUrls %>%
       filter(LSIP == input$geoChoiceOver)
-    p("The LSIP can be found here: ", a(
-      href = lsipUrlRow$URL,
-      lsipUrlRow$ERB,
-      .noWS = c("after")
-    ), br())
+    p(
+      "The LSIP can be found here: ", a(
+        href = lsipUrlRow$URL,
+        lsipUrlRow$ERB,
+        .noWS = c("after")
+      ),
+      ifelse(lsipUrlRow$CA_Name != "No Overlap",
+        paste0(". This LSIP covers the same geography as ", lsipUrlRow$CA_Name, "."),
+        ""
+      ),
+      br()
+    )
+  })
+
+  output$page0caUrl <- renderUI({
+    validate(need(input$splashGeoType == "CA", ""))
+    lsipUrlRow <- C_lsipUrls %>%
+      filter(gsub("LSIP", "CA", LSIP) == input$geoChoiceOver)
+    p(
+      "The authority's website can be found here: ", a(
+        href = lsipUrlRow$CA_Link,
+        lsipUrlRow$CA_Name,
+        .noWS = c("after")
+      ),
+      ifelse(lsipUrlRow$ERB != "NA",
+        paste0(". This CA covers the same geography as ", lsipUrlRow$LSIP, "."),
+        ""
+      ),
+      br()
+    )
   })
 
   # 5 Local skills----
@@ -1179,12 +1204,37 @@ server <- function(input, output, session) {
   output$lsipUrl <- renderUI({
     validate(need(input$splashGeoType == "LSIP", ""))
     lsipUrlRow <- C_lsipUrls %>%
-      filter(LSIP == input$geoChoice)
-    p("The LSIP can be found here: ", a(
-      href = lsipUrlRow$URL,
-      lsipUrlRow$ERB,
-      .noWS = c("after")
-    ), br())
+      filter(LSIP == input$geoChoiceOver)
+    p(
+      "The LSIP can be found here: ", a(
+        href = lsipUrlRow$URL,
+        lsipUrlRow$ERB,
+        .noWS = c("after")
+      ),
+      ifelse(lsipUrlRow$CA_Name != "No Overlap",
+        paste0(". This LSIP covers the same geography as ", lsipUrlRow$CA_Name, "."),
+        ""
+      ),
+      br()
+    )
+  })
+
+  output$caUrl <- renderUI({
+    validate(need(input$splashGeoType == "CA", ""))
+    lsipUrlRow <- C_lsipUrls %>%
+      filter(gsub("LSIP", "CA", LSIP) == input$geoChoiceOver)
+    p(
+      "The authority's website can be found here: ", a(
+        href = lsipUrlRow$CA_Link,
+        lsipUrlRow$CA_Name,
+        .noWS = c("after")
+      ),
+      ifelse(lsipUrlRow$ERB != "NA",
+        paste0(". This CA covers the same geography as ", lsipUrlRow$LSIP, "."),
+        ""
+      ),
+      br()
+    )
   })
 
   # create subheading

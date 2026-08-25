@@ -357,7 +357,7 @@ div.myspecial-popup div.leaflet-popup-content-wrapper {
       <a href="https://www.gov.uk/government/organisations/skills-england"
          class="govuk-header__link govuk-header__link--homepage">
         <span class="govuk-header__logotype">
-          <img src="images/Skills England_Lesser_Arms_Landscape-SElogoWhite.svg"
+          <img src="images/Skills_England_Lesser_Arms_Landscape_SElogoWhite.svg"
                class="govuk-header__logotype-crown-fallback-image"
                width="300px"/>
         </span>
@@ -827,15 +827,20 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("30 Jul 2026 (1.6.16)"),
+              p("25 Aug 2026 (1.6.17)"),
               tags$ul(
                 tags$li("Update to July 2026 online job advert data."),
-                tags$li("Add LSIP websites.")
+                tags$li("Add CA websites.")
               ),
               details(
                 label = "Previous updates",
                 inputId = "PreviousUpdate",
                 p(
+                  p("30 Jul 2026 (1.6.16)"),
+                  tags$ul(
+                    tags$li("Update to June 2026 online job advert data."),
+                    tags$li("Add LSIP websites.")
+                  ),
                   p("22 Jul 2026 (1.6.15)"),
                   tags$ul(
                     tags$li("Add grouped geography feature to Datahub to allow the download of data combined over multiple, user chosen areas."),
@@ -1216,6 +1221,12 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
           column(
             12,
             p(uiOutput("lsipUrl"))
+          )
+        ),
+        fluidRow(
+          column(
+            12,
+            p(uiOutput("caUrl"))
           )
         ),
         fluidRow(
