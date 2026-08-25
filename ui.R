@@ -1225,6 +1225,12 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
         fluidRow(
           column(
             12,
+            p(uiOutput("caUrl"))
+          )
+        ),
+        fluidRow(
+          column(
+            12,
             p(uiOutput("subheading"))
           )
         ),
