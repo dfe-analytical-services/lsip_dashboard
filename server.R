@@ -2148,6 +2148,7 @@ server <- function(input, output, session) {
     }
   })
 
+  ### 5.8.5 Apprenticeships/occupations table----
   # Render apprenticeships associated with chosen SOC 1 and 2 digits chosen
   output$LsAppsTable <- DT::renderDataTable({
     soc_codes <- as.numeric(
@@ -3133,7 +3134,9 @@ server <- function(input, output, session) {
     )
   })
 
+  ### 5.10.9 Apprenticeships table----
   # Render apprenticeships associated with chosen SOC
+
   output$jobAppsTable <- DT::renderDataTable({
     if (input$jobOccupationGroup == "All occupations") {
       return(NULL)
@@ -3163,15 +3166,85 @@ server <- function(input, output, session) {
         arrange(SOC)
     }
 
+    tbl$more_info <- sprintf(
+      '<button class="btn btn-sm btn-primary app_details_link" id="%s">
+More info
+</button>',
+      tbl$Code
+    )
+
+
     DT::datatable(
       tbl,
+      escape = FALSE,
       rownames = FALSE,
+      selection = "none",
+      # colnames = c("Standard", "Code", ""),
+      callback = JS(
+        "
+$(document).on('click', '.app_details_link', function() {
+Shiny.setInputValue(
+'selected_app',
+this.id,
+{priority: 'event'}
+);
+});
+"
+      ),
       options = list(
         searching = FALSE,
         lengthChange = FALSE,
         info = FALSE
       )
     )
+  })
+
+  jump_from_table <- reactiveVal(FALSE)
+  selected_app_code <- reactiveVal(NULL)
+
+  observeEvent(input$selected_app, {
+    jump_from_table(TRUE)
+    selected_app_code(input$selected_app)
+
+    bslib::nav_select("navbar", "local_skills_data")
+
+    updateSelectInput(
+      session,
+      "splashMetric",
+      selected = "apprenticeships"
+    )
+  })
+
+  observeEvent(input$splashMetric, {
+    req(jump_from_table())
+    req(input$splashMetric == "apprenticeships")
+
+    updateSelectInput(
+      session,
+      "breakdownPage",
+      selected = "Standard"
+    )
+  })
+
+  observe({
+    req(jump_from_table())
+    req(input$splashMetric == "apprenticeships")
+    req(input$breakdownPage == "Standard")
+
+    target <- grep(
+      paste0("^", selected_app_code()),
+      distinctSubgroups$subgroup[distinctSubgroups$metric == input$splashMetric & distinctSubgroups$breakdown == input$breakdownPage],
+      value = TRUE
+    )
+
+    updateSelectInput(
+      session,
+      "subgroupPage",
+      selected = target[1]
+    )
+
+    # reset flag once navigation is complete
+    jump_from_table(FALSE)
   })
 
   # 6 DataHub----
