@@ -82,8 +82,9 @@ APS_econ_activity_clean <- APS_econ_activity %>%
   janitor::clean_names() %>%
   select(date_name, geography_name, geography_code, measures_name, obs_value) %>%
   filter(measures_name == "Value") %>%
-  rename(chartPeriod = date_name,
+  select(chartPeriod = date_name,
          region = geography_name,
+         geography_code,
          population = obs_value) %>%
   # rename 'East' to 'East of England' to line up with the shape file
   mutate(region = if_else(region == "East", "East of England", region))
@@ -93,7 +94,7 @@ APS_employment_clean <- APS_employment %>%
   janitor::clean_names() %>%
   select(date_name, geography_name, measures_name, obs_value) %>%
   filter(measures_name == "Value") %>%
-  rename(chartPeriod = date_name,
+  select(chartPeriod = date_name,
          region = geography_name,
          employment = obs_value) %>%
   mutate(region = if_else(region == "East", "East of England", region))
@@ -109,8 +110,9 @@ APS_employment_soc_clean <- APS_employment_soc %>%
            remove = TRUE) %>%
   select(date_name, geography_name, soc_4_digit_code, soc_4_digit_label, measures_name, obs_value) %>%
   filter(measures_name == "Value") %>%
-  rename(chartPeriod = date_name,
+  select(chartPeriod = date_name,
          region = geography_name,
+         soc_4_digit_code,
          employment = obs_value) %>%
   mutate(region = if_else(region == "East", "East of England", region))
 
@@ -194,7 +196,6 @@ new_ads_national_job <- new_ads_national_pop %>%
 
 # Growth rate of job ads by SOC
 new_ads_SOC_growth <- new_ads_SOC_roll %>%
-  filter(timePeriod >= base_date) %>%
   group_by(soc_4_digit_code, soc_4_digit_label) %>%
   mutate(n_jobs_base = n_jobs_3m_avg[timePeriod == base_date],
          growth_rate = (n_jobs_3m_avg - n_jobs_base) / n_jobs_base) %>%
@@ -234,7 +235,6 @@ new_ads_region_vol <- new_ads_region_roll %>%
 
 # Growth rate of job ads by region
 new_ads_region_growth <- new_ads_region_roll %>%
-  filter(timePeriod >= base_date) %>%
   group_by(region) %>%
   mutate(n_jobs_base = n_jobs_3m_avg[timePeriod == base_date],
          growth_rate = (n_jobs_3m_avg - n_jobs_base) / n_jobs_base) %>%
@@ -242,14 +242,9 @@ new_ads_region_growth <- new_ads_region_roll %>%
   select(-n_jobs_base)
 
 # Population rate of job ads by region
-
-# Filter APS economic activity data
-APS_econ_activity_region <- APS_econ_activity_clean %>%
-  select(chartPeriod, region, geography_code, population)
-
 new_ads_region_pop <- population_data(new_ads_region_roll, region) %>%
   # Join on APS economic activity data
-  left_join(APS_econ_activity_region, by = c("chartPeriod", "region")) %>%
+  left_join(APS_econ_activity_clean, by = c("chartPeriod", "region")) %>%
   filter(!is.na(population)) %>%
   mutate(pop_rate = n_jobs_yr_sum / population)
 
@@ -257,8 +252,7 @@ new_ads_region_pop <- population_data(new_ads_region_roll, region) %>%
 
 # Filter APS employment data
 APS_employment_region <- APS_employment_clean %>%
-  filter(region != "England") %>%
-  select(chartPeriod, region, employment)
+  filter(region != "England")
 
 new_ads_region_job <- new_ads_region_pop %>%
   # Join on APS employment data
@@ -276,7 +270,6 @@ new_ads_region_SOC_vol <- new_ads_region_SOC_roll %>%
 
 # Growth rate of job ads by region and SOC
 new_ads_region_SOC_growth <- new_ads_region_SOC_roll %>%
-  filter(timePeriod >= base_date) %>%
   group_by(region, soc_4_digit_code, soc_4_digit_label) %>%
   mutate(n_jobs_base = n_jobs_3m_avg[timePeriod == base_date],
          growth_rate = (n_jobs_3m_avg - n_jobs_base) / n_jobs_base) %>%
@@ -286,7 +279,7 @@ new_ads_region_SOC_growth <- new_ads_region_SOC_roll %>%
 # Population rate of job ads by region and SOC
 new_ads_region_SOC_pop <- population_data(new_ads_region_SOC_roll, region, soc_4_digit_code, soc_4_digit_label) %>%
   # Join on APS economic activity data
-  left_join(APS_econ_activity_region, by = c("chartPeriod", "region")) %>%
+  left_join(APS_econ_activity_clean, by = c("chartPeriod", "region")) %>%
   filter(!is.na(population)) %>%
   mutate(pop_rate = n_jobs_yr_sum / population,
          pop_rate = round2(pop_rate * 1000, 3)) # Per 100,000 population
@@ -295,8 +288,7 @@ new_ads_region_SOC_pop <- population_data(new_ads_region_SOC_roll, region, soc_4
 
 # Filter APS employment SOC data
 APS_employment_soc_region <- APS_employment_soc_clean %>%
-  filter(region != "England") %>%
-  select(chartPeriod, region, employment, soc_4_digit_code)
+  filter(region != "England")
 
 new_ads_region_SOC_job <- new_ads_region_SOC_pop %>%
   # Join on employment data
@@ -496,11 +488,8 @@ new_ads_SOC_ranking <- new_ads_SOC_roll %>%
   # Create ranking column
   mutate(rank = dense_rank(desc(n_jobs_3m_avg))) %>%
   select(-c(timePeriod, n_jobs)) %>%
-  arrange(rank)
-
+  arrange(rank) %>%
 # Final formatted table for the dashboard page
-new_ads_SOC_ranking <- new_ads_SOC_ranking %>%
-  select(rank, soc_4_digit_label, n_jobs_3m_avg) %>%
   mutate(n_jobs_3m_avg = round2(n_jobs_3m_avg, 0),
          Region = "England") %>%
   select(Rank = rank,
@@ -516,11 +505,8 @@ new_ads_region_SOC_ranking <- new_ads_region_SOC_roll %>%
   mutate(rank = dense_rank(desc(n_jobs_3m_avg))) %>%
   ungroup() %>%
   select(-c(timePeriod, n_jobs)) %>%
-  arrange(region, rank)
-
+  arrange(region, rank) %>%
 # Final formatted table for the dashboard page
-new_ads_region_SOC_ranking <- new_ads_region_SOC_ranking %>%
-  select(rank, region,soc_4_digit_label, n_jobs_3m_avg) %>%
   mutate(n_jobs_3m_avg = round2(n_jobs_3m_avg, 0)) %>%
   select(Rank = rank,
          Region = region,
@@ -579,6 +565,7 @@ output_occupations <- bind_rows(
   new_ads_SOC_growth  %>%
     select(timePeriod, soc_4_digit_code, soc_4_digit_label, growth_rate) %>%
     rename(value = growth_rate) %>%
+    filter(timePeriod >= make_date(year(latest_date) - 4, 1, 1)) %>%
     mutate(metric = "growthRate"),
   
   new_ads_SOC_pop  %>%
@@ -614,6 +601,7 @@ output_regions <- bind_rows(
   new_ads_region_growth  %>%
     select(timePeriod, region, growth_rate) %>%
     rename(value = growth_rate) %>%
+    filter(timePeriod >= make_date(year(latest_date) - 4, 1, 1)) %>%
     mutate(metric = "growthRate"),
   
   new_ads_region_pop  %>%
@@ -648,6 +636,7 @@ output_occupations_regions <- bind_rows(
   new_ads_region_SOC_growth  %>%
     select(timePeriod, region, soc_4_digit_code, soc_4_digit_label, growth_rate) %>%
     rename(value = growth_rate) %>%
+    filter(timePeriod >= make_date(year(latest_date) - 4, 1, 1)) %>%
     mutate(metric = "growthRate"),
   
   new_ads_region_SOC_pop  %>%
