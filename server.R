@@ -2278,6 +2278,17 @@ server <- function(input, output, session) {
     selected = character(0)
   )
 
+  # Clear selected geographies when 'National' is chosen in the dropdown
+  observeEvent(input$jobGeoGroup, {
+    if (input$jobGeoGroup == "National") {
+      updateSelectizeInput(
+        session,
+        inputId = "jobGeoChoice",
+        selected = character(0)
+      )
+    }
+  })
+
   # Get list of occupations for the dropdown
   jobOccupationsList <- jobAdsLineChart %>%
     filter(
@@ -2319,6 +2330,28 @@ server <- function(input, output, session) {
     )
   })
 
+  # Clear selected occupations when 'All occupations' is chosen in the dropdown
+  observeEvent(input$jobOccupationGroup, {
+    if (input$jobOccupationGroup == "All occupations") {
+      updateSelectizeInput(
+        session,
+        inputId = "jobOccupationChoice",
+        selected = character(0)
+      )
+    }
+  })
+
+  # Flag if national is selected
+  is_national <- reactive({
+    input$jobGeoGroup == "National"
+  })
+
+  # List of selected geographies
+  selected_geogs <- reactive({
+    input$jobGeoChoice
+  })
+
+
   ### 5.10.2 Job Ads Banner ----
 
   # Create a banner for flagged SOCs
@@ -2358,13 +2391,35 @@ server <- function(input, output, session) {
     HTML((I_DataText %>% filter(metric == "vacancies"))$subheading)
   })
 
+  # Create the heading for dynamic text
+  output$jobDynamicHeading <- renderUI({
+    # Hide the heading for multiple geographies and selected occupations
+    if (input$jobOccupationGroup != "All occupations" &&
+      !is_national() &&
+      length(selected_geogs()) > 1
+    ) {
+      return(NULL)
+    }
+
+    h4("Key statistics")
+  })
+
   # Create dynamic text
   output$jobDynamicText <- renderUI({
     req(jobAdsLineChart)
 
-    if (input$jobOccupationGroup == "All occupations") {
+    geography_selection <- !is_national() && length(selected_geogs()) > 0
+
+    # ====================================================================
+    # 1. NATIONAL + ALL OCCUPATIONS
+    # ====================================================================
+    if (!geography_selection &&
+      input$jobOccupationGroup == "All occupations") {
       jobTextData <- jobAdsLineChart %>%
-        filter(soc_4_digit_group == "All occupations") %>%
+        filter(
+          soc_4_digit_group == "All occupations",
+          geogConcat == "England"
+        ) %>%
         mutate(date = as.Date(timePeriod)) %>%
         group_by(metric) %>%
         filter(date == max(date, na.rm = TRUE)) %>%
@@ -2402,11 +2457,69 @@ server <- function(input, output, session) {
         " adverts per 100 jobs.",
         "</p>"
       )
-    } else {
-      req(input$jobOccupationChoice)
 
+      # ====================================================================
+      # 2. REGIONAL + ALL OCCUPATIONS
+      # ====================================================================
+    } else if (geography_selection &&
+      input$jobOccupationGroup == "All occupations") {
       jobTextData <- jobAdsLineChart %>%
-        filter(soc_4_digit_group %in% input$jobOccupationChoice) %>%
+        filter(
+          soc_4_digit_group == "All occupations",
+          geogConcat %in% selected_geogs()
+        ) %>%
+        mutate(date = as.Date(timePeriod)) %>%
+        group_by(geogConcat, metric) %>%
+        filter(date == max(date, na.rm = TRUE)) %>%
+        ungroup() %>%
+        filter(metric %in% c("volume", "growthRate", "popRate", "jobRate")) %>%
+        group_by(metric, date, chartPeriod, timePeriod) %>%
+        tidyr::pivot_wider(
+          names_from = metric,
+          values_from = c(timePeriod, chartPeriod, value, date)
+        )
+
+      dynamic_text <- ""
+
+      for (selected_geogs in seq_len(nrow(jobTextData))) {
+        dynamic_text <- paste0(
+          dynamic_text,
+          "<li><strong>",
+          jobTextData$geogConcat[selected_geogs],
+          "</strong>: ",
+          format(round2(jobTextData$value_volume[selected_geogs], 0), big.mark = ","),
+          " average monthly job adverts (",
+          format(jobTextData$date_volume[selected_geogs] %m-% months(2), "%b %Y"),
+          "–",
+          format(jobTextData$date_volume[selected_geogs], "%b %Y"),
+          "), ",
+          if (jobTextData$value_growthRate[selected_geogs] > 0) "up " else "down ",
+          scales::percent(
+            round2(abs(jobTextData$value_growthRate[selected_geogs]), 2),
+            trim = FALSE
+          ),
+          " from Nov 2021–Jan 2022. ",
+          round2(jobTextData$value_popRate[selected_geogs] * 100, 0),
+          " adverts per 100 adults and ",
+          round2(jobTextData$value_jobRate[selected_geogs] * 100, 0),
+          " adverts per 100 jobs (",
+          format(jobTextData$date_popRate[selected_geogs] %m-% months(11), "%b %Y"),
+          "–",
+          format(jobTextData$date_popRate[selected_geogs], "%b %Y"),
+          "). ",
+          "</li>"
+        )
+      }
+
+      # ====================================================================
+      # 3. NATIONAL + SELECTED OCCUPATIONS
+      # ====================================================================
+    } else if (!geography_selection) {
+      jobTextData <- jobAdsLineChart %>%
+        filter(
+          geogConcat == "England",
+          soc_4_digit_group %in% input$jobOccupationChoice
+        ) %>%
         mutate(date = as.Date(timePeriod)) %>%
         group_by(soc_4_digit_group, metric) %>%
         filter(date == max(date, na.rm = TRUE)) %>%
@@ -2448,22 +2561,71 @@ server <- function(input, output, session) {
           "</li>"
         )
       }
+
+      # ====================================================================
+      # 4. REGIONAL + SELECTED OCCUPATIONS
+      # ====================================================================
+    } else {
+      # Hide the dynamic text if multiple geographies selected
+      if (length(selected_geogs()) > 1) {
+        return(NULL)
+      }
+
+      jobTextData <- jobAdsLineChart %>%
+        filter(
+          geogConcat %in% selected_geogs(),
+          soc_4_digit_group %in% input$jobOccupationChoice
+        ) %>%
+        mutate(date = as.Date(timePeriod)) %>%
+        group_by(geogConcat, soc_4_digit_group, metric) %>%
+        filter(date == max(date, na.rm = TRUE)) %>%
+        ungroup() %>%
+        filter(metric %in% c("volume", "growthRate", "popRate", "jobRate")) %>%
+        pivot_wider(
+          names_from = metric,
+          values_from = c(timePeriod, chartPeriod, value, date)
+        )
+
+      dynamic_text <- ""
+
+      for (selected_occupation in seq_len(nrow(jobTextData))) {
+        dynamic_text <- paste0(
+          dynamic_text,
+          "<li><strong>",
+          jobTextData$soc_4_digit_group[selected_occupation] %>%
+            str_remove(" - \\d{4}$"),
+          "; ",
+          jobTextData$geogConcat[selected_occupation],
+          "</strong>: ",
+          format(round2(jobTextData$value_volume[selected_occupation], 0), big.mark = ","),
+          " average monthly job adverts (",
+          format(jobTextData$date_volume[selected_occupation] %m-% months(2), "%b %Y"),
+          "–",
+          format(jobTextData$date_volume[selected_occupation], "%b %Y"),
+          "), ",
+          if (jobTextData$value_growthRate[selected_occupation] > 0) "up " else "down ",
+          scales::percent(
+            round2(abs(jobTextData$value_growthRate[selected_occupation]), 2),
+            trim = FALSE
+          ),
+          " from Nov 2021–Jan 2022. ",
+          round2(jobTextData$value_popRate[selected_occupation] * 100, 0),
+          " adverts per 100,000 adults and ",
+          round2(jobTextData$value_jobRate[selected_occupation] * 100, 0),
+          " adverts per 100 jobs (",
+          format(jobTextData$date_popRate[selected_occupation] %m-% months(11), "%b %Y"),
+          "–",
+          format(jobTextData$date_popRate[selected_occupation], "%b %Y"),
+          "). ",
+          "</li>"
+        )
+      }
     }
+
     HTML(dynamic_text)
   })
 
   ### 5.10.4 Job Ads Map ----
-
-  # Filter for selected geographies
-  selected_geogs <- reactive({
-    req(input$jobGeoGroup)
-
-    if (input$jobGeoGroup == "National") {
-      character(0)
-    } else {
-      input$jobGeoChoice
-    }
-  })
 
   # Filter dataframe based on dropdown choice
   filtered_data <- reactive({
@@ -2478,7 +2640,13 @@ server <- function(input, output, session) {
 
   # Create commentary for map
   output$jobMapComment <- renderUI({
-    # Commentary for national and all occupations
+    req(jobAdsMap)
+
+    geography_selection <- !is_national() && length(selected_geogs()) > 1
+
+    # ====================================================================
+    # 1. NATIONAL + ALL OCCUPATIONS
+    # ====================================================================
     if (input$jobOccupationGroup == "All occupations") {
       highest_area <- jobAdsMap %>%
         filter(soc_4_digit_group == "All occupations") %>%
@@ -2497,8 +2665,11 @@ server <- function(input, output, session) {
         lowest_area,
         "."
       )
-      # Commentary for selected geographies and all occupations
-      if (length(selected_geogs()) > 0) {
+
+      # ====================================================================
+      # 2. REGIONAL + ALL OCCUPATIONS
+      # ====================================================================
+      if (geography_selection) {
         selected_data <- jobAdsMap %>%
           filter(
             soc_4_digit_group == "All occupations",
@@ -2523,7 +2694,12 @@ server <- function(input, output, session) {
           "."
         )
       }
+
       HTML(comment)
+
+      # ====================================================================
+      # 3. NATIONAL + SELECTED OCCUPATIONS
+      # ====================================================================
     } else {
       req(input$jobOccupationChoice)
 
@@ -2543,8 +2719,11 @@ server <- function(input, output, session) {
         lowest_area,
         "."
       )
-      # Commentary for selected geographies and occupations
-      if (length(selected_geogs()) > 0) {
+
+      # ====================================================================
+      # 4. REGIONAL + SELECTED OCCUPATIONS
+      # ====================================================================
+      if (geography_selection) {
         selected_data <- filtered_data() %>%
           filter(region %in% selected_geogs())
 
@@ -2585,7 +2764,12 @@ server <- function(input, output, session) {
       left_join(map_data_filtered,
         by = c("areaName" = "region")
       ) %>%
-      mutate(selected_geographies = areaName %in% selected_geogs())
+      # Set logical column to TRUE for selected geographies, and FALSE for national / non-selected geographies
+      mutate(selected_geographies = if (is_national()) {
+        FALSE
+      } else {
+        areaName %in% selected_geogs()
+      })
   })
 
   # Output either map or table, depending on toggle selected
@@ -2645,9 +2829,9 @@ server <- function(input, output, session) {
 
     # Create the wording for the hover label
     metricLabel <- if (input$jobOccupationGroup == "All occupations") {
-      "online job adverts"
+      "job adverts"
     } else {
-      "online job adverts for selected occupation(s)"
+      "job adverts for selected occupation(s)"
     }
 
     if (sum(!is.na(jobMapData$value)) > 0) {
@@ -2658,7 +2842,7 @@ server <- function(input, output, session) {
 
     # Create hover label
     labels <- sprintf(
-      "<strong>%s</strong><br/>Total<br/>%s: %s",
+      "<strong>%s</strong><br/>Total online<br/>%s: %s",
       jobMapData$areaName,
       metricLabel,
       format(round2(jobMapData$value, 0), big.mark = ",")
@@ -2725,11 +2909,11 @@ server <- function(input, output, session) {
       )
     }
 
-    if (length(selected_geogs()) > 0) {
+    if (!is_national() && length(selected_geogs()) > 0) {
       footer_text <- paste0(
         footer_text,
         "<br><br>Selected region(s): ",
-        paste(selected_geogs(), collapse = "; ")
+        paste(input$jobGeoChoice, collapse = "; ")
       )
     }
     HTML(footer_text)
@@ -2748,18 +2932,15 @@ server <- function(input, output, session) {
     )
   })
 
-  # Filter for selected geographies
-  selected_geogs <- reactive({
-    req(input$jobGeoChoice)
-
-    setdiff(input$jobGeoChoice, "England")
-  })
-
   # Commentary for chart
   output$jobTimeComment <- renderUI({
     req(jobAdsLineChart)
 
-    # Commentary for England and all occupations
+    geography_selection <- !is_national() && length(selected_geogs()) > 0
+
+    # ====================================================================
+    # 1. NATIONAL + ALL OCCUPATIONS
+    # ====================================================================
     if (input$jobOccupationGroup == "All occupations") {
       jobTextData <- jobAdsLineChart %>%
         filter(
@@ -2790,8 +2971,11 @@ server <- function(input, output, session) {
         input$jobMetric == "popRate" ~ "This chart shows the number of job adverts per 100 adults, presented as a 12-month rolling sum per quarter. Since mid-2024, the rate has remained fairly stable.",
         input$jobMetric == "jobRate" ~ "This chart shows the number of job adverts per 100 employees, presented as a 12-month rolling sum per quarter. Since mid-2024, the rate has remained fairly stable."
       )
-      # Commentary for multiple geographies and all occupations
-      if (length(selected_geogs()) >= 1) {
+
+      # ====================================================================
+      # 2. REGIONAL + ALL OCCUPATIONS
+      # ====================================================================
+      if (geography_selection) {
         comment <- case_when(
           input$jobMetric == "volume" ~ "This chart shows the trend in online job adverts for the selected region(s) over time, presented as a 3-month rolling average.",
           input$jobMetric == "growthRate" ~ "This chart shows the change in online job adverts since January 2022 for the selected region(s), presented as a 3-month rolling average.",
@@ -2800,10 +2984,13 @@ server <- function(input, output, session) {
         )
       }
       comment
+
+      # ====================================================================
+      # 3. NATIONAL + SELECTED OCCUPATIONS
+      # ====================================================================
     } else {
       req(input$jobOccupationChoice)
 
-      # Commentary for England and selected occupations
       comment <- case_when(
         input$jobMetric == "volume" ~ "This chart shows the trend in online job adverts for the selected occupation(s) over time, presented as a 3-month rolling average.",
         input$jobMetric == "growthRate" ~ "This chart shows the change in online job adverts since January 2022 for the selected occupation(s), presented as a 3-month rolling average.",
@@ -2811,8 +2998,10 @@ server <- function(input, output, session) {
         input$jobMetric == "jobRate" ~ "This chart shows the number of job adverts per 100 employees for the selected occupation(s), presented as a 12-month rolling sum per quarter."
       )
 
-      # Commentary for multiple geographies and selected occupations
-      if (length(selected_geogs()) >= 1) {
+      # ====================================================================
+      # 4. REGIONAL + SELECTED OCCUPATIONS
+      # ====================================================================
+      if (geography_selection) {
         comment <- case_when(
           input$jobMetric == "volume" ~ "This chart shows the trend in online job adverts for the selected occupation(s) and region(s) over time, presented as a 3-month rolling average.",
           input$jobMetric == "growthRate" ~ "This chart shows the change in online job adverts since January 2022 for the selected occupation(s) and region(s), presented as a 3-month rolling average.",
@@ -2826,27 +3015,94 @@ server <- function(input, output, session) {
 
   # Create a dataframe that updates based on the dropdown choice
   jobTimeData <- reactive({
+    if (!is_national()) {
+      req(length(selected_geogs()) > 0)
+    }
+
+    # ====================================================================
+    # 1. NATIONAL + ALL OCCUPATIONS
+    # ====================================================================
     if (input$jobOccupationGroup == "All occupations") {
-      jobAdsLineChart %>%
-        filter(
-          geogConcat %in% input$jobGeoChoice,
-          soc_4_digit_group == "All occupations",
-          metric == input$jobMetric
-        )
+      if (is_national()) {
+        jobAdsLineChart %>%
+          filter(
+            geogConcat == "England",
+            soc_4_digit_group == "All occupations",
+            metric == input$jobMetric
+          )
+
+        # ====================================================================
+        # 2. REGIONAL + ALL OCCUPATIONS
+        # ====================================================================
+      } else {
+        jobAdsLineChart %>%
+          filter(
+            geogConcat %in% selected_geogs(),
+            soc_4_digit_group == "All occupations",
+            metric == input$jobMetric
+          )
+      }
+
+      # ====================================================================
+      # 3. NATIONAL + SELECTED OCCUPATIONS
+      # ====================================================================
     } else {
       req(input$jobOccupationChoice)
 
-      jobAdsLineChart %>%
-        filter(
-          geogConcat %in% input$jobGeoChoice,
-          soc_4_digit_group %in% input$jobOccupationChoice,
-          metric == input$jobMetric
-        )
+      if (is_national()) {
+        jobAdsLineChart %>%
+          filter(
+            geogConcat == "England",
+            soc_4_digit_group %in% input$jobOccupationChoice,
+            metric == input$jobMetric
+          )
+
+        # ====================================================================
+        # 4. REGIONAL + SELECTED OCCUPATIONS
+        # ====================================================================
+      } else {
+        jobAdsLineChart %>%
+          filter(
+            geogConcat %in% selected_geogs(),
+            soc_4_digit_group %in% input$jobOccupationChoice,
+            metric == input$jobMetric
+          )
+      }
+    }
+  })
+
+  # Limit the number of lines in the chart to 4
+
+  # Count the number of lines
+  n_lines <- reactive({
+    jobTimeData() %>%
+      mutate(line_label = paste0(str_remove(soc_4_digit_group, " - \\d{4}$"), "; ", geogConcat)) %>%
+      distinct(line_label) %>%
+      nrow()
+  })
+
+  # Display a message if user selects > 4 lines
+  output$jobTimeUI <- renderUI({
+    if (n_lines() > 4) {
+      div(
+        style = "
+      height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+          ",
+        "Limit reached. Please select fewer regions or occupations."
+      )
+    } else {
+      plotlyOutput("jobTime")
     }
   })
 
   # Render line chart
   output$jobTime <- renderPlotly({
+    req(n_lines() <= 4)
+
     jobTimeData <- jobTimeData() %>%
       mutate(line_label = paste0(str_remove(soc_4_digit_group, " - \\d{4}$"), "; ", geogConcat))
 
@@ -2999,73 +3255,110 @@ server <- function(input, output, session) {
 
   # Commentary for ranking table
   output$jobRankComment <- renderUI({
-    req(jobAdsLineChart)
-
-    "Volume of online job adverts by occupation, presented as a 3-month rolling average."
+    case_when(
+      is_national() ~
+        "Volume of online job adverts by occupation, presented as a 3-month rolling average.",
+      TRUE ~
+        "Volume of online job adverts by occupation and region, presented as a 3-month rolling average."
+    )
   })
 
   # Create a dataframe that updates based on the dropdown choice
   jobRankData <- reactive({
-    if (input$jobOccupationGroup == "All occupations") {
-      return(jobAdsRanking %>%
-        mutate(selected_row = FALSE))
+    # National ranking
+    if (is_national()) {
+      ranking_geogs <- jobAdsRanking %>%
+        filter(Region == "England") %>%
+        mutate(selected_row = FALSE)
+
+      # All occupations
+      if (input$jobOccupationGroup == "All occupations") {
+        return(ranking_geogs)
+      }
     } else {
-      req(input$jobOccupationChoice)
+      # Regional ranking
+      req(length(selected_geogs()) > 0)
 
-      # Filter the ranking table for the chosen occupations and remove the SOC code to
-      # line up with the ranking table occupations list
-      selected_occupations <- input$jobOccupationChoice %>%
-        str_remove(" - \\d{4}$")
+      # Create summed ranking column for the chosen geographies
+      combined_ranking_geogs <- jobAdsRanking %>%
+        filter(Region %in% selected_geogs()) %>%
+        group_by(Occupation) %>%
+        summarise(`Total number of new job adverts` = sum(`Number of new job adverts`, na.rm = TRUE)) %>%
+        ungroup() %>%
+        arrange(desc(`Total number of new job adverts`)) %>%
+        mutate(Rank = row_number())
 
-      # For loop to filter the ranking table for the chosen occupations
-      ranking_table <- data.frame()
-      loop_iteration <- 1
+      # Create individual ranking column(s)
+      individual_ranking_geogs <- jobAdsRanking %>%
+        filter(Region %in% selected_geogs()) %>%
+        select(Occupation, Region, `Number of new job adverts`) %>%
+        pivot_wider(names_from = Region, values_from = `Number of new job adverts`)
 
-      for (occupation in selected_occupations) {
-        # Get the ranking value for the specified occupation
-        ranking_value <- jobAdsRanking %>%
-          filter(Occupation == occupation) %>%
-          pull(Rank)
+      # Combine columns
+      ranking_geogs <- combined_ranking_geogs %>%
+        left_join(individual_ranking_geogs, by = "Occupation") %>%
+        select(Rank, Occupation, `Total number of new job adverts`, everything())
 
-        # Filter the data for rows +/- 2 of ranking_value
-        filtered_data <- jobAdsRanking %>%
-          filter(between(Rank, ranking_value - 2, ranking_value + 2)) %>%
-          arrange(Rank)
+      # All occupations
+      if (input$jobOccupationGroup == "All occupations") {
+        return(ranking_geogs %>%
+          mutate(selected_row = FALSE))
+      }
+    }
 
-        # Append results
-        ranking_table <- bind_rows(ranking_table, filtered_data)
+    # Selected occupations
+    req(input$jobOccupationChoice)
 
-        # Add blank rows between ranked occupation groups (but not at the end)
-        if (loop_iteration < length(selected_occupations)) {
-          ranking_table <- ranking_table %>%
-            add_row() %>%
-            add_row() %>%
-            add_row()
-        }
+    # Filter the ranking table for the chosen occupations and remove the SOC code to
+    # line up with the ranking table occupations list
+    selected_occupations <- input$jobOccupationChoice %>%
+      str_remove(" - \\d{4}$")
 
-        loop_iteration <- loop_iteration + 1
+    # For loop to filter the ranking table for the chosen occupations
+    ranking_table <- data.frame()
+    loop_iteration <- 1
+
+    for (occupation in selected_occupations) {
+      # Get the ranking value for the specified occupation
+      ranking_value <- ranking_geogs %>%
+        filter(Occupation == occupation) %>%
+        pull(Rank)
+
+      # Filter the data for rows +/- 2 of ranking_value
+      filtered_data <- ranking_geogs %>%
+        filter(between(Rank, ranking_value - 2, ranking_value + 2)) %>%
+        arrange(Rank)
+
+      # Append results
+      ranking_table <- bind_rows(ranking_table, filtered_data)
+
+      # Add blank rows between ranked occupation groups (but not at the end)
+      if (loop_iteration < length(selected_occupations)) {
+        ranking_table <- ranking_table %>%
+          add_row() %>%
+          add_row() %>%
+          add_row()
       }
 
-      # Create a selected occupations flag so that we can set these to bold
-      ranking_table <- ranking_table %>%
-        mutate(selected_row = Occupation %in% selected_occupations)
-
-      ranking_table
+      loop_iteration <- loop_iteration + 1
     }
+
+    # Create a selected occupations flag so that we can set these to bold
+    ranking_table %>%
+      mutate(selected_row = Occupation %in% selected_occupations)
   })
 
   output$jobRankTable <- DT::renderDataTable({
     DT::datatable(
       jobRankData(),
+      extensions = c("FixedColumns"),
       options = list(
         scrollY = "300px", # Create a scrolling table
+        scrollX = TRUE,
+        fixedColumns = list(leftColumns = 2), # Fix the first two columns
         paging = FALSE,
         info = FALSE,
         columnDefs = list(
-          list(
-            targets = c("Number of new job adverts"), # Right align the values column
-            className = "dt-right"
-          ),
           # Hide the selected occupations flag
           list(
             targets = which(names(jobRankData()) == "selected_row") - 1,
@@ -3075,6 +3368,12 @@ server <- function(input, output, session) {
       ),
       rownames = FALSE
     ) %>%
+      # Format numbers
+      DT::formatRound(
+        columns = names(jobRankData())[sapply(jobRankData(), is.numeric)],
+        digits = 0,
+        mark = ","
+      ) %>%
       # Set the selected occupations to bold
       DT::formatStyle(
         "selected_row",
@@ -3128,11 +3427,15 @@ server <- function(input, output, session) {
     if (input$jobOccupationGroup != "All occupations") {
       return(NULL)
     }
+    # Additional text for multiple geographies
+    geog_text <- if (!is_national() && length(selected_geogs()) > 1) {
+      " The number of new job adverts have been totalled and the percentage change recalculated for the selected regions."
+    } else {}
 
     if (input$jobTableSwitch == "Emerging Demand") {
-      "Occupations in emerging demand are those which have been in the top 15% in the latest 3-months, but not so in the 9-months prior to that."
+      paste0("Occupations in emerging demand are those which have been in the top 15% in the latest 3-months, but not so in the 9-months prior to that.", geog_text)
     } else {
-      "Occupations in constant demand are those which have been in the top 5% for every month over the past year."
+      paste0("Occupations in constant demand are those which have been in the top 5% for every month over the past year.", geog_text)
     }
   })
 
@@ -3152,10 +3455,43 @@ server <- function(input, output, session) {
     }
   })
 
+  # Create emerging dataframe that updates based on the dropdown choice
+  emerging_data <- reactive({
+    # National demand
+    if (is_national()) {
+      jobAdsDemand %>%
+        filter(
+          Region == "England",
+          metric == "emerging"
+        ) %>%
+        select(-c(Region, metric))
+    } else {
+      # Regional demand
+      req(length(selected_geogs()) > 0)
+
+      jobAdsDemandGeog %>%
+        filter(
+          Region %in% selected_geogs(),
+          metric == "emerging"
+        ) %>%
+        group_by(Occupation) %>%
+        summarise(
+          `Number of new job adverts` = sum(`Number of new job adverts`, na.rm = TRUE),
+          n_jobs_previous = sum(n_jobs_previous, na.rm = TRUE),
+          n_jobs_latest = sum(n_jobs_latest, na.rm = TRUE)
+        ) %>%
+        ungroup() %>%
+        # Percentage change will be the latest month compared to the same month in the previous year
+        mutate(`Percentage change` = (n_jobs_latest - n_jobs_previous) / n_jobs_previous) %>%
+        select(-n_jobs_previous, -n_jobs_latest) %>%
+        arrange(desc(`Number of new job adverts`))
+    }
+  })
+
   # Render emerging demand table
   output$emergingTable <- DT::renderDataTable({
     DT::datatable(
-      jobAdsEmerging %>%
+      emerging_data() %>%
         dplyr::mutate(
           # Format the percentage change column
           `Percentage change` = scales::percent(round2(`Percentage change`, 3), accuracy = 0.1, trim = FALSE)
@@ -3173,13 +3509,52 @@ server <- function(input, output, session) {
         )
       ),
       rownames = FALSE
-    )
+    ) %>%
+      # Format numbers
+      DT::formatRound(
+        columns = names(emerging_data())[2],
+        digits = 0,
+        mark = ","
+      )
+  })
+
+  # Create constant dataframe that updates based on the dropdown choice
+  constant_data <- reactive({
+    # National demand
+    if (is_national()) {
+      jobAdsDemand %>%
+        filter(
+          Region == "England",
+          metric == "constant"
+        ) %>%
+        select(-c(Region, metric))
+    } else {
+      # Regional demand
+      req(length(selected_geogs()) > 0)
+
+      jobAdsDemandGeog %>%
+        filter(
+          Region %in% selected_geogs(),
+          metric == "constant"
+        ) %>%
+        group_by(Occupation) %>%
+        summarise(
+          `Number of new job adverts` = sum(`Number of new job adverts`, na.rm = TRUE),
+          n_jobs_previous = sum(n_jobs_previous, na.rm = TRUE),
+          n_jobs_latest = sum(n_jobs_latest, na.rm = TRUE)
+        ) %>%
+        ungroup() %>%
+        # Percentage change will be the latest month compared to the same month in the previous year
+        mutate(`Percentage change` = (n_jobs_latest - n_jobs_previous) / n_jobs_previous) %>%
+        select(-n_jobs_previous, -n_jobs_latest) %>%
+        arrange(desc(`Number of new job adverts`))
+    }
   })
 
   # Render constant demand table
   output$constantTable <- DT::renderDataTable({
     DT::datatable(
-      jobAdsConstant |>
+      constant_data() %>%
         dplyr::mutate(
           # Format the percentage change column
           `Percentage change` = scales::percent(round2(`Percentage change`, 3), accuracy = 0.1, trim = FALSE)
@@ -3197,7 +3572,13 @@ server <- function(input, output, session) {
         )
       ),
       rownames = FALSE
-    )
+    ) %>%
+      # Format numbers
+      DT::formatRound(
+        columns = names(constant_data())[2],
+        digits = 0,
+        mark = ","
+      )
   })
 
   # Create data date footnote
@@ -3220,7 +3601,7 @@ server <- function(input, output, session) {
     end_date_prev <- end_date %m-% years(1)
     start_date_prev <- start_date %m-% years(1)
 
-    paste0(
+    footer_text <- paste0(
       "Average monthly new job adverts between ",
       format(start_date, "%B %Y"),
       " and ",
@@ -3231,6 +3612,16 @@ server <- function(input, output, session) {
       format(end_date_prev, "%B %Y"),
       "."
     )
+
+    if (!is_national() && length(selected_geogs()) > 0) {
+      footer_text <- paste0(
+        footer_text,
+        "<br><br>Selected region(s): ",
+        paste(input$jobGeoChoice, collapse = "; ")
+      )
+    }
+
+    HTML(footer_text)
   })
 
   ### 5.10.8 Job Ads Data Notes ----

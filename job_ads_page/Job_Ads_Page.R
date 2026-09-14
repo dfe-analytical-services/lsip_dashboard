@@ -347,11 +347,13 @@ new_ads_SOC_constant_output <- new_ads_SOC_roll %>%
   # Percentage change will be the latest month compared to the same month in the previous year
   mutate(Region = "England",
          `Percentage change` = (n_jobs_latest - n_jobs_previous) / n_jobs_previous,
-         `Number of new job adverts` = format(round2(n_jobs_latest, 0), big.mark = ",")) %>%
+         `Number of new job adverts` = round2(n_jobs_latest, 0),
+         metric = "constant") %>%
   select(Region,
          Occupation = soc_4_digit_label,
          `Number of new job adverts`,
-         `Percentage change`)
+         `Percentage change`,
+         metric)
 
 # Constant high demand of job ads by region and SOC
 
@@ -377,7 +379,7 @@ new_ads_region_SOC_constant <- new_ads_region_SOC_constant %>%
   filter(top_10_all) %>%
   select(-top_10_all)
 
-# Calculate percentage change for these occupations
+# Create columns needed to calculate percentage change (calculation will be done within server file)
 new_ads_region_SOC_constant_output <- new_ads_region_SOC_roll %>%
   filter(timePeriod %in% c(latest_date, latest_date %m-% years(1))) %>%
   mutate(period = if_else(timePeriod == latest_date, 
@@ -388,13 +390,14 @@ new_ads_region_SOC_constant_output <- new_ads_region_SOC_roll %>%
   # Join on the constant data
   right_join(new_ads_region_SOC_constant, by = c("region", "soc_4_digit_code")) %>%
   arrange(region, desc(n_jobs_latest)) %>%
-  # Percentage change will be the latest month compared to the same month in the previous year
-  mutate(`Percentage change` = (n_jobs_latest - n_jobs_previous) / n_jobs_previous,
-         `Number of new job adverts` = format(round2(n_jobs_latest, 0), big.mark = ",")) %>%
+  mutate(`Number of new job adverts` = round2(n_jobs_latest, 0),
+         metric = "constant") %>%
   select(Region = region,
          Occupation = soc_4_digit_label,
          `Number of new job adverts`,
-         `Percentage change`)
+         n_jobs_previous,
+         n_jobs_latest,
+         metric)
 
 # Emerging high demand ===============================================
 
@@ -435,11 +438,13 @@ new_ads_SOC_emerging_output <- new_ads_SOC_roll %>%
   # Percentage change will be the latest month compared to the same month in the previous year
   mutate(Region = "England",
          `Percentage change` = (n_jobs_latest - n_jobs_previous) / n_jobs_previous,
-         `Number of new job adverts` = format(round2(n_jobs_latest, 0), big.mark = ",")) %>%
+         `Number of new job adverts` = round2(n_jobs_latest, 0),
+         metric = "emerging") %>%
   select(Region,
          Occupation = soc_4_digit_label,
          `Number of new job adverts`,
-         `Percentage change`)
+         `Percentage change`,
+         metric)
 
 # Emerging high demand of job ads by region and SOC
 
@@ -456,13 +461,15 @@ new_ads_region_SOC_9months <- new_ads_region_SOC_roll %>%
   group_by(region, soc_4_digit_code, soc_4_digit_label) %>% 
   summarise(n_jobs_sum = sum(n_jobs, na.rm = TRUE)) %>%
   ungroup() %>%
-  filter(n_jobs_sum >= quantile(n_jobs_sum, (1-emerging_cutoff)))
+  group_by(region) %>%
+  filter(n_jobs_sum >= quantile(n_jobs_sum, (1-emerging_cutoff))) %>%
+  ungroup()
 
 # Pull out the occupations that are in the top 15% in the latest 3-months but not in the previous 9-months
 new_ads_region_SOC_emerging <- new_ads_region_SOC_3months %>%
   anti_join(new_ads_region_SOC_9months, by = c("region", "soc_4_digit_code"))
 
-# Calculate percentage change for these occupations
+# Create columns needed to calculate percentage change (calculation will be done within server file)
 new_ads_region_SOC_emerging_output <- new_ads_region_SOC_roll %>%
   filter(timePeriod %in% c(latest_date, latest_date %m-% years(1))) %>%
   mutate(period = if_else(timePeriod == latest_date, 
@@ -472,13 +479,14 @@ new_ads_region_SOC_emerging_output <- new_ads_region_SOC_roll %>%
   pivot_wider(names_from = period, values_from = n_jobs_3m_avg) %>%
   # Join on the emerging data
   right_join(new_ads_region_SOC_emerging, by = c("region", "soc_4_digit_code")) %>%
-  # Percentage change will be the latest month compared to the same month in the previous year
-  mutate(`Percentage change` = (n_jobs_latest - n_jobs_previous) / n_jobs_previous,
-         `Number of new job adverts` = format(round2(n_jobs_latest, 0), big.mark = ",")) %>%
+  mutate(`Number of new job adverts` = round2(n_jobs_latest, 0),
+         metric = "emerging") %>%
   select(Region = region,
          Occupation = soc_4_digit_label,
          `Number of new job adverts`,
-         `Percentage change`)
+         n_jobs_previous,
+         n_jobs_latest,
+         metric)
 
 # Rank of occupations ================================================
 
@@ -493,7 +501,7 @@ new_ads_SOC_ranking <- new_ads_SOC_roll %>%
 # Final formatted table for the dashboard page
 new_ads_SOC_ranking <- new_ads_SOC_ranking %>%
   select(rank, soc_4_digit_label, n_jobs_3m_avg) %>%
-  mutate(n_jobs_3m_avg = format(round2(n_jobs_3m_avg, 0), big.mark = ","),
+  mutate(n_jobs_3m_avg = round2(n_jobs_3m_avg, 0),
          Region = "England") %>%
   select(Rank = rank,
          Region,
@@ -513,7 +521,7 @@ new_ads_region_SOC_ranking <- new_ads_region_SOC_roll %>%
 # Final formatted table for the dashboard page
 new_ads_region_SOC_ranking <- new_ads_region_SOC_ranking %>%
   select(rank, region,soc_4_digit_label, n_jobs_3m_avg) %>%
-  mutate(n_jobs_3m_avg = format(round2(n_jobs_3m_avg, 0), big.mark = ",")) %>%
+  mutate(n_jobs_3m_avg = round2(n_jobs_3m_avg, 0)) %>%
   select(Rank = rank,
          Region = region,
          Occupation = soc_4_digit_label,
@@ -668,9 +676,9 @@ output_line_chart <- bind_rows(output_national, output_occupations, output_regio
 
 output_map <- bind_rows(new_ads_region_vol, new_ads_region_SOC_vol)
 
-output_constant <- bind_rows(new_ads_SOC_constant_output, new_ads_region_SOC_constant_output)
+output_demand <- bind_rows(new_ads_SOC_constant_output, new_ads_SOC_emerging_output)
 
-output_emerging <- bind_rows(new_ads_SOC_emerging_output, new_ads_region_SOC_emerging_output)
+output_demand_region <- bind_rows(new_ads_region_SOC_constant_output, new_ads_region_SOC_emerging_output)
 
 output_ranking <- bind_rows(new_ads_SOC_ranking, new_ads_region_SOC_ranking)
 
@@ -682,8 +690,8 @@ saveRDS(output_line_chart, "./job_ads_page/job_ads_page_line_chart.rds")
 
 saveRDS(output_map, "./job_ads_page/job_ads_page_map.rds")
 
-saveRDS(output_constant, "./job_ads_page/job_ads_page_constant.rds")
+saveRDS(output_demand, "./job_ads_page/job_ads_page_demand.rds")
 
-saveRDS(output_emerging, "./job_ads_page/job_ads_page_emerging.rds")
+saveRDS(output_demand_region, "./job_ads_page/job_ads_page_demand_geog.rds")
 
 saveRDS(output_ranking, "./job_ads_page/job_ads_page_ranking.rds")

@@ -139,7 +139,7 @@ jobAdTab <- function() {
     fluidRow(
       column(
         12,
-        h4("Key statistics"),
+        uiOutput("jobDynamicHeading"),
         p(uiOutput("jobDynamicText"))
       )
     ),
@@ -160,7 +160,7 @@ jobAdTab <- function() {
         6,
         h3(uiOutput("jobTimeHeading")),
         p(uiOutput("jobTimeComment")),
-        withSpinner(plotlyOutput("jobTime")),
+        withSpinner(uiOutput("jobTimeUI")),
         p(uiOutput("jobTimeFooter"))
       )
     ),
