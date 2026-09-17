@@ -7,7 +7,6 @@ server <- function(input, output, session) {
     anim = TRUE,
     animType = "fade"
   )
-  show("app-content")
 
   # We use bookmarking to store input choices in the url.
   # We exclude these inputs:
