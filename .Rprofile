@@ -10,9 +10,12 @@
 
 cat("Sourcing .Rprofile.", fill = TRUE)
 
-source("renv/activate.R")
-
-renv::status()
+if (system.file(package = "renv") != "") {
+  source("renv/activate.R")
+  renv::status()
+} else {
+  warning("renv package is not installed, please run renv::restore() to set up the necessary package environment")
+}
 
 if (system.file(package = "dfeshiny") != "") {
   library(dfeshiny)
