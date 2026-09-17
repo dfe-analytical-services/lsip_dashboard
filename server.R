@@ -2431,6 +2431,9 @@ server <- function(input, output, session) {
         )
 
       dynamic_text <- paste0(
+        "<strong>",
+        jobTextData$geogConcat,
+        "</strong>: ",
         "<p>",
         "Between ",
         format(jobTextData$date_volume %m-% months(2), "%B %Y"),
@@ -2923,13 +2926,20 @@ server <- function(input, output, session) {
 
   # Headings for chart
   output$jobTimeHeading <- renderUI({
-    case_when(
+    geography_selection <- !is_national() && length(selected_geogs()) > 0
+
+    heading <- case_when(
       input$jobMetric == "volume" ~ "How are online job adverts changing over time?",
       input$jobMetric == "growthRate" ~ "How have online job adverts changed since January 2022?",
       input$jobMetric == "popRate" & input$jobOccupationGroup == "All occupations" ~ "How has the rate of online job adverts per 100 adults changed over time?",
       input$jobMetric == "popRate" ~ "How has the rate of online job adverts per 100,000 adults changed over time?",
       input$jobMetric == "jobRate" ~ "How has the rate of online job adverts per 100 employees changed over time?"
     )
+
+    if (geography_selection) {
+      heading <- sub("\\?$", " in the selected regions?", heading)
+    }
+    heading
   })
 
   # Commentary for chart
@@ -3245,12 +3255,18 @@ server <- function(input, output, session) {
 
   # Headings for ranking table
   output$jobRankHeading <- renderUI({
-    # Hide if 'All occupations' is selected
-    if (input$jobOccupationGroup == "All occupations") {
-      "Which occupations have the highest volumes of online job adverts?"
-    } else {
-      "How do the selected occupations rank by volume relative to other occupations?"
-    }
+    geography_selection <- !is_national() && length(selected_geogs()) > 0
+
+    case_when(
+      input$jobOccupationGroup == "All occupations" & geography_selection ~
+        "Which occupations have the highest volumes of online job adverts in the selected regions?",
+      input$jobOccupationGroup == "All occupations" ~
+        "Which occupations have the highest volumes of online job adverts?",
+      geography_selection ~
+        "How do the selected occupations rank by volume relative to other occupations in the selected regions?",
+      TRUE ~
+        "How do the selected occupations rank by volume relative to other occupations?"
+    )
   })
 
   # Commentary for ranking table
@@ -3415,11 +3431,18 @@ server <- function(input, output, session) {
       return(NULL)
     }
 
-    if (input$jobTableSwitch == "Emerging Demand") {
+    geography_selection <- !is_national() && length(selected_geogs()) > 0
+
+    heading <- if (input$jobTableSwitch == "Emerging Demand") {
       "Which occupations are seeing emerging demand?"
     } else {
       "Which occupations are constantly in demand?"
     }
+
+    if (geography_selection) {
+      heading <- sub("\\?$", " in the selected regions?", heading)
+    }
+    heading
   })
 
   # Commentary for demand table
@@ -3429,7 +3452,7 @@ server <- function(input, output, session) {
     }
     # Additional text for multiple geographies
     geog_text <- if (!is_national() && length(selected_geogs()) > 1) {
-      " The number of new job adverts have been totalled and the percentage change recalculated for the selected regions."
+      " The number of new job adverts and percentage change reflect totals across selected regions."
     } else {}
 
     if (input$jobTableSwitch == "Emerging Demand") {

@@ -41,7 +41,8 @@ APS_employment <- read.csv("https://www.nomisweb.co.uk/api/v01/dataset/NM_17_1.d
 # occupation (SOC2020) = All 4-digit SOC codes
 # NOTE: NOMIS limits public API downloads to 25,000 rows. The below link has been created using a NOMIS account to 
 # bypass this limit and so cannot be changed.
-APS_employment_soc <- read.csv("https://www.nomisweb.co.uk/api/v01/dataset/NM_218_1.data.csv?geography=2092957699,2013265926,2013265924,2013265927,2013265921,2013265922,2013265928,2013265929,2013265925,2013265923&jtype=0&ftpt=0&etype=0&c_sex=0&soc2020_full=0...412&measure=1&measures=20100,20701&signature=NPK-60c752aed1cf7912d2f205:0xbf75e66477c4ba11e1a67d27dd94c9d2e2052942")
+APS_employment_soc_url <- Sys.getenv("NOMIS_APS_URL")
+APS_employment_soc <- read.csv(APS_employment_soc_url)
 
 # If there are issues with the above link, run this script:
 # source("./job_ads_page/import_aps_employment_data.R")
@@ -80,7 +81,6 @@ new_ads_SOC_clean <- new_ads_SOC %>%
 # Clean APS economic activity data
 APS_econ_activity_clean <- APS_econ_activity %>%
   janitor::clean_names() %>%
-  select(date_name, geography_name, geography_code, measures_name, obs_value) %>%
   filter(measures_name == "Value") %>%
   select(chartPeriod = date_name,
          region = geography_name,
@@ -92,7 +92,6 @@ APS_econ_activity_clean <- APS_econ_activity %>%
 # Clean APS employment data
 APS_employment_clean <- APS_employment %>%
   janitor::clean_names() %>%
-  select(date_name, geography_name, measures_name, obs_value) %>%
   filter(measures_name == "Value") %>%
   select(chartPeriod = date_name,
          region = geography_name,
@@ -108,7 +107,6 @@ APS_employment_soc_clean <- APS_employment_soc %>%
            into = c("soc_4_digit_code", "soc_4_digit_label"),
            sep = " : ",
            remove = TRUE) %>%
-  select(date_name, geography_name, soc_4_digit_code, soc_4_digit_label, measures_name, obs_value) %>%
   filter(measures_name == "Value") %>%
   select(chartPeriod = date_name,
          region = geography_name,
@@ -310,15 +308,16 @@ new_ads_SOC_constant <- new_ads_SOC_roll %>%
 # Find the 95th percentile of the total number of job ads for each month
 new_ads_percentile <- new_ads_SOC_constant %>%
   group_by(timePeriod) %>%
-  summarise(percentile = quantile(n_jobs_3m_avg, probs = (1-constant_cutoff), na.rm = TRUE)) %>%
-  ungroup()
+  summarise(percentile = quantile(n_jobs, probs = (1-constant_cutoff), na.rm = TRUE)) %>%
+  ungroup() %>%
+  filter(!is.na(percentile))
 
 # Flag whether each value of n_job is in the top 5% per month
 new_ads_SOC_constant <- new_ads_SOC_constant %>%
   left_join(new_ads_percentile, by = "timePeriod") %>%
   mutate(top_10 = case_when(
-    n_jobs_3m_avg >= percentile ~ TRUE,
-    TRUE ~ FALSE)) %>%
+    is.na(n_jobs) ~ TRUE,
+    TRUE ~ n_jobs >= percentile)) %>%
   # Pull out the occupations that have been in the top 5% for every month
   group_by(soc_4_digit_code, soc_4_digit_label) %>%
   summarise(top_10_all = ifelse(sum(top_10) == n(), TRUE, FALSE)) %>%
@@ -356,15 +355,16 @@ new_ads_region_SOC_constant <- new_ads_region_SOC_roll %>%
 # Find the 95th percentile of the total number of job ads for each month
 new_ads_region_percentile <- new_ads_region_SOC_constant %>%
   group_by(region, timePeriod) %>%
-  summarise(percentile = quantile(n_jobs_3m_avg, probs = (1-constant_cutoff), na.rm = TRUE)) %>%
-  ungroup()
+  summarise(percentile = quantile(n_jobs, probs = (1-constant_cutoff), na.rm = TRUE)) %>%
+  ungroup() %>%
+  filter(!is.na(percentile))
 
 # Flag whether each value of n_job is in the top 5% per month
 new_ads_region_SOC_constant <- new_ads_region_SOC_constant %>%
   left_join(new_ads_region_percentile, by = c("region", "timePeriod")) %>%
   mutate(top_10 = case_when(
-    n_jobs_3m_avg >= percentile ~ TRUE,
-    TRUE ~ FALSE)) %>%
+    is.na(n_jobs) ~ TRUE,
+    TRUE ~ n_jobs >= percentile)) %>%
   # Pull out the occupations that have been in the top 5% for every month
   group_by(region, soc_4_digit_code, soc_4_digit_label) %>%
   summarise(top_10_all = ifelse(sum(top_10) == n(), TRUE, FALSE)) %>%
@@ -487,7 +487,6 @@ new_ads_SOC_ranking <- new_ads_SOC_roll %>%
   filter(timePeriod == latest_date) %>%
   # Create ranking column
   mutate(rank = dense_rank(desc(n_jobs_3m_avg))) %>%
-  select(-c(timePeriod, n_jobs)) %>%
   arrange(rank) %>%
 # Final formatted table for the dashboard page
   mutate(n_jobs_3m_avg = round2(n_jobs_3m_avg, 0),
@@ -504,7 +503,6 @@ new_ads_region_SOC_ranking <- new_ads_region_SOC_roll %>%
   group_by(region) %>%
   mutate(rank = dense_rank(desc(n_jobs_3m_avg))) %>%
   ungroup() %>%
-  select(-c(timePeriod, n_jobs)) %>%
   arrange(region, rank) %>%
 # Final formatted table for the dashboard page
   mutate(n_jobs_3m_avg = round2(n_jobs_3m_avg, 0)) %>%
