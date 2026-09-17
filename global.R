@@ -11,7 +11,6 @@ shhh(library(shiny))
 shhh(library(shinyjs))
 shhh(library(tools))
 shhh(library(testthat))
-shhh(library(shinytest2))
 shhh(library(diffviewer))
 shhh(library(shinyWidgets))
 shhh(library(shinyGovstyle))
@@ -34,6 +33,7 @@ shhh(library(bslib)) # Value boxes
 
 if (FALSE) {
   shhh(library(rsconnect))
+  shhh(library(shinytest2))
 }
 
 # This line enables bookmarking such that input choices are shown in the url.
