@@ -68,6 +68,9 @@ source("importData/combineData.R", echo = TRUE)
 source("job_ads_page/Job_Ads_Page.R", echo = TRUE)
 
 # 8 LSIP urls
+## Note that while LSIP URLs are brought in via an webpage, the names of and links to corresponding CAs are hard-coded
+## , and future local government reorganisation may require this to be updated (or a complex use of existing lookup
+## tables to automate could be explored)
 source("importData/importLsipUrls.R", echo = TRUE)
 
 # Run tests to assess changes
