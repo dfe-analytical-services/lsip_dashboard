@@ -5831,12 +5831,12 @@
         "Package": "terra",
         "Type": "Package",
         "Title": "Spatial Data Analysis",
-        "Version": "1.9-50",
-        "Date": "2026-09-08",
+        "Version": "1.9-46",
+        "Date": "2026-08-21",
         "Depends": "R (>= 3.5.0), methods",
         "Suggests": "parallel, tinytest, ncdf4, sf (>= 0.9-8), igraph, deldir,\nXML, leaflet (>= 2.2.1), htmlwidgets, future, future.apply",
         "LinkingTo": "Rcpp",
-        "Imports": "Rcpp (>= 1.0-10), stats",
+        "Imports": "Rcpp (>= 1.0-10)",
         "SystemRequirements": "C++17, GDAL (>= 2.2.3), GEOS (>= 3.4.0), PROJ (>=\n4.9.3), TBB, sqlite3",
         "Encoding": "UTF-8",
         "Language": "en-US",
@@ -5848,11 +5848,11 @@
         "LazyLoad": "yes",
         "Authors@R": "c(\n\tperson(\"Robert J.\", \"Hijmans\", role=c(\"cre\", \"aut\"),  \n\t\t\temail=\"r.hijmans@gmail.com\", comment=c(ORCID=\"0000-0001-5872-2872\")),\t\t\t\n    person(\"Andrew\", \"Brown\", role=\"aut\", comment=c(ORCID=\"0000-0002-4565-533X\")),\n    person(c(\"A.\", \"Márcia\"), \"Barbosa\", role=\"aut\", comment=c(ORCID=\"0000-0001-8972-7713\")),\n    person(\"Emanuele\", \"Cordano\", role=\"aut\",comment=c(ORCID=\"0000-0002-3508-5898\")),\n    person(\"Krzysztof\", \"Dyba\", role=\"aut\", comment=c(ORCID=\"0000-0002-8614-3816\")),\n    person(\"Roger\", \"Bivand\", role=\"ctb\", comment=c(ORCID=\"0000-0003-2392-6140\")),\n    person(\"Michael\", \"Chirico\", role=\"ctb\", comment=c(ORCID=\"0000-0003-0787-087X\")),\n    person(\"Edzer\", \"Pebesma\", role=\"ctb\", comment=c(ORCID=\"0000-0001-8049-7069\")),\n    person(\"Barry\", \"Rowlingson\", role=\"ctb\", comment=c(ORCID=\"0000-0002-8586-6625\")),\n    person(\"Michael D.\", \"Sumner\", role=\"ctb\", comment=c(ORCID=\"0000-0002-2471-7511\")))",
         "NeedsCompilation": "yes",
-        "Packaged": "2026-09-08 09:32:19 UTC; rhijm",
+        "Packaged": "2026-08-21 08:01:12 UTC; rhijm",
         "Author": "Robert J. Hijmans [cre, aut] (ORCID:\n    <https://orcid.org/0000-0001-5872-2872>),\n  Andrew Brown [aut] (ORCID: <https://orcid.org/0000-0002-4565-533X>),\n  A. Márcia Barbosa [aut] (ORCID:\n    <https://orcid.org/0000-0001-8972-7713>),\n  Emanuele Cordano [aut] (ORCID: <https://orcid.org/0000-0002-3508-5898>),\n  Krzysztof Dyba [aut] (ORCID: <https://orcid.org/0000-0002-8614-3816>),\n  Roger Bivand [ctb] (ORCID: <https://orcid.org/0000-0003-2392-6140>),\n  Michael Chirico [ctb] (ORCID: <https://orcid.org/0000-0003-0787-087X>),\n  Edzer Pebesma [ctb] (ORCID: <https://orcid.org/0000-0001-8049-7069>),\n  Barry Rowlingson [ctb] (ORCID: <https://orcid.org/0000-0002-8586-6625>),\n  Michael D. Sumner [ctb] (ORCID:\n    <https://orcid.org/0000-0002-2471-7511>)",
         "Repository": "CRAN",
-        "Date/Publication": "2026-09-08 15:50:02 UTC",
-        "Built": "R 4.6.1; x86_64-w64-mingw32; 2026-09-08 23:50:31 UTC; windows",
+        "Date/Publication": "2026-08-22 16:30:02 UTC",
+        "Built": "R 4.6.1; x86_64-w64-mingw32; 2026-09-02 01:28:35 UTC; windows",
         "Archs": "x64",
         "RemoteType": "standard",
         "RemoteRef": "terra",
@@ -5860,7 +5860,7 @@
         "RemoteRepos": "https://cloud.r-project.org",
         "RemoteReposName": "CRAN",
         "RemotePkgPlatform": "x86_64-w64-mingw32",
-        "RemoteSha": "1.9-50"
+        "RemoteSha": "1.9-46"
       }
     },
     "testthat": {
@@ -6840,7 +6840,7 @@
       "checksum": "38dbd188c2dff12082b4485584747c6d"
     },
     ".Rprofile": {
-      "checksum": "f1992c88384ff30ca345fe398603c568"
+      "checksum": "150a4e828ca129bf5d5a6dd282d8714e"
     },
     "checkUpdateChanges.R": {
       "checksum": "96dd09cdce02ee34ead30edfd418907e"
@@ -7272,10 +7272,10 @@
       "checksum": "5fefb24720e0df8d944e9564d0a4f320"
     },
     "renv.lock": {
-      "checksum": "5743650be1ff7b71dcb9ae9d8ba98490"
+      "checksum": "732ba2c69ae48b04c75adf33a82d1bdb"
     },
     "server.R": {
-      "checksum": "2bf644a745e95452b9f27d1c4c48d951"
+      "checksum": "728b0aa4fbb8d16de1fd4685839dae95"
     },
     "shiny_bookmarks/001f5f0134ed9305/input.rds": {
       "checksum": "e446b40ee9ac49612d30bbdc653a6e29"
