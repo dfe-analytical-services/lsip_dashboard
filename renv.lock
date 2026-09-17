@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.6.1",
+    "Version": "4.5.3",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -25,8 +25,7 @@
       "NeedsCompilation": "no",
       "Author": "Dirk Eddelbuettel [aut, cre] (<https://orcid.org/0000-0001-6419-907X>), Christopher M. Kohlhoff [aut] (Author of Asio)",
       "Maintainer": "Dirk Eddelbuettel <edd@debian.org>",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "Encoding": "UTF-8"
+      "Repository": "CRAN"
     },
     "DBI": {
       "Package": "DBI",
@@ -78,7 +77,7 @@
       "NeedsCompilation": "no",
       "Author": "R Special Interest Group on Databases (R-SIG-DB) [aut], Hadley Wickham [aut], Kirill Müller [aut, cre] (ORCID: <https://orcid.org/0000-0002-1416-3412>), R Consortium [fnd]",
       "Maintainer": "Kirill Müller <kirill@cynkra.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "DT": {
       "Package": "DT",
@@ -315,7 +314,7 @@
       "NeedsCompilation": "no",
       "Author": "Winston Chang [aut, cre], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Winston Chang <winston@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "RColorBrewer": {
       "Package": "RColorBrewer",
@@ -332,8 +331,7 @@
       "Description": "Provides color schemes for maps (and other graphics) designed by Cynthia Brewer as described at http://colorbrewer2.org.",
       "License": "Apache License 2.0",
       "NeedsCompilation": "no",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "Encoding": "UTF-8"
+      "Repository": "CRAN"
     },
     "Rcpp": {
       "Package": "Rcpp",
@@ -365,7 +363,7 @@
       "NeedsCompilation": "yes",
       "Author": "Dirk Eddelbuettel [aut, cre] (ORCID: <https://orcid.org/0000-0001-6419-907X>), Romain Francois [aut] (ORCID: <https://orcid.org/0000-0002-2444-4226>), JJ Allaire [aut] (ORCID: <https://orcid.org/0000-0003-0174-9868>), Kevin Ushey [aut] (ORCID: <https://orcid.org/0000-0003-2880-7407>), Qiang Kou [aut] (ORCID: <https://orcid.org/0000-0001-6786-5453>), Nathan Russell [aut], Iñaki Ucar [aut] (ORCID: <https://orcid.org/0000-0001-6403-5550>), Doug Bates [aut] (ORCID: <https://orcid.org/0000-0001-8316-9503>), John Chambers [aut]",
       "Maintainer": "Dirk Eddelbuettel <edd@debian.org>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "RcppTOML": {
       "Package": "RcppTOML",
@@ -435,7 +433,7 @@
       "NeedsCompilation": "yes",
       "Author": "Object-Oriented Programming Working Group [cph], Davis Vaughan [aut], Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>), Tomasz Kalinowski [aut], Will Landau [aut], Michael Lawrence [aut], Martin Maechler [aut] (ORCID: <https://orcid.org/0000-0002-8685-9910>), Luke Tierney [aut], Hadley Wickham [aut, cre] (ORCID: <https://orcid.org/0000-0003-4757-117X>)",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "V8": {
       "Package": "V8",
@@ -471,7 +469,7 @@
       "Biarch": "true",
       "Author": "Jeroen Ooms [aut, cre] (ORCID: <https://orcid.org/0000-0002-4035-0289>), George Stagg [ctb] (ORCID: <https://orcid.org/0009-0006-3173-9846>), Jan Marvin Garbuszus [ctb]",
       "Maintainer": "Jeroen Ooms <jeroenooms@gmail.com>",
-      "Repository": "CRAN"
+      "Repository": "https://packagemanager.posit.co/cran/latest"
     },
     "XML": {
       "Package": "XML",
@@ -521,7 +519,7 @@
       "NeedsCompilation": "yes",
       "Author": "Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>)",
       "Maintainer": "Jeroen Ooms <jeroenooms@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "backports": {
       "Package": "backports",
@@ -564,8 +562,7 @@
       "URL": "https://www.rforge.net/base64enc",
       "BugReports": "https://github.com/s-u/base64enc/issues",
       "NeedsCompilation": "yes",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "Encoding": "UTF-8"
+      "Repository": "CRAN"
     },
     "bit": {
       "Package": "bit",
@@ -598,7 +595,7 @@
       "NeedsCompilation": "yes",
       "Author": "Michael Chirico [aut, cre], Jens Oehlschlägel [aut], Brian Ripley [ctb]",
       "Maintainer": "Michael Chirico <MichaelChirico4@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "bit64": {
       "Package": "bit64",
@@ -692,7 +689,7 @@
       "NeedsCompilation": "yes",
       "Author": "Jim Hester [aut] (<https://orcid.org/0000-0002-2739-7082>), Gábor Csárdi [aut, cre], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "broom": {
       "Package": "broom",
@@ -902,7 +899,7 @@
       "NeedsCompilation": "yes",
       "Author": "Winston Chang [aut, cre], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Winston Chang <winston@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "callr": {
       "Package": "callr",
@@ -1053,7 +1050,7 @@
       "Collate": "'AssertCollection.R' 'allMissing.R' 'anyInfinite.R' 'anyMissing.R' 'anyNaN.R' 'asInteger.R' 'assert.R' 'helper.R' 'makeExpectation.R' 'makeTest.R' 'makeAssertion.R' 'checkAccess.R' 'checkArray.R' 'checkAtomic.R' 'checkAtomicVector.R' 'checkCharacter.R' 'checkChoice.R' 'checkClass.R' 'checkComplex.R' 'checkCount.R' 'checkDataFrame.R' 'checkDataTable.R' 'checkDate.R' 'checkDirectoryExists.R' 'checkDisjunct.R' 'checkDouble.R' 'checkEnvironment.R' 'checkFALSE.R' 'checkFactor.R' 'checkFileExists.R' 'checkFlag.R' 'checkFormula.R' 'checkFunction.R' 'checkInt.R' 'checkInteger.R' 'checkIntegerish.R' 'checkList.R' 'checkLogical.R' 'checkMatrix.R' 'checkMultiClass.R' 'checkNamed.R' 'checkNames.R' 'checkNull.R' 'checkNumber.R' 'checkNumeric.R' 'checkOS.R' 'checkPOSIXct.R' 'checkPathForOutput.R' 'checkPermutation.R' 'checkR6.R' 'checkRaw.R' 'checkScalar.R' 'checkScalarNA.R' 'checkSetEqual.R' 'checkString.R' 'checkSubset.R' 'checkTRUE.R' 'checkTibble.R' 'checkVector.R' 'coalesce.R' 'isIntegerish.R' 'matchArg.R' 'qassert.R' 'qassertr.R' 'vname.R' 'wfwl.R' 'zzz.R'",
       "Author": "Michel Lang [cre, aut] (ORCID: <https://orcid.org/0000-0001-9754-0393>), Bernd Bischl [ctb], Dénes Tóth [ctb] (ORCID: <https://orcid.org/0000-0003-4262-3217>)",
       "Maintainer": "Michel Lang <michellang@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "chromote": {
       "Package": "chromote",
@@ -1100,11 +1097,11 @@
       "Author": "Garrick Aden-Buie [aut, cre] (ORCID: <https://orcid.org/0000-0002-7111-0077>), Winston Chang [aut], Barret Schloerke [aut] (ORCID: <https://orcid.org/0000-0001-9986-114X>), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Garrick Aden-Buie <garrick@posit.co>",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
       "RemoteUsername": "rstudio",
       "RemoteRepo": "chromote",
       "RemoteRef": "main",
-      "RemoteSha": "13a789a2c2f9bae17687cb11b724e6c26ff46ada"
+      "RemoteSha": "13a789a2c2f9bae17687cb11b724e6c26ff46ada",
+      "RemoteHost": "api.github.com"
     },
     "class": {
       "Package": "class",
@@ -1166,7 +1163,7 @@
       "VignetteBuilder": "knitr",
       "Author": "Roger Bivand [aut, cre] (<https://orcid.org/0000-0003-2392-6140>), Bill Denney [ctb] (<https://orcid.org/0000-0002-5759-428X>), Richard Dunlap [ctb], Diego Hernangómez [ctb] (<https://orcid.org/0000-0001-8457-4658>), Hisaji Ono [ctb], Josiah Parry [ctb] (<https://orcid.org/0000-0001-9910-865X>), Matthieu Stigler [ctb] (<https://orcid.org/0000-0002-6802-4290>)",
       "Maintainer": "Roger Bivand <Roger.Bivand@nhh.no>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "RSPM"
     },
     "cli": {
       "Package": "cli",
@@ -1400,7 +1397,7 @@
       "NeedsCompilation": "no",
       "Author": "Gábor Csárdi [aut, cre], Brodie Gaslam [ctb], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "crosstalk": {
       "Package": "crosstalk",
@@ -1603,7 +1600,7 @@
       "Collate": "'assertions.R' 'authors-at-r.R' 'built.R' 'classes.R' 'collate.R' 'constants.R' 'deps.R' 'desc-package.R' 'description.R' 'encoding.R' 'find-package-root.R' 'latex.R' 'non-oo-api.R' 'package-archives.R' 'read.R' 'remotes.R' 'str.R' 'syntax_checks.R' 'urls.R' 'utils.R' 'validate.R' 'version.R'",
       "NeedsCompilation": "no",
       "Author": "Gábor Csárdi [aut, cre], Kirill Müller [aut], Jim Hester [aut], Maëlle Salmon [ctb] (<https://orcid.org/0000-0002-2815-0399>), Posit Software, PBC [cph, fnd]",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "dfeshiny": {
       "Package": "dfeshiny",
@@ -1723,7 +1720,7 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [aut, cre], Joshua Kunst [aut], Winston Chang [aut], Posit Software, PBC [cph, fnd], Paul Fitzpatrick [cph] (Author of included daff.js library), Rodrigo Fernandes [cph] (Author of included diff2html library), JQuery Foundation [cph] (Author of included jquery library), Kevin Decker [cph] (Author of included jsdiff library), Matthew Holt [cph] (Author of incldued PapaParse library), Huddle [cph] (Author of included resemble library)",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "digest": {
       "Package": "digest",
@@ -1752,7 +1749,7 @@
       "NeedsCompilation": "yes",
       "Author": "Dirk Eddelbuettel [aut, cre] (ORCID: <https://orcid.org/0000-0001-6419-907X>), Antoine Lucas [ctb] (ORCID: <https://orcid.org/0000-0002-8059-9767>), Jarek Tuszynski [ctb], Henrik Bengtsson [ctb] (ORCID: <https://orcid.org/0000-0002-7579-5165>), Simon Urbanek [ctb] (ORCID: <https://orcid.org/0000-0003-2297-1732>), Mario Frasca [ctb], Bryan Lewis [ctb], Murray Stokely [ctb], Hannes Muehleisen [ctb] (ORCID: <https://orcid.org/0000-0001-8552-0029>), Duncan Murdoch [ctb], Jim Hester [ctb] (ORCID: <https://orcid.org/0000-0002-2739-7082>), Wush Wu [ctb] (ORCID: <https://orcid.org/0000-0001-5180-0567>), Qiang Kou [ctb] (ORCID: <https://orcid.org/0000-0001-6786-5453>), Thierry Onkelinx [ctb] (ORCID: <https://orcid.org/0000-0001-8804-4216>), Michel Lang [ctb] (ORCID: <https://orcid.org/0000-0001-9754-0393>), Viliam Simko [ctb], Kurt Hornik [ctb] (ORCID: <https://orcid.org/0000-0003-4198-9911>), Radford Neal [ctb] (ORCID: <https://orcid.org/0000-0002-2473-3407>), Kendon Bell [ctb] (ORCID: <https://orcid.org/0000-0002-9093-8312>), Matthew de Queljoe [ctb], Dmitry Selivanov [ctb] (ORCID: <https://orcid.org/0000-0003-0492-6647>), Ion Suruceanu [ctb] (ORCID: <https://orcid.org/0009-0005-6446-4909>), Bill Denney [ctb] (ORCID: <https://orcid.org/0000-0002-5759-428X>), Dirk Schumacher [ctb], András Svraka [ctb] (ORCID: <https://orcid.org/0009-0008-8480-1329>), Sergey Fedorov [ctb] (ORCID: <https://orcid.org/0000-0002-5970-7233>), Will Landau [ctb] (ORCID: <https://orcid.org/0000-0003-1878-3253>), Floris Vanderhaeghe [ctb] (ORCID: <https://orcid.org/0000-0002-6378-6229>), Kevin Tappe [ctb], Harris McGehee [ctb], Tim Mastny [ctb], Aaron Peikert [ctb] (ORCID: <https://orcid.org/0000-0001-7813-818X>), Mark van der Loo [ctb] (ORCID: <https://orcid.org/0000-0002-9807-4686>), Chris Muir [ctb] (ORCID: <https://orcid.org/0000-0003-2555-3878>), Moritz Beller [ctb] (ORCID: <https://orcid.org/0000-0003-4852-0526>), Sebastian Campbell [ctb] (ORCID: <https://orcid.org/0009-0000-5948-4503>), Winston Chang [ctb] (ORCID: <https://orcid.org/0000-0002-1576-2126>), Dean Attali [ctb] (ORCID: <https://orcid.org/0000-0002-5645-3493>), Michael Chirico [ctb] (ORCID: <https://orcid.org/0000-0003-0787-087X>), Kevin Ushey [ctb] (ORCID: <https://orcid.org/0000-0003-2880-7407>), Carl Pearson [ctb] (ORCID: <https://orcid.org/0000-0003-0701-7860>)",
       "Maintainer": "Dirk Eddelbuettel <edd@debian.org>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "dplyr": {
       "Package": "dplyr",
@@ -1949,7 +1946,7 @@
       "NeedsCompilation": "yes",
       "Author": "Thomas Lin Pedersen [cre, aut] (<https://orcid.org/0000-0002-5147-4711>), Berendea Nicolae [aut] (Author of the ColorSpace C++ library), Romain François [aut] (<https://orcid.org/0000-0002-2444-4226>), Posit, PBC [cph, fnd]",
       "Maintainer": "Thomas Lin Pedersen <thomas.pedersen@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "fastmap": {
       "Package": "fastmap",
@@ -1969,7 +1966,7 @@
       "NeedsCompilation": "yes",
       "Author": "Winston Chang [aut, cre], Posit Software, PBC [cph, fnd], Tessil [cph] (hopscotch_map library)",
       "Maintainer": "Winston Chang <winston@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "fontawesome": {
       "Package": "fontawesome",
@@ -2004,7 +2001,7 @@
       "NeedsCompilation": "no",
       "Author": "Richard Iannone [aut, cre] (<https://orcid.org/0000-0003-3925-190X>), Christophe Dervieux [ctb] (<https://orcid.org/0000-0003-4474-2498>), Winston Chang [ctb], Dave Gandy [ctb, cph] (Font-Awesome font), Posit Software, PBC [cph, fnd]",
       "Maintainer": "Richard Iannone <rich@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "forcats": {
       "Package": "forcats",
@@ -2169,7 +2166,7 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [aut, cre] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Max Kuhn [aut], Davis Vaughan [aut], Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "RSPM"
     },
     "geojsonsf": {
       "Package": "geojsonsf",
@@ -2315,7 +2312,7 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Winston Chang [aut] (ORCID: <https://orcid.org/0000-0002-1576-2126>), Lionel Henry [aut], Thomas Lin Pedersen [aut, cre] (ORCID: <https://orcid.org/0000-0002-5147-4711>), Kohske Takahashi [aut], Claus Wilke [aut] (ORCID: <https://orcid.org/0000-0002-7470-9261>), Kara Woo [aut] (ORCID: <https://orcid.org/0000-0002-5125-4188>), Hiroaki Yutani [aut] (ORCID: <https://orcid.org/0000-0002-3385-7233>), Dewey Dunnington [aut] (ORCID: <https://orcid.org/0000-0002-9415-4582>), Teun van den Brand [aut] (ORCID: <https://orcid.org/0000-0002-9335-7468>), Posit, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Thomas Lin Pedersen <thomas.pedersen@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "globals": {
       "Package": "globals",
@@ -2341,7 +2338,7 @@
       "NeedsCompilation": "no",
       "Author": "Henrik Bengtsson [aut, cre, cph], Davis Vaughan [ctb]",
       "Maintainer": "Henrik Bengtsson <henrikb@braju.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "glue": {
       "Package": "glue",
@@ -2431,7 +2428,7 @@
       "NeedsCompilation": "no",
       "Author": "Lucy D'Agostino McGowan [aut], Jennifer Bryan [aut, cre] (ORCID: <https://orcid.org/0000-0002-6983-2759>), Posit Software, PBC [cph, fnd]",
       "Maintainer": "Jennifer Bryan <jenny@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "RSPM"
     },
     "googlesheets4": {
       "Package": "googlesheets4",
@@ -2481,7 +2478,7 @@
       "NeedsCompilation": "no",
       "Author": "Jennifer Bryan [cre, aut] (ORCID: <https://orcid.org/0000-0002-6983-2759>), Posit Software, PBC [cph, fnd]",
       "Maintainer": "Jennifer Bryan <jenny@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "RSPM"
     },
     "gtable": {
       "Package": "gtable",
@@ -2521,7 +2518,7 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [aut], Thomas Lin Pedersen [aut, cre], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Thomas Lin Pedersen <thomas.pedersen@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "haven": {
       "Package": "haven",
@@ -2600,7 +2597,7 @@
       "NeedsCompilation": "no",
       "Author": "Yihui Xie [aut, cre] (ORCID: <https://orcid.org/0000-0003-0645-5666>), Yixuan Qiu [aut], Christopher Gandrud [ctb], Qiang Li [ctb]",
       "Maintainer": "Yihui Xie <xie@yihui.name>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "hms": {
       "Package": "hms",
@@ -2634,7 +2631,7 @@
       "NeedsCompilation": "no",
       "Author": "Kirill Müller [aut, cre] (ORCID: <https://orcid.org/0000-0002-1416-3412>), R Consortium [fnd], Posit Software, PBC [fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Kirill Müller <kirill@cynkra.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "htmltools": {
       "Package": "htmltools",
@@ -2677,7 +2674,7 @@
       "NeedsCompilation": "yes",
       "Author": "Joe Cheng [aut], Carson Sievert [aut, cre] (ORCID: <https://orcid.org/0000-0002-4958-2844>), Barret Schloerke [aut] (ORCID: <https://orcid.org/0000-0001-9986-114X>), Winston Chang [aut] (ORCID: <https://orcid.org/0000-0002-1576-2126>), Yihui Xie [aut], Jeff Allen [aut], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Carson Sievert <carson@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "htmlwidgets": {
       "Package": "htmlwidgets",
@@ -2710,7 +2707,7 @@
       "NeedsCompilation": "no",
       "Author": "Ramnath Vaidyanathan [aut, cph], Yihui Xie [aut], JJ Allaire [aut], Joe Cheng [aut], Carson Sievert [aut, cre] (<https://orcid.org/0000-0002-4958-2844>), Kenton Russell [aut, cph], Ellis Hughes [ctb], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Carson Sievert <carson@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "httpuv": {
       "Package": "httpuv",
@@ -2754,7 +2751,7 @@
       "NeedsCompilation": "yes",
       "Author": "Joe Cheng [aut], Winston Chang [aut, cre], Posit, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>), Hector Corrada Bravo [ctb], Jeroen Ooms [ctb], Andrzej Krzemienski [cph] (optional.hpp), libuv project contributors [cph] (libuv library, see src/libuv/AUTHORS file), Joyent, Inc. and other Node contributors [cph] (libuv library, see src/libuv/AUTHORS file; and http-parser library, see src/http-parser/AUTHORS file), Niels Provos [cph] (libuv subcomponent: tree.h), Internet Systems Consortium, Inc. [cph] (libuv subcomponent: inet_pton and inet_ntop, contained in src/libuv/src/inet.c), Alexander Chemeris [cph] (libuv subcomponent: stdint-msvc2008.h (from msinttypes)), Google, Inc. [cph] (libuv subcomponent: pthread-fixes.c), Sony Mobile Communcations AB [cph] (libuv subcomponent: pthread-fixes.c), Berkeley Software Design Inc. [cph] (libuv subcomponent: android-ifaddrs.h, android-ifaddrs.c), Kenneth MacKay [cph] (libuv subcomponent: android-ifaddrs.h, android-ifaddrs.c), Emergya (Cloud4all, FP7/2007-2013, grant agreement no 289016) [cph] (libuv subcomponent: android-ifaddrs.h, android-ifaddrs.c), Steve Reid [aut] (SHA-1 implementation), James Brown [aut] (SHA-1 implementation), Bob Trower [aut] (base64 implementation), Alexander Peslyak [aut] (MD5 implementation), Trantor Standard Systems [cph] (base64 implementation), Igor Sysoev [cph] (http-parser)",
       "Maintainer": "Winston Chang <winston@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "httr": {
       "Package": "httr",
@@ -2924,7 +2921,7 @@
       "NeedsCompilation": "yes",
       "Author": "Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Claus O. Wilke [aut] (Original author, ORCID: <https://orcid.org/0000-0002-7470-9261>), Thomas Lin Pedersen [aut, cre] (ORCID: <https://orcid.org/0000-0002-5147-4711>), Posit, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Thomas Lin Pedersen <thomas.pedersen@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "janitor": {
       "Package": "janitor",
@@ -2970,7 +2967,7 @@
       "NeedsCompilation": "no",
       "Author": "Sam Firke [aut, cre], Bill Denney [ctb], Chris Haid [ctb], Ryan Knight [ctb], Malte Grosser [ctb], Jonathan Zadra [ctb]",
       "Maintainer": "Sam Firke <samuel.firke@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "jose": {
       "Package": "jose",
@@ -3002,7 +2999,7 @@
       "NeedsCompilation": "no",
       "Author": "Jeroen Ooms [aut, cre] (ORCID: <https://orcid.org/0000-0002-4035-0289>)",
       "Maintainer": "Jeroen Ooms <jeroenooms@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "jquerylib": {
       "Package": "jquerylib",
@@ -3024,7 +3021,7 @@
       "NeedsCompilation": "no",
       "Author": "Carson Sievert [aut, cre] (<https://orcid.org/0000-0002-4958-2844>), Joe Cheng [aut], RStudio [cph], jQuery Foundation [cph] (jQuery library and jQuery UI library), jQuery contributors [ctb, cph] (jQuery library; authors listed in inst/lib/jquery-AUTHORS.txt)",
       "Maintainer": "Carson Sievert <carson@rstudio.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "jsonify": {
       "Package": "jsonify",
@@ -3089,7 +3086,7 @@
       "Encoding": "UTF-8",
       "NeedsCompilation": "yes",
       "Author": "Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>), Duncan Temple Lang [ctb], Lloyd Hilaiel [cph] (author of bundled libyajl)",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "knitr": {
       "Package": "knitr",
@@ -3172,8 +3169,7 @@
         "stats",
         "graphics"
       ],
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "Encoding": "UTF-8"
+      "Repository": "CRAN"
     },
     "later": {
       "Package": "later",
@@ -3213,7 +3209,7 @@
       "NeedsCompilation": "yes",
       "Author": "Winston Chang [aut] (ORCID: <https://orcid.org/0000-0002-1576-2126>), Joe Cheng [aut], Charlie Gao [aut, cre] (ORCID: <https://orcid.org/0000-0002-0750-061X>), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>), Marcus Geelnard [ctb, cph] (TinyCThread library, https://tinycthread.github.io/), Evan Nemerson [ctb, cph] (TinyCThread library, https://tinycthread.github.io/)",
       "Maintainer": "Charlie Gao <charlie.gao@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "lattice": {
       "Package": "lattice",
@@ -3369,7 +3365,7 @@
       "NeedsCompilation": "no",
       "Author": "Leslie Huang [aut], Barret Schloerke [ctb, cre] (ORCID: <https://orcid.org/0000-0001-9986-114X>), Leaflet Providers contributors [ctb, cph] (Leaflet Providers plugin), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Barret Schloerke <barret@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "lifecycle": {
       "Package": "lifecycle",
@@ -3409,7 +3405,7 @@
       "NeedsCompilation": "no",
       "Author": "Lionel Henry [aut, cre], Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Posit Software, PBC [cph, fnd]",
       "Maintainer": "Lionel Henry <lionel@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "lubridate": {
       "Package": "lubridate",
@@ -3455,7 +3451,7 @@
       "Collate": "'Dates.r' 'POSIXt.r' 'util.r' 'parse.r' 'timespans.r' 'intervals.r' 'difftimes.r' 'durations.r' 'periods.r' 'accessors-date.R' 'accessors-day.r' 'accessors-dst.r' 'accessors-hour.r' 'accessors-minute.r' 'accessors-month.r' 'accessors-quarter.r' 'accessors-second.r' 'accessors-tz.r' 'accessors-week.r' 'accessors-year.r' 'am-pm.r' 'time-zones.r' 'numeric.r' 'coercion.r' 'constants.r' 'cyclic_encoding.r' 'data.r' 'decimal-dates.r' 'deprecated.r' 'format_ISO8601.r' 'guess.r' 'hidden.r' 'instants.r' 'leap-years.r' 'ops-addition.r' 'ops-compare.r' 'ops-division.r' 'ops-integer-division.r' 'ops-m+.r' 'ops-modulo.r' 'ops-multiplication.r' 'ops-subtraction.r' 'package.r' 'pretty.r' 'round.r' 'stamp.r' 'tzdir.R' 'update.r' 'vctrs.R' 'zzz.R'",
       "NeedsCompilation": "yes",
       "Author": "Vitalie Spinu [aut, cre], Garrett Grolemund [aut], Hadley Wickham [aut], Davis Vaughan [ctb], Ian Lyttle [ctb], Imanuel Costigan [ctb], Jason Law [ctb], Doug Mitarotonda [ctb], Joseph Larmarange [ctb], Jonathan Boiser [ctb], Chel Hee Lee [ctb]",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "magrittr": {
       "Package": "magrittr",
@@ -3516,7 +3512,7 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [aut], Jim Hester [aut], Winston Chang [aut, cre], Kirill Müller [aut], Daniel Cook [aut], Mark Edmondson [ctb]",
       "Maintainer": "Winston Chang <winston@rstudio.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "mime": {
       "Package": "mime",
@@ -3537,7 +3533,7 @@
       "NeedsCompilation": "yes",
       "Author": "Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>, https://yihui.org), Jeffrey Horner [ctb], Beilei Bian [ctb]",
       "Maintainer": "Yihui Xie <xie@yihui.name>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "minty": {
       "Package": "minty",
@@ -3576,7 +3572,7 @@
       "NeedsCompilation": "yes",
       "Author": "Chung-hong Chan [aut, cre] (ORCID: <https://orcid.org/0000-0002-6232-7530>), Hadley Wickham [aut] (author of the ported code from readr), Jim Hester [aut] (author of the ported code from readr), Romain Francois [ctb] (author of the ported code from readr), Jennifer Bryan [aut] (author of the ported code from readr), Shelby Bearrows [ctb] (author of the ported code from readr), Posit Software, PBC [cph] (copyright holder of readr), David Olson [aut] (author of src/tzfile.h)",
       "Maintainer": "Chung-hong Chan <chainsawtiney@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "modelr": {
       "Package": "modelr",
@@ -3731,7 +3727,7 @@
       "NeedsCompilation": "no",
       "Author": "Gábor Csárdi [aut, cre]",
       "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "packrat": {
       "Package": "packrat",
@@ -3856,7 +3852,7 @@
       "NeedsCompilation": "yes",
       "Author": "Gábor Csárdi [aut, cre], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "pkgbuild": {
       "Package": "pkgbuild",
@@ -3895,7 +3891,7 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [aut], Jim Hester [aut], Gábor Csárdi [aut, cre], Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "RSPM"
     },
     "pkgconfig": {
       "Package": "pkgconfig",
@@ -3919,7 +3915,7 @@
       "BugReports": "https://github.com/r-lib/pkgconfig/issues",
       "Encoding": "UTF-8",
       "NeedsCompilation": "no",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "pkgload": {
       "Package": "pkgload",
@@ -3968,7 +3964,7 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [aut], Winston Chang [aut], Jim Hester [aut], Lionel Henry [aut, cre], Posit Software, PBC [cph, fnd], R Core team [ctb] (Some namespace and vignette code extracted from base R)",
       "Maintainer": "Lionel Henry <lionel@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "plotly": {
       "Package": "plotly",
@@ -4100,8 +4096,7 @@
       "URL": "https://www.rforge.net/png/",
       "BugReports": "https://github.com/s-u/png/issues/",
       "NeedsCompilation": "yes",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "Encoding": "UTF-8"
+      "Repository": "CRAN"
     },
     "praise": {
       "Package": "praise",
@@ -4120,8 +4115,7 @@
       ],
       "Collate": "'adjective.R' 'adverb.R' 'exclamation.R' 'verb.R' 'rpackage.R' 'package.R'",
       "NeedsCompilation": "no",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "Encoding": "UTF-8"
+      "Repository": "CRAN"
     },
     "prettyunits": {
       "Package": "prettyunits",
@@ -4146,7 +4140,7 @@
       "NeedsCompilation": "no",
       "Author": "Gabor Csardi [aut, cre], Bill Denney [ctb] (<https://orcid.org/0000-0002-5759-428X>), Christophe Regouby [ctb]",
       "Maintainer": "Gabor Csardi <csardi.gabor@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "processx": {
       "Package": "processx",
@@ -4187,7 +4181,7 @@
       "NeedsCompilation": "yes",
       "Author": "Gábor Csárdi [aut, cre, cph] (ORCID: <https://orcid.org/0000-0001-7098-9676>), Winston Chang [aut], Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>), Ascent Digital Services [cph, fnd]",
       "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "progress": {
       "Package": "progress",
@@ -4220,7 +4214,7 @@
       "NeedsCompilation": "no",
       "Author": "Gábor Csárdi [aut, cre], Rich FitzJohn [aut], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "promises": {
       "Package": "promises",
@@ -4267,7 +4261,7 @@
       "NeedsCompilation": "no",
       "Author": "Joe Cheng [aut], Barret Schloerke [aut, cre] (ORCID: <https://orcid.org/0000-0001-9986-114X>), Winston Chang [aut] (ORCID: <https://orcid.org/0000-0002-1576-2126>), Charlie Gao [aut] (ORCID: <https://orcid.org/0000-0002-0750-061X>), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Barret Schloerke <barret@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "proxy": {
       "Package": "proxy",
@@ -4531,7 +4525,7 @@
       "NeedsCompilation": "yes",
       "Author": "Hadley Wickham [trl, cre, cph], Sridhar Ratnakumar [aut], Trent Mick [aut], ActiveState [cph] (R/appdir.r, R/cache.r, R/data.r, R/log.r translated from appdirs), Eddy Petrisor [ctb], Trevor Davis [trl, aut] (ORCID: <https://orcid.org/0000-0001-6341-4639>), Gabor Csardi [ctb], Gregory Jefferis [ctb], Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "raster": {
       "Package": "raster",
@@ -4573,7 +4567,7 @@
       "NeedsCompilation": "yes",
       "Author": "Robert J. Hijmans [cre, aut] (<https://orcid.org/0000-0001-5872-2872>), Jacob van Etten [ctb], Michael Sumner [ctb], Joe Cheng [ctb], Dan Baston [ctb], Andrew Bevan [ctb], Roger Bivand [ctb], Lorenzo Busetto [ctb], Mort Canty [ctb], Ben Fasoli [ctb], David Forrest [ctb], Aniruddha Ghosh [ctb], Duncan Golicher [ctb], Josh Gray [ctb], Jonathan A. Greenberg [ctb], Paul Hiemstra [ctb], Kassel Hingee [ctb], Alex Ilich [ctb], Institute for Mathematics Applied Geosciences [cph], Charles Karney [ctb], Matteo Mattiuzzi [ctb], Steven Mosher [ctb], Babak Naimi [ctb], Jakub Nowosad [ctb], Edzer Pebesma [ctb], Oscar Perpinan Lamigueiro [ctb], Etienne B. Racine [ctb], Barry Rowlingson [ctb], Ashton Shortridge [ctb], Bill Venables [ctb], Rafael Wueest [ctb]",
       "Maintainer": "Robert J. Hijmans <r.hijmans@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "Repository": "RSPM",
       "Encoding": "UTF-8"
     },
     "reactR": {
@@ -4606,7 +4600,7 @@
       "VignetteBuilder": "knitr",
       "NeedsCompilation": "no",
       "Author": "Facebook Inc [aut, cph] (React library in lib, https://reactjs.org/; see AUTHORS for full list of contributors), Michel Weststrate [aut, cph] (mobx library in lib, https://github.com/mobxjs), Kent Russell [aut, cre] (R interface), Alan Dipert [aut] (R interface), Greg Lin [aut] (R interface)",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "reactable": {
       "Package": "reactable",
@@ -4650,7 +4644,7 @@
       "NeedsCompilation": "no",
       "Author": "Greg Lin [aut, cre], Tanner Linsley [ctb, cph] (React Table library), Emotion team and other contributors [ctb, cph] (Emotion library), Kent Russell [ctb, cph] (reactR package), Ramnath Vaidyanathan [ctb, cph] (htmlwidgets package), Joe Cheng [ctb, cph] (htmlwidgets package), JJ Allaire [ctb, cph] (htmlwidgets package), Yihui Xie [ctb, cph] (htmlwidgets package), Kenton Russell [ctb, cph] (htmlwidgets package), Facebook, Inc. and its affiliates [ctb, cph] (React library), FormatJS [ctb, cph] (FormatJS libraries), Feross Aboukhadijeh, and other contributors [ctb, cph] (buffer library), Roman Shtylman [ctb, cph] (process library), James Halliday [ctb, cph] (stream-browserify library), Posit Software, PBC [fnd, cph]",
       "Maintainer": "Greg Lin <glin@glin.io>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "readODS": {
       "Package": "readODS",
@@ -4754,7 +4748,7 @@
       "NeedsCompilation": "yes",
       "Author": "Hadley Wickham [aut], Jim Hester [aut], Romain Francois [ctb], Jennifer Bryan [aut, cre] (ORCID: <https://orcid.org/0000-0002-6983-2759>), Shelby Bearrows [ctb], Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>), https://github.com/mandreyel/ [cph] (mio library), Jukka Jylänki [ctb, cph] (grisu3 implementation), Mikkel Jørgensen [ctb, cph] (grisu3 implementation)",
       "Maintainer": "Jennifer Bryan <jenny@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "readxl": {
       "Package": "readxl",
@@ -4999,7 +4993,7 @@
       "NeedsCompilation": "yes",
       "Author": "Lionel Henry [aut, cre], Hadley Wickham [aut], mikefc [cph] (Hash implementation based on Mike's xxhashlite), Yann Collet [cph] (Author of the embedded xxHash library), Posit, PBC [cph, fnd]",
       "Maintainer": "Lionel Henry <lionel@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "rmapshaper": {
       "Package": "rmapshaper",
@@ -5256,7 +5250,7 @@
       "Config/roxygen2/version": "8.0.0",
       "NeedsCompilation": "no",
       "Author": "Kevin Ushey [aut, cre], JJ Allaire [aut], Hadley Wickham [aut], Gary Ritchie [aut], RStudio [cph]",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "rvest": {
       "Package": "rvest",
@@ -5307,7 +5301,7 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [aut, cre], Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "s2": {
       "Package": "s2",
@@ -5379,7 +5373,7 @@
       "NeedsCompilation": "yes",
       "Author": "Joe Cheng [aut], Timothy Mastny [aut], Richard Iannone [aut] (<https://orcid.org/0000-0003-3925-190X>), Barret Schloerke [aut] (<https://orcid.org/0000-0001-9986-114X>), Carson Sievert [aut, cre] (<https://orcid.org/0000-0002-4958-2844>), Christophe Dervieux [ctb] (<https://orcid.org/0000-0003-4474-2498>), RStudio [cph, fnd], Sass Open Source Foundation [ctb, cph] (LibSass library), Greter Marcel [ctb, cph] (LibSass library), Mifsud Michael [ctb, cph] (LibSass library), Hampton Catlin [ctb, cph] (LibSass library), Natalie Weizenbaum [ctb, cph] (LibSass library), Chris Eppstein [ctb, cph] (LibSass library), Adams Joseph [ctb, cph] (json.cpp), Trifunovic Nemanja [ctb, cph] (utf8.h)",
       "Maintainer": "Carson Sievert <carson@rstudio.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "scales": {
       "Package": "scales",
@@ -5423,7 +5417,7 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [aut], Thomas Lin Pedersen [cre, aut] (<https://orcid.org/0000-0002-5147-4711>), Dana Seidel [aut], Posit Software, PBC [cph, fnd] (03wc8by49)",
       "Maintainer": "Thomas Lin Pedersen <thomas.pedersen@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "selectr": {
       "Package": "selectr",
@@ -5728,7 +5722,7 @@
       "NeedsCompilation": "no",
       "Author": "Victor Perrier [aut, cre, cph], Fanny Meyer [aut], David Granjon [aut], Ian Fellows [ctb] (Methods for mutating vertical tabs & updateMultiInput), Wil Davis [ctb] (numericRangeInput function), Spencer Matthews [ctb] (autoNumeric methods), JavaScript and CSS libraries authors [ctb, cph] (All authors are listed in LICENSE.md)",
       "Maintainer": "Victor Perrier <victor.perrier@dreamrs.fr>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "shinyalert": {
       "Package": "shinyalert",
@@ -5757,7 +5751,7 @@
       "NeedsCompilation": "no",
       "Author": "Dean Attali [aut, cre] (<https://orcid.org/0000-0002-5645-3493>, R interface), Tristan Edwards [aut] (sweetalert library), Zhengjia Wang [ctb]",
       "Maintainer": "Dean Attali <daattali@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "RSPM"
     },
     "shinycssloaders": {
       "Package": "shinycssloaders",
@@ -5789,7 +5783,7 @@
       "NeedsCompilation": "no",
       "Author": "Dean Attali [aut, cre] (Maintainer/developer of shinycssloaders since 2019, <https://orcid.org/0000-0002-5645-3493>), Andras Sali [aut] (Original creator of shinycssloaders package), Luke Hass [ctb, cph] (Author of included CSS loader code)",
       "Maintainer": "Dean Attali <daattali@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "RSPM"
     },
     "shinyjs": {
       "Package": "shinyjs",
@@ -5823,7 +5817,7 @@
       "NeedsCompilation": "no",
       "Author": "Dean Attali [aut, cre] (ORCID: <https://orcid.org/0000-0002-5645-3493>)",
       "Maintainer": "Dean Attali <daattali@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "shinytest2": {
       "Package": "shinytest2",
@@ -5890,7 +5884,7 @@
       "NeedsCompilation": "yes",
       "Author": "Barret Schloerke [cre, aut] (ORCID: <https://orcid.org/0000-0001-9986-114X>), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>), Winston Chang [ctb] (Original author to rstudio/shinytest), Gábor Csárdi [ctb] (Original author to rstudio/shinytest), Hadley Wickham [ctb] (Original author to rstudio/shinytest), Mango Solutions [cph, ccp] (Original author to rstudio/shinytest)",
       "Maintainer": "Barret Schloerke <barret@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "slider": {
       "Package": "slider",
@@ -5968,7 +5962,7 @@
       "VignetteBuilder": "knitr",
       "NeedsCompilation": "no",
       "Author": "Malte Grosser [aut, cre]",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "snowflakeauth": {
       "Package": "snowflakeauth",
@@ -6024,7 +6018,7 @@
       "Encoding": "UTF-8",
       "NeedsCompilation": "yes",
       "Author": "Kevin Ushey [aut, cre]",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "sp": {
       "Package": "sp",
@@ -6095,7 +6089,7 @@
       "Author": "Marek Gagolewski [aut, cre, cph] (ORCID: <https://orcid.org/0000-0003-0637-6028>), Bartek Tartanus [ctb], Unicode, Inc. and others [ctb] (ICU4C source code, Unicode Character Database)",
       "Maintainer": "Marek Gagolewski <marek@gagolewski.com>",
       "License_is_FOSS": "yes",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "stringr": {
       "Package": "stringr",
@@ -6140,7 +6134,7 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [aut, cre, cph], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "styler": {
       "Package": "styler",
@@ -6189,7 +6183,7 @@
       "NeedsCompilation": "no",
       "Author": "Kirill Müller [aut] (ORCID: <https://orcid.org/0000-0002-1416-3412>), Lorenz Walthert [cre, aut], Indrajeet Patil [aut] (ORCID: <https://orcid.org/0000-0003-1995-6531>)",
       "Maintainer": "Lorenz Walthert <lorenz.walthert@icloud.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "sys": {
       "Package": "sys",
@@ -6213,7 +6207,7 @@
       "NeedsCompilation": "yes",
       "Author": "Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>), Gábor Csárdi [ctb]",
       "Maintainer": "Jeroen Ooms <jeroenooms@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "systemfonts": {
       "Package": "systemfonts",
@@ -6261,21 +6255,18 @@
       "NeedsCompilation": "yes",
       "Author": "Thomas Lin Pedersen [aut, cre] (ORCID: <https://orcid.org/0000-0002-5147-4711>), Jeroen Ooms [aut] (ORCID: <https://orcid.org/0000-0002-4035-0289>), Devon Govett [aut] (Author of font-manager), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Thomas Lin Pedersen <thomas.pedersen@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "terra": {
       "Package": "terra",
       "Version": "1.9-34",
       "Source": "Repository",
+      "Type": "Package",
+      "Title": "Spatial Data Analysis",
+      "Date": "2026-06-18",
       "Depends": [
         "R (>= 3.5.0)",
         "methods"
-      ],
-      "Imports": [
-        "Rcpp (>= 1.0-10)"
-      ],
-      "LinkingTo": [
-        "Rcpp"
       ],
       "Suggests": [
         "parallel",
@@ -6290,6 +6281,24 @@
         "future",
         "future.apply"
       ],
+      "LinkingTo": [
+        "Rcpp"
+      ],
+      "Imports": [
+        "Rcpp (>= 1.0-10)"
+      ],
+      "SystemRequirements": "C++17, GDAL (>= 2.2.3), GEOS (>= 3.4.0), PROJ (>= 4.9.3), TBB, sqlite3",
+      "Encoding": "UTF-8",
+      "Language": "en-US",
+      "Maintainer": "Robert J. Hijmans <r.hijmans@gmail.com>",
+      "Description": "Methods for spatial data analysis with vector (points, lines, polygons) and raster (grid) data. Methods for vector data include geometric operations such as intersect and buffer. Raster methods include local, focal, global, zonal and geometric operations. The predict and interpolate methods facilitate the use of regression type (interpolation, machine learning) models for spatial prediction, including with satellite remote sensing data. Processing of very large files is supported. See the manual and tutorials on <https://rspatial.org/> to get started.",
+      "License": "GPL (>= 3)",
+      "URL": "https://rspatial.org/, https://rspatial.github.io/terra/",
+      "BugReports": "https://github.com/rspatial/terra/issues",
+      "LazyLoad": "yes",
+      "Authors@R": "c( person(\"Robert J.\", \"Hijmans\", role=c(\"cre\", \"aut\"),   email=\"r.hijmans@gmail.com\", comment=c(ORCID=\"0000-0001-5872-2872\")),\t\t\t person(\"Andrew\", \"Brown\", role=\"aut\", comment=c(ORCID=\"0000-0002-4565-533X\")), person(\"Márcia\", \"Barbosa\", role=\"aut\", comment=c(ORCID=\"0000-0001-8972-7713\")), person(\"Krzysztof\", \"Dyba\", role=\"ctb\", comment=c(ORCID=\"0000-0002-8614-3816\")), person(\"Roger\", \"Bivand\", role=\"ctb\", comment=c(ORCID=\"0000-0003-2392-6140\")), person(\"Michael\", \"Chirico\", role=\"ctb\", comment=c(ORCID=\"0000-0003-0787-087X\")), person(\"Emanuele\", \"Cordano\", role=\"ctb\",comment=c(ORCID=\"0000-0002-3508-5898\")), person(\"Edzer\", \"Pebesma\", role=\"ctb\", comment=c(ORCID=\"0000-0001-8049-7069\")), person(\"Barry\", \"Rowlingson\", role=\"ctb\", comment=c(ORCID=\"0000-0002-8586-6625\")), person(\"Michael D.\", \"Sumner\", role=\"ctb\", comment=c(ORCID=\"0000-0002-2471-7511\")))",
+      "NeedsCompilation": "yes",
+      "Author": "Robert J. Hijmans [cre, aut] (ORCID: <https://orcid.org/0000-0001-5872-2872>), Andrew Brown [aut] (ORCID: <https://orcid.org/0000-0002-4565-533X>), Márcia Barbosa [aut] (ORCID: <https://orcid.org/0000-0001-8972-7713>), Krzysztof Dyba [ctb] (ORCID: <https://orcid.org/0000-0002-8614-3816>), Roger Bivand [ctb] (ORCID: <https://orcid.org/0000-0003-2392-6140>), Michael Chirico [ctb] (ORCID: <https://orcid.org/0000-0003-0787-087X>), Emanuele Cordano [ctb] (ORCID: <https://orcid.org/0000-0002-3508-5898>), Edzer Pebesma [ctb] (ORCID: <https://orcid.org/0000-0001-8049-7069>), Barry Rowlingson [ctb] (ORCID: <https://orcid.org/0000-0002-8586-6625>), Michael D. Sumner [ctb] (ORCID: <https://orcid.org/0000-0002-2471-7511>)",
       "Repository": "CRAN"
     },
     "testthat": {
@@ -6352,7 +6361,7 @@
       "NeedsCompilation": "yes",
       "Author": "Hadley Wickham [aut, cre], Posit Software, PBC [cph, fnd], R Core team [ctb] (Implementation of utils::recover())",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "textshaping": {
       "Package": "textshaping",
@@ -6396,7 +6405,7 @@
       "NeedsCompilation": "yes",
       "Author": "Thomas Lin Pedersen [cre, aut] (ORCID: <https://orcid.org/0000-0002-5147-4711>), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Thomas Lin Pedersen <thomas.pedersen@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "tibble": {
       "Package": "tibble",
@@ -6461,7 +6470,7 @@
       "NeedsCompilation": "yes",
       "Author": "Kirill Müller [aut, cre] (ORCID: <https://orcid.org/0000-0002-1416-3412>), Hadley Wickham [aut], Romain Francois [ctb], Jennifer Bryan [ctb], Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Kirill Müller <kirill@cynkra.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "tidyr": {
       "Package": "tidyr",
@@ -6512,7 +6521,7 @@
       "NeedsCompilation": "yes",
       "Author": "Hadley Wickham [aut, cre], Davis Vaughan [aut], Maximilian Girlich [aut], Kevin Ushey [ctb], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "tidyselect": {
       "Package": "tidyselect",
@@ -6555,7 +6564,7 @@
       "NeedsCompilation": "yes",
       "Author": "Lionel Henry [aut, cre], Hadley Wickham [aut], Posit Software, PBC [cph, fnd]",
       "Maintainer": "Lionel Henry <lionel@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "tidyverse": {
       "Package": "tidyverse",
@@ -6647,7 +6656,7 @@
       "NeedsCompilation": "yes",
       "Author": "Vitalie Spinu [aut, cre], Google Inc. [ctb, cph]",
       "Maintainer": "Vitalie Spinu <spinuvit@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "tinytex": {
       "Package": "tinytex",
@@ -6672,7 +6681,7 @@
       "NeedsCompilation": "no",
       "Author": "Yihui Xie [aut, cre, cph] (ORCID: <https://orcid.org/0000-0003-0645-5666>), Posit Software, PBC [cph, fnd], Christophe Dervieux [ctb] (ORCID: <https://orcid.org/0000-0003-4474-2498>), Devon Ryan [ctb] (ORCID: <https://orcid.org/0000-0002-8549-0971>), Ethan Heinzen [ctb], Fernando Cagua [ctb]",
       "Maintainer": "Yihui Xie <xie@yihui.name>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "tzdb": {
       "Package": "tzdb",
@@ -6702,7 +6711,7 @@
       "NeedsCompilation": "yes",
       "Author": "Davis Vaughan [aut, cre], Howard Hinnant [cph] (Author of the included date library), Posit Software, PBC [cph, fnd]",
       "Maintainer": "Davis Vaughan <davis@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "units": {
       "Package": "units",
@@ -6746,7 +6755,7 @@
       "NeedsCompilation": "yes",
       "Author": "Edzer Pebesma [aut, cre] (ORCID: <https://orcid.org/0000-0001-8049-7069>), Thomas Mailund [aut], Tomasz Kalinowski [aut], James Hiebert [ctb], Iñaki Ucar [aut] (ORCID: <https://orcid.org/0000-0001-6403-5550>), Thomas Lin Pedersen [ctb]",
       "Maintainer": "Edzer Pebesma <edzer.pebesma@uni-muenster.de>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "utf8": {
       "Package": "utf8",
@@ -6777,7 +6786,7 @@
       "NeedsCompilation": "yes",
       "Author": "Patrick O. Perry [aut, cph], Kirill Müller [cre] (ORCID: <https://orcid.org/0000-0002-1416-3412>), Unicode, Inc. [cph, dtc] (Unicode Character Database)",
       "Maintainer": "Kirill Müller <kirill@cynkra.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "RSPM"
     },
     "uuid": {
       "Package": "uuid",
@@ -6795,8 +6804,7 @@
       "URL": "https://www.rforge.net/uuid",
       "BugReports": "https://github.com/s-u/uuid/issues",
       "NeedsCompilation": "yes",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
-      "Encoding": "UTF-8"
+      "Repository": "CRAN"
     },
     "vctrs": {
       "Package": "vctrs",
@@ -6874,7 +6882,7 @@
       "RoxygenNote": "7.3.3",
       "NeedsCompilation": "no",
       "Author": "Simon Garnier [aut, cre], Noam Ross [ctb, cph], Bob Rudis [ctb, cph], Marco Sciaini [ctb, cph], Antônio Pedro Camargo [ctb, cph], Cédric Scherer [ctb, cph]",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "vroom": {
       "Package": "vroom",
@@ -6946,7 +6954,7 @@
       "NeedsCompilation": "yes",
       "Author": "Jim Hester [aut] (ORCID: <https://orcid.org/0000-0002-2739-7082>), Hadley Wickham [aut] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Jennifer Bryan [aut, cre] (ORCID: <https://orcid.org/0000-0002-6983-2759>), Shelby Bearrows [ctb], https://github.com/mandreyel/ [cph] (mio library), Jukka Jylänki [cph] (grisu3 implementation), Mikkel Jørgensen [cph] (grisu3 implementation), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Jennifer Bryan <jenny@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "waldo": {
       "Package": "waldo",
@@ -7048,7 +7056,7 @@
       "NeedsCompilation": "yes",
       "Author": "Winston Chang [aut, cre], Joe Cheng [aut], Alan Dipert [aut], Barbara Borges [aut], Posit, PBC [cph], Peter Thorson [ctb, cph] (WebSocket++ library), René Nyffenegger [ctb, cph] (Base 64 library), Micael Hildenborg [ctb, cph] (SHA1 library), Aladdin Enterprises [cph] (MD5 library), Bjoern Hoehrmann [ctb, cph] (UTF8 Validation library)",
       "Maintainer": "Winston Chang <winston@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "withr": {
       "Package": "withr",
@@ -7267,10 +7275,9 @@
         "R (>= 2.10.0)"
       ],
       "License": "GPL (>= 2)",
-      "Repository": "https://packagemanager.posit.co/cran/latest",
+      "Repository": "CRAN",
       "NeedsCompilation": "no",
-      "Author": "David B. Dahl [aut], David Scott [aut, cre], Charles Roosen [aut], Arni Magnusson [aut], Jonathan Swinton [aut], Ajay Shah [ctb], Arne Henningsen [ctb], Benno Puetz [ctb], Bernhard Pfaff [ctb], Claudio Agostinelli [ctb], Claudius Loehnert [ctb], David Mitchell [ctb], David Whiting [ctb], Fernando da Rosa [ctb], Guido Gay [ctb], Guido Schulz [ctb], Ian Fellows [ctb], Jeff Laake [ctb], John Walker [ctb], Jun Yan [ctb], Liviu Andronic [ctb], Markus Loecher [ctb], Martin Gubri [ctb], Matthieu Stigler [ctb], Robert Castelo [ctb], Seth Falcon [ctb], Stefan Edwards [ctb], Sven Garbade [ctb], Uwe Ligges [ctb]",
-      "Encoding": "UTF-8"
+      "Author": "David B. Dahl [aut], David Scott [aut, cre], Charles Roosen [aut], Arni Magnusson [aut], Jonathan Swinton [aut], Ajay Shah [ctb], Arne Henningsen [ctb], Benno Puetz [ctb], Bernhard Pfaff [ctb], Claudio Agostinelli [ctb], Claudius Loehnert [ctb], David Mitchell [ctb], David Whiting [ctb], Fernando da Rosa [ctb], Guido Gay [ctb], Guido Schulz [ctb], Ian Fellows [ctb], Jeff Laake [ctb], John Walker [ctb], Jun Yan [ctb], Liviu Andronic [ctb], Markus Loecher [ctb], Martin Gubri [ctb], Matthieu Stigler [ctb], Robert Castelo [ctb], Seth Falcon [ctb], Stefan Edwards [ctb], Sven Garbade [ctb], Uwe Ligges [ctb]"
     },
     "yaml": {
       "Package": "yaml",
@@ -7296,7 +7303,7 @@
       "NeedsCompilation": "yes",
       "Author": "Hadley Wickham [cre] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Shawn Garbett [ctb] (ORCID: <https://orcid.org/0000-0003-4079-5621>), Jeremy Stephens [aut, ctb], Kirill Simonov [aut], Yihui Xie [ctb] (ORCID: <https://orcid.org/0000-0003-0645-5666>), Zhuoer Dong [ctb], Jeffrey Horner [ctb], reikoch [ctb], Will Beasley [ctb] (ORCID: <https://orcid.org/0000-0002-5613-5006>), Brendan O'Connor [ctb], Michael Quinn [ctb], Charlie Gao [ctb], Gregory R. Warnes [ctb], Zhian N. Kamvar [ctb]",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     },
     "zip": {
       "Package": "zip",
@@ -7332,7 +7339,7 @@
       "NeedsCompilation": "yes",
       "Author": "Gábor Csárdi [aut, cre], Kuba Podgórski [ctb], Rich Geldreich [ctb], Arm Limited [ctb, cph] (bundled Mbed TLS crypto subset in src/mbedtls/ (Apache-2.0)), Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
-      "Repository": "https://packagemanager.posit.co/cran/latest"
+      "Repository": "CRAN"
     }
   }
 }
