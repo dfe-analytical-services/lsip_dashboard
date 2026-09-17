@@ -2431,9 +2431,6 @@ server <- function(input, output, session) {
         )
 
       dynamic_text <- paste0(
-        "<strong>",
-        jobTextData$geogConcat,
-        "</strong>: ",
         "<p>",
         "Between ",
         format(jobTextData$date_volume %m-% months(2), "%B %Y"),
@@ -2442,7 +2439,7 @@ server <- function(input, output, session) {
         ", there were an average of ",
         format(round2(jobTextData$value_volume, 0), big.mark = ","),
         " new online job adverts per month in ",
-        input$jobGeoChoice,
+        jobTextData$geogConcat,
         ", which represents ",
         if (jobTextData$value_growthRate > 0) "an increase" else "a decrease",
         " of ",
