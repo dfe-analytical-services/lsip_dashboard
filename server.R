@@ -3303,8 +3303,12 @@ server <- function(input, output, session) {
 
       # Create individual ranking column(s)
       individual_ranking_geogs <- jobAdsRanking %>%
-        filter(Region %in% selected_geogs()) %>%
         select(Occupation, Region, `Number of new job adverts`) %>%
+        mutate(`Number of new job adverts` = if_else(
+          Region %in% selected_geogs(),
+          `Number of new job adverts`,
+          NA_real_
+        )) %>%
         pivot_wider(names_from = Region, values_from = `Number of new job adverts`)
 
       # Combine columns
@@ -3362,9 +3366,22 @@ server <- function(input, output, session) {
   })
 
   output$jobRankTable <- DT::renderDataTable({
+    data <- jobRankData()
+
+    # Identify all region columns
+    all_region_cols <- sort(unique(jobAdsRanking$Region))
+
+    region_cols <- which(names(data) %in% all_region_cols) - 1
+
+    # Identify which regions have been selected
+    selected_region_cols <- which(names(data) %in% input$jobGeoChoice) - 1
+
+    # Identify the un-selected region columns to hide from the table
+    hidden_region_cols <- setdiff(region_cols, selected_region_cols)
+
     DT::datatable(
-      jobRankData(),
-      extensions = c("FixedColumns"),
+      data,
+      extensions = "FixedColumns",
       options = list(
         scrollY = "300px", # Create a scrolling table
         scrollX = TRUE,
@@ -3374,7 +3391,12 @@ server <- function(input, output, session) {
         columnDefs = list(
           # Hide the selected occupations flag
           list(
-            targets = which(names(jobRankData()) == "selected_row") - 1,
+            targets = which(names(data) == "selected_row") - 1,
+            visible = FALSE
+          ),
+          # Hide un-selected region columns
+          list(
+            targets = hidden_region_cols,
             visible = FALSE
           )
         )
@@ -3383,7 +3405,7 @@ server <- function(input, output, session) {
     ) %>%
       # Format numbers
       DT::formatRound(
-        columns = names(jobRankData())[sapply(jobRankData(), is.numeric)],
+        columns = names(data)[sapply(data, is.numeric)],
         digits = 0,
         mark = ","
       ) %>%
