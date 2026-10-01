@@ -829,7 +829,8 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
               h2("Latest update"),
               p("1 Oct 2026 (1.6.21)"),
               tags$ul(
-                tags$li("New base map.")
+                tags$li("New base map."),
+                tags$li("Update to August 2026 online job advert data.")
               ),
               details(
                 label = "Previous updates",

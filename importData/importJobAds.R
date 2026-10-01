@@ -1,5 +1,6 @@
 #Download data
-url<-"https://www.ons.gov.uk/file?uri=/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk/january2017tojuly2026/labourdemandbyoccupation.xlsx"
+## Note that the file name changed for August 2026, will likely revert next month so be aware
+url<-"https://www.ons.gov.uk/file?uri=/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk/january2017toaugust2026/refv1.xlsx"
 job_ads_raw <- tempfile(fileext = ".xlsx")
 download.file(url, job_ads_raw, mode = "wb")
 
@@ -111,7 +112,7 @@ I_Ons3digLA<-read.xlsx(job_ads_raw, sheet = "Table 4", skipEmptyRows = T)
    ungroup() %>%
    select(-newArea) %>%
    group_by(geogConcat, SOC2digit, time_period) %>% # sum for each area
-   summarise(value=sum(as.numeric(value))) %>%
+   summarise(value=sum(as.numeric(value),na.rm=T)) %>%
    mutate(value = as.character(value)) # so we can merge
  
  # get england soc stats summed from LSIPs, plus GLA for London (as no london LSIPs)

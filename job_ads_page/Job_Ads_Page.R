@@ -137,7 +137,10 @@ new_ads_SOC_roll <- new_ads_SOC_clean %>%
 # Three-month rolling average by region
 new_ads_region_roll <- new_ads_LAD_clean %>%
   group_by(region, timePeriod) %>%
-  summarise(n_jobs = sum(n_jobs)) %>%
+  summarise(n_jobs = sum(n_jobs,na.rm=TRUE)) %>%
+  ## Adding na.rm=TRUE above to avoid NaNs where some data is missing in all three months, but resetting to NA when 0
+  ## so it's correctly NA where there is no data at all. This is safe at region level because won't be 'real' 0s
+  mutate(n_jobs = ifelse(n_jobs == 0,NA,n_jobs)) %>% 
   mutate(n_jobs_3m_avg = slide_dbl(n_jobs, ~ mean(.x, na.rm = TRUE), .before = 2, .complete = TRUE)) %>%
   ungroup()
 
@@ -403,7 +406,7 @@ new_ads_region_SOC_constant_output <- new_ads_region_SOC_roll %>%
 new_ads_SOC_3months <- new_ads_SOC_roll %>%
   filter(timePeriod == latest_date) %>%
   # Pull out the occupations that are in the top 15%
-  filter(n_jobs_3m_avg >= quantile(n_jobs_3m_avg, (1-emerging_cutoff)))
+  filter(n_jobs_3m_avg >= quantile(n_jobs_3m_avg,na.rm=T, (1-emerging_cutoff)))
 
 # Filter data for the 9-months prior to that
 new_ads_SOC_9months <- new_ads_SOC_roll %>%
@@ -445,7 +448,7 @@ new_ads_region_SOC_3months <- new_ads_region_SOC_roll %>%
   filter(timePeriod == latest_date) %>%
   # Pull out the occupations that are in the top 15%
   group_by(region) %>%
-  filter(n_jobs_3m_avg >= quantile(n_jobs_3m_avg, (1-emerging_cutoff))) %>%
+  filter(n_jobs_3m_avg >= quantile(n_jobs_3m_avg,na.rm=T, (1-emerging_cutoff))) %>%
   ungroup()
 
 new_ads_region_SOC_9months <- new_ads_region_SOC_roll %>%
