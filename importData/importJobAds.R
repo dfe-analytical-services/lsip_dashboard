@@ -112,7 +112,7 @@ I_Ons3digLA<-read.xlsx(job_ads_raw, sheet = "Table 4", skipEmptyRows = T)
    ungroup() %>%
    select(-newArea) %>%
    group_by(geogConcat, SOC2digit, time_period) %>% # sum for each area
-   summarise(value=sum(as.numeric(value))) %>%
+   summarise(value=sum(as.numeric(value),na.rm=T)) %>%
    mutate(value = as.character(value)) # so we can merge
  
  # get england soc stats summed from LSIPs, plus GLA for London (as no london LSIPs)
