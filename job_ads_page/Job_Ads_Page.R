@@ -448,7 +448,7 @@ new_ads_region_SOC_3months <- new_ads_region_SOC_roll %>%
   filter(timePeriod == latest_date) %>%
   # Pull out the occupations that are in the top 15%
   group_by(region) %>%
-  filter(n_jobs_3m_avg >= quantile(n_jobs_3m_avgna.rm=T, (1-emerging_cutoff))) %>%
+  filter(n_jobs_3m_avg >= quantile(n_jobs_3m_avg,na.rm=T, (1-emerging_cutoff))) %>%
   ungroup()
 
 new_ads_region_SOC_9months <- new_ads_region_SOC_roll %>%
