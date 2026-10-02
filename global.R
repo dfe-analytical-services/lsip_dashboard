@@ -31,6 +31,7 @@ shhh(library(RColorBrewer)) # map colours
 shhh(library(quarto)) # map colours
 shhh(library(dfeshiny)) # map colours
 shhh(library(bslib)) # Value boxes
+shhh(library(rsconnect))
 
 # This line enables bookmarking such that input choices are shown in the url.
 enableBookmarking("url")
