@@ -1583,7 +1583,7 @@ server <- function(input, output, session) {
 
     # Create map
     leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
-      addProviderTiles(providers$Stadia.AlidadeSmooth) %>%
+      addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
       setView(
         lng = -1.6,
         lat = 52.8,
@@ -1728,7 +1728,7 @@ server <- function(input, output, session) {
     bbox_list <- as.list(bbox)
 
     leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
-      addProviderTiles(providers$Stadia.AlidadeSmooth) %>%
+      addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
       addPolygons(
         data = mapData,
         fillColor = ~ pal(mapData$value),
@@ -2850,7 +2850,7 @@ server <- function(input, output, session) {
 
     # Create map
     leaflet(options = leafletOptions(zoomSnap = 0.1)) %>%
-      addProviderTiles(providers$Stadia.AlidadeSmooth) %>%
+      addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
       setView(
         lng = -1.6,
         lat = 52.8,
