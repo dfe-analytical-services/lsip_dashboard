@@ -294,7 +294,20 @@ server <- function(input, output, session) {
         rename(Achievements = valueText, "Sector subject area tier 1" = Subgroup)), path = file)
     }
   )
+
   output$downloadData6 <- downloadHandler(
+    filename = function() {
+      "AppAchievements.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list("3c.App achievements" = C_datahub %>%
+        filter(metric == "apprenticeships") %>%
+        select(-metric, -metricNeat) %>%
+        rename(Achievements = valueText)), path = file)
+    }
+  )
+
+  output$downloadData7 <- downloadHandler(
     filename = function() {
       "HighestQualification.xlsx"
     },
@@ -308,7 +321,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  output$downloadData7 <- downloadHandler(
+  output$downloadData8 <- downloadHandler(
     filename = function() {
       "EnterpriseBySize.xlsx"
     },
@@ -319,7 +332,7 @@ server <- function(input, output, session) {
         rename("Enterprise count" = valueText, "Size band" = Subgroup)), path = file)
     }
   )
-  output$downloadData8 <- downloadHandler(
+  output$downloadData9 <- downloadHandler(
     filename = function() {
       "EnterpriseByIndustry.xlsx"
     },
@@ -333,7 +346,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  output$downloadData9 <- downloadHandler(
+  output$downloadData10 <- downloadHandler(
     filename = function() {
       "EnterpriseDemography.xlsx"
     },
@@ -347,7 +360,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  output$downloadData10 <- downloadHandler(
+  output$downloadData11 <- downloadHandler(
     filename = function() {
       "KS4Destinations.xlsx"
     },
@@ -361,7 +374,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  output$downloadData11 <- downloadHandler(
+  output$downloadData12 <- downloadHandler(
     filename = function() {
       "KS5Destinations.xlsx"
     },
@@ -375,7 +388,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  output$downloadData12 <- downloadHandler(
+  output$downloadData13 <- downloadHandler(
     filename = function() {
       "OnlineJobAdverts.xlsx"
     },
@@ -395,7 +408,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  output$downloadData13 <- downloadHandler(
+  output$downloadData14 <- downloadHandler(
     filename = function() {
       "EmploymentProjection.xlsx"
     },
