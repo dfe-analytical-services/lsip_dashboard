@@ -236,6 +236,7 @@ C_datahub <- C_localSkillsDataset %>%
     # metric == "starts_rate_per_100000_population" ~ "FE start rate per 100k",
     metric == "achievements" ~ "FE achievements volume",
     metric == "participation" ~ "FE participation volume",
+    metric == "apprenticeships" ~ "FE apprenticeship achievements volume",
     metric == "achievementsAims" ~ "FE achievement aims volume",
     metric == "enrolmentsAims" ~ "FE enrolment aims volume",
     # metric == "starts" ~ "FE starts volume",
