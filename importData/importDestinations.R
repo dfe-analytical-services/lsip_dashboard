@@ -9,7 +9,7 @@ ks4_raw <- read_csv(
 ks5_raw <- read_csv(
   "https://api.education.gov.uk/statistics/v1/data-sets/019d4e73-6440-7523-b60c-bfab1ad4a30d/csv"
 ) |> 
-  filter(establishment_type_group=="State-funded mainstream schools & colleges",
+  filter(establishment_type_group=="State-funded mainstream schools and colleges",
          cohort_level=="Total") |> 
   mutate(metric="sustainedPositiveDestinationKS5Rate")
 
