@@ -78,6 +78,8 @@ C_app_detail<- bind_rows(
     value = sum(value, na.rm = TRUE),
     .groups = "drop"
   ) |> 
+  #round data to match other FE data
+  mutate(value=round2(value,-1)) |> 
   mutate(valueText = as.character(value),
          metric="apprenticeships") 
 

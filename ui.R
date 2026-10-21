@@ -827,7 +827,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h2("Latest update"),
-              p("16 Oct 2026 (1.6.22)"),
+              p("21 Oct 2026 (1.6.22)"),
               tags$ul(
                 tags$li("Added detailed apprenticeship data to the Local Skills tab. Find it in the metrics dropdown."),
                 tags$li("Update destinations data.")
