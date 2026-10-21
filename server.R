@@ -114,7 +114,7 @@ server <- function(input, output, session) {
     google_analytics_key = google_analytics_key
   )
 
-  # Manage page naviogation
+  # Manage page navigation
   observeEvent(input$summary, bslib::nav_select("navbar", "summary"))
   observeEvent(input$local_skills_data, bslib::nav_select("navbar", "local_skills_data"))
   observeEvent(input$data_download, bslib::nav_select("navbar", "data_download"))
@@ -294,7 +294,20 @@ server <- function(input, output, session) {
         rename(Achievements = valueText, "Sector subject area tier 1" = Subgroup)), path = file)
     }
   )
+
   output$downloadData6 <- downloadHandler(
+    filename = function() {
+      "AppAchievements.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(list("3c.App achievements" = C_datahub %>%
+        filter(metric == "apprenticeships") %>%
+        select(-metric, -metricNeat) %>%
+        rename(Achievements = valueText)), path = file)
+    }
+  )
+
+  output$downloadData7 <- downloadHandler(
     filename = function() {
       "HighestQualification.xlsx"
     },
@@ -308,7 +321,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  output$downloadData7 <- downloadHandler(
+  output$downloadData8 <- downloadHandler(
     filename = function() {
       "EnterpriseBySize.xlsx"
     },
@@ -319,7 +332,7 @@ server <- function(input, output, session) {
         rename("Enterprise count" = valueText, "Size band" = Subgroup)), path = file)
     }
   )
-  output$downloadData8 <- downloadHandler(
+  output$downloadData9 <- downloadHandler(
     filename = function() {
       "EnterpriseByIndustry.xlsx"
     },
@@ -333,7 +346,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  output$downloadData9 <- downloadHandler(
+  output$downloadData10 <- downloadHandler(
     filename = function() {
       "EnterpriseDemography.xlsx"
     },
@@ -347,7 +360,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  output$downloadData10 <- downloadHandler(
+  output$downloadData11 <- downloadHandler(
     filename = function() {
       "KS4Destinations.xlsx"
     },
@@ -361,7 +374,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  output$downloadData11 <- downloadHandler(
+  output$downloadData12 <- downloadHandler(
     filename = function() {
       "KS5Destinations.xlsx"
     },
@@ -375,7 +388,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  output$downloadData12 <- downloadHandler(
+  output$downloadData13 <- downloadHandler(
     filename = function() {
       "OnlineJobAdverts.xlsx"
     },
@@ -395,7 +408,7 @@ server <- function(input, output, session) {
       )
     }
   )
-  output$downloadData13 <- downloadHandler(
+  output$downloadData14 <- downloadHandler(
     filename = function() {
       "EmploymentProjection.xlsx"
     },
@@ -820,7 +833,7 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_FE2, {
     bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
-      selected = "achievements_rate_per_100000_population"
+      selected = "apprenticeships"
     )
   })
 
@@ -2085,7 +2098,7 @@ server <- function(input, output, session) {
       ))
     }
     # get rid of soc codes
-    Splash_21 <- Splash_21 %>% mutate(subgroup = gsub("[0-9]+ - ", "", subgroup))
+    Splash_21 <- Splash_21 %>% mutate(subgroup = sub("^.*? - ", "", subgroup))
 
     # if no rows (because of filter lag) then don't plot
     if (nrow(Splash_21) == 0) {
@@ -2196,6 +2209,39 @@ server <- function(input, output, session) {
         }
       )
     }
+  })
+
+  # Render apprenticeships associated with chosen SOC 1 and 2 digits chosen
+  output$jobAppsLsTable <- DT::renderDataTable({
+    soc_codes <- as.numeric(
+      sub(" -.*", "", input$subgroupPage)
+    )
+
+    tbl <- C_STD_SOC_lookup |>
+      filter(soc2020_code_2 %in% soc_codes)
+
+    if (length(soc_codes) == 1) {
+      tbl <- tbl |>
+        select(Standard = st_name, Code = st_code)
+    } else {
+      tbl <- tbl |>
+        select(
+          SOC = soc2020_description,
+          Standard = st_name,
+          Code = st_code
+        ) |>
+        arrange(SOC)
+    }
+
+    DT::datatable(
+      tbl,
+      rownames = FALSE,
+      options = list(
+        searching = FALSE,
+        lengthChange = FALSE,
+        info = FALSE
+      )
+    )
   })
 
   ## 5.9 Downloads local skills ----
