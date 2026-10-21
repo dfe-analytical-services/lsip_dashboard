@@ -114,7 +114,7 @@ server <- function(input, output, session) {
     google_analytics_key = google_analytics_key
   )
 
-  # Manage page naviogation
+  # Manage page navigation
   observeEvent(input$summary, bslib::nav_select("navbar", "summary"))
   observeEvent(input$local_skills_data, bslib::nav_select("navbar", "local_skills_data"))
   observeEvent(input$data_download, bslib::nav_select("navbar", "data_download"))
@@ -833,7 +833,7 @@ server <- function(input, output, session) {
   observeEvent(input$link_to_tabpanel_FE2, {
     bslib::nav_select("navbar", "local_skills_data")
     updateSelectInput(session, "splashMetric",
-      selected = "achievements_rate_per_100000_population"
+      selected = "apprenticeships"
     )
   })
 
