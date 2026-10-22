@@ -783,6 +783,11 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
                 actionLink("link_to_tabpanel_destinations", "Destinations"),
                 " variables show the number of graduates from KS4 and KS5 education are in employment or training in the area, giving a broad impression of the supply of graduates with a general level of skill."
               ),
+              p(
+                "Higher Education data is not included in this Dashboard, but information about Higher Education qualifiers is available at LSIP area level in the ",
+                tags$a(href = "https://www.officeforstudents.org.uk/data-and-analysis/higher-education-market-monitoring-tool/", "Office for Students Market monitoring tool dashboard."),
+                "The 'Size and shape from student records' tab shows the number of graduates by subject area and type of study in an area, and the 'Graduate movement' tab shows the region of origin and employment destination of graduates from institutions in the chosen area."
+              ),
               h3("Further information and data quality notes"),
               p("Use the links below to find further details on the Dashboard's data sources and related tools and publications:"),
               tags$ul(
