@@ -731,8 +731,8 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
             div(
               class = "panel-body",
               h3("Background"),
-              p("The Local Skills Dashboard brings together published data from variety of sources to support local skills planning. The dashboard covers topics such as employment, qualifications, and education outcomes across England."),
-              p("Data is available to view and download at different levels of geography. The main geography we use is the LSIP (Local Skills Improvement Plan) area, which are groups of local councils with a common plan for skills policy, working with local employer groups. The data is also available at the level of Combined Authority, which often overlaps with LSIPs and England-wide level. Individual Local Authority data can be viewed for comparison where available."),
+              p("The Local Skills Dashboard brings together published data from sources across Government statistics to support local skills planning. The dashboard covers topics such as employment, qualifications, and education outcomes across England."),
+              p("Data is available to view and download at different levels of geography. The main geography we use is the LSIP (Local Skills Improvement Plan) area, which are groups of local councils with a common plan for skills policy, working with local employer groups. The data is also available at the level of Combined Authority level, which often overlaps with LSIPs, and as a total for England. Individual Local Authority data can be viewed for comparison on measures where it is available."),
               p(
                 "This dashboard is produced by Skills England, a body that brings together key partners to meet the skills needs of the next decade across all regions. For more information on Skills England's aims and our work, visit our",
                 a(
@@ -759,13 +759,13 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
               p(
                 "The ",
                 actionLink("link_to_tabpanel_employment", "Employment"),
-                " variables give the number and rate of working-age people in the area in employment, self-employment, unemployment, and inactivity. This can generally be understood as an indication of labour market strength (and hence demand), but the numbers in unemployment and inactivity are a measure of labour supply. All variables are available as a rate instead of a number, but due to reliability of data they can only be broken down by occupation group and industry when presented as a number."
+                " variables give the number and rate of working-age people in the area in employment, self-employment, unemployment, and economically inactive. This can generally be understood as an indication of labour market strength (and hence demand), but the numbers in unemployment and inactive are a measure of *potential* labour supply. All variables are available as a rate instead of the volume number, but due to reliability of data they can only be broken down by occupation group and industry when presented as a number."
               ),
               h4("Demand"),
               p(
                 "The ",
                 actionLink("link_to_tabpanel_vacancies", "Jobs"),
-                " variables use two different measures to show local demand for jobs, broken down by occupation group. Online job adverts are based on web scraping data to determine where location and nature of current job advert postings. Employment projections are based on the Skills Imperative report which estimated future demand for jobs, including at a local level, but are not based on the most up-to-date data."
+                " variables use two different measures to show local demand for jobs, broken down by occupation group. Online job adverts are based on web scraping data to determine the location and occupation group of the latest job advert postings. Employment projections are based on the Skills Imperative report which estimated future demand for jobs, including at a local level, but are not based on the most up-to-date data."
               ),
               p(
                 "The ",
@@ -776,16 +776,16 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
               p(
                 "The ",
                 actionLink("link_to_tabpanel_FE", "Skills"),
-                " variables show the number of people in the area in or completing Further Education courses, with the number (but not rate, as with Employment above) of achievements available broken down by subject area. They also show in general how many people are qualified at the key Levels 3 and 4 of the Regulated Qualification Framework."
+                " variables show the number of people in the area in or completing Further Education courses, with the number (but not rate, as with Employment above) of achievements available broken down by subject area. For Apprenticeships, achievements are also broken down by specific standard, allowing a view of skills supply for the specific occupations which they feed in to. They also show in general how many people are qualified at the key Levels 3 and 4 of the Regulated Qualification Framework."
               ),
               p(
                 "The ",
                 actionLink("link_to_tabpanel_destinations", "Destinations"),
-                " variables show the number of graduates from KS4 and KS5 education are in employment or training in the area, giving a broad impression of the supply of graduates with a general level of skill."
+                " variables show the number of graduates from Key Stage 4 and 5 education who are in employment or training in the area, giving an impression of the supply of graduates with a level of broad skill."
               ),
               p(
                 "Higher Education data is not included in this Dashboard, but information about Higher Education qualifiers is available at LSIP area level in the ",
-                tags$a(href = "https://www.officeforstudents.org.uk/data-and-analysis/higher-education-market-monitoring-tool/", "Office for Students Market monitoring tool dashboard."),
+                a(href = "https://www.officeforstudents.org.uk/data-and-analysis/higher-education-market-monitoring-tool/", "Office for Students Market monitoring tool dashboard."),
                 "The 'Size and shape from student records' tab shows the number of graduates by subject area and type of study in an area, and the 'Graduate movement' tab shows the region of origin and employment destination of graduates from institutions in the chosen area."
               ),
               h3("Further information and data quality notes"),
