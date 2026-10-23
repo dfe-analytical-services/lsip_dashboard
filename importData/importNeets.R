@@ -76,7 +76,10 @@ C_neet<-bind_rows(England_neet,LA_neet,LSIP_neet,CA_neet) |>
   # Remove invalid value text for NA values, e.g. Inf, NaN, z
   mutate(valueText = ifelse(is.na(value), "NA", paste0(round2(value*100,2),"%"))) |> 
   mutate(metric="neet_percentage") |> 
-  mutate(breakdown= str_to_sentence(characteristic_grouping),subgroup=str_to_sentence(characteristic)) |> 
+  mutate(breakdown= case_when(characteristic_grouping!="SEND" ~ str_to_sentence(characteristic_grouping),
+                              TRUE ~ characteristic_grouping),
+         subgroup= case_when(characteristic_grouping!="SEND" ~ str_to_sentence(characteristic),
+                   TRUE ~ characteristic)) |> 
   #remove unused cols
   select(geogConcat,chartPeriod,timePeriod,latest,breakdown,subgroup,value,valueText,metric) 
 
