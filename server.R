@@ -425,8 +425,25 @@ server <- function(input, output, session) {
     }
   )
 
+  output$downloadData15 <- downloadHandler(
+    filename = function() {
+      "NEET16to17.xlsx"
+    },
+    content = function(file) {
+      write_xlsx(
+        list(
+          "8.NEET 16 to 17 year olds" = C_datahub %>%
+            filter(metric == "neet_percentage") %>%
+            select(-metric, -metricNeat) %>%
+            rename("NEET percentage 16-17" = valueText)
+        ),
+        path = file
+      )
+    }
+  )
+
   # Create download links
-  output$hidden_downloads <- renderUI(lapply(1:13, function(i) {
+  output$hidden_downloads <- renderUI(lapply(1:15, function(i) {
     downloadLink(paste0("downloadData", i), "download", class = "hiddenLink")
   }))
 
@@ -1509,7 +1526,7 @@ server <- function(input, output, session) {
     paste0(
       (I_DataText %>% filter(metric == input$splashMetric))$mapComment, " in ",
       input$geoChoice,
-      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection" | str_sub(input$splashMetric, start = -10) == "population") {
+      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection" | input$splashMetric == "neet_percentage" | str_sub(input$splashMetric, start = -10) == "population") {
         paste0(
           " is ",
           compareNational,
@@ -1538,7 +1555,7 @@ server <- function(input, output, session) {
     }
     labels <-
       # if a percentage then format as %, else big number
-      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
+      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection" | input$splashMetric == "neet_percentage") {
         sprintf(
           "<strong>%s</strong><br/>%s<br/>%s: %s%%",
           mapData$areaName,
@@ -1568,7 +1585,7 @@ server <- function(input, output, session) {
 
     popupLabel <-
       # if a percentage then format as %, else big number
-      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
+      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection" | input$splashMetric == "neet_percentage") {
         sprintf(
           "<strong>%s</strong><br/>%s<br/>%s: %s%%",
           mapDataPopup$areaName,
@@ -1711,7 +1728,7 @@ server <- function(input, output, session) {
 
     labels <-
       # if a percentage then format as %, else big number
-      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
+      if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection" | input$splashMetric == "neet_percentage") {
         sprintf(
           "<strong>%s</strong><br/>%s<br/>%s: %s%%",
           mapData$areaName,
@@ -1875,7 +1892,7 @@ server <- function(input, output, session) {
           "\nNone"
         }) |
           # get england for comparison (if a rate and not already chosen)
-          (if ((str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection") & input$geoChoice != "England" & !("England" %in% input$geoComps)) {
+          (if ((str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection" | input$splashMetric == "neet_percentage") & input$geoChoice != "England" & !("England" %in% input$geoComps)) {
             (geogConcat == "England")
           } else {
             geogConcat == "\nNone"
@@ -1918,7 +1935,7 @@ server <- function(input, output, session) {
           }, " ",
           ifelse(input$splashMetric == "employmentProjection", "Projected annual employment growth", (I_DataText %>% filter(metric == input$splashMetric))$mapPop),
           ": ",
-          if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
+          if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection" | input$splashMetric == "neet_percentage") {
             scales::percent(round2(value, 3))
           } else {
             format(round2(value, 0), big.mark = ",")
@@ -1938,7 +1955,7 @@ server <- function(input, output, session) {
       ) +
       scale_y_continuous(
         # Style labels. If a rate style as %, If bigger than 1m style as x.xxM, else use cut_short_scale to append a k for bigger than 1000
-        labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection") {
+        labels = if (str_sub(input$splashMetric, start = -4) == "Rate" | input$splashMetric == "employmentProjection" | input$splashMetric == "neet_percentage") {
           scales::percent
         } else if (sum(!is.na(SplashTime$value) == 0)) {
           label_number(accuracy = 1, scale_cut = append(scales::cut_short_scale(), 1, 1))
@@ -1951,7 +1968,7 @@ server <- function(input, output, session) {
         }
       ) +
       labs(colour = "") +
-      scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection" | input$geoChoice == "England" | "England" %in% input$geoComps) {
+      scale_color_manual(values = if (str_sub(input$splashMetric, start = -4) == "Rate" | str_sub(input$splashMetric, start = -10) == "population" | input$splashMetric == "employmentProjection" | input$splashMetric == "neet_percentage" | input$geoChoice == "England" | "England" %in% input$geoComps) {
         chartColors6
       } else {
         chartColors5
@@ -2129,7 +2146,7 @@ server <- function(input, output, session) {
               format(round2(value, 0), big.mark = ",")
             } else {
               if (str_sub(input$splashMetric, start = -4) == "Rate" |
-                input$splashMetric == "employmentProjection") {
+                input$splashMetric == "employmentProjection" | input$splashMetric == "neet_percentage") {
                 scales::percent(round2(value, 3))
               } else {
                 paste0(scales::percent(round2(value, 3)), " (", format(round2(vol_value, 0), big.mark = ",", trim = T), ")")

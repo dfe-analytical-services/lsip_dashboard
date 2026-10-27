@@ -829,6 +829,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
               h2("Latest update"),
               p("28 Oct 2026 (1.6.23)"),
               tags$ul(
+                tags$li("Added 16-17 year old NEET data."),
                 tags$li("Update job adverts data.")
               ),
               details(

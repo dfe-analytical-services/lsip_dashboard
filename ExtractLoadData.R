@@ -58,6 +58,9 @@ source("importData/importONS.R", echo = TRUE)
 ## 4.4 Skills imperative----
 source("importData/importSkillsImp.R", echo = TRUE)
 
+## 4.5 NEETS (16-17yo)----
+source("importData/importNeets.R", echo = TRUE)
+
 # 5 Dashboard text----
 source("importData/importDashboardText.R", echo = TRUE)
 
