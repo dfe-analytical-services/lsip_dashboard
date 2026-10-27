@@ -1,6 +1,6 @@
 #Download data
 ## Note that the file name changed for August 2026, will likely revert next month so be aware
-url<-"https://www.ons.gov.uk/file?uri=/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk/january2017toaugust2026/refv1.xlsx"
+url<-"https://www.ons.gov.uk/file?uri=/employmentandlabourmarket/peopleinwork/employmentandemployeetypes/datasets/labourdemandvolumesbystandardoccupationclassificationsoc2020uk/january2017toseptember2026/labourdemandbyoccupation.xlsx"
 job_ads_raw <- tempfile(fileext = ".xlsx")
 download.file(url, job_ads_raw, mode = "wb")
 
