@@ -1,4 +1,6 @@
-#https://explore-education-statistics.service.gov.uk/data-catalogue/data-set/a7bc111a-9503-40df-99fa-764fcb13a2e9
+# Get the NEET/not known perecntage for each area where possible. 
+# This value is for 16-17 year olds only so it will be caveated a lot in the dashboard
+# Source: https://explore-education-statistics.service.gov.uk/data-catalogue/data-set/a7bc111a-9503-40df-99fa-764fcb13a2e9
 
 I_neet<-read.csv("https://explore-education-statistics.service.gov.uk/data-catalogue/data-set/a7bc111a-9503-40df-99fa-764fcb13a2e9/csv")
 
