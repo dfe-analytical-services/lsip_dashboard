@@ -50,7 +50,8 @@ metricChoices <- list(
     "Employment" = "inemployment",
     "Self-employment" = "selfemployed",
     "Unemployed" = "unemployed",
-    "Inactive" = "inactive"
+    "Inactive" = "inactive",
+    "NEET (16-17 year olds)" = "neet_percentage"
   ),
   "Jobs" = list(
     "Online job adverts" = "vacancies",

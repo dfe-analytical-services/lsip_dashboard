@@ -14,7 +14,8 @@ C_localSkillsDataset <- bind_rows(
   C_skillsImperative,
   C_destinations,
   C_adverts,
-  C_businesses
+  C_businesses,
+  C_neet
 )
 
 # 4. Create datasets used by the app----
