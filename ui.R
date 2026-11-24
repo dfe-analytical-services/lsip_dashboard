@@ -759,7 +759,7 @@ Shiny.addCustomMessageHandler(\'updateActiveNav\', function(activeId) {
               p(
                 "The ",
                 actionLink("link_to_tabpanel_employment", "Employment"),
-                " variables give the number and rate of working-age people in the area in employment, self-employment, unemployment, and economically inactive. This can generally be understood as an indication of labour market strength (and hence demand), but the numbers in unemployment and inactive are a measure of *potential* labour supply. All variables are available as a rate instead of the volume number, but due to reliability of data they can only be broken down by occupation group and industry when presented as a number."
+                " variables give the number and rate of working-age people in the area in employment, self-employment, unemployment, and economically inactive. This can generally be understood as an indication of labour market strength (and hence demand), but the numbers in unemployment and inactive are a measure of potential labour supply. All variables are available as a rate instead of the volume number, but due to reliability of data they can only be broken down by occupation group and industry when presented as a number. The rate of 16-17 year olds not in education, employment or training, or not known (NEET / Not known) is also available, though only as a rate and not for all local authorities."
               ),
               h4("Demand"),
               p(
